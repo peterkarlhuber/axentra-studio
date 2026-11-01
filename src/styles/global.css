@@ -1,0 +1,145 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ax-color-bg);
+  color: var(--ax-color-text);
+  font-family: var(--ax-font-sans);
+  font-size: var(--ax-text-md);
+  line-height: var(--ax-leading-normal);
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--ax-font-display);
+  color: var(--ax-color-heading);
+  line-height: var(--ax-leading-tight);
+  font-weight: var(--ax-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--ax-color-link);
+  text-underline-offset: 2px;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--ax-font-mono);
+  font-size: 0.92em;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--ax-brand-blue) 30%, transparent);
+}
+
+/* One focus ring for everything; never remove without a replacement. */
+:focus-visible {
+  outline: 2px solid var(--ax-color-focus);
+  outline-offset: 2px;
+}
+
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+.ax-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.ax-skip-link {
+  position: fixed;
+  top: var(--ax-space-2);
+  left: var(--ax-space-2);
+  z-index: calc(var(--ax-z-tooltip) + 1);
+  padding: var(--ax-space-2) var(--ax-space-4);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-surface);
+  color: var(--ax-color-text);
+  box-shadow: var(--ax-shadow-lg);
+  font-weight: var(--ax-weight-semibold);
+  transform: translateY(-200%);
+  transition: transform var(--ax-duration-fast) var(--ax-ease-standard);
+}
+
+.ax-skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Subtle hexagon motif used on hero areas (login, setup, empty states). */
+.ax-hex-motif {
+  position: relative;
+  isolation: isolate;
+}
+
+.ax-hex-motif::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--ax-hex-motif-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath fill='none' stroke='%233488fa' stroke-width='1.5' d='M28 66 0 50V18L28 2l28 16v32L28 66Zm0 32V66'/%3E%3C/svg%3E");
+  background-size: 56px 98px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,29 @@
+.content {
+  z-index: var(--ax-z-tooltip);
+  max-width: 280px;
+  padding: var(--ax-space-1) var(--ax-space-2);
+  border-radius: var(--ax-radius-sm);
+  background: var(--ax-brand-ink);
+  color: #f1f4ff;
+  font-size: var(--ax-text-xs);
+  font-weight: var(--ax-weight-medium);
+  line-height: 1.4;
+  box-shadow: var(--ax-shadow-md);
+  animation: fade var(--ax-duration-fast) var(--ax-ease-standard);
+}
+:global([data-theme='dark']) .content {
+  background: #e9ecfb;
+  color: #06034c;
+}
+.arrow {
+  fill: var(--ax-brand-ink);
+}
+:global([data-theme='dark']) .arrow {
+  fill: #e9ecfb;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+}

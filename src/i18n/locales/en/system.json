@@ -1,0 +1,43 @@
+{
+  "bootstrap": {
+    "unreachableTitle": "Cannot connect to Axentra",
+    "unreachableBody": "Axentra Studio could not load the server information (GET /v1/meta). Check that the Axentra server is running and that the Studio is configured with the right API address.",
+    "incompatibleTitle": "Incompatible server version",
+    "incompatible": {
+      "major_mismatch": "This Studio speaks a different major version of the Axentra API than the server.",
+      "minor_too_low": "The server is older than this Studio requires. Update the Axentra server or use an older Studio.",
+      "unparseable": "The server reported an API version this Studio cannot interpret."
+    },
+    "incompatibleHelp": "Use a Studio release that matches the server's API version. See the README for the compatibility table.",
+    "serverApi": "Server API version",
+    "requiredApi": "Required API version",
+    "serverVersion": "Server",
+    "studioVersion": "Studio version",
+    "sessionErrorTitle": "Your session could not be checked"
+  },
+  "module": {
+    "disabledTitle": "Module not enabled on this server",
+    "disabledBody": "The server does not report the “{{module}}” module. Enable it in the Axentra server configuration to use this section.",
+    "notInStudioTitle": "Not yet available in Studio",
+    "notInStudioBody": "The server has the “{{module}}” module enabled, but this Studio release has no screens for it yet. Use the API or a newer Studio release."
+  },
+  "health": {
+    "title": "System health",
+    "description": "Readiness and liveness of the Axentra server and its dependencies.",
+    "readiness": "Readiness",
+    "readinessHelp": "GET /v1/health/ready – checks the server's dependencies.",
+    "liveness": "Liveness",
+    "livenessHelp": "GET /v1/health/live – the server process responds.",
+    "versions": "Versions",
+    "notReady": "The server reports that it is not ready to serve requests.",
+    "noChecks": "The server did not report individual checks.",
+    "updated": "Updated {{time}}"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "heading": "We could not find this page",
+    "body": "The address may be mistyped, or the item was moved or deleted.",
+    "home": "Go to start page"
+  },
+  "environment": "Environment"
+}

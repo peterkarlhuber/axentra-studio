@@ -1,0 +1,35 @@
+{
+  "title": "Profile",
+  "description": "Your account, password and sessions.",
+  "account": {
+    "title": "Account",
+    "email": "Email address",
+    "id": "User ID",
+    "platformRole": "Platform role",
+    "noPlatformRole": "None",
+    "products": "Products",
+    "noProducts": "No product memberships"
+  },
+  "name": {
+    "title": "Display name",
+    "label": "Name",
+    "saved": "Name saved"
+  },
+  "password": {
+    "title": "Change password",
+    "description": "Other sessions may be signed out after the change.",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Repeat new password",
+    "mismatch": "The new passwords do not match.",
+    "submit": "Change password",
+    "changed": "Password changed",
+    "setTitle": "Set a password",
+    "setDescription": "You currently sign in with single sign-on only. A password enables password sign-in as well."
+  },
+  "sessions": {
+    "title": "Your sessions",
+    "description": "Browsers where you are signed in.",
+    "revoked": "Session revoked"
+  }
+}

@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+package-lock.json
+api/openapi.json
+src/api/schema.d.ts
+public/branding
+test-results
+playwright-report

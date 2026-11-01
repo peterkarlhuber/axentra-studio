@@ -1,0 +1,18 @@
+{
+  "title": "Settings",
+  "description": "Your personal preferences and the effective server configuration.",
+  "preferences": {
+    "title": "Preferences",
+    "description": "Saved in this browser and in your account.",
+    "language": "Language",
+    "languageHelp": "Used for the Studio interface.",
+    "theme": "Theme",
+    "saving": "Saving…",
+    "storedHint": "Changes apply immediately."
+  },
+  "server": {
+    "title": "Server configuration",
+    "description": "Effective, non-secret configuration of this Axentra server (read-only).",
+    "empty": "The server returned no settings."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "title": "Audit-Protokoll",
+  "description": "Wer hat wann was getan – für jede Änderung auf dem Server aufgezeichnet.",
+  "openDetails": "Details zu {{action}} anzeigen",
+  "fields": {
+    "id": "Ereignis-ID",
+    "time": "Zeitpunkt",
+    "action": "Aktion",
+    "actor": "Akteur",
+    "actorType": "Art des Akteurs",
+    "target": "Ziel",
+    "outcome": "Ergebnis",
+    "product": "Produkt",
+    "tenant": "Mandant",
+    "requestId": "Anfrage-ID",
+    "ip": "IP-Adresse",
+    "userAgent": "User-Agent",
+    "actorId": "Akteur-ID"
+  },
+  "filters": {
+    "label": "Audit-Ereignisse filtern",
+    "search": "Suche",
+    "searchPlaceholder": "Freitext",
+    "product": "Produkt",
+    "allProducts": "Alle Produkte",
+    "tenant": "Mandanten-ID",
+    "action": "Aktion",
+    "actor": "Akteur-ID",
+    "since": "Von",
+    "until": "Bis",
+    "apply": "Filter anwenden",
+    "reset": "Filter zurücksetzen",
+    "allOutcomes": "Alle Ergebnisse",
+    "more": "Weitere Filter",
+    "fewer": "Weniger Filter"
+  },
+  "empty": {
+    "title": "Noch keine Audit-Ereignisse",
+    "body": "Ereignisse erscheinen hier, sobald sich etwas ändert.",
+    "filteredTitle": "Keine passenden Ereignisse",
+    "filteredBody": "Passen Sie die Filter an oder setzen Sie sie zurück."
+  },
+  "detail": {
+    "subtitle": "Audit-Ereignis",
+    "details": "Details",
+    "noDetails": "Dieses Ereignis enthält keine weiteren Details."
+  }
+}

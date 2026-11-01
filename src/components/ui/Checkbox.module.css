@@ -1,0 +1,45 @@
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ax-space-3);
+}
+.box {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  padding: 0;
+  border: 1.5px solid var(--ax-color-control-border);
+  border-radius: var(--ax-radius-xs);
+  background: var(--ax-color-surface);
+  cursor: pointer;
+}
+.box[data-state='checked'],
+.box[data-state='indeterminate'] {
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+}
+.box:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.indicator svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 3;
+}
+.text {
+  min-width: 0;
+}
+.label {
+  font-weight: var(--ax-weight-medium);
+  cursor: pointer;
+}
+.description {
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+}

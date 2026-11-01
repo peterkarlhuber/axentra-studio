@@ -1,0 +1,18 @@
+{
+  "title": "Einstellungen",
+  "description": "Ihre persönlichen Einstellungen und die wirksame Serverkonfiguration.",
+  "preferences": {
+    "title": "Persönliche Einstellungen",
+    "description": "Gespeichert in diesem Browser und in Ihrem Konto.",
+    "language": "Sprache",
+    "languageHelp": "Sprache der Studio-Oberfläche.",
+    "theme": "Darstellung",
+    "saving": "Wird gespeichert …",
+    "storedHint": "Änderungen werden sofort wirksam."
+  },
+  "server": {
+    "title": "Serverkonfiguration",
+    "description": "Wirksame, nicht geheime Konfiguration dieses Axentra-Servers (nur lesbar).",
+    "empty": "Der Server hat keine Einstellungen geliefert."
+  }
+}

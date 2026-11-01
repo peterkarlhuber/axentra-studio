@@ -1,0 +1,29 @@
+.issues {
+  margin: var(--ax-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.details {
+  margin-top: var(--ax-space-3);
+  text-align: left;
+  font-size: var(--ax-text-sm);
+}
+.details summary {
+  cursor: pointer;
+  color: var(--ax-color-link);
+  font-weight: var(--ax-weight-medium);
+}
+.details dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--ax-space-1) var(--ax-space-3);
+  margin: var(--ax-space-2) 0 0;
+}
+.details dt {
+  color: var(--ax-color-text-muted);
+}
+.details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}

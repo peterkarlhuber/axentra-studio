@@ -1,0 +1,101 @@
+.button {
+  --btn-bg: var(--ax-color-surface);
+  --btn-fg: var(--ax-color-text);
+  --btn-border: var(--ax-color-border-strong);
+  --btn-bg-hover: var(--ax-color-surface-hover);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ax-space-2);
+  min-height: 36px;
+  padding: 0 var(--ax-space-4);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--ax-radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: var(--ax-weight-semibold);
+  font-size: var(--ax-text-md);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--ax-duration-fast) var(--ax-ease-standard),
+    border-color var(--ax-duration-fast) var(--ax-ease-standard),
+    box-shadow var(--ax-duration-fast) var(--ax-ease-standard),
+    transform var(--ax-duration-fast) var(--ax-ease-standard);
+}
+.button:hover:not(:disabled) {
+  background: var(--btn-bg-hover);
+}
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.button[aria-busy='true'] {
+  cursor: progress;
+  opacity: 0.85;
+}
+
+.primary {
+  --btn-bg: var(--ax-color-primary);
+  --btn-fg: var(--ax-color-on-primary);
+  --btn-border: transparent;
+  --btn-bg-hover: var(--ax-color-primary-hover);
+  box-shadow:
+    var(--ax-shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.secondary {
+  box-shadow: var(--ax-shadow-sm);
+}
+.ghost {
+  --btn-bg: transparent;
+  --btn-border: transparent;
+  --btn-bg-hover: var(--ax-color-surface-2);
+}
+.subtle {
+  --btn-bg: var(--ax-color-primary-subtle);
+  --btn-fg: var(--ax-color-link);
+  --btn-border: transparent;
+  --btn-bg-hover: color-mix(
+    in srgb,
+    var(--ax-color-primary-subtle) 70%,
+    var(--ax-color-primary) 12%
+  );
+}
+.danger {
+  --btn-bg: var(--ax-color-danger);
+  --btn-fg: var(--ax-color-on-danger);
+  --btn-border: transparent;
+  --btn-bg-hover: var(--ax-color-danger-hover);
+}
+
+.sm {
+  min-height: 30px;
+  padding: 0 var(--ax-space-3);
+  font-size: var(--ax-text-sm);
+}
+.lg {
+  min-height: 44px;
+  padding: 0 var(--ax-space-6);
+  font-size: var(--ax-text-lg);
+}
+.full {
+  width: 100%;
+}
+.icon {
+  display: inline-flex;
+}
+.icon svg {
+  width: 16px;
+  height: 16px;
+}
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

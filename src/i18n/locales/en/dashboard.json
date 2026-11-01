@@ -1,0 +1,37 @@
+{
+  "title": "Dashboard",
+  "description": "Overview of this product.",
+  "overview": "Overview",
+  "noStats": "The server reported no counters for this product.",
+  "stats": {
+    "tenants": "Tenants",
+    "users": "Users",
+    "apiKeys": "API keys",
+    "audit24h": "Audit events (24 h)",
+    "records": "Records",
+    "denied24h": "Denied requests (24 h)"
+  },
+  "actions": {
+    "newTenant": "New tenant",
+    "newApiKey": "New API key"
+  },
+  "health": {
+    "title": "System health",
+    "details": "Details"
+  },
+  "server": {
+    "title": "Server",
+    "name": "Server version",
+    "api": "API version",
+    "mode": "Mode",
+    "modes": {
+      "single": "Single product",
+      "multi": "Multi product"
+    },
+    "productId": "Product ID",
+    "modules": "Modules",
+    "enabled": "enabled",
+    "disabled": "not enabled",
+    "environment": "Environment"
+  }
+}

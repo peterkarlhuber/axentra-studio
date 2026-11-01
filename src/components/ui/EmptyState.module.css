@@ -1,0 +1,26 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--ax-space-2);
+  padding: var(--ax-space-12) var(--ax-space-6);
+}
+.compact {
+  padding: var(--ax-space-8) var(--ax-space-4);
+}
+.title {
+  margin-top: var(--ax-space-2);
+  font-size: var(--ax-text-lg);
+}
+.description {
+  max-width: 52ch;
+  color: var(--ax-color-text-muted);
+}
+.action {
+  margin-top: var(--ax-space-3);
+  display: flex;
+  gap: var(--ax-space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}

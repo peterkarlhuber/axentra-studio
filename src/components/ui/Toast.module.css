@@ -1,0 +1,103 @@
+.viewport {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: var(--ax-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+  width: min(400px, 100vw);
+  max-width: 100vw;
+  margin: 0;
+  padding: var(--ax-space-4);
+  list-style: none;
+  outline: none;
+}
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-3) var(--ax-space-3) var(--ax-space-3) var(--ax-space-4);
+  border: 1px solid var(--ax-color-border);
+  border-left: 4px solid var(--toast-accent);
+  border-radius: var(--ax-radius-lg);
+  background: var(--ax-color-surface);
+  box-shadow: var(--ax-shadow-lg);
+  animation: slideIn var(--ax-duration-normal) var(--ax-ease-standard);
+}
+.toast[data-state='closed'] {
+  animation: fadeOut var(--ax-duration-fast) ease-in forwards;
+}
+.toast[data-swipe='move'] {
+  transform: translateX(var(--radix-toast-swipe-move-x));
+}
+.toast[data-swipe='end'] {
+  animation: fadeOut var(--ax-duration-fast) ease-out forwards;
+}
+.success {
+  --toast-accent: var(--ax-color-success);
+}
+.error {
+  --toast-accent: var(--ax-color-danger);
+}
+.info {
+  --toast-accent: var(--ax-color-info);
+}
+.warning {
+  --toast-accent: var(--ax-color-warning);
+}
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--toast-accent);
+  margin-top: 1px;
+}
+.text {
+  flex: 1;
+  min-width: 0;
+}
+.title {
+  font-weight: var(--ax-weight-semibold);
+}
+.description {
+  margin-top: 2px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-text-sm);
+}
+.meta {
+  margin-top: 4px;
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-xs);
+  color: var(--ax-color-text-subtle);
+  overflow-wrap: anywhere;
+}
+.close {
+  flex: none;
+  display: inline-flex;
+  padding: 4px;
+  border: none;
+  border-radius: var(--ax-radius-sm);
+  background: none;
+  color: var(--ax-color-text-muted);
+  cursor: pointer;
+}
+.close:hover {
+  background: var(--ax-color-surface-2);
+}
+.close svg {
+  width: 16px;
+  height: 16px;
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+}
