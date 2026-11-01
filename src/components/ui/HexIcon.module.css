@@ -1,0 +1,60 @@
+.hex {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.lg {
+  width: 56px;
+  height: 64px;
+}
+.md {
+  width: 36px;
+  height: 41px;
+}
+.shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.shape path {
+  fill: var(--ax-color-primary-subtle);
+  stroke: color-mix(in srgb, var(--ax-brand-blue) 45%, transparent);
+  stroke-width: 1.5;
+}
+.icon {
+  position: relative;
+  display: inline-flex;
+  color: var(--ax-color-link);
+}
+.lg .icon svg {
+  width: 24px;
+  height: 24px;
+}
+.md .icon svg {
+  width: 18px;
+  height: 18px;
+}
+.danger .shape path {
+  fill: var(--ax-color-danger-bg);
+  stroke: color-mix(in srgb, var(--ax-color-danger) 45%, transparent);
+}
+.danger .icon {
+  color: var(--ax-color-danger);
+}
+.warning .shape path {
+  fill: var(--ax-color-warning-bg);
+  stroke: color-mix(in srgb, var(--ax-color-warning) 45%, transparent);
+}
+.warning .icon {
+  color: var(--ax-color-warning);
+}
+.brand .shape path {
+  fill: var(--ax-brand-core);
+  stroke: var(--ax-brand-cyan);
+}
+.brand .icon {
+  color: #ffffff;
+}

@@ -1,0 +1,37 @@
+{
+  "title": "Dashboard",
+  "description": "Überblick über dieses Produkt.",
+  "overview": "Überblick",
+  "noStats": "Der Server hat für dieses Produkt keine Kennzahlen gemeldet.",
+  "stats": {
+    "tenants": "Mandanten",
+    "users": "Benutzer",
+    "apiKeys": "API-Schlüssel",
+    "audit24h": "Audit-Ereignisse (24 h)",
+    "records": "Datensätze",
+    "denied24h": "Abgelehnte Anfragen (24 h)"
+  },
+  "actions": {
+    "newTenant": "Neuer Mandant",
+    "newApiKey": "Neuer API-Schlüssel"
+  },
+  "health": {
+    "title": "Systemzustand",
+    "details": "Details"
+  },
+  "server": {
+    "title": "Server",
+    "name": "Serverversion",
+    "api": "API-Version",
+    "mode": "Modus",
+    "modes": {
+      "single": "Einzelprodukt",
+      "multi": "Mehrere Produkte"
+    },
+    "productId": "Produkt-ID",
+    "modules": "Module",
+    "enabled": "aktiviert",
+    "disabled": "nicht aktiviert",
+    "environment": "Umgebung"
+  }
+}

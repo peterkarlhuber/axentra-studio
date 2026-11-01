@@ -1,0 +1,106 @@
+.wrapper {
+  min-width: 0;
+}
+.scroller {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.scroller:focus-visible {
+  outline-offset: -2px;
+}
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--ax-text-md);
+}
+.table th,
+.table td {
+  padding: var(--ax-space-3) var(--ax-space-4);
+  border-bottom: 1px solid var(--ax-color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-top: var(--ax-space-2);
+  padding-bottom: var(--ax-space-2);
+  background: var(--ax-color-surface-2);
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-text-xs);
+  font-weight: var(--ax-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.table tbody th {
+  font-weight: var(--ax-weight-semibold);
+  color: var(--ax-color-heading);
+}
+.table tbody tr {
+  transition: background-color var(--ax-duration-fast) var(--ax-ease-standard);
+}
+.table tbody tr:hover {
+  background: var(--ax-color-surface-hover);
+}
+.table tbody tr:last-child > * {
+  border-bottom: none;
+}
+.selected {
+  background: var(--ax-color-primary-subtle) !important;
+}
+.end {
+  text-align: right !important;
+}
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: -4px -6px;
+  padding: 4px 6px;
+  border: none;
+  border-radius: var(--ax-radius-xs);
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+.sortButton:hover {
+  color: var(--ax-color-text);
+  background: var(--ax-color-surface-hover);
+}
+.sortButton svg {
+  width: 14px;
+  height: 14px;
+}
+.sortActive {
+  color: var(--ax-color-heading);
+}
+.sortIdle {
+  opacity: 0.5;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-3) var(--ax-space-4);
+  border-top: 1px solid var(--ax-color-border);
+}
+.count {
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+}
+@media (max-width: 720px) {
+  .hideMobile {
+    display: none;
+  }
+  .table th,
+  .table td {
+    padding: var(--ax-space-3);
+  }
+}

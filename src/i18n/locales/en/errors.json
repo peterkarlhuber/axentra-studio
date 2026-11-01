@@ -1,0 +1,57 @@
+{
+  "details": "Technical details",
+  "status": "HTTP status",
+  "code": "Error code",
+  "serverMessage": "Server message",
+  "requestId": "Request ID",
+  "codes": {
+    "validation_failed": {
+      "title": "Please check your input",
+      "message": "Some values were not accepted by the server."
+    },
+    "unauthenticated": {
+      "title": "Please sign in",
+      "message": "Your session has ended or you are not signed in."
+    },
+    "forbidden": {
+      "title": "Not permitted",
+      "message": "You do not have permission to perform this action."
+    },
+    "not_found": {
+      "title": "Not found",
+      "message": "This item does not exist or you do not have access to it."
+    },
+    "conflict": {
+      "title": "Conflict",
+      "message": "This conflicts with existing data, for example a name that is already taken."
+    },
+    "precondition_failed": {
+      "title": "Changed in the meantime",
+      "message": "Someone else changed this item. Reload it and apply your changes again."
+    },
+    "rate_limited": {
+      "title": "Too many requests",
+      "message": "Please wait a moment and try again."
+    },
+    "quota_exceeded": {
+      "title": "Quota exceeded",
+      "message": "The quota of this product or plan is used up."
+    },
+    "mode_not_supported": {
+      "title": "Not available in this mode",
+      "message": "This action is not supported by the server's current mode (single or multi product)."
+    },
+    "internal": {
+      "title": "Server error",
+      "message": "The server could not complete the request. Please try again later."
+    },
+    "network_error": {
+      "title": "Server not reachable",
+      "message": "The Axentra server could not be reached. Check your connection or the server status."
+    },
+    "unknown": {
+      "title": "Unexpected error",
+      "message": "The request failed for an unknown reason."
+    }
+  }
+}

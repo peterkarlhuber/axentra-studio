@@ -1,0 +1,113 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ax-z-overlay);
+  background: var(--ax-color-overlay);
+  backdrop-filter: blur(2px);
+  animation: fadeIn var(--ax-duration-normal) var(--ax-ease-standard);
+}
+.content {
+  position: fixed;
+  z-index: var(--ax-z-overlay);
+  display: flex;
+  flex-direction: column;
+  background: var(--ax-color-surface);
+  border: 1px solid var(--ax-color-border);
+  box-shadow: var(--ax-shadow-lg);
+  color: var(--ax-color-text);
+}
+.content:focus-visible {
+  outline: none;
+}
+.dialog {
+  top: 50%;
+  left: 50%;
+  width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+  border-radius: var(--ax-radius-xl);
+  transform: translate(-50%, -50%);
+  animation: dialogIn var(--ax-duration-normal) var(--ax-ease-standard);
+}
+.dialog::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  border-radius: var(--ax-radius-xl) var(--ax-radius-xl) 0 0;
+  background: var(--ax-gradient-brand);
+}
+.sm {
+  max-width: 420px;
+}
+.md {
+  max-width: 560px;
+}
+.lg {
+  max-width: 820px;
+}
+.drawer {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100vw);
+  border-radius: var(--ax-radius-xl) 0 0 var(--ax-radius-xl);
+  animation: drawerIn var(--ax-duration-slow) var(--ax-ease-standard);
+}
+@media (max-width: 600px) {
+  .drawer {
+    border-radius: 0;
+  }
+}
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-5) var(--ax-space-5) var(--ax-space-3);
+}
+.headings {
+  min-width: 0;
+}
+.title {
+  font-size: var(--ax-text-xl);
+  overflow-wrap: anywhere;
+}
+.description {
+  margin-top: var(--ax-space-1);
+  color: var(--ax-color-text-muted);
+}
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--ax-space-2) var(--ax-space-5) var(--ax-space-5);
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ax-space-2);
+  flex-wrap: wrap;
+  padding: var(--ax-space-4) var(--ax-space-5);
+  border-top: 1px solid var(--ax-color-border);
+  background: var(--ax-color-surface-2);
+  border-radius: 0 0 var(--ax-radius-xl) var(--ax-radius-xl);
+}
+.drawer .footer {
+  border-radius: 0;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+}
+@keyframes drawerIn {
+  from {
+    transform: translateX(100%);
+  }
+}

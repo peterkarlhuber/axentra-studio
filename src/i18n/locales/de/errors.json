@@ -1,0 +1,57 @@
+{
+  "details": "Technische Details",
+  "status": "HTTP-Status",
+  "code": "Fehlercode",
+  "serverMessage": "Servermeldung",
+  "requestId": "Anfrage-ID",
+  "codes": {
+    "validation_failed": {
+      "title": "Bitte Eingaben prüfen",
+      "message": "Einige Werte wurden vom Server nicht akzeptiert."
+    },
+    "unauthenticated": {
+      "title": "Bitte anmelden",
+      "message": "Ihre Sitzung ist abgelaufen oder Sie sind nicht angemeldet."
+    },
+    "forbidden": {
+      "title": "Nicht erlaubt",
+      "message": "Sie haben keine Berechtigung für diese Aktion."
+    },
+    "not_found": {
+      "title": "Nicht gefunden",
+      "message": "Dieses Element existiert nicht oder Sie haben keinen Zugriff darauf."
+    },
+    "conflict": {
+      "title": "Konflikt",
+      "message": "Das steht im Widerspruch zu vorhandenen Daten, zum Beispiel ein bereits vergebener Name."
+    },
+    "precondition_failed": {
+      "title": "Zwischenzeitlich geändert",
+      "message": "Jemand anderes hat dieses Element geändert. Laden Sie es neu und wiederholen Sie Ihre Änderungen."
+    },
+    "rate_limited": {
+      "title": "Zu viele Anfragen",
+      "message": "Bitte warten Sie einen Moment und versuchen Sie es erneut."
+    },
+    "quota_exceeded": {
+      "title": "Kontingent überschritten",
+      "message": "Das Kontingent dieses Produkts oder Tarifs ist aufgebraucht."
+    },
+    "mode_not_supported": {
+      "title": "In diesem Modus nicht verfügbar",
+      "message": "Diese Aktion wird im aktuellen Servermodus (Einzel- oder Mehrproduktbetrieb) nicht unterstützt."
+    },
+    "internal": {
+      "title": "Serverfehler",
+      "message": "Der Server konnte die Anfrage nicht abschließen. Bitte versuchen Sie es später erneut."
+    },
+    "network_error": {
+      "title": "Server nicht erreichbar",
+      "message": "Der Axentra-Server ist nicht erreichbar. Prüfen Sie Ihre Verbindung oder den Serverstatus."
+    },
+    "unknown": {
+      "title": "Unerwarteter Fehler",
+      "message": "Die Anfrage ist aus unbekanntem Grund fehlgeschlagen."
+    }
+  }
+}

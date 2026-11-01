@@ -1,0 +1,127 @@
+{
+  "app": {
+    "name": "Axentra Studio",
+    "studio": "Studio",
+    "home": "Startseite von Axentra Studio"
+  },
+  "form": {
+    "required": "Pflichtfeld"
+  },
+  "actions": {
+    "retry": "Erneut versuchen",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "dismiss": "Benachrichtigung schließen",
+    "save": "Änderungen speichern",
+    "done": "Fertig",
+    "refresh": "Aktualisieren"
+  },
+  "copy": {
+    "copy": "In die Zwischenablage kopieren",
+    "copied": "In die Zwischenablage kopiert",
+    "failed": "Kopieren fehlgeschlagen. Bitte markieren und manuell kopieren.",
+    "reveal": "Wert anzeigen",
+    "hide": "Wert verbergen",
+    "copyJson": "Als JSON kopieren"
+  },
+  "confirm": {
+    "typeToConfirm": "Zur Bestätigung {{text}} eingeben",
+    "typeToConfirmHelp": "Das schützt vor versehentlichen Klicks."
+  },
+  "toast": {
+    "label": "Benachrichtigung",
+    "region": "Benachrichtigungen ({hotkey})"
+  },
+  "states": {
+    "loading": "Wird geladen …",
+    "connecting": "Verbindung zum Axentra-Server wird hergestellt …",
+    "emptyTitle": "Noch keine Einträge"
+  },
+  "table": {
+    "showing_one": "{{count}} Eintrag angezeigt",
+    "showing_other": "{{count}} Einträge angezeigt",
+    "loadMore": "Mehr laden",
+    "allLoaded": "Alle Einträge geladen",
+    "actions": "Aktionen"
+  },
+  "status": {
+    "active": "Aktiv",
+    "ok": "OK",
+    "ready": "Bereit",
+    "healthy": "Gesund",
+    "pass": "Bestanden",
+    "accepted": "Angenommen",
+    "success": "Erfolgreich",
+    "pending": "Ausstehend",
+    "invited": "Eingeladen",
+    "degraded": "Eingeschränkt",
+    "expired": "Abgelaufen",
+    "archived": "Archiviert",
+    "disabled": "Deaktiviert",
+    "revoked": "Widerrufen",
+    "failed": "Fehlgeschlagen",
+    "error": "Fehler",
+    "down": "Ausgefallen",
+    "fail": "Fehlerhaft",
+    "denied": "Abgelehnt",
+    "unavailable": "Nicht verfügbar",
+    "failure": "Fehlschlag",
+    "suspended": "Gesperrt"
+  },
+  "userMenu": {
+    "open": "Benutzermenü öffnen",
+    "profile": "Profil",
+    "language": "Sprache",
+    "theme": "Darstellung",
+    "logout": "Abmelden"
+  },
+  "theme": {
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  },
+  "crash": {
+    "title": "Etwas ist schiefgelaufen",
+    "body": "Diese Seite konnte nicht angezeigt werden. Neu laden hilft meistens; andernfalls melden Sie das Problem bitte.",
+    "notFound": "Diese Seite existiert nicht.",
+    "reload": "Seite neu laden"
+  },
+  "members": {
+    "user": "Benutzer",
+    "role": "Rolle",
+    "roleFor": "Rolle von {{name}}",
+    "since": "Mitglied seit",
+    "email": "E-Mail-Adresse",
+    "add": "Mitglied hinzufügen",
+    "addDescription": "Die Person muss bereits ein Axentra-Konto haben.",
+    "added": "Mitglied hinzugefügt",
+    "roleChanged": "Rolle geändert",
+    "empty": "Noch keine Mitglieder",
+    "remove": "Mitglied entfernen",
+    "removeNamed": "{{name}} entfernen",
+    "removeTitle": "Mitglied entfernen?",
+    "removeBody": "{{name}} verliert alle Zugriffe aus dieser Mitgliedschaft.",
+    "removed": "Mitglied entfernt"
+  },
+  "roles": {
+    "choose": "Rolle auswählen",
+    "placeholder": "Rollenname"
+  },
+  "tenantPicker": {
+    "label": "Mandant",
+    "choose": "Mandant auswählen",
+    "none": "Kein Mandant",
+    "error": "Mandanten konnten nicht geladen werden.",
+    "truncated": "Es werden nur die ersten {{count}} Mandanten angezeigt."
+  },
+  "sessions": {
+    "device": "Gerät",
+    "unknownDevice": "Unbekanntes Gerät",
+    "current": "Diese Sitzung",
+    "lastSeen": "Zuletzt aktiv",
+    "expires": "Läuft ab",
+    "revoke": "Sitzung beenden",
+    "empty": "Keine aktiven Sitzungen",
+    "method": "Anmeldeart"
+  }
+}

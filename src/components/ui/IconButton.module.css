@@ -1,0 +1,56 @@
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 1px solid transparent;
+  border-radius: var(--ax-radius-md);
+  background: transparent;
+  color: var(--ax-color-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--ax-duration-fast) var(--ax-ease-standard),
+    color var(--ax-duration-fast) var(--ax-ease-standard);
+}
+.iconButton:hover:not(:disabled) {
+  background: var(--ax-color-surface-2);
+  color: var(--ax-color-text);
+}
+.iconButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.md {
+  width: 36px;
+  height: 36px;
+}
+.sm {
+  width: 30px;
+  height: 30px;
+}
+.md svg {
+  width: 18px;
+  height: 18px;
+}
+.sm svg {
+  width: 16px;
+  height: 16px;
+}
+.secondary {
+  border-color: var(--ax-color-border-strong);
+  background: var(--ax-color-surface);
+}
+.danger {
+  color: var(--ax-color-danger);
+}
+.danger:hover:not(:disabled) {
+  background: var(--ax-color-danger-bg);
+  color: var(--ax-color-danger);
+}
+.onDark {
+  color: var(--ax-sidebar-text);
+}
+.onDark:hover:not(:disabled) {
+  background: var(--ax-sidebar-hover);
+  color: var(--ax-sidebar-text-active);
+}

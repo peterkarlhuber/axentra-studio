@@ -1,0 +1,61 @@
+{
+  "title": "Users",
+  "description": "People with access to this product.",
+  "search": "Search users",
+  "searchPlaceholder": "Name or email",
+  "filters": {
+    "allStatuses": "All statuses"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "Email address",
+    "status": "Status",
+    "locale": "Language",
+    "lastLogin": "Last sign-in",
+    "created": "Created",
+    "platformRole": "Platform role",
+    "password": "Password sign-in"
+  },
+  "empty": {
+    "title": "No users yet",
+    "body": "Users appear here once they are members of this product or one of its tenants.",
+    "filteredTitle": "No matching users",
+    "filteredBody": "Try a different search or status filter."
+  },
+  "detail": {
+    "profile": "Profile",
+    "sessions": "Active sessions",
+    "disable": "Disable user",
+    "enable": "Enable user",
+    "disableTitle": "Disable user?",
+    "disableBody": "{{name}} can no longer sign in and all sessions end immediately.",
+    "disabled": "User disabled",
+    "enabled": "User enabled",
+    "disabledNotice": "This user is disabled and cannot sign in.",
+    "revokeSessions": "Sign out everywhere",
+    "revokeTitle": "Sign out everywhere?",
+    "revokeBody": "All sessions of {{name}} end immediately. The user can sign in again.",
+    "hasPassword": "Password set",
+    "noPassword": "No password (single sign-on only)",
+    "sessionsRevoked_one": "{{count}} session revoked",
+    "sessionsRevoked_other": "{{count}} sessions revoked"
+  },
+  "platformRoles": {
+    "none": "No platform role",
+    "platform_viewer": "Platform viewer",
+    "platform_admin": "Platform administrator",
+    "help": {
+      "none": "Access only through product and tenant memberships.",
+      "platform_viewer": "Read-only access to every product, the settings and the installation-wide audit log.",
+      "platform_admin": "Full control of the whole installation, including all products and users."
+    }
+  },
+  "platformRole": {
+    "title": "Platform role",
+    "description": "Installation-wide permissions, independent of products.",
+    "apply": "Change platform role",
+    "saved": "Platform role changed",
+    "confirmTitle": "Change platform role?",
+    "confirmBody": "{{name}} gets the platform role “{{role}}”. This changes access to every product on this server."
+  }
+}

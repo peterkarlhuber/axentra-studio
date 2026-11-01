@@ -1,0 +1,127 @@
+{
+  "app": {
+    "name": "Axentra Studio",
+    "studio": "Studio",
+    "home": "Axentra Studio home"
+  },
+  "form": {
+    "required": "required"
+  },
+  "actions": {
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "close": "Close",
+    "dismiss": "Dismiss notification",
+    "save": "Save changes",
+    "done": "Done",
+    "refresh": "Refresh"
+  },
+  "copy": {
+    "copy": "Copy to clipboard",
+    "copied": "Copied to clipboard",
+    "failed": "Copying failed. Select the text and copy it manually.",
+    "reveal": "Show value",
+    "hide": "Hide value",
+    "copyJson": "Copy as JSON"
+  },
+  "confirm": {
+    "typeToConfirm": "Type {{text}} to confirm",
+    "typeToConfirmHelp": "This protects against accidental clicks."
+  },
+  "toast": {
+    "label": "Notification",
+    "region": "Notifications ({hotkey})"
+  },
+  "states": {
+    "loading": "Loading…",
+    "connecting": "Connecting to the Axentra server…",
+    "emptyTitle": "Nothing here yet"
+  },
+  "table": {
+    "showing_one": "Showing {{count}} entry",
+    "showing_other": "Showing {{count}} entries",
+    "loadMore": "Load more",
+    "allLoaded": "All entries loaded",
+    "actions": "Actions"
+  },
+  "status": {
+    "active": "Active",
+    "ok": "OK",
+    "ready": "Ready",
+    "healthy": "Healthy",
+    "pass": "Passing",
+    "accepted": "Accepted",
+    "success": "Success",
+    "pending": "Pending",
+    "invited": "Invited",
+    "degraded": "Degraded",
+    "expired": "Expired",
+    "archived": "Archived",
+    "disabled": "Disabled",
+    "revoked": "Revoked",
+    "failed": "Failed",
+    "error": "Error",
+    "down": "Down",
+    "fail": "Failing",
+    "denied": "Denied",
+    "unavailable": "Unavailable",
+    "failure": "Failure",
+    "suspended": "Suspended"
+  },
+  "userMenu": {
+    "open": "Open user menu",
+    "profile": "Profile",
+    "language": "Language",
+    "theme": "Theme",
+    "logout": "Sign out"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "crash": {
+    "title": "Something went wrong",
+    "body": "This page could not be displayed. Reloading usually helps; if not, please report the problem.",
+    "notFound": "This page does not exist.",
+    "reload": "Reload page"
+  },
+  "members": {
+    "user": "User",
+    "role": "Role",
+    "roleFor": "Role of {{name}}",
+    "since": "Member since",
+    "email": "Email address",
+    "add": "Add member",
+    "addDescription": "The user must already have an Axentra account.",
+    "added": "Member added",
+    "roleChanged": "Role updated",
+    "empty": "No members yet",
+    "remove": "Remove member",
+    "removeNamed": "Remove {{name}}",
+    "removeTitle": "Remove member?",
+    "removeBody": "{{name}} loses all access granted by this membership.",
+    "removed": "Member removed"
+  },
+  "roles": {
+    "choose": "Choose a role",
+    "placeholder": "Role name"
+  },
+  "tenantPicker": {
+    "label": "Tenant",
+    "choose": "Choose a tenant",
+    "none": "No tenant",
+    "error": "Tenants could not be loaded.",
+    "truncated": "Only the first {{count}} tenants are listed."
+  },
+  "sessions": {
+    "device": "Device",
+    "unknownDevice": "Unknown device",
+    "current": "This session",
+    "lastSeen": "Last active",
+    "expires": "Expires",
+    "revoke": "Revoke session",
+    "empty": "No active sessions",
+    "method": "Sign-in method"
+  }
+}

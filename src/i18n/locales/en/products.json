@@ -1,0 +1,56 @@
+{
+  "title": "Products",
+  "description": "Products are isolated applications on this Axentra server, each with its own tenants, users and keys.",
+  "descriptionSingle": "This server runs in single-product mode with exactly one product.",
+  "openDashboard": "Open dashboard",
+  "openDashboardFor": "Open dashboard of {{name}}",
+  "fields": {
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "id": "ID",
+    "slug": "Slug",
+    "created": "Created",
+    "updated": "Updated",
+    "settings": "Settings (JSON)"
+  },
+  "create": {
+    "open": "New product",
+    "title": "Create product",
+    "description": "A product gets its own tenants, users, roles and API keys.",
+    "submit": "Create product",
+    "success": "Product “{{name}}” created",
+    "slugHelp": "URL-friendly identifier, derived from the name. Must be unique on this server."
+  },
+  "empty": {
+    "title": "No products yet",
+    "body": "You are not a member of any product. Ask a platform administrator for access.",
+    "bodyAdmin": "Create the first product to start managing tenants and users."
+  },
+  "tabs": {
+    "label": "Product sections",
+    "details": "Details",
+    "settings": "Settings",
+    "members": "Members"
+  },
+  "settings": {
+    "title": "Product settings",
+    "description": "Changes apply immediately to all tenants of this product.",
+    "readOnly": "You can view but not change these settings.",
+    "jsonHelp": "Product-specific configuration as a JSON object.",
+    "invalidJson": "This is not valid JSON.",
+    "mustBeObject": "Settings must be a JSON object, for example {\"key\": \"value\"}.",
+    "saved": "Product saved"
+  },
+  "lifecycle": {
+    "archive": "Archive",
+    "restore": "Restore",
+    "archiveTitle": "Archive product?",
+    "archiveBody": "“{{name}}” becomes read-only and its API keys stop working until it is restored.",
+    "restoreTitle": "Restore product?",
+    "restoreBody": "“{{name}}” becomes active again.",
+    "archiveSuccess": "Product archived",
+    "restoreSuccess": "Product restored",
+    "archivedNotice": "This product is archived. Restore it to make changes."
+  }
+}

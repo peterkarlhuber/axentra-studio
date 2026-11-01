@@ -1,0 +1,41 @@
+{
+  "title": "Datensätze",
+  "description": "Durchsuchen Sie die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
+  "collections": {
+    "title": "Sammlungen",
+    "empty": "Keine Sammlungen",
+    "emptyBody": "Sammlungen erscheinen, sobald Datensätze über die API geschrieben werden.",
+    "stats": "{{records}} Datensätze in {{tenants}} Mandanten"
+  },
+  "pick": {
+    "title": "Mandant und Sammlung auswählen",
+    "body": "Datensätze gehören immer zu einem Mandanten. Wählen Sie beides aus, um sie anzusehen."
+  },
+  "listDescription": "Neueste zuerst. Datensätze passen, wenn sie alle Filter enthalten.",
+  "tableCaption": "Datensätze in {{collection}}",
+  "empty": "Keine passenden Datensätze",
+  "viewRecord": "Datensatz {{id}} ansehen",
+  "fields": {
+    "id": "ID",
+    "data": "Daten",
+    "version": "Version",
+    "created": "Erstellt",
+    "updated": "Aktualisiert",
+    "collection": "Sammlung",
+    "tenant": "Mandant",
+    "createdBy": "Erstellt von",
+    "updatedBy": "Geändert von"
+  },
+  "filter": {
+    "label": "Datensätze filtern",
+    "field": "Feld",
+    "value": "Ist gleich",
+    "add": "Filter hinzufügen",
+    "active": "Aktive Filter",
+    "remove": "Filter auf {{field}} entfernen",
+    "valueHelp": "JSON-Werte (true, 42, null) werden typgenau verglichen, anderer Text als Zeichenkette."
+  },
+  "record": {
+    "title": "Datensatz"
+  }
+}

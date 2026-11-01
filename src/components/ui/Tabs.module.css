@@ -1,0 +1,43 @@
+.root {
+  min-width: 0;
+}
+.list {
+  display: flex;
+  gap: var(--ax-space-1);
+  border-bottom: 1px solid var(--ax-color-border);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.trigger {
+  position: relative;
+  padding: var(--ax-space-3) var(--ax-space-3);
+  border: none;
+  background: none;
+  color: var(--ax-color-text-muted);
+  font-weight: var(--ax-weight-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.trigger:hover {
+  color: var(--ax-color-text);
+}
+.trigger[data-state='active'] {
+  color: var(--ax-color-heading);
+}
+.trigger[data-state='active']::after {
+  content: '';
+  position: absolute;
+  inset: auto var(--ax-space-2) -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--ax-gradient-brand);
+}
+.trigger:focus-visible {
+  outline-offset: -2px;
+}
+.content {
+  padding-top: var(--ax-space-5);
+}
+.content:focus-visible {
+  outline-offset: 4px;
+}

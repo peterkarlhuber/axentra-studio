@@ -1,0 +1,88 @@
+{
+  "title": "Tenants",
+  "description": "Tenants are the customers or organizations inside this product. Their data is strictly separated.",
+  "fields": {
+    "name": "Name",
+    "slug": "Slug",
+    "status": "Status",
+    "id": "ID",
+    "created": "Created",
+    "updated": "Updated",
+    "members": "Members"
+  },
+  "create": {
+    "open": "New tenant",
+    "title": "Create tenant",
+    "description": "You can invite members after creating the tenant.",
+    "slugHelp": "URL-friendly identifier, derived from the name. Must be unique within the product.",
+    "submit": "Create tenant",
+    "success": "Tenant “{{name}}” created"
+  },
+  "empty": {
+    "title": "No tenants yet",
+    "body": "Create a tenant for each customer or organization that uses this product.",
+    "filteredTitle": "No matching tenants",
+    "filteredBody": "Try a different search or status filter."
+  },
+  "detail": {
+    "tabs": "Tenant sections",
+    "details": "Details",
+    "members": "Members",
+    "invitations": "Invitations",
+    "overview": "Overview",
+    "edit": "Edit tenant",
+    "saved": "Tenant saved",
+    "records": "Browse records",
+    "delete": "Delete tenant",
+    "deleteTitle": "Delete tenant?",
+    "deleteBody": "“{{name}}” and all of its data will be deleted. This cannot be undone.",
+    "deleted": "Tenant “{{name}}” deleted",
+    "suspend": "Suspend tenant",
+    "activate": "Reactivate tenant",
+    "suspended": "Tenant suspended",
+    "activated": "Tenant reactivated",
+    "suspendTitle": "Suspend tenant?",
+    "suspendBody": "Members of “{{name}}” lose access until the tenant is reactivated. No data is deleted.",
+    "suspendedNotice": "This tenant is suspended. Its members cannot access it."
+  },
+  "invitations": {
+    "title": "Invitations",
+    "description": "Invite people by email to join a tenant.",
+    "pickTenant": "Choose a tenant to see its invitations",
+    "email": "Email address",
+    "role": "Role",
+    "status": "Status",
+    "expires": "Expires",
+    "empty": "No invitations",
+    "invite": "Invite member",
+    "inviteDescription": "The person receives an invitation to join this tenant.",
+    "send": "Send invitation",
+    "sent": "Invitation for {{email}} created",
+    "createdTitle": "Invitation created",
+    "oneTimeTitle": "Shown only once",
+    "oneTimeBody": "Share this with the invited person now. It cannot be displayed again.",
+    "link": "Invitation link",
+    "token": "Invitation token",
+    "revoke": "Revoke invitation",
+    "revokeFor": "Revoke invitation for {{email}}",
+    "revokeTitle": "Revoke invitation?",
+    "revokeBody": "The invitation for {{email}} will stop working.",
+    "revoked": "Invitation revoked",
+    "tokenHelp": "The server has no public URL configured, so share the token. The person accepts it under “Accept invitation” after signing in.",
+    "roleHelp": "Defaults to “member” when empty."
+  },
+  "accept": {
+    "title": "Accept invitation",
+    "description": "Join a tenant with the invitation token you received.",
+    "token": "Invitation token",
+    "submit": "Accept invitation",
+    "successTitle": "Invitation accepted",
+    "successBody": "You now have access. It may take a moment until it appears everywhere.",
+    "continue": "Continue"
+  },
+  "search": "Search tenants",
+  "searchPlaceholder": "Name or slug",
+  "filters": {
+    "allStatuses": "All statuses"
+  }
+}

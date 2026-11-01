@@ -1,0 +1,41 @@
+{
+  "title": "Records",
+  "description": "Browse the JSON records that tenants store in collections.",
+  "collections": {
+    "title": "Collections",
+    "empty": "No collections",
+    "emptyBody": "Collections appear once records are written through the API.",
+    "stats": "{{records}} records in {{tenants}} tenants"
+  },
+  "pick": {
+    "title": "Choose a tenant and a collection",
+    "body": "Records always belong to one tenant. Pick both to browse them."
+  },
+  "listDescription": "Newest first. Records match when they contain all filters.",
+  "tableCaption": "Records in {{collection}}",
+  "empty": "No records match",
+  "viewRecord": "View record {{id}}",
+  "fields": {
+    "id": "ID",
+    "data": "Data",
+    "version": "Version",
+    "created": "Created",
+    "updated": "Updated",
+    "collection": "Collection",
+    "tenant": "Tenant",
+    "createdBy": "Created by",
+    "updatedBy": "Updated by"
+  },
+  "filter": {
+    "label": "Filter records",
+    "field": "Field",
+    "value": "Equals",
+    "add": "Add filter",
+    "active": "Active filters",
+    "remove": "Remove filter on {{field}}",
+    "valueHelp": "JSON values (true, 42, null) match typed; other text matches as a string."
+  },
+  "record": {
+    "title": "Record"
+  }
+}

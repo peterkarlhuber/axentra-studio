@@ -1,0 +1,56 @@
+{
+  "title": "Produkte",
+  "description": "Produkte sind voneinander isolierte Anwendungen auf diesem Axentra-Server, jeweils mit eigenen Mandanten, Benutzern und Schlüsseln.",
+  "descriptionSingle": "Dieser Server läuft im Einzelproduktbetrieb mit genau einem Produkt.",
+  "openDashboard": "Dashboard öffnen",
+  "openDashboardFor": "Dashboard von {{name}} öffnen",
+  "fields": {
+    "name": "Name",
+    "description": "Beschreibung",
+    "status": "Status",
+    "id": "ID",
+    "slug": "Kurzname",
+    "created": "Erstellt",
+    "updated": "Aktualisiert",
+    "settings": "Einstellungen (JSON)"
+  },
+  "create": {
+    "open": "Neues Produkt",
+    "title": "Produkt anlegen",
+    "description": "Ein Produkt erhält eigene Mandanten, Benutzer, Rollen und API-Schlüssel.",
+    "submit": "Produkt anlegen",
+    "success": "Produkt „{{name}}“ angelegt",
+    "slugHelp": "URL-taugliche Kennung, aus dem Namen abgeleitet. Muss auf diesem Server eindeutig sein."
+  },
+  "empty": {
+    "title": "Noch keine Produkte",
+    "body": "Sie sind in keinem Produkt Mitglied. Bitten Sie eine Plattform-Administration um Zugriff.",
+    "bodyAdmin": "Legen Sie das erste Produkt an, um Mandanten und Benutzer zu verwalten."
+  },
+  "tabs": {
+    "label": "Produktbereiche",
+    "details": "Details",
+    "settings": "Einstellungen",
+    "members": "Mitglieder"
+  },
+  "settings": {
+    "title": "Produkteinstellungen",
+    "description": "Änderungen gelten sofort für alle Mandanten dieses Produkts.",
+    "readOnly": "Sie können diese Einstellungen ansehen, aber nicht ändern.",
+    "jsonHelp": "Produktspezifische Konfiguration als JSON-Objekt.",
+    "invalidJson": "Das ist kein gültiges JSON.",
+    "mustBeObject": "Die Einstellungen müssen ein JSON-Objekt sein, zum Beispiel {\"key\": \"value\"}.",
+    "saved": "Produkt gespeichert"
+  },
+  "lifecycle": {
+    "archive": "Archivieren",
+    "restore": "Wiederherstellen",
+    "archiveTitle": "Produkt archivieren?",
+    "archiveBody": "„{{name}}“ wird schreibgeschützt und seine API-Schlüssel funktionieren nicht mehr, bis es wiederhergestellt wird.",
+    "restoreTitle": "Produkt wiederherstellen?",
+    "restoreBody": "„{{name}}“ wird wieder aktiv.",
+    "archiveSuccess": "Produkt archiviert",
+    "restoreSuccess": "Produkt wiederhergestellt",
+    "archivedNotice": "Dieses Produkt ist archiviert. Stellen Sie es wieder her, um Änderungen vorzunehmen."
+  }
+}

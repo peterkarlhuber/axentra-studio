@@ -1,0 +1,66 @@
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.checklistHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ax-space-3);
+}
+.legend {
+  font-size: var(--ax-text-sm);
+  font-weight: var(--ax-weight-semibold);
+}
+.count {
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--ax-space-3);
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 2px;
+}
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-3);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-surface-2);
+}
+.groupName {
+  font-family: var(--ax-font-mono);
+  font-weight: var(--ax-weight-semibold);
+}
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+  padding-left: var(--ax-space-6);
+}
+.permList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.permList code {
+  font-size: var(--ax-text-xs);
+}
+.secretBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-4);
+}

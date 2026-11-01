@@ -1,0 +1,182 @@
+/*
+ * Axentra design tokens.
+ *
+ * Primitive values are derived from the Axentra logo (see docs/DESIGN_SYSTEM.md).
+ * Components must only use the semantic tokens (--ax-color-*, --ax-space-*, ...),
+ * never the primitives directly, so both themes stay consistent.
+ *
+ * The contrast test (src/styles/tokens.test.ts) parses this file: keep one
+ * declaration per line in the form `--name: value;`.
+ */
+
+:root {
+  /* ---- Brand primitives (from the logo) ---- */
+  --ax-brand-cyan: #06c4f5;
+  --ax-brand-blue: #3488fa;
+  --ax-brand-violet: #7846f9;
+  --ax-brand-ink: #06034c;
+  --ax-brand-core: #1e1b6b;
+  --ax-brand-ring: #88b0f8;
+  --ax-gradient-brand: linear-gradient(90deg, #06c4f5 0%, #3488fa 50%, #7846f9 100%);
+  --ax-gradient-brand-vertical: linear-gradient(180deg, #06c4f5 0%, #3488fa 50%, #7846f9 100%);
+
+  /* ---- Typography ---- */
+  --ax-font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ax-font-display: 'Manrope Variable', 'Manrope', var(--ax-font-sans);
+  --ax-font-mono:
+    'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --ax-text-xs: 0.75rem;
+  --ax-text-sm: 0.8125rem;
+  --ax-text-md: 0.875rem;
+  --ax-text-lg: 1rem;
+  --ax-text-xl: 1.25rem;
+  --ax-text-2xl: 1.5rem;
+  --ax-text-3xl: 1.875rem;
+  --ax-leading-tight: 1.25;
+  --ax-leading-normal: 1.5;
+  --ax-weight-regular: 400;
+  --ax-weight-medium: 500;
+  --ax-weight-semibold: 600;
+  --ax-weight-bold: 700;
+
+  /* ---- Spacing (4px grid) ---- */
+  --ax-space-0: 0;
+  --ax-space-1: 0.25rem;
+  --ax-space-2: 0.5rem;
+  --ax-space-3: 0.75rem;
+  --ax-space-4: 1rem;
+  --ax-space-5: 1.25rem;
+  --ax-space-6: 1.5rem;
+  --ax-space-8: 2rem;
+  --ax-space-10: 2.5rem;
+  --ax-space-12: 3rem;
+  --ax-space-16: 4rem;
+
+  /* ---- Radii ---- */
+  --ax-radius-xs: 4px;
+  --ax-radius-sm: 6px;
+  --ax-radius-md: 8px;
+  --ax-radius-lg: 12px;
+  --ax-radius-xl: 16px;
+  --ax-radius-full: 999px;
+
+  /* ---- Motion ---- */
+  --ax-duration-fast: 120ms;
+  --ax-duration-normal: 200ms;
+  --ax-duration-slow: 320ms;
+  --ax-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ax-ease-emphasized: cubic-bezier(0.3, 0, 0, 1.2);
+
+  /* ---- Layout ---- */
+  --ax-sidebar-width: 264px;
+  --ax-sidebar-width-collapsed: 72px;
+  --ax-topbar-height: 60px;
+  --ax-content-max: 1360px;
+  --ax-z-sticky: 10;
+  --ax-z-drawer: 40;
+  --ax-z-overlay: 50;
+  --ax-z-toast: 60;
+  --ax-z-tooltip: 70;
+
+  /* ---- Sidebar (navy in both themes) ---- */
+  --ax-sidebar-bg: #0d0b3f;
+  --ax-sidebar-bg-elevated: #1a1760;
+  --ax-sidebar-text: #c8ccef;
+  --ax-sidebar-text-muted: #9aa0d6;
+  --ax-sidebar-text-active: #ffffff;
+  --ax-sidebar-indicator: #22d3ee;
+  --ax-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --ax-sidebar-active: rgba(136, 176, 248, 0.14);
+  --ax-sidebar-border: rgba(255, 255, 255, 0.08);
+
+  /* ---- Light theme (default) ---- */
+  color-scheme: light;
+  --ax-color-bg: #f4f6fb;
+  --ax-color-surface: #ffffff;
+  --ax-color-surface-2: #eceff7;
+  --ax-color-surface-hover: #f0f2f9;
+  --ax-color-overlay: rgba(6, 3, 76, 0.45);
+  --ax-color-border: #dde1ee;
+  --ax-color-border-strong: #c3c9dc;
+  --ax-color-control-border: #858caa;
+  --ax-color-text: #11143b;
+  --ax-color-text-muted: #4f5677;
+  --ax-color-text-subtle: #626a8c;
+  --ax-color-heading: #06034c;
+  --ax-color-primary: #2a59e0;
+  --ax-color-primary-hover: #1f47bd;
+  --ax-color-primary-subtle: #e6edfd;
+  --ax-color-on-primary: #ffffff;
+  --ax-color-accent: #6a3be6;
+  --ax-color-focus: #7340f0;
+  --ax-color-link: #2a59e0;
+  --ax-color-success: #0f7a4a;
+  --ax-color-success-bg: #e2f4ea;
+  --ax-color-warning: #8a5300;
+  --ax-color-warning-bg: #fcf1d8;
+  --ax-color-danger: #c42537;
+  --ax-color-danger-hover: #a51d2d;
+  --ax-color-danger-bg: #fce7e9;
+  --ax-color-on-danger: #ffffff;
+  --ax-color-info: #0a67a3;
+  --ax-color-info-bg: #e1f1fb;
+  --ax-color-neutral: #4f5677;
+  --ax-color-neutral-bg: #eceff7;
+  --ax-color-code-bg: #f1f3fa;
+  --ax-color-skeleton: #e3e7f2;
+  --ax-color-skeleton-shine: #f3f5fb;
+  --ax-shadow-sm: 0 1px 2px rgba(17, 20, 59, 0.06), 0 1px 1px rgba(17, 20, 59, 0.04);
+  --ax-shadow-md: 0 4px 12px rgba(17, 20, 59, 0.08), 0 1px 3px rgba(17, 20, 59, 0.06);
+  --ax-shadow-lg: 0 16px 40px rgba(17, 20, 59, 0.16), 0 4px 12px rgba(17, 20, 59, 0.08);
+  --ax-hex-motif-opacity: 0.05;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ax-color-bg: #0a0c22;
+  --ax-color-surface: #11143a;
+  --ax-color-surface-2: #181c47;
+  --ax-color-surface-hover: #1b1f4e;
+  --ax-color-overlay: rgba(3, 2, 20, 0.7);
+  --ax-color-border: #262b5a;
+  --ax-color-border-strong: #3a4078;
+  --ax-color-control-border: #6a71a8;
+  --ax-color-text: #e9ecfb;
+  --ax-color-text-muted: #a6acd0;
+  --ax-color-text-subtle: #8d94bd;
+  --ax-color-heading: #f4f6ff;
+  --ax-color-primary: #7aa2ff;
+  --ax-color-primary-hover: #9bb9ff;
+  --ax-color-primary-subtle: #1c2a63;
+  --ax-color-on-primary: #06034c;
+  --ax-color-accent: #a98bff;
+  --ax-color-focus: #a98bff;
+  --ax-color-link: #8fb0ff;
+  --ax-color-success: #5ad69c;
+  --ax-color-success-bg: #0f2f2a;
+  --ax-color-warning: #f2c35c;
+  --ax-color-warning-bg: #33280f;
+  --ax-color-danger: #ff8590;
+  --ax-color-danger-hover: #ffa3ab;
+  --ax-color-danger-bg: #3a1424;
+  --ax-color-on-danger: #06034c;
+  --ax-color-info: #62cbf5;
+  --ax-color-info-bg: #0f2a45;
+  --ax-color-neutral: #a6acd0;
+  --ax-color-neutral-bg: #1f2350;
+  --ax-color-code-bg: #0d1030;
+  --ax-color-skeleton: #1c2050;
+  --ax-color-skeleton-shine: #262b62;
+  --ax-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ax-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --ax-shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.55);
+  --ax-hex-motif-opacity: 0.07;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ax-duration-fast: 0ms;
+    --ax-duration-normal: 0ms;
+    --ax-duration-slow: 0ms;
+  }
+}

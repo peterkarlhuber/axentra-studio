@@ -1,0 +1,35 @@
+{
+  "title": "Profil",
+  "description": "Ihr Konto, Ihr Passwort und Ihre Sitzungen.",
+  "account": {
+    "title": "Konto",
+    "email": "E-Mail-Adresse",
+    "id": "Benutzer-ID",
+    "platformRole": "Plattformrolle",
+    "noPlatformRole": "Keine",
+    "products": "Produkte",
+    "noProducts": "Keine Produktmitgliedschaften"
+  },
+  "name": {
+    "title": "Anzeigename",
+    "label": "Name",
+    "saved": "Name gespeichert"
+  },
+  "password": {
+    "title": "Passwort ändern",
+    "description": "Andere Sitzungen werden nach der Änderung möglicherweise abgemeldet.",
+    "current": "Aktuelles Passwort",
+    "new": "Neues Passwort",
+    "confirm": "Neues Passwort wiederholen",
+    "mismatch": "Die neuen Passwörter stimmen nicht überein.",
+    "submit": "Passwort ändern",
+    "changed": "Passwort geändert",
+    "setTitle": "Passwort festlegen",
+    "setDescription": "Sie melden sich derzeit nur per Single Sign-on an. Mit einem Passwort ist zusätzlich die Passwort-Anmeldung möglich."
+  },
+  "sessions": {
+    "title": "Ihre Sitzungen",
+    "description": "Browser, in denen Sie angemeldet sind.",
+    "revoked": "Sitzung beendet"
+  }
+}

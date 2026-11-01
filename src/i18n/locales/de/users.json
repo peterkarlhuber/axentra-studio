@@ -1,0 +1,61 @@
+{
+  "title": "Benutzer",
+  "description": "Personen mit Zugriff auf dieses Produkt.",
+  "search": "Benutzer suchen",
+  "searchPlaceholder": "Name oder E-Mail",
+  "filters": {
+    "allStatuses": "Alle Status"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "E-Mail-Adresse",
+    "status": "Status",
+    "locale": "Sprache",
+    "lastLogin": "Letzte Anmeldung",
+    "created": "Erstellt",
+    "platformRole": "Plattformrolle",
+    "password": "Passwort-Anmeldung"
+  },
+  "empty": {
+    "title": "Noch keine Benutzer",
+    "body": "Benutzer erscheinen hier, sobald sie Mitglied dieses Produkts oder eines seiner Mandanten sind.",
+    "filteredTitle": "Keine passenden Benutzer",
+    "filteredBody": "Versuchen Sie eine andere Suche oder einen anderen Statusfilter."
+  },
+  "detail": {
+    "profile": "Profil",
+    "sessions": "Aktive Sitzungen",
+    "disable": "Benutzer deaktivieren",
+    "enable": "Benutzer aktivieren",
+    "disableTitle": "Benutzer deaktivieren?",
+    "disableBody": "{{name}} kann sich nicht mehr anmelden und alle Sitzungen enden sofort.",
+    "disabled": "Benutzer deaktiviert",
+    "enabled": "Benutzer aktiviert",
+    "disabledNotice": "Dieser Benutzer ist deaktiviert und kann sich nicht anmelden.",
+    "revokeSessions": "Überall abmelden",
+    "revokeTitle": "Überall abmelden?",
+    "revokeBody": "Alle Sitzungen von {{name}} enden sofort. Eine erneute Anmeldung ist möglich.",
+    "hasPassword": "Passwort gesetzt",
+    "noPassword": "Kein Passwort (nur Single Sign-on)",
+    "sessionsRevoked_one": "{{count}} Sitzung beendet",
+    "sessionsRevoked_other": "{{count}} Sitzungen beendet"
+  },
+  "platformRoles": {
+    "none": "Keine Plattformrolle",
+    "platform_viewer": "Plattform-Leserecht",
+    "platform_admin": "Plattform-Administration",
+    "help": {
+      "none": "Zugriff nur über Produkt- und Mandantenmitgliedschaften.",
+      "platform_viewer": "Lesezugriff auf alle Produkte, die Einstellungen und das installationsweite Audit-Protokoll.",
+      "platform_admin": "Volle Kontrolle über die gesamte Installation, einschließlich aller Produkte und Benutzer."
+    }
+  },
+  "platformRole": {
+    "title": "Plattformrolle",
+    "description": "Installationsweite Berechtigungen, unabhängig von Produkten.",
+    "apply": "Plattformrolle ändern",
+    "saved": "Plattformrolle geändert",
+    "confirmTitle": "Plattformrolle ändern?",
+    "confirmBody": "{{name}} erhält die Plattformrolle „{{role}}“. Das ändert den Zugriff auf alle Produkte dieses Servers."
+  }
+}

@@ -1,0 +1,69 @@
+.healthHead {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-3);
+  flex-wrap: wrap;
+}
+.checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-2) 0;
+  border-bottom: 1px solid var(--ax-color-border);
+}
+.check:last-child {
+  border-bottom: none;
+}
+.checkName {
+  flex: 1;
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+}
+.modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ax-space-2);
+}
+.tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tree ul {
+  margin: 0;
+  padding-left: var(--ax-space-5);
+  list-style: none;
+  border-left: 1px dashed var(--ax-color-border-strong);
+}
+.treeRow {
+  display: flex;
+  gap: var(--ax-space-3);
+  align-items: baseline;
+  padding: 3px 0;
+  min-width: 0;
+}
+.treeKey {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+  flex: none;
+}
+.treeValue {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.treeGroup {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+  font-weight: var(--ax-weight-semibold);
+  padding: 3px 0;
+}

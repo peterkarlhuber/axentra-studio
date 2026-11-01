@@ -1,0 +1,48 @@
+{
+  "title": "Audit log",
+  "description": "Who did what, when – recorded for every change on the server.",
+  "openDetails": "Show details for {{action}}",
+  "fields": {
+    "id": "Event ID",
+    "time": "Time",
+    "action": "Action",
+    "actor": "Actor",
+    "actorType": "Actor type",
+    "target": "Target",
+    "outcome": "Outcome",
+    "product": "Product",
+    "tenant": "Tenant",
+    "requestId": "Request ID",
+    "ip": "IP address",
+    "userAgent": "User agent",
+    "actorId": "Actor ID"
+  },
+  "filters": {
+    "label": "Filter audit events",
+    "search": "Search",
+    "searchPlaceholder": "Free text",
+    "product": "Product",
+    "allProducts": "All products",
+    "tenant": "Tenant ID",
+    "action": "Action",
+    "actor": "Actor ID",
+    "since": "From",
+    "until": "Until",
+    "apply": "Apply filters",
+    "reset": "Reset filters",
+    "allOutcomes": "All outcomes",
+    "more": "More filters",
+    "fewer": "Fewer filters"
+  },
+  "empty": {
+    "title": "No audit events yet",
+    "body": "Events appear here as soon as something changes.",
+    "filteredTitle": "No matching events",
+    "filteredBody": "Adjust or reset the filters."
+  },
+  "detail": {
+    "subtitle": "Audit event",
+    "details": "Details",
+    "noDetails": "This event has no additional details."
+  }
+}

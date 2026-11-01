@@ -1,0 +1,88 @@
+{
+  "title": "Mandanten",
+  "description": "Mandanten sind die Kunden oder Organisationen innerhalb dieses Produkts. Ihre Daten sind strikt getrennt.",
+  "fields": {
+    "name": "Name",
+    "slug": "Kurzname",
+    "status": "Status",
+    "id": "ID",
+    "created": "Erstellt",
+    "updated": "Aktualisiert",
+    "members": "Mitglieder"
+  },
+  "create": {
+    "open": "Neuer Mandant",
+    "title": "Mandant anlegen",
+    "description": "Nach dem Anlegen können Sie Mitglieder einladen.",
+    "slugHelp": "URL-taugliche Kennung, aus dem Namen abgeleitet. Muss innerhalb des Produkts eindeutig sein.",
+    "submit": "Mandant anlegen",
+    "success": "Mandant „{{name}}“ angelegt"
+  },
+  "empty": {
+    "title": "Noch keine Mandanten",
+    "body": "Legen Sie für jeden Kunden bzw. jede Organisation, die dieses Produkt nutzt, einen Mandanten an.",
+    "filteredTitle": "Keine passenden Mandanten",
+    "filteredBody": "Versuchen Sie eine andere Suche oder einen anderen Statusfilter."
+  },
+  "detail": {
+    "tabs": "Mandantenbereiche",
+    "details": "Details",
+    "members": "Mitglieder",
+    "invitations": "Einladungen",
+    "overview": "Überblick",
+    "edit": "Mandant bearbeiten",
+    "saved": "Mandant gespeichert",
+    "records": "Datensätze ansehen",
+    "delete": "Mandant löschen",
+    "deleteTitle": "Mandant löschen?",
+    "deleteBody": "„{{name}}“ und alle zugehörigen Daten werden gelöscht. Das kann nicht rückgängig gemacht werden.",
+    "deleted": "Mandant „{{name}}“ gelöscht",
+    "suspend": "Mandant sperren",
+    "activate": "Mandant reaktivieren",
+    "suspended": "Mandant gesperrt",
+    "activated": "Mandant reaktiviert",
+    "suspendTitle": "Mandant sperren?",
+    "suspendBody": "Mitglieder von „{{name}}“ verlieren den Zugriff, bis der Mandant reaktiviert wird. Es werden keine Daten gelöscht.",
+    "suspendedNotice": "Dieser Mandant ist gesperrt. Seine Mitglieder haben keinen Zugriff."
+  },
+  "invitations": {
+    "title": "Einladungen",
+    "description": "Laden Sie Personen per E-Mail in einen Mandanten ein.",
+    "pickTenant": "Wählen Sie einen Mandanten, um seine Einladungen zu sehen",
+    "email": "E-Mail-Adresse",
+    "role": "Rolle",
+    "status": "Status",
+    "expires": "Läuft ab",
+    "empty": "Keine Einladungen",
+    "invite": "Mitglied einladen",
+    "inviteDescription": "Die Person erhält eine Einladung zu diesem Mandanten.",
+    "send": "Einladung senden",
+    "sent": "Einladung für {{email}} erstellt",
+    "createdTitle": "Einladung erstellt",
+    "oneTimeTitle": "Wird nur einmal angezeigt",
+    "oneTimeBody": "Geben Sie dies jetzt an die eingeladene Person weiter. Es kann nicht erneut angezeigt werden.",
+    "link": "Einladungslink",
+    "token": "Einladungs-Token",
+    "revoke": "Einladung widerrufen",
+    "revokeFor": "Einladung für {{email}} widerrufen",
+    "revokeTitle": "Einladung widerrufen?",
+    "revokeBody": "Die Einladung für {{email}} wird ungültig.",
+    "revoked": "Einladung widerrufen",
+    "tokenHelp": "Auf dem Server ist keine öffentliche URL konfiguriert, geben Sie daher das Token weiter. Die Person nimmt es nach der Anmeldung unter „Einladung annehmen“ an.",
+    "roleHelp": "Ohne Angabe wird „member“ verwendet."
+  },
+  "accept": {
+    "title": "Einladung annehmen",
+    "description": "Treten Sie mit Ihrem Einladungs-Token einem Mandanten bei.",
+    "token": "Einladungs-Token",
+    "submit": "Einladung annehmen",
+    "successTitle": "Einladung angenommen",
+    "successBody": "Sie haben jetzt Zugriff. Es kann einen Moment dauern, bis er überall sichtbar ist.",
+    "continue": "Weiter"
+  },
+  "search": "Mandanten suchen",
+  "searchPlaceholder": "Name oder Kurzname",
+  "filters": {
+    "allStatuses": "Alle Status"
+  }
+}
