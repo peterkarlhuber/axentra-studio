@@ -30,12 +30,14 @@ export function ProductSwitcher({ productId }: { productId: string | null }) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={styles.switcher} aria-label={t('switchProduct')}>
+      <DropdownMenuTrigger className={styles.switcher}>
         <Boxes aria-hidden className={styles.switcherIcon} />
         <span className={styles.switcherText}>
           <span className={styles.switcherLabel}>{t('product')}</span>
           <span className={styles.switcherValue}>{current?.name ?? t('noProduct')}</span>
         </span>
+        {/* Visible text first, so the accessible name contains the visible label (WCAG 2.5.3). */}
+        <span className="ax-sr-only"> {t('switchProduct')}</span>
         <ChevronsUpDown aria-hidden className={styles.chevron} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
