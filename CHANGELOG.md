@@ -8,6 +8,9 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- GitHub social preview `branding-src/social-preview.png` (1280 × 640, not served): the Axentra
+  lockup with a "Studio" tag on a dark violet background, rendered by `scripts/social_preview.py`,
+  the template shared with Nodestro and Orkexa. It is uploaded by hand in the repository settings.
 - New official Axentra logo. The two logo masters live in `branding-src/` (not served) and every
   brand file is derived from them by `scripts/derive_branding.py`, the shared derivation script
   (replaces `scripts/derive-branding.py`). The sign-in, setup and public help pages show the lockup
