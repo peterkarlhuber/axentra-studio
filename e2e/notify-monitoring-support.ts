@@ -10,9 +10,6 @@ export const password = process.env.AXENTRA_E2E_PASSWORD;
 
 export async function expectNoA11yViolations(page: Page) {
   const results = await new AxeBuilder({ page })
-    // Known shell issue outside these areas (reported to the foundation): the product switcher
-    // trigger's aria-label does not contain its visible text (label-content-name-mismatch).
-    .exclude('[aria-label="Switch product"]')
     // Notification previews are sandboxed frames without scripts: axe cannot run inside them
     // (and their content is the template author's email HTML, not Studio UI).
     // Legacy mode runs axe in the top document only, so it never waits on those frames.

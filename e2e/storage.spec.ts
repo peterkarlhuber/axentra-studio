@@ -27,10 +27,6 @@ async function expectNoA11yViolations(page: Page) {
     await page.emulateMedia({ colorScheme });
     await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme);
     const results = await new AxeBuilder({ page })
-      // Known shell issue outside this area: the product switcher's aria-label ("Switch
-      // product") does not contain its visible text (label-content-name-mismatch). It only
-      // shows with several products, which these tests create. Reported to the shell owner.
-      .exclude('[aria-label="Switch product"]')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
     expect(

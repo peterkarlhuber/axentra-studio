@@ -32,10 +32,6 @@ const run = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}
 async function expectNoA11yViolations(page: Page) {
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    // Shell, not this area: the product switcher's aria-label ("Switch product") does not
-    // contain its visible text (the product name), which axe reports as
-    // label-content-name-mismatch once a user can see more than one product.
-    .exclude('[aria-label="Switch product"]')
     .analyze();
   expect(
     results.violations.map(

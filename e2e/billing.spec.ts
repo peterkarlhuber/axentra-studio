@@ -21,10 +21,6 @@ test.describe.configure({ timeout: 120_000 });
 
 async function expectNoA11yViolations(page: Page) {
   const results = await new AxeBuilder({ page })
-    // Known shell issue outside this area (reported): the product switcher's aria-label
-    // "Switch product" does not contain its visible product name (label-content-name-mismatch).
-    // It only renders with more than one product, which these tests create.
-    .exclude('button[aria-label="Switch product"]')
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .analyze();
   expect(
