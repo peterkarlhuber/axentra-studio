@@ -1,0 +1,66 @@
+{
+  "title": "Usuarios",
+  "description": "Personas con acceso a este producto: sus operadores y los miembros de sus inquilinos.",
+  "search": "Buscar usuarios",
+  "searchPlaceholder": "Nombre o correo electrónico",
+  "filters": {
+    "allStatuses": "Todos los estados"
+  },
+  "fields": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "status": "Estado",
+    "locale": "Idioma",
+    "lastLogin": "Último inicio de sesión",
+    "created": "Creado",
+    "platformRole": "Rol de plataforma",
+    "password": "Inicio de sesión con contraseña"
+  },
+  "empty": {
+    "title": "Aún no hay usuarios",
+    "body": "Los usuarios aparecen aquí cuando son miembros de este producto o de uno de sus inquilinos.",
+    "filteredTitle": "No hay usuarios coincidentes",
+    "filteredBody": "Prueba con otra búsqueda u otro filtro de estado."
+  },
+  "detail": {
+    "profile": "Perfil",
+    "sessions": "Sesiones activas",
+    "disable": "Desactivar usuario",
+    "enable": "Activar usuario",
+    "disableTitle": "¿Desactivar usuario?",
+    "disableBody": "{{name}} ya no podrá iniciar sesión y todas sus sesiones terminan de inmediato. Las membresías se mantienen y las claves de API que creó el usuario siguen funcionando.",
+    "disabled": "Usuario desactivado",
+    "enabled": "Usuario activado",
+    "disabledNotice": "Este usuario está desactivado y no puede iniciar sesión.",
+    "revokeSessions": "Cerrar sesión en todas partes",
+    "revokeTitle": "¿Cerrar sesión en todas partes?",
+    "revokeBody": "Todas las sesiones de {{name}} finalizan de inmediato. El usuario puede volver a iniciar sesión.",
+    "hasPassword": "Contraseña establecida",
+    "noPassword": "Sin contraseña (solo inicio de sesión único)",
+    "sessionsRevoked_one": "{{count}} sesión revocada",
+    "sessionsRevoked_many": "{{count}} de sesiones revocadas",
+    "sessionsRevoked_other": "{{count}} sesiones revocadas",
+    "profileDescription": "Las membresías se gestionan en la pestaña Miembros de cada inquilino.",
+    "noEmail": "Sin dirección de correo electrónico",
+    "noEmailInfo": "Este usuario solo inicia sesión mediante inicio de sesión único y no puede aceptar invitaciones, que están vinculadas a una dirección de correo electrónico. En su lugar, añade el usuario directamente a los inquilinos.",
+    "noEmailAbout": "Acerca de los usuarios sin dirección de correo electrónico"
+  },
+  "platformRoles": {
+    "none": "Sin rol de plataforma",
+    "platform_viewer": "Observador de la plataforma",
+    "platform_admin": "Administrador de la plataforma",
+    "help": {
+      "none": "Acceso solo mediante membresías de producto e inquilino.",
+      "platform_viewer": "Acceso de solo lectura a todos los productos, la configuración y el registro de auditoría de toda la instalación.",
+      "platform_admin": "Control total de toda la instalación, incluidos todos los productos y usuarios."
+    }
+  },
+  "platformRole": {
+    "title": "Rol de plataforma",
+    "description": "Permisos para toda la instalación, independientes de los productos.",
+    "apply": "Cambiar rol de plataforma",
+    "saved": "Rol de plataforma cambiado",
+    "confirmTitle": "¿Cambiar rol de plataforma?",
+    "confirmBody": "{{name}} recibe el rol de plataforma “{{role}}”. Esto cambia el acceso a todos los productos de este servidor."
+  }
+}

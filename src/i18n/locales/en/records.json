@@ -5,7 +5,10 @@
     "title": "Collections",
     "empty": "No collections",
     "emptyBody": "Collections appear once records are written through the API.",
-    "stats": "{{records}} records in {{tenants}} tenants"
+    "stats": "{{records}} records in {{tenants}} tenants",
+    "noList": "Listing all collections needs a product role. Enter the name of a collection to open it.",
+    "openLabel": "Collection name",
+    "open": "Open"
   },
   "pick": {
     "title": "Choose a tenant and a collection",
@@ -33,7 +36,8 @@
     "add": "Add filter",
     "active": "Active filters",
     "remove": "Remove filter on {{field}}",
-    "valueHelp": "JSON values (true, 42, null) match typed; other text matches as a string."
+    "valueHelp": "JSON values (true, 42, null) match typed; other text matches as a string.",
+    "valueInfo": "A record matches when it contains this value. An object value such as {\"city\": \"Graz\"} matches records whose field contains these keys; use it to filter nested fields."
   },
   "record": {
     "title": "Record"
@@ -59,6 +63,9 @@
     "updated": "Record {{id}} saved",
     "deleted": "Record {{id}} deleted",
     "deleteTitle": "Delete record?",
-    "deleteBody": "Record {{id}} is deleted permanently. This cannot be undone."
+    "deleteBody": "Record {{id}} is deleted permanently. This cannot be undone.",
+    "collectionInfo": "Collections need no setup: the first record creates one, deleting its last record removes it. A record cannot be moved to another collection later.",
+    "dataInfo": "Saving replaces the whole object: fields you remove are deleted. ID, version and timestamps are set by the server; do not include them.",
+    "conflictLink": "What if someone else changes it?"
   }
 }

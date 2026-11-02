@@ -24,7 +24,8 @@
     "description": "A product gets its own tenants, users, roles and API keys.",
     "submit": "Create product",
     "success": "Product “{{name}}” created",
-    "slugHelp": "URL-friendly identifier, derived from the name. Must be unique on this server."
+    "slugHelp": "URL-friendly identifier, derived from the name. Must be unique on this server.",
+    "slugInfo": "Lowercase letters, digits and dashes (2–63 characters), starting with a letter or digit. The slug appears in URLs and configuration and cannot be changed later."
   },
   "empty": {
     "title": "No products yet",
@@ -45,18 +46,20 @@
     "jsonHelp": "Product-specific configuration as a JSON object.",
     "invalidJson": "This is not valid JSON.",
     "mustBeObject": "Settings must be a JSON object, for example {\"key\": \"value\"}.",
-    "saved": "Product saved"
+    "saved": "Product saved",
+    "jsonInfo": "Your product code can read these values. Axentra uses some keys itself: invitation_accept_url (link in invitation emails), default_locale (fallback language of notifications) and storage (set on the Files tab). Saving replaces the whole object; it may be up to about 32,000 characters long."
   },
   "lifecycle": {
     "archive": "Archive",
     "restore": "Restore",
     "archiveTitle": "Archive product?",
-    "archiveBody": "“{{name}}” becomes read-only and its API keys stop working until it is restored.",
+    "archiveBody": "“{{name}}” is hidden from its operators and tenant members, and its API keys stop working until it is restored. Platform administrators keep access. No data is deleted.",
     "restoreTitle": "Restore product?",
     "restoreBody": "“{{name}}” becomes active again.",
     "archiveSuccess": "Product archived",
     "restoreSuccess": "Product restored",
-    "archivedNotice": "This product is archived. Restore it to make changes.",
+    "archivedNotice": "This product is archived: its operators, tenant members and API keys have no access. Restore it to make changes.",
     "singleMode": "The server runs in single-product mode, so this product cannot be archived. You can change its name, description, settings and members."
-  }
+  },
+  "membersDescription": "Operators of this product. Their role applies in every tenant; tenant members are managed on each tenant."
 }

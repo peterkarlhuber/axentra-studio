@@ -17,6 +17,7 @@ import {
   useToast,
 } from '@/components/ui';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { InfoTip } from '@/help/InfoTip';
 import styles from './notify.module.css';
 
 /**
@@ -33,7 +34,20 @@ export function PreferencesPanel({ productId }: { productId: string }) {
   });
 
   return (
-    <Card title={t('preferences.title')} description={t('preferences.description')}>
+    <Card
+      title={t('preferences.title')}
+      description={
+        <>
+          {t('preferences.description')}{' '}
+          <InfoTip
+            label={t('help:tip.about', { topic: t('preferences.scope') })}
+            topic="notifications#preferences"
+          >
+            {t('info.scope')}
+          </InfoTip>
+        </>
+      }
+    >
       <div className={layout.form}>
         <TenantPicker
           productId={productId}

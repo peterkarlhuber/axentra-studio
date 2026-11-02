@@ -66,6 +66,8 @@ export function ProductFormDialog({
         <FormField
           label={t('fields.slug')}
           help={t('create.slugHelp')}
+          info={t('create.slugInfo')}
+          infoTopic="products#fields"
           error={fields.slug}
           required
         >

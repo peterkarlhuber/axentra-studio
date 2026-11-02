@@ -1,37 +1,40 @@
 {
   "bootstrap": {
     "unreachableTitle": "Keine Verbindung zu Axentra",
-    "unreachableBody": "Axentra Studio konnte die Serverinformationen (GET /v1/meta) nicht laden. Prüfen Sie, ob der Axentra-Server läuft und das Studio mit der richtigen API-Adresse konfiguriert ist.",
+    "unreachableBody": "Axentra Studio konnte die Serverinformationen (GET /v1/meta) nicht laden. Prüfe, ob der Axentra-Server läuft und das Studio mit der richtigen API-Adresse konfiguriert ist.",
     "incompatibleTitle": "Inkompatible Serverversion",
     "incompatible": {
       "major_mismatch": "Dieses Studio spricht eine andere Hauptversion der Axentra-API als der Server.",
-      "minor_too_low": "Der Server ist älter, als dieses Studio voraussetzt. Aktualisieren Sie den Axentra-Server oder verwenden Sie ein älteres Studio.",
+      "minor_too_low": "Der Server ist älter, als dieses Studio voraussetzt. Aktualisiere den Axentra-Server oder verwende ein älteres Studio.",
       "unparseable": "Der Server meldet eine API-Version, die dieses Studio nicht auswerten kann."
     },
-    "incompatibleHelp": "Verwenden Sie eine Studio-Version, die zur API-Version des Servers passt. Die Kompatibilitätstabelle steht in der README.",
+    "incompatibleHelp": "Verwende eine Studio-Version, die zur API-Version des Servers passt. Die Kompatibilitätstabelle steht in der README.",
     "serverApi": "API-Version des Servers",
     "requiredApi": "Benötigte API-Version",
     "serverVersion": "Server",
     "studioVersion": "Studio-Version",
-    "sessionErrorTitle": "Ihre Sitzung konnte nicht geprüft werden"
+    "sessionErrorTitle": "Deine Sitzung konnte nicht geprüft werden"
   },
   "module": {
     "disabledTitle": "Modul auf diesem Server nicht aktiviert",
-    "disabledBody": "Der Server meldet das Modul „{{module}}“ nicht. Aktivieren Sie es in der Konfiguration des Axentra-Servers, um diesen Bereich zu nutzen.",
+    "disabledBody": "Der Server meldet das Modul „{{module}}“ nicht. Aktiviere es in der Konfiguration des Axentra-Servers, um diesen Bereich zu nutzen.",
     "notInStudioTitle": "Im Studio noch nicht verfügbar",
-    "notInStudioBody": "Auf dem Server ist das Modul „{{module}}“ aktiviert, diese Studio-Version bietet dafür aber noch keine Ansichten. Nutzen Sie die API oder eine neuere Studio-Version."
+    "notInStudioBody": "Auf dem Server ist das Modul „{{module}}“ aktiviert, diese Studio-Version bietet dafür aber noch keine Ansichten. Nutze die API oder eine neuere Studio-Version."
   },
   "health": {
     "title": "Systemzustand",
     "description": "Bereitschaft und Erreichbarkeit des Axentra-Servers und seiner Abhängigkeiten.",
     "readiness": "Bereitschaft",
-    "readinessHelp": "GET /v1/health/ready – prüft die Abhängigkeiten des Servers.",
+    "readinessHelp": "Ob der Server Anfragen bedienen kann: Jede Abhängigkeit wird geprüft (GET /v1/health/ready).",
     "liveness": "Erreichbarkeit",
-    "livenessHelp": "GET /v1/health/live – der Serverprozess antwortet.",
+    "livenessHelp": "Ob der Serverprozess überhaupt antwortet (GET /v1/health/live).",
     "versions": "Versionen",
     "notReady": "Der Server meldet, dass er nicht bereit ist, Anfragen zu bedienen.",
     "noChecks": "Der Server hat keine einzelnen Prüfungen gemeldet.",
-    "updated": "Aktualisiert um {{time}}"
+    "updated": "Aktualisiert um {{time}}",
+    "notReadyLink": "Was du tun kannst",
+    "compatLabel": "Über die Versionsprüfung",
+    "compatInfo": "Studio startet nur, wenn der Server dieselbe API-Hauptversion und mindestens diese Nebenversion hat. Eine neuere Nebenversion auf dem Server ist in Ordnung."
   },
   "notFound": {
     "title": "Seite nicht gefunden",

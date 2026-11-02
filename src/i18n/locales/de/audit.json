@@ -1,6 +1,6 @@
 {
   "title": "Audit-Protokoll",
-  "description": "Wer hat wann was getan – für jede Änderung auf dem Server aufgezeichnet.",
+  "description": "Wer hat wann was getan: Anmeldungen, Zugriffsänderungen und andere Verwaltungsaktionen auf dem Server.",
   "openDetails": "Details zu {{action}} anzeigen",
   "fields": {
     "id": "Ereignis-ID",
@@ -38,12 +38,23 @@
     "title": "Noch keine Audit-Ereignisse",
     "body": "Ereignisse erscheinen hier, sobald sich etwas ändert.",
     "filteredTitle": "Keine passenden Ereignisse",
-    "filteredBody": "Passen Sie die Filter an oder setzen Sie sie zurück."
+    "filteredBody": "Passe die Filter an oder setze sie zurück."
   },
   "detail": {
     "subtitle": "Audit-Ereignis",
     "details": "Details",
     "noDetails": "Dieses Ereignis enthält keine weiteren Details.",
-    "notFound": "Das vollständige Ereignis konnte nicht geladen werden: Es existiert nicht mehr oder Sie dürfen es nicht lesen. Angezeigt werden die Werte aus der Liste."
+    "notFound": "Das vollständige Ereignis konnte nicht geladen werden: Es existiert nicht mehr oder du darfst es nicht lesen. Angezeigt werden die Werte aus der Liste."
+  },
+  "info": {
+    "search": "Findet Teile der Aktion, der Ziel-ID, des Akteursnamens oder der Akteur-ID, ohne Rücksicht auf Groß- und Kleinschreibung. Anfrage-IDs werden nicht durchsucht.",
+    "productAdmin": "„Alle Produkte“ enthält auch installationsweite Ereignisse ohne Produkt, etwa Anmeldungen.",
+    "productScoped": "Du siehst die Ereignisse der Produkte, in denen du das Audit-Protokoll lesen darfst (audit:read). Installationsweite Ereignisse wie Anmeldungen brauchen die Plattformberechtigung platform:audit.",
+    "action": "Der genaue Aktionsname, z. B. tenancy.tenant.create. Endet er auf *, passen alle Aktionen, die so beginnen, z. B. tenancy.*.",
+    "range": "In deiner Ortszeit. „Von“ schließt den Zeitpunkt ein, „Bis“ nicht.",
+    "outcomeLabel": "Über Ergebnisse",
+    "outcome": "Erfolgreich: ausgeführt. Abgelehnt: vom Server verweigert, z. B. bei falschem Passwort. Fehlschlag: versucht, aber nicht gelungen.",
+    "requestIdLabel": "Über die Anfrage-ID",
+    "requestId": "Kennzeichnet die HTTP-Anfrage, die dieses Ereignis ausgelöst hat. Fehlermeldungen und Serverprotokolle zeigen dieselbe ID."
   }
 }

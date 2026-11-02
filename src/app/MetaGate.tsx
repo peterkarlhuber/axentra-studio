@@ -11,9 +11,25 @@ import { Button, DetailList } from '@/components/ui';
 import { describeError } from '@/lib/errors';
 import { MetaContext } from './contexts';
 
+/** The help center works without the API, so it stays reachable when the server is not. */
+function isHelpPath(): boolean {
+  return typeof window !== 'undefined' && /^\/help(\/|$)/.test(window.location.pathname);
+}
+
+/** Plain link (this gate sits outside the router): opens the matching troubleshooting section. */
+function TroubleshootingLink({ anchor }: { anchor: string }) {
+  const { t } = useTranslation('help');
+  return (
+    <p>
+      <a href={`/help/troubleshooting#${anchor}`}>{t('tip.learnMore')}</a>
+    </p>
+  );
+}
+
 /**
  * Startup gate: loads `GET /v1/meta`, refuses to run against an incompatible API and then
- * provides the metadata to the whole app.
+ * provides the metadata to the whole app. Help center routes render even when the server is
+ * unreachable or incompatible (without metadata), so users can read the troubleshooting guide.
  */
 export function MetaGate({ children }: { children: ReactNode }) {
   const { t } = useTranslation('system');
@@ -25,6 +41,10 @@ export function MetaGate({ children }: { children: ReactNode }) {
   });
 
   if (query.isPending) return <SplashScreen label={t('common:states.connecting')} />;
+
+  if (isHelpPath() && (query.isError || !checkCompatibility(query.data.api_version).ok)) {
+    return <>{children}</>;
+  }
 
   if (query.isError) {
     const described = describeError(t, query.error);
@@ -49,6 +69,7 @@ export function MetaGate({ children }: { children: ReactNode }) {
           {described.title}: {described.message}
           {described.requestId ? ` (${t('errors:requestId')}: ${described.requestId})` : ''}
         </p>
+        <TroubleshootingLink anchor="api-unreachable" />
       </FullPageMessage>
     );
   }
@@ -80,6 +101,7 @@ export function MetaGate({ children }: { children: ReactNode }) {
           ]}
         />
         <p>{t('bootstrap.incompatibleHelp')}</p>
+        <TroubleshootingLink anchor="incompatible-version" />
       </FullPageMessage>
     );
   }

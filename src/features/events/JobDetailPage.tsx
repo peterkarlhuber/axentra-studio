@@ -22,6 +22,7 @@ import {
   Time,
   layout,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { canCancelJob, canRetryJob } from './events-utils';
 import { JobActionDialog } from './JobsPage';
 import { JobStatusPill } from './shared';
@@ -65,6 +66,7 @@ export function JobDetailPage() {
       <PageHeader
         title={<code>{job.kind}</code>}
         documentTitle={job.kind}
+        help="jobs#job-detail"
         meta={
           <>
             <JobStatusPill status={job.status} />
@@ -93,7 +95,10 @@ export function JobDetailPage() {
         }
       />
       {job.cancel_requested && job.status === 'running' ? (
-        <Alert tone="warning">{t('jobs.cancelRequestedNotice')}</Alert>
+        <Alert tone="warning">
+          {t('jobs.cancelRequestedNotice')}{' '}
+          <HelpLink topic="jobs#cancel">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
       ) : null}
       <div className={layout.grid2}>
         <Card title={t('jobs.detail.details')}>

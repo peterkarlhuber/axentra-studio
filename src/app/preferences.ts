@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { meApi } from '@/api/endpoints';
 import { queryKeys } from '@/api/queryKeys';
-import { isLocale, setLocale, type Locale } from '@/i18n';
+import { isLocale, matchLocale, setLocale, type Locale } from '@/i18n';
 import { readPreference } from '@/lib/storage';
 import { isThemePreference, type ThemePreference } from '@/lib/theme';
 import { useMe } from './auth';
@@ -51,8 +51,8 @@ export function useAdoptServerPreferences() {
   useEffect(() => {
     if (!me?.user || adopted.current) return;
     adopted.current = true;
-    const serverLocale = me.user.locale?.toLowerCase().split(/[-_]/)[0];
-    if (!readPreference('locale') && isLocale(serverLocale)) void setLocale(serverLocale);
+    const serverLocale = matchLocale(me.user.locale);
+    if (!readPreference('locale') && serverLocale) void setLocale(serverLocale);
     const serverTheme = me.user.preferences?.theme;
     if (!readPreference('theme') && isThemePreference(serverTheme)) setPreference(serverTheme);
   }, [me, setPreference]);

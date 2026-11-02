@@ -1,0 +1,105 @@
+en	it	note
+Axentra / Axentra Studio / Studio	Axentra / Axentra Studio / Studio	product names, never translated
+address form	tu	informal "tu" throughout (product-owner decision); imperatives: Salva, Inserisci, Scegli
+product	prodotto	
+tenant	tenant	borrowed, masculine invariable (il tenant, i tenant); standard in Italian SaaS
+user	utente	
+member	membro	
+membership	appartenenza	
+invitation	invito	
+invite (verb)	invitare	
+role	ruolo	
+custom role	ruolo personalizzato	
+built-in	predefinito	roles, permissions, templates
+permission	autorizzazione	permission ids (tenants:read) never translated
+scope	ambito	
+API key	chiave API	
+secret	segreto	
+signing secret	segreto di firma	
+grace period	periodo di tolleranza	
+rotate (secret)	ruotare	"Ruota segreto"
+revoke	revocare	
+suspend	sospendere	
+reactivate	riattivare	
+archive	archiviare	
+restore	ripristinare	
+enable / disable	attivare / disattivare	module enabled = "abilitato"
+owner	proprietario	built-in role keys (owner, admin, viewer, support, member) kept as ids
+platform admin	amministratore della piattaforma	
+platform viewer	visualizzatore della piattaforma	
+platform role	ruolo nella piattaforma	
+operator	operatore	
+session	sessione	
+sign in / sign out	accedere / esci	button "Accedi", menu "Esci"; "Disconnetti ovunque"
+single sign-on	single sign-on	kept
+record	record	borrowed, masculine invariable
+collection	raccolta	
+file	file	invariable
+storage	archiviazione / spazio	module = archiviazione; bytes used = spazio
+quota	quota	
+quota override	override della quota	"override" kept as borrowed noun (invariable)
+retention	conservazione	
+label (metadata)	etichetta	
+download link	link di download	
+inert attachment	allegato inerte	
+content-type policy	policy sui tipi di contenuto	"policy" borrowed
+job	job	borrowed, masculine invariable
+enqueue	accodare	
+queued	in coda	
+dead (job/delivery)	esaurito	attempts exhausted
+worker / handler	worker / handler	kept
+payload	payload	kept
+idempotency key	chiave di idempotenza	
+schedule	pianificazione	
+cron expression	espressione cron	cron syntax untouched
+event	evento	
+event log	registro eventi	
+live	in diretta	
+stream	flusso	
+webhook	webhook	borrowed, masculine invariable
+endpoint	endpoint	kept
+delivery	consegna	
+redeliver	consegnare di nuovo	
+usage	utilizzo	
+meter	contatore	
+aggregation	aggregazione	
+reset period	periodo di azzeramento	
+hard / soft limit	limite rigido / flessibile	
+reservation	prenotazione	
+commit / release (reservation)	confermare / rilasciare	
+plan	piano	
+subscription	abbonamento	
+subscribe	abbonare	
+entitlement	diritto d'uso	plural "diritti d'uso"
+feature	funzionalità	
+trial	prova	"In prova", "Giorni di prova"
+past due	pagamento scaduto	
+cancel (subscription)	annullare	
+checkout	checkout	kept (Stripe Checkout)
+payment provider	provider di pagamento	"provider" borrowed
+billing	fatturazione	
+notification	notifica	
+template	modello	
+message log	registro messaggi	
+outbox	posta in uscita	
+mailbox	casella di posta	
+dispatcher	dispatcher	kept
+sensitive	sensibile	
+preview	anteprima	
+category	categoria	
+audit log	registro di audit	
+audit event	evento di audit	
+actor	autore	
+outcome	esito	
+health	stato del sistema	status "Healthy" = Integro
+readiness / liveness	readiness / liveness	kept as technical probe names
+monitoring	monitoraggio	
+metrics	metriche	Prometheus types Counter/Gauge/Summary kept; Histogram = Istogramma
+tracing / logging	tracing / logging	kept
+settings	impostazioni	
+preferences	preferenze	
+module	modulo	
+dashboard	dashboard	borrowed, feminine (la dashboard)
+help center	centro assistenza	
+slug	slug	kept
+bearer token	bearer token	kept

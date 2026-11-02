@@ -66,7 +66,7 @@ test('create a template, preview it, send it to a member and find it in the log 
   const key = `welcome.${suffix}`;
   await page.getByRole('textbox', { name: /^Template key/ }).fill(key);
   await page.getByLabel('Name', { exact: true }).fill(`Welcome ${suffix}`);
-  await page.getByLabel('Category').fill(category);
+  await page.getByRole('combobox', { name: 'Category' }).fill(category);
   await page.getByRole('textbox', { name: /^Subject/ }).fill('Welcome {{ name }}');
   await page.getByRole('textbox', { name: /^Text/ }).fill('Hi {{ name }}, welcome aboard.');
   await page
@@ -176,7 +176,7 @@ test('create a template, preview it, send it to a member and find it in the log 
   await page.getByRole('tab', { name: 'My preferences' }).click();
   // Tenant-scoped, so parallel projects sharing one product (single mode) never race on the
   // same preference record and its If-Match version.
-  await page.getByLabel('Applies to').selectOption(tenant.id);
+  await page.getByRole('combobox', { name: 'Applies to' }).selectOption(tenant.id);
   await expect(page.getByRole('checkbox', { name: /transactional/ })).toBeDisabled();
   const onboarding = page.getByRole('checkbox', { name: category, exact: true });
   await expect(onboarding).toBeChecked();

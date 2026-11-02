@@ -1,0 +1,218 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ax-space-2);
+  margin: var(--ax-space-5) 0 0;
+  padding: var(--ax-space-5);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-lg);
+  background: var(--ax-color-surface);
+  font-size: var(--ax-text-sm);
+  line-height: 1.4;
+}
+.caption {
+  margin-top: var(--ax-space-3);
+  color: var(--ax-color-text-muted);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ax-space-3);
+  justify-content: center;
+}
+.row > * {
+  flex: 1 1 160px;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ax-space-2);
+  flex: 2 1 260px;
+}
+.column:last-child {
+  flex: 1 1 140px;
+}
+.wide {
+  width: 100%;
+}
+.box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ax-space-2);
+  padding: var(--ax-space-3);
+  border: 1px solid var(--ax-color-border-strong);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-bg);
+  min-width: 0;
+}
+.boxIcon {
+  flex: none;
+  color: var(--ax-color-primary);
+}
+.boxIcon svg {
+  width: 18px;
+  height: 18px;
+}
+.boxText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.boxText strong {
+  color: var(--ax-color-heading);
+}
+.detail {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-text-xs);
+}
+.brand {
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-primary-subtle);
+}
+.success {
+  border-color: var(--ax-color-success);
+  background: var(--ax-color-success-bg);
+}
+.warning {
+  border-color: var(--ax-color-warning);
+  background: var(--ax-color-warning-bg);
+}
+.danger {
+  border-color: var(--ax-color-danger);
+  background: var(--ax-color-danger-bg);
+}
+.muted {
+  border-style: dashed;
+}
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ax-space-2);
+  color: var(--ax-color-text-subtle);
+}
+.arrow svg {
+  width: 18px;
+  height: 18px;
+}
+.arrowLabel {
+  font-size: var(--ax-text-xs);
+  color: var(--ax-color-text-muted);
+}
+.right {
+  flex-direction: column;
+  flex: 0 0 auto;
+  max-width: 120px;
+  text-align: center;
+}
+.flow {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-2);
+}
+.flow > .box {
+  flex: 1 1 0;
+}
+@media (max-width: 640px) {
+  .flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .flow > .right {
+    max-width: none;
+    flex-direction: row;
+  }
+  .flow > .right svg {
+    transform: rotate(90deg);
+  }
+}
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--ax-space-2);
+  margin: var(--ax-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.outcomes > li + li {
+  margin-top: 0;
+}
+.outcomes .box {
+  height: 100%;
+}
+.note {
+  margin-top: var(--ax-space-2);
+  color: var(--ax-color-text-muted);
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+}
+.lane,
+.axis {
+  display: grid;
+  grid-template-columns: minmax(110px, 160px) 1fr;
+  gap: var(--ax-space-3);
+  align-items: center;
+}
+.laneLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ax-space-1);
+  font-weight: var(--ax-weight-semibold);
+  color: var(--ax-color-heading);
+}
+.laneLabel svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.bars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.bar {
+  padding: var(--ax-space-1) var(--ax-space-2);
+  border-radius: var(--ax-radius-xs);
+  font-size: var(--ax-text-xs);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.barActive {
+  background: var(--ax-color-success-bg);
+  color: var(--ax-color-success);
+  border: 1px solid var(--ax-color-success);
+}
+.barGrace {
+  background: var(--ax-color-warning-bg);
+  color: var(--ax-color-warning);
+  border: 1px solid var(--ax-color-warning);
+}
+.barOff {
+  background: var(--ax-color-surface-2);
+  color: var(--ax-color-text-muted);
+  border: 1px dashed var(--ax-color-border-strong);
+}
+.barNone {
+  visibility: hidden;
+}
+.axis {
+  font-size: var(--ax-text-xs);
+  color: var(--ax-color-text-muted);
+}
+.axis .bars > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.axis svg {
+  width: 14px;
+  height: 14px;
+}

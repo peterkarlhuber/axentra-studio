@@ -27,3 +27,6 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
+.help {
+  margin-top: var(--ax-space-2);
+}

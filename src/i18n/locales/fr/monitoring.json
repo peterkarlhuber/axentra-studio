@@ -1,0 +1,82 @@
+{
+  "title": "Supervision",
+  "description": "Contrôles d’état, métriques du processus d’API, conservation et traçage, tels que signalés par le serveur Axentra.",
+  "health": {
+    "readiness": "Disponibilité",
+    "readinessHelp": "Indique si le serveur peut traiter des requêtes (GET /v1/health/ready). Si une vérification échoue, le serveur répond 503.",
+    "liveness": "Vivacité",
+    "livenessHelp": "Indique si le processus du serveur répond tout court (GET /v1/health/live)."
+  },
+  "metrics": {
+    "title": "Métriques",
+    "description": "GET /metrics – compteurs Prometheus du processus d’API qui a répondu à cette requête.",
+    "perProcess": "Les valeurs sont comptées depuis le démarrage de ce processus d’API. Chaque processus (ainsi que le répartiteur de notifications ou le worker séparé) tient ses propres compteurs ; collecte donc tous les processus pour obtenir une vue complète.",
+    "kpiLabel": "Indicateurs clés",
+    "kpi": {
+      "requests": "Requêtes HTTP",
+      "errors5xx": "Erreurs serveur (5xx)",
+      "errors4xx": "Erreurs client (4xx)",
+      "latency": "Temps de réponse moyen",
+      "authFailures": "Refusées (401/403)",
+      "notifyEnqueued": "Notifications mises en file d’attente",
+      "notifySent": "Notifications remises",
+      "notifyFailed": "Échecs de remise de notifications"
+    },
+    "ms": "{{value}} ms",
+    "notExposed": "non signalé",
+    "groups": {
+      "http": "HTTP",
+      "auth": "Authentification",
+      "database": "Pool de la base de données",
+      "notify": "Notifications",
+      "jobs": "Tâches et événements",
+      "other": "Autres métriques"
+    },
+    "types": {
+      "counter": "Compteur",
+      "gauge": "Jauge",
+      "histogram": "Histogramme",
+      "summary": "Résumé",
+      "untyped": "Non typé"
+    },
+    "value": "Valeur",
+    "count": "Nombre",
+    "average": "Moyenne",
+    "noSamples": "Aucune valeur enregistrée pour l’instant.",
+    "truncated": "Affichage des {{shown}} plus grandes séries sur {{total}}.",
+    "empty": "Le serveur n’a signalé aucune métrique.",
+    "disabledTitle": "Les métriques ne sont pas disponibles",
+    "disabledBody": "Le serveur répond 404 : les métriques sont désactivées (observability.metrics_enabled = false), ou il s’agit d’un serveur de production sans observability.metrics_token_ref, sur lequel les métriques restent désactivées tant qu’aucun jeton n’est configuré.",
+    "tokenRequiredTitle": "Un jeton de métriques est requis",
+    "tokenRequiredBody": "Ce serveur protège /metrics par un jeton Bearer (observability.metrics_token_ref). Saisis le jeton pour afficher les métriques.",
+    "tokenRejected": "Le serveur n’a pas accepté ce jeton.",
+    "tokenTitle": "Jeton de métriques",
+    "token": "Jeton Bearer",
+    "tokenHelp": "Conservé uniquement dans cette page tant qu’elle est ouverte ; jamais stocké.",
+    "useToken": "Charger les métriques",
+    "tokenInfo": "Le jeton est le secret que l’opérateur a configuré dans observability.metrics_token_ref. Il est envoyé uniquement à /metrics, en tant que bearer token."
+  },
+  "ops": {
+    "title": "Conservation et traçage",
+    "forbidden": "Les paramètres de conservation et de traçage ne sont visibles que par les administrateurs de la plateforme et les gestionnaires de produit (GET /v1/settings).",
+    "retentionTitle": "Maintenance et conservation",
+    "retentionHelp": "Durées de conservation signalées par GET /v1/settings. Les données sont supprimées lors de l’exécution de la tâche de maintenance.",
+    "auditRetention": "Événements d’audit",
+    "jobRetention": "Tâches terminées",
+    "notifyContentRetention": "Contenu des notifications",
+    "notifyMessageRetention": "Messages de notification",
+    "days_many": "{{count}} de jours",
+    "days_one": "{{count}} jour",
+    "days_other": "{{count}} jours",
+    "notReported": "non signalé par le serveur",
+    "purgeHint": "Rien n’est supprimé automatiquement : les anciennes données sont supprimées quand l’opérateur exécute",
+    "tracingTitle": "Traçage et journalisation",
+    "tracingHelp": "Paramètres OpenTelemetry et de journalisation signalés par GET /v1/settings.",
+    "otel": "Traçage OpenTelemetry",
+    "enabled": "Activé",
+    "disabled": "Désactivé",
+    "logLevel": "Niveau de journalisation",
+    "notifyProvider": "Prestataire de notifications",
+    "environment": "Environnement"
+  }
+}

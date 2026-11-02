@@ -58,17 +58,19 @@ The sidebar groups, in this order:
 9. Settings
 
 Items for modules the server does not report stay visible but lead to the "module not enabled"
-state, so operators can see what exists and what to enable. Items the user has no permission for
-are hidden.
+state, so operators can see what exists and what to enable. The sidebar does not filter by
+permission: a screen the user cannot use explains why (no access state) instead of disappearing.
+**Help** sits in the last group and is always available.
 
 ### Shell
 
 - **Sidebar**: navy, collapsible to icons on desktop (remembered per browser). Below 960 px it
   becomes a drawer opened from the top bar; it closes on navigation and on Escape.
-- **Top bar**: menu button (mobile), breadcrumbs, product switcher, user menu.
+- **Top bar**: menu button (mobile), breadcrumbs, product switcher, help center button, user menu.
 - **Product switcher**: only shown in multi-product mode or when the user can see more than one
   product. Switching keeps the current section (`/p/A/tenants/x` → `/p/B/tenants`).
-- **User menu**: profile, language (Deutsch/English), theme (Light/Dark/System), sign out.
+- **User menu**: profile, language (the six supported languages, each named in its own
+  language), theme (Light/Dark/System), sign out.
 - **Skip link** to the main content as the first focusable element.
 - **Breadcrumbs** from route metadata, with resolved names for products, tenants and users.
 
@@ -162,6 +164,25 @@ labelled region.
 
 ## Language
 
-German and English, complete in both. The language follows the browser until the user picks one
-(user menu, login page, profile); signed-in choices are saved to the user's profile. Dates,
-times and numbers use `Intl` with the active language.
+Six languages, complete in all of them: English (reference), German, Spanish, French, Brazilian
+Portuguese and Italian, both for the interface and for the help center. Every language addresses
+the user informally (du, tú, tu, você, tu). The language follows the browser until the user picks
+one (user menu, login page, help center header, profile); signed-in choices are saved to the
+user's profile. Dates, times and numbers use `Intl` with the active language. Terms are fixed in
+[i18n/TERMINOLOGY.md](i18n/TERMINOLOGY.md); `npm run i18n:check` and `npm run help:check` guard
+missing keys, placeholders, plural forms, formal address, untranslated text and article
+structure.
+
+## Help
+
+- **Help center** at `/help`: chapters, search with deep links to sections, table of contents,
+  related topics, previous/next, diagrams and code examples. It is public and works without a
+  reachable API, so troubleshooting stays available when the server is down.
+- **Page help**: the `?` button in a page header opens the page's article in a side panel; the
+  page and any form stay as they are. Links inside the panel open in the panel, with Back.
+- **Info tips**: `i` buttons next to field labels explain a field in one to three sentences and
+  can link to the matching section. They open on click, Enter or Space and close with Escape
+  (toggletip, not hover-only).
+- **Error states** link to the troubleshooting entry for their error code.
+
+Authoring rules are in [HELP_AUTHORING.md](HELP_AUTHORING.md).

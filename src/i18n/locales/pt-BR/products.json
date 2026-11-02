@@ -1,0 +1,65 @@
+{
+  "title": "Produtos",
+  "description": "Produtos são aplicações isoladas neste servidor Axentra, cada uma com seus próprios tenants, usuários e chaves.",
+  "descriptionSingle": "Este servidor opera no modo de produto único, com exatamente um produto.",
+  "singleMode": {
+    "title": "Modo de produto único",
+    "body": "O servidor cria seu único produto a partir da configuração. Neste modo, produtos não podem ser criados, arquivados ou restaurados; para executar vários produtos, um operador define mode = \"multi\" na configuração do servidor."
+  },
+  "openDashboard": "Abrir painel",
+  "openDashboardFor": "Abrir painel de {{name}}",
+  "fields": {
+    "name": "Nome",
+    "description": "Descrição",
+    "status": "Status",
+    "id": "ID",
+    "slug": "Slug",
+    "created": "Criado em",
+    "updated": "Atualizado em",
+    "settings": "Configurações (JSON)"
+  },
+  "create": {
+    "open": "Novo produto",
+    "title": "Criar produto",
+    "description": "Um produto recebe seus próprios tenants, usuários, funções e chaves de API.",
+    "submit": "Criar produto",
+    "success": "Produto “{{name}}” criado",
+    "slugHelp": "Identificador amigável para URL, derivado do nome. Deve ser único neste servidor.",
+    "slugInfo": "Letras minúsculas, dígitos e hifens (de 2 a 63 caracteres), começando com uma letra ou um dígito. O slug aparece em URLs e na configuração e não pode ser alterado depois."
+  },
+  "empty": {
+    "title": "Nenhum produto ainda",
+    "body": "Você não é membro de nenhum produto. Peça acesso a um administrador da plataforma.",
+    "bodyAdmin": "Crie o primeiro produto para começar a gerenciar tenants e usuários."
+  },
+  "tabs": {
+    "label": "Seções do produto",
+    "details": "Detalhes",
+    "settings": "Configurações",
+    "files": "Arquivos",
+    "members": "Membros"
+  },
+  "settings": {
+    "title": "Configurações do produto",
+    "description": "As alterações se aplicam imediatamente a todos os tenants deste produto.",
+    "readOnly": "Você pode ver estas configurações, mas não alterá-las.",
+    "jsonHelp": "Configuração específica do produto como objeto JSON.",
+    "invalidJson": "Este JSON não é válido.",
+    "mustBeObject": "As configurações devem ser um objeto JSON, por exemplo {\"key\": \"value\"}.",
+    "saved": "Produto salvo",
+    "jsonInfo": "O código do seu produto pode ler estes valores. O próprio Axentra usa algumas chaves: invitation_accept_url (link nos e-mails de convite), default_locale (idioma de fallback das notificações) e storage (definido na guia Arquivos). Salvar substitui o objeto inteiro; ele pode ter até cerca de 32.000 caracteres."
+  },
+  "lifecycle": {
+    "archive": "Arquivar",
+    "restore": "Restaurar",
+    "archiveTitle": "Arquivar produto?",
+    "archiveBody": "“{{name}}” fica oculto para os seus operadores e membros de tenants, e as chaves de API dele deixam de funcionar até que ele seja restaurado. Os administradores da plataforma mantêm o acesso. Nenhum dado é excluído.",
+    "restoreTitle": "Restaurar produto?",
+    "restoreBody": "“{{name}}” volta a ficar ativo.",
+    "archiveSuccess": "Produto arquivado",
+    "restoreSuccess": "Produto restaurado",
+    "archivedNotice": "Este produto está arquivado: seus operadores, membros de tenants e chaves de API não têm acesso. Restaure-o para fazer alterações.",
+    "singleMode": "O servidor opera no modo de produto único, portanto este produto não pode ser arquivado. Você pode alterar o nome, a descrição, as configurações e os membros."
+  },
+  "membersDescription": "Operadores deste produto. A função deles vale em todos os tenants; os membros de tenants são gerenciados em cada tenant."
+}

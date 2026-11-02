@@ -1,0 +1,71 @@
+{
+  "title": "Record",
+  "description": "Consulta i record JSON che i tenant memorizzano nelle raccolte.",
+  "collections": {
+    "title": "Raccolte",
+    "empty": "Nessuna raccolta",
+    "emptyBody": "Le raccolte compaiono non appena vengono scritti record tramite l'API.",
+    "stats": "{{records}} record in {{tenants}} tenant",
+    "noList": "Per elencare tutte le raccolte serve un ruolo di prodotto. Inserisci il nome di una raccolta per aprirla.",
+    "openLabel": "Nome della raccolta",
+    "open": "Apri"
+  },
+  "pick": {
+    "title": "Scegli un tenant e una raccolta",
+    "body": "I record appartengono sempre a un tenant. Seleziona entrambi per consultarli."
+  },
+  "listDescription": "Dai più recenti. Un record corrisponde se soddisfa tutti i filtri.",
+  "tableCaption": "Record in {{collection}}",
+  "empty": "Nessun record corrispondente",
+  "viewRecord": "Visualizza record {{id}}",
+  "fields": {
+    "id": "ID",
+    "data": "Dati",
+    "version": "Versione",
+    "created": "Creato",
+    "updated": "Aggiornato",
+    "collection": "Raccolta",
+    "tenant": "Tenant",
+    "createdBy": "Creato da",
+    "updatedBy": "Aggiornato da"
+  },
+  "filter": {
+    "label": "Filtra record",
+    "field": "Campo",
+    "value": "Uguale a",
+    "add": "Aggiungi filtro",
+    "active": "Filtri attivi",
+    "remove": "Rimuovi filtro su {{field}}",
+    "valueHelp": "I valori JSON (true, 42, null) corrispondono in base al tipo; altro testo corrisponde come stringa.",
+    "valueInfo": "Un record corrisponde quando contiene questo valore. Un valore oggetto come {\"city\": \"Graz\"} corrisponde ai record il cui campo contiene queste chiavi; usalo per filtrare campi annidati."
+  },
+  "record": {
+    "title": "Record"
+  },
+  "descriptionWrite": "Consulta, crea, modifica ed elimina i record JSON che i tenant memorizzano nelle raccolte.",
+  "write": {
+    "create": "Nuovo record",
+    "createTitle": "Nuovo record",
+    "createDescription": "Memorizza un oggetto JSON in una raccolta del tenant selezionato. Un nuovo nome di raccolta crea la raccolta.",
+    "createSubmit": "Crea record",
+    "editTitle": "Modifica record",
+    "edit": "Modifica",
+    "delete": "Elimina record",
+    "collectionHelp": "Lettere minuscole, cifre e trattini bassi, iniziando con una lettera.",
+    "collectionInvalid": "Usa lettere minuscole, cifre e trattini bassi, iniziando con una lettera (al massimo 63 caratteri).",
+    "dataHelp": "Un oggetto JSON, al massimo 256 KiB. Il salvataggio sostituisce l'intero oggetto.",
+    "dataError": {
+      "json": "Questo non è un JSON valido.",
+      "object": "I dati del record devono essere un oggetto JSON."
+    },
+    "versionNote": "Modifica della versione {{version}}. Se nel frattempo qualcun altro ha modificato il record, il salvataggio verrà rifiutato.",
+    "created": "Record {{id}} creato",
+    "updated": "Record {{id}} salvato",
+    "deleted": "Record {{id}} eliminato",
+    "deleteTitle": "Elimina il record?",
+    "deleteBody": "Il record {{id}} verrà eliminato definitivamente. L'operazione è irreversibile.",
+    "collectionInfo": "Le raccolte non richiedono configurazione: il primo record ne crea una, eliminando l'ultimo record la si rimuove. Un record non può essere spostato in un'altra raccolta in seguito.",
+    "dataInfo": "Il salvataggio sostituisce l'intero oggetto: i campi che rimuovi vengono eliminati. ID, versione e timestamp sono impostati dal server; non includerli.",
+    "conflictLink": "E se qualcun altro lo modifica?"
+  }
+}

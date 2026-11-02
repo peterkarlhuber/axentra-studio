@@ -1,6 +1,6 @@
 {
   "title": "Users",
-  "description": "People with access to this product.",
+  "description": "People with access to this product: its operators and the members of its tenants.",
   "search": "Search users",
   "searchPlaceholder": "Name or email",
   "filters": {
@@ -28,7 +28,7 @@
     "disable": "Disable user",
     "enable": "Enable user",
     "disableTitle": "Disable user?",
-    "disableBody": "{{name}} can no longer sign in and all sessions end immediately.",
+    "disableBody": "{{name}} can no longer sign in and all sessions end immediately. Memberships stay, and API keys the user created keep working.",
     "disabled": "User disabled",
     "enabled": "User enabled",
     "disabledNotice": "This user is disabled and cannot sign in.",
@@ -38,7 +38,11 @@
     "hasPassword": "Password set",
     "noPassword": "No password (single sign-on only)",
     "sessionsRevoked_one": "{{count}} session revoked",
-    "sessionsRevoked_other": "{{count}} sessions revoked"
+    "sessionsRevoked_other": "{{count}} sessions revoked",
+    "profileDescription": "Memberships are managed on each tenant's Members tab.",
+    "noEmail": "No email address",
+    "noEmailInfo": "This user signs in only through single sign-on and cannot accept invitations, which are bound to an email address. Add the user to tenants directly instead.",
+    "noEmailAbout": "About users without an email address"
   },
   "platformRoles": {
     "none": "No platform role",

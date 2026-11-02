@@ -1,0 +1,81 @@
+{
+  "details": "Detalles técnicos",
+  "status": "Estado HTTP",
+  "code": "Código de error",
+  "serverMessage": "Mensaje del servidor",
+  "requestId": "ID de solicitud",
+  "codes": {
+    "validation_failed": {
+      "title": "Revisa los datos introducidos",
+      "message": "El servidor no aceptó algunos de los valores. Corrige los campos marcados abajo (el mensaje del servidor indica el problema) y vuelve a intentarlo."
+    },
+    "bad_request": {
+      "title": "Solicitud no comprendida",
+      "message": "El servidor no pudo leer la solicitud, por ejemplo porque un valor tenía un formato incorrecto. Recarga la página y vuelve a intentarlo; si sigue ocurriendo, infórmalo indicando el ID de solicitud."
+    },
+    "unauthenticated": {
+      "title": "Inicia sesión",
+      "message": "No has iniciado sesión o tu sesión ha finalizado (caduca tras un período de inactividad, al cerrar sesión o cuando se revoca). Vuelve a iniciar sesión para continuar donde lo dejaste."
+    },
+    "forbidden": {
+      "title": "No permitido",
+      "message": "Tus roles no permiten esta acción aquí, o el producto está archivado o el inquilino suspendido. Pide acceso a un propietario o administrador de este producto o inquilino."
+    },
+    "reauthentication_required": {
+      "title": "Vuelve a iniciar sesión",
+      "message": "Por tu seguridad, esta acción solo se permite poco después de iniciar sesión. Vuelve a iniciar sesión y repite la acción."
+    },
+    "not_found": {
+      "title": "No encontrado",
+      "message": "Este elemento no existe, se eliminó o no tienes acceso a él (Axentra no revela elementos que no puedes ver). Comprueba la dirección o pide acceso."
+    },
+    "conflict": {
+      "title": "Conflicto",
+      "message": "Esto entra en conflicto con datos existentes o con el estado actual del elemento, por ejemplo un nombre o una clave que ya está en uso. Lee el mensaje del servidor, cambia el valor o el estado del elemento y vuelve a intentarlo."
+    },
+    "precondition_failed": {
+      "title": "Modificado mientras tanto",
+      "message": "Otra persona guardó un cambio en este elemento después de que lo abrieras, así que tu cambio no se aplicó. Recarga el elemento y vuelve a hacer el cambio."
+    },
+    "rate_limited": {
+      "title": "Demasiadas solicitudes",
+      "message": "El servidor recibió demasiadas solicitudes (o intentos fallidos de inicio de sesión) en poco tiempo. Espera alrededor de un minuto y vuelve a intentarlo."
+    },
+    "quota_exceeded": {
+      "title": "Cuota superada",
+      "message": "Se ha agotado una cuota o un límite del plan de este inquilino, por lo que el servidor rechazó la acción. Libera espacio o uso, o pide a alguien con acceso que aumente la cuota o cambie el plan."
+    },
+    "mode_not_supported": {
+      "title": "No disponible en este modo",
+      "message": "La configuración actual del servidor no admite esta acción, por ejemplo crear productos en el modo de producto único. Un operador tendría que cambiar la configuración del servidor."
+    },
+    "module_disabled": {
+      "title": "Módulo no activado",
+      "message": "El módulo del servidor necesario para esta acción está desactivado. Un operador puede activarlo en la configuración del servidor de Axentra."
+    },
+    "payment_provider_not_configured": {
+      "title": "Proveedor de pagos no configurado",
+      "message": "Esta acción de facturación necesita un proveedor de pagos, pero el servidor no tiene ninguno configurado. Un operador tiene que configurar el proveedor de facturación en la configuración del servidor."
+    },
+    "internal": {
+      "title": "Error del servidor",
+      "message": "El servidor o un servicio detrás de él falló al procesar la solicitud; es posible que tu cambio no se haya guardado. Vuelve a intentarlo en un momento; si sigue fallando, infórmalo a tu operador indicando el ID de solicitud."
+    },
+    "network_error": {
+      "title": "Servidor no accesible",
+      "message": "Studio no obtuvo respuesta del servidor de Axentra. Comprueba tu conexión de red; si funciona, puede que el servidor esté caído o reiniciándose. Vuelve a intentarlo en un momento."
+    },
+    "unknown": {
+      "title": "Error inesperado",
+      "message": "La solicitud falló por un motivo que Studio no reconoce. Vuelve a intentarlo; si sigue ocurriendo, infórmalo indicando el ID de solicitud y el mensaje del servidor."
+    },
+    "payload_too_large": {
+      "title": "Demasiado grande",
+      "message": "La solicitud o el archivo es más grande de lo que acepta el servidor. Usa un archivo más pequeño o menos datos, o pregunta a un operador por el límite de tamaño."
+    },
+    "unsupported_media_type": {
+      "title": "Tipo no aceptado",
+      "message": "El servidor no acepta este tipo de contenido, por ejemplo un tipo de archivo bloqueado como un ejecutable o un archivo HTML o SVG. Usa otro tipo de archivo."
+    }
+  }
+}

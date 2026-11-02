@@ -14,7 +14,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui';
-import { isLocale } from '@/i18n';
+import { isLocale, LOCALE_NAMES, SUPPORTED_LOCALES } from '@/i18n';
 import { isThemePreference } from '@/lib/theme';
 import { useErrorToast, useLogout, useSession } from '../auth';
 import { usePreferences } from '../preferences';
@@ -60,12 +60,11 @@ export function UserMenu() {
               value={locale}
               onValueChange={(value) => (isLocale(value) ? setLanguage(value) : undefined)}
             >
-              <DropdownMenuRadioItem value="de">
-                <span lang="de">Deutsch</span>
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="en">
-                <span lang="en">English</span>
-              </DropdownMenuRadioItem>
+              {SUPPORTED_LOCALES.map((lng) => (
+                <DropdownMenuRadioItem key={lng} value={lng}>
+                  <span lang={lng}>{LOCALE_NAMES[lng]}</span>
+                </DropdownMenuRadioItem>
+              ))}
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>

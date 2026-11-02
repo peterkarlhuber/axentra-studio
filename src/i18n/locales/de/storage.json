@@ -3,14 +3,14 @@
     "title": "Dateien",
     "description": "Dateien, die Mandanten über das Storage-Modul speichern: hochladen, prüfen, herunterladen und löschen.",
     "pickTitle": "Mandanten auswählen",
-    "pickBody": "Dateien gehören immer zu einem Mandanten. Wählen Sie einen Mandanten, um seine Dateien und seinen Speicherverbrauch zu sehen.",
+    "pickBody": "Dateien gehören immer zu einem Mandanten. Wähle einen Mandanten, um seine Dateien und seinen Speicherverbrauch zu sehen.",
     "noAccessTitle": "Kein Zugriff auf die Dateien dieses Mandanten",
-    "noAccessBody": "Ihre Rollen gewähren in diesem Mandanten kein files:read. Bitten Sie einen Produktverantwortlichen um Zugriff.",
+    "noAccessBody": "Deine Rollen gewähren in diesem Mandanten kein files:read. Bitte einen Produktverantwortlichen um Zugriff.",
     "listTitle": "Gespeicherte Dateien",
     "listDescription": "Neueste zuerst. Nur aktive, nicht abgelaufene Dateien werden angezeigt.",
     "tableCaption": "Dateien des ausgewählten Mandanten",
     "empty": "Keine passenden Dateien",
-    "emptyBody": "Laden Sie eine Datei hoch oder ändern Sie die Filter."
+    "emptyBody": "Lade eine Datei hoch oder ändere die Filter."
   },
   "actions": {
     "upload": "Datei hochladen",
@@ -40,7 +40,8 @@
     "inert": "Inert gespeichert",
     "inertWithType": "Ja, hochgeladen als {{type}}",
     "inertNoType": "Ja",
-    "inertHelp": "Ein gesperrter Dateityp, den die Inhaltstyp-Richtlinie des Produkts als undurchsichtigen Anhang aufbewahrt. Er wird nur heruntergeladen, nie angezeigt."
+    "inertHelp": "Ein gesperrter Dateityp, den die Inhaltstyp-Richtlinie des Produkts als undurchsichtigen Anhang aufbewahrt. Er wird nur heruntergeladen, nie angezeigt.",
+    "inertInfoLabel": "Über inerte Dateien"
   },
   "filter": {
     "label": "Dateien filtern",
@@ -74,20 +75,22 @@
   "quota": {
     "edit": "Kontingent bearbeiten",
     "title": "Speicherkontingent",
-    "description": "Abweichende Werte für diesen Mandanten. Lassen Sie ein Feld leer, um den Standard des Produkts oder Servers zu übernehmen.",
+    "description": "Abweichende Werte für diesen Mandanten. Lass ein Feld leer, um den Standard des Produkts oder Servers zu übernehmen.",
     "bytes": "Speichergrenze",
     "unit": "Einheit",
     "files": "Dateigrenze",
-    "inheritHelp": "Leer: Standard übernehmen.",
-    "invalid": "Geben Sie eine Zahl ab 0 ein oder lassen Sie das Feld leer.",
+    "inheritHelp": "Leer lassen, um den Standard des Produkts oder Servers zu übernehmen.",
+    "invalid": "Gib eine Zahl ab 0 ein oder lass das Feld leer.",
     "current": "Derzeit belegt: {{bytes}} in {{files}} Dateien.",
     "belowUsage": "Diese Grenze liegt unter dem aktuellen Verbrauch. Vorhandene Dateien bleiben erhalten, weitere Uploads werden aber abgelehnt.",
-    "effectiveNote": "Hat jemand anderes das Kontingent inzwischen geändert, wird das Speichern abgelehnt und Sie können neu laden.",
-    "saved": "Speicherkontingent gespeichert"
+    "effectiveNote": "Hat jemand anderes das Kontingent inzwischen geändert, wird das Speichern abgelehnt und du kannst neu laden.",
+    "saved": "Speicherkontingent gespeichert",
+    "bytesInfo": "Sobald die aktiven Dateien des Mandanten diese Größe erreichen, werden weitere Uploads abgelehnt. Vorhandene Dateien werden nie gelöscht. 0 sperrt alle Uploads.",
+    "filesInfo": "Höchstzahl aktiver Dateien. Abgelaufene Dateien zählen mit, bis die Bereinigung des Servers gelaufen ist. 0 sperrt alle Uploads."
   },
   "upload": {
     "title": "Datei hochladen",
-    "description": "Die Datei wird für den ausgewählten Mandanten gespeichert. Dateien lassen sich später nicht ändern; laden Sie stattdessen eine neue Datei hoch.",
+    "description": "Die Datei wird für den ausgewählten Mandanten gespeichert. Dateien lassen sich später nicht ändern; lade stattdessen eine neue Datei hoch.",
     "file": "Datei",
     "maxSize": "Höchstens {{size}} pro Datei.",
     "maxSizeUnknown": "Der Server prüft seine maximale Dateigröße.",
@@ -122,10 +125,14 @@
       "unsupported_media_type": "Dateityp nicht zulässig",
       "unsupported_media_typeBody": "Der Server lehnt diesen Dateityp ab. Programme, HTML, SVG und Skripte sind gesperrt, und der Server lässt möglicherweise nur bestimmte Typen zu.",
       "quota_exceeded": "Speicherkontingent erschöpft",
-      "quota_exceededBody": "Der Mandant hat sein Speicher- oder Dateikontingent erreicht. Löschen Sie Dateien oder erhöhen Sie das Kontingent."
+      "quota_exceededBody": "Der Mandant hat sein Speicher- oder Dateikontingent erreicht. Lösche Dateien oder erhöhe das Kontingent."
     },
     "inertExtensions": "Als inerte Anhänge angenommen: {{extensions}}.",
-    "extraBlocked": "Von diesem Produkt zusätzlich gesperrt: {{items}}."
+    "extraBlocked": "Von diesem Produkt zusätzlich gesperrt: {{items}}.",
+    "fileInfo": "Leere Dateien werden abgelehnt. Der Server prüft die ersten Bytes: Eine Datei, die wie ein Programm, HTML, SVG oder Skript aussieht, gilt als gesperrt, egal wie sie heißt oder welchen Typ sie angibt.",
+    "metadataInfo": "Schlüssel: 1–64 Zeichen aus Buchstaben, Ziffern und _ . : - . Textwerte bis 1.024 Zeichen, insgesamt 8 KiB. Labels erscheinen im Audit-Log, trag also keine Geheimnisse ein.",
+    "expiresInfo": "Zu diesem Zeitpunkt verschwindet die Datei aus den Listen und ihre Download-Links funktionieren nicht mehr. Die Bereinigung des Servers entfernt sie später; bis dahin zählt sie noch zum Kontingent. Den Ablauf kannst du nach dem Upload nicht mehr ändern.",
+    "rulesLink": "Welche Dateien werden angenommen?"
   },
   "detail": {
     "title": "Datei"
@@ -135,7 +142,8 @@
     "body": "Jeder mit diesem Link kann die Datei herunterladen, bis er abläuft. Er lässt sich nicht einzeln widerrufen; das Löschen der Datei beendet ihn.",
     "url": "Download-Link",
     "expires": "Läuft ab",
-    "presigned": "vom Objektspeicher signiert"
+    "presigned": "vom Objektspeicher signiert",
+    "learnMore": "So funktionieren Download-Links"
   },
   "edit": {
     "title": "Datei bearbeiten",
@@ -167,7 +175,7 @@
     "storageTable": "Speicherverbrauch pro Mandant",
     "storageEmpty": "Noch keine Mandanten",
     "storageOffTitle": "Storage-Modul nicht aktiviert",
-    "storageOffBody": "Aktivieren Sie das Storage-Modul in der Serverkonfiguration, um Dateien zu speichern.",
+    "storageOffBody": "Aktiviere das Storage-Modul in der Serverkonfiguration, um Dateien zu speichern.",
     "bytesUsed": "Belegter Speicher",
     "filesUsed": "Dateien",
     "defaultQuotaBytes": "Standard-Speicherkontingent",
@@ -190,12 +198,14 @@
     "days_other": "{{formatted}} Tage",
     "backupTitle": "Backups werden nicht gemeldet",
     "backupBody": "Die API meldet weder den Backup-Status noch, wie lange Metadaten gelöschter Dateien aufbewahrt werden. Beides gehört zum Serverbetrieb.",
-    "blockedProduct": "{{value}} ({{source}})"
+    "blockedProduct": "{{value}} ({{source}})",
+    "quotaInfoLabel": "Über Speicherkontingente",
+    "quotaInfo": "Die wirksame Grenze: das eigene Kontingent des Mandanten (Kennzeichen „Mandant“), sonst der Produktstandard, sonst der Server-Standard. Unbegrenzt heißt: Es gilt keine Grenze."
   },
   "policy": {
     "title": "Inhaltstyp-Richtlinie für Dateien",
     "description": "Was in diesem Produkt mit hochgeladenen ausführbaren Dateien, HTML, SVG und Skripten geschieht. Gesperrte Dateien werden nie angezeigt; höchstens werden sie zum Herunterladen aufbewahrt.",
-    "readOnly": "Sie können diese Richtlinie ansehen; zum Ändern ist product:manage nötig.",
+    "readOnly": "Du kannst diese Richtlinie ansehen; zum Ändern ist product:manage nötig.",
     "mode": "Gesperrte Dateitypen",
     "modeHelp": "Geprüft werden angegebener Typ, Dateiendung und Inhalt (auch Skripte, die mit #! beginnen).",
     "inherit": "Standard der Installation ({{mode}})",
@@ -217,6 +227,9 @@
     "inertNote": "Inerte Dateien werden als application/octet-stream gespeichert und als Anhang mit nosniff heruntergeladen; ihr ursprünglicher Typ wird nur zur Anzeige aufbewahrt.",
     "saved": "Inhaltstyp-Richtlinie gespeichert",
     "loadError": "Die Inhaltstyp-Richtlinie konnte nicht geladen werden.",
-    "moduleOff": "Das Speichermodul ist auf diesem Server nicht aktiviert."
+    "moduleOff": "Das Speichermodul ist auf diesem Server nicht aktiviert.",
+    "modeInfo": "„Hochladen ablehnen“: Wer hochlädt, erhält „Dateityp nicht zulässig“. „Als inerten Anhang speichern“: Die Datei wird als application/octet-stream gespeichert und kann nur heruntergeladen, nie angezeigt werden. Gilt für neue Uploads und Umbenennungen; gespeicherte Dateien bleiben unverändert.",
+    "inertExtensionsInfo": "Wirkt nur, solange gesperrte Dateien abgelehnt werden. Es entscheidet der Dateiname, auch wenn der Inhalt gesperrt ist: Ein Skript namens run.sh wird inert gespeichert, wenn „sh“ eingetragen ist; dasselbe Skript als run.txt wird abgelehnt.",
+    "blockedInfo": "Die eingebaute Liste (siehe „Immer gesperrt“) lässt sich nicht verkürzen. Einträge hier werden zusätzlich gesperrt und folgen der Einstellung „Gesperrte Dateitypen“. Höchstens 100 Einträge."
   }
 }

@@ -1,0 +1,71 @@
+{
+  "title": "Registros",
+  "description": "Explora los registros JSON que los inquilinos guardan en colecciones.",
+  "collections": {
+    "title": "Colecciones",
+    "empty": "No hay colecciones",
+    "emptyBody": "Las colecciones aparecen cuando se escriben registros mediante la API.",
+    "stats": "{{records}} registros en {{tenants}} inquilinos",
+    "noList": "Para ver la lista de todas las colecciones se necesita un rol de producto. Introduce el nombre de una colección para abrirla.",
+    "openLabel": "Nombre de la colección",
+    "open": "Abrir"
+  },
+  "pick": {
+    "title": "Elige un inquilino y una colección",
+    "body": "Los registros siempre pertenecen a un inquilino. Elige ambos para explorarlos."
+  },
+  "listDescription": "Los más recientes primero. Se muestran los registros que cumplen todos los filtros.",
+  "tableCaption": "Registros de {{collection}}",
+  "empty": "Ningún registro coincide",
+  "viewRecord": "Ver registro {{id}}",
+  "fields": {
+    "id": "ID",
+    "data": "Datos",
+    "version": "Versión",
+    "created": "Creado",
+    "updated": "Actualizado",
+    "collection": "Colección",
+    "tenant": "Inquilino",
+    "createdBy": "Creado por",
+    "updatedBy": "Actualizado por"
+  },
+  "filter": {
+    "label": "Filtrar registros",
+    "field": "Campo",
+    "value": "Es igual a",
+    "add": "Añadir filtro",
+    "active": "Filtros activos",
+    "remove": "Quitar filtro de {{field}}",
+    "valueHelp": "Los valores JSON (true, 42, null) se comparan con su tipo; el resto del texto se compara como cadena.",
+    "valueInfo": "Un registro coincide cuando contiene este valor. Un valor de objeto como {\"city\": \"Graz\"} coincide con los registros cuyo campo contiene esas claves; úsalo para filtrar campos anidados."
+  },
+  "record": {
+    "title": "Registro"
+  },
+  "descriptionWrite": "Explora, crea, modifica y elimina los registros JSON que los inquilinos guardan en colecciones.",
+  "write": {
+    "create": "Nuevo registro",
+    "createTitle": "Nuevo registro",
+    "createDescription": "Guarda un objeto JSON en una colección del inquilino seleccionado. Un nombre de colección nuevo crea la colección.",
+    "createSubmit": "Crear registro",
+    "editTitle": "Editar registro",
+    "edit": "Editar",
+    "delete": "Eliminar registro",
+    "collectionHelp": "Letras minúsculas, dígitos y guiones bajos; debe empezar por una letra.",
+    "collectionInvalid": "Usa letras minúsculas, dígitos y guiones bajos, empezando por una letra (63 caracteres como máximo).",
+    "dataHelp": "Un objeto JSON de 256 KiB como máximo. Al guardar se reemplaza el objeto completo.",
+    "dataError": {
+      "json": "No es un JSON válido.",
+      "object": "Los datos del registro deben ser un objeto JSON."
+    },
+    "versionNote": "Estás editando la versión {{version}}. Si otra persona ha modificado el registro mientras tanto, no se podrá guardar.",
+    "created": "Registro {{id}} creado",
+    "updated": "Registro {{id}} guardado",
+    "deleted": "Registro {{id}} eliminado",
+    "deleteTitle": "¿Eliminar registro?",
+    "deleteBody": "El registro {{id}} se eliminará de forma permanente. Esta acción no se puede deshacer.",
+    "collectionInfo": "Las colecciones no necesitan configuración: el primer registro crea una y, al eliminar su último registro, desaparece. Un registro no se puede mover a otra colección más adelante.",
+    "dataInfo": "Al guardar se reemplaza el objeto completo: los campos que quites se eliminan. El servidor establece el ID, la versión y las marcas de tiempo; no los incluyas.",
+    "conflictLink": "¿Y si otra persona lo cambia?"
+  }
+}

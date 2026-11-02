@@ -1,0 +1,81 @@
+{
+  "details": "Détails techniques",
+  "status": "Statut HTTP",
+  "code": "Code d’erreur",
+  "serverMessage": "Message du serveur",
+  "requestId": "ID de requête",
+  "codes": {
+    "validation_failed": {
+      "title": "Vérifie ta saisie",
+      "message": "Le serveur n’a pas accepté certaines valeurs. Corrige les champs signalés ci-dessous (le message du serveur indique le problème) et réessaie."
+    },
+    "bad_request": {
+      "title": "Requête incomprise",
+      "message": "Le serveur n’a pas pu lire la requête, par exemple parce qu’une valeur avait un format incorrect. Recharge la page et réessaie ; si le problème se reproduit, signale-le avec l’ID de requête."
+    },
+    "unauthenticated": {
+      "title": "Connecte-toi",
+      "message": "Tu n’es pas connecté ou ta session a pris fin (elle expire après une période d’inactivité, à la déconnexion ou lorsqu’elle est révoquée). Reconnecte-toi pour reprendre là où tu t’étais arrêté."
+    },
+    "forbidden": {
+      "title": "Non autorisé",
+      "message": "Tes rôles ne permettent pas cette action ici, ou le produit est archivé ou le locataire suspendu. Demande l’accès à un propriétaire ou à un administrateur de ce produit ou de ce locataire."
+    },
+    "reauthentication_required": {
+      "title": "Reconnecte-toi",
+      "message": "Pour ta sécurité, cette action n’est autorisée que peu après la connexion. Reconnecte-toi, puis recommence l’action."
+    },
+    "not_found": {
+      "title": "Introuvable",
+      "message": "Cet élément n’existe pas, a été supprimé ou tu n’y as pas accès (Axentra ne révèle pas les éléments que tu ne peux pas voir). Vérifie l’adresse ou demande l’accès."
+    },
+    "conflict": {
+      "title": "Conflit",
+      "message": "Cela entre en conflit avec des données existantes ou avec l’état actuel de l’élément, par exemple un nom ou une clé déjà utilisés. Lis le message du serveur, puis modifie la valeur ou l’état de l’élément et réessaie."
+    },
+    "precondition_failed": {
+      "title": "Modifié entre-temps",
+      "message": "Quelqu’un d’autre a enregistré une modification de cet élément après que tu l’as ouvert, ta modification n’a donc pas été appliquée. Recharge l’élément et refais ta modification."
+    },
+    "rate_limited": {
+      "title": "Trop de requêtes",
+      "message": "Le serveur a reçu trop de requêtes (ou de tentatives de connexion échouées) en peu de temps. Attends environ une minute et réessaie."
+    },
+    "quota_exceeded": {
+      "title": "Quota dépassé",
+      "message": "Un quota ou une limite de l’offre de ce locataire est épuisé, le serveur a donc refusé l’action. Libère de l’espace ou réduis l’utilisation, ou demande à une personne qui en a l’accès d’augmenter le quota ou de changer d’offre."
+    },
+    "mode_not_supported": {
+      "title": "Indisponible dans ce mode",
+      "message": "La configuration actuelle du serveur ne prend pas en charge cette action, par exemple la création de produits en mode produit unique. Un opérateur devrait modifier la configuration du serveur."
+    },
+    "module_disabled": {
+      "title": "Module non activé",
+      "message": "Le module du serveur nécessaire à cette action est désactivé. Un opérateur peut l’activer dans la configuration du serveur Axentra."
+    },
+    "payment_provider_not_configured": {
+      "title": "Prestataire de paiement non configuré",
+      "message": "Cette action de facturation nécessite un prestataire de paiement, mais aucun n’est configuré sur le serveur. Un opérateur doit configurer le prestataire de facturation dans la configuration du serveur."
+    },
+    "internal": {
+      "title": "Erreur du serveur",
+      "message": "Le serveur ou un service dont il dépend a échoué pendant le traitement de la requête ; ta modification n’a peut-être pas été enregistrée. Réessaie dans un instant ; si l’échec persiste, signale-le à ton opérateur avec l’ID de requête."
+    },
+    "network_error": {
+      "title": "Serveur injoignable",
+      "message": "Studio n’a reçu aucune réponse du serveur Axentra. Vérifie ta connexion réseau ; si elle fonctionne, le serveur est peut-être arrêté ou en cours de redémarrage. Réessaie dans un instant."
+    },
+    "unknown": {
+      "title": "Erreur inattendue",
+      "message": "La requête a échoué pour une raison que Studio ne reconnaît pas. Réessaie ; si le problème se reproduit, signale-le avec l’ID de requête et le message du serveur."
+    },
+    "payload_too_large": {
+      "title": "Trop volumineux",
+      "message": "La requête ou le fichier dépasse la taille acceptée par le serveur. Utilise un fichier plus petit ou moins de données, ou renseigne-toi auprès d’un opérateur sur la taille maximale."
+    },
+    "unsupported_media_type": {
+      "title": "Type non accepté",
+      "message": "Le serveur n’accepte pas ce type de contenu, par exemple un type de fichier bloqué comme un exécutable, un fichier HTML ou SVG. Utilise un autre type de fichier."
+    }
+  }
+}

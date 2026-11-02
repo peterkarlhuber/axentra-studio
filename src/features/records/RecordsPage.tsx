@@ -34,8 +34,9 @@ import clsx from '@/lib/clsx';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { HelpLink } from '@/help/HelpLink';
 import { RecordEditorDialog } from './RecordEditorDialog';
-import { parseFilterValue, previewData } from './records-utils';
+import { parseFilterValue, previewData, validCollectionName } from './records-utils';
 import styles from './records.module.css';
 
 export function RecordsPage() {
@@ -47,10 +48,13 @@ export function RecordsPage() {
   const collection = params.get('collection') ?? '';
   const can = useCan();
   const canWrite = tenantId ? can('records:write', { tenantId }) : false;
+  // Listing collections needs `collections:read` (product roles only); tenant members type a name.
+  const canList = can('collections:read');
   const [creating, setCreating] = useState(false);
   const collections = useQuery({
     queryKey: queryKeys.collections(productId),
     queryFn: () => recordsApi.collections(productId),
+    enabled: canList,
   });
 
   const update = (changes: Record<string, string>) =>
@@ -72,6 +76,7 @@ export function RecordsPage() {
       <PageHeader
         title={t('title')}
         description={canWrite ? t('descriptionWrite') : t('description')}
+        help="records"
         actions={
           canWrite ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -94,7 +99,13 @@ export function RecordsPage() {
       ) : null}
       <div className={styles.layout}>
         <Card title={t('collections.title')} className={styles.sidebar}>
-          {collections.isPending ? (
+          {!canList ? (
+            <OpenCollectionForm
+              key={collection}
+              initial={collection}
+              onOpen={(name) => update({ collection: name })}
+            />
+          ) : collections.isPending ? (
             <div className={layout.form} aria-busy="true">
               <Skeleton />
               <Skeleton width="80%" />
@@ -273,7 +284,12 @@ function RecordList({
             placeholder="status"
           />
         </FormField>
-        <FormField label={t('filter.value')} help={t('filter.valueHelp')}>
+        <FormField
+          label={t('filter.value')}
+          help={t('filter.valueHelp')}
+          info={t('filter.valueInfo')}
+          infoTopic="records#filter"
+        >
           <Input
             value={value}
             onChange={(event) => setValue(event.target.value)}
@@ -375,7 +391,11 @@ function RecordList({
         open={deleting !== null}
         onOpenChange={(open) => (open ? undefined : setDeleting(null))}
         title={t('write.deleteTitle')}
-        description={t('write.deleteBody', { id: deleting?.id })}
+        description={
+          <>
+            {t('write.deleteBody', { id: deleting?.id })} <HelpLink topic="records#delete" />
+          </>
+        }
         confirmLabel={t('write.delete')}
         onConfirm={async () => {
           if (!deleting) return;
@@ -398,5 +418,45 @@ function RecordList({
         }}
       />
     </Card>
+  );
+}
+
+/** Without `collections:read` the collection list is not available: open one by name. */
+function OpenCollectionForm({
+  initial,
+  onOpen,
+}: {
+  initial: string;
+  onOpen: (collection: string) => void;
+}) {
+  const { t } = useTranslation('records');
+  const [name, setName] = useState(initial);
+  const valid = validCollectionName(name.trim());
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    if (valid) onOpen(name.trim());
+  };
+  return (
+    <form className={layout.form} onSubmit={submit} aria-label={t('collections.title')}>
+      <p className={layout.muted}>{t('collections.noList')}</p>
+      <FormField
+        label={t('collections.openLabel')}
+        help={t('write.collectionHelp')}
+        error={name.trim() && !valid ? t('write.collectionInvalid') : undefined}
+      >
+        <Input
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          spellCheck={false}
+          autoComplete="off"
+          placeholder="orders"
+        />
+      </FormField>
+      <div className={layout.actions}>
+        <Button type="submit" disabled={!valid}>
+          {t('collections.open')}
+        </Button>
+      </div>
+    </form>
   );
 }

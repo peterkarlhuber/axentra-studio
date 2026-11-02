@@ -34,6 +34,7 @@ export function NotificationsPage() {
       <PageHeader
         title={t('title')}
         description={canManage ? t('description') : t('descriptionPreferencesOnly')}
+        help={canManage ? 'notifications' : 'notifications#preferences'}
         actions={
           canManage ? (
             <ButtonLink to="templates/new" variant="primary" icon={<Plus />}>

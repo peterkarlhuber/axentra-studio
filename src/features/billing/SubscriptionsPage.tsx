@@ -24,6 +24,8 @@ import {
 } from '@/components/ui';
 import { TenantPicker } from '@/features/shared/TenantPicker';
 import { useTenantNames } from '@/features/usage/useTenantNames';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { formatMoney, statusTone, SUBSCRIPTION_STATUSES } from './billing-utils';
@@ -71,7 +73,11 @@ export function SubscriptionsPage() {
   if (!canRead) {
     return (
       <div className={layout.stack}>
-        <PageHeader title={t('subscriptions.title')} description={t('subscriptions.description')} />
+        <PageHeader
+          title={t('subscriptions.title')}
+          description={t('subscriptions.description')}
+          help="plans-subscriptions#subscriptions"
+        />
         <EmptyState icon={<ShieldOff />} title={t('noAccess')} description={t('noAccessBody')} />
       </div>
     );
@@ -91,7 +97,14 @@ export function SubscriptionsPage() {
     { id: 'plan', header: t('subscriptions.plan'), cell: (sub) => <code>{sub.plan_key}</code> },
     {
       id: 'status',
-      header: t('subscriptions.status'),
+      header: (
+        <span className={layout.tags}>
+          {t('subscriptions.status')}
+          <InfoTip label={t('info.statusLabel')} topic="plans-subscriptions#status">
+            {t('info.status')}
+          </InfoTip>
+        </span>
+      ),
       cell: (sub) => (
         <span className={layout.tags}>
           <Badge tone={statusTone(sub.status)}>
@@ -146,7 +159,11 @@ export function SubscriptionsPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('subscriptions.title')} description={t('subscriptions.description')} />
+      <PageHeader
+        title={t('subscriptions.title')}
+        description={t('subscriptions.description')}
+        help="plans-subscriptions#subscriptions"
+      />
       {tenantsEnabled ? (
         <Card title={t('subscriptions.openTitle')} description={t('subscriptions.openDescription')}>
           <form className={layout.row} onSubmit={openTenant}>
@@ -192,7 +209,14 @@ export function SubscriptionsPage() {
               headingLevel={3}
               icon={<CreditCard />}
               title={t('subscriptions.empty')}
-              description={t('subscriptions.emptyBody')}
+              description={
+                <>
+                  {t('subscriptions.emptyBody')}{' '}
+                  <HelpLink topic="plans-subscriptions#subscribe">
+                    {t('common:help.learnMore')}
+                  </HelpLink>
+                </>
+              }
             />
           }
           {...list.tableProps}

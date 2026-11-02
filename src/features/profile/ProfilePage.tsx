@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { KeyRound, LogIn, Save } from 'lucide-react';
+import { KeyRound, LogIn, LogOut, Save } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { asItems, authApi, meApi } from '@/api/endpoints';
@@ -23,6 +23,7 @@ import {
 import { fieldErrors } from '@/lib/errors';
 import { ApiError, isReauthenticationRequired } from '@/api/errors';
 import { SessionsTable } from '@/features/shared/SessionsTable';
+import { HelpLink } from '@/help/HelpLink';
 
 export function ProfilePage() {
   const { t } = useTranslation('profile');
@@ -42,7 +43,7 @@ export function ProfilePage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} />
+      <PageHeader title={t('title')} description={t('description')} help="profile" />
       <div className={layout.grid2}>
         <Card title={t('account.title')}>
           <DetailList
@@ -107,10 +108,11 @@ function NameForm({ name: initial }: { name: string }) {
   return (
     <Card title={t('name.title')}>
       <form className={layout.form} onSubmit={submit}>
-        <FormField label={t('name.label')} required>
+        <FormField label={t('name.label')} info={t('name.info')} required>
           <Input
             value={name}
             onChange={(event) => setName(event.target.value)}
+            maxLength={200}
             autoComplete="name"
           />
         </FormField>
@@ -172,7 +174,10 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
       <form className={layout.form} onSubmit={submit}>
         {needsReauth ? (
           <Alert tone="warning" title={t('errors:codes.reauthentication_required.title')}>
-            <p>{t('password.reauthBody')}</p>
+            <p>
+              {t('password.reauthBody')}{' '}
+              <HelpLink topic="profile#set-password">{t('common:help.learnMore')}</HelpLink>
+            </p>
             <div className={layout.actions}>
               <Button
                 icon={<LogIn />}
@@ -194,7 +199,13 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
             />
           </FormField>
         ) : null}
-        <FormField label={t('password.new')} error={fields.new_password} required>
+        <FormField
+          label={t('password.new')}
+          error={fields.new_password}
+          info={t('password.rules')}
+          infoTopic="profile#password"
+          required
+        >
           <Input
             type="password"
             value={next}
@@ -222,7 +233,7 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
             loading={change.isPending}
             disabled={(hasPassword && !current) || !next || !confirm}
           >
-            {t('password.submit')}
+            {hasPassword ? t('password.submit') : t('password.setSubmit')}
           </Button>
         </div>
       </form>
@@ -244,8 +255,36 @@ function OwnSessions() {
     },
     onError: showError,
   });
+  const others = asItems(sessions.data).filter((session) => !session.current);
+  const revokeOthers = useMutation({
+    mutationFn: () => Promise.all(others.map((session) => authApi.revokeSession(session.id))),
+    onSuccess: () => toast.success(t('sessions.othersRevoked')),
+    onError: showError,
+    onSettled: () => void queryClient.invalidateQueries({ queryKey: queryKeys.ownSessions }),
+  });
   return (
-    <Card title={t('sessions.title')} description={t('sessions.description')} flush>
+    <Card
+      title={t('sessions.title')}
+      description={
+        <>
+          {t('sessions.description')}{' '}
+          <HelpLink topic="profile#sessions">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
+      actions={
+        others.length > 0 ? (
+          <Button
+            size="sm"
+            icon={<LogOut />}
+            loading={revokeOthers.isPending}
+            onClick={() => revokeOthers.mutate()}
+          >
+            {t('sessions.revokeOthers')}
+          </Button>
+        ) : null
+      }
+      flush
+    >
       <SessionsTable
         caption={t('sessions.title')}
         sessions={asItems(sessions.data)}

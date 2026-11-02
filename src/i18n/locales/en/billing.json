@@ -237,5 +237,13 @@
     "byStatus": "Subscriptions by status",
     "sampled": "Counted from the newest {{count}} subscriptions.",
     "allCounted": "All subscriptions counted."
+  },
+  "info": {
+    "trialDays": "New subscriptions start in “Trial” and get the plan’s entitlements. With the manual provider, a trial ends only when the operator’s scheduled billing task runs.",
+    "providerPriceId": "With Stripe, enter the id of the price you created in Stripe. Axentra uses it to map Stripe’s subscription updates back to this plan.",
+    "statusLabel": "About subscription statuses",
+    "status": "Trial, Active and Past due grant the plan’s entitlements; Past due is a grace period. Incomplete waits for the checkout at the provider. Canceled is final.",
+    "entitlementsLabel": "About effective entitlements",
+    "entitlements": "Without a subscription in Trial, Active or Past due, the tenant gets only its overrides. Overrides stay when the plan changes or the subscription ends."
   }
 }

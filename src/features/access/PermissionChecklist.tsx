@@ -1,7 +1,9 @@
-import { useId, useMemo, useState } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Permission } from '@/api/models';
 import { Badge, Checkbox, FormField, Input } from '@/components/ui';
+import { InfoTip } from '@/help/InfoTip';
+import type { HelpTopic } from '@/help/manifest';
 import { groupPermissions } from './permission-groups';
 import styles from './access.module.css';
 
@@ -11,12 +13,19 @@ export function PermissionChecklist({
   onChange,
   disabled,
   legend,
+  info,
+  infoLabel,
+  infoTopic,
 }: {
   permissions: Permission[];
   value: string[];
   onChange: (next: string[]) => void;
   disabled?: boolean;
   legend: string;
+  /** Background info shown in a toggletip next to the legend. */
+  info?: ReactNode;
+  infoLabel?: string;
+  infoTopic?: HelpTopic;
 }) {
   const { t } = useTranslation('access');
   const [filter, setFilter] = useState('');
@@ -41,8 +50,16 @@ export function PermissionChecklist({
   return (
     <fieldset className={styles.checklist} aria-labelledby={legendId} disabled={disabled}>
       <div className={styles.checklistHead}>
-        <span id={legendId} className={styles.legend}>
-          {legend}
+        <span className={styles.legend}>
+          <span id={legendId}>{legend}</span>
+          {info && infoTopic ? (
+            <>
+              {' '}
+              <InfoTip label={infoLabel ?? legend} topic={infoTopic}>
+                {info}
+              </InfoTip>
+            </>
+          ) : null}
         </span>
         <span className={styles.count} aria-live="polite">
           {t('permissions.selected', { count: value.length })}

@@ -19,6 +19,7 @@ import {
   Textarea,
   layout,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { fieldErrors } from '@/lib/errors';
 import { useFormatters } from '@/lib/format';
 import {
@@ -193,6 +194,8 @@ export function PlanFormDialog({
           <FormField
             label={t('plans.trialDays')}
             help={t('plans.trialDaysHelp')}
+            info={t('info.trialDays')}
+            infoTopic="plans-subscriptions#plan-settings"
             error={trialInvalid ? t('plans.trialInvalid') : fields.trial_days}
           >
             <Input
@@ -211,7 +214,10 @@ export function PlanFormDialog({
 
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>{t('prices.title')}</legend>
-          <p className={styles.help}>{t('prices.help')}</p>
+          <p className={styles.help}>
+            {t('prices.help')}{' '}
+            <HelpLink topic="plans-subscriptions#prices">{t('common:help.learnMore')}</HelpLink>
+          </p>
           {prices.length === 0 ? <p className={styles.help}>{t('prices.free')}</p> : null}
           <ul className={styles.rows}>
             {prices.map((row, index) => {
@@ -273,6 +279,8 @@ export function PlanFormDialog({
                   <FormField
                     label={t('prices.providerPriceId')}
                     help={t('prices.providerPriceIdHelp')}
+                    info={t('info.providerPriceId')}
+                    infoTopic="plans-subscriptions#prices"
                   >
                     <Input
                       value={row.providerPriceId}

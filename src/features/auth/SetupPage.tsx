@@ -2,13 +2,15 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Sparkles } from 'lucide-react';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate, useNavigate } from 'react-router';
+import { Link, Navigate, useNavigate } from 'react-router';
 import { setCsrfToken } from '@/api/csrf';
 import { authApi } from '@/api/endpoints';
+import { isApiError } from '@/api/errors';
 import { queryKeys } from '@/api/queryKeys';
 import { useMeta } from '@/app/contexts';
 import { CenteredLayout } from '@/components/layout/CenteredLayout';
 import { Alert, Button, FormField, Input, useToast } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { describeError, fieldErrors } from '@/lib/errors';
 import { AuthLanguageSwitch } from './AuthLanguageSwitch';
 import styles from './auth.module.css';
@@ -64,6 +66,11 @@ export function SetupPage() {
       void navigate('/', { replace: true });
     } catch (caught) {
       setError(caught);
+      // 409: possibly someone completed setup in the meantime. Refreshing the server
+      // information then closes this page and leads to the sign-in page.
+      if (isApiError(caught) && caught.status === 409) {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.meta });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -71,17 +78,53 @@ export function SetupPage() {
 
   const described = error ? describeError(t, error) : null;
   const fields = error ? fieldErrors(error) : {};
+  // The setup endpoint answers 401 for a wrong, expired or used token: not a session problem.
+  const tokenRejected = isApiError(error) && error.status === 401;
+  // 409 has two causes: setup was completed in the meantime, or the email address is taken.
+  const alreadyDone =
+    isApiError(error) && error.status === 409 && /already completed/i.test(error.detail ?? '');
+  // Password policy, invalid address or an address already in use come without field details;
+  // the server's reason (English) is the only precise explanation, so show it.
+  const serverReason =
+    isApiError(error) &&
+    ((error.status === 422 && Object.keys(fields).length === 0) ||
+      (error.status === 409 && !alreadyDone))
+      ? error.detail
+      : undefined;
+  const alertTitle = tokenRejected
+    ? t('setup.tokenInvalidTitle')
+    : alreadyDone
+      ? t('setup.alreadyDoneTitle')
+      : described?.title;
 
   return (
     <CenteredLayout wide footer={<AuthLanguageSwitch />}>
       <div className={styles.header}>
         <h1 className={styles.title}>{t('setup.title')}</h1>
-        <p className={styles.subtitle}>{t('setup.subtitle')}</p>
+        <p className={styles.subtitle}>
+          {t('setup.subtitle')} <HelpLink topic="first-run-setup">{t('setup.learnMore')}</HelpLink>
+        </p>
       </div>
       <form className={styles.form} onSubmit={submit}>
         {described ? (
-          <Alert tone="danger" title={described.title}>
-            {described.message}
+          <Alert tone="danger" title={alertTitle}>
+            {tokenRejected ? (
+              <>
+                {t('setup.tokenInvalidBody')} <HelpLink topic="first-run-setup#setup-token" />
+              </>
+            ) : alreadyDone ? (
+              <>
+                {t('setup.alreadyDoneBody')} <Link to="/login">{t('setup.goToLogin')}</Link>
+              </>
+            ) : (
+              described.message
+            )}
+            {serverReason ? (
+              <>
+                {' '}
+                {t('setup.serverReason')}: <q>{serverReason}</q>
+              </>
+            ) : null}
             {described.requestId ? (
               <>
                 {' '}
@@ -98,6 +141,8 @@ export function SetupPage() {
             </>
           }
           error={fields.setup_token}
+          info={t('setup.tokenInfo')}
+          infoTopic="first-run-setup#setup-token"
           required
         >
           <Input
@@ -110,13 +155,20 @@ export function SetupPage() {
         <FormField label={t('fields.name')} error={fields.name} required>
           <Input value={form.name} onChange={update('name')} autoComplete="name" />
         </FormField>
-        <FormField label={t('fields.email')} error={fields.email} required>
+        <FormField
+          label={t('fields.email')}
+          error={fields.email}
+          help={t('setup.emailHelp')}
+          required
+        >
           <Input type="email" value={form.email} onChange={update('email')} autoComplete="email" />
         </FormField>
         <FormField
           label={t('fields.password')}
           error={fields.password}
           help={t('setup.passwordHelp')}
+          info={t('setup.passwordInfo')}
+          infoTopic="first-run-setup#password-policy"
           required
         >
           <Input
@@ -142,6 +194,9 @@ export function SetupPage() {
           {t('setup.submit')}
         </Button>
       </form>
+      <p className={styles.helpRow}>
+        <Link to="/help">{t('helpCenter')}</Link>
+      </p>
     </CenteredLayout>
   );
 }

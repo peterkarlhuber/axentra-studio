@@ -1,10 +1,13 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import i18n from '@/i18n';
 import { ApiError, codeForStatus, formatIssueLocation } from '@/api/errors';
 import { describeError, fieldErrors } from './errors';
 
 const t = i18n.getFixedT('en');
 const tDe = i18n.getFixedT('de');
+
+// German is loaded on demand (only English is bundled).
+beforeAll(() => i18n.loadLanguages('de'));
 
 describe('describeError', () => {
   it('translates by stable code and keeps the request id', () => {

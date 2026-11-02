@@ -35,6 +35,8 @@ import { fieldErrors } from '@/lib/errors';
 import { TenantPicker } from '@/features/shared/TenantPicker';
 import { PermissionChecklist } from './PermissionChecklist';
 import { SecretRevealDialog } from './SecretRevealDialog';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import menuStyles from '@/components/ui/IconButton.module.css';
 
 export function ApiKeysPage() {
@@ -88,7 +90,14 @@ export function ApiKeysPage() {
     },
     {
       id: 'status',
-      header: t('keys.status'),
+      header: (
+        <>
+          {t('keys.status')}{' '}
+          <InfoTip label={t('keys.statusAbout')} topic="api-keys#list">
+            {t('keys.statusInfo')}
+          </InfoTip>
+        </>
+      ),
       cell: (apiKey) => <StatusPill status={apiKey.status} />,
     },
     {
@@ -112,7 +121,14 @@ export function ApiKeysPage() {
     },
     {
       id: 'lastUsed',
-      header: t('keys.lastUsed'),
+      header: (
+        <>
+          {t('keys.lastUsed')}{' '}
+          <InfoTip label={t('keys.lastUsedAbout')} topic="api-keys#list">
+            {t('keys.lastUsedInfo')}
+          </InfoTip>
+        </>
+      ),
       cell: (apiKey) => <Time value={apiKey.last_used_at} />,
     },
     {
@@ -167,6 +183,7 @@ export function ApiKeysPage() {
       <PageHeader
         title={t('keys.title')}
         description={t('keys.description')}
+        help="api-keys"
         actions={
           canManage ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -186,7 +203,14 @@ export function ApiKeysPage() {
               headingLevel={3}
               icon={<KeyRound />}
               title={t('keys.empty')}
-              description={canManage ? t('keys.emptyBody') : undefined}
+              description={
+                canManage ? (
+                  <>
+                    {t('keys.emptyBody')}{' '}
+                    <HelpLink topic="api-keys#create">{t('common:help.learnMore')}</HelpLink>
+                  </>
+                ) : undefined
+              }
             />
           }
           rows={rows}
@@ -211,7 +235,12 @@ export function ApiKeysPage() {
         secret={secret?.value ?? null}
         keyName={secret?.name ?? ''}
         onClose={() => setSecret(null)}
-      />
+      >
+        <p className={layout.muted}>
+          {t('keys.secretUsage')}{' '}
+          <HelpLink topic="api-keys#use">{t('common:help.learnMore')}</HelpLink>
+        </p>
+      </SecretRevealDialog>
       <ConfirmDialog
         open={confirm !== null}
         onOpenChange={(open) => {
@@ -250,7 +279,12 @@ export function ApiKeysPage() {
         }}
       >
         {confirm?.action === 'rotate' ? (
-          <FormField label={t('keys.grace')} help={t('keys.graceHelp')}>
+          <FormField
+            label={t('keys.grace')}
+            help={t('keys.graceHelp')}
+            info={t('keys.graceInfo')}
+            infoTopic="api-keys#grace-period"
+          >
             <Select value={grace} onChange={(event) => setGrace(event.target.value)}>
               <option value="0">{t('keys.graceNone')}</option>
               <option value="3600">{t('keys.grace1h')}</option>
@@ -259,6 +293,9 @@ export function ApiKeysPage() {
             </Select>
           </FormField>
         ) : null}
+        <HelpLink topic={confirm?.action === 'rotate' ? 'api-keys#rotate' : 'api-keys#revoke'}>
+          {t('common:help.learnMore')}
+        </HelpLink>
       </ConfirmDialog>
     </div>
   );
@@ -310,7 +347,12 @@ function CreateKeyDialog({
       onOpenChange={(open) => (open ? undefined : onClose())}
       size="lg"
       title={t('keys.create')}
-      description={t('keys.createDescription')}
+      description={
+        <>
+          {t('keys.createDescription')}{' '}
+          <HelpLink topic="api-keys#create">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>
@@ -343,6 +385,8 @@ function CreateKeyDialog({
             onChange={setTenantId}
             label={t('keys.tenantScope')}
             help={t('keys.tenantScopeHelp')}
+            info={t('keys.tenantScopeInfo')}
+            infoTopic="api-keys#tenant-scope"
             allowNone
             noneLabel={t('keys.productWide')}
           />
@@ -354,6 +398,9 @@ function CreateKeyDialog({
         ) : (
           <PermissionChecklist
             legend={t('keys.permissions')}
+            info={t('keys.permissionsInfo')}
+            infoLabel={t('keys.permissionsAbout')}
+            infoTopic="api-keys#create"
             permissions={asItems(catalog.data).filter(
               (permission) => permission.scope !== 'platform' && !permission.retired_at,
             )}

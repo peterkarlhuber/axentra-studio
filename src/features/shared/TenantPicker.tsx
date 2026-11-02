@@ -2,7 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { tenantsApi } from '@/api/endpoints';
 import { queryKeys } from '@/api/queryKeys';
+import type { ReactNode } from 'react';
 import { FormField, Select } from '@/components/ui';
+import type { HelpTopic } from '@/help/manifest';
 
 const PICKER_LIMIT = 200;
 
@@ -15,6 +17,8 @@ export function TenantPicker({
   allowNone,
   noneLabel,
   help,
+  info,
+  infoTopic,
 }: {
   productId: string;
   value: string;
@@ -23,6 +27,9 @@ export function TenantPicker({
   allowNone?: boolean;
   noneLabel?: string;
   help?: string;
+  /** Background info in a toggletip next to the label (see `FormField`). */
+  info?: ReactNode;
+  infoTopic?: HelpTopic;
 }) {
   const { t } = useTranslation('common');
   const params = { limit: PICKER_LIMIT, sort: 'name' };
@@ -39,6 +46,8 @@ export function TenantPicker({
     <FormField
       label={label ?? t('tenantPicker.label')}
       help={helpText || undefined}
+      info={info}
+      infoTopic={infoTopic}
       error={query.isError ? t('tenantPicker.error') : undefined}
     >
       <Select

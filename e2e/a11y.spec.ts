@@ -35,6 +35,7 @@ const params: Record<string, string | undefined> = {
   webhookId: e2e.webhookId,
   templateKey: e2e.templateKey,
   userId: undefined, // filled from GET /v1/me in beforeAll
+  articleId: 'api-keys', // help article with tables, callouts, a diagram and code
 };
 
 function toUrl(route: DiscoveredRoute): { url: string } | { missing: string[] } {

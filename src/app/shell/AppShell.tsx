@@ -1,9 +1,9 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
-import { Menu, X } from 'lucide-react';
+import { CircleHelp, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, useLocation, useParams } from 'react-router';
-import { IconButton } from '@/components/ui';
+import { Link, Outlet, useLocation, useParams } from 'react-router';
+import { IconButton, Tooltip } from '@/components/ui';
 import { readPreference, writePreference } from '@/lib/storage';
 import { useAdoptServerPreferences } from '../preferences';
 import { useLastProductId } from '../useLastProduct';
@@ -87,6 +87,11 @@ export function AppShell() {
           </div>
           <div className={topbar.actions}>
             <ProductSwitcher productId={productId} />
+            <Tooltip content={t('help:center.open')}>
+              <Link to="/help" className={topbar.helpButton} aria-label={t('help:center.open')}>
+                <CircleHelp aria-hidden="true" />
+              </Link>
+            </Tooltip>
             <UserMenu />
           </div>
         </header>

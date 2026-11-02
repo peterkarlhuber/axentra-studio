@@ -21,6 +21,7 @@ import {
   layout,
   type Column,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { useCursorList } from '@/lib/useCursorList';
 import { RenderedView } from './RenderedView';
 import styles from './notify.module.css';
@@ -60,9 +61,12 @@ function MailboxUnavailable({ provider }: { provider?: string }) {
         icon={<MailX />}
         title={t('mailbox.unavailableTitle')}
         description={
-          provider
-            ? t('mailbox.unavailableBody', { provider })
-            : t('mailbox.unavailableBodyUnknown')
+          <>
+            {provider
+              ? t('mailbox.unavailableBody', { provider })
+              : t('mailbox.unavailableBodyUnknown')}{' '}
+            <HelpLink topic="notifications#mailbox">{t('common:help.learnMore')}</HelpLink>
+          </>
         }
       />
     </Card>

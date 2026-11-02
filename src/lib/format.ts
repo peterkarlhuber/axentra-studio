@@ -31,10 +31,17 @@ export function formatNumber(value: number, locale: string): string {
   return new Intl.NumberFormat(locale).format(value);
 }
 
+/** The Intl locale for a UI language: regional defaults for en/de, the tag itself otherwise. */
+export function intlLocale(language: string): string {
+  if (language === 'de') return 'de-DE';
+  if (language === 'en') return 'en-US';
+  return language;
+}
+
 /** Locale-aware formatters bound to the current UI language. */
 export function useFormatters() {
   const { i18n } = useTranslation();
-  const locale = i18n.language === 'de' ? 'de-DE' : 'en-US';
+  const locale = intlLocale(i18n.language);
   return {
     locale,
     dateTime: (value: string | null | undefined) => formatDateTime(value, locale),

@@ -1,0 +1,60 @@
+{
+  "title": "Log de auditoria",
+  "description": "Quem fez o quê e quando: logins, alterações de acesso e outras ações administrativas no servidor.",
+  "openDetails": "Mostrar detalhes de {{action}}",
+  "fields": {
+    "id": "ID do evento",
+    "time": "Horário",
+    "action": "Ação",
+    "actor": "Autor",
+    "actorType": "Tipo de autor",
+    "target": "Alvo",
+    "outcome": "Resultado",
+    "product": "Produto",
+    "tenant": "Tenant",
+    "requestId": "ID da requisição",
+    "ip": "Endereço IP",
+    "userAgent": "User agent",
+    "actorId": "ID do autor"
+  },
+  "filters": {
+    "label": "Filtrar eventos de auditoria",
+    "search": "Pesquisar",
+    "searchPlaceholder": "Texto livre",
+    "product": "Produto",
+    "allProducts": "Todos os produtos",
+    "tenant": "ID do tenant",
+    "action": "Ação",
+    "actor": "ID do autor",
+    "since": "De",
+    "until": "Até",
+    "apply": "Aplicar filtros",
+    "reset": "Redefinir filtros",
+    "allOutcomes": "Todos os resultados",
+    "more": "Mais filtros",
+    "fewer": "Menos filtros"
+  },
+  "empty": {
+    "title": "Nenhum evento de auditoria ainda",
+    "body": "Os eventos aparecem aqui assim que algo for alterado.",
+    "filteredTitle": "Nenhum evento correspondente",
+    "filteredBody": "Ajuste ou redefina os filtros."
+  },
+  "detail": {
+    "subtitle": "Evento de auditoria",
+    "details": "Detalhes",
+    "noDetails": "Este evento não tem detalhes adicionais.",
+    "notFound": "Não foi possível carregar o evento completo: ele não existe mais ou você não tem permissão para lê-lo. Os valores da lista são exibidos."
+  },
+  "info": {
+    "search": "Encontra parte da ação, o ID do alvo, o nome do autor ou o ID do autor, sem diferenciar maiúsculas e minúsculas. IDs de requisição não são pesquisados.",
+    "productAdmin": "“Todos os produtos” inclui também eventos de toda a instalação que não pertencem a nenhum produto, como logins.",
+    "productScoped": "Você vê os eventos dos produtos em que pode ler o log de auditoria (audit:read). Eventos de toda a instalação, como logins, exigem a permissão da plataforma platform:audit.",
+    "action": "O nome exato da ação, como tenancy.tenant.create. Termine com * para encontrar todas as ações que começam com ele, como tenancy.*.",
+    "range": "No seu horário local. “De” inclui esse momento, “Até” não.",
+    "outcomeLabel": "Sobre os resultados",
+    "outcome": "Sucesso: executado. Negado: recusado pelo servidor, por exemplo por uma senha errada. Falha: tentado, mas sem êxito.",
+    "requestIdLabel": "Sobre o ID da requisição",
+    "requestId": "Identifica a requisição HTTP que gerou este evento. As mensagens de erro e os logs do servidor mostram o mesmo ID."
+  }
+}

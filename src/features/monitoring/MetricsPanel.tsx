@@ -17,6 +17,7 @@ import {
   Skeleton,
   layout,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { useFormatters } from '@/lib/format';
 import {
   METRIC_GROUPS,
@@ -76,10 +77,18 @@ export function MetricsPanel() {
             icon={<BarChart3 />}
             title={t('metrics.disabledTitle')}
             description={t('metrics.disabledBody')}
+            action={
+              <HelpLink topic="health-monitoring#metrics-token">
+                {t('common:help.learnMore')}
+              </HelpLink>
+            }
           />
         ) : needsToken ? (
           <Alert tone="warning" title={t('metrics.tokenRequiredTitle')}>
-            {token ? t('metrics.tokenRejected') : t('metrics.tokenRequiredBody')}
+            {token ? t('metrics.tokenRejected') : t('metrics.tokenRequiredBody')}{' '}
+            <HelpLink topic="health-monitoring#metrics-token">
+              {t('common:help.learnMore')}
+            </HelpLink>
           </Alert>
         ) : metrics.isError ? (
           <ErrorState
@@ -96,7 +105,12 @@ export function MetricsPanel() {
             <h3 id={tokenId} className={styles.subTitle}>
               {t('metrics.tokenTitle')}
             </h3>
-            <FormField label={t('metrics.token')} help={t('metrics.tokenHelp')}>
+            <FormField
+              label={t('metrics.token')}
+              help={t('metrics.tokenHelp')}
+              info={t('metrics.tokenInfo')}
+              infoTopic="health-monitoring#metrics-token"
+            >
               <Input
                 type="password"
                 value={tokenDraft}
@@ -189,7 +203,10 @@ function MetricsView({ text }: { text: string }) {
           </li>
         ))}
       </ul>
-      <p className={layout.muted}>{t('metrics.perProcess')}</p>
+      <p className={layout.muted}>
+        {t('metrics.perProcess')}{' '}
+        <HelpLink topic="health-monitoring#metrics">{t('common:help.learnMore')}</HelpLink>
+      </p>
       {METRIC_GROUPS.map((group) => {
         const members = families.filter((family) => groupOf(family.name) === group);
         if (members.length === 0) return null;

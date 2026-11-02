@@ -1,0 +1,146 @@
+{
+  "app": {
+    "name": "Axentra Studio",
+    "studio": "Studio",
+    "home": "Accueil d’Axentra Studio"
+  },
+  "form": {
+    "required": "obligatoire"
+  },
+  "actions": {
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "dismiss": "Fermer la notification",
+    "save": "Enregistrer les modifications",
+    "done": "Terminé",
+    "refresh": "Actualiser"
+  },
+  "copy": {
+    "copy": "Copier dans le presse-papiers",
+    "copied": "Copié dans le presse-papiers",
+    "failed": "La copie a échoué. Sélectionne le texte et copie-le manuellement.",
+    "reveal": "Afficher la valeur",
+    "hide": "Masquer la valeur",
+    "copyJson": "Copier en JSON"
+  },
+  "confirm": {
+    "typeToConfirm": "Saisis {{text}} pour confirmer",
+    "typeToConfirmHelp": "Cela évite les clics accidentels."
+  },
+  "toast": {
+    "label": "Notification",
+    "region": "Notifications ({hotkey})"
+  },
+  "states": {
+    "loading": "Chargement…",
+    "connecting": "Connexion au serveur Axentra…",
+    "emptyTitle": "Rien pour l’instant"
+  },
+  "table": {
+    "showing_many": "{{count}} d’entrées affichées",
+    "showing_one": "{{count}} entrée affichée",
+    "showing_other": "{{count}} entrées affichées",
+    "loadMore": "Charger plus",
+    "allLoaded": "Toutes les entrées sont chargées",
+    "actions": "Actions"
+  },
+  "status": {
+    "active": "Actif",
+    "ok": "OK",
+    "ready": "Prêt",
+    "healthy": "Sain",
+    "pass": "Réussi",
+    "accepted": "Accepté",
+    "success": "Succès",
+    "pending": "En attente",
+    "invited": "Invité",
+    "degraded": "Dégradé",
+    "expired": "Expiré",
+    "archived": "Archivé",
+    "disabled": "Désactivé",
+    "revoked": "Révoqué",
+    "failed": "Échoué",
+    "error": "Erreur",
+    "down": "Hors service",
+    "fail": "En échec",
+    "denied": "Refusé",
+    "unavailable": "Indisponible",
+    "failure": "Échec",
+    "suspended": "Suspendu"
+  },
+  "userMenu": {
+    "open": "Ouvrir le menu utilisateur",
+    "profile": "Profil",
+    "language": "Langue",
+    "theme": "Thème",
+    "logout": "Se déconnecter"
+  },
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "crash": {
+    "title": "Une erreur s’est produite",
+    "body": "Cette page n’a pas pu être affichée. Un rechargement suffit généralement ; sinon, signale le problème.",
+    "notFound": "Cette page n’existe pas.",
+    "reload": "Recharger la page"
+  },
+  "members": {
+    "user": "Utilisateur",
+    "role": "Rôle",
+    "roleFor": "Rôle de {{name}}",
+    "since": "Membre depuis",
+    "email": "Adresse e-mail",
+    "add": "Ajouter un membre",
+    "addDescription": "Ajoute un utilisateur qui possède déjà un compte visible pour toi. Axentra ne révèle pas les autres comptes.",
+    "added": "Membre ajouté",
+    "roleChanged": "Rôle mis à jour",
+    "empty": "Aucun membre pour l’instant",
+    "remove": "Retirer le membre",
+    "removeNamed": "Retirer {{name}}",
+    "removeTitle": "Retirer le membre ?",
+    "removeBody": "{{name}} perd tous les accès accordés par cette adhésion.",
+    "removed": "Membre retiré",
+    "aboveYourLevel": "Supérieur à ton propre rôle : seule une personne disposant des autorisations de ce rôle peut le modifier",
+    "ceilingHelp": "Les rôles comportant des autorisations que tu ne détiens pas toi-même (ainsi que les rôles de propriétaire, sauf si tu es propriétaire) ne peuvent pas être attribués.",
+    "notFoundTitle": "Utilisateur introuvable",
+    "notFoundInvite": "Aucun compte visible pour toi n’a cette adresse. Envoie plutôt une invitation : la personne rejoint avec ce rôle après l’avoir acceptée.",
+    "notFoundOperator": "Aucun compte visible pour toi n’a cette adresse. Les membres d’un produit doivent déjà avoir un compte : invite d’abord la personne dans l’un des locataires du produit, ou demande à un administrateur de la plateforme de l’ajouter.",
+    "inviteInstead": "Envoyer plutôt une invitation",
+    "invited": "Invitation pour {{email}} créée",
+    "invitedTitle": "Invitation créée"
+  },
+  "roles": {
+    "choose": "Choisir un rôle",
+    "placeholder": "Nom du rôle",
+    "notGrantable": "{{role}} (au-delà de tes autorisations)"
+  },
+  "tenantPicker": {
+    "label": "Locataire",
+    "choose": "Choisir un locataire",
+    "none": "Aucun locataire",
+    "error": "Les locataires n’ont pas pu être chargés.",
+    "truncated": "Seuls les {{count}} premiers locataires sont affichés."
+  },
+  "sessions": {
+    "device": "Appareil",
+    "unknownDevice": "Appareil inconnu",
+    "current": "Cette session",
+    "lastSeen": "Dernière activité",
+    "expires": "Expire le",
+    "revoke": "Révoquer la session",
+    "empty": "Aucune session active",
+    "method": "Méthode de connexion"
+  },
+  "idempotency": {
+    "conflictTitle": "Déjà utilisée pour une autre requête",
+    "conflictRenewed": "Une tentative précédente avec d’autres valeurs a déjà utilisé la clé d’idempotence de cette requête. Une nouvelle clé a été générée : envoie à nouveau pour créer un nouvel élément.",
+    "conflictManual": "Cette clé d’idempotence a déjà été utilisée pour une autre requête (ou par un autre appelant). Utilise une nouvelle clé pour créer un nouvel élément, ou répète la requête d’origine sans modification.",
+    "newKey": "Utiliser une nouvelle clé"
+  },
+  "help": {
+    "learnMore": "En savoir plus"
+  }
+}

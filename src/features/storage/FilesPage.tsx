@@ -33,6 +33,7 @@ import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { useDebouncedValue } from '@/lib/useDebouncedValue';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { HelpLink } from '@/help/HelpLink';
 import { parseFilterValue } from '@/features/records/records-utils';
 import { FileDetailDrawer } from './FileDetailDrawer';
 import { formatBytes, storageLimits } from './storage-utils';
@@ -69,6 +70,7 @@ export function FilesPage() {
       <PageHeader
         title={t('files.title')}
         description={t('files.description')}
+        help="files"
         actions={
           canWrite ? (
             <Button variant="primary" icon={<Upload />} onClick={() => update({ upload: '1' })}>
@@ -101,7 +103,12 @@ export function FilesPage() {
             headingLevel={2}
             icon={<Lock />}
             title={t('files.noAccessTitle')}
-            description={t('files.noAccessBody')}
+            description={
+              <>
+                <p>{t('files.noAccessBody')}</p>
+                <HelpLink topic="files#troubleshooting" />
+              </>
+            }
           />
         </Card>
       ) : (
@@ -390,7 +397,9 @@ function TenantFiles({
           }
         }}
       >
-        <p className={layout.muted}>{t('delete.note')}</p>
+        <p className={layout.muted}>
+          {t('delete.note')} <HelpLink topic="files#delete" />
+        </p>
       </ConfirmDialog>
     </>
   );

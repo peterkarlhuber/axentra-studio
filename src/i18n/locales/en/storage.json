@@ -40,7 +40,8 @@
     "inert": "Stored inert",
     "inertWithType": "Yes, uploaded as {{type}}",
     "inertNoType": "Yes",
-    "inertHelp": "A blocked file type kept as an opaque attachment by the product’s content-type policy. It is only ever downloaded, never displayed."
+    "inertHelp": "A blocked file type kept as an opaque attachment by the product’s content-type policy. It is only ever downloaded, never displayed.",
+    "inertInfoLabel": "About inert files"
   },
   "filter": {
     "label": "Filter files",
@@ -78,12 +79,14 @@
     "bytes": "Storage limit",
     "unit": "Unit",
     "files": "File limit",
-    "inheritHelp": "Empty: inherit the default.",
+    "inheritHelp": "Leave empty to inherit the product or server default.",
     "invalid": "Enter a number of 0 or more, or leave the field empty.",
     "current": "Currently used: {{bytes}} in {{files}} files.",
     "belowUsage": "This limit is below the current usage. Existing files stay, but further uploads are refused.",
     "effectiveNote": "If someone else changed the quota in the meantime, saving is refused and you can reload.",
-    "saved": "Storage quota saved"
+    "saved": "Storage quota saved",
+    "bytesInfo": "Once the tenant’s active files reach this size, further uploads are refused. Existing files are never deleted. 0 blocks all uploads.",
+    "filesInfo": "Maximum number of active files. Expired files count until the server’s purge has run. 0 blocks all uploads."
   },
   "upload": {
     "title": "Upload file",
@@ -125,7 +128,11 @@
       "quota_exceededBody": "The tenant has reached its storage or file quota. Delete files or raise the quota."
     },
     "inertExtensions": "Accepted as inert attachments: {{extensions}}.",
-    "extraBlocked": "Also blocked by this product: {{items}}."
+    "extraBlocked": "Also blocked by this product: {{items}}.",
+    "fileInfo": "Empty files are refused. The server inspects the first bytes: a file that looks like an executable, HTML, SVG or script counts as blocked, whatever its name or declared type.",
+    "metadataInfo": "Keys: 1–64 characters from letters, digits and _ . : - . Text values up to 1,024 characters, 8 KiB in total. Labels appear in the audit log, so do not put secrets in them.",
+    "expiresInfo": "At this time the file disappears from lists and its download links stop working. The server’s purge removes it later; until then it still counts against the quota. The expiry cannot be changed after the upload.",
+    "rulesLink": "Which files are accepted?"
   },
   "detail": {
     "title": "File"
@@ -135,7 +142,8 @@
     "body": "Anyone with this link can download the file until it expires. It cannot be revoked individually; deleting the file ends it.",
     "url": "Download link",
     "expires": "Expires",
-    "presigned": "presigned by the object store"
+    "presigned": "presigned by the object store",
+    "learnMore": "How download links work"
   },
   "edit": {
     "title": "Edit file",
@@ -190,7 +198,9 @@
     "days_other": "{{formatted}} days",
     "backupTitle": "Backups are not reported",
     "backupBody": "The API reports neither backup status nor how long deleted file metadata is kept. Both are part of the server operation.",
-    "blockedProduct": "{{value}} ({{source}})"
+    "blockedProduct": "{{value}} ({{source}})",
+    "quotaInfoLabel": "About storage quotas",
+    "quotaInfo": "The effective limit: the tenant’s own quota (badge “Tenant”), otherwise the product default, otherwise the server default. Unlimited means no limit applies."
   },
   "policy": {
     "title": "File content-type policy",
@@ -217,6 +227,9 @@
     "inertNote": "Inert files are stored as application/octet-stream and downloaded as attachments with nosniff; their original type is kept for display only.",
     "saved": "Content-type policy saved",
     "loadError": "The content-type policy could not be loaded.",
-    "moduleOff": "The storage module is not enabled on this server."
+    "moduleOff": "The storage module is not enabled on this server.",
+    "modeInfo": "“Refuse the upload”: the uploader gets “File type not accepted”. “Store as inert attachment”: the file is kept as application/octet-stream and can only be downloaded, never displayed. Applies to new uploads and renames; stored files stay as they are.",
+    "inertExtensionsInfo": "Only matters while blocked files are refused. The file name decides, even when the content is what is blocked: a script named run.sh is kept as inert if “sh” is listed; the same script named run.txt is refused.",
+    "blockedInfo": "The built-in list (see “Always blocked”) cannot be shortened. Entries here are blocked in addition and follow the setting “Blocked file types”. At most 100 entries."
   }
 }

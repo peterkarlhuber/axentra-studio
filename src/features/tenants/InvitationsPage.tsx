@@ -17,7 +17,11 @@ export function InvitationsPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('invitations.title')} description={t('invitations.description')} />
+      <PageHeader
+        title={t('invitations.title')}
+        description={t('invitations.description')}
+        help="members-invitations#invite"
+      />
       <Card>
         <div className={layout.form}>
           <div className={layout.row}>

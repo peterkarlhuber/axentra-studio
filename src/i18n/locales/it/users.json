@@ -1,0 +1,66 @@
+{
+  "title": "Utenti",
+  "description": "Persone con accesso a questo prodotto: i suoi operatori e i membri dei suoi tenant.",
+  "search": "Cerca utenti",
+  "searchPlaceholder": "Nome o email",
+  "filters": {
+    "allStatuses": "Tutti gli stati"
+  },
+  "fields": {
+    "name": "Nome",
+    "email": "Indirizzo email",
+    "status": "Stato",
+    "locale": "Lingua",
+    "lastLogin": "Ultimo accesso",
+    "created": "Creato",
+    "platformRole": "Ruolo nella piattaforma",
+    "password": "Accesso con password"
+  },
+  "empty": {
+    "title": "Ancora nessun utente",
+    "body": "Gli utenti compaiono qui non appena sono membri di questo prodotto o di uno dei suoi tenant.",
+    "filteredTitle": "Nessun utente corrispondente",
+    "filteredBody": "Prova con un'altra ricerca o un altro filtro di stato."
+  },
+  "detail": {
+    "profile": "Profilo",
+    "sessions": "Sessioni attive",
+    "disable": "Disattiva utente",
+    "enable": "Attiva utente",
+    "disableTitle": "Disattivare l'utente?",
+    "disableBody": "{{name}} non potrà più accedere e tutte le sessioni terminano subito. Le appartenenze restano e le chiavi API create dall'utente continuano a funzionare.",
+    "disabled": "Utente disattivato",
+    "enabled": "Utente attivato",
+    "disabledNotice": "Questo utente è disattivato e non può accedere.",
+    "revokeSessions": "Disconnetti ovunque",
+    "revokeTitle": "Disconnettere ovunque?",
+    "revokeBody": "Tutte le sessioni di {{name}} termineranno immediatamente. L'utente potrà accedere di nuovo.",
+    "hasPassword": "Password impostata",
+    "noPassword": "Nessuna password (solo single sign-on)",
+    "sessionsRevoked_one": "{{count}} sessione revocata",
+    "sessionsRevoked_many": "{{count}} di sessioni revocate",
+    "sessionsRevoked_other": "{{count}} sessioni revocate",
+    "profileDescription": "Le appartenenze si gestiscono nella scheda Membri di ciascun tenant.",
+    "noEmail": "Nessun indirizzo email",
+    "noEmailInfo": "Questo utente accede solo tramite single sign-on e non può accettare inviti, che sono vincolati a un indirizzo email. Aggiungi invece l'utente direttamente ai tenant.",
+    "noEmailAbout": "Informazioni sugli utenti senza indirizzo email"
+  },
+  "platformRoles": {
+    "none": "Nessun ruolo nella piattaforma",
+    "platform_viewer": "Visualizzatore della piattaforma",
+    "platform_admin": "Amministratore della piattaforma",
+    "help": {
+      "none": "Accesso solo tramite appartenenze a prodotti e tenant.",
+      "platform_viewer": "Accesso in sola lettura a tutti i prodotti, alle impostazioni e al registro di audit dell'intera installazione.",
+      "platform_admin": "Controllo completo dell'intera installazione, inclusi tutti i prodotti e gli utenti."
+    }
+  },
+  "platformRole": {
+    "title": "Ruolo nella piattaforma",
+    "description": "Autorizzazioni valide per l'intera installazione, indipendenti dai prodotti.",
+    "apply": "Cambia ruolo nella piattaforma",
+    "saved": "Ruolo nella piattaforma modificato",
+    "confirmTitle": "Cambiare il ruolo nella piattaforma?",
+    "confirmBody": "{{name}} riceverà il ruolo nella piattaforma “{{role}}”. Questo modifica l'accesso a tutti i prodotti di questo server."
+  }
+}

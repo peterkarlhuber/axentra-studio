@@ -1,0 +1,82 @@
+{
+  "title": "Monitoramento",
+  "description": "Verificações de integridade, métricas do processo da API, retenção e rastreamento conforme informados pelo servidor Axentra.",
+  "health": {
+    "readiness": "Prontidão",
+    "readinessHelp": "Indica se o servidor consegue atender requisições (GET /v1/health/ready). Se uma verificação falhar, o servidor responde 503.",
+    "liveness": "Atividade",
+    "livenessHelp": "Indica se o processo do servidor responde (GET /v1/health/live)."
+  },
+  "metrics": {
+    "title": "Métricas",
+    "description": "GET /metrics – contadores Prometheus do processo da API que respondeu a esta requisição.",
+    "perProcess": "Os valores são contados desde o início deste processo da API. Cada processo (e o dispatcher de notificações ou worker separado) mantém seus próprios contadores; colete de todos os processos para ter uma visão completa.",
+    "kpiLabel": "Indicadores principais",
+    "kpi": {
+      "requests": "Requisições HTTP",
+      "errors5xx": "Erros do servidor (5xx)",
+      "errors4xx": "Erros do cliente (4xx)",
+      "latency": "Tempo médio de resposta",
+      "authFailures": "Recusadas (401/403)",
+      "notifyEnqueued": "Notificações enfileiradas",
+      "notifySent": "Notificações entregues",
+      "notifyFailed": "Entregas de notificação com falha"
+    },
+    "ms": "{{value}} ms",
+    "notExposed": "não informado",
+    "groups": {
+      "http": "HTTP",
+      "auth": "Autenticação",
+      "database": "Pool do banco de dados",
+      "notify": "Notificações",
+      "jobs": "Jobs e eventos",
+      "other": "Outras métricas"
+    },
+    "types": {
+      "counter": "Contador",
+      "gauge": "Medidor",
+      "histogram": "Histograma",
+      "summary": "Resumo",
+      "untyped": "Sem tipo"
+    },
+    "value": "Valor",
+    "count": "Contagem",
+    "average": "Média",
+    "noSamples": "Nenhum valor registrado ainda.",
+    "truncated": "Exibindo as {{shown}} maiores de {{total}} séries.",
+    "empty": "O servidor não informou métricas.",
+    "disabledTitle": "Métricas indisponíveis",
+    "disabledBody": "O servidor responde 404: as métricas estão desativadas (observability.metrics_enabled = false) ou este é um servidor de produção sem observability.metrics_token_ref, em que as métricas permanecem desativadas até que um token seja configurado.",
+    "tokenRequiredTitle": "É necessário um token de métricas",
+    "tokenRequiredBody": "Este servidor protege /metrics com um bearer token (observability.metrics_token_ref). Informe o token para ver as métricas.",
+    "tokenRejected": "O servidor não aceitou este token.",
+    "tokenTitle": "Token de métricas",
+    "token": "Bearer token",
+    "tokenHelp": "Mantido apenas nesta página enquanto ela estiver aberta; nunca é armazenado.",
+    "useToken": "Carregar métricas",
+    "tokenInfo": "O token é o segredo que o operador configurou em observability.metrics_token_ref. Ele é enviado somente para /metrics, como bearer token."
+  },
+  "ops": {
+    "title": "Retenção e rastreamento",
+    "forbidden": "As configurações de retenção e rastreamento são exibidas apenas para administradores da plataforma e gerentes de produto (GET /v1/settings).",
+    "retentionTitle": "Manutenção e retenção",
+    "retentionHelp": "Períodos de retenção informados por GET /v1/settings. Os dados são removidos quando a tarefa de manutenção é executada.",
+    "auditRetention": "Eventos de auditoria",
+    "jobRetention": "Jobs concluídos",
+    "notifyContentRetention": "Conteúdo das notificações",
+    "notifyMessageRetention": "Mensagens de notificação",
+    "days_many": "{{count}} de dias",
+    "days_one": "{{count}} dia",
+    "days_other": "{{count}} dias",
+    "notReported": "não informado pelo servidor",
+    "purgeHint": "Nada é excluído automaticamente: os dados mais antigos são removidos quando o operador executa",
+    "tracingTitle": "Rastreamento e logs",
+    "tracingHelp": "Configurações de OpenTelemetry e de log informadas por GET /v1/settings.",
+    "otel": "Rastreamento OpenTelemetry",
+    "enabled": "Ativado",
+    "disabled": "Desativado",
+    "logLevel": "Nível de log",
+    "notifyProvider": "Provedor de notificações",
+    "environment": "Ambiente"
+  }
+}

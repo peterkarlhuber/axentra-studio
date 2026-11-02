@@ -26,6 +26,8 @@ import {
   useToast,
   type Column,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import clsx from '@/lib/clsx';
 import { fieldErrors } from '@/lib/errors';
 import { useFormatters } from '@/lib/format';
@@ -95,10 +97,25 @@ function PeriodSummary({
   const quantity = (value: number | null) => formatQuantity(value, locale);
 
   return (
-    <Card title={t('tenant.periodTitle')} description={t('tenant.periodDescription')}>
+    <Card
+      title={t('tenant.periodTitle')}
+      description={
+        <>
+          {t('tenant.periodDescription')}{' '}
+          <InfoTip label={t('info.limitSourceLabel')} topic="usage#limit-source">
+            {t('info.limitSource')}
+          </InfoTip>
+        </>
+      }
+    >
       <div className={layout.stack}>
         <div className={styles.filters}>
-          <FormField label={t('tenant.periodAt')} help={t('tenant.periodAtHelp')}>
+          <FormField
+            label={t('tenant.periodAt')}
+            help={t('tenant.periodAtHelp')}
+            info={t('info.periodAt')}
+            infoTopic="usage#fixed-periods"
+          >
             <Input type="date" value={day} onChange={(event) => setDay(event.target.value)} />
           </FormField>
         </div>
@@ -279,7 +296,12 @@ function QuotaDialog({
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       title={t('quota.title', { meter: usage.name || usage.meter })}
-      description={t('quota.description')}
+      description={
+        <>
+          {t('quota.description')}{' '}
+          <HelpLink topic="usage#quota-override">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>
@@ -301,6 +323,8 @@ function QuotaDialog({
         <FormField
           label={t('quota.limit')}
           help={t('quota.limitHelp')}
+          info={t('info.quotaLimit')}
+          infoTopic="usage#quota-override"
           error={invalid ? t('meters.limitInvalid') : fields.limit}
         >
           <Input
@@ -310,7 +334,12 @@ function QuotaDialog({
             autoComplete="off"
           />
         </FormField>
-        <FormField label={t('meters.enforcement')} help={t('meters.enforcementHelp')}>
+        <FormField
+          label={t('meters.enforcement')}
+          help={t('meters.enforcementHelp')}
+          info={t('info.enforcement')}
+          infoTopic="usage#enforcement"
+        >
           <Select value={enforcement} onChange={(event) => setEnforcement(event.target.value)}>
             {ENFORCEMENTS.map((value) => (
               <option key={value} value={value}>
@@ -516,7 +545,15 @@ function ReservationLookup({
   const reservation = query.data;
 
   return (
-    <Card title={t('reservations.title')} description={t('reservations.description')}>
+    <Card
+      title={t('reservations.title')}
+      description={
+        <>
+          {t('reservations.description')}{' '}
+          <HelpLink topic="usage#reservations">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
+    >
       <div className={layout.stack}>
         <form className={styles.filters} onSubmit={submit}>
           <FormField label={t('reservations.id')}>
@@ -583,6 +620,8 @@ function ReservationLookup({
                 <FormField
                   label={t('reservations.commitQuantity')}
                   help={t('reservations.commitQuantityHelp')}
+                  info={t('info.commit')}
+                  infoTopic="usage#reservations"
                   error={commitInvalid ? t('meters.limitInvalid') : undefined}
                 >
                   <Input

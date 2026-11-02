@@ -10,6 +10,7 @@ import { FullPageMessage, SplashScreen } from '@/components/layout/FullPageMessa
 import { Button, EmptyState, ErrorState, PageHeader, Skeleton } from '@/components/ui';
 import { writePreference } from '@/lib/storage';
 import { loginPath, useMe, useSession } from './auth';
+import { HelpLink } from '@/help/HelpLink';
 import { ProductScopeContext, singleProductId, useMeta } from './contexts';
 import { IMPLEMENTED_MODULES, isModuleEnabled, MODULE_IDS, type StudioModule } from './modules';
 import { productAccess } from './permissions';
@@ -140,6 +141,12 @@ export function ModuleUnavailable({
             </p>
             <p>
               <code>{backendModule}</code>
+            </p>
+            <p>
+              <HelpLink
+                topic={enabled ? 'troubleshooting#not-in-studio' : 'server-configuration#modules'}
+                icon
+              />
             </p>
           </>
         }

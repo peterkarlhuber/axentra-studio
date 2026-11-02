@@ -1,0 +1,82 @@
+{
+  "title": "Monitoraggio",
+  "description": "Controlli di stato, metriche del processo API, conservazione dei dati e tracing come riportati dal server Axentra.",
+  "health": {
+    "readiness": "Readiness",
+    "readinessHelp": "Indica se il server può gestire le richieste (GET /v1/health/ready). Un controllo non riuscito fa rispondere il server con 503.",
+    "liveness": "Liveness",
+    "livenessHelp": "Indica se il processo del server risponde (GET /v1/health/live)."
+  },
+  "metrics": {
+    "title": "Metriche",
+    "description": "GET /metrics – contatori Prometheus del processo API che ha risposto a questa richiesta.",
+    "perProcess": "I valori sono conteggiati dall'avvio di questo processo API. Ogni processo (e il dispatcher delle notifiche o il worker separati) mantiene i propri contatori: per un quadro completo, raccogli le metriche da ogni processo.",
+    "kpiLabel": "Indicatori chiave",
+    "kpi": {
+      "requests": "Richieste HTTP",
+      "errors5xx": "Errori del server (5xx)",
+      "errors4xx": "Errori del client (4xx)",
+      "latency": "Tempo di risposta medio",
+      "authFailures": "Rifiutate (401/403)",
+      "notifyEnqueued": "Notifiche accodate",
+      "notifySent": "Notifiche consegnate",
+      "notifyFailed": "Consegne di notifiche non riuscite"
+    },
+    "ms": "{{value}} ms",
+    "notExposed": "non riportato",
+    "groups": {
+      "http": "HTTP",
+      "auth": "Autenticazione",
+      "database": "Pool del database",
+      "notify": "Notifiche",
+      "jobs": "Job ed eventi",
+      "other": "Altre metriche"
+    },
+    "types": {
+      "counter": "Counter",
+      "gauge": "Gauge",
+      "histogram": "Istogramma",
+      "summary": "Summary",
+      "untyped": "Senza tipo"
+    },
+    "value": "Valore",
+    "count": "Conteggio",
+    "average": "Media",
+    "noSamples": "Ancora nessun valore registrato.",
+    "truncated": "Visualizzate le {{shown}} serie più grandi su {{total}}.",
+    "empty": "Il server non ha riportato metriche.",
+    "disabledTitle": "Metriche non disponibili",
+    "disabledBody": "Il server risponde 404: le metriche sono disattivate (observability.metrics_enabled = false) oppure si tratta di un server di produzione senza observability.metrics_token_ref, in cui le metriche restano disattivate finché non viene configurato un token.",
+    "tokenRequiredTitle": "È necessario un token per le metriche",
+    "tokenRequiredBody": "Questo server protegge /metrics con un bearer token (observability.metrics_token_ref). Inserisci il token per visualizzare le metriche.",
+    "tokenRejected": "Il server non ha accettato questo token.",
+    "tokenTitle": "Token per le metriche",
+    "token": "Bearer token",
+    "tokenHelp": "Conservato solo in questa pagina finché è aperta; mai memorizzato.",
+    "useToken": "Carica metriche",
+    "tokenInfo": "Il token è il segreto che l'operatore ha configurato in observability.metrics_token_ref. Viene inviato solo a /metrics, come bearer token."
+  },
+  "ops": {
+    "title": "Conservazione e tracing",
+    "forbidden": "Le impostazioni di conservazione e tracing sono visibili solo agli amministratori della piattaforma e ai responsabili di prodotto (GET /v1/settings).",
+    "retentionTitle": "Manutenzione e conservazione",
+    "retentionHelp": "Periodi di conservazione riportati da GET /v1/settings. I dati vengono rimossi quando viene eseguita l'attività di manutenzione.",
+    "auditRetention": "Eventi di audit",
+    "jobRetention": "Job completati",
+    "notifyContentRetention": "Contenuto delle notifiche",
+    "notifyMessageRetention": "Messaggi di notifica",
+    "days_one": "{{count}} giorno",
+    "days_many": "{{count}} di giorni",
+    "days_other": "{{count}} giorni",
+    "notReported": "non riportato dal server",
+    "purgeHint": "Nulla viene eliminato automaticamente: i dati meno recenti vengono rimossi quando l'operatore esegue",
+    "tracingTitle": "Tracing e logging",
+    "tracingHelp": "Impostazioni di OpenTelemetry e dei log riportate da GET /v1/settings.",
+    "otel": "Tracing OpenTelemetry",
+    "enabled": "Attivato",
+    "disabled": "Disattivato",
+    "logLevel": "Livello di log",
+    "notifyProvider": "Provider delle notifiche",
+    "environment": "Ambiente"
+  }
+}

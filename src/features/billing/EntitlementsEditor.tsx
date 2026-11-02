@@ -2,6 +2,7 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, FormField, IconButton, Input, Select } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import type { EntitlementRow } from './billing-utils';
 import styles from './billing.module.css';
 
@@ -29,7 +30,10 @@ export function EntitlementsEditor({
   return (
     <fieldset className={styles.fieldset}>
       <legend className={styles.legend}>{legend}</legend>
-      <p className={styles.help}>{t('entitlements.editorHelp')}</p>
+      <p className={styles.help}>
+        {t('entitlements.editorHelp')}{' '}
+        <HelpLink topic="plans-subscriptions#entitlements">{t('common:help.learnMore')}</HelpLink>
+      </p>
       {meterKeys.length ? (
         <datalist id={listId}>
           {meterKeys.map((key) => (

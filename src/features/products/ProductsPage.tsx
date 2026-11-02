@@ -23,6 +23,7 @@ import {
   useToast,
   type Column,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { ProductFormDialog } from './ProductFormDialog';
 
 export function ProductsPage() {
@@ -108,6 +109,7 @@ export function ProductsPage() {
       <PageHeader
         title={t('title')}
         description={meta.mode === 'single' ? t('descriptionSingle') : t('description')}
+        help="products"
         actions={
           canCreate ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -118,7 +120,8 @@ export function ProductsPage() {
       />
       {meta.mode === 'single' ? (
         <Alert tone="info" title={t('singleMode.title')}>
-          {t('singleMode.body')}
+          {t('singleMode.body')}{' '}
+          <HelpLink topic="products#single-product-mode">{t('common:help.learnMore')}</HelpLink>
         </Alert>
       ) : null}
       <Card flush>

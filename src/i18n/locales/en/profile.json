@@ -13,11 +13,12 @@
   "name": {
     "title": "Display name",
     "label": "Name",
-    "saved": "Name saved"
+    "saved": "Name saved",
+    "info": "Shown in the user menu, in member lists and as the actor of your actions in the audit log. Earlier audit events keep the old name."
   },
   "password": {
     "title": "Change password",
-    "description": "Other sessions may be signed out after the change.",
+    "description": "All your other sessions are signed out when the password changes. This browser stays signed in.",
     "current": "Current password",
     "new": "New password",
     "confirm": "Repeat new password",
@@ -27,11 +28,15 @@
     "setTitle": "Set a password",
     "setDescription": "You currently sign in with single sign-on only. A password enables password sign-in as well. For your security this needs a recent sign-in.",
     "reauth": "Sign in again",
-    "reauthBody": "Setting a first password is only allowed shortly after you signed in. Sign in again (you come back here), then set the password within a few minutes."
+    "reauthBody": "Setting a first password is only allowed shortly after you signed in. Sign in again (you come back here), then set the password within a few minutes.",
+    "rules": "At least the server's minimum length (12 characters unless the operator changed it), not your email address, and at least 4 different characters.",
+    "setSubmit": "Set password"
   },
   "sessions": {
     "title": "Your sessions",
-    "description": "Browsers where you are signed in.",
-    "revoked": "Session revoked"
+    "description": "Browsers and devices where you are signed in.",
+    "revoked": "Session revoked",
+    "revokeOthers": "Sign out all other sessions",
+    "othersRevoked": "All other sessions signed out"
   }
 }

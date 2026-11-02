@@ -1,0 +1,60 @@
+{
+  "title": "Registro di audit",
+  "description": "Chi ha fatto cosa e quando: accessi, modifiche agli accessi e altre azioni amministrative sul server.",
+  "openDetails": "Mostra dettagli per {{action}}",
+  "fields": {
+    "id": "ID evento",
+    "time": "Ora",
+    "action": "Azione",
+    "actor": "Autore",
+    "actorType": "Tipo di autore",
+    "target": "Destinazione",
+    "outcome": "Esito",
+    "product": "Prodotto",
+    "tenant": "Tenant",
+    "requestId": "ID richiesta",
+    "ip": "Indirizzo IP",
+    "userAgent": "User agent",
+    "actorId": "ID autore"
+  },
+  "filters": {
+    "label": "Filtra eventi di audit",
+    "search": "Cerca",
+    "searchPlaceholder": "Testo libero",
+    "product": "Prodotto",
+    "allProducts": "Tutti i prodotti",
+    "tenant": "ID tenant",
+    "action": "Azione",
+    "actor": "ID autore",
+    "since": "Da",
+    "until": "A",
+    "apply": "Applica filtri",
+    "reset": "Reimposta filtri",
+    "allOutcomes": "Tutti gli esiti",
+    "more": "Altri filtri",
+    "fewer": "Meno filtri"
+  },
+  "empty": {
+    "title": "Ancora nessun evento di audit",
+    "body": "Gli eventi compaiono qui non appena qualcosa cambia.",
+    "filteredTitle": "Nessun evento corrispondente",
+    "filteredBody": "Modifica o reimposta i filtri."
+  },
+  "detail": {
+    "subtitle": "Evento di audit",
+    "details": "Dettagli",
+    "noDetails": "Questo evento non ha dettagli aggiuntivi.",
+    "notFound": "Impossibile caricare l'evento completo: non esiste più oppure non hai l'autorizzazione a leggerlo. Vengono mostrati i valori dell'elenco."
+  },
+  "info": {
+    "search": "Cerca in una parte dell'azione, nell'ID della destinazione, nel nome dell'autore o nell'ID dell'autore, senza distinguere maiuscole e minuscole. Gli ID richiesta non vengono cercati.",
+    "productAdmin": "“Tutti i prodotti” include anche gli eventi dell'intera installazione che non appartengono a nessun prodotto, come gli accessi.",
+    "productScoped": "Vedi gli eventi dei prodotti in cui puoi leggere il registro di audit (audit:read). Gli eventi dell'intera installazione, come gli accessi, richiedono l'autorizzazione della piattaforma platform:audit.",
+    "action": "Il nome esatto dell'azione, ad esempio tenancy.tenant.create. Terminalo con * per trovare tutte le azioni che iniziano così, ad esempio tenancy.*.",
+    "range": "Nella tua ora locale. “Da” include quel momento, “A” no.",
+    "outcomeLabel": "Informazioni sugli esiti",
+    "outcome": "Riuscito: eseguito. Negato: rifiutato dal server, ad esempio per una password errata. Errore: tentato ma non riuscito.",
+    "requestIdLabel": "Informazioni sull'ID richiesta",
+    "requestId": "Identifica la richiesta HTTP che ha causato questo evento. I messaggi di errore e i log del server mostrano lo stesso ID."
+  }
+}

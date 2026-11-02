@@ -23,6 +23,7 @@ import {
   layout,
   type Column,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { TenantPicker } from '@/features/shared/TenantPicker';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
@@ -69,7 +70,7 @@ export function UsagePage() {
   if (!tenantRead) {
     return (
       <div className={layout.stack}>
-        <PageHeader title={t('title')} description={t('description')} />
+        <PageHeader title={t('title')} description={t('description')} help="usage" />
         <EmptyState icon={<ShieldOff />} title={t('noAccess')} description={t('noAccessBody')} />
       </div>
     );
@@ -77,7 +78,7 @@ export function UsagePage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} />
+      <PageHeader title={t('title')} description={t('description')} help="usage" />
       <Tabs
         label={t('tabs.label')}
         value={tab}
@@ -168,7 +169,12 @@ function ProductOverview({ productId }: { productId: string }) {
       <EmptyState
         icon={<BarChart3 />}
         title={t('overview.noMeters')}
-        description={t('overview.noMetersBody')}
+        description={
+          <>
+            {t('overview.noMetersBody')}{' '}
+            <HelpLink topic="usage#create-meter">{t('common:help.learnMore')}</HelpLink>
+          </>
+        }
       />
     );
   }

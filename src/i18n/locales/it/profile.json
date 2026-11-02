@@ -1,0 +1,42 @@
+{
+  "title": "Profilo",
+  "description": "Il tuo account, la password e le sessioni.",
+  "account": {
+    "title": "Account",
+    "email": "Indirizzo email",
+    "id": "ID utente",
+    "platformRole": "Ruolo nella piattaforma",
+    "noPlatformRole": "Nessuno",
+    "products": "Prodotti",
+    "noProducts": "Nessuna appartenenza a prodotti"
+  },
+  "name": {
+    "title": "Nome visualizzato",
+    "label": "Nome",
+    "saved": "Nome salvato",
+    "info": "Mostrato nel menu utente, negli elenchi dei membri e come autore delle tue azioni nel registro di audit. Gli eventi di audit precedenti mantengono il vecchio nome."
+  },
+  "password": {
+    "title": "Cambia password",
+    "description": "Quando la password cambia, tutte le altre tue sessioni vengono disconnesse. Questo browser resta connesso.",
+    "current": "Password attuale",
+    "new": "Nuova password",
+    "confirm": "Ripeti nuova password",
+    "mismatch": "Le nuove password non coincidono.",
+    "submit": "Cambia password",
+    "changed": "Password modificata",
+    "setTitle": "Imposta una password",
+    "setDescription": "Attualmente accedi solo tramite single sign-on. Una password abilita anche l'accesso con password. Per sicurezza serve un accesso recente.",
+    "reauth": "Accedi di nuovo",
+    "reauthBody": "Puoi impostare una prima password solo poco dopo aver effettuato l'accesso. Accedi di nuovo (tornerai a questa pagina), quindi imposta la password entro pochi minuti.",
+    "rules": "Almeno la lunghezza minima del server (12 caratteri, salvo modifiche dell'operatore), diversa dal tuo indirizzo email e con almeno 4 caratteri diversi.",
+    "setSubmit": "Imposta password"
+  },
+  "sessions": {
+    "title": "Le tue sessioni",
+    "description": "Browser e dispositivi in cui hai effettuato l'accesso.",
+    "revoked": "Sessione revocata",
+    "revokeOthers": "Disconnetti tutte le altre sessioni",
+    "othersRevoked": "Tutte le altre sessioni sono state disconnesse"
+  }
+}

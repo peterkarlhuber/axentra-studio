@@ -27,7 +27,9 @@
     "closed": "Disconnected",
     "retryIn": "next attempt in {{seconds}} s",
     "accessLost": "Access to the stream was lost (session or permission changed).",
-    "reconnect": "Reconnect"
+    "reconnect": "Reconnect",
+    "infoLabel": "About the connection status",
+    "info": "Live means updates arrive. After a dropped connection Studio reconnects by itself and continues where it stopped. Disconnected means it stopped trying: choose Reconnect."
   },
   "jobs": {
     "title": "Jobs",
@@ -54,7 +56,7 @@
     "payload": "Payload",
     "payloadHelp": "A JSON object of at most 64 KB. Do not put secrets here: pass ids and read secrets inside the handler.",
     "idempotencyKey": "Idempotency key",
-    "idempotencyKeyHelp": "Enqueueing the same key again (same kind and tenant) returns the existing job instead of a new one.",
+    "idempotencyKeyHelp": "Sending the same request again with this key (same kind and tenant) returns the existing job instead of a new one.",
     "enqueue": "Enqueue job",
     "enqueueDescription": "Adds a job to the queue. It runs when a worker with a handler for its kind claims it.",
     "enqueueSubmit": "Enqueue",
@@ -79,7 +81,7 @@
     "cancelRequestedNotice": "Cancellation was requested. The job ends as cancelled when its handler notices, or as succeeded if it finishes its work first.",
     "stats": {
       "title": "Overview",
-      "last24h": "Last 24 hours: {{succeeded}} succeeded, {{failed}} failed.",
+      "last24h": "Last 24 hours: {{succeeded}} succeeded, {{failed}} failed or dead.",
       "oldestQueued": "Oldest queued job:",
       "noneQueued": "Nothing is waiting in the queue.",
       "filterHint": ", show only these jobs"
@@ -101,7 +103,16 @@
       "redactedHelp": "Sensitive values are redacted by the server.",
       "result": "Result",
       "noResult": "No result (yet)."
-    }
+    },
+    "statusInfoLabel": "About job statuses",
+    "statusInfo": "Failed: the handler reported a permanent error, so there are no more automatic attempts. Dead: every attempt ended with an error. You can retry both.",
+    "attemptsInfoLabel": "About attempts",
+    "attemptsInfo": "Every run counts as an attempt. After an error the job waits (2, 4, 8 … seconds with default settings) and runs again, until the maximum is reached and it becomes dead.",
+    "kindInfo": "Workers only take kinds they have a handler for. A job whose kind no running worker handles stays queued and never fails, so check the spelling.",
+    "payloadInfo": "The payload is stored as entered and is readable for everyone who can view jobs. Fields named like password, secret or token are only hidden in the display.",
+    "priorityInfo": "Priority only decides which due job a free worker takes first. It does not interrupt running jobs and does not guarantee an order.",
+    "maxAttemptsInfo": "After an error the job is retried with a growing wait. When the last attempt fails it becomes dead and stays in the list, so you can read the error and retry it.",
+    "idempotencyKeyInfo": "Studio fills in a new random key each time you open this dialog, so a double click enqueues only once. The same key with a different payload or priority is refused."
   },
   "schedules": {
     "title": "Schedules",
@@ -158,7 +169,7 @@
     "currentNextRun": "Next run now:",
     "nextRunHint": "The server computes the next run when you save.",
     "enabled": "Enabled",
-    "enabledHelp": "Disabled schedules keep their settings but do not fire.",
+    "enabledHelp": "Disabled schedules keep their settings but do not fire. When enabled again, they continue with the next slot; missed slots are not run.",
     "enable": "Enable",
     "disable": "Disable",
     "enabledToast": "Schedule “{{name}}” enabled",
@@ -169,7 +180,12 @@
     "deleted": "Schedule “{{name}}” deleted",
     "actionsFor": "Actions for schedule {{name}}",
     "empty": "No schedules yet",
-    "emptyBody": "Create a schedule to run a job regularly."
+    "emptyBody": "Create a schedule to run a job regularly.",
+    "timingInfoLabel": "About schedule times",
+    "timingInfo": "Schedules run in UTC, without daylight saving time. Next run and last run are shown in your own time zone.",
+    "intervalInfo": "Intervals are counted from 1 January 1970, 00:00 UTC, not from when you save. Every 15 minutes fires at :00, :15, :30 and :45; every day fires at 00:00 UTC.",
+    "cronInfo": "UTC, with no daylight saving adjustment: 09:00 in Berlin is 0 8 * * * in winter and 0 7 * * * in summer. If both day of month and day of week are set, a day matches when either one matches.",
+    "maxAttemptsHelp": "1 to 100 per enqueued job. Default 5."
   },
   "cronField": {
     "minute": "minute",
@@ -185,7 +201,7 @@
       "reserved": "Kinds starting with “axentra.” are reserved for Axentra."
     },
     "type": {
-      "invalid": "Use lowercase letters, digits and _ . : -, starting with a letter.",
+      "invalid": "Use lowercase letters, digits and _ . : -, starting with a letter (at most 150 characters).",
       "reserved": "Types starting with “axentra.” are reserved for Axentra."
     },
     "typeFilter": "Enter an exact type or a prefix ending in * (for example invoice.*).",
@@ -226,7 +242,10 @@
     "publish": "Publish event",
     "publishDescription": "Publishes an event in a tenant. Subscribers and matching webhooks receive it.",
     "publishSubmit": "Publish",
-    "published": "Event “{{type}}” published"
+    "published": "Event “{{type}}” published",
+    "actorInfoLabel": "About the actor",
+    "actorInfo": "Who published the event: user, api_key or system (Axentra or your product's own code), followed by its id.",
+    "publishInfo": "A published event is real: matching webhook endpoints and your product's subscribers receive it. Use test data and a tenant meant for testing."
   },
   "live": {
     "filters": "Live stream filter",
@@ -268,7 +287,7 @@
     "tenantFilterHelp": "Optional: only deliver events of this tenant. Cannot be changed later.",
     "allTenants": "All tenants",
     "enabled": "Enabled",
-    "enabledHelp": "Disabled endpoints receive no new deliveries.",
+    "enabledHelp": "Disabled endpoints receive no new deliveries. Deliveries still waiting for a retry end as dead.",
     "create": "New endpoint",
     "createDescription": "Axentra generates a signing secret for the endpoint and shows it once.",
     "createSubmit": "Create endpoint",
@@ -276,7 +295,7 @@
     "emptyBody": "Create an endpoint to send events to another system.",
     "secretTitle": "Signing secret",
     "secret": "Signing secret",
-    "secretUsage": "Verify the Axentra-Signature header with this secret: HMAC-SHA256 over “<t>.<raw body>”, compared in constant time; reject timestamps older than about 5 minutes.",
+    "secretUsage": "Verify the Axentra-Signature header with this secret (the complete value, including whsec_): HMAC-SHA256 over “<t>.<raw body>”, compared in constant time with each v1 value; reject timestamps more than about 5 minutes off.",
     "tabs": "Endpoint sections",
     "deliveries": "Deliveries",
     "settings": "Settings",
@@ -301,8 +320,13 @@
     "disabledNotice": "This endpoint is disabled and receives no new deliveries.",
     "delete": "Delete endpoint",
     "deleteTitle": "Delete webhook endpoint",
-    "deleteBody": "{{url}} receives no more deliveries, and its delivery log is removed.",
-    "deleted": "Endpoint deleted"
+    "deleteBody": "{{url}} receives no more deliveries, and its delivery history is deleted. To pause the endpoint instead, disable it.",
+    "deleted": "Endpoint deleted",
+    "urlInfo": "The host must resolve to public addresses only; localhost and private networks are refused. Redirects are not followed, and the receiver must answer with a 2xx status within 10 seconds.",
+    "eventTypesInfo": "An event is delivered when it matches any pattern. * stands for any text, so invoice.* covers invoice.created and invoice.paid. Up to 50 patterns.",
+    "secretHowTo": "How to verify signatures",
+    "emptyTutorial": "Tutorial: build a receiver",
+    "graceInfo": "During the grace period every request carries two signatures, one with the new and one with the previous secret, so a receiver that still has the old secret keeps working until you update it."
   },
   "deliveries": {
     "event": "Event",
@@ -326,6 +350,8 @@
     "redelivered": "Delivery queued again",
     "empty": "No deliveries yet",
     "emptyBody": "Deliveries appear when matching events are published or you send a test ping.",
-    "emptyFiltered": "No deliveries with this status"
+    "emptyFiltered": "No deliveries with this status",
+    "statusInfoLabel": "About delivery statuses",
+    "statusInfo": "Failed, retrying: another attempt is planned. Dead: no more automatic attempts (all used, URL refused or endpoint disabled). Fix the cause, then redeliver."
   }
 }

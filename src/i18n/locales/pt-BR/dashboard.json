@@ -1,0 +1,50 @@
+{
+  "title": "Painel",
+  "description": "Visão geral deste produto.",
+  "overview": "Visão geral",
+  "noStats": "O servidor não informou contadores para este produto.",
+  "stats": {
+    "tenants": "Tenants",
+    "users": "Usuários",
+    "apiKeys": "Chaves de API",
+    "audit24h": "Eventos de auditoria (24 h)",
+    "records": "Registros",
+    "denied24h": "Requisições negadas (24 h)",
+    "about": "Sobre “{{label}}”",
+    "hints": {
+      "tenants": "Todos os tenants deste produto, ativos e suspensos.",
+      "users": "Pessoas com acesso a este produto: membros dos seus tenants e operadores do produto, cada uma contada uma vez.",
+      "apiKeys": "Chaves deste produto que não foram revogadas. As chaves expiradas estão incluídas.",
+      "records": "Registros em todas as coleções e todos os tenants deste produto.",
+      "audit24h": "Eventos de auditoria deste produto nas últimas 24 horas, permitidos e negados.",
+      "denied24h": "Requisições das últimas 24 horas que foram recusadas, por exemplo por falta de uma permissão. Um aumento repentino costuma indicar uma chave de API ou uma função mal configurada."
+    }
+  },
+  "actions": {
+    "newTenant": "Novo tenant",
+    "newApiKey": "Nova chave de API"
+  },
+  "health": {
+    "title": "Integridade do sistema",
+    "details": "Detalhes"
+  },
+  "server": {
+    "title": "Servidor",
+    "name": "Versão do servidor",
+    "api": "Versão da API",
+    "mode": "Modo",
+    "modes": {
+      "single": "Produto único",
+      "multi": "Multiproduto"
+    },
+    "productId": "ID do produto",
+    "modules": "Módulos",
+    "enabled": "habilitado",
+    "disabled": "não habilitado",
+    "environment": "Ambiente",
+    "modeAbout": "Sobre o modo",
+    "modeInfo": "Produto único: o servidor atende exatamente um produto, criado a partir da configuração dele; não é possível criar nem arquivar produtos. Multiproduto: administradores da plataforma criam e arquivam produtos. O operador define o modo na configuração do servidor.",
+    "modulesAbout": "Sobre os módulos",
+    "modulesInfo": "Blocos funcionais do servidor. Módulos verdes estão habilitados; os cinza não estão, e as entradas deles na barra lateral mostram “Desat.”. Só o operador do servidor pode habilitar um módulo."
+  }
+}

@@ -37,29 +37,27 @@
 }
 .language {
   display: inline-flex;
-  gap: var(--ax-space-1);
-}
-.languageButton {
-  padding: var(--ax-space-1) var(--ax-space-2);
-  border: none;
-  border-radius: var(--ax-radius-sm);
-  background: none;
+  align-items: center;
+  gap: var(--ax-space-2);
   color: var(--ax-color-text-muted);
+}
+.languageLabel {
+  display: inline-flex;
+  align-items: center;
+}
+.languageSelect {
+  width: auto;
+  min-width: 10rem;
   font-size: var(--ax-text-sm);
-  cursor: pointer;
-}
-.languageButton[aria-pressed='true'] {
-  color: var(--ax-color-heading);
-  font-weight: var(--ax-weight-semibold);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.languageButton:hover {
-  color: var(--ax-color-text);
 }
 .footer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--ax-space-2);
+}
+.helpRow {
+  margin: 0;
+  text-align: center;
+  font-size: var(--ax-text-sm);
 }
