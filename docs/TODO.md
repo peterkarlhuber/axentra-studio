@@ -155,9 +155,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 - **Help: translations are reviewed by checks, not by native speakers.** `help:check` and
   `i18n:check` guarantee completeness, structure, links, placeholders and informal address; a
   native-speaker review of es, fr, pt-BR and it (wording, tone) is still open.
-- **Help: German calls plan entitlements "Berechtigungen".** The same word as permissions; a
-  distinct term (for example "Leistungen") would be clearer in `de/billing.json` and the German
-  billing articles.
 - **The e2e backend uses fixed names.** `scripts/e2e-backend.sh` drops and recreates
   `$AXENTRA_E2E_DB`/`$AXENTRA_E2E_DB_ROLE`; parallel runs on one PostgreSQL need distinct names
   and ports (all configurable through environment variables).

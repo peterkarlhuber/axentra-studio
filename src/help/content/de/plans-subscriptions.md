@@ -1,14 +1,14 @@
 ---
 title: Tarife und Abonnements
-summary: Tarife mit Preisen und Berechtigungen anlegen, Mandanten anmelden, ihre Abonnements verwalten und den Zahlungsanbieter verstehen.
-keywords: Abrechnung, Billing, Tarif, Plan, Preis, Preisstufe, Abonnement, Berechtigung, Feature-Flag, Funktion, Limit, Testphase, kündigen, überfällig, Stripe, Checkout, Zahlungsanbieter, manuelle Abrechnung
+summary: Tarife mit Preisen und Leistungen anlegen, Mandanten anmelden, ihre Abonnements verwalten und den Zahlungsanbieter verstehen.
+keywords: Abrechnung, Billing, Tarif, Plan, Preis, Preisstufe, Abonnement, Leistung, Tarifleistung, Entitlement, Feature-Flag, Funktion, Limit, Testphase, kündigen, überfällig, Stripe, Checkout, Zahlungsanbieter, manuelle Abrechnung
 ---
 
 Ein **Tarif** beschreibt, was ein Mandant bekommt: seine Preise, die Länge der Testphase und seine
-**Berechtigungen** (Funktionen, die ein- oder ausgeschaltet sind, und Nutzungslimits pro Zähler).
+**Leistungen** (Funktionen, die ein- oder ausgeschaltet sind, und Nutzungslimits pro Zähler).
 Ein **Abonnement** verbindet einen Mandanten mit einem Tarif und hat einen Status, etwa
 **Testphase**, **Aktiv** oder **Überfällig**. Dein Produkt fragt bei Axentra die wirksamen
-Berechtigungen eines Mandanten ab, um zu entscheiden, was der Mandant darf; das Nutzungsmodul
+Leistungen eines Mandanten ab, um zu entscheiden, was der Mandant darf; das Nutzungsmodul
 übernimmt daraus seine Standardkontingente. Produktverantwortliche richten auf diesen Seiten Tarife ein
 und unterstützen Kunden bei ihren Abonnements.
 
@@ -34,21 +34,21 @@ und unterstützen Kunden bei ihren Abonnements.
 4. Lass **Aktiv** eingeschaltet, damit der Tarif für neue Abonnements gewählt werden kann.
 5. Wähle unter **Preise** für jeden Preis **Preis hinzufügen** (siehe
    [Preise](help:plans-subscriptions#prices)). Ohne Preise ist der Tarif kostenlos.
-6. Füge unter **Berechtigungen** Funktionen und Limits hinzu (siehe
-   [Berechtigungen](help:plans-subscriptions#entitlements)).
+6. Füge unter **Leistungen** Funktionen und Limits hinzu (siehe
+   [Leistungen](help:plans-subscriptions#entitlements)).
 7. Wähle **Tarif anlegen**.
 
 ### Einstellungen eines Tarifs {#plan-settings}
 
-| Einstellung        | Was sie bewirkt                                                               | Erlaubte Werte / Standard                                                                                 |
-| ------------------ | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| **Name**           | Anzeigename                                                                   | 1 bis 200 Zeichen; Pflicht                                                                                |
-| **Schlüssel**      | Kennung des Tarifs                                                            | Kleinbuchstaben, Ziffern, `_` und `-`, beginnt mit einem Buchstaben, höchstens 63 Zeichen; nicht änderbar |
-| **Beschreibung**   | Freier Text                                                                   | Höchstens 2000 Zeichen                                                                                    |
-| **Testtage**       | Länge der Testphase neuer Abonnements                                         | 0 bis 365; Standard 0 (keine Testphase)                                                                   |
-| **Aktiv**          | Nur aktive Tarife können für neue Abonnements und Tarifwechsel gewählt werden | Standardmäßig eingeschaltet                                                                               |
-| **Preise**         | Betrag, Währung, Intervall und Preis-ID beim Anbieter                         | Höchstens 20 pro Tarif                                                                                    |
-| **Berechtigungen** | Funktionen und Limits                                                         | Höchstens 200 Einträge                                                                                    |
+| Einstellung      | Was sie bewirkt                                                               | Erlaubte Werte / Standard                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Name**         | Anzeigename                                                                   | 1 bis 200 Zeichen; Pflicht                                                                                |
+| **Schlüssel**    | Kennung des Tarifs                                                            | Kleinbuchstaben, Ziffern, `_` und `-`, beginnt mit einem Buchstaben, höchstens 63 Zeichen; nicht änderbar |
+| **Beschreibung** | Freier Text                                                                   | Höchstens 2000 Zeichen                                                                                    |
+| **Testtage**     | Länge der Testphase neuer Abonnements                                         | 0 bis 365; Standard 0 (keine Testphase)                                                                   |
+| **Aktiv**        | Nur aktive Tarife können für neue Abonnements und Tarifwechsel gewählt werden | Standardmäßig eingeschaltet                                                                               |
+| **Preise**       | Betrag, Währung, Intervall und Preis-ID beim Anbieter                         | Höchstens 20 pro Tarif                                                                                    |
+| **Leistungen**   | Funktionen und Limits                                                         | Höchstens 200 Einträge                                                                                    |
 
 ### Preise {#prices}
 
@@ -71,9 +71,9 @@ haben (zum Beispiel monatlich und jährlich); dann wählst du beim Anmelden eine
 davon. Bestehende Abonnements behalten eine Kopie des Preises, mit dem sie begonnen haben; spätere
 Preisänderungen betreffen sie also nicht.
 
-### Berechtigungen {#entitlements}
+### Leistungen {#entitlements}
 
-Berechtigungen sind eine flache Liste von Schlüsseln. Wähle im Editor für jede Zeile die **Art**:
+Leistungen sind eine flache Liste von Schlüsseln. Wähle im Editor für jede Zeile die **Art**:
 
 | Art          | Gespeichert als                                     | Wert                                     |
 | ------------ | --------------------------------------------------- | ---------------------------------------- |
@@ -93,7 +93,7 @@ und gibt sie zurück.
 
 Im Aktionsmenü der Zeile (**Aktionen für Tarif …**):
 
-- **Bearbeiten** ändert alles außer dem Schlüssel. Geänderte Berechtigungen gelten sofort für
+- **Bearbeiten** ändert alles außer dem Schlüssel. Geänderte Leistungen gelten sofort für
   jeden Mandanten mit diesem Tarif. Geänderte Preise gelten nur für neue Abonnements.
 - **Deaktivieren** blendet den Tarif für neue Abonnements und Tarifwechsel aus. Bestehende
   Abonnements laufen weiter. **Aktivieren** macht das rückgängig.
@@ -113,13 +113,13 @@ und wähle **Öffnen**.
 
 ### Status eines Abonnements {#status}
 
-| Status            | Bedeutung                               | Berechtigungen gelten |
-| ----------------- | --------------------------------------- | --------------------- |
-| **Unvollständig** | Wartet auf den Checkout beim Anbieter   | Nein                  |
-| **Testphase**     | Testtage laufen                         | Ja                    |
-| **Aktiv**         | Laufendes Abonnement                    | Ja                    |
-| **Überfällig**    | Zahlung ist überfällig; eine Kulanzzeit | Ja                    |
-| **Gekündigt**     | Beendet; endgültig                      | Nein                  |
+| Status            | Bedeutung                               | Leistungen gelten |
+| ----------------- | --------------------------------------- | ----------------- |
+| **Unvollständig** | Wartet auf den Checkout beim Anbieter   | Nein              |
+| **Testphase**     | Testtage laufen                         | Ja                |
+| **Aktiv**         | Laufendes Abonnement                    | Ja                |
+| **Überfällig**    | Zahlung ist überfällig; eine Kulanzzeit | Ja                |
+| **Gekündigt**     | Beendet; endgültig                      | Nein              |
 
 Erlaubte Wechsel: Unvollständig → Testphase, Aktiv oder Gekündigt; Testphase → Aktiv, Überfällig
 oder Gekündigt; Aktiv → Überfällig oder Gekündigt; Überfällig → Aktiv oder Gekündigt. Ein
@@ -150,7 +150,7 @@ Ein Mandant hat höchstens ein aktuelles (nicht gekündigtes) Abonnement.
 
 **Tarif wechseln** stellt den Mandanten auf einen anderen aktiven Tarif um (oder auf einen anderen
 Preis desselben Tarifs). Eine anteilige Verrechnung gibt es nicht: Axentra berechnet weder
-Gutschriften noch Nachbelastungen. Die Berechtigungen des neuen Tarifs gelten sofort.
+Gutschriften noch Nachbelastungen. Die Leistungen des neuen Tarifs gelten sofort.
 
 - Stripe-Abonnements werden in Stripe geändert (zum Beispiel im Kundenportal von Stripe); der
   Webhook aktualisiert dann Axentra. Studio blendet **Tarif wechseln** für sie aus.
@@ -164,7 +164,7 @@ Gutschriften noch Nachbelastungen. Die Berechtigungen des neuen Tarifs gelten so
 
 - **Zum Periodenende kündigen**: Das Abonnement bleibt bis zum Ende des aktuellen Zeitraums nutzbar
   und endet dann. **Fortsetzen** nimmt die geplante Kündigung zurück.
-- **Sofort kündigen**: Das Abonnement endet sofort, und seine Berechtigungen enden. Du bestätigst
+- **Sofort kündigen**: Das Abonnement endet sofort, und seine Leistungen enden. Du bestätigst
   durch Eingabe des Tarifschlüssels. Das lässt sich nicht rückgängig machen.
 
 Bei Stripe-Abonnements gibt Axentra die Kündigung zuerst an Stripe weiter.
@@ -183,11 +183,11 @@ Rechnung offen ist, oder **Aktiv**, wenn sie bezahlt ist. Nur erlaubte Übergän
 Wer während einer Testphase **Aktiv** setzt, beendet die Testphase sofort. Abonnements anderer
 Anbieter erhalten ihren Status über die Webhooks des Anbieters.
 
-## Wirksame Berechtigungen und Überschreibungen {#overrides}
+## Wirksame Leistungen und Überschreibungen {#overrides}
 
-**Wirksame Berechtigungen** auf der Abrechnungsseite des Mandanten zeigt, was der Mandant jetzt
+**Wirksame Leistungen** auf der Abrechnungsseite des Mandanten zeigt, was der Mandant jetzt
 bekommt: den **Tarif** (mit seinem Status), **Funktionen**, **Limits** und **Überschreibungen**.
-Das sind die Berechtigungen des Tarifs, solange das Abonnement im Status **Testphase**, **Aktiv**
+Das sind die Leistungen des Tarifs, solange das Abonnement im Status **Testphase**, **Aktiv**
 oder **Überfällig** ist, zusammengeführt mit den Überschreibungen des Mandanten. Ohne ein solches
 Abonnement bekommt der Mandant nur seine Überschreibungen (**Kein berechtigendes Abonnement**).
 
@@ -226,7 +226,7 @@ sie, dass die Konfiguration für dich nicht sichtbar ist. Siehe [Einstellungen](
 
 ## Für Entwickler {#developers}
 
-- Lies die wirksamen Berechtigungen eines Mandanten mit
+- Lies die wirksamen Leistungen eines Mandanten mit
   `GET /v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements`
   (`billing:read`). Die Antwort enthält `features` (Name → true/false), `limits`
   (Zählerschlüssel → Zahl oder `null` für unbegrenzt), `plan_key`, `subscription_status` und
@@ -248,7 +248,7 @@ sie, dass die Konfiguration für dich nicht sichtbar ist. Siehe [Einstellungen](
 - Keine anteilige Verrechnung, keine Gutscheine, Steuern, Rechnungen, Platzanzahlen oder
   nutzungsbasierten Preise.
 - Kein Endpunkt für ein Kundenportal; Tarifwechsel bei Stripe passieren in Stripe.
-- `past_due` behält die Berechtigungen; entscheide in deinem Produkt, ob du etwas einschränkst.
+- `past_due` behält die Leistungen; entscheide in deinem Produkt, ob du etwas einschränkst.
 - Siehe [Bekannte Einschränkungen](help:limitations).
 
 ## Fehlerbehebung {#troubleshooting}
@@ -267,4 +267,4 @@ sie, dass die Konfiguration für dich nicht sichtbar ist. Siehe [Einstellungen](
 | Das Abonnement bleibt **Unvollständig**                                                            | Der Checkout wurde nicht abgeschlossen, oder der Webhook erreicht den Server nicht           | Öffne den Checkout erneut; bitte den Betreiber, Webhook-Endpunkt und Secret zu prüfen          |
 | Die Testphase endet nicht (manuell)                                                                | Die Abrechnungsaufgabe ist nicht eingeplant                                                  | Bitte den Betreiber, `advance_periods` einzuplanen                                             |
 | **Zwischenzeitlich geändert**                                                                      | Jemand anderes hat den Tarif oder das Abonnement geändert                                    | Lade neu und wiederhole                                                                        |
-| Limits gelten nach der Kündigung nicht                                                             | Gekündigte Abonnements gewähren keine Berechtigungen                                         | Erwartet; es gilt der Standard des Zählers oder eine Kontingent-Überschreibung                 |
+| Limits gelten nach der Kündigung nicht                                                             | Gekündigte Abonnements gewähren keine Leistungen                                             | Erwartet; es gilt der Standard des Zählers oder eine Kontingent-Überschreibung                 |

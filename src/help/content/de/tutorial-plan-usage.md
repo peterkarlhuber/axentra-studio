@@ -1,7 +1,7 @@
 ---
 title: Tarife und Nutzung von Anfang bis Ende
 summary: Einen Zähler und einen Tarif mit Nutzungslimit definieren, einen Mandanten anmelden, Nutzung über die API erfassen und das Kontingent in Studio beobachten.
-keywords: Tutorial, Anleitung, Schritt für Schritt, Beispiel, Nutzungsmessung, Metering, Kontingent, Tariflimit, Berechtigung, Abonnement, API-Schlüssel, Nutzung erfassen, 429, Kontingent überschritten, quota exceeded
+keywords: Tutorial, Anleitung, Schritt für Schritt, Beispiel, Nutzungsmessung, Metering, Kontingent, Tariflimit, Leistung, Tarifleistung, Abonnement, API-Schlüssel, Nutzung erfassen, 429, Kontingent überschritten, quota exceeded
 ---
 
 In diesem Tutorial begrenzt du die API-Aufrufe eines Kunden über seinen Tarif. Du legst einen
@@ -38,19 +38,19 @@ Das Standardlimit von 100 gilt für Mandanten ohne Tariflimit, zum Beispiel Mand
 Abonnement. **Abrechnungszeitraum** lässt den Zähler dem Abonnementzyklus jedes Mandanten folgen.
 Details: [Nutzung und Kontingente](help:usage#create-meter).
 
-## Schritt 2: Einen Tarif mit Berechtigungen anlegen {#step-plan}
+## Schritt 2: Einen Tarif mit Leistungen anlegen {#step-plan}
 
 1. Öffne [Tarife](app:plans) und wähle **Neuer Tarif**.
 2. **Name**: Starter, **Schlüssel**: `starter`, **Testtage**: `0`, **Aktiv** eingeschaltet.
 3. Lass **Preise** leer. Der Tarif ist kostenlos, daher beginnt das Abonnement bei jedem
    Zahlungsanbieter sofort.
-4. Wähle unter **Berechtigungen** zweimal **Berechtigung hinzufügen**:
+4. Wähle unter **Leistungen** zweimal **Leistung hinzufügen**:
    - **Art** **Limit**, **Schlüssel des Zählers** `api_calls`, **Limit** `1000`;
    - **Art** **Funktion**, **Name der Funktion** `export`, **Eingeschaltet** an.
 5. Wähle **Tarif anlegen**.
 
 Der Tarif enthält jetzt `limit.api_calls: 1000` und `feature.export: true`. Details:
-[Berechtigungen](help:plans-subscriptions#entitlements).
+[Leistungen](help:plans-subscriptions#entitlements).
 
 > [!NOTE]
 > Ein kostenpflichtiger Tarif funktioniert genauso, aber die Anmeldung erfordert einen Checkout
@@ -63,7 +63,7 @@ Der Tarif enthält jetzt `limit.api_calls: 1000` und `feature.export: true`. Det
    dann **Öffnen**.
 2. Wähle unter **Abonnement** die Option **Tarif abonnieren**, dann **Starter (starter)**, und wähle
    **Abonnieren**.
-3. Das Abonnement zeigt **Aktiv**. **Wirksame Berechtigungen** listet `export: on` unter
+3. Das Abonnement zeigt **Aktiv**. **Wirksame Leistungen** listet `export: on` unter
    **Funktionen** und `api_calls` 1.000 unter **Limits**.
 
 ## Schritt 4: Einen API-Schlüssel zum Erfassen der Nutzung anlegen {#step-api-key}
@@ -193,7 +193,7 @@ Angenommen, du gestehst `acme` für diesen Zeitraum 2.000 Aufrufe zu:
    Die Anfrage wird mit `"source": "quota"` angenommen.
 
 Wähle **Überschreibung entfernen**, um zum Tariflimit zurückzukehren. Um das Limit für jeden
-Mandanten mit diesem Tarif zu ändern, bearbeite stattdessen die Berechtigung des Tarifs. Details:
+Mandanten mit diesem Tarif zu ändern, bearbeite stattdessen die Leistung des Tarifs. Details:
 [Woher das wirksame Limit kommt](help:usage#limit-source).
 
 ## Was dein Produkt damit macht {#in-your-product}

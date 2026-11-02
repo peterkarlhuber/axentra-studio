@@ -190,7 +190,7 @@
     "sampled": "Basierend auf den ersten {{count}} Mandantensummen."
   },
   "info": {
-    "key": "Dein Produkt erfasst Nutzung mit diesem Schlüssel, und Tarif-Berechtigungen verweisen darauf als „limit.“ gefolgt vom Schlüssel.",
+    "key": "Dein Produkt erfasst Nutzung mit diesem Schlüssel, und Tarifleistungen verweisen darauf als „limit.“ gefolgt vom Schlüssel.",
     "aggregation": "Nutze Summe für Dinge, die sich addieren, etwa Aufrufe oder Nachrichten. Nutze Maximum oder Letzter Wert für einen gemessenen Stand, etwa gespeicherte Bytes oder Plätze.",
     "resetPeriod": "Zeiträume haben feste Grenzen in UTC: Ein Tageslimit steht um Mitternacht UTC wieder zur Verfügung, nicht 24 Stunden nach der ersten Nutzung. „Abrechnungszeitraum“ verwendet Kalendermonate, solange der Mandant kein aktives Abonnement hat.",
     "defaultLimit": "Gilt nur für Mandanten ohne Kontingent-Überschreibung und ohne Tariflimit für diesen Zähler. Eine Änderung gilt ab der nächsten erfassten Nutzung.",

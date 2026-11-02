@@ -8,6 +8,9 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- German: plan entitlements are now **Leistungen** (Tarifleistung, Leistungsüberschreibung) in the
+  billing and usage texts and every German help article; "Berechtigung" means only permission
+  again (docs/i18n/TERMINOLOGY.md).
 - **Sign out all other sessions** no longer fails as a whole when one request fails: it reads the
   session list fresh, never revokes the session the server marks as current (and revokes nothing
   without that marker), sends at most 4 requests at a time, counts an already ended session as

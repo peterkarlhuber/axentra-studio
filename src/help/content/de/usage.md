@@ -71,7 +71,7 @@ Ein Zähler legt fest, _was_ gemessen wird. Er erfasst selbst nichts.
 
 | Einstellung          | Was sie bewirkt                                                                                                                                                                       | Erlaubte Werte / Standard                                                                 |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| **Schlüssel**        | Kennung, die die API-Aufrufe deines Produkts und die Tarifberechtigungen (`limit.<key>`) verwenden                                                                                    | Kleinbuchstaben, Ziffern, `_` und `.`, beginnt mit einem Buchstaben, höchstens 63 Zeichen |
+| **Schlüssel**        | Kennung, die die API-Aufrufe deines Produkts und die Tarifleistungen (`limit.<key>`) verwenden                                                                                        | Kleinbuchstaben, Ziffern, `_` und `.`, beginnt mit einem Buchstaben, höchstens 63 Zeichen |
 | **Name**             | Anzeigename                                                                                                                                                                           | Höchstens 200 Zeichen; optional                                                           |
 | **Einheit**          | Wird hinter Werten angezeigt                                                                                                                                                          | Freier Text; optional                                                                     |
 | **Aggregation**      | Wie Ereignisse eines Zeitraums zusammengefasst werden: **Summe** addiert Mengen, **Maximum** behält die höchste, **Letzter Wert** den Wert des Ereignisses mit dem jüngsten Zeitpunkt | `sum` (Standard), `max`, `last`                                                           |
@@ -138,12 +138,12 @@ Darunter folgen **Tägliche Nutzung** (ein Diagramm pro Zähler, gleiche Zeiträ
 
 Der erste Treffer gilt:
 
-| Kennzeichen                  | Quelle                                                                                                                                      |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Mandanten-Überschreibung** | Eine Kontingent-Überschreibung, die auf dieser Seite für diesen Mandanten festgelegt wurde                                                  |
-| **Aus dem Tarif**            | Die Berechtigung `limit.<meter key>` des Tarifs des Mandanten oder eine Berechtigungs-Überschreibung auf der Abrechnungsseite des Mandanten |
-| **Standard des Zählers**     | Das **Standardlimit** des Zählers                                                                                                           |
-| **Kein Limit**               | Nichts davon: unbegrenzt                                                                                                                    |
+| Kennzeichen                  | Quelle                                                                                                                             |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Mandanten-Überschreibung** | Eine Kontingent-Überschreibung, die auf dieser Seite für diesen Mandanten festgelegt wurde                                         |
+| **Aus dem Tarif**            | Die Leistung `limit.<meter key>` des Tarifs des Mandanten oder eine Leistungsüberschreibung auf der Abrechnungsseite des Mandanten |
+| **Standard des Zählers**     | Das **Standardlimit** des Zählers                                                                                                  |
+| **Kein Limit**               | Nichts davon: unbegrenzt                                                                                                           |
 
 Ein Tariflimit gilt nur, solange das Abonnement im Status **Testphase**, **Aktiv** oder
 **Überfällig** ist. Tariflimits verwenden die **Durchsetzung** des Zählers; nur eine
@@ -152,8 +152,8 @@ Kontingent-Überschreibung legt eine eigene fest.
 > [!NOTE]
 > Es gibt zwei Arten von Mandanten-Überschreibungen. Eine **Kontingent-Überschreibung** (diese
 > Seite) ersetzt das Limit eines Zählers einschließlich seiner Durchsetzung und gilt immer
-> vorrangig. Eine **Berechtigungs-Überschreibung** auf der Abrechnungsseite des Mandanten ersetzt
-> eine Tarifberechtigung und erscheint als **Aus dem Tarif**. Verwende pro Zähler nur einen
+> vorrangig. Eine **Leistungsüberschreibung** auf der Abrechnungsseite des Mandanten ersetzt
+> eine Tarifleistung und erscheint als **Aus dem Tarif**. Verwende pro Zähler nur einen
 > Mechanismus, damit es leicht nachvollziehbar bleibt.
 
 ## Eine Kontingent-Überschreibung festlegen oder entfernen {#quota-override}
