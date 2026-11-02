@@ -12,15 +12,22 @@ A row is added only when both checks below ran for that pair: the contract job (
 contract is byte-for-byte the backend's `openapi/axentra-v1.json` at that commit) and the e2e job
 (Playwright against a running server of that commit).
 
-| Studio version | Studio commit                    | `REQUIRED_API` | Axentra version | Axentra commit (`api/BACKEND_REF`) | API version | Tested on  | Result                                                                                     |
-| -------------- | -------------------------------- | -------------- | --------------- | ---------------------------------- | ----------- | ---------- | ------------------------------------------------------------------------------------------ |
-| 0.1.0 (unrel.) | `wip/ci` on top of `0b5ab56`[^1] | 1.0            | 0.1.0.dev0      | `a2ca72a7270d`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 126 passed, 0 failed, 0 skipped (local run)[^2] |
+| Studio version | Studio commit                    | `REQUIRED_API` | Axentra version | Axentra commit (`api/BACKEND_REF`) | API version | Tested on  | Result                                                                                                     |
+| -------------- | -------------------------------- | -------------- | --------------- | ---------------------------------- | ----------- | ---------- | ---------------------------------------------------------------------------------------------------------- |
+| 0.1.0 (unrel.) | `wip/ci` on top of `0b5ab56`[^1] | 1.0            | 0.1.0.dev0      | `a2ca72a7270d`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 126 passed, 0 failed, 0 skipped (local run)[^2]                 |
+| 0.1.0 (unrel.) | `wip/secadapt`[^1]               | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 186 passed, 0 failed, 0 skipped, twice in a row (local run)[^3] |
 
 [^1]: Fill in the merge commit when this branch lands on `main`.
 
 [^2]:
     `scripts/e2e-backend.sh run --worker` against the checkout at `a2ca72a`, PostgreSQL 16,
     Chromium, desktop and 360 px projects. Not yet confirmed by a CI run on GitHub.
+
+[^3]:
+    `scripts/e2e-backend.sh run --backend <checkout> --worker` against the checkout at `7511a37`
+    (backend security fixes: role ceiling, no user directory, `notify:send_external`, system-only
+    templates, idempotency replays), environment `test`, PostgreSQL 16, Chromium desktop and
+    360 px. Includes `e2e/security.spec.ts`. Not yet confirmed by a CI run on GitHub.
 
 ## What Studio checks at runtime
 
