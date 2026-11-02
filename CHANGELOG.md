@@ -28,6 +28,12 @@ All notable changes to Axentra Studio are documented here. The format follows
   effective settings, profile with password and sessions.
 - "Module not enabled" and "not yet available in Studio" states for files, jobs, events,
   webhooks, usage, plans, subscriptions and notifications.
+- Usage & Billing: meters (create, edit, (de)activate, delete), product usage chart (inline SVG
+  with data table) and totals per tenant, tenant usage per period with limits, quota overrides,
+  events and reservation lookup (commit/release); plans with Intl-formatted prices and
+  entitlements, subscriptions per tenant (subscribe, change plan, cancel at period end or now,
+  resume, manual status, hosted checkout only for a reported test provider), entitlement
+  overrides, payment provider state, and usage/billing widgets on the dashboard.
 - German and English translations with a parity check (`npm run i18n:check`).
 - Brand assets derived from the original logo with a reproducible script
   (`scripts/derive-branding.py`, provenance in `public/branding/README.md`).

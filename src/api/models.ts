@@ -79,3 +79,30 @@ export interface MemberLike {
 }
 
 export type UserPreferences = { theme?: 'light' | 'dark' | 'system'; [key: string]: unknown };
+
+// ---- Usage & Billing (studio-billing) ----------------------------------------------------
+export type Meter = Schemas['Meter'];
+export type MeterInput = Schemas['MeterCreate'];
+export type MeterPatch = Schemas['MeterUpdate'];
+export type MeterUsage = Schemas['MeterUsage'];
+export type TenantMeterTotal = Schemas['TenantMeterTotal'];
+export type TimeSeries = Schemas['TimeSeries'];
+export type TimePoint = Schemas['TimePoint'];
+export type UsageEvent = Schemas['UsageEvent'];
+export type UsageRecordInput = Schemas['UsageRecord'];
+export type UsageRecordResult = Schemas['RecordResult'];
+export type QuotaStatus = Schemas['QuotaStatus'];
+export type EffectiveLimit = Schemas['EffectiveLimit'];
+export type QuotaInput = Schemas['axentra__api__routes__usage__QuotaSet'];
+export type Reservation = Schemas['Reservation'];
+export type ReservationCommitInput = Schemas['ReservationCommit'];
+export type Plan = Schemas['Plan'];
+export type PlanInput = Schemas['PlanCreate'];
+export type PlanPatch = Schemas['PlanUpdate'];
+export type Price = Schemas['Price'];
+export type PriceInput = Schemas['PriceIn'];
+export type Subscription = Schemas['Subscription'];
+export type SubscriptionStatus = NonNullable<Schemas['Entitlements']['subscription_status']>;
+export type Entitlements = Schemas['Entitlements'];
+export type CheckoutInput = Schemas['CheckoutCreate'];
+export type CheckoutSession = Schemas['CheckoutSession'];

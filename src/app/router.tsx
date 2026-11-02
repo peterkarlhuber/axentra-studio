@@ -199,9 +199,52 @@ export const routes: RouteObject[] = [
                   futureModule('jobs', 'jobs', 'jobs'),
                   futureModule('events', 'events', 'events'),
                   futureModule('webhooks', 'webhooks', 'webhooks'),
-                  futureModule('usage', 'usage', 'usage'),
-                  futureModule('plans', 'billing', 'plans'),
-                  futureModule('subscriptions', 'billing', 'subscriptions'),
+                  /* ---- Usage & Billing (studio-billing) ---- */
+                  {
+                    path: 'usage',
+                    handle: { crumb: 'usage' },
+                    element: <ModuleGate module="usage" titleKey="usage" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/usage/UsagePage'), 'UsagePage'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'plans',
+                    handle: { crumb: 'plans' },
+                    element: <ModuleGate module="billing" titleKey="plans" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/billing/PlansPage'), 'PlansPage'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'subscriptions',
+                    handle: { crumb: 'subscriptions' },
+                    element: <ModuleGate module="billing" titleKey="subscriptions" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/billing/SubscriptionsPage'),
+                          'SubscriptionsPage',
+                        ),
+                      },
+                      {
+                        path: ':tenantId',
+                        handle: { crumbParam: 'tenantId' },
+                        lazy: lazyPage(
+                          () => import('@/features/billing/TenantBillingPage'),
+                          'TenantBillingPage',
+                        ),
+                      },
+                    ],
+                  },
+                  /* ---- end Usage & Billing ---- */
                   futureModule('notifications', 'notifications', 'notifications'),
                 ],
               },

@@ -6,9 +6,11 @@ backend. Studio is a separate, static single-page app that talks to the Axentra 
 
 - Products, tenants, users, invitations, members, roles, API keys, records (read-only),
   audit log, system health, effective server settings, and your own profile and sessions.
-- Sections for modules that are not part of Phase 1 (files, jobs, events, webhooks, usage,
-  plans, subscriptions, notifications) exist as routes. They show "module not enabled" or "not
-  yet available in Studio" and never show demo data.
+- Usage & Billing: meters, usage charts and totals, tenant quotas, events and reservations;
+  plans, subscriptions and entitlements (see "Usage & Billing" below).
+- Sections for modules that are not built yet (files, jobs, events, webhooks, notifications)
+  exist as routes. They show "module not enabled" or "not yet available in Studio" and never
+  show demo data.
 - German and English, light and dark theme, usable from 360 px wide, keyboard and screen
   reader accessible (WCAG 2.1 AA as the target).
 
@@ -147,6 +149,22 @@ handling, CSP violations and axe-core (WCAG 2.1 A/AA) on desktop and a 360 px ph
 The API must allow the origin `http://127.0.0.1:4173` (see Quick start). There is no e2e job in
 CI yet: it needs a running Axentra with PostgreSQL. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to use a
 preinstalled Chromium.
+
+## Usage & Billing
+
+- `/p/:id/usage`: overview (daily chart of a meter across tenants, totals per tenant), meters,
+  and tenant usage (current or any past period with limits and their source, quota overrides,
+  daily chart, events, reservation lookup by id). The chart is inline SVG colored with design
+  tokens; every chart has a data table for screen readers.
+- `/p/:id/plans` and `/p/:id/subscriptions[/:tenantId]`: plans with prices (entered in major
+  units, stored as `amount_minor`, shown with `Intl` in the UI language) and entitlements;
+  subscriptions per tenant with plan change (`If-Match`), cancellation, resume, manual status
+  and entitlement overrides.
+- **Studio never collects card or bank data.** The payment provider shown is what
+  `GET /v1/settings` reports (`billing.provider`, `billing.live_payments`; needs
+  `platform:settings` or `product:manage`). A checkout is offered only for paid plans when the
+  provider is `fake` or `stripe` with live payments off; it only opens the provider's hosted page.
+  With live payments on, Studio starts no checkout.
 
 ## Project layout
 
