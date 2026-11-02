@@ -253,7 +253,7 @@ async function seed(page, receiverUrl) {
     {
       name: 'logo-mark.png',
       mimeType: 'image/png',
-      buffer: readFileSync(join(ROOT, 'public/branding/axentra-mark-192.png')),
+      buffer: readFileSync(join(ROOT, 'public/branding/axentra-mark.png')),
     },
   ];
   for (const file of files) {
