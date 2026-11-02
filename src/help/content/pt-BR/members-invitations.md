@@ -82,13 +82,18 @@ convite**.
 
 ### Como o convite chega à pessoa {#delivery}
 
-- **Módulo de notificações habilitado:** o Axentra enfileira um e-mail de convite para o endereço
-  com o link de aceite, e o Studio mostra o mesmo link para que você também possa enviá-lo. O link
-  aponta para a configuração do produto `invitation_accept_url`, se estiver definida (veja as
-  [configurações do produto](help:products#settings)); caso contrário, para `/accept-invitation`
-  na URL pública do servidor. Para enviar as pessoas direto à página de aceite do Studio, defina
-  `invitation_accept_url` como
-  `https://<your Studio address>/invitations/accept?token={token}`.
+- **Módulo de notificações ativado:** o Axentra coloca na fila um e-mail de convite para o
+  endereço com o link de aceite, e o Studio mostra o mesmo link para que você também possa enviá-lo.
+  O link usa a configuração de produto `invitation_accept_url`, se definida (veja
+  [configurações do produto](help:products#settings)); caso contrário, a configuração do servidor
+  `notify.invitation_accept_url` (veja a
+  [configuração do servidor](help:server-configuration#user-visible-settings)); caso contrário,
+  `/accept-invitation` na URL pública do servidor. O Studio atende `/accept-invitation` e
+  redireciona para a página **Aceitar convite**, então o padrão funciona quando o Studio roda no
+  endereço da API. Quando o Studio tem endereço próprio (por exemplo `https://studio.example.com`
+  ao lado de `https://api.example.com`), o padrão aponta para a API: defina
+  `notify.invitation_accept_url` (ou a configuração de produto) como
+  `https://<your Studio address>/invitations/accept`.
 - **Módulo de notificações desabilitado:** nenhum e-mail é enviado e não há link. Compartilhe o
   **Token do convite**; a pessoa o informa na página **Aceitar convite** do Studio.
 
@@ -114,15 +119,20 @@ link e o token param de funcionar imediatamente.
 
 Isto é o que a pessoa convidada faz:
 
-1. Entre no Studio com a conta cujo endereço de e-mail é o endereço convidado. Uma pessoa sem conta
-   pode criar uma entrando pelo login único com esse endereço (quando o seu servidor oferece login
-   único); não existe autocadastro com senha.
-2. Abra o link do convite. Se você tiver apenas o token, abra **Aceitar convite** em
-   `/invitations/accept` e cole-o em **Token do convite**.
-3. Escolha **Aceitar convite**.
+1. Abra o link do convite. Se você não estiver conectado, **Entrar** avisa que você está entrando
+   para um convite e depois traz você de volta a ele, também após o login único.
+2. Entre com a conta cujo endereço de e-mail é o endereço convidado. Ainda não tem conta? Se a
+   página de login oferecer login único, entre por ali com o endereço convidado: o servidor cria
+   sua conta porque há um convite aberto para ele. Não há cadastro com senha; fale com quem
+   convidou você ou com um administrador.
+3. Confira a conta mostrada em **Conectado como** e escolha **Aceitar convite**. Nada acontece
+   antes da sua confirmação. O Studio tira o token da barra de endereço assim que a página o lê,
+   para que ele não fique no histórico do navegador; o campo **Token do convite** já vem
+   preenchido. Se você tiver só o token, abra **Aceitar convite** em `/invitations/accept` e
+   cole-o.
 
-O Studio confirma **Convite aceito** e o tenant aparece no seu produto. Se você já era membro do
-tenant, sua função atual permanece inalterada.
+**Convite aceito** mostra o tenant, o produto e sua função; **Abrir o tenant** leva você até ele.
+Se você já era membro do tenant, sua função atual continua a mesma.
 
 > [!IMPORTANT]
 > Um convite só pode ser aceito por um usuário conectado cuja conta tenha exatamente o endereço de
@@ -183,12 +193,25 @@ proprietário.
 produto (por exemplo, um erro de digitação no campo de texto livre da função) ou é uma função de
 produto.
 
-**Ao aceitar: Não encontrado, “the invitation is invalid or expired”.** O token está errado ou o
-convite já foi aceito, revogado ou tem mais de 7 dias. Peça um novo convite.
+**Ao aceitar: Este convite não pode ser usado.** O servidor responde da mesma forma para um
+convite expirado (após 7 dias), já aceito ou revogado, e para um link ou token incompleto ou
+digitado errado, para que ninguém consiga sondar convites. Peça um novo convite a quem convidou
+você.
 
-**Ao aceitar: Não permitido, “this invitation was sent to another email address”.** Você está
-conectado com uma conta de outro endereço ou com uma conta sem endereço de e-mail. Entre com o
-endereço convidado ou peça um convite para o seu endereço.
+**Ao aceitar: Convite para outro endereço de e-mail.** Você está conectado com uma conta de outro
+endereço. Escolha **Sair e usar o endereço convidado**: depois que você entrar com o endereço
+convidado, o Studio traz você de volta ao convite. Ou peça um convite para o seu próprio endereço.
+
+**Ao aceitar: Sua conta não tem endereço de e-mail.** Essas contas não podem aceitar convites. Entre
+com o endereço convidado ou peça a quem convidou você que adicione sua conta diretamente ao tenant.
+
+**Ao aceitar: Não foi possível acessar o servidor.** Nada foi alterado. Verifique sua conexão e
+escolha **Tentar novamente**.
+
+**O link do convite abre "não encontrada" ou uma página da API.** O link aponta para um endereço
+onde o Studio não roda. Defina a configuração do servidor `notify.invitation_accept_url` (ou a
+configuração de produto `invitation_accept_url`) com a página de aceite do Studio; veja
+[a entrega](#delivery). Até lá, envie o token e peça que a pessoa o cole em `/invitations/accept`.
 
 **A pessoa convidada não consegue entrar.** Ela ainda não tem conta. O Studio não cria contas e não
 existe cadastro com senha. Uma pessoa convidada obtém uma conta entrando pelo login único com o

@@ -82,11 +82,15 @@ The dialog **Invitation created** then shows the **Invitation link** (when avail
 ### How the invitation reaches the person {#delivery}
 
 - **Notifications module enabled:** Axentra queues an invitation email to the address with the
-  accept link, and Studio shows the same link so you can also send it yourself. The link points to
-  the product setting `invitation_accept_url`, if set (see
-  [product settings](help:products#settings)); otherwise to `/accept-invitation` on the server's
-  public URL. To send people straight to Studio's accept page, set `invitation_accept_url` to
-  `https://<your Studio address>/invitations/accept?token={token}`.
+  accept link, and Studio shows the same link so you can also send it yourself. The link uses the
+  product setting `invitation_accept_url` if set (see [product settings](help:products#settings)),
+  otherwise the server setting `notify.invitation_accept_url` (see
+  [server configuration](help:server-configuration#user-visible-settings)), otherwise
+  `/accept-invitation` on the server's public URL. Studio serves `/accept-invitation` and forwards
+  it to its **Accept invitation** page, so the default works when Studio runs on the API's address.
+  When Studio has its own address (for example `https://studio.example.com` next to
+  `https://api.example.com`), the default points to the API: set `notify.invitation_accept_url`
+  (or the product setting) to `https://<your Studio address>/invitations/accept`.
 - **Notifications module disabled:** no email is sent and there is no link. Share the
   **Invitation token**; the person enters it on Studio's **Accept invitation** page.
 
@@ -111,15 +115,20 @@ link and token stop working immediately.
 
 This is what the invited person does:
 
-1. Sign in to Studio with the account whose email address is the invited address. A person
-   without an account can create one by signing in through single sign-on with that address
-   (when your server offers single sign-on); there is no self sign-up with a password.
-2. Open the invitation link. If you only have the token, open **Accept invitation** at
-   `/invitations/accept` and paste it into **Invitation token**.
-3. Choose **Accept invitation**.
+1. Open the invitation link. If you are not signed in, **Sign in** says that you are signing in
+   for an invitation and brings you back to it afterwards, also after single sign-on.
+2. Sign in with the account whose email address is the invited address. No account yet? If the
+   sign-in page offers single sign-on, sign in there with the invited address: the server creates
+   your account because an invitation is open for it. There is no sign-up with a password; ask the
+   person who invited you or an administrator.
+3. Check the account shown under **Signed in as** and choose **Accept invitation**. Nothing
+   happens before you confirm. Studio takes the token out of the address bar as soon as the page
+   has read it, so it does not stay in the browser history; the **Invitation token** field is
+   filled in. If you only have the token, open **Accept invitation** at `/invitations/accept` and
+   paste it.
 
-Studio confirms **Invitation accepted** and the tenant appears in your product. If you were
-already a member of the tenant, your existing role stays unchanged.
+**Invitation accepted** names the tenant, the product and your role; **Open the tenant** takes you
+there. If you were already a member of the tenant, your existing role stays unchanged.
 
 > [!IMPORTANT]
 > An invitation can be accepted only by a signed-in user whose account has exactly the invited
@@ -176,12 +185,27 @@ and platform administrators can manage owners.
 **Please check your input: "unknown tenant role …".** The role key does not exist in this
 product (for example a typo in the free-text role field), or it is a product role.
 
-**When accepting: Not found, "the invitation is invalid or expired".** The token is wrong, or the
-invitation was already accepted, revoked or is older than 7 days. Ask for a new invitation.
+**When accepting: This invitation cannot be used.** The server gives the same answer for an
+invitation that has expired (after 7 days), was already accepted or was revoked, and for a link or
+token that is incomplete or mistyped, so that nobody can probe invitations. Ask the person who
+invited you for a new invitation.
 
-**When accepting: Not permitted, "this invitation was sent to another email address".** You are
-signed in with an account for a different address, or one without an email address. Sign in with
-the invited address, or ask for an invitation to your address.
+**When accepting: Invitation for another email address.** You are signed in with an account for a
+different address. Choose **Sign out and use the invited address**: after you sign in with the
+invited address, Studio brings you back to the invitation. Or ask for an invitation to your own
+address.
+
+**When accepting: Your account has no email address.** Such accounts cannot accept invitations.
+Sign in with the invited address, or ask the person who invited you to add your account to the
+tenant directly.
+
+**When accepting: The server could not be reached.** Nothing was changed. Check your connection and
+choose **Try again**.
+
+**The invitation link opens "page not found" or a page of the API.** The link points to an address
+where Studio does not run. Set the server setting `notify.invitation_accept_url` (or the product
+setting `invitation_accept_url`) to Studio's accept page, see [delivery](#delivery). Until then,
+send the token and have the person paste it under `/invitations/accept`.
 
 **The invited person cannot sign in.** They have no account yet. Studio cannot create accounts and
 there is no password sign-up. An invited person gets an account by signing in through single

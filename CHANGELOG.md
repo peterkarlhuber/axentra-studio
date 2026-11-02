@@ -149,6 +149,18 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Fixed
 
+- Invitation links: Axentra's default link `<public_url>/accept-invitation?token=…` ended on "page
+  not found". `/accept-invitation` is now a public alias of `/invitations/accept` (history replace,
+  query kept), so links already sent work when Studio runs on the API origin; split-origin
+  deployments set Axentra's new `notify.invitation_accept_url`. Signed-out visitors keep the token
+  through password and single sign-on login. The accept page removes the token from the address
+  bar, keeps it for the tab only, still waits for confirmation, shows the signed-in account and
+  explains every outcome with a next step (accepted with tenant and role, unusable invitation,
+  another address with "sign out and use the invited address", account without email, server not
+  reachable with retry). The sign-in page explains an invitation sign-in and how people without an
+  account get one. Help articles updated in all six languages; new `e2e/invitations.spec.ts`;
+  `scripts/e2e-backend.sh` points invitation links at the preview origin when the backend supports
+  the setting.
 - The full Playwright suite passes against one `scripts/e2e-backend.sh run --worker` backend: the
   worker loads the e2e job handlers, billing uses the `manual` provider, webhook retries are short,
   the a11y route sweep gets job, webhook, template and subscription fixtures (no skipped routes),

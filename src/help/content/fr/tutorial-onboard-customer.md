@@ -83,9 +83,12 @@ est activé, un **Lien d’invitation**. Les deux ne sont affichés qu’une seu
 > Le lien d’invitation est construit à partir du paramètre de produit `invitation_accept_url` (dans
 > les **Paramètres (JSON)** du produit), par exemple
 > `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Sans ce
-> paramètre, le lien pointe vers `/accept-invitation` sur l’adresse publique de l’API. Fais-le
-> pointer vers la page de ton produit qui accepte les invitations, ou vers la page du Studio
-> `https://studio.example.com/invitations/accept?token={token}` si tes clients utilisent le Studio.
+> paramètre, le paramètre de serveur `notify.invitation_accept_url` s’applique ; sans lui, le lien
+> pointe vers `/accept-invitation` sur l’adresse publique de l’API, que le Studio redirige vers sa
+> page d’acceptation quand il tourne à cette adresse. Fais pointer le lien vers la page de ton
+> produit qui accepte les invitations, ou vers la page du Studio
+> `https://studio.example.com/invitations/accept?token={token}` si tes clients utilisent le Studio
+> à sa propre adresse.
 
 **Vérification :** l’onglet **Invitations** affiche l’invitation avec le statut **En attente** et
 une date d’expiration 7 jours plus tard.
@@ -107,30 +110,31 @@ Axentra ne révèle pas si une adresse possède un compte : l’invitation fonc
 
 Voici ce que fait la personne invitée. Envoie-lui ces instructions.
 
-1. **Disposer d’un compte avec exactement l’adresse e-mail invitée.**
-   - Si ton serveur propose l’**authentification unique**, la personne se connecte avec
-     **Continuer avec …**. Un compte est créé automatiquement pour une adresse e-mail vérifiée qui
-     a une invitation ouverte.
-   - Avec la **connexion par mot de passe uniquement**, le compte doit déjà exister. Axentra ne
-     propose pas d’auto-inscription via l’API : les comptes pour la connexion par mot de passe sont
-     créés par le code de ton propre produit. Voir [Utilisateurs](help:users).
-2. **Ouvrir le lien d’invitation.** Si elle n’est pas connectée, la personne est dirigée vers
-   **Se connecter** puis, après la connexion, ramenée à l’invitation. Avec un jeton au lieu d’un
-   lien, elle ouvre **Accepter l’invitation** (adresse `/invitations/accept`) après s’être
-   connectée et colle le **Jeton d’invitation**.
-3. Choisir **Accepter l’invitation**.
+1. **Ouvrir le lien d’invitation.** Si elle n’est pas connectée, elle arrive sur **Connexion**, qui
+   mentionne l’invitation, puis revient à l’invitation après s’être connectée.
+2. **Se connecter avec exactement l’adresse e-mail invitée.**
+   - Si ton serveur propose l’**authentification unique**, la personne se connecte avec **Continuer
+     avec …**. Un compte est créé automatiquement pour une adresse e-mail vérifiée qui a une
+     invitation ouverte.
+   - Avec **connexion par mot de passe uniquement**, le compte doit déjà exister. Axentra n’offre
+     pas d’inscription libre par l’API : les comptes pour la connexion par mot de passe sont créés
+     par le code de ton produit. Voir [utilisateurs](help:users).
+3. **Confirmer.** La page affiche le compte sous **Connecté en tant que** ; la personne choisit
+   **Accepter l’invitation**. Avec un jeton au lieu d’un lien, elle ouvre **Accepter l’invitation**
+   (adresse `/invitations/accept`) après s’être connectée et colle le **Jeton d’invitation**.
 
-**Résultat attendu :** « Invitation acceptée. Tu as maintenant accès. » La personne voit désormais
-le produit et le locataire selon son rôle. L’accès peut mettre quelques instants à apparaître
+**Résultat attendu :** **Invitation acceptée**, avec le locataire, le produit et le rôle. La personne
+voit maintenant le locataire selon son rôle. L’accès peut mettre quelques instants à apparaître
 partout.
 
 **Vérification (de ton côté) :** dans l’onglet **Membres** du locataire, la personne apparaît avec
 le rôle **Owner**. Dans **Invitations**, le statut est **Accepté**.
 
 > [!WARNING]
-> Les invitations sont liées à l’adresse. Si la personne se connecte avec une autre adresse,
-> l’acceptation échoue avec **Non autorisé**. Une invitation acceptée, révoquée ou expirée ne peut
-> pas être réutilisée : crées-en une nouvelle.
+> Les invitations sont liées à l’adresse. Si la personne se connecte avec une autre adresse, le
+> Studio affiche **Invitation pour une autre adresse e-mail** et propose **Se déconnecter et
+> utiliser l’adresse invitée**. Une invitation acceptée, révoquée ou expirée ne peut pas être
+> réutilisée (**Cette invitation ne peut pas être utilisée**) : crées-en une nouvelle.
 
 ## Étape 6 : ajuster les rôles si nécessaire {#change-role}
 
@@ -205,15 +209,15 @@ Tous avec le résultat **Succès**. Une tentative d’acceptation avec le mauvai
 
 ## Dépannage {#troubleshooting}
 
-| Problème                                               | Cause et solution                                                                                                                                                                            |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Owner** ne peut pas être sélectionné                 | Tu n’as pas le rang de propriétaire ou certaines autorisations du rôle (plafond de rôle). Adresse-toi à un propriétaire du produit ou à un administrateur de la plateforme.                  |
-| **Conflit** lors de l’invitation                       | Une invitation ouverte existe déjà pour cette adresse dans ce locataire. Utilise-la ou révoque-la.                                                                                           |
-| **Utilisateur introuvable** dans **Ajouter un membre** | Aucun compte visible pour toi ne porte cette adresse. Utilise **Envoyer plutôt une invitation**.                                                                                             |
-| Le client ne reçoit pas d’e-mail                       | Le module `notify` est désactivé, ou la remise de l’e-mail a échoué. Envoie toi-même le lien ou le jeton ; consulte [Notifications](help:notifications).                                     |
-| Le lien ouvre une page « introuvable »                 | Le paramètre de produit `invitation_accept_url` est absent ou erroné (voir [remise](help:tutorial-onboard-customer#delivery)). Envoie le jeton et fais-le coller sous `/invitations/accept`. |
-| L’acceptation échoue avec **Non autorisé**             | La personne est connectée avec un compte dont l’adresse e-mail diffère de l’adresse invitée. Connecte-toi avec le bon compte, ou invite l’adresse réelle.                                    |
-| L’acceptation échoue avec **Introuvable**              | L’invitation a déjà été acceptée, a été révoquée ou date de plus de 7 jours. Crée une nouvelle invitation.                                                                                   |
-| L’authentification unique échoue avec « aucun compte » | Aucune invitation ouverte pour l’adresse vérifiée, et l’inscription est désactivée. Vérifie l’adresse invitée ; voir [Connexion](help:signing-in#sso-errors).                                |
-| L’intégration reçoit `403`                             | Il manque une autorisation à la clé, ou le locataire est suspendu.                                                                                                                           |
-| Aucun événement dans le journal d’audit                | Vérifie le filtre **Produit** et que tu disposes de `audit:read`.                                                                                                                            |
+| Problème                                                             | Cause et solution                                                                                                                                                                                                                                                                                                 |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Owner** ne peut pas être sélectionné                               | Tu n’as pas le rang de propriétaire ou certaines autorisations du rôle (plafond de rôle). Adresse-toi à un propriétaire du produit ou à un administrateur de la plateforme.                                                                                                                                       |
+| **Conflit** lors de l’invitation                                     | Une invitation ouverte existe déjà pour cette adresse dans ce locataire. Utilise-la ou révoque-la.                                                                                                                                                                                                                |
+| **Utilisateur introuvable** dans **Ajouter un membre**               | Aucun compte visible pour toi ne porte cette adresse. Utilise **Envoyer plutôt une invitation**.                                                                                                                                                                                                                  |
+| Le client ne reçoit pas d’e-mail                                     | Le module `notify` est désactivé, ou la remise de l’e-mail a échoué. Envoie toi-même le lien ou le jeton ; consulte [Notifications](help:notifications).                                                                                                                                                          |
+| Le lien ouvre une page « introuvable » ou une page de l’API          | Le Studio tourne à sa propre adresse, et ni le paramètre de serveur `notify.invitation_accept_url` ni le paramètre de produit `invitation_accept_url` ne pointe vers lui (voir [la remise](help:tutorial-onboard-customer#delivery)). En attendant, envoie le jeton et fais-le coller sous `/invitations/accept`. |
+| L’acceptation affiche **Invitation pour une autre adresse e-mail**   | La personne est connectée avec un compte dont l’adresse e-mail diffère de l’adresse invitée. Choisis **Se déconnecter et utiliser l’adresse invitée**, ou invite la bonne adresse.                                                                                                                                |
+| L’acceptation affiche **Cette invitation ne peut pas être utilisée** | L’invitation a déjà été acceptée, a été révoquée ou date de plus de 7 jours, ou le jeton est incomplet. Crée une nouvelle invitation.                                                                                                                                                                             |
+| L’authentification unique échoue avec « aucun compte »               | Aucune invitation ouverte pour l’adresse vérifiée, et l’inscription est désactivée. Vérifie l’adresse invitée ; voir [Connexion](help:signing-in#sso-errors).                                                                                                                                                     |
+| L’intégration reçoit `403`                                           | Il manque une autorisation à la clé, ou le locataire est suspendu.                                                                                                                                                                                                                                                |
+| Aucun événement dans le journal d’audit                              | Vérifie le filtre **Produit** et que tu disposes de `audit:read`.                                                                                                                                                                                                                                                 |

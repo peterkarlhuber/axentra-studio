@@ -138,16 +138,17 @@ laden; siehe [Fehlerbehebung](#troubleshooting).
 
 ## Servereinstellungen, die ändern, was Benutzer sehen {#user-visible-settings}
 
-| Servereinstellung                                     | Wirkung in Studio                                                                                                     | Standard                         |
-| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| `security.password_login`                             | Formular für die Passwortanmeldung auf der Anmeldeseite                                                               | an                               |
-| `[[oidc]]`-Anbieter                                   | Single-Sign-on-Schaltflächen auf der Anmeldeseite                                                                     | keine                            |
-| `security.session_ttl_hours` / `session_idle_minutes` | Wann sich Benutzer erneut anmelden müssen                                                                             | 12 h / 120 min                   |
-| `security.password_min_length`                        | Mindestlänge neuer Passwörter                                                                                         | 12                               |
-| `security.first_password` / `fresh_login_minutes`     | Ob und wie schnell Single-Sign-on-Benutzer in ihrem [Profil](help:profile#set-password) ein Passwort festlegen können | erlaubt innerhalb von 5 min      |
-| `security.max_body_bytes`, `storage.max_file_bytes`   | Größte Anfrage und größter Datei-Upload                                                                               | 10 MiB / 50 MiB                  |
-| `observability.metrics_enabled` / `metrics_token_ref` | Ob **Metriken** unter Monitoring Daten zeigt oder nach einem Token fragt                                              | an; in Produktion ohne Token aus |
-| `observability.audit_retention_days`                  | Wie weit das Audit-Protokoll nach `axentra maintenance purge` zurückreicht                                            | 365                              |
+| Servereinstellung                                     | Wirkung in Studio                                                                                                                                                                                  | Standard                                         |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `security.password_login`                             | Formular für die Passwortanmeldung auf der Anmeldeseite                                                                                                                                            | an                                               |
+| `[[oidc]]`-Anbieter                                   | Single-Sign-on-Schaltflächen auf der Anmeldeseite                                                                                                                                                  | keine                                            |
+| `security.session_ttl_hours` / `session_idle_minutes` | Wann sich Benutzer erneut anmelden müssen                                                                                                                                                          | 12 h / 120 min                                   |
+| `security.password_min_length`                        | Mindestlänge neuer Passwörter                                                                                                                                                                      | 12                                               |
+| `security.first_password` / `fresh_login_minutes`     | Ob und wie schnell Single-Sign-on-Benutzer in ihrem [Profil](help:profile#set-password) ein Passwort festlegen können                                                                              | erlaubt innerhalb von 5 min                      |
+| `security.max_body_bytes`, `storage.max_file_bytes`   | Größte Anfrage und größter Datei-Upload                                                                                                                                                            | 10 MiB / 50 MiB                                  |
+| `observability.metrics_enabled` / `metrics_token_ref` | Ob **Metriken** unter Monitoring Daten zeigt oder nach einem Token fragt                                                                                                                           | an; in Produktion ohne Token aus                 |
+| `observability.audit_retention_days`                  | Wie weit das Audit-Protokoll nach `axentra maintenance purge` zurückreicht                                                                                                                         | 365                                              |
+| `notify.invitation_accept_url`                        | Wohin Einladungslinks führen (eine eigene `invitation_accept_url` des Produkts hat Vorrang). Setze sie auf `https://<your Studio address>/invitations/accept`, wenn Studio eine eigene Adresse hat | `/accept-invitation` unter `security.public_url` |
 
 Ändere diese Werte in der TOML-Datei des Servers oder als Umgebungsvariablen
 `AXENTRA__<SECTION>__<KEY>` (zum Beispiel `AXENTRA__SECURITY__SESSION_TTL_HOURS=8`) und starte die
@@ -189,3 +190,8 @@ Im Studio-Repository: `README.md` (Konfiguration und Container-Image) und
   Modus `single`.
 - Das Audit-Protokoll zeigt die Adresse des Proxys als **IP-Adresse**: Füge den Proxy zu
   `security.trusted_proxies` hinzu.
+- Einladungslinks öffnen eine Seite der API oder **Seite nicht gefunden**: Studio hat eine eigene
+  Adresse. Setze `notify.invitation_accept_url` auf
+  `https://<your Studio address>/invitations/accept` und starte die API neu. Bereits verschickte
+  Links zeigen weiter auf die API; schick diesen Personen das Token oder eine neue Einladung. Siehe
+  [Mitglieder und Einladungen](help:members-invitations#delivery).

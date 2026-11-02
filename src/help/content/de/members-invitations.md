@@ -84,11 +84,16 @@ Der Dialog **Einladung erstellt** zeigt dann den **Einladungslink** (sofern verf
 
 - **Benachrichtigungsmodul aktiviert:** Axentra stellt eine Einladungs-E-Mail mit dem Annahmelink an
   die Adresse in die Warteschlange, und Studio zeigt denselben Link an, damit du ihn auch selbst
-  verschicken kannst. Der Link zeigt auf die Produkteinstellung `invitation_accept_url`, sofern
-  gesetzt (siehe [Produkteinstellungen](help:products#settings)), sonst auf `/accept-invitation` unter
-  der öffentlichen URL des Servers. Um Personen direkt auf die Annahmeseite von Studio zu schicken,
-  setze `invitation_accept_url` auf
-  `https://<your Studio address>/invitations/accept?token={token}`.
+  verschicken kannst. Der Link verwendet die Produkteinstellung `invitation_accept_url`, sofern
+  gesetzt (siehe [Produkteinstellungen](help:products#settings)), sonst die Servereinstellung
+  `notify.invitation_accept_url` (siehe
+  [Serverkonfiguration](help:server-configuration#user-visible-settings)), sonst
+  `/accept-invitation` unter der öffentlichen URL des Servers. Studio bedient `/accept-invitation`
+  und leitet auf seine Seite **Einladung annehmen** weiter, daher funktioniert der Standard, wenn
+  Studio unter der Adresse der API läuft. Hat Studio eine eigene Adresse (zum Beispiel
+  `https://studio.example.com` neben `https://api.example.com`), zeigt der Standard auf die API:
+  Setze `notify.invitation_accept_url` (oder die Produkteinstellung) auf
+  `https://<your Studio address>/invitations/accept`.
 - **Benachrichtigungsmodul deaktiviert:** Es wird keine E-Mail verschickt, und es gibt keinen Link.
   Gib das **Einladungs-Token** weiter; die Person gibt es auf der Studio-Seite **Einladung annehmen**
   ein.
@@ -115,16 +120,20 @@ widerrufen?**. Link und Token funktionieren sofort nicht mehr.
 
 So geht die eingeladene Person vor:
 
-1. Melde dich bei Studio mit dem Konto an, dessen E-Mail-Adresse die eingeladene Adresse ist. Wer
-   noch kein Konto hat, kann eines anlegen, indem er sich per Single Sign-on mit dieser Adresse
-   anmeldet (wenn dein Server Single Sign-on anbietet); eine Selbstregistrierung mit Passwort gibt es
-   nicht.
-2. Öffne den Einladungslink. Hast du nur das Token, öffne **Einladung annehmen** unter
-   `/invitations/accept` und füge es in **Einladungs-Token** ein.
-3. Wähle **Einladung annehmen**.
+1. Öffne den Einladungslink. Bist du nicht angemeldet, weist **Anmelden** darauf hin, dass du dich
+   für eine Einladung anmeldest, und bringt dich danach zu ihr zurück, auch nach Single Sign-on.
+2. Melde dich mit dem Konto an, dessen E-Mail-Adresse die eingeladene Adresse ist. Noch kein Konto?
+   Bietet die Anmeldeseite Single Sign-on an, melde dich dort mit der eingeladenen Adresse an: Der
+   Server legt dein Konto an, weil für sie eine Einladung offen ist. Eine Registrierung mit Passwort
+   gibt es nicht; wende dich an die Person, die dich eingeladen hat, oder an eine Administration.
+3. Prüfe das unter **Angemeldet als** angezeigte Konto und wähle **Einladung annehmen**. Vor deiner
+   Bestätigung passiert nichts. Studio entfernt das Token aus der Adresszeile, sobald die Seite es
+   gelesen hat, damit es nicht im Browserverlauf bleibt; das Feld **Einladungs-Token** ist
+   ausgefüllt. Hast du nur das Token, öffne **Einladung annehmen** unter `/invitations/accept` und
+   füge es ein.
 
-Studio bestätigt **Einladung angenommen**, und der Mandant erscheint in deinem Produkt. Warst du
-bereits Mitglied des Mandanten, bleibt deine bisherige Rolle unverändert.
+**Einladung angenommen** nennt Mandant, Produkt und deine Rolle; **Mandant öffnen** bringt dich
+dorthin. Warst du bereits Mitglied des Mandanten, bleibt deine bisherige Rolle unverändert.
 
 > [!IMPORTANT]
 > Eine Einladung kann nur ein angemeldeter Benutzer annehmen, dessen Konto genau die eingeladene
@@ -185,13 +194,28 @@ oder herabzustufen.
 Produkt nicht (zum Beispiel wegen eines Tippfehlers im Freitext-Rollenfeld), oder es handelt sich um
 eine Produktrolle.
 
-**Beim Annehmen: Nicht gefunden, „the invitation is invalid or expired“.** Das Token ist falsch, oder
-die Einladung wurde bereits angenommen, widerrufen oder ist älter als 7 Tage. Bitte um eine neue
-Einladung.
+**Beim Annehmen: Diese Einladung kann nicht verwendet werden.** Der Server antwortet gleich für
+eine Einladung, die abgelaufen (nach 7 Tagen), bereits angenommen oder widerrufen ist, und für einen
+unvollständigen oder falsch eingegebenen Link oder Token, damit niemand Einladungen ausprobieren
+kann. Bitte die Person, die dich eingeladen hat, um eine neue Einladung.
 
-**Beim Annehmen: Nicht erlaubt, „this invitation was sent to another email address“.** Du bist mit
-einem Konto für eine andere Adresse oder mit einem Konto ohne E-Mail-Adresse angemeldet. Melde dich
-mit der eingeladenen Adresse an oder bitte um eine Einladung an deine Adresse.
+**Beim Annehmen: Einladung für eine andere E-Mail-Adresse.** Du bist mit einem Konto für eine andere
+Adresse angemeldet. Wähle **Abmelden und eingeladene Adresse verwenden**: Nachdem du dich mit der
+eingeladenen Adresse angemeldet hast, bringt Studio dich zur Einladung zurück. Oder bitte um eine
+Einladung an deine eigene Adresse.
+
+**Beim Annehmen: Dein Konto hat keine E-Mail-Adresse.** Solche Konten können keine Einladungen
+annehmen. Melde dich mit der eingeladenen Adresse an oder bitte die Person, die dich eingeladen hat,
+dein Konto direkt zum Mandanten hinzuzufügen.
+
+**Beim Annehmen: Der Server ist nicht erreichbar.** Es wurde nichts verändert. Prüfe deine
+Verbindung und wähle **Erneut versuchen**.
+
+**Der Einladungslink öffnet „Seite nicht gefunden“ oder eine Seite der API.** Der Link zeigt auf eine
+Adresse, unter der Studio nicht läuft. Setze die Servereinstellung `notify.invitation_accept_url`
+(oder die Produkteinstellung `invitation_accept_url`) auf die Annahmeseite von Studio, siehe
+[Zustellung](#delivery). Bis dahin schick das Token und lass es unter `/invitations/accept`
+einfügen.
 
 **Die eingeladene Person kann sich nicht anmelden.** Die Person hat noch kein Konto. Studio kann keine Konten
 anlegen, und es gibt keine Registrierung mit Passwort. Eine eingeladene Person erhält ein Konto, indem

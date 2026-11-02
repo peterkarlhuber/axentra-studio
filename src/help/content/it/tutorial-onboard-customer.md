@@ -80,12 +80,15 @@ abilitato, un **Link di invito**. Entrambi vengono mostrati una sola volta.
   insieme alle istruzioni del [passo 5](help:tutorial-onboard-customer#accept-invitation).
 
 > [!NOTE]
-> Il link di invito viene costruito a partire dall'impostazione di prodotto `invitation_accept_url`
-> (nelle **Impostazioni (JSON)** del prodotto), per esempio
+> Il link di invito è costruito dall'impostazione di prodotto `invitation_accept_url` (nelle
+> **Impostazioni (JSON)** del prodotto), per esempio
 > `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Senza
-> questa impostazione, il link punta a `/accept-invitation` sull'indirizzo pubblico dell'API. Fallo
-> puntare alla pagina del tuo prodotto che accetta gli inviti, oppure alla pagina di Studio
-> `https://studio.example.com/invitations/accept?token={token}` se i tuoi clienti usano Studio.
+> questa impostazione vale l'impostazione del server `notify.invitation_accept_url`; senza
+> quest'ultima il link punta a `/accept-invitation` sull'indirizzo pubblico dell'API, che Studio
+> inoltra alla sua pagina di accettazione quando gira a quell'indirizzo. Fai puntare il link alla
+> pagina del tuo prodotto che accetta gli inviti, oppure alla pagina di Studio
+> `https://studio.example.com/invitations/accept?token={token}` se i tuoi clienti usano Studio a un
+> indirizzo proprio.
 
 **Verifica:** la scheda **Inviti** mostra l'invito con stato **In attesa** e una data di scadenza a
 7 giorni.
@@ -108,27 +111,30 @@ indirizzo.
 
 Ecco cosa fa la persona invitata. Inviale queste istruzioni.
 
-1. **Avere un account con esattamente l'indirizzo email invitato.**
+1. **Aprire il link di invito.** Se non ha effettuato l'accesso, arriva su **Accedi**, che menziona
+   l'invito, e dopo l'accesso torna all'invito.
+2. **Accedere esattamente con l'indirizzo email invitato.**
    - Se il tuo server offre il **single sign-on**, la persona accede con **Continua con …**. Per un
-     indirizzo email verificato con un invito aperto, l'account viene creato automaticamente.
-   - Con il **solo accesso tramite password**, l'account deve già esistere. Axentra non prevede
-     l'auto-registrazione tramite API: gli account per l'accesso con password vengono creati dal
-     codice del tuo prodotto. Vedi [utenti](help:users).
-2. **Aprire il link di invito.** Se non ha effettuato l'accesso, la persona viene portata ad
-   **Accedi** e, dopo l'accesso, di nuovo all'invito. Con un token invece di un link, dopo l'accesso
-   apre **Accetta invito** (indirizzo `/invitations/accept`) e incolla il **Token di invito**.
-3. Scegliere **Accetta invito**.
+     indirizzo email verificato con un invito aperto viene creato automaticamente un account.
+   - Con **solo accesso con password**, l'account deve già esistere. Axentra non offre una
+     registrazione autonoma tramite API: gli account per l'accesso con password li crea il codice del
+     tuo prodotto. Vedi [utenti](help:users).
+3. **Confermare.** La pagina mostra l'account in **Accesso effettuato come**; la persona sceglie
+   **Accetta invito**. Con un token invece di un link, dopo l'accesso apre **Accetta invito**
+   (indirizzo `/invitations/accept`) e incolla il **Token di invito**.
 
-**Risultato atteso:** "Invito accettato. Ora hai accesso." La persona ora vede il prodotto e il
-tenant in base al suo ruolo. Può volerci qualche istante prima che l'accesso sia visibile ovunque.
+**Risultato atteso:** **Invito accettato**, con il tenant, il prodotto e il ruolo. Ora la persona
+vede il tenant secondo il suo ruolo. Potrebbe essere necessario qualche istante prima che l'accesso
+sia visibile ovunque.
 
 **Verifica (tu):** nella scheda **Membri** del tenant, la persona è elencata con il ruolo
 **Owner**. In **Inviti**, lo stato è **Accettato**.
 
 > [!WARNING]
-> Gli inviti sono legati all'indirizzo. Se la persona accede con un altro indirizzo, l'accettazione
-> fallisce con **Non consentito**. Un invito già accettato, revocato o scaduto non può essere
-> riutilizzato: creane uno nuovo.
+> Gli inviti sono legati all'indirizzo. Se la persona accede con un altro indirizzo, Studio mostra
+> **Invito per un altro indirizzo email** e offre **Esci e usa l'indirizzo invitato**. Un invito
+> accettato, revocato o scaduto non può essere usato di nuovo (**Questo invito non può essere
+> usato**): creane uno nuovo.
 
 ## Passo 6: modificare i ruoli se necessario {#change-role}
 
@@ -199,15 +205,15 @@ Tutti con l'esito **Riuscito**. Un tentativo di accettazione con l'account sbagl
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-| Problema                                        | Causa e soluzione                                                                                                                                                                          |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Owner** non è selezionabile                   | Non hai il rango di proprietario o alcune delle autorizzazioni del ruolo (tetto dei ruoli). Chiedi a un proprietario del prodotto o a un amministratore della piattaforma.                 |
-| **Conflitto** durante l'invito                  | Esiste già un invito aperto per questo indirizzo in questo tenant. Usalo o revocalo.                                                                                                       |
-| **Utente non trovato** in **Aggiungi membro**   | Nessun account visibile per te ha questo indirizzo. Usa **Invia invece un invito**.                                                                                                        |
-| Il cliente non riceve nessuna email             | Il modulo `notify` è disattivato, oppure la consegna della posta non è riuscita. Invia tu il link o il token; controlla le [notifiche](help:notifications).                                |
-| Il link apre una pagina "non trovata"           | L'impostazione di prodotto `invitation_accept_url` manca o è errata (vedi [consegna](help:tutorial-onboard-customer#delivery)). Invia il token e fallo incollare in `/invitations/accept`. |
-| L'accettazione fallisce con **Non consentito**  | La persona ha effettuato l'accesso con un account la cui email è diversa dall'indirizzo invitato. Accedi con l'account giusto, oppure invita l'indirizzo effettivo.                        |
-| L'accettazione fallisce con **Non trovato**     | L'invito è già stato accettato, è stato revocato o ha più di 7 giorni. Crea un nuovo invito.                                                                                               |
-| Il single sign-on fallisce con "nessun account" | Non c'è un invito aperto per l'indirizzo verificato e la registrazione è disattivata. Controlla l'indirizzo invitato; vedi [accesso](help:signing-in#sso-errors).                          |
-| L'integrazione riceve `403`                     | Alla chiave manca un'autorizzazione, oppure il tenant è sospeso.                                                                                                                           |
-| Nessun evento nel registro di audit             | Controlla il filtro **Prodotto** e di avere `audit:read`.                                                                                                                                  |
+| Problema                                                         | Causa e soluzione                                                                                                                                                                                                                                                                                      |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Owner** non è selezionabile                                    | Non hai il rango di proprietario o alcune delle autorizzazioni del ruolo (tetto dei ruoli). Chiedi a un proprietario del prodotto o a un amministratore della piattaforma.                                                                                                                             |
+| **Conflitto** durante l'invito                                   | Esiste già un invito aperto per questo indirizzo in questo tenant. Usalo o revocalo.                                                                                                                                                                                                                   |
+| **Utente non trovato** in **Aggiungi membro**                    | Nessun account visibile per te ha questo indirizzo. Usa **Invia invece un invito**.                                                                                                                                                                                                                    |
+| Il cliente non riceve nessuna email                              | Il modulo `notify` è disattivato, oppure la consegna della posta non è riuscita. Invia tu il link o il token; controlla le [notifiche](help:notifications).                                                                                                                                            |
+| Il link apre una pagina "non trovata" o una pagina dell'API      | Studio gira a un indirizzo proprio e né l'impostazione del server `notify.invitation_accept_url` né l'impostazione di prodotto `invitation_accept_url` puntano lì (vedi [consegna](help:tutorial-onboard-customer#delivery)). Nel frattempo invia il token e fallo incollare in `/invitations/accept`. |
+| All'accettazione compare **Invito per un altro indirizzo email** | La persona ha effettuato l'accesso con un account la cui email è diversa dall'indirizzo invitato. Scegli **Esci e usa l'indirizzo invitato** oppure invita l'indirizzo giusto.                                                                                                                         |
+| All'accettazione compare **Questo invito non può essere usato**  | L'invito è già stato accettato, è stato revocato o ha più di 7 giorni, oppure il token è incompleto. Crea un nuovo invito.                                                                                                                                                                             |
+| Il single sign-on fallisce con "nessun account"                  | Non c'è un invito aperto per l'indirizzo verificato e la registrazione è disattivata. Controlla l'indirizzo invitato; vedi [accesso](help:signing-in#sso-errors).                                                                                                                                      |
+| L'integrazione riceve `403`                                      | Alla chiave manca un'autorizzazione, oppure il tenant è sospeso.                                                                                                                                                                                                                                       |
+| Nessun evento nel registro di audit                              | Controlla il filtro **Prodotto** e di avere `audit:read`.                                                                                                                                                                                                                                              |

@@ -395,6 +395,17 @@ senha errada _quanto_ para um endereço desconhecido; o servidor não revela qua
 tentativas demais, você vê [Muitas requisições](#rate-limited). Uma conta desabilitada não consegue
 entrar de forma alguma. Veja [Como entrar](help:signing-in).
 
+### Um link de convite não funciona {#invitation-link}
+
+- **Página não encontrada** ou uma página da API: o link aponta para um endereço onde o Studio não
+  roda. Peça a quem opera o servidor que defina `notify.invitation_accept_url`; veja
+  [Membros e convites](help:members-invitations#delivery).
+- **Este convite não pode ser usado**: o convite expirou, já foi usado ou revogado, ou o link está
+  incompleto. Peça um novo convite a quem convidou você.
+- **Convite para outro endereço de e-mail**: escolha **Sair e usar o endereço convidado**.
+
+Veja [Aceitar um convite](help:members-invitations#accept).
+
 ### Um segredo de exibição única foi perdido {#secret-lost}
 
 Segredos de chaves de API, segredos de assinatura de webhooks e links de convite são exibidos apenas

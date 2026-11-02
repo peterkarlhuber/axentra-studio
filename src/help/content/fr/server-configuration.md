@@ -141,16 +141,17 @@ Si le Studio affiche plutôt **Impossible de se connecter à Axentra**, il n’a
 
 ## Paramètres du serveur qui modifient ce que voient les utilisateurs {#user-visible-settings}
 
-| Paramètre du serveur                                  | Effet dans le Studio                                                                                                                              | Par défaut                                  |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `security.password_login`                             | Formulaire de connexion par mot de passe sur la page de connexion                                                                                 | activé                                      |
-| Fournisseurs `[[oidc]]`                               | Boutons d’authentification unique sur la page de connexion                                                                                        | aucun                                       |
-| `security.session_ttl_hours` / `session_idle_minutes` | Moment où les utilisateurs doivent se reconnecter                                                                                                 | 12 h / 120 min                              |
-| `security.password_min_length`                        | Longueur minimale des nouveaux mots de passe                                                                                                      | 12                                          |
-| `security.first_password` / `fresh_login_minutes`     | Si et dans quel délai les utilisateurs de l’authentification unique peuvent définir un mot de passe dans leur [profil](help:profile#set-password) | autorisé dans les 5 min                     |
-| `security.max_body_bytes`, `storage.max_file_bytes`   | Plus grande requête et plus grand téléversement de fichier                                                                                        | 10 Mio / 50 Mio                             |
-| `observability.metrics_enabled` / `metrics_token_ref` | Si les **Métriques** de la page Supervision affichent des données ou demandent un jeton                                                           | activé ; désactivé en production sans jeton |
-| `observability.audit_retention_days`                  | Profondeur de l’historique du journal d’audit après `axentra maintenance purge`                                                                   | 365                                         |
+| Paramètre du serveur                                  | Effet dans le Studio                                                                                                                                                                               | Par défaut                                     |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `security.password_login`                             | Formulaire de connexion par mot de passe sur la page de connexion                                                                                                                                  | activé                                         |
+| Fournisseurs `[[oidc]]`                               | Boutons d’authentification unique sur la page de connexion                                                                                                                                         | aucun                                          |
+| `security.session_ttl_hours` / `session_idle_minutes` | Moment où les utilisateurs doivent se reconnecter                                                                                                                                                  | 12 h / 120 min                                 |
+| `security.password_min_length`                        | Longueur minimale des nouveaux mots de passe                                                                                                                                                       | 12                                             |
+| `security.first_password` / `fresh_login_minutes`     | Si et dans quel délai les utilisateurs de l’authentification unique peuvent définir un mot de passe dans leur [profil](help:profile#set-password)                                                  | autorisé dans les 5 min                        |
+| `security.max_body_bytes`, `storage.max_file_bytes`   | Plus grande requête et plus grand téléversement de fichier                                                                                                                                         | 10 Mio / 50 Mio                                |
+| `observability.metrics_enabled` / `metrics_token_ref` | Si les **Métriques** de la page Supervision affichent des données ou demandent un jeton                                                                                                            | activé ; désactivé en production sans jeton    |
+| `observability.audit_retention_days`                  | Profondeur de l’historique du journal d’audit après `axentra maintenance purge`                                                                                                                    | 365                                            |
+| `notify.invitation_accept_url`                        | Où mènent les liens d’invitation (le `invitation_accept_url` propre au produit a la priorité). Règle-le sur `https://<your Studio address>/invitations/accept` quand le Studio a sa propre adresse | `/accept-invitation` sur `security.public_url` |
 
 Modifie-les dans le fichier TOML du serveur ou sous forme de variables d’environnement
 `AXENTRA__<SECTION>__<KEY>` (par exemple `AXENTRA__SECURITY__SESSION_TTL_HOURS=8`), puis redémarre
@@ -194,3 +195,8 @@ Dans le dépôt du Studio : `README.md` (configuration et image de conteneur) e
   `single`.
 - Le journal d’audit affiche l’adresse du proxy comme **Adresse IP** : ajoute le proxy à
   `security.trusted_proxies`.
+- Les liens d’invitation ouvrent une page de l’API ou **Page introuvable** : le Studio a sa propre
+  adresse. Règle `notify.invitation_accept_url` sur
+  `https://<your Studio address>/invitations/accept` et redémarre l’API. Les liens déjà envoyés
+  pointent toujours vers l’API ; envoie à ces personnes le jeton ou une nouvelle invitation. Voir
+  [Membres et invitations](help:members-invitations#delivery).
