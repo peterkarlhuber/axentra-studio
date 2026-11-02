@@ -2788,7 +2788,7 @@ export interface components {
              * Channel
              * @enum {string}
              */
-            channel: "email" | "sms" | "push";
+            channel: "email" | "sms" | "push" | "inbox";
             content?: components["schemas"]["MessageContent"] | null;
             /**
              * Content State
@@ -2820,6 +2820,8 @@ export interface components {
             provider: string | null;
             /** Provider Message Id */
             provider_message_id: string | null;
+            /** Read At */
+            read_at?: string | null;
             /** Recipient */
             recipient: string;
             /** Recipient User Id */
@@ -4182,7 +4184,7 @@ export interface components {
              * Channel
              * @enum {string}
              */
-            channel: "email" | "sms" | "push";
+            channel: "email" | "sms" | "push" | "inbox";
             /** Created At */
             created_at?: string | null;
             /** Description */
@@ -4229,7 +4231,7 @@ export interface components {
              * @default email
              * @enum {string}
              */
-            channel: "email" | "sms" | "push";
+            channel: "email" | "sms" | "push" | "inbox";
             /**
              * Description
              * @default
@@ -4263,7 +4265,7 @@ export interface components {
             /** Category */
             category?: string | null;
             /** Channel */
-            channel?: ("email" | "sms" | "push") | null;
+            channel?: ("email" | "sms" | "push" | "inbox") | null;
             /** Description */
             description?: string | null;
             /** Name */
