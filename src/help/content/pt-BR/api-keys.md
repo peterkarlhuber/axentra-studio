@@ -100,10 +100,10 @@ key-rotation
 
 ### Período de carência {#grace-period}
 
-| Opção                                            | Efeito                                                                                                     |
-| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| **Nenhum – o segredo antigo para imediatamente** | A chave antiga é revogada na hora. Os serviços que ainda a usam falham até receberem o novo segredo.       |
-| **1 hora**, **24 horas**, **7 dias**             | A chave antiga e a nova funcionam até o fim do período. As duas aparecem como **Ativo**, com o mesmo nome. |
+| Opção                                                          | Efeito                                                                                                     |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Nenhum – o segredo antigo deixa de funcionar imediatamente** | A chave antiga é revogada na hora. Os serviços que ainda a usam falham até receberem o novo segredo.       |
+| **1 hora**, **24 horas**, **7 dias**                           | A chave antiga e a nova funcionam até o fim do período. As duas aparecem como **Ativo**, com o mesmo nome. |
 
 > [!TIP]
 > Rotação sem indisponibilidade: rotacione com **24 horas**, implante o novo segredo em todos os

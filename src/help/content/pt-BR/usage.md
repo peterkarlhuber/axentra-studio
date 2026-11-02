@@ -9,8 +9,8 @@ bytes armazenados, relatórios gerados. Você define **Medidores** no Studio; o 
 **Eventos de uso** neles pela API. O Axentra soma os eventos por tenant e período, compara o
 resultado com o **Limite** do tenant (de uma substituição de cota, do plano ou do padrão do
 medidor) e recusa ou sinaliza o uso acima dele. Operadores do produto usam esta tela para definir
-medidores e acompanhar o consumo; a equipe de suporte a usa para responder "por que minha
-requisição foi recusada?".
+medidores e acompanhar o consumo; a equipe de suporte a usa para responder “por que minha
+requisição foi recusada?”.
 
 > [!IMPORTANT]
 > A tela **Uso** precisa do módulo `usage` no servidor. Sem ele, **Uso** não aparece na navegação.
@@ -112,7 +112,7 @@ No menu de ações da linha (**Ações do medidor …**):
 1. Abra a guia **Uso do tenant** e escolha o tenant (ou selecione um tenant em **Totais por tenant**).
 2. **Uso no período** mostra um cartão para cada medidor ativo com:
    - o valor no período atual e, para medidores com limite, uma barra com
-     "_usado_ de _limite_ usado (_n_ %), incluindo reservas";
+     “_usado_ de _limite_ usado (_n_ %), incluindo reservas”;
    - de onde vem o limite (veja abaixo) e **Limite rígido** ou **Limite flexível**;
    - **Acima do limite** quando um uso com limite flexível ultrapassou o limite;
    - **Período**, **Eventos**, **Reservado** (se houver) e **Restante**.
@@ -226,7 +226,7 @@ A API não tem uma lista de reservas, por isso o Studio procura uma reserva pelo
   então o uso registrado não pode ser subtraído. Para dar mais margem a um tenant depois de um erro,
   defina uma [substituição de cota](help:usage#quota-override) para o restante do período.
 - Eventos de uso individuais não são auditados por causa do volume; alterações de medidores e cotas são.
-- Os dados de um tenant ficam isolados: o ID de um tenant alheio retorna "não encontrado".
+- Os dados de um tenant ficam isolados: o ID de um tenant alheio retorna “não encontrado”.
 - O Studio mostra quantidades com até 6 casas decimais, formatadas para o seu idioma.
 - As séries temporais cobrem no máximo 400 dias.
 - Outros limites estão listados em [Limitações conhecidas](help:limitations).
@@ -239,12 +239,12 @@ A API não tem uma lista de reservas, por isso o Studio procura uma reserva pelo
 | Apenas a guia **Uso do tenant**                           | Você tem `usage:read` somente por meio de uma função de tenant                | Comportamento esperado; a visão geral exige uma função de produto                                                                              |
 | **Nenhum medidor ainda**                                  | Nenhum medidor definido                                                       | Crie um em **Medidores** (exige `usage:manage`)                                                                                                |
 | **Conflito** ao excluir um medidor                        | O medidor tem uso registrado                                                  | **Desative**-o em vez disso                                                                                                                    |
-| **Conflito** "a meter with this key exists"               | As chaves são únicas por produto, inclusive para medidores inativos           | Escolha outra chave ou ative o medidor antigo                                                                                                  |
+| **Conflito** “a meter with this key exists”               | As chaves são únicas por produto, inclusive para medidores inativos           | Escolha outra chave ou ative o medidor antigo                                                                                                  |
 | **Alterado nesse meio-tempo**                             | Outra pessoa editou o medidor                                                 | Recarregue e repita a alteração                                                                                                                |
 | O seu produto recebe `429 quota_exceeded`                 | Um limite rígido seria ultrapassado                                           | Verifique a origem do limite no cartão; aumente o limite do plano, defina uma substituição de cota ou aguarde o fim do período (`Retry-After`) |
-| O seu produto recebe `409` "the meter is inactive"        | O medidor foi desativado                                                      | **Ative**-o em **Medidores**                                                                                                                   |
+| O seu produto recebe `409` “the meter is inactive”        | O medidor foi desativado                                                      | **Ative**-o em **Medidores**                                                                                                                   |
 | O seu produto recebe `409` para uma chave de idempotência | A chave foi reutilizada com um corpo diferente                                | Use uma nova chave para cada evento de uso distinto                                                                                            |
 | **Verifique os dados informados** ao registrar            | Quantidade, `occurred_at` ou `properties` fora dos limites acima              | Corrija o valor; envie `occurred_at` com fuso horário                                                                                          |
-| A confirmação é recusada: "the reservation is expired"    | O TTL expirou antes da confirmação                                            | Registre o uso como um evento normal; escolha um `ttl_seconds` maior                                                                           |
+| A confirmação é recusada: “the reservation is expired”    | O TTL expirou antes da confirmação                                            | Registre o uso como um evento normal; escolha um `ttl_seconds` maior                                                                           |
 | O uso aparece no dia errado                               | Os dias são UTC                                                               | Compare com horários UTC                                                                                                                       |
 | Medidor de **Período de cobrança** é zerado no dia 1º     | O tenant não tem uma assinatura com direitos, ou a cobrança está desabilitada | Faça o tenant assinar um plano (veja [Planos e assinaturas](help:plans-subscriptions#subscribe))                                               |

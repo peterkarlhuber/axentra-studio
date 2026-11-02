@@ -46,7 +46,7 @@ do servidor; às vezes a API do servidor oferece mais do que o Studio.
 
 ## Dados e arquivos {#data-files}
 
-- **Sem contagens totais.** As listas mostram "Exibindo N itens" e carregam mais sob demanda; a API
+- **Sem contagens totais.** As listas mostram “Exibindo N itens” e carregam mais sob demanda; a API
   não tem números de página nem totais, por design.
 - **Registros:** filtros apenas em valores JSON de primeiro nível, ordenação apenas por ID, data de
   criação ou de atualização. Salvar um registro substitui o objeto JSON inteiro. Um registro tem no

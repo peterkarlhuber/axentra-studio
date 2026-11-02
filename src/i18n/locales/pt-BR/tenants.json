@@ -77,7 +77,7 @@
   },
   "accept": {
     "title": "Aceitar convite",
-    "description": "Entre em um tenant com o link ou o token de convite que você recebeu. Você precisa estar conectado com a conta do endereço de e-mail convidado.",
+    "description": "Participe de um tenant com o link ou o token de convite que você recebeu. Você precisa estar conectado com a conta do endereço de e-mail convidado.",
     "token": "Token do convite",
     "submit": "Aceitar convite",
     "successTitle": "Convite aceito",

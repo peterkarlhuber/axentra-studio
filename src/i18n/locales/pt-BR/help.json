@@ -133,7 +133,7 @@
       "title": "Entregas de webhooks",
       "caption": "Cada evento correspondente cria uma entrega por endpoint. Cada tentativa é um POST HTTPS assinado com o segredo de assinatura do endpoint.",
       "event": "Evento",
-      "eventDetail": "Por exemplo tenant.created",
+      "eventDetail": "Por exemplo, tenant.created",
       "match": "endpoints habilitados com tipos de evento e filtro de tenant correspondentes",
       "pendingDetail": "A entrega aguarda o worker",
       "post": "POST assinado",

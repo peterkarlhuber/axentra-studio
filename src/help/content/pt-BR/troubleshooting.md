@@ -390,7 +390,7 @@ endereços diferentes, os dois precisam pertencer ao mesmo site (por exemplo `st
 
 ### O login falha {#sign-in-fails}
 
-**Falha ao entrar**, com "O endereço de e-mail ou a senha estão incorretos", aparece tanto para uma
+**Falha ao entrar**, com “O endereço de e-mail ou a senha estão incorretos”, aparece tanto para uma
 senha errada _quanto_ para um endereço desconhecido; o servidor não revela qual é o caso. Depois de
 tentativas demais, você vê [Muitas requisições](#rate-limited). Uma conta desabilitada não consegue
 entrar de forma alguma. Veja [Como entrar](help:signing-in).

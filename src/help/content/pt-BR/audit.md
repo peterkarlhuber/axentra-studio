@@ -6,8 +6,8 @@ keywords: auditoria, trilha de auditoria, histórico, log de atividades, quem al
 
 O **Log de auditoria** registra ações administrativas e relevantes para a segurança no servidor
 Axentra: quem agiu (um usuário, uma chave de API ou o sistema), o que fez, em qual objeto, com qual
-resultado e quando. Use-o para responder perguntas como "quem revogou esta chave de API?", "por que
-este usuário não consegue mais entrar?" ou "o que aconteceu durante a requisição com este ID?".
+resultado e quando. Use-o para responder perguntas como “quem revogou esta chave de API?”, “por que
+este usuário não consegue mais entrar?” ou “o que aconteceu durante a requisição com este ID?”.
 
 O próprio servidor grava os eventos. O Studio apenas os lê: ninguém pode editar ou excluir um evento
 de auditoria, nem mesmo um administrador da plataforma.
@@ -156,4 +156,4 @@ aparece em **Manutenção e retenção**, na página [Monitoramento](help:health
 - **Nenhum evento correspondente**: os filtros estão restritivos demais. Verifique se **Ação** está escrita exatamente (as ações são `tenancy.tenant.create`, não `tenant.created`) ou termine-a com `*`, amplie **De** / **Até** ou escolha **Redefinir filtros**.
 - **Nenhum evento de auditoria ainda**, embora coisas tenham mudado: você está olhando um produto, mas a alteração foi em toda a instalação (por exemplo, um login). Esses eventos exigem `platform:audit`. Verifique também se a ação é uma das registradas (veja [O que é registrado](#what-is-recorded)).
 - **Não foi possível carregar o evento completo** (no painel de detalhes): o evento foi excluído pela tarefa de retenção, ou pertence a um produto (ou a nenhum produto) que você não pode ler. O servidor responde `404` nos dois casos, para não revelar se o evento existe. Nesse caso, o Studio mostra os valores da lista.
-- **Verifique os dados informados**: um valor de filtro foi recusado, por exemplo uma **Ação** com mais de 100 caracteres ou uma **Pesquisa** com mais de 200 caracteres.
+- **Verifique os dados informados**: um valor de filtro foi recusado, por exemplo uma **Ação** com mais de 100 caracteres ou um texto em **Pesquisar** com mais de 200 caracteres.

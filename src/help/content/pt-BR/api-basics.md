@@ -251,10 +251,10 @@ repositório do backend sempre descreve o contrato atual.
 - **`401 unauthenticated` com uma chave de API**: a chave está errada, revogada ou expirada, ou foi
   rotacionada e o período de carência terminou. Verifique o status da chave em **Chaves de API** e
   envie-a como `Authorization: Bearer axk_...`.
-- **`403 forbidden` com "missing or invalid CSRF token"**: uma requisição de navegador autenticada
+- **`403 forbidden` com “missing or invalid CSRF token”**: uma requisição de navegador autenticada
   por cookie sem `X-Axentra-CSRF`, ou com um token desatualizado. Leia `GET /v1/auth/session` de
   novo.
-- **`403` com "cross-origin request refused"**: a origem do seu app não está em
+- **`403` com “cross-origin request refused”**: a origem do seu app não está em
   `security.allowed_origins`. Peça ao operador que a adicione.
 - **`404` embora o ID esteja certo**: o recurso pertence a outro produto ou tenant que não o da sua
   chave, ou o módulo está desabilitado (`module_disabled`).

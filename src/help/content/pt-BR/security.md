@@ -58,7 +58,7 @@ com **Não permitido**; veja [O login ou o salvamento falha](help:troubleshootin
 
 As senhas são armazenadas com Argon2id, um hash lento de mão única. A política do servidor exige,
 por padrão, pelo menos 12 caracteres. Um login com falha sempre diz que o endereço de e-mail _ou_ a
-senha está errado, para que ninguém descubra quais contas existem. Depois de cerca de 10 tentativas
+senha estão errados, para que ninguém descubra quais contas existem. Depois de cerca de 10 tentativas
 com falha para uma conta em um minuto (mais a partir de um mesmo endereço de rede), novas tentativas
 são recusadas por até um minuto.
 
@@ -107,7 +107,7 @@ _teto de funções_:
 - O último proprietário de um produto ou tenant não pode ser removido nem rebaixado, e o último
   administrador da plataforma não pode ser desabilitado nem rebaixado.
 
-No Studio, funções que você não pode atribuir aparecem como **"… (acima das suas permissões)"** e não
+No Studio, funções que você não pode atribuir aparecem como **“… (acima das suas permissões)”** e não
 podem ser selecionadas; membros acima do seu nível mostram **Acima da sua própria função: somente
 alguém com as permissões desta função pode alterá-la**. O mesmo princípio vale para chaves de API:
 uma nova chave só pode ter permissões que quem a cria tem. Permissões da plataforma nunca são
@@ -141,7 +141,7 @@ rotacione o [segredo do webhook](help:webhooks) ou crie um novo convite.
 [Chaves de API](help:api-keys) permitem que outros sistemas chamem a API do Axentra. Boas práticas:
 
 - **Uma chave por serviço e ambiente**, com o nome de onde é usada (por exemplo
-  "billing-worker produção"), para que você possa revogar uma sem quebrar as outras.
+  “billing-worker produção”), para que você possa revogar uma sem quebrar as outras.
 - **Privilégio mínimo:** conceda apenas as permissões de que o serviço precisa e restrinja a chave a
   um tenant quando o serviço trabalha para um único tenant.
 - **Guarde os segredos em um gerenciador de segredos**, nunca no código-fonte, em tickets ou no chat.

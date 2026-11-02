@@ -55,7 +55,7 @@ Cada preço tem um **Valor**, uma **Moeda**, um **Intervalo** e um **ID do preç
 
 - Informe o valor em unidades normais da moeda, por exemplo `19.90`. O Axentra o armazena como um
   inteiro em unidades menores (centavos); o Studio mostra o valor armazenado abaixo do campo
-  ("Armazenado como 1990 unidades menores"). Moedas sem unidades menores (como JPY) aceitam números
+  (“Armazenado como 1990 unidades menores”). Moedas sem unidades menores (como JPY) aceitam números
   inteiros.
 - **Moeda** é um código ISO 4217 de três letras, como `EUR`, `USD` ou `BRL`.
 - **Intervalo**: **mês** ou **ano**. Ele também define a duração do período de cobrança da
@@ -165,8 +165,8 @@ plano valem imediatamente.
 Para assinaturas do Stripe, o Axentra repassa o cancelamento primeiro ao Stripe.
 
 > [!IMPORTANT]
-> Com o provedor **Manual**, as avaliações terminam, os períodos avançam e o "cancelar no fim do
-> período" só tem efeito quando o operador executa a tarefa agendada de cobrança (`advance_periods`,
+> Com o provedor **Manual**, as avaliações terminam, os períodos avançam e o “cancelar no fim do
+> período” só tem efeito quando o operador executa a tarefa agendada de cobrança (`advance_periods`,
 > por exemplo de hora em hora). Se as avaliações nunca terminam, peça ao operador que a agende.
 
 ## Definir o status (provedor manual) {#set-status}
@@ -244,13 +244,13 @@ informa que a configuração não está visível para você. Veja [Configuraçõ
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | **Sem acesso à cobrança**                                                            | Sua função não tem `billing:read` (no nível do produto para **Planos** e **Assinaturas**) | Peça a um administrador do produto uma função adequada                                                |
 | **Conflito** ao excluir um plano                                                     | Há assinaturas usando o plano                                                             | **Desative**-o em vez disso                                                                           |
-| **Conflito** "a plan with this key exists"                                           | As chaves de plano são únicas por produto                                                 | Escolha outra chave                                                                                   |
+| **Conflito** “a plan with this key exists”                                           | As chaves de plano são únicas por produto                                                 | Escolha outra chave                                                                                   |
 | Um plano não aparece em **Escolha um plano**                                         | Ele está inativo                                                                          | Ative-o em **Planos**                                                                                 |
-| **Conflito** "paid plans need a checkout …"                                          | Assinatura de um plano pago com o provedor de testes ou o Stripe                          | Use **Iniciar checkout**, ou o checkout do próprio produto quando pagamentos reais estiverem ativados |
-| "Este plano pago precisa de um checkout, que o servidor não oferece aqui"            | Pagamentos reais estão ativados, ou o provedor não é visível para você                    | Use o checkout do seu produto                                                                         |
-| **Conflito** "the tenant already has a subscription"                                 | Já existe uma assinatura atual                                                            | Use **Trocar plano** ou cancele antes                                                                 |
+| **Conflito** “paid plans need a checkout …”                                          | Assinatura de um plano pago com o provedor de testes ou o Stripe                          | Use **Iniciar checkout**, ou o checkout do próprio produto quando pagamentos reais estiverem ativados |
+| “Este plano pago precisa de um checkout, que o servidor não oferece aqui”            | Pagamentos reais estão ativados, ou o provedor não é visível para você                    | Use o checkout do seu produto                                                                         |
+| **Conflito** “the tenant already has a subscription”                                 | Já existe uma assinatura atual                                                            | Use **Trocar plano** ou cancele antes                                                                 |
 | **Indisponível neste modo** ao trocar o plano                                        | A assinatura é gerenciada pelo Stripe                                                     | Altere-a no Stripe                                                                                    |
-| **Verifique os dados informados**: "redirect URLs must start with an allowed origin" | O endereço do Studio não é a URL pública do servidor nem uma origem permitida             | Peça ao operador que adicione a origem do Studio a `security.allowed_origins`                         |
+| **Verifique os dados informados**: “redirect URLs must start with an allowed origin” | O endereço do Studio não é a URL pública do servidor nem uma origem permitida             | Peça ao operador que adicione a origem do Studio a `security.allowed_origins`                         |
 | A assinatura continua **Incompleta**                                                 | O checkout não foi concluído, ou o webhook não chega ao servidor                          | Abra o checkout de novo; peça ao operador que verifique o endpoint e o segredo do webhook             |
 | A avaliação não termina (manual)                                                     | A tarefa de cobrança não está agendada                                                    | Peça ao operador que agende `advance_periods`                                                         |
 | **Alterado nesse meio-tempo**                                                        | Outra pessoa alterou o plano ou a assinatura                                              | Recarregue e repita                                                                                   |
