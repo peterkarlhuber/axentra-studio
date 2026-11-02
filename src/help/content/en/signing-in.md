@@ -135,6 +135,7 @@ When single sign-on fails, the server sends you back to the sign-in page, and St
 | No account (`signup_disabled`)                                | No account exists for you and sign-up is off.                                                                                       | Ask an administrator for an [invitation](help:members-invitations), then sign in again. |
 | Account disabled (`account_disabled`)                         | Your account is disabled.                                                                                                           | Contact an administrator.                                                               |
 | Too many attempts (`rate_limited`)                            | Too many sign-ins started from your network.                                                                                        | Wait a minute.                                                                          |
+| Invitation not accepted here (`invitation_requires_post`)     | A single sign-on link carried an invitation token in its address, which the server refuses.                                         | Open the invitation link from your email again and sign in from the sign-in page.       |
 
 ## Troubleshooting {#troubleshooting}
 

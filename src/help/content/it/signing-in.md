@@ -141,6 +141,7 @@ Quando il single sign-on non riesce, il server ti rimanda alla pagina di accesso
 | Nessun account (`signup_disabled`)                            | Non esiste un account per te e la registrazione è disattivata.                                                                                                | Chiedi a un amministratore un [invito](help:members-invitations), poi accedi di nuovo. |
 | Account disattivato (`account_disabled`)                      | Il tuo account è disattivato.                                                                                                                                 | Contatta un amministratore.                                                            |
 | Troppi tentativi (`rate_limited`)                             | Troppi accessi avviati dalla tua rete.                                                                                                                        | Attendi un minuto.                                                                     |
+| Invito non accettato qui (`invitation_requires_post`)         | Un link di single sign-on conteneva un token di invito nel suo indirizzo, che il server rifiuta.                                                              | Apri di nuovo il link di invito dalla tua email e accedi dalla pagina di accesso.      |
 
 ## Risoluzione dei problemi {#troubleshooting}
 

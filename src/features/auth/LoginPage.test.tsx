@@ -118,6 +118,15 @@ describe('LoginPage', () => {
     expect(alert).toHaveTextContent(/no account for you/i);
     expect(screen.queryByText(/continue where you left off/i)).not.toBeInTheDocument();
   });
+
+  it('explains a refused invitation on the GET single sign-on start (R4-1)', async () => {
+    configureApi({ baseUrl: 'http://axentra.test', fetch: async () => unauthenticated() });
+    renderWithProviders(<LoginPage />, { route: '/login?login_error=invitation_requires_post' });
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/only accepts from this sign-in page/i);
+    expect(alert).not.toHaveTextContent(/invitation_requires_post/);
+  });
+
   it('explains an invitation sign-in; the token leaves the address bar and goes only in the POST start body', async () => {
     window.sessionStorage.clear();
     const assign = vi.spyOn(browserNavigation, 'assign').mockImplementation(() => {});

@@ -8,7 +8,21 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Security
 
-- An invitation token is in no URL any more (security review round 3, NF-2 and NF-3, the rest of AX-R2):
+- The Docker image's nginx access log records no query strings any more (security review round 4, R4-2).
+  The first request of an emailed link (`GET /invitations/accept?token=...`, `/setup?token=...`) reaches
+  nginx before Studio can remove the token from the address bar, and the default `combined` format logged
+  the full request line, token included (also `?code=&state=` of an OIDC callback through the `/v1` proxy).
+  The server now logs with its own `axentra_studio` format: the path of the request up to the first `?`,
+  no query and no `Referer`. `scripts/access-log.test.mjs` checks the format and that no other
+  `access_log` in the image uses another one.
+- The sign-in page explains Axentra's new single sign-on error `invitation_requires_post` (all six
+  languages, also in the **Signing in** help): Axentra now refuses an invitation on the `GET` start (security
+  review round 4, R4-1), which Studio does not use (it sends invitations with the `POST` start only; its
+  `405` fallback is the token-free `GET` start). The vendored contract and `api/BACKEND_REF` are synced from the
+  axentra fix (descriptions only, no shape change): axentra `2767a2e` (axentra #29).
+- An invitation token is kept out of every URL that Studio builds or keeps (security review round 3, NF-2
+  and NF-3, the rest of AX-R2). The emailed link itself still carries it on its first request, which the
+  image's access log no longer records (entry above):
   - Studio reads it once and removes it from the address bar at once (`history.replaceState`, no history
     entry): at startup, before the router runs, for the invitation link and for a sign-in page whose
     `return_to` holds one, and in `loginPath()`, the `/accept-invitation` alias and the accept page for

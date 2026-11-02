@@ -41,6 +41,9 @@ const SSO_ERRORS = new Set([
   'signup_disabled',
   'account_disabled',
   'rate_limited',
+  // An invitation on the `GET` start (refused since security review round 4, R4-1). Studio sends
+  // invitations with the `POST` start only; another client or an old link may still hit it.
+  'invitation_requires_post',
 ]);
 
 export function LoginPage() {
