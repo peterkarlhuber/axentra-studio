@@ -1,0 +1,94 @@
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.legend {
+  padding: 0;
+  font-size: var(--ax-text-md);
+  font-weight: var(--ax-weight-semibold);
+  color: var(--ax-color-heading);
+}
+.help {
+  margin: 0;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-text-sm);
+}
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.entRow,
+.priceRow {
+  display: grid;
+  gap: var(--ax-space-3);
+  align-items: end;
+  padding: var(--ax-space-3);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-surface-2);
+  min-width: 0;
+}
+.entRow {
+  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+.priceRow {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 6rem) minmax(0, 8rem) minmax(0, 1fr) auto;
+}
+.entValue {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+}
+.entRemove {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+}
+@media (max-width: 720px) {
+  .entRow,
+  .priceRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.priceList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.money {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.widgetList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.widgetRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ax-space-3);
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-variant-numeric: tabular-nums;
+}
+.widgetValue {
+  font-family: var(--ax-font-display);
+  font-weight: var(--ax-weight-bold);
+  color: var(--ax-color-heading);
+}

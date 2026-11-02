@@ -10,7 +10,11 @@ import type {
   ApiKeyInput,
   AuditEvent,
   AuthSession,
+  CheckoutInput,
+  CheckoutSession,
   CollectionStats,
+  EffectiveLimit,
+  Entitlements,
   DataRecord,
   DownloadUrl,
   FileInfo,
@@ -25,27 +29,44 @@ import type {
   MemberInput,
   MePatch,
   Meta,
+  Meter,
+  MeterInput,
+  MeterPatch,
+  MeterUsage,
   NewApiKey,
   NewInvitation,
   Page,
   PasswordChangeInput,
   PasswordLoginInput,
   Permission,
+  Plan,
+  PlanInput,
+  PlanPatch,
   Product,
   ProductInput,
   ProductMember,
   ProductOverview,
   ProductPatch,
+  UsageQuotaInput,
+  Reservation,
+  ReservationCommitInput,
   RevokeResult,
   Role,
   RoleInput,
   RolePatch,
   ServerSettings,
   SetupInput,
+  Subscription,
+  SubscriptionStatus,
   Tenant,
+  TenantMeterTotal,
   TenantInput,
   TenantMember,
   TenantPatch,
+  TimeSeries,
+  UsageEvent,
+  UsageRecordInput,
+  UsageRecordResult,
   User,
   UserPatch,
   UserSession,
@@ -617,6 +638,292 @@ export const storageApi = {
       api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/storage/quota', {
         params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
         body,
+      }),
+    ),
+};
+
+// ---- Usage & Billing (studio-billing) --------------------------------------------------
+
+export type UsageRangeParams = {
+  /** ISO dates (YYYY-MM-DD), inclusive; the API defaults to the last 30 days. */
+  since?: string;
+  until?: string;
+};
+
+export interface ProductUsageSummaryParams extends ListParams, UsageRangeParams {
+  meter?: string;
+}
+
+export interface UsageEventListParams extends ListParams {
+  meter?: string;
+  since?: string;
+  until?: string;
+}
+
+export interface SubscriptionListParams extends ListParams {
+  status?: SubscriptionStatus | '';
+  plan?: string;
+}
+
+const meterPath = (productId: string, meterId: string) => ({
+  path: { product_id: productId, meter_id: meterId },
+});
+const planPath = (productId: string, planId: string) => ({
+  path: { product_id: productId, plan_id: planId },
+});
+const reservationPath = (productId: string, tenantId: string, reservationId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, reservation_id: reservationId },
+});
+
+export const usageApi = {
+  meters: (productId: string) =>
+    unwrap<Meter[]>(
+      api().GET('/v1/products/{product_id}/usage/meters', { params: productPath(productId) }),
+    ),
+  createMeter: (productId: string, body: MeterInput) =>
+    unwrap<Meter>(
+      api().POST('/v1/products/{product_id}/usage/meters', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  updateMeter: (productId: string, meterId: string, body: MeterPatch, version?: number) =>
+    unwrap<Meter>(
+      api().PATCH('/v1/products/{product_id}/usage/meters/{meter_id}', {
+        params: { ...meterPath(productId, meterId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  deleteMeter: (productId: string, meterId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/usage/meters/{meter_id}', {
+        params: { ...meterPath(productId, meterId), header: ifMatch(version) },
+      }),
+    ),
+  productSummary: (productId: string, params?: ProductUsageSummaryParams) =>
+    unwrap<Page<TenantMeterTotal>>(
+      api().GET('/v1/products/{product_id}/usage/summary', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            since?: string;
+            until?: string;
+            meter?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  productTimeseries: (productId: string, meter: string, range?: UsageRangeParams) =>
+    unwrap<TimeSeries>(
+      api().GET('/v1/products/{product_id}/usage/timeseries', {
+        params: { ...productPath(productId), query: { meter, ...cleanQuery(range) } },
+      }),
+    ),
+  record: (productId: string, tenantId: string, body: UsageRecordInput, idempotencyKey: string) =>
+    unwrap<UsageRecordResult>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/usage/events', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          header: { 'Idempotency-Key': idempotencyKey },
+        },
+        body,
+      }),
+    ),
+  events: (productId: string, tenantId: string, params?: UsageEventListParams) =>
+    unwrap<Page<UsageEvent>>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/events', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          query: cleanQuery(params) as {
+            meter?: string;
+            since?: string;
+            until?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  /** `at`: any time inside the wanted period (ISO date-time with zone); default now. */
+  tenantSummary: (productId: string, tenantId: string, at?: string) =>
+    unwrap<MeterUsage[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/summary', {
+        params: { ...tenantPath(productId, tenantId), query: cleanQuery({ at }) },
+      }),
+    ),
+  tenantTimeseries: (
+    productId: string,
+    tenantId: string,
+    meter: string,
+    range?: UsageRangeParams,
+  ) =>
+    unwrap<TimeSeries>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/timeseries', {
+        params: { ...tenantPath(productId, tenantId), query: { meter, ...cleanQuery(range) } },
+      }),
+    ),
+  quotas: (productId: string, tenantId: string) =>
+    unwrap<EffectiveLimit[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/quotas', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  setQuota: (productId: string, tenantId: string, meter: string, body: UsageQuotaInput) =>
+    unwrap<EffectiveLimit>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/usage/quotas/{meter}', {
+        params: { path: { product_id: productId, tenant_id: tenantId, meter } },
+        body,
+      }),
+    ),
+  deleteQuota: (productId: string, tenantId: string, meter: string) =>
+    unwrap<EffectiveLimit>(
+      api().DELETE('/v1/products/{product_id}/tenants/{tenant_id}/usage/quotas/{meter}', {
+        params: { path: { product_id: productId, tenant_id: tenantId, meter } },
+      }),
+    ),
+  reservation: (productId: string, tenantId: string, reservationId: string) =>
+    unwrap<Reservation>(
+      api().GET(
+        '/v1/products/{product_id}/tenants/{tenant_id}/usage/reservations/{reservation_id}',
+        { params: reservationPath(productId, tenantId, reservationId) },
+      ),
+    ),
+  commitReservation: (
+    productId: string,
+    tenantId: string,
+    reservationId: string,
+    body: ReservationCommitInput,
+  ) =>
+    unwrap<UsageRecordResult>(
+      api().POST(
+        '/v1/products/{product_id}/tenants/{tenant_id}/usage/reservations/{reservation_id}/commit',
+        { params: reservationPath(productId, tenantId, reservationId), body },
+      ),
+    ),
+  releaseReservation: (productId: string, tenantId: string, reservationId: string) =>
+    unwrap<Reservation>(
+      api().POST(
+        '/v1/products/{product_id}/tenants/{tenant_id}/usage/reservations/{reservation_id}/release',
+        { params: reservationPath(productId, tenantId, reservationId) },
+      ),
+    ),
+};
+
+export const billingApi = {
+  plans: (productId: string) =>
+    unwrap<Plan[]>(
+      api().GET('/v1/products/{product_id}/billing/plans', { params: productPath(productId) }),
+    ),
+  createPlan: (productId: string, body: PlanInput) =>
+    unwrap<Plan>(
+      api().POST('/v1/products/{product_id}/billing/plans', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  updatePlan: (productId: string, planId: string, body: PlanPatch, version?: number) =>
+    unwrap<Plan>(
+      api().PATCH('/v1/products/{product_id}/billing/plans/{plan_id}', {
+        params: { ...planPath(productId, planId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  deletePlan: (productId: string, planId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/billing/plans/{plan_id}', {
+        params: { ...planPath(productId, planId), header: ifMatch(version) },
+      }),
+    ),
+  subscriptions: (productId: string, params?: SubscriptionListParams) =>
+    unwrap<Page<Subscription>>(
+      api().GET('/v1/products/{product_id}/billing/subscriptions', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            status?: SubscriptionStatus;
+            plan?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  tenantPlans: (productId: string, tenantId: string) =>
+    unwrap<Plan[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/billing/plans', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  subscription: (productId: string, tenantId: string) =>
+    unwrap<Subscription>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  subscribe: (productId: string, tenantId: string, plan: string, priceId?: string | null) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription', {
+        params: tenantPath(productId, tenantId),
+        body: { plan, price_id: priceId ?? null },
+      }),
+    ),
+  changePlan: (
+    productId: string,
+    tenantId: string,
+    plan: string,
+    priceId: string | null | undefined,
+    version?: number,
+  ) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/change-plan', {
+        params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
+        body: { plan, price_id: priceId ?? null },
+      }),
+    ),
+  cancel: (productId: string, tenantId: string, atPeriodEnd: boolean) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/cancel', {
+        params: tenantPath(productId, tenantId),
+        body: { at_period_end: atPeriodEnd },
+      }),
+    ),
+  resume: (productId: string, tenantId: string) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/resume', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  setStatus: (productId: string, tenantId: string, status: SubscriptionStatus, version?: number) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/status', {
+        params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
+        body: { status },
+      }),
+    ),
+  checkout: (productId: string, tenantId: string, body: CheckoutInput) =>
+    unwrap<CheckoutSession>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/checkout', {
+        params: tenantPath(productId, tenantId),
+        body,
+      }),
+    ),
+  entitlements: (productId: string, tenantId: string) =>
+    unwrap<Entitlements>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  setOverrides: (
+    productId: string,
+    tenantId: string,
+    entitlements: Record<string, boolean | number | null>,
+  ) =>
+    unwrap<Entitlements>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements/overrides', {
+        params: tenantPath(productId, tenantId),
+        body: { entitlements },
       }),
     ),
 };

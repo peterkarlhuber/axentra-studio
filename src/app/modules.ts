@@ -29,6 +29,9 @@ export const IMPLEMENTED_MODULES: ReadonlySet<StudioModule> = new Set<StudioModu
   'audit',
   // Data & Storage
   'files',
+  // Usage & Billing (studio-billing)
+  'usage',
+  'billing',
 ]);
 
 export function isModuleEnabled(modules: readonly string[] | undefined, module: StudioModule) {

@@ -39,3 +39,33 @@ export const queryKeys = {
     ['products', productId, 'storage', tenantId] as const,
   productStorage: (productId: string) => ['products', productId, 'storage', 'product'] as const,
 };
+
+/* ---- Usage & Billing (studio-billing) ---- */
+export const usageBillingKeys = {
+  meters: (productId: string) => ['products', productId, 'usage', 'meters'] as const,
+  productUsageSummary: (productId: string, params?: unknown) =>
+    ['products', productId, 'usage', 'summary', params ?? {}] as const,
+  productTimeseries: (productId: string, params?: unknown) =>
+    ['products', productId, 'usage', 'timeseries', params ?? {}] as const,
+  tenantUsage: (productId: string, tenantId: string) =>
+    ['products', productId, 'usage', 'tenant', tenantId] as const,
+  tenantUsageSummary: (productId: string, tenantId: string, at?: string) =>
+    ['products', productId, 'usage', 'tenant', tenantId, 'summary', at ?? 'now'] as const,
+  tenantQuotas: (productId: string, tenantId: string) =>
+    ['products', productId, 'usage', 'tenant', tenantId, 'quotas'] as const,
+  tenantTimeseries: (productId: string, tenantId: string, params?: unknown) =>
+    ['products', productId, 'usage', 'tenant', tenantId, 'timeseries', params ?? {}] as const,
+  usageEvents: (productId: string, tenantId: string, params?: unknown) =>
+    ['products', productId, 'usage', 'tenant', tenantId, 'events', params ?? {}] as const,
+  reservation: (productId: string, tenantId: string, reservationId: string) =>
+    ['products', productId, 'usage', 'tenant', tenantId, 'reservation', reservationId] as const,
+  plans: (productId: string) => ['products', productId, 'billing', 'plans'] as const,
+  tenantPlans: (productId: string, tenantId: string) =>
+    ['products', productId, 'billing', 'tenant', tenantId, 'plans'] as const,
+  subscriptions: (productId: string, params?: unknown) =>
+    ['products', productId, 'billing', 'subscriptions', params ?? {}] as const,
+  subscription: (productId: string, tenantId: string) =>
+    ['products', productId, 'billing', 'tenant', tenantId, 'subscription'] as const,
+  entitlements: (productId: string, tenantId: string) =>
+    ['products', productId, 'billing', 'tenant', tenantId, 'entitlements'] as const,
+};
