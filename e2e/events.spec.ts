@@ -2,6 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { createServer, type IncomingMessage, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
+import { settleAnimations, specProduct } from './support';
 
 /**
  * Events & Jobs against a real Axentra API (module `events`).
@@ -14,6 +15,10 @@ import { expect, test, type APIRequestContext, type Page } from '@playwright/tes
  *   PYTHONPATH=e2e/fixtures axentra worker --load axentra_e2e_jobs
  * Webhook receivers are started by this spec on 127.0.0.1 (AXENTRA_E2E_RECEIVER_HOST overrides
  * the host the API should call).
+ *
+ * Multi-product mode: one new product per Playwright project. Single-product mode: the server's
+ * one product; schedule names, event types, tenant slugs and job payloads carry the per-run id,
+ * and each test looks only at what it created (a row by its name, an endpoint by its page).
  */
 const api = process.env.AXENTRA_E2E_API;
 const email = process.env.AXENTRA_E2E_EMAIL;
@@ -30,6 +35,7 @@ test.skip(
 const run = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
 
 async function expectNoA11yViolations(page: Page) {
+  await settleAnimations(page);
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .analyze();
@@ -104,16 +110,19 @@ async function startReceiver(status: number): Promise<Receiver> {
 
 let productId = '';
 let tenantId = '';
+/** True in single-product mode: the product is shared with other specs and projects. */
+let shared = false;
 
 test.beforeEach(async ({ page, baseURL }, testInfo) => {
   await login(page);
   if (!productId) {
     const client = await apiClient(page, baseURL ?? '');
-    const product = await client.post<{ id: string }>('/v1/products', {
+    const product = await specProduct(page.request, {
       name: `E2E events ${run}`,
       slug: `e2e-events-${run}`,
     });
     productId = product.id;
+    shared = product.shared;
     const tenant = await client.post<{ id: string }>(`/v1/products/${productId}/tenants`, {
       name: 'Acme',
       slug: `acme-${run}`,
@@ -328,10 +337,13 @@ test('events: the live view shows an event published while it is open', async ({
     type: `${type}.paused`,
     data: {},
   });
-  await expect(page.getByRole('button', { name: 'Resume (1 new event)' })).toBeVisible({
-    timeout: 15_000,
+  // Single-product mode: specs of the other Playwright project may publish events into the same
+  // product meanwhile, so only "at least one new event" is certain there.
+  const resume = page.getByRole('button', {
+    name: shared ? /^Resume \(\d+ new events?\)$/ : 'Resume (1 new event)',
   });
-  await page.getByRole('button', { name: 'Resume (1 new event)' }).click();
+  await expect(resume).toBeVisible({ timeout: 15_000 });
+  await resume.click();
   await expect(received.getByText(`${type}.paused`, { exact: true })).toBeVisible();
 
   await page.getByRole('tab', { name: 'Event log' }).click();

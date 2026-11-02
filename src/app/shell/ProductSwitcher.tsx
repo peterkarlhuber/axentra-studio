@@ -23,8 +23,21 @@ export function ProductSwitcher({ productId }: { productId: string | null }) {
   const { pathname } = useLocation();
   const { products } = useSwitchableProducts();
 
-  // Shown only when switching makes sense: multi-product mode or more than one product.
-  if (meta.mode !== 'multi' && products.length <= 1) return null;
+  // Single-product mode serves exactly one product (docs/architecture/DEPLOYMENT_MODELS.md in
+  // Axentra): no switcher, only a static label naming it.
+  if (meta.mode === 'single') {
+    const name = meta.product?.name;
+    if (!name) return null;
+    return (
+      <span className={styles.productLabel} data-testid="single-product-label">
+        <Boxes aria-hidden className={styles.switcherIcon} />
+        <span className={styles.switcherText}>
+          <span className={styles.switcherLabel}>{t('product')}</span>
+          <span className={styles.switcherValue}>{name}</span>
+        </span>
+      </span>
+    );
+  }
 
   const current = products.find((product) => product.id === productId);
 

@@ -1,5 +1,6 @@
 import { execSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
+import { specProduct } from './support';
 import {
   api,
   apiClient,
@@ -19,6 +20,9 @@ import {
  *   AXENTRA_E2E_NOTIFY_DISPATCH (optional) is a shell command that delivers queued
  *   notifications once, e.g. `axentra --config /path/axentra.toml notify-dispatch --once`.
  *   Without either the test stops after checking that the message is queued.
+ * - Multi-product mode: a new product. Single-product mode: the server's one product, shared with
+ *   the other specs and the other Playwright project, so the template key, its category and the
+ *   sample name carry the per-run suffix (the mailbox and the preferences are product-wide).
  */
 const dispatchLoop = process.env.AXENTRA_E2E_WORKER === '1';
 const dispatch = process.env.AXENTRA_E2E_NOTIFY_DISPATCH;
@@ -37,11 +41,12 @@ test('create a template, preview it, send it to a member and find it in the log 
   await login(page);
   const client = await apiClient(page);
   const me = await client.get<{ user: { id: string; email: string } }>('/v1/me');
-  const product = await client.post<{ id: string }>('/v1/products', {
+  const product = await specProduct(page.request, {
     name: `Notify E2E ${suffix}`,
     slug: `notify-e2e-${suffix}`,
-    description: '',
   });
+  const category = `onboarding_${suffix}`;
+  const sample = `Ada ${suffix}`;
   const tenant = await client.post<{ id: string; name: string }>(
     `/v1/products/${product.id}/tenants`,
     { name: `Tenant ${suffix}`, slug: `tenant-${suffix}`, owner_user_id: me.user.id },
@@ -61,7 +66,7 @@ test('create a template, preview it, send it to a member and find it in the log 
   const key = `welcome.${suffix}`;
   await page.getByRole('textbox', { name: /^Template key/ }).fill(key);
   await page.getByLabel('Name', { exact: true }).fill(`Welcome ${suffix}`);
-  await page.getByLabel('Category').fill('onboarding');
+  await page.getByLabel('Category').fill(category);
   await page.getByRole('textbox', { name: /^Subject/ }).fill('Welcome {{ name }}');
   await page.getByRole('textbox', { name: /^Text/ }).fill('Hi {{ name }}, welcome aboard.');
   await page
@@ -71,7 +76,7 @@ test('create a template, preview it, send it to a member and find it in the log 
     );
   // The preview reports the undeclared placeholder; declare it from the suggestion.
   await page.getByRole('button', { name: /Declare used placeholders: name/ }).click();
-  await page.getByLabel('Sample value').fill('Ada');
+  await page.getByLabel('Sample value').fill(sample);
 
   const frame = page.frameLocator('iframe[title="HTML preview of the template"]');
   await expect(frame.getByText('Hello Ada')).toBeVisible();
@@ -147,7 +152,7 @@ test('create a template, preview it, send it to a member and find it in the log 
 
   // ---- Local mailbox ----
   await page.getByRole('tab', { name: 'Mailbox' }).click();
-  const entry = page.getByRole('row').filter({ hasText: 'Welcome Ada' });
+  const entry = page.getByRole('row').filter({ hasText: `Welcome ${sample}` });
   await expect(entry).toBeVisible();
   await entry.getByRole('button', { name: /Open message/ }).click();
   await expect(page.getByRole('dialog').getByText(me.user.email).first()).toBeVisible();
@@ -158,7 +163,7 @@ test('create a template, preview it, send it to a member and find it in the log 
   // ---- Preferences: locked categories cannot be turned off ----
   await page.getByRole('tab', { name: 'My preferences' }).click();
   await expect(page.getByRole('checkbox', { name: /transactional/ })).toBeDisabled();
-  const onboarding = page.getByRole('checkbox', { name: 'onboarding' });
+  const onboarding = page.getByRole('checkbox', { name: category, exact: true });
   await expect(onboarding).toBeChecked();
   await onboarding.click();
   await page.getByRole('button', { name: 'Save preferences' }).click();

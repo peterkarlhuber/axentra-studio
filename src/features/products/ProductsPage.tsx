@@ -10,6 +10,7 @@ import { useCan, useErrorToast } from '@/app/auth';
 import { useVisibleProducts } from '@/app/useProducts';
 import { useMeta } from '@/app/contexts';
 import {
+  Alert,
   Button,
   ButtonLink,
   Card,
@@ -115,6 +116,11 @@ export function ProductsPage() {
           ) : null
         }
       />
+      {meta.mode === 'single' ? (
+        <Alert tone="info" title={t('singleMode.title')}>
+          {t('singleMode.body')}
+        </Alert>
+      ) : null}
       <Card flush>
         <DataTable
           caption={t('title')}
