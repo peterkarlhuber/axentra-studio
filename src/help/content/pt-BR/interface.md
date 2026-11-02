@@ -50,7 +50,7 @@ não são oferecidas.
 ### Itens marcados como “Desat.” {#module-off}
 
 Um item cujo módulo do servidor não está habilitado continua visível e mostra **Desat.**. Ao
-abri-lo, aparece **Módulo não habilitado neste servidor** com o id do módulo (por exemplo
+abri-lo, aparece **Módulo não habilitado neste servidor** com o ID do módulo (por exemplo
 `storage`) que o operador do servidor precisa habilitar. Assim você vê o que existe e o que está
 faltando. Veja [módulos](help:concepts#modules).
 

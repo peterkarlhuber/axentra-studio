@@ -248,7 +248,7 @@
     "publishSubmit": "Publicar",
     "published": "Evento “{{type}}” publicado",
     "actorInfoLabel": "Acerca del actor",
-    "actorInfo": "Quién publicó el evento: user, api_key o system (Axentra o el propio código de tu producto), seguido de su id.",
+    "actorInfo": "Quién publicó el evento: user, api_key o system (Axentra o el propio código de tu producto), seguido de su ID.",
     "publishInfo": "Un evento publicado es real: los endpoints de webhook que coinciden y los suscriptores de tu producto lo reciben. Usa datos de prueba y un inquilino destinado a pruebas."
   },
   "live": {
@@ -300,7 +300,7 @@
     "emptyBody": "Crea un endpoint para enviar eventos a otro sistema.",
     "secretTitle": "Secreto de firma",
     "secret": "Secreto de firma",
-    "secretUsage": "Verifica el encabezado Axentra-Signature con este secreto (el valor completo, incluido whsec_): HMAC-SHA256 sobre “<t>.<raw body>”, comparado en tiempo constante con cada valor v1; rechaza marcas de tiempo con más de unos 5 minutos de diferencia.",
+    "secretUsage": "Verifica la cabecera Axentra-Signature con este secreto (el valor completo, incluido whsec_): HMAC-SHA256 sobre “<t>.<raw body>”, comparado en tiempo constante con cada valor v1; rechaza marcas de tiempo con más de unos 5 minutos de diferencia.",
     "tabs": "Secciones del endpoint",
     "deliveries": "Entregas",
     "settings": "Configuración",

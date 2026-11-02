@@ -120,7 +120,7 @@
     "statusAbout": "Acerca del estado de la clave",
     "lastUsedInfo": "Hora de la última solicitud correcta con esta clave. Se actualiza como máximo una vez por minuto.",
     "lastUsedAbout": "Acerca del último uso",
-    "secretUsage": "Envía el secreto en cada solicitud en el encabezado “Authorization: Bearer <secret>” o “X-API-Key: <secret>”."
+    "secretUsage": "Envía el secreto en cada solicitud en la cabecera “Authorization: Bearer <secret>” o “X-API-Key: <secret>”."
   },
   "catalog": {
     "title": "Permisos",

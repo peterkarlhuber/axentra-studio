@@ -114,12 +114,12 @@ entrega registrada.
 
 Um ping de teste é enviado uma única vez, sem novas tentativas, e também para um endpoint
 desabilitado, para que você possa testar um receptor antes de habilitá-lo. O corpo dele tem
-`"type": "axentra.ping"`, `"data": {"endpoint_id": "…"}` e o id da entrega como `id`.
+`"type": "axentra.ping"`, `"data": {"endpoint_id": "…"}` e o ID da entrega como `id`.
 
 ## Verificar entregas {#deliveries}
 
 A guia **Entregas** de um endpoint lista as entregas dele da mais nova para a mais antiga:
-**Evento** (tipo e id da entrega), **Status**, **Resposta** (o código de status HTTP),
+**Evento** (tipo e ID da entrega), **Status**, **Resposta** (o código de status HTTP),
 **Tentativas**, **Duração** e **Criado em**. Filtre por **Status**; **Atualizar** carrega o estado
 mais recente.
 
@@ -172,7 +172,7 @@ aguardava. Um nome de host que não pode ser resolvido é tentado de novo.
 
 A entrega passa para **Pendente** e é enviada de novo com um novo conjunto de tentativas. O
 contador **Tentativas** continua contando. **Reenviar** não é oferecido enquanto a entrega está
-**Pendente**. O receptor recebe o mesmo id de evento de novo, então um receptor que elimina
+**Pendente**. O receptor recebe o mesmo ID de evento de novo, então um receptor que elimina
 duplicatas ignora os eventos que já processou.
 
 ## Rotacionar o segredo de assinatura {#rotate-secret}
@@ -181,7 +181,7 @@ Rotacione o segredo quando ele puder ter vazado, quando alguém que o conhecia s
 como boa prática.
 
 1. Na página do endpoint, escolha **Rotacionar segredo**.
-2. Escolha um **Período de carência**: **Nenhum (o segredo antigo para imediatamente)**,
+2. Escolha um **Período de carência**: **Nenhum (o segredo antigo deixa de funcionar imediatamente)**,
    **1 hora**, **24 horas** ou **7 dias**.
 3. Escolha **Rotacionar segredo** e depois copie e guarde o novo segredo, como na criação.
 

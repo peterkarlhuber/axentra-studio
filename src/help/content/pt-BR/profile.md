@@ -115,7 +115,7 @@ Administradores podem encerrar as sessões de outros usuários na página [Usuá
   tentativa como **Negado** no log de auditoria.
 - **Verifique os dados informados**: a nova senha viola uma das regras acima (curta demais, igual ao
   seu endereço de e-mail, simples demais). **Detalhes técnicos**, na mensagem, mostram o motivo do
-  servidor, por exemplo "the password must have at least 12 characters".
+  servidor, por exemplo “the password must have at least 12 characters”.
 - **As novas senhas não coincidem.**: **Nova senha** e **Repita a nova senha** são diferentes.
 - **Faça login novamente** ao definir uma primeira senha: o seu login é antigo demais. Siga os passos
   em [Definir uma primeira senha](#set-password).

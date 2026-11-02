@@ -51,7 +51,7 @@ La tabla ofrece un resumen. Las secciones siguientes explican cada código con c
 | **No permitido**                      | `forbidden`                       | 403            | Falta un permiso, o el producto o inquilino no está activo |
 | **Vuelve a iniciar sesión**           | `reauthentication_required`       | 403            | Requiere un inicio de sesión reciente                      |
 | **No encontrado**                     | `not_found`                       | 404            | No existe, o no es visible para ti                         |
-| **Módulo no activado**                | `module_disabled`                 | 404            | Módulo del servidor desactivado                            |
+| **Módulo no habilitado**              | `module_disabled`                 | 404            | Módulo del servidor desactivado                            |
 | **Acción no admitida**                | `method_not_allowed`              | 405            | No se ofrece en esta dirección                             |
 | **Conflicto**                         | `conflict`                        | 409            | Choca con datos o estados existentes                       |
 | **La configuración ya está completa** | `setup_already_completed`         | 409            | Ya existe un administrador                                 |
@@ -169,7 +169,7 @@ cuenta _que puedas ver_ tiene esta dirección. Envía una invitación en su luga
 **Qué hacer:** comprueba la dirección, vuelve a la lista o pide a alguien con acceso al producto o
 al inquilino que te añada.
 
-### Módulo no activado {#module-disabled}
+### Módulo no habilitado {#module-disabled}
 
 **Qué ha pasado:** la acción necesita un módulo del servidor que está desactivado
 (`module_disabled`).

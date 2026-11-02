@@ -318,7 +318,7 @@ endpoint (por exemplo, de antes de uma rotação), um framework alterou o corpo 
 o corpo bruto, não o JSON interpretado), ou o relógio do receptor está mais de 5 minutos errado:
 sincronize-o com NTP.
 
-**"webhook urls must not point to local hosts" ao criar o endpoint.** Você informou `localhost` ou um
+**“webhook urls must not point to local hosts” ao criar o endpoint.** Você informou `localhost` ou um
 endereço privado. Use o endereço HTTPS público do túnel.
 
 **O ping funciona, mas os eventos publicados não chegam.** Verifique os **Tipos de evento** do

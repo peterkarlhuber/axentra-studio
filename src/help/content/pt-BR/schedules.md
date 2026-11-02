@@ -131,7 +131,7 @@ Em cada horário, o agendamento enfileira um job com:
   agendamento;
 - um link de volta para o agendamento (os detalhes do job o mostram em **Agendamento**);
 - **Criado por** `schedule:<schedule id>`;
-- uma chave de idempotência formada pelo id do agendamento e pelo horário.
+- uma chave de idempotência formada pelo ID do agendamento e pelo horário.
 
 Cada horário dispara **no máximo uma vez**, mesmo quando vários workers estão rodando. O job em si
 roda então pelo menos uma vez, com as [novas tentativas](help:jobs#retries) habituais. Um

@@ -109,7 +109,7 @@ inglês.
 
 A **Pré-visualização** ao lado do editor é renderizada pelo servidor a partir do estado atual, não
 salvo, com os seus valores de exemplo, um instante depois que você para de digitar. Escolha o idioma
-no seletor da pré-visualização; "Renderizada no idioma …" informa qual variante foi usada. A
+no seletor da pré-visualização; “Renderizada no idioma …” informa qual variante foi usada. A
 pré-visualização aparece quando todos os idiomas têm assunto e texto.
 
 O HTML é exibido em um quadro isolado: scripts nunca são executados, e imagens, fontes e estilos
@@ -165,14 +165,14 @@ dias após a entrega) e mensagens suprimidas não guardam nenhum. O Studio infor
 servidor remove tokens, chaves e senhas do último erro.
 
 > [!NOTE]
-> A entrega é do tipo "pelo menos uma vez": após uma falha grave, uma mensagem pode ser entregue
+> A entrega é do tipo “pelo menos uma vez”: após uma falha grave, uma mensagem pode ser entregue
 > duas vezes. As mensagens têm um Message-ID estável, para que os servidores de e-mail reconheçam
 > duplicatas. A ordem das mensagens não é garantida.
 
 ## Caixa de correio {#mailbox}
 
 A **Caixa de correio** só existe quando o servidor usa o provedor local de desenvolvimento
-(`notify.provider = "local"`). Esse provedor não envia nada; ele guarda aqui o que "entregou", para
+(`notify.provider = "local"`). Esse provedor não envia nada; ele guarda aqui o que “entregou”, para
 que você possa conferir modelos em servidores de desenvolvimento e teste. Filtre por
 **Destinatário** e abra uma mensagem para vê-la como foi entregue.
 
@@ -227,10 +227,10 @@ exige `notify:preferences` nele (membros e administradores têm essa permissão)
 | Apenas **Minhas preferências**                                              | Você não tem `notify:manage`                                                                                      | Peça a um administrador do produto, se você precisar dos modelos                                                          |
 | **Verifique os dados informados** ao salvar                                 | Chave ou categoria inválida, placeholder não declarado, sintaxe `{{ … }}` não suportada ou falta da variante `en` | Leia a mensagem do servidor; corrija o campo ou placeholder indicado                                                      |
 | A pré-visualização diz que falta um valor                                   | Uma variável declarada não tem valor de exemplo                                                                   | Preencha o **Valor de exemplo**                                                                                           |
-| **Conflito** "a template with this key exists"                              | As chaves são únicas por produto                                                                                  | Escolha outra chave ou edite o modelo existente                                                                           |
+| **Conflito** “a template with this key exists”                              | As chaves são únicas por produto                                                                                  | Escolha outra chave ou edite o modelo existente                                                                           |
 | **Alterado nesse meio-tempo**                                               | Outra pessoa salvou o modelo                                                                                      | Recarregue; as suas edições não salvas são perdidas, então copie-as antes                                                 |
 | Nenhum ícone de envio para um modelo                                        | Ele é **Somente sistema**, ou você não tem `notify:send`                                                          | Esperado para convites; peça uma função com `notify:send`                                                                 |
-| "Você não tem a permissão notify:send neste tenant"                         | Sua função não abrange esse tenant                                                                                | Escolha outro tenant ou peça uma função                                                                                   |
+| “Você não tem a permissão notify:send neste tenant”                         | Sua função não abrange esse tenant                                                                                | Escolha outro tenant ou peça uma função                                                                                   |
 | **Não permitido** ao enviar para um endereço                                | O endereço não é de um membro e você não tem `notify:send_external`                                               | Envie para um membro ou peça a um proprietário do produto                                                                 |
 | **Não encontrado** para um membro                                           | O usuário não é membro do tenant                                                                                  | Escolha um membro do tenant selecionado                                                                                   |
 | As mensagens ficam **Na fila**; **Mensagem mais antiga na fila** só aumenta | Nenhum dispatcher está em execução                                                                                | Peça ao operador que execute `axentra notify-dispatch --loop` ou um worker                                                |

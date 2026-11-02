@@ -41,8 +41,8 @@ sua conta. Uma escolha feita em um navegador permanece nele até você alterá-l
 
 O cartão **Configuração do servidor** mostra a configuração efetiva e não secreta do servidor
 (`GET /v1/settings`) em forma de árvore: grupos como `limits` ou `storage` contêm os seus valores.
-Listas aparecem separadas por vírgulas. Use-o para responder perguntas como "quais módulos estão
-habilitados?", "quanto dura uma sessão?" ou "qual o tamanho máximo de um arquivo?" sem precisar
+Listas aparecem separadas por vírgulas. Use-o para responder perguntas como “quais módulos estão
+habilitados?”, “quanto dura uma sessão?” ou “qual o tamanho máximo de um arquivo?” sem precisar
 perguntar ao operador.
 
 > [!IMPORTANT]

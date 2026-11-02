@@ -48,7 +48,7 @@
   "overview": {
     "meter": "Medidor",
     "range": "Intervalo de tempo",
-    "lastDays_many": "Últimos {{count}} dias",
+    "lastDays_many": "Últimos {{count}} de dias",
     "lastDays_one": "Último dia",
     "lastDays_other": "Últimos {{count}} dias",
     "chartTitle": "Uso diário, todos os tenants",

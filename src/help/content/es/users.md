@@ -72,7 +72,7 @@ ID del usuario en lugar de la dirección. Estos usuarios:
 Todas las sesiones del usuario terminan de inmediato, en todos los dispositivos. El usuario puede
 volver a iniciar sesión. Úsalo cuando se haya perdido un dispositivo o una sesión pueda estar
 comprometida. **Sesiones activas**, en la misma página, enumera cada sesión con el dispositivo, el
-**Método** de inicio de sesión, **Última actividad** y **Caduca**.
+**Método de inicio de sesión**, **Última actividad** y **Caduca**.
 
 ## Desactivar un usuario {#disable}
 

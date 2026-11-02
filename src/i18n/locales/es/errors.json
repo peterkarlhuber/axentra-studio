@@ -50,8 +50,8 @@
       "message": "La configuración del servidor no permite esta acción aquí, por ejemplo crear productos en el modo de producto único, cambiar una suscripción que gestiona Stripe (cámbiala en Stripe) o abrir el buzón de prueba cuando el servidor envía correos reales. El mensaje del servidor indica el motivo; solo un operador puede cambiar la configuración."
     },
     "module_disabled": {
-      "title": "Módulo no activado",
-      "message": "El módulo del servidor necesario para esta acción está desactivado. Un operador puede activarlo en la configuración del servidor de Axentra."
+      "title": "Módulo no habilitado",
+      "message": "El módulo del servidor necesario para esta acción está desactivado. Un operador puede habilitarlo en la configuración del servidor de Axentra."
     },
     "payment_provider_not_configured": {
       "title": "Proveedor de pagos no configurado",

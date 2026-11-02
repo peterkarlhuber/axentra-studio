@@ -45,17 +45,17 @@ produto:
 
 | Função de produto integrada              | Em resumo                                                                                                               |
 | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Proprietário do produto (Product owner)  | Controle total do produto. Quem cria um produto se torna o proprietário dele.                                           |
-| Administrador do produto (Product admin) | Gerencia tenants, funções, chaves e dados; não pode gerenciar operadores de produto nem declarar permissões de produto. |
-| Suporte (Support)                        | Lê tudo no produto e gerencia membros de tenants até o limite das próprias permissões.                                  |
-| Leitor do produto (Product viewer)       | Acesso somente leitura ao produto.                                                                                      |
+| Product owner (proprietário do produto)  | Controle total do produto. Quem cria um produto se torna o proprietário dele.                                           |
+| Product admin (administrador do produto) | Gerencia tenants, funções, chaves e dados; não pode gerenciar operadores de produto nem declarar permissões de produto. |
+| Support (suporte)                        | Lê tudo no produto e gerencia membros de tenants até o limite das próprias permissões.                                  |
+| Product viewer (leitor do produto)       | Acesso somente leitura ao produto.                                                                                      |
 
 Uma função de produto que contém permissões de tenant as concede em **todos** os tenants do
 produto. Veja [produtos](help:products).
 
 ## Tenant {#tenant}
 
-Um **tenant** é um cliente ou uma organização dentro de um produto, por exemplo “Acme Ltda.”. Os
+Um **tenant** é um cliente ou uma organização dentro de um produto, por exemplo “Acme Ltd”. Os
 dados de tenants diferentes ficam estritamente separados, inclusive dentro do banco de dados
 (segurança em nível de linha). Um tenant está **ativo** ou **suspenso**; suspender bloqueia os
 membros dele e as chaves de API vinculadas a ele sem excluir dados. Veja [tenants](help:tenants).
@@ -78,10 +78,10 @@ pessoa acesso aos dados de um tenant. Funções de tenant integradas:
 
 | Função de tenant integrada | Em resumo                                                      |
 | -------------------------- | -------------------------------------------------------------- |
-| Proprietário (Owner)       | Controle total do tenant.                                      |
-| Administrador (Admin)      | Gerencia membros e dados do tenant.                            |
-| Membro (Member)            | Trabalha com os dados do tenant. A função padrão dos convites. |
-| Leitor (Viewer)            | Acesso somente leitura ao tenant.                              |
+| Owner (proprietário)       | Controle total do tenant.                                      |
+| Admin (administrador)      | Gerencia membros e dados do tenant.                            |
+| Member (membro)            | Trabalha com os dados do tenant. A função padrão dos convites. |
+| Viewer (leitor)            | Acesso somente leitura ao tenant.                              |
 
 Não confunda membros de tenant com **operadores de produto** (membros do produto), que têm uma
 função de produto. Veja [membros e convites](help:members-invitations).
@@ -136,7 +136,7 @@ opcionais incluem `storage` (arquivos), `events` (jobs, agendamentos, eventos, w
 `billing` e `notify` (notificações).
 
 No Studio, um item da barra lateral cujo módulo não está habilitado continua visível e mostra
-**Desat.**. Ao abri-lo, aparece **Módulo não habilitado neste servidor** com o id do módulo que o
+**Desat.**. Ao abri-lo, aparece **Módulo não habilitado neste servidor** com o ID do módulo que o
 operador precisa habilitar. O cartão **Servidor** do painel lista todos os módulos e o estado de
 cada um. Veja a [referência de módulos](help:modules-reference).
 

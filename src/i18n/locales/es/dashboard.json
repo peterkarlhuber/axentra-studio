@@ -45,6 +45,6 @@
     "modeAbout": "Acerca del modo",
     "modeInfo": "Producto único: el servidor atiende exactamente un producto, creado a partir de su configuración; no se pueden crear ni archivar productos. Multiproducto: los administradores de la plataforma crean y archivan productos. El operador define el modo en la configuración del servidor.",
     "modulesAbout": "Acerca de los módulos",
-    "modulesInfo": "Bloques funcionales del servidor. Los módulos en verde están activados; los grises no, y sus entradas de la barra lateral muestran “Inactivo”. Solo el operador del servidor puede activar un módulo."
+    "modulesInfo": "Bloques funcionales del servidor. Los módulos en verde están habilitados; los grises no, y sus entradas de la barra lateral muestran “Inactivo”. Solo el operador del servidor puede habilitar un módulo."
   }
 }

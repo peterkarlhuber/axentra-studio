@@ -34,7 +34,7 @@ mantém pelo menos um proprietário. Veja [teto de funções](help:security#role
 
 ## Por que não consigo escolher algumas funções? {#roles-greyed-out}
 
-O Studio marca as funções que você não pode atribuir com **"… (acima das suas permissões)"**: elas
+O Studio marca as funções que você não pode atribuir com **“… (acima das suas permissões)”**: elas
 contêm permissões que você mesmo não tem, ou são uma função de proprietário e você não é
 proprietário. Ninguém pode distribuir mais direitos do que tem. Veja
 [teto de funções](help:security#role-ceiling).
@@ -52,13 +52,13 @@ administradores da plataforma ainda podem inspecioná-lo. Proprietários e admin
 reativá-lo na página do tenant no Studio. Já excluir um tenant remove o tenant e
 todos os dados dele e não pode ser desfeito. Veja [Tenants](help:tenants).
 
-## Por que vejo "Não encontrado" para algo que existe? {#not-found-exists}
+## Por que vejo “Não encontrado” para algo que existe? {#not-found-exists}
 
 Se você não tem relação com um produto ou tenant, o Axentra responde exatamente como se ele não
 existisse, para que ninguém descubra quais produtos, tenants ou contas há. Peça a alguém com acesso
 que adicione você. Veja [Não encontrado](help:troubleshooting#not-found).
 
-## Por que uma área da barra lateral está marcada como "Desat."? {#area-off}
+## Por que uma área da barra lateral está marcada como “Desat.”? {#area-off}
 
 O módulo do servidor por trás dela está desligado. Um operador pode habilitá-lo na configuração do
 servidor. Veja a [referência de módulos](help:modules-reference).
