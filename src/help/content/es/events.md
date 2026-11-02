@@ -37,7 +37,7 @@ pantallas aceptan **patrones** en los que `*` representa cualquier texto: `invoi
 
 Abre [Eventos](app:events). La pestaña **Historial de eventos** enumera los eventos del más reciente
 al más antiguo, con **Tipo**, **Inquilino** (o **Nivel de producto**), **Actor** y **Ocurrido**. El
-actor muestra la clase de llamante (`user`, `api_key` o `system`) y su id. Desplázate hacia abajo y
+actor muestra la clase de llamante (`user`, `api_key` o `system`) y su ID. Desplázate hacia abajo y
 carga más para retroceder en el tiempo.
 
 ### Filtrar por tipo e inquilino {#filter}

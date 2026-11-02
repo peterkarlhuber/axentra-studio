@@ -54,7 +54,7 @@ Cuando un módulo está desactivado, el servidor no ofrece en absoluto su parte 
 - Desaparecen los accesos directos y widgets que dependen del módulo, por ejemplo los widgets de uso
   y facturación del panel o el botón **Explorar registros** en la página de un inquilino.
 - Una acción que aún llegue a un módulo desactivado responde
-  [Módulo no activado](help:troubleshooting#module-disabled) o **No encontrado**.
+  [Módulo no habilitado](help:troubleshooting#module-disabled) o **No encontrado**.
 
 Notas por módulo:
 

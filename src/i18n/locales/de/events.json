@@ -116,7 +116,7 @@
   },
   "schedules": {
     "title": "Zeitpläne",
-    "description": "Reihen Jobs in festen Abständen oder zu Cron-Zeiten (UTC) ein. Jeder Zeitpunkt löst höchstens einmal aus; verpasste Zeitpunkte werden zu einem Lauf zusammengefasst.",
+    "description": "Zeitpläne reihen Jobs in festen Abständen oder zu Cron-Zeiten (UTC) ein. Jeder Zeitpunkt löst höchstens einmal aus; verpasste Zeitpunkte werden zu einem Lauf zusammengefasst.",
     "name": "Name",
     "timing": "Zeitsteuerung",
     "state": "Zustand",

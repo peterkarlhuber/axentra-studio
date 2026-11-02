@@ -24,6 +24,40 @@ All notable changes to Axentra Studio are documented here. The format follows
 - GitHub social preview `branding-src/social-preview.png` (1280 × 640, not served): the Axentra
   lockup with a "Studio" tag on a dark violet background, rendered by `scripts/social_preview.py`,
   the template shared with Nodestro and Orkexa. It is uploaded by hand in the repository settings.
+- German: plan entitlements are now **Leistungen** (Tarifleistung, Leistungsüberschreibung) in the
+  billing and usage texts and every German help article; "Berechtigung" means only permission
+  again (docs/i18n/TERMINOLOGY.md).
+- **Sign out all other sessions** no longer fails as a whole when one request fails: it reads the
+  session list fresh, never revokes the session the server marks as current (and revokes nothing
+  without that marker), sends at most 4 requests at a time, counts an already ended session as
+  done, reports how many sessions could not be signed out with the first reason, and always
+  reloads the list. No new backend endpoint (see docs/TODO.md).
+- **New API key** offers an optional **Expiry**: never (default), in 30, 90 or 365 days, or the
+  end of a chosen day (after today, local time zone; validated before sending). The info tip and
+  the API keys article (new section "Expiry", six languages) explain that an expiry cannot be
+  extended, that rotation keeps it and how derived keys inherit it. The list already showed it.
+- Help (webhooks, webhook receiver tutorial; six languages): webhook deliveries now retry on their
+  own schedule (Axentra `events.webhook_backoff_base_seconds` 120 s doubling, at most 6 hours per
+  wait), so the default 8 attempts span about 2 to 4¼ hours instead of a few minutes.
+- First-run setup tells "setup already completed" from "email address in use" by the new error
+  codes (`setup_already_completed`, `email_taken`); the message text is only a fallback for older
+  backends that answer `conflict` for both.
+- Every error code the Axentra API can answer with has its own message (six languages) and a
+  troubleshooting section: new `method_not_allowed` (405), the generic `error`, `invalid_signature`,
+  `setup_already_completed` and `email_taken` (Axentra's new setup conflict codes), and
+  `KNOWN_ERROR_CODES` now lists the codes `errors.json` already translated. `405`, `413` and `415`
+  without a code map to their codes. The `mode_not_supported` message and article also name the
+  Stripe subscription and test mailbox cases.
+- The sidebar lists **Audit log** only for users who may read audit events (`platform:audit`, or
+  `audit:read` in one of their products, from `GET /v1/me`); before, everyone saw it and got a
+  `403` state. **Settings** (personal preferences for everyone) and **System health** /
+  **Monitoring** (public readiness checks) stay visible and explain the parts the user cannot read;
+  items of disabled modules stay visible as before. A direct link still shows **Not permitted**.
+- Translation review of all six languages (UI strings and the 39 help articles): consistent terms
+  (de **Betreiber** for the operator, **erneuern** for rotate; it "scheda" for tabs), informal address,
+  typography (de „…“, fr « … » with non-breaking spaces, curly apostrophes), meaning fixes in pt-BR
+  and it, and help labels that match the UI exactly. A native-speaker review is still open (see
+  docs/TODO.md).
 - New official Axentra logo. The two logo masters live in `branding-src/` (not served) and every
   brand file is derived from them by `scripts/derive_branding.py`, the shared derivation script
   (replaces `scripts/derive-branding.py`). The sign-in, setup and public help pages show the lockup

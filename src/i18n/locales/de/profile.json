@@ -29,7 +29,7 @@
     "setDescription": "Du meldest dich derzeit nur per Single Sign-on an. Mit einem Passwort ist zusätzlich die Passwort-Anmeldung möglich. Aus Sicherheitsgründen ist dafür eine frische Anmeldung nötig.",
     "reauth": "Erneut anmelden",
     "reauthBody": "Ein erstes Passwort lässt sich nur kurz nach der Anmeldung festlegen. Melde dich erneut an (du kehrst hierher zurück) und lege das Passwort dann innerhalb weniger Minuten fest.",
-    "rules": "Mindestens so lang wie vom Server verlangt (12 Zeichen, sofern der Betrieb nichts anderes eingestellt hat), nicht deine E-Mail-Adresse und mindestens 4 verschiedene Zeichen.",
+    "rules": "Mindestens so lang wie vom Server verlangt (12 Zeichen, sofern der Betreiber nichts anderes eingestellt hat), nicht deine E-Mail-Adresse und mindestens 4 verschiedene Zeichen.",
     "setSubmit": "Passwort festlegen"
   },
   "sessions": {
@@ -37,6 +37,9 @@
     "description": "Browser und Geräte, in denen du angemeldet bist.",
     "revoked": "Sitzung beendet",
     "revokeOthers": "Alle anderen Sitzungen abmelden",
-    "othersRevoked": "Alle anderen Sitzungen abgemeldet"
+    "othersRevoked_one": "{{count}} andere Sitzung abgemeldet",
+    "othersRevoked_other": "{{count}} andere Sitzungen abgemeldet",
+    "othersPartial_one": "{{count}} von {{total}} anderen Sitzungen konnte nicht abgemeldet werden",
+    "othersPartial_other": "{{count}} von {{total}} anderen Sitzungen konnten nicht abgemeldet werden"
   }
 }

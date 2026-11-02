@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router';
 import { IconButton, Tooltip } from '@/components/ui';
 import clsx from '@/lib/clsx';
+import { useMe } from '../auth';
 import { useMeta } from '../contexts';
 import { isModuleEnabled } from '../modules';
 import { NAVIGATION, type NavItem } from '../navigation';
@@ -27,9 +28,15 @@ export function Sidebar({
 }: SidebarProps) {
   const { t } = useTranslation('nav');
   const meta = useMeta();
+  const { data: me } = useMe();
   const isCollapsed = variant === 'rail' && collapsed;
 
-  const visible = (item: NavItem) => item.scope === 'platform' || Boolean(productId);
+  // Items for disabled modules stay visible (they explain what to enable); items whose screen
+  // the user cannot use at all are hidden once `/v1/me` is known. A direct visit still shows
+  // the explanatory "Not permitted" state, and the server stays authoritative.
+  const visible = (item: NavItem) =>
+    (item.scope === 'platform' || Boolean(productId)) &&
+    (!item.visibleTo || !me || item.visibleTo(me));
 
   return (
     <div className={clsx(styles.sidebar, isCollapsed && styles.collapsed)}>

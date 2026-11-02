@@ -35,7 +35,7 @@ Good to know:
   type a name (**Type … to confirm**). This protects against accidental key presses.
 - **Info tips** (the small (i) buttons next to labels) open with **Enter** or **Space** and
   close with **Escape**. They work with keyboard, touch and screen readers, not only on hover.
-- **Tables** with many columns scroll inside their own labelled area. Focus the area with
+- **Tables** with many columns scroll inside their own labeled area. Focus the area with
   **Tab** and scroll it with the arrow keys.
 
 ## Focus {#focus}
@@ -48,7 +48,7 @@ page's main heading, so you start at the new content and screen readers announce
 
 - **Landmarks:** each page has a header, the main navigation and the main content, and exactly
   one main heading.
-- **Breadcrumbs** and the **Main navigation** are labelled. Sidebar areas of switched-off modules
+- **Breadcrumbs** and the **Main navigation** are labeled. Sidebar areas of switched-off modules
   are announced as "module not enabled".
 - **Forms:** every field has a visible label; required fields are announced; error messages are
   connected to their field.

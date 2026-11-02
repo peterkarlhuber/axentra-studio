@@ -4,7 +4,7 @@ summary: Configure um novo cliente de ponta a ponta - tenant, administrador e eq
 keywords: onboarding, integração de cliente, novo cliente, configuração de cliente, configuração de tenant, convidar, convite, aceitar convite, proprietário, owner, admin, membro, leitor, integração, chave de API, auditoria, checklist, offboarding, desligamento
 ---
 
-Um novo cliente, a "Acme Ltd", contratou o seu produto. Neste tutorial, você prepara tudo de que ele
+Um novo cliente, a “Acme Ltd”, contratou o seu produto. Neste tutorial, você prepara tudo de que ele
 precisa: um tenant próprio, o administrador e a equipe com funções adequadas, uma chave de API para
 a integração e uma verificação no log de auditoria de que tudo aconteceu como planejado. Você também
 aprende o que o cliente precisa fazer do lado dele para aceitar um convite.
@@ -56,7 +56,7 @@ personalizada. Veja [funções e permissões](help:roles-permissions).
    cliente. O slug precisa ser único no produto e não pode ser reutilizado enquanto o tenant existir.
 3. Escolha **Criar tenant**.
 
-**Resultado esperado:** "Tenant “Acme Ltd” criado"; a página do tenant se abre com o status **Ativo**
+**Resultado esperado:** “Tenant “Acme Ltd” criado”; a página do tenant se abre com o status **Ativo**
 e sem membros. Anote o **ID** do tenant (`ten_…`) na guia **Detalhes**.
 
 ## Passo 3: Convidar o administrador do cliente {#invite-admin}
@@ -134,8 +134,8 @@ tenant de acordo com a função. Pode levar um momento até que o acesso apareç
 ## Passo 6: Ajustar funções, se necessário {#change-role}
 
 Na guia **Membros**, escolha uma nova função na lista **Função** do membro; o Studio confirma
-"Função atualizada". Para retirar o acesso, escolha **Remover membro**. Você não pode alterar nem
-remover membros cuja função esteja acima da sua (marcados com "Acima da sua própria função").
+“Função atualizada”. Para retirar o acesso, escolha **Remover membro**. Você não pode alterar nem
+remover membros cuja função esteja acima da sua (marcados com “Acima da sua própria função”).
 
 ## Passo 7: Criar a chave de API para a integração {#integration-key}
 
@@ -206,9 +206,9 @@ Todos com o resultado **Sucesso**. Uma tentativa de aceite com a conta errada ap
 | **Conflito** ao convidar                                     | Já existe um convite em aberto para este endereço neste tenant. Use-o ou revogue-o.                                                                                                                                                                                                                         |
 | **Usuário não encontrado** em **Adicionar membro**           | Nenhuma conta que você consegue ver tem este endereço. Use **Enviar convite**.                                                                                                                                                                                                                              |
 | O cliente não recebe e-mail                                  | O módulo `notify` está desligado, ou a entrega do e-mail falhou. Envie você mesmo o link ou o token; verifique as [notificações](help:notifications).                                                                                                                                                       |
-| O link abre uma página "não encontrada" ou uma página da API | O Studio roda em endereço próprio, e nem a configuração do servidor `notify.invitation_accept_url` nem a configuração de produto `invitation_accept_url` apontam para ele (veja [entrega](help:tutorial-onboard-customer#delivery)). Até lá, envie o token e peça que seja colado em `/invitations/accept`. |
+| O link abre uma página “não encontrada” ou uma página da API | O Studio roda em endereço próprio, e nem a configuração do servidor `notify.invitation_accept_url` nem a configuração de produto `invitation_accept_url` apontam para ele (veja [entrega](help:tutorial-onboard-customer#delivery)). Até lá, envie o token e peça que seja colado em `/invitations/accept`. |
 | Ao aceitar aparece **Convite para outro endereço de e-mail** | A pessoa está conectada com uma conta cujo e-mail é diferente do endereço convidado. Escolha **Sair e usar o endereço convidado** ou convide o endereço certo.                                                                                                                                              |
 | Ao aceitar aparece **Este convite não pode ser usado**       | O convite já foi aceito, revogado ou tem mais de 7 dias, ou o token está incompleto. Crie um novo convite.                                                                                                                                                                                                  |
-| O login único falha com "no account"                         | Não há convite em aberto para o endereço verificado, e o cadastro está desligado. Verifique o endereço convidado; veja [como entrar](help:signing-in#sso-errors).                                                                                                                                           |
+| O login único falha com “no account”                         | Não há convite em aberto para o endereço verificado, e o cadastro está desligado. Verifique o endereço convidado; veja [como entrar](help:signing-in#sso-errors).                                                                                                                                           |
 | A integração recebe `403`                                    | Falta uma permissão à chave, ou o tenant está suspenso.                                                                                                                                                                                                                                                     |
 | Nenhum evento no log de auditoria                            | Verifique o filtro **Produto** e se você tem `audit:read`.                                                                                                                                                                                                                                                  |

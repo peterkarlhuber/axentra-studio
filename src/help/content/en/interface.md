@@ -40,8 +40,12 @@ Entries that belong to a product (from **Dashboard** to **Notifications**, excep
 shown only when a product is selected. **Products**, **Audit log**, **System health**,
 **Monitoring** and **Settings** are platform-wide.
 
-The sidebar shows the same entries to everybody. If you open a page you have no permission for, the
-page tells you so (**Not permitted**), and actions you may not perform are not offered.
+The sidebar shows the same entries to everybody, with one exception: **Audit log** appears only if
+you may read audit events (`audit:read` in one of your products, or `platform:audit`).
+**Settings**, **System health** and **Monitoring** are always listed because they offer something
+to everyone (your preferences, the public health checks); the parts you may not read say so there.
+If you open a page you have no permission for, for example through a saved link, the page tells
+you so (**Not permitted**), and actions you may not perform are not offered.
 
 ### Entries marked "Off" {#module-off}
 
@@ -126,7 +130,7 @@ The **Dashboard** is the start page of a product. It shows:
 - **Usage and billing** cards, when those modules are enabled and you may read them.
 - **System health**: the result of the server's readiness check, with **Details**.
 - **Server**: **Server version**, **API version**, **Environment**, **Mode**, **Product ID** and the
-  **Modules** with their state (green: enabled, grey: not enabled).
+  **Modules** with their state (green: enabled, gray: not enabled).
 
 Quick actions at the top right: **New tenant** (with `tenants:create`, module `tenancy`) and **New
 API key** (with `api_keys:manage`).

@@ -154,7 +154,7 @@ tentativi mantiene la prossima esecuzione.
 ## Modificare una pianificazione {#edit}
 
 1. Apri il menu delle azioni della riga e scegli **Modifica**.
-2. Modifica i valori e scegli **Salva**.
+2. Modifica i valori e scegli **Salva modifiche**.
 
 Studio invia solo i campi che hai modificato. Il **Tenant** non può essere cambiato dopo la
 creazione; elimina invece la pianificazione e creane una nuova. I job già accodati mantengono il loro
@@ -203,17 +203,17 @@ job vengono accodati ma restano **In coda**, nessun worker gestisce il tipo; ved
 **Scatta all'ora sbagliata.** Gli orari cron sono in UTC. Converti la tua ora locale, tenendo conto
 dell'ora legale (vedi [Fuso orario](help:schedules#timezone)).
 
-**"The cron expression never matches".** I campi descrivono una data che non esiste, come il 30
+**“The cron expression never matches”.** I campi descrivono una data che non esiste, come il 30
 febbraio. Modifica il giorno o il mese.
 
-**"Verifica i dati inseriti" con un messaggio sul cron.** Il server indica il campo, per esempio
+**“Verifica i dati inseriti” con un messaggio sul cron.** Il server indica il campo, per esempio
 `cron hour: values must be within 0-23` o `cron day of week: invalid value 'MON'`. Usa numeri invece
 di nomi e rimuovi le macro.
 
-**"interval_seconds must be between 10 and 31622400".** L'intervallo è più breve di 10 secondi o più
+**“interval_seconds must be between 10 and 31622400”.** L'intervallo è più breve di 10 secondi o più
 lungo di 366 giorni.
 
-**"Modificato nel frattempo" durante il salvataggio, l'attivazione o l'eliminazione.** Qualcun altro
+**“Modificato nel frattempo” durante il salvataggio, l'attivazione o l'eliminazione.** Qualcun altro
 ha modificato la pianificazione dopo che l'hai caricata. Chiudi la finestra, attendi che l'elenco si
 aggiorni (o ricarica la pagina), poi ripeti la modifica sulla versione attuale.
 

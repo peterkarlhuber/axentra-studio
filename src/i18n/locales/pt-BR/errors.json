@@ -47,7 +47,7 @@
     },
     "mode_not_supported": {
       "title": "Indisponível neste modo",
-      "message": "A configuração atual do servidor não oferece suporte a esta ação, por exemplo criar produtos no modo de produto único. Um operador teria que alterar a configuração do servidor."
+      "message": "A configuração do servidor não permite esta ação aqui, por exemplo criar produtos no modo de produto único, alterar uma assinatura gerenciada pelo Stripe (altere-a no Stripe) ou abrir a caixa de teste quando o servidor envia e-mails reais. A mensagem do servidor informa o motivo; só um operador pode alterar a configuração."
     },
     "module_disabled": {
       "title": "Módulo não habilitado",
@@ -76,6 +76,26 @@
     "unsupported_media_type": {
       "title": "Tipo não aceito",
       "message": "O servidor não aceita este tipo de conteúdo, por exemplo um tipo de arquivo bloqueado, como um executável ou um arquivo HTML ou SVG. Use outro tipo de arquivo."
+    },
+    "method_not_allowed": {
+      "title": "Ação não suportada",
+      "message": "O servidor não oferece esta ação neste endereço (HTTP 405). Provavelmente as versões do Studio e do servidor não combinam. Recarregue a página; se continuar acontecendo, relate o problema com o ID da requisição."
+    },
+    "error": {
+      "title": "A requisição falhou",
+      "message": "O servidor recusou a requisição com um erro HTTP sem código mais específico. Confira a mensagem do servidor e o status HTTP em Detalhes técnicos e tente novamente; se continuar acontecendo, relate o problema com o ID da requisição."
+    },
+    "invalid_signature": {
+      "title": "Assinatura inválida",
+      "message": "A assinatura de um webhook do provedor de pagamento não confere. Isso diz respeito à conexão do servidor com o provedor de pagamento, não ao Studio; um operador deve verificar o segredo do webhook."
+    },
+    "setup_already_completed": {
+      "title": "A configuração já foi concluída",
+      "message": "Já existe um administrador da plataforma neste servidor, então a configuração não pode ser executada de novo. Entre com uma conta existente."
+    },
+    "email_taken": {
+      "title": "Endereço de e-mail em uso",
+      "message": "Outra conta já usa este endereço de e-mail. Use outro endereço ou entre com a conta existente."
     }
   }
 }

@@ -56,7 +56,7 @@ facoltativo.
 
 - Inserisci l'importo nella normale unità di valuta, per esempio `19.90`. Axentra lo memorizza come
   intero nelle unità minori (centesimi); Studio mostra il valore memorizzato sotto il campo
-  ("Memorizzato come 1990 unità minori"). Le valute senza unità minori (come JPY) accettano numeri
+  (“Memorizzato come 1990 unità minori”). Le valute senza unità minori (come JPY) accettano numeri
   interi.
 - **Valuta** è un codice ISO 4217 di tre lettere, come `EUR` o `USD`.
 - **Intervallo**: **mese** o **anno**. Stabilisce anche la durata del periodo di fatturazione
@@ -198,7 +198,7 @@ nell'intestazione della pagina apre l'utilizzo del tenant.
 
 ## Provider di pagamento {#payment-provider}
 
-La scheda **Provider di pagamento** in **Piani** e **Abbonamenti** mostra la configurazione del server:
+Il riquadro **Provider di pagamento** in **Piani** e **Abbonamenti** mostra la configurazione del server:
 
 | Provider            | Comportamento                                                                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -211,7 +211,7 @@ da Studio** indica se Studio può avviare un checkout ospitato: solo con il prov
 Stripe con i pagamenti reali disattivati.
 
 Il provider viene scelto dall'operatore nella configurazione del server (`billing.provider`); non
-si può cambiare in Studio. La scheda richiede `platform:settings` o `product:manage`; altrimenti
+si può cambiare in Studio. Il riquadro richiede `platform:settings` o `product:manage`; altrimenti
 indica che la configurazione non è visibile per te. Vedi [Impostazioni](help:settings) e
 [Configurazione del server](help:server-configuration).
 
@@ -241,18 +241,18 @@ indica che la configurazione non è visibile per te. Vedi [Impostazioni](help:se
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-| Cosa vedi                                                                                             | Perché                                                                                     | Cosa fare                                                                                      |
-| ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| **Nessun accesso alla fatturazione**                                                                  | Il tuo ruolo non ha `billing:read` (a livello di prodotto per **Piani** e **Abbonamenti**) | Chiedi a un amministratore del prodotto un ruolo adatto                                        |
-| **Conflitto** durante l'eliminazione di un piano                                                      | Ci sono abbonamenti che usano il piano                                                     | **Disattiva** il piano invece di eliminarlo                                                    |
-| **Conflitto** "esiste già un piano con questa chiave"                                                 | Le chiavi dei piani sono univoche per prodotto                                             | Scegli un'altra chiave                                                                         |
-| Un piano manca in **Scegli un piano**                                                                 | Il piano è inattivo                                                                        | Attivalo in **Piani**                                                                          |
-| **Conflitto** "i piani a pagamento richiedono un checkout …"                                          | Abbonamento a un piano a pagamento con il provider di test o Stripe                        | Usa **Avvia checkout**, oppure il checkout del prodotto quando i pagamenti reali sono attivi   |
-| "Questo piano a pagamento richiede un checkout, che qui il server non offre."                         | I pagamenti reali sono attivi, oppure il provider non ti è noto                            | Usa il checkout del tuo prodotto                                                               |
-| **Conflitto** "il tenant ha già un abbonamento"                                                       | Esiste già un abbonamento corrente                                                         | Usa **Cambia piano**, oppure annulla prima l'abbonamento                                       |
-| **Non disponibile in questa modalità** quando cambi il piano                                          | L'abbonamento è gestito da Stripe                                                          | Cambialo in Stripe                                                                             |
-| **Verifica i dati inseriti**: "gli URL di reindirizzamento devono iniziare con un'origine consentita" | L'indirizzo di Studio non è l'URL pubblico del server né un'origine consentita             | Chiedi all'operatore di aggiungere l'origine di Studio a `security.allowed_origins`            |
-| L'abbonamento resta **Incompleto**                                                                    | Il checkout non è stato completato, oppure il webhook non raggiunge il server              | Riapri il checkout; chiedi all'operatore di controllare endpoint e segreto del webhook         |
-| La prova non termina (manuale)                                                                        | L'attività di fatturazione non è pianificata                                               | Chiedi all'operatore di pianificare `advance_periods`                                          |
-| **Modificato nel frattempo**                                                                          | Qualcun altro ha modificato il piano o l'abbonamento                                       | Ricarica e ripeti                                                                              |
-| I limiti non valgono dopo l'annullamento                                                              | Gli abbonamenti annullati non concedono diritti d'uso                                      | È il comportamento previsto; vale il valore predefinito del contatore o l'override della quota |
+| Cosa vedi                                                                       | Perché                                                                                     | Cosa fare                                                                                      |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| **Nessun accesso alla fatturazione**                                            | Il tuo ruolo non ha `billing:read` (a livello di prodotto per **Piani** e **Abbonamenti**) | Chiedi a un amministratore del prodotto un ruolo adatto                                        |
+| **Conflitto** durante l'eliminazione di un piano                                | Ci sono abbonamenti che usano il piano                                                     | **Disattiva** il piano invece di eliminarlo                                                    |
+| **Conflitto** “a plan with this key exists”                                     | Le chiavi dei piani sono univoche per prodotto                                             | Scegli un'altra chiave                                                                         |
+| Un piano manca in **Scegli un piano**                                           | Il piano è inattivo                                                                        | Attivalo in **Piani**                                                                          |
+| **Conflitto** “paid plans need a checkout …”                                    | Abbonamento a un piano a pagamento con il provider di test o Stripe                        | Usa **Avvia checkout**, oppure il checkout del prodotto quando i pagamenti reali sono attivi   |
+| “Questo piano a pagamento richiede un checkout, che qui il server non offre.”   | I pagamenti reali sono attivi, oppure il provider non ti è noto                            | Usa il checkout del tuo prodotto                                                               |
+| **Conflitto** “the tenant already has a subscription”                           | Esiste già un abbonamento corrente                                                         | Usa **Cambia piano**, oppure annulla prima l'abbonamento                                       |
+| **Non disponibile in questa modalità** quando cambi il piano                    | L'abbonamento è gestito da Stripe                                                          | Cambialo in Stripe                                                                             |
+| **Verifica i dati inseriti**: “redirect URLs must start with an allowed origin” | L'indirizzo di Studio non è l'URL pubblico del server né un'origine consentita             | Chiedi all'operatore di aggiungere l'origine di Studio a `security.allowed_origins`            |
+| L'abbonamento resta **Incompleto**                                              | Il checkout non è stato completato, oppure il webhook non raggiunge il server              | Riapri il checkout; chiedi all'operatore di controllare endpoint e segreto del webhook         |
+| La prova non termina (manuale)                                                  | L'attività di fatturazione non è pianificata                                               | Chiedi all'operatore di pianificare `advance_periods`                                          |
+| **Modificato nel frattempo**                                                    | Qualcun altro ha modificato il piano o l'abbonamento                                       | Ricarica e ripeti                                                                              |
+| I limiti non valgono dopo l'annullamento                                        | Gli abbonamenti annullati non concedono diritti d'uso                                      | È il comportamento previsto; vale il valore predefinito del contatore o l'override della quota |

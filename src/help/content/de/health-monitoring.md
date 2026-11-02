@@ -175,8 +175,8 @@ Das Backend-Repository dokumentiert all das in `docs/operations/OBSERVABILITY.md
   setzen.
 - **Der Server hat dieses Token nicht akzeptiert.**: Das Token ist falsch oder wurde erneuert. Bitte
   den Betreiber um das aktuelle.
-- **Einstellungen zu Aufbewahrung und Tracing sehen nur Plattform-Administratoren und
-  Produktverantwortliche**: Du hast weder `platform:settings` noch `product:manage`. Der Rest der
+- **Einstellungen zu Aufbewahrung und Tracing sehen nur Plattform-Administratoren sowie
+  Produktinhaber und -administratoren**: Du hast weder `platform:settings` noch `product:manage`. Der Rest der
   Seite funktioniert trotzdem.
 - **Metriken wirken zu niedrig oder springen auf null zurück**: Ein anderer API-Prozess hat
   geantwortet, oder der Prozess wurde neu gestartet (siehe die Warnung unter [Metriken](#metrics)).

@@ -76,7 +76,7 @@
   },
   "accept": {
     "title": "Aceitar convite",
-    "description": "Entre em um tenant com o link ou o token de convite que você recebeu. Entre com a conta do endereço de e-mail para o qual o convite foi enviado, confira os dados e confirme.",
+    "description": "Participe de um tenant com o link ou o token de convite que você recebeu. Entre com a conta do endereço de e-mail para o qual o convite foi enviado, confira os dados e confirme.",
     "token": "Token do convite",
     "tokenHelp": "Cole o token do convite se você não abriu o link.",
     "tokenFromLink": "Preenchido a partir do seu link de convite. Ele não aparece mais na barra de endereço.",

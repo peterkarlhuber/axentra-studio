@@ -25,22 +25,38 @@ almacena un hash, así que nadie, ni siquiera un administrador, puede volver a m
 3. Si quieres, elige un **Ámbito de inquilino** (consulta las
    [claves vinculadas a un inquilino](#tenant-scope)). Deja **Todo el producto** para una clave que
    funcione en todos los inquilinos.
-4. Selecciona los **Permisos** que necesita el servicio, y ninguno más. La lista funciona como se
+4. Si quieres, elige una **Caducidad**: **Nunca** (predeterminado), **En 30 días**, **En 90 días**,
+   **En 365 días**, o **En una fecha…** y después una **Fecha de caducidad** (consulta
+   [caducidad](#expiry)).
+5. Selecciona los **Permisos** que necesita el servicio, y ninguno más. La lista funciona como se
    describe en [roles y permisos](help:roles-permissions#checklist).
-5. Elige **Crear clave**.
-6. Copia el secreto de **Secreto de la clave de API** en tu gestor de secretos.
-7. Marca **He guardado el secreto de forma segura** y elige **Listo**.
+6. Elige **Crear clave**.
+7. Copia el secreto de **Secreto de la clave de API** en tu gestor de secretos.
+8. Marca **He guardado el secreto de forma segura** y elige **Listo**.
 
 > [!CAUTION]
 > El diálogo del secreto no se puede cerrar con Escape ni haciendo clic fuera, y el secreto no se
 > puede volver a mostrar. Si se pierde, [rota la clave](#rotate) para obtener un secreto nuevo.
 
-| Campo                    | Qué hace                                              | Valores permitidos / valor predeterminado                                                                        |
-| ------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Nombre**               | Etiqueta en la lista y en el registro de auditoría.   | De 1 a 200 caracteres. No tiene que ser único.                                                                   |
-| **Ámbito de inquilino**  | Vincula la clave a un inquilino.                      | **Todo el producto** (predeterminado) o un inquilino. Se muestra cuando el módulo de inquilinos está habilitado. |
-| **Permisos**             | Lo que puede hacer la clave.                          | De 1 a 100 permisos de ámbito producto o inquilino, incluidos los definidos por el producto que estén activos.   |
-| Caducidad (`expires_at`) | Momento a partir del cual la clave deja de funcionar. | No se establece en Studio: las claves creadas aquí nunca caducan. Disponible a través de la API.                 |
+| Campo                   | Qué hace                                              | Valores permitidos / valor predeterminado                                                                                         |
+| ----------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Nombre**              | Etiqueta en la lista y en el registro de auditoría.   | De 1 a 200 caracteres. No tiene que ser único.                                                                                    |
+| **Ámbito de inquilino** | Vincula la clave a un inquilino.                      | **Todo el producto** (predeterminado) o un inquilino. Se muestra cuando el módulo de inquilinos está habilitado.                  |
+| **Permisos**            | Lo que puede hacer la clave.                          | De 1 a 100 permisos de ámbito producto o inquilino, incluidos los definidos por el producto que estén activos.                    |
+| **Caducidad**           | Momento a partir del cual la clave deja de funcionar. | **Nunca** (predeterminado), 30, 90 o 365 días desde la creación, o el final de un día elegido (posterior a hoy, tu zona horaria). |
+
+### Caducidad {#expiry}
+
+Una clave con caducidad deja de funcionar en ese momento: se rechaza como una clave revocada y
+aparece como **Caducado**. Elige una caducidad para claves que solo se necesitan durante un tiempo,
+por ejemplo para una migración o la prueba de un socio; los servicios permanentes suelen usar claves
+sin caducidad y [rotarlas](#rotate) periódicamente.
+
+La caducidad no se puede cambiar después de crear la clave, y la rotación la conserva: crea una
+clave nueva antes de que caduque la antigua y cambia el servicio. Las claves que un servicio crea
+con otra clave nunca sobreviven a la clave que las crea (consulta [claves
+derivadas](#derived-keys)); las claves creadas en Studio pertenecen a tu cuenta, así que esa regla
+no se les aplica.
 
 ### Claves vinculadas a un inquilino {#tenant-scope}
 

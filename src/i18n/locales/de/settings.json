@@ -15,8 +15,8 @@
     "title": "Serverkonfiguration",
     "description": "Wirksame, nicht geheime Konfiguration dieses Axentra-Servers (nur lesbar).",
     "empty": "Der Server hat keine Einstellungen geliefert.",
-    "forbidden": "Die Serverkonfiguration sehen nur Plattform-Administratoren sowie Produktverantwortliche und -administratoren.",
-    "changeHint": "Diese Werte legt der Betrieb in der Serverkonfiguration fest; hier lassen sie sich nicht ändern.",
+    "forbidden": "Die Serverkonfiguration sehen nur Plattform-Administratoren sowie Produktinhaber und -administratoren.",
+    "changeHint": "Diese Werte legt der Betreiber in der Serverkonfiguration fest; hier lassen sie sich nicht ändern.",
     "changeLink": "So änderst du sie"
   }
 }

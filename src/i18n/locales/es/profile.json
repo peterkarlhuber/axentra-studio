@@ -37,6 +37,11 @@
     "description": "Navegadores y dispositivos en los que tienes la sesión iniciada.",
     "revoked": "Sesión revocada",
     "revokeOthers": "Cerrar todas las demás sesiones",
-    "othersRevoked": "Se cerraron todas las demás sesiones"
+    "othersRevoked_one": "Se cerró {{count}} sesión más",
+    "othersRevoked_many": "Se cerraron {{count}} de sesiones más",
+    "othersRevoked_other": "Se cerraron {{count}} sesiones más",
+    "othersPartial_one": "No se pudo cerrar {{count}} de {{total}} sesiones más",
+    "othersPartial_many": "No se pudieron cerrar {{count}} de {{total}} sesiones más",
+    "othersPartial_other": "No se pudieron cerrar {{count}} de {{total}} sesiones más"
   }
 }

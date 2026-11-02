@@ -16,7 +16,7 @@
   },
   "plans": {
     "title": "Tarife",
-    "description": "Tarife mit Preisen und Berechtigungen. Genutzte Tarife können deaktiviert, aber nicht gelöscht werden.",
+    "description": "Tarife mit Preisen und Leistungen. Genutzte Tarife können deaktiviert, aber nicht gelöscht werden.",
     "create": "Neuer Tarif",
     "createSubmit": "Tarif anlegen",
     "formDescription": "Preise werden in der kleinsten Währungseinheit (Cent) gespeichert. Studio wickelt keine Zahlungen ab.",
@@ -38,7 +38,7 @@
     "trialValue_one": "{{count}} Tag",
     "trialValue_other": "{{count}} Tage",
     "noTrial": "Keine Testphase",
-    "entitlements": "Berechtigungen",
+    "entitlements": "Leistungen",
     "status": "Status",
     "active": "Aktiv",
     "inactive": "Inaktiv",
@@ -55,7 +55,7 @@
     "saved": "Tarif {{name}} gespeichert",
     "actionsFor": "Aktionen für Tarif {{name}}",
     "empty": "Noch keine Tarife",
-    "emptyBody": "Lege einen Tarif mit Preisen und Berechtigungen an und melde dann Mandanten dafür an."
+    "emptyBody": "Lege einen Tarif mit Preisen und Leistungen an und melde dann Mandanten dafür an."
   },
   "prices": {
     "title": "Preise",
@@ -74,9 +74,9 @@
     "per": "{{amount}} / {{interval}}"
   },
   "entitlements": {
-    "title": "Berechtigungen",
+    "title": "Leistungen",
     "editorHelp": "Funktionen sind ein- oder ausgeschaltet. Limits legen das Kontingent eines Nutzungszählers pro Zeitraum fest; leer lassen für unbegrenzt.",
-    "none": "Keine Berechtigungen.",
+    "none": "Keine Leistungen.",
     "rowLabel": "Eintrag {{index}}",
     "kind": "Art",
     "feature": "Funktion",
@@ -89,13 +89,13 @@
     "limitValue": "Limit",
     "limitHelp": "Leer = unbegrenzt",
     "limitInvalid": "Gib eine Zahl ab 0 ein.",
-    "add": "Berechtigung hinzufügen",
+    "add": "Leistung hinzufügen",
     "remove": "{{name}} entfernen",
     "unlimited": "unbegrenzt",
     "on": "an",
     "off": "aus",
-    "effectiveTitle": "Wirksame Berechtigungen",
-    "effectiveDescription": "Die Berechtigungen des Tarifs (in Testphase, aktiv oder überfällig) zusammen mit den Überschreibungen des Mandanten.",
+    "effectiveTitle": "Wirksame Leistungen",
+    "effectiveDescription": "Die Leistungen des Tarifs (in Testphase, aktiv oder überfällig) zusammen mit den Überschreibungen des Mandanten.",
     "source": "Tarif",
     "noPlan": "Kein berechtigendes Abonnement",
     "features": "Funktionen",
@@ -104,7 +104,7 @@
     "noOverrides": "Keine Überschreibungen",
     "noneSet": "Keine",
     "editOverrides": "Überschreibungen bearbeiten",
-    "overridesDescription": "Überschreibungen ersetzen einzelne Berechtigungen für diesen Mandanten. Beim Speichern werden alle Überschreibungen ersetzt.",
+    "overridesDescription": "Überschreibungen ersetzen einzelne Leistungen für diesen Mandanten. Beim Speichern werden alle Überschreibungen ersetzt.",
     "saveOverrides": "Überschreibungen speichern",
     "overridesSaved": "Überschreibungen gespeichert"
   },
@@ -138,7 +138,7 @@
     "description": "Abonnements aller Mandanten, neueste zuerst.",
     "listTitle": "Alle Abonnements",
     "openTitle": "Abrechnung eines Mandanten",
-    "openDescription": "Öffne Abonnement und Berechtigungen eines Mandanten, auch wenn er noch kein Abonnement hat.",
+    "openDescription": "Öffne Abonnement und Leistungen eines Mandanten, auch wenn er noch kein Abonnement hat.",
     "open": "Öffnen",
     "tenant": "Mandant",
     "plan": "Tarif",
@@ -157,7 +157,7 @@
   },
   "tenant": {
     "title": "Abrechnung des Mandanten",
-    "description": "Abonnement und Berechtigungen dieses Mandanten.",
+    "description": "Abonnement und Leistungen dieses Mandanten.",
     "usage": "Nutzung"
   },
   "subscription": {
@@ -196,7 +196,7 @@
     "trialNotice_one": "Die Testphase endet in {{count}} Tag ({{date}}).",
     "trialNotice_other": "Die Testphase endet in {{count}} Tagen ({{date}}).",
     "endsNotice": "Endet zum Periodenende am {{date}}.",
-    "pastDueNotice": "Die Zahlung ist überfällig. Die Berechtigungen bleiben als Kulanzzeit wirksam.",
+    "pastDueNotice": "Die Zahlung ist überfällig. Die Leistungen bleiben als Kulanzzeit wirksam.",
     "incompleteNotice": "Wartet auf den Abschluss des Checkouts beim Anbieter.",
     "stripeManaged": "Tarifwechsel von Stripe-Abonnements erfolgen in Stripe; der Webhook aktualisiert Axentra.",
     "manualPaid": "Manueller Anbieter: Zieh die Zahlung außerhalb von Axentra ein.",
@@ -208,7 +208,7 @@
       },
       "cancelNow": {
         "title": "Sofort kündigen?",
-        "body": "Das Abonnement von {{plan}} endet sofort, seine Berechtigungen erlöschen. Das kann nicht rückgängig gemacht werden.",
+        "body": "Das Abonnement von {{plan}} endet sofort, seine Leistungen erlöschen. Das kann nicht rückgängig gemacht werden.",
         "action": "Sofort kündigen"
       },
       "resume": {
@@ -239,11 +239,11 @@
     "allCounted": "Alle Abonnements gezählt."
   },
   "info": {
-    "trialDays": "Neue Abonnements beginnen in der „Testphase“ und erhalten die Berechtigungen des Tarifs. Mit dem manuellen Anbieter endet eine Testphase erst, wenn der geplante Abrechnungsjob des Betreibers läuft.",
+    "trialDays": "Neue Abonnements beginnen in der „Testphase“ und erhalten die Leistungen des Tarifs. Mit dem manuellen Anbieter endet eine Testphase erst, wenn der geplante Abrechnungsjob des Betreibers läuft.",
     "providerPriceId": "Bei Stripe gibst du die ID des Preises ein, den du in Stripe angelegt hast. Axentra ordnet damit Abonnement-Änderungen aus Stripe diesem Tarif zu.",
     "statusLabel": "Über Abonnement-Status",
-    "status": "Testphase, Aktiv und Überfällig gewähren die Berechtigungen des Tarifs; Überfällig ist eine Kulanzzeit. Unvollständig wartet auf den Checkout beim Anbieter. Gekündigt ist endgültig.",
-    "entitlementsLabel": "Über wirksame Berechtigungen",
+    "status": "Testphase, Aktiv und Überfällig gewähren die Leistungen des Tarifs; Überfällig ist eine Kulanzzeit. Unvollständig wartet auf den Checkout beim Anbieter. Gekündigt ist endgültig.",
+    "entitlementsLabel": "Über wirksame Leistungen",
     "entitlements": "Ohne Abonnement in Testphase, Aktiv oder Überfällig erhält der Mandant nur seine Überschreibungen. Überschreibungen bleiben bestehen, wenn sich der Tarif ändert oder das Abonnement endet."
   }
 }

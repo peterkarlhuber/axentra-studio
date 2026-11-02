@@ -43,11 +43,11 @@
     },
     "quota_exceeded": {
       "title": "Quota dépassé",
-      "message": "Un quota ou une limite de l’offre de ce locataire est épuisé, le serveur a donc refusé l’action. Libère de l’espace ou réduis l’utilisation, ou demande à une personne qui en a l’accès d’augmenter le quota ou de changer d’offre."
+      "message": "Un quota ou une limite de l’offre de ce locataire est épuisé, le serveur a donc refusé l’action. Libère de l’espace ou réduis l’utilisation, ou demande à une personne disposant de l’accès nécessaire d’augmenter le quota ou de changer d’offre."
     },
     "mode_not_supported": {
       "title": "Indisponible dans ce mode",
-      "message": "La configuration actuelle du serveur ne prend pas en charge cette action, par exemple la création de produits en mode produit unique. Un opérateur devrait modifier la configuration du serveur."
+      "message": "La configuration du serveur ne permet pas cette action ici, par exemple créer des produits en mode produit unique, modifier un abonnement géré par Stripe (modifie-le dans Stripe) ou ouvrir la boîte de test quand le serveur envoie de vrais e-mails. Le message du serveur indique la raison ; seul un opérateur peut modifier la configuration."
     },
     "module_disabled": {
       "title": "Module non activé",
@@ -76,6 +76,26 @@
     "unsupported_media_type": {
       "title": "Type non accepté",
       "message": "Le serveur n’accepte pas ce type de contenu, par exemple un type de fichier bloqué comme un exécutable, un fichier HTML ou SVG. Utilise un autre type de fichier."
+    },
+    "method_not_allowed": {
+      "title": "Action non prise en charge",
+      "message": "Le serveur ne propose pas cette action à cette adresse (HTTP 405). Les versions de Studio et du serveur ne correspondent probablement pas. Recharge la page ; si le problème se reproduit, signale-le avec l’ID de requête."
+    },
+    "error": {
+      "title": "La requête a échoué",
+      "message": "Le serveur a refusé la requête avec une erreur HTTP sans code plus précis. Vérifie le message du serveur et le statut HTTP sous Détails techniques, puis réessaie ; si le problème se reproduit, signale-le avec l’ID de requête."
+    },
+    "invalid_signature": {
+      "title": "Signature non valide",
+      "message": "La signature d’un webhook du prestataire de paiement ne correspondait pas. Cela concerne la connexion du serveur au prestataire de paiement, pas Studio ; un opérateur devrait vérifier le secret du webhook."
+    },
+    "setup_already_completed": {
+      "title": "L’installation est déjà terminée",
+      "message": "Un administrateur de la plateforme existe déjà sur ce serveur, l’installation ne peut donc pas être relancée. Connecte-toi avec un compte existant."
+    },
+    "email_taken": {
+      "title": "Adresse e-mail déjà utilisée",
+      "message": "Un autre compte utilise déjà cette adresse e-mail. Utilise une autre adresse ou connecte-toi avec le compte existant."
     }
   }
 }

@@ -112,7 +112,7 @@ configurações do produto) recebem entradas em JSON; os exemplos dos artigos ba
   [configuração do servidor](help:server-configuration).
 - O Studio não cria contas de usuário diretamente. As contas vêm da configuração inicial, do login
   único ou do próprio código do seu produto. Veja [usuários](help:users).
-- Algumas funções estão disponíveis apenas pela API. Elas estão listadas em
+- Alguns recursos estão disponíveis apenas pela API. Eles estão listados em
   [limitações conhecidas](help:limitations).
 
 ## Solução de problemas {#troubleshooting}

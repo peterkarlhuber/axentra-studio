@@ -11,7 +11,7 @@ somma gli eventi per tenant e periodo, confronta il risultato con il **limite** 
 override della quota, dal piano o dal valore predefinito del contatore) e rifiuta o segnala
 l'utilizzo che lo supera. Gli operatori del prodotto usano questa schermata per definire i
 contatori e tenere d'occhio i consumi; il personale di supporto la usa per rispondere alla domanda
-"perché la mia richiesta è stata rifiutata?".
+“perché la mia richiesta è stata rifiutata?”.
 
 > [!IMPORTANT]
 > La schermata **Utilizzo** richiede il modulo `usage` sul server. Senza di esso, **Utilizzo** non
@@ -46,7 +46,7 @@ valori giornalieri, **Massimo** prende il valore giornaliero più alto, **Ultimo
 valore dell'ultimo giorno con utilizzo. Tutti i giorni sono giorni UTC, quindi un giorno può
 iniziare la sera o la mattina secondo la tua ora locale.
 
-La **Dashboard** del prodotto ha una scheda **Utilizzo di questo mese** con i totali per contatore
+La **Dashboard** del prodotto ha un riquadro **Utilizzo di questo mese** con i totali per contatore
 dal primo giorno del mese UTC corrente.
 
 ## Creare un contatore {#create-meter}
@@ -115,9 +115,9 @@ Nel menu delle azioni della riga (**Azioni per il contatore …**):
 ## Controllare utilizzo e limiti di un tenant {#tenant-usage}
 
 1. Apri la scheda **Utilizzo per tenant** e scegli il tenant (oppure seleziona un tenant in **Totali per tenant**).
-2. **Utilizzo nel periodo** mostra una scheda per ogni contatore attivo con:
+2. **Utilizzo nel periodo** mostra un riquadro per ogni contatore attivo con:
    - il valore nel periodo corrente e, per i contatori con limite, una barra con
-     "_usato_ di _limite_ usato (_n_ %), prenotazioni incluse";
+     “_usato_ di _limite_ usato (_n_ %), prenotazioni incluse”;
    - la provenienza del limite (vedi sotto) e **Limite rigido** o **Limite flessibile**;
    - **Oltre il limite** quando l'utilizzo con limite flessibile ha superato il limite;
    - **Periodo**, **Eventi**, **Prenotato** (se presente) e **Rimanente**.
@@ -153,12 +153,12 @@ ne imposta una propria.
 
 Richiede l'autorizzazione di prodotto `usage:manage`.
 
-1. In **Utilizzo nel periodo**, scegli **Imposta override** sulla scheda del contatore.
+1. In **Utilizzo nel periodo**, scegli **Imposta override** sul riquadro del contatore.
 2. Inserisci un **Limite**. Lascialo vuoto per un override illimitato (il tenant non ha quindi alcun
    limite, anche se il suo piano ne prevede uno).
 3. Scegli l'**Applicazione** e **Salva override**.
 
-Il badge diventa **Override del tenant**. **Rimuovi override** (visibile solo sulle schede con un
+Il badge diventa **Override del tenant**. **Rimuovi override** (visibile solo sui riquadri con un
 override del tenant) fa tornare in vigore il limite del piano o il valore predefinito del
 contatore. Gli override valgono dal successivo utilizzo registrato; l'utilizzo già registrato
 resta. Le modifiche alle quote vengono registrate nel registro di audit.
@@ -235,7 +235,7 @@ L'API non offre un elenco delle prenotazioni, quindi Studio ne cerca una tramite
   dopo un errore, imposta un [override della quota](help:usage#quota-override) per il resto del periodo.
 - I singoli eventi di utilizzo non vengono sottoposti ad audit per via del loro volume; le modifiche
   a contatori e quote sì.
-- I dati di un tenant sono isolati: l'id di un altro tenant restituisce "non trovato".
+- I dati di un tenant sono isolati: l'id di un altro tenant restituisce “non trovato”.
 - Studio mostra le quantità con un massimo di 6 cifre decimali, formattate per la tua lingua.
 - Le serie temporali coprono al massimo 400 giorni.
 - Altri limiti sono elencati in [Limitazioni note](help:limitations).
@@ -248,12 +248,12 @@ L'API non offre un elenco delle prenotazioni, quindi Studio ne cerca una tramite
 | Solo la scheda **Utilizzo per tenant**                             | Hai `usage:read` solo tramite un ruolo nel tenant                                       | È il comportamento previsto; la panoramica richiede un ruolo di prodotto                                                                             |
 | **Ancora nessun contatore**                                        | Nessun contatore definito                                                               | Creane uno in **Contatori** (serve `usage:manage`)                                                                                                   |
 | **Conflitto** durante l'eliminazione di un contatore               | Il contatore ha utilizzo registrato                                                     | **Disattiva** il contatore invece di eliminarlo                                                                                                      |
-| **Conflitto** "esiste già un contatore con questa chiave"          | Le chiavi sono univoche per prodotto, anche per i contatori inattivi                    | Scegli un'altra chiave o riattiva il vecchio contatore                                                                                               |
+| **Conflitto** “a meter with this key exists”                       | Le chiavi sono univoche per prodotto, anche per i contatori inattivi                    | Scegli un'altra chiave o riattiva il vecchio contatore                                                                                               |
 | **Modificato nel frattempo**                                       | Qualcun altro ha modificato il contatore                                                | Ricarica e ripeti la modifica                                                                                                                        |
-| Il tuo prodotto riceve `429 quota_exceeded`                        | Verrebbe superato un limite rigido                                                      | Controlla l'origine del limite sulla scheda; alza il limite del piano, imposta un override della quota o attendi la fine del periodo (`Retry-After`) |
-| Il tuo prodotto riceve `409` "il contatore è inattivo"             | Il contatore è stato disattivato                                                        | **Attiva** il contatore in **Contatori**                                                                                                             |
+| Il tuo prodotto riceve `429 quota_exceeded`                        | Verrebbe superato un limite rigido                                                      | Controlla l'origine del limite sul riquadro; alza il limite del piano, imposta un override della quota o attendi la fine del periodo (`Retry-After`) |
+| Il tuo prodotto riceve `409` “the meter is inactive”               | Il contatore è stato disattivato                                                        | **Attiva** il contatore in **Contatori**                                                                                                             |
 | Il tuo prodotto riceve `409` per una chiave di idempotenza         | La chiave è stata riutilizzata con un corpo diverso                                     | Usa una nuova chiave per ogni evento di utilizzo distinto                                                                                            |
 | **Verifica i dati inseriti** durante la registrazione              | Quantità, `occurred_at` o `properties` fuori dai limiti indicati sopra                  | Correggi il valore; invia `occurred_at` con un fuso orario                                                                                           |
-| La conferma viene rifiutata: "la prenotazione è scaduta"           | Il TTL è scaduto prima della conferma                                                   | Registra l'utilizzo come evento normale; scegli un `ttl_seconds` più lungo                                                                           |
+| La conferma viene rifiutata: “the reservation is expired”          | Il TTL è scaduto prima della conferma                                                   | Registra l'utilizzo come evento normale; scegli un `ttl_seconds` più lungo                                                                           |
 | L'utilizzo compare nel giorno sbagliato                            | I giorni sono UTC                                                                       | Confronta con gli orari UTC                                                                                                                          |
 | Un contatore con **Periodo di fatturazione** si azzera il giorno 1 | Il tenant non ha un abbonamento con diritti d'uso, oppure la fatturazione è disattivata | Abbona il tenant a un piano (vedi [Piani e abbonamenti](help:plans-subscriptions#subscribe))                                                         |

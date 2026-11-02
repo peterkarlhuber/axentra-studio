@@ -59,8 +59,12 @@ already used in `src/i18n/locales/de`.
 | meter          | Zähler            | medidor               | compteur             | medidor               | contatore             |
 | plan           | Tarif             | plan                  | offre                | plano                 | piano                 |
 | subscription   | Abonnement        | suscripción           | abonnement           | assinatura            | abbonamento           |
-| entitlement    | Leistung (Tarif)  | prestación            | droit                | direito               | diritto d'uso         |
+| entitlement    | Leistung¹         | prestación            | droit                | direito               | diritto d'uso         |
 | notification   | Benachrichtigung  | notificación          | notification         | notificação           | notifica              |
 | template       | Vorlage           | plantilla             | modèle               | modelo                | modello               |
 | audit log      | Audit-Protokoll   | registro de auditoría | journal d’audit      | log de auditoria      | registro di audit     |
 | settings       | Einstellungen     | configuración         | paramètres           | configurações         | impostazioni          |
+
+¹ German: _Leistung_ / _Leistungen_ (of a plan), in compounds _Tarifleistung_,
+_Leistungsüberschreibung_ (entitlement override). Never _Berechtigung_, which is reserved for
+_permission_.

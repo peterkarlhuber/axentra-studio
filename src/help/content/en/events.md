@@ -139,7 +139,7 @@ Studio sends an idempotency key with each publish dialog, so a double click publ
 - The live view shows only events that arrive while it is open. To see what happened earlier, use
   the **Event log**.
 - Type suggestions in the webhook form come from the latest events in this log, because there is
-  no central catalogue of types.
+  no central catalog of types.
 
 ## Troubleshooting {#troubleshooting}
 

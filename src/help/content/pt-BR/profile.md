@@ -99,6 +99,10 @@ Para encerrar todas as sessões, exceto a que você está usando, escolha **Sair
 sessões** no cabeçalho de **Suas sessões**. O botão aparece quando existe pelo menos uma outra
 sessão.
 
+Sua sessão atual nunca é encerrada. Cada uma das outras sessões é encerrada separadamente; se
+algumas não puderem ser encerradas (por exemplo, por causa do limite de requisições), o Studio
+informa quantas, a lista mostra as que continuam ativas e você pode escolher o botão de novo.
+
 > [!TIP]
 > Entrou em um computador compartilhado ou perdido? Revogue essa sessão aqui. Se você acha que
 > outra pessoa conhece a sua senha, altere-a: isso também encerra todas as outras sessões.
@@ -111,7 +115,7 @@ Administradores podem encerrar as sessões de outros usuários na página [Usuá
   tentativa como **Negado** no log de auditoria.
 - **Verifique os dados informados**: a nova senha viola uma das regras acima (curta demais, igual ao
   seu endereço de e-mail, simples demais). **Detalhes técnicos**, na mensagem, mostram o motivo do
-  servidor, por exemplo "the password must have at least 12 characters".
+  servidor, por exemplo “the password must have at least 12 characters”.
 - **As novas senhas não coincidem.**: **Nova senha** e **Repita a nova senha** são diferentes.
 - **Faça login novamente** ao definir uma primeira senha: o seu login é antigo demais. Siga os passos
   em [Definir uma primeira senha](#set-password).

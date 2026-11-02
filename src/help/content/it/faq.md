@@ -29,14 +29,14 @@ al suo interno. Assegna i ruoli di prodotto solo a chi ha bisogno di questa port
 
 ## Che differenza c'è tra Owner e Admin di un tenant? {#owner-vs-admin}
 
-Hanno le stesse autorizzazioni. Solo un **Owner** (proprietario) (o qualcuno con autorità dal prodotto o
-dalla piattaforma) può rendere qualcuno proprietario, oppure modificare o rimuovere un
+Hanno le stesse autorizzazioni. Solo un **Owner** (proprietario), o qualcuno con autorità a livello di
+prodotto o di piattaforma, può rendere qualcuno proprietario, oppure modificare o rimuovere un
 proprietario. Ogni tenant conserva almeno un proprietario. Vedi
 [tetto dei ruoli](help:security#role-ceiling).
 
 ## Perché non posso scegliere alcuni ruoli? {#roles-greyed-out}
 
-Studio contrassegna i ruoli che non puoi assegnare con **"… (oltre le tue autorizzazioni)"**:
+Studio contrassegna i ruoli che non puoi assegnare con **“… (oltre le tue autorizzazioni)”**:
 contengono autorizzazioni che non possiedi, oppure sono un ruolo di proprietario e tu non sei
 proprietario. Nessuno può distribuire più diritti di quanti ne abbia. Vedi
 [tetto dei ruoli](help:security#role-ceiling).
@@ -54,13 +54,13 @@ riattivato; gli amministratori della piattaforma possono comunque esaminarlo. I 
 possono riattivarlo dalla pagina del tenant in Studio. Eliminare un tenant,
 invece, rimuove il tenant e tutti i suoi dati e non si può annullare. Vedi [Tenant](help:tenants).
 
-## Perché vedo "Non trovato" per qualcosa che esiste? {#not-found-exists}
+## Perché vedo “Non trovato” per qualcosa che esiste? {#not-found-exists}
 
 Se non hai alcun legame con un prodotto o un tenant, Axentra risponde esattamente come se non
 esistesse, così nessuno può scoprire quali prodotti, tenant o account ci sono. Chiedi a qualcuno
 con accesso di aggiungerti. Vedi [Non trovato](help:troubleshooting#not-found).
 
-## Perché un'area nella barra laterale è contrassegnata con "Off"? {#area-off}
+## Perché un'area nella barra laterale è contrassegnata con “Off”? {#area-off}
 
 Il modulo del server che la gestisce è disattivato. Un operatore può abilitarlo nella
 configurazione del server. Vedi il [riferimento dei moduli](help:modules-reference).

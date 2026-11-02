@@ -10,7 +10,7 @@
     "listDescription": "Dai più recenti. Sono elencati solo i file attivi e non scaduti.",
     "tableCaption": "File del tenant selezionato",
     "empty": "Nessun file corrispondente",
-    "emptyBody": "Carica un file o modificare i filtri."
+    "emptyBody": "Carica un file o modifica i filtri."
   },
   "actions": {
     "upload": "Carica file",

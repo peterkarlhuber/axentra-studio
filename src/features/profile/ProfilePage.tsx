@@ -20,10 +20,11 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
-import { fieldErrors } from '@/lib/errors';
+import { describeError, fieldErrors } from '@/lib/errors';
 import { ApiError, isReauthenticationRequired } from '@/api/errors';
 import { SessionsTable } from '@/features/shared/SessionsTable';
 import { HelpLink } from '@/help/HelpLink';
+import { revokeOtherSessions } from './revoke-other-sessions';
 
 export function ProfilePage() {
   const { t } = useTranslation('profile');
@@ -257,9 +258,25 @@ function OwnSessions() {
   });
   const others = asItems(sessions.data).filter((session) => !session.current);
   const revokeOthers = useMutation({
-    mutationFn: () => Promise.all(others.map((session) => authApi.revokeSession(session.id))),
-    onSuccess: () => toast.success(t('sessions.othersRevoked')),
+    mutationFn: () => revokeOtherSessions(),
+    onSuccess: (result) => {
+      if (result.failed === 0) {
+        toast.success(t('sessions.othersRevoked', { count: result.revoked }));
+        return;
+      }
+      // Report how many are still signed in, with the first reason (e.g. a rate limit).
+      const reason = describeError(t, result.errors[0]);
+      toast.error(
+        t('sessions.othersPartial', {
+          count: result.failed,
+          total: result.revoked + result.failed,
+        }),
+        `${reason.title}: ${reason.message}`,
+        reason.requestId ? `${t('errors:requestId')}: ${reason.requestId}` : undefined,
+      );
+    },
     onError: showError,
+    // Always reload the list, so it shows exactly the sessions that are still active.
     onSettled: () => void queryClient.invalidateQueries({ queryKey: queryKeys.ownSessions }),
   });
   return (

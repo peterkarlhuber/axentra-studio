@@ -134,10 +134,13 @@ the [job](help:jobs#job-detail)), **Created**, **Delivered** and **Next attempt*
 ## Retries {#retries}
 
 Failed deliveries are retried automatically through the job queue, up to **8 attempts** with default
-settings (`events.webhook_max_attempts`). The wait before attempt _n + 1_ is between half and all of
-`2 × 2^(n−1)` seconds (2, 4, 8 … 128 seconds), so with default settings all attempts are used within
-about two to five minutes. Each attempt waits at most 10 seconds for the connection and for each
-read of the answer.
+settings (`events.webhook_max_attempts`). Webhooks have their own, slower schedule than other jobs:
+the wait before attempt _n + 1_ is between half and all of `120 × 2^(n−1)` seconds, at most 6 hours
+(`events.webhook_backoff_base_seconds`, `events.webhook_backoff_max_seconds`). With default settings
+the waits are about 2, 4, 8, 16, 32, 64 and 128 minutes, so the last attempt runs about **2 to 4¼
+hours** after the first, and a receiver outage of up to about two hours is always bridged. Each
+attempt waits at most 10 seconds for the connection and for each read of the answer. (Axentra
+versions before this schedule used the short job backoff and used up all attempts within minutes.)
 
 A receiver that is down for longer than that loses no events, but its deliveries end as **Dead**:
 redeliver them once it is back. Axentra does not disable endpoints that keep failing, and has no
@@ -226,8 +229,8 @@ Verify the signature over the **raw** body bytes; do not parse and re-serialize 
 | **Enabled**                 | Whether new deliveries are sent.                   | Default on.                                                     |
 | **Grace period** (rotation) | How long the previous secret still signs requests. | None, 1 hour, 24 hours, 7 days (API: up to 7 days in seconds).  |
 
-Server-side defaults (operators can change them in `[events]`): 8 attempts, 10-second timeout,
-4096 bytes of stored response body.
+Server-side defaults (operators can change them in `[events]`): 8 attempts, retries spread over
+about 2 to 4¼ hours, 10-second timeout, 4096 bytes of stored response body.
 
 ## Good to know {#good-to-know}
 

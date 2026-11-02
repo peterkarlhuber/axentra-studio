@@ -41,14 +41,18 @@ Las entradas que pertenecen a un producto (de **Panel** a **Notificaciones**, sa
 solo se muestran cuando hay un producto seleccionado. **Productos**, **Registro de auditoría**,
 **Estado del sistema**, **Monitorización** y **Configuración** abarcan toda la plataforma.
 
-La barra lateral muestra las mismas entradas a todo el mundo. Si abres una página para la que no
-tienes permiso, la página te lo indica (**No permitido**), y no se ofrecen las acciones que no
-puedes realizar.
+La barra lateral muestra las mismas entradas a todo el mundo, con una excepción: **Registro de
+auditoría** solo aparece si puedes leer eventos de auditoría (`audit:read` en uno de tus productos,
+o `platform:audit`). **Configuración**, **Estado del sistema** y **Monitorización** aparecen siempre
+porque ofrecen algo a todos (tus preferencias, las comprobaciones públicas de estado); las partes
+que no puedes leer te lo indican allí. Si abres una página para la que no tienes permiso, por
+ejemplo desde un enlace guardado, la página te lo indica (**No permitido**), y no se ofrecen las
+acciones que no puedes realizar.
 
 ### Entradas marcadas como «Inactivo» {#module-off}
 
 Una entrada cuyo módulo del servidor no está habilitado sigue visible y muestra **Inactivo**. Al
-abrirla aparece **Módulo no habilitado en este servidor** con el id del módulo (por ejemplo
+abrirla aparece **Módulo no habilitado en este servidor** con el ID del módulo (por ejemplo
 `storage`) que el operador del servidor tiene que habilitar. Así puedes ver qué existe y qué falta.
 Consulta los [módulos](help:concepts#modules).
 
@@ -182,10 +186,10 @@ sin iniciar sesión.
 
 ### Ayuda en cada pantalla {#contextual-help}
 
-- **Ayuda de la página**: el botón (?) junto al título de una página (**Ayuda sobre esta página**)
+- **Ayuda de la página**: el botón (?) junto al título de una página (**Ayuda para esta página**)
   abre el artículo de esa página en un panel lateral. No pierdes tu sitio, y un formulario que estés
   rellenando se queda tal como está. Los enlaces dentro del panel abren otros artículos (**Atrás**
-  vuelve), **Abrir en el centro de ayuda** muestra el artículo completo y **Cerrar ayuda** cierra el
+  vuelve), **Abrir en el centro de ayuda** muestra el artículo completo y **Cerrar la ayuda** cierra el
   panel.
 - **Sugerencias informativas**: el botón (i) junto a un campo, una columna o un estado explica
   efectos, valores predeterminados y límites. Se abre con un clic, un toque, Intro o Espacio y se

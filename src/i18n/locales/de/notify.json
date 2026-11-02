@@ -56,7 +56,7 @@
     "total": "Gesamt",
     "last24h": "Letzte 24 Stunden",
     "provider": "Zustellanbieter",
-    "attempts24h": "Zustellversuche (24 Std.)",
+    "attempts24h": "Zustellversuche (24 h)",
     "oldestQueued": "Älteste wartende Nachricht",
     "noneQueued": "Keine wartenden"
   },
@@ -156,7 +156,7 @@
     "queued": "Benachrichtigung angenommen: {{status}}.",
     "sentTitle": "Benachrichtigung angenommen",
     "dispatchHint": "Die Nachricht wird vom Dispatcher zugestellt (axentra notify-dispatch oder ein Worker). Den Status siehst du im Nachrichtenprotokoll.",
-    "membersOnly": "Du kannst an Mitglieder des Mandanten senden. Für andere E-Mail-Adressen ist die Produktberechtigung notify:send_external nötig (Produktinhaber und -admins)."
+    "membersOnly": "Du kannst an Mitglieder des Mandanten senden. Für andere E-Mail-Adressen ist die Produktberechtigung notify:send_external nötig (Produktinhaber und -administratoren)."
   },
   "messages": {
     "title": "Nachrichtenprotokoll",

@@ -160,7 +160,7 @@
       "days": "Jours"
     },
     "cron": "Expression cron",
-    "cronHelp": "5 champs en UTC : minute heure jour-du-mois mois jour-de-la-semaine. Autorisés : *, nombres, plages (1-5), listes (1,15) et pas (*/10). Jour de la semaine 0-7, 0 et 7 correspondant au dimanche. Ni noms ni macros.",
+    "cronHelp": "5 champs en UTC : minute heure jour-du-mois mois jour-de-la-semaine. Autorisés : *, nombres, plages (1-5), listes (1,15) et pas (*/10). Jour de la semaine 0-7, 0 et 7 correspondent au dimanche. Ni noms ni macros.",
     "presets": "Expressions courantes",
     "preset": {
       "everyFiveMinutes": "Toutes les 5 minutes",

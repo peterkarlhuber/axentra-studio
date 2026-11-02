@@ -77,7 +77,7 @@ convite**.
 > [!CAUTION]
 > O link e o token são mostrados uma única vez. O Axentra armazena apenas um hash do token, então
 > ninguém consegue exibi-lo de novo. Qualquer pessoa que tenha o token e entre com o endereço
-> convidado pode entrar no tenant. Compartilhe-o somente com a pessoa convidada. Se ele se perder,
+> convidado pode participar do tenant. Compartilhe-o somente com a pessoa convidada. Se ele se perder,
 > revogue o convite e crie um novo.
 
 ### Como o convite chega à pessoa {#delivery}

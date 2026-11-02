@@ -37,6 +37,9 @@
     "description": "Browsers and devices where you are signed in.",
     "revoked": "Session revoked",
     "revokeOthers": "Sign out all other sessions",
-    "othersRevoked": "All other sessions signed out"
+    "othersRevoked_one": "{{count}} other session signed out",
+    "othersRevoked_other": "{{count}} other sessions signed out",
+    "othersPartial_one": "{{count}} of {{total}} other sessions could not be signed out",
+    "othersPartial_other": "{{count}} of {{total}} other sessions could not be signed out"
   }
 }

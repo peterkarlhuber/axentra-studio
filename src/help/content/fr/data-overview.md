@@ -91,7 +91,7 @@ Chacune des deux limites (octets et fichiers) est déterminée séparément, dan
 { "storage": { "quota_bytes": 10737418240, "quota_files": 10000 } }
 ```
 
-L’exemple définit une valeur par défaut du produit de 10 Gio (en octets) et de 10 000 fichiers.
+L’exemple définit une valeur par défaut du produit de 10 Gio (en octets) et de 10 000 fichiers.
 
 > [!NOTE]
 > L’utilisation compte les fichiers _actifs_. Un fichier dont la date d’expiration est passée disparaît immédiatement, mais

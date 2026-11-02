@@ -16,19 +16,34 @@ export interface ProblemDetails {
   errors?: ValidationIssue[];
 }
 
-/** Stable codes from API_CONVENTIONS plus two client-side codes. */
+/**
+ * Every `code` the Axentra API can answer with (Axentra docs/architecture/API_CONVENTIONS.md,
+ * `axentra.core.errors` and the HTTP error handlers), plus two client-side codes
+ * (`network_error`, `unknown`). Each has a title and message in `errors.json`.
+ */
 export const KNOWN_ERROR_CODES = [
+  'bad_request',
   'validation_failed',
+  'invalid_signature',
   'unauthenticated',
   'forbidden',
   'reauthentication_required',
   'not_found',
+  'module_disabled',
+  'method_not_allowed',
   'conflict',
+  'setup_already_completed',
+  'email_taken',
+  'mode_not_supported',
+  'payment_provider_not_configured',
   'precondition_failed',
+  'payload_too_large',
+  'unsupported_media_type',
   'rate_limited',
   'quota_exceeded',
-  'mode_not_supported',
   'internal',
+  // A framework-level HTTP error without a more specific code.
+  'error',
   'network_error',
   'unknown',
 ] as const;
@@ -40,8 +55,11 @@ const STATUS_TO_CODE: Record<number, KnownErrorCode> = {
   401: 'unauthenticated',
   403: 'forbidden',
   404: 'not_found',
+  405: 'method_not_allowed',
   409: 'conflict',
   412: 'precondition_failed',
+  413: 'payload_too_large',
+  415: 'unsupported_media_type',
   422: 'validation_failed',
   429: 'rate_limited',
 };

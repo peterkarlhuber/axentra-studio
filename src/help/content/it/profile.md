@@ -13,7 +13,7 @@ trovano nella pagina [Impostazioni](help:settings#preferences) e nello stesso me
 
 ## Controllare il tuo account {#account}
 
-La scheda **Account** mostra:
+Il riquadro **Account** mostra:
 
 | Campo                       | Significato                                                                                               |
 | --------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ La nuova password deve
 
 ### Impostare una prima password (utenti single sign-on) {#set-password}
 
-Se hai sempre effettuato l'accesso solo tramite single sign-on, la scheda si chiama **Imposta una
+Se hai sempre effettuato l'accesso solo tramite single sign-on, il riquadro si chiama **Imposta una
 password** e non ha il campo **Password attuale**. Una password ti permette di accedere anche con
 email e password.
 
@@ -101,6 +101,10 @@ Per terminare tutte le sessioni tranne quella che stai usando, scegli **Disconne
 sessioni** nell'intestazione di **Le tue sessioni**. Il pulsante compare quando esiste almeno
 un'altra sessione.
 
+La tua sessione attuale non viene mai disconnessa. Ogni altra sessione viene disconnessa
+separatamente; se alcune non possono esserlo (ad esempio per il limite di richieste), Studio ti dice
+quante, l'elenco mostra quelle ancora attive e puoi scegliere di nuovo il pulsante.
+
 > [!TIP]
 > Hai effettuato l'accesso su un computer condiviso o smarrito? Revoca qui quella sessione. Se
 > pensi che qualcun altro conosca la tua password, cambiala: in questo modo disconnetti anche tutte
@@ -114,7 +118,7 @@ Gli amministratori possono terminare le sessioni di altri utenti nella pagina [U
   il tentativo come **Negato** nel registro di audit.
 - **Verifica i dati inseriti**: la nuova password viola una delle regole indicate sopra (troppo
   corta, uguale al tuo indirizzo email, troppo semplice). I **Dettagli tecnici** del messaggio
-  riportano il motivo indicato dal server, per esempio "la password deve avere almeno 12 caratteri".
+  riportano il motivo indicato dal server, per esempio “the password must have at least 12 characters”.
 - **Le nuove password non coincidono.**: **Nuova password** e **Ripeti nuova password** sono diverse.
 - **Accedi di nuovo** durante l'impostazione di una prima password: il tuo accesso è troppo vecchio.
   Segui i passaggi in [Impostare una prima password](#set-password).

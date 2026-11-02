@@ -5,7 +5,7 @@ keywords: configuração, instalação, configuração inicial, primeira inicial
 ---
 
 Um novo servidor Axentra ainda não tem administrador. Enquanto for assim, o servidor informa
-“configuração necessária” e o Studio mostra a página **Configurar o Axentra** em vez da página de
+“setup required” e o Studio mostra a página **Configurar o Axentra** em vez da página de
 login. Nela você cria o primeiro **administrador da plataforma**: a conta com controle total da
 instalação. Você precisa de um **token de configuração** fornecido por quem opera o servidor.
 

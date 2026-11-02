@@ -101,13 +101,13 @@ e acompanha você em outros navegadores. Veja [a interface](help:interface#langu
 Estas configurações do servidor afetam o login. Somente o operador do servidor pode alterá-las; o
 Studio mostra os valores efetivos em **Configurações**.
 
-| Configuração                     | O que faz                                                                              | Padrão  |
-| -------------------------------- | -------------------------------------------------------------------------------------- | ------- |
-| `security.password_login`        | Permite login com e-mail e senha. Quando desativada, apenas o login único é oferecido. | ativado |
-| `security.login_rate_per_minute` | Falhas de login permitidas por conta e por minuto (por endereço de rede: o triplo).    | 10      |
-| `security.session_ttl_hours`     | Duração máxima da sessão.                                                              | 12      |
-| `security.session_idle_minutes`  | Tempo limite de inatividade.                                                           | 120     |
-| Provedores `[[oidc]]`            | Provedores de login único exibidos como **Continuar com …**.                           | nenhum  |
+| Configuração                     | O que faz                                                                                | Padrão     |
+| -------------------------------- | ---------------------------------------------------------------------------------------- | ---------- |
+| `security.password_login`        | Permite login com e-mail e senha. Quando desabilitada, apenas o login único é oferecido. | habilitado |
+| `security.login_rate_per_minute` | Falhas de login permitidas por conta e por minuto (por endereço de rede: o triplo).      | 10         |
+| `security.session_ttl_hours`     | Duração máxima da sessão.                                                                | 12         |
+| `security.session_idle_minutes`  | Tempo limite de inatividade.                                                             | 120        |
+| Provedores `[[oidc]]`            | Provedores de login único exibidos como **Continuar com …**.                             | nenhum     |
 
 ## Detalhes para administradores {#details}
 
@@ -138,7 +138,7 @@ Quando o login único falha, o servidor envia você de volta à página de login
 | Não foi possível verificar a resposta (`login_failed`)         | O token do provedor falhou em uma verificação.                                                                                                | Tente novamente; se persistir, o operador verifica o log do servidor.             |
 | E-mail não verificado (`email_not_verified`)                   | O provedor não confirmou seu endereço como verificado. É comum com o Microsoft Entra ID, que muitas vezes não envia a claim `email_verified`. | O operador configura o provedor para enviá-la.                                    |
 | Domínio não permitido (`domain_not_allowed`)                   | O domínio do seu e-mail não está na lista de permissões do provedor.                                                                          | Use uma conta de um domínio permitido.                                            |
-| Sem conta (`signup_disabled`)                                  | Não existe conta para você e o cadastro está desativado.                                                                                      | Peça um [convite](help:members-invitations) a um administrador e entre novamente. |
+| Sem conta (`signup_disabled`)                                  | Não existe conta para você e o cadastro está desabilitado.                                                                                    | Peça um [convite](help:members-invitations) a um administrador e entre novamente. |
 | Conta desabilitada (`account_disabled`)                        | Sua conta está desabilitada.                                                                                                                  | Fale com um administrador.                                                        |
 | Tentativas demais (`rate_limited`)                             | Logins demais iniciados a partir da sua rede.                                                                                                 | Aguarde um minuto.                                                                |
 

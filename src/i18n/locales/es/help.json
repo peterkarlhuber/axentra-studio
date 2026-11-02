@@ -17,15 +17,15 @@
     "backToStudio": "Volver a Studio",
     "loadError": "No se pudieron cargar los artículos de ayuda.",
     "notFoundTitle": "Artículo no encontrado",
-    "notFoundDescription": "No existe ningún artículo de ayuda \"{{id}}\". Puede que se haya renombrado. Busca en el centro de ayuda o empieza desde el resumen."
+    "notFoundDescription": "No existe ningún artículo de ayuda “{{id}}”. Puede que se haya renombrado. Busca en el centro de ayuda o empieza desde el resumen."
   },
   "search": {
     "label": "Buscar en el centro de ayuda",
-    "placeholder": "Busca en la ayuda, por ejemplo \"clave de API\"",
-    "results_one": "{{count}} resultado para \"{{query}}\"",
-    "results_many": "{{count}} de resultados para \"{{query}}\"",
-    "results_other": "{{count}} resultados para \"{{query}}\"",
-    "noResults": "No hay resultados para \"{{query}}\"",
+    "placeholder": "Busca en la ayuda, por ejemplo “clave de API”",
+    "results_one": "{{count}} resultado para “{{query}}”",
+    "results_many": "{{count}} de resultados para “{{query}}”",
+    "results_other": "{{count}} resultados para “{{query}}”",
+    "noResults": "No hay resultados para “{{query}}”",
     "noResultsHint": "Revisa la ortografía, usa menos palabras o explora los capítulos de abajo.",
     "clear": "Borrar búsqueda",
     "inSection": "en la sección {{section}}"
@@ -138,9 +138,9 @@
       "pendingDetail": "La entrega espera al worker",
       "post": "POST firmado",
       "receiver": "Tu endpoint",
-      "receiverDetail": "Comprueba el encabezado Axentra-Signature",
+      "receiverDetail": "Comprueba la cabecera Axentra-Signature",
       "succeededDetail": "Respuesta 2xx",
-      "failedDetail": "Error, tiempo de espera agotado o respuesta distinta de 2xx; se reintenta tras un tiempo de espera",
+      "failedDetail": "Error, tiempo de espera agotado o respuesta distinta de 2xx; se reintenta tras un intervalo de espera",
       "deadDetail": "Intentos agotados, URL rechazada o endpoint desactivado",
       "redeliver": "Volver a entregar envía de nuevo una entrega terminada (no mientras está pendiente). Un ping de prueba se envía una vez y termina como entregado o fallido definitivamente."
     },

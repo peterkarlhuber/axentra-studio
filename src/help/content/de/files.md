@@ -4,7 +4,7 @@ summary: Lade die Dateien eines Mandanten hoch, finde, lade herunter, teile und 
 keywords: Dateien, hochladen, Upload, herunterladen, Download, Anhänge, Dokumente, Speicher, Kontingent, Speicherplatz, Dateigröße, Inhaltstyp, MIME-Typ, Download-Link, Freigabelink, signierte URL, Presigned URL, S3, Labels, Metadaten, Ablauf, inert, gesperrte Typen
 ---
 
-Die Seite **Dateien** zeigt die Dateien, die ein Mandant über das Speichermodul von Axentra abgelegt
+Die Seite **Dateien** zeigt die Dateien, die ein Mandant über das Storage-Modul von Axentra abgelegt
 hat: Dokumente, Bilder, Exporte oder jeden anderen Anhang, den deine Anwendung hochlädt. Du kannst
 Dateien von Hand hochladen, sie nach Name, Typ oder Label finden, herunterladen, einen befristeten
 Download-Link erstellen, sie umbenennen und löschen. Die Seite zeigt außerdem, wie viel seines

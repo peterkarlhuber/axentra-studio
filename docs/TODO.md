@@ -72,19 +72,7 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   show the generic **Not permitted** state. They could show the same "suspended, reactivate to
   manage" explanation (the tenant record is readable).
 
-- **Sidebar shows screens the user cannot use.** Audit, Settings and Monitoring are listed for
-  everyone and answer with a `403` state. Hiding or marking them by permission (from `/v1/me`)
-  would be clearer; the help describes the current behaviour.
-- **Unmapped error codes.** `method_not_allowed` and the generic `error` fall back to "Unexpected
-  error"; `mode_not_supported` is also used for a Stripe plan change and a missing mailbox, so its
-  message is too narrow.
-- **Webhook retries give up after minutes.** With the defaults (8 attempts, 2 s base) a delivery
-  is dead after about 2-5 minutes, so a short receiver outage loses events until someone redelivers
-  (backend setting; the help explains redelivery).
-- **Setup `409` is parsed by message text.** "Setup already done" and "email already taken" share
-  the status; Studio tells them apart by the message, which breaks if the backend rewords it.
-- **Studio cannot set an API key expiry or list a user's memberships.** Both are API-only today.
-- **"Sign out all other sessions" revokes one by one.** There is no revoke-all endpoint (backend).
+- **Studio cannot list a user's memberships.** API-only today.
 
 - **Role ceiling needs the role catalog.** Studio disables roles above the caller only when
   `GET .../roles` is readable (`roles:read`); otherwise the role is a free-text field and the
@@ -96,7 +84,8 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   `403` explanation otherwise.
 - **API key expiry inheritance is text only.** Studio creates keys with a user session, so the
   "inherits the creating key's expiry" rule (`422` for a later `expires_at`) never applies to
-  Studio's own create form; the page explains it, and the revoke confirmation says that derived
+  Studio's own create form (which offers an optional expiry: presets or a date); the expiry info
+  tip and the help explain it, and the revoke confirmation says that derived
   keys are revoked too. The confirmation does not list those derived keys (they could be found
   through `created_by`, which holds the creating key's actor id; not built).
 
@@ -142,6 +131,13 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
   for the tab and returns to it after the next sign-in, but other deep links are lost.
 
+- **"Sign out all other sessions" sends one request per session (backend endpoint decided
+  against for now).** Axentra offers `DELETE /v1/auth/sessions/{id}` for the caller and an admin
+  endpoint that ends _all_ sessions of a user, including the current one. A user has a handful of
+  sessions, so Studio revokes the others one by one (at most 4 at a time, from a freshly read list,
+  never the session marked `current`), counts an already ended session (`404`) as done, reports
+  how many failed and reloads the list. A server-side "all but this one" endpoint would only be
+  worth it for atomicity or users with very many sessions.
 - **Single-product mode with leftover products.** Axentra accepts `mode = "single"` on a database
   that also holds other products as long as the configured slug exists. Studio then hides the
   switcher; a platform admin reaches the other products only through the Products page (and they
@@ -157,12 +153,14 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 - **Help: no screenshots.** Articles use localized HTML/CSS diagrams and exact UI labels instead
   of screenshots, which would need six languages × two themes and go stale with every UI change.
   If screenshots are wanted later, generate them from the e2e suite per locale.
-- **Help: translations are reviewed by checks, not by native speakers.** `help:check` and
-  `i18n:check` guarantee completeness, structure, links, placeholders and informal address; a
-  native-speaker review of es, fr, pt-BR and it (wording, tone) is still open.
-- **Help: German calls plan entitlements "Berechtigungen".** The same word as permissions; a
-  distinct term (for example "Leistungen") would be clearer in `de/billing.json` and the German
-  billing articles.
+- **Translations still need a native-speaker review.** `help:check` and `i18n:check` guarantee
+  completeness, structure, links, placeholders and informal address, and a full non-native review
+  of all six languages (UI strings and help) fixed terms, meaning, typography and label parity
+  (2026-11-02). Still open, by a native speaker per language: tone and naturalness of the long help
+  texts (most articles were skimmed, 12 per language read in full); de "Kulanzzeit" vs
+  "Übergangsfrist" and "anlegen" vs "erstellen"; en "Canceled" (US) vs the server's "Cancelled";
+  es quote style and the meaning of "registros"; pt-BR "inquilino" vs "tenant", "direito" and
+  "substituição"; fr "Studio" vs "le Studio"; it "Verificatosi" and the `_many` plural forms.
 - **The e2e backend uses fixed names.** `scripts/e2e-backend.sh` drops and recreates
   `$AXENTRA_E2E_DB`/`$AXENTRA_E2E_DB_ROLE`; parallel runs on one PostgreSQL need distinct names
   and ports (all configurable through environment variables).

@@ -47,7 +47,7 @@
     "invalidJson": "Das ist kein gültiges JSON.",
     "mustBeObject": "Die Einstellungen müssen ein JSON-Objekt sein, zum Beispiel {\"key\": \"value\"}.",
     "saved": "Produkt gespeichert",
-    "jsonInfo": "Der Code deines Produkts kann diese Werte lesen. Axentra nutzt einige Schlüssel selbst: invitation_accept_url (Link in Einladungs-E-Mails), default_locale (Ersatzsprache von Benachrichtigungen) und storage (im Reiter „Dateien“ festgelegt). Speichern ersetzt das ganze Objekt; es darf bis zu etwa 32.000 Zeichen lang sein."
+    "jsonInfo": "Der Code deines Produkts kann diese Werte lesen. Axentra nutzt einige Schlüssel selbst: invitation_accept_url (Link in Einladungs-E-Mails), default_locale (Ersatzsprache von Benachrichtigungen) und storage (im Tab „Dateien“ festgelegt). Speichern ersetzt das ganze Objekt; es darf bis zu etwa 32.000 Zeichen lang sein."
   },
   "lifecycle": {
     "archive": "Archivieren",

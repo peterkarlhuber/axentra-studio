@@ -68,7 +68,7 @@ export function SetupPage() {
       setError(caught);
       // 409: possibly someone completed setup in the meantime. Refreshing the server
       // information then closes this page and leads to the sign-in page.
-      if (isApiError(caught) && caught.status === 409) {
+      if (isApiError(caught) && caught.status === 409 && caught.code !== 'email_taken') {
         void queryClient.invalidateQueries({ queryKey: queryKeys.meta });
       }
     } finally {
@@ -80,9 +80,15 @@ export function SetupPage() {
   const fields = error ? fieldErrors(error) : {};
   // The setup endpoint answers 401 for a wrong, expired or used token: not a session problem.
   const tokenRejected = isApiError(error) && error.status === 401;
-  // 409 has two causes: setup was completed in the meantime, or the email address is taken.
+  // 409 has two causes: setup was completed in the meantime (`setup_already_completed`), or the
+  // email address is taken (`email_taken`). Backends before these codes answer `conflict` for
+  // both; for them the message text is the only hint.
   const alreadyDone =
-    isApiError(error) && error.status === 409 && /already completed/i.test(error.detail ?? '');
+    isApiError(error) &&
+    (error.code === 'setup_already_completed' ||
+      (error.code === 'conflict' &&
+        error.status === 409 &&
+        /already completed/i.test(error.detail ?? '')));
   // Password policy, invalid address or an address already in use come without field details;
   // the server's reason (English) is the only precise explanation, so show it.
   const serverReason =
