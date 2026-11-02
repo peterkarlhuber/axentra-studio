@@ -96,7 +96,7 @@
     "on": "activada",
     "off": "desactivada",
     "effectiveTitle": "Prestaciones efectivas",
-    "effectiveDescription": "Las prestaciones del plan (en prueba, activa o con pago vencido) combinadas con las excepciones del inquilino.",
+    "effectiveDescription": "Las prestaciones del plan (mientras la suscripción está en prueba, activa o con pago vencido) combinadas con las excepciones del inquilino.",
     "source": "Plan",
     "noPlan": "Sin suscripción con prestaciones",
     "features": "Funciones",
@@ -243,9 +243,9 @@
   },
   "info": {
     "trialDays": "Las suscripciones nuevas empiezan en “En prueba” y obtienen las prestaciones del plan. Con el proveedor manual, una prueba solo termina cuando se ejecuta la tarea de facturación programada del operador.",
-    "providerPriceId": "Con Stripe, introduce el id del precio que creaste en Stripe. Axentra lo usa para asociar las actualizaciones de suscripción de Stripe con este plan.",
+    "providerPriceId": "Con Stripe, introduce el ID del precio que creaste en Stripe. Axentra lo usa para asociar las actualizaciones de suscripción de Stripe con este plan.",
     "statusLabel": "Acerca de los estados de suscripción",
-    "status": "En prueba, Activa y Pago vencido conceden las prestaciones del plan; Pago vencido es un período de gracia. Incompleta espera el checkout en el proveedor. Cancelada es definitivo.",
+    "status": "En prueba, Activa y Pago vencido conceden las prestaciones del plan; Pago vencido es un período de gracia. Incompleta espera el checkout en el proveedor. Cancelada es un estado definitivo.",
     "entitlementsLabel": "Acerca de las prestaciones efectivas",
     "entitlements": "Sin una suscripción en estado En prueba, Activa o Pago vencido, el inquilino solo obtiene sus excepciones. Las excepciones se mantienen cuando cambia el plan o termina la suscripción."
   }

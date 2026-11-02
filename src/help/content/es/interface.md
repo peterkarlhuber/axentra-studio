@@ -48,7 +48,7 @@ puedes realizar.
 ### Entradas marcadas como «Inactivo» {#module-off}
 
 Una entrada cuyo módulo del servidor no está habilitado sigue visible y muestra **Inactivo**. Al
-abrirla aparece **Módulo no habilitado en este servidor** con el id del módulo (por ejemplo
+abrirla aparece **Módulo no habilitado en este servidor** con el ID del módulo (por ejemplo
 `storage`) que el operador del servidor tiene que habilitar. Así puedes ver qué existe y qué falta.
 Consulta los [módulos](help:concepts#modules).
 
@@ -182,10 +182,10 @@ sin iniciar sesión.
 
 ### Ayuda en cada pantalla {#contextual-help}
 
-- **Ayuda de la página**: el botón (?) junto al título de una página (**Ayuda sobre esta página**)
+- **Ayuda de la página**: el botón (?) junto al título de una página (**Ayuda para esta página**)
   abre el artículo de esa página en un panel lateral. No pierdes tu sitio, y un formulario que estés
   rellenando se queda tal como está. Los enlaces dentro del panel abren otros artículos (**Atrás**
-  vuelve), **Abrir en el centro de ayuda** muestra el artículo completo y **Cerrar ayuda** cierra el
+  vuelve), **Abrir en el centro de ayuda** muestra el artículo completo y **Cerrar la ayuda** cierra el
   panel.
 - **Sugerencias informativas**: el botón (i) junto a un campo, una columna o un estado explica
   efectos, valores predeterminados y límites. Se abre con un clic, un toque, Intro o Espacio y se

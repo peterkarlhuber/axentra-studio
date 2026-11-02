@@ -100,7 +100,7 @@ Selecciona el tipo de una tarea en la lista. La página de detalles muestra:
 - **Detalles**: **ID de la tarea**, **Tipo**, **Estado**, **Inquilino**, **Intentos**,
   **Prioridad**, **Clave de idempotencia**, la **Programación** que creó la tarea (un enlace), el
   **Worker** que la ejecuta o la ejecutó, si está marcada **Cancelación solicitada**, y **Creada
-  por** (un id de usuario o de clave de API, o `schedule:<id>` para las tareas programadas).
+  por** (un ID de usuario o de clave de API, o `schedule:<id>` para las tareas programadas).
 - **Cronología**: **Creada**, **Ejecutar después de** (la hora de inicio más temprana, incluidos los
   retrasos y la espera exponencial), **Iniciada**, **Reservada hasta**, **Finalizada** y
   **Actualizada**.

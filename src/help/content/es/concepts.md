@@ -140,7 +140,7 @@ habilitados. Entre los módulos opcionales están `storage` (archivos), `events`
 programaciones, eventos, webhooks), `usage`, `billing` y `notify` (notificaciones).
 
 En Studio, una entrada de la barra lateral cuyo módulo no está habilitado sigue visible y muestra
-**Inactivo**. Al abrirla aparece **Módulo no habilitado en este servidor** junto con el id del
+**Inactivo**. Al abrirla aparece **Módulo no habilitado en este servidor** junto con el ID del
 módulo que el operador debe habilitar. La tarjeta **Servidor** del panel enumera todos los módulos y
 su estado. Consulta la [referencia de módulos](help:modules-reference).
 

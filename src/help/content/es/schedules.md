@@ -132,7 +132,7 @@ En cada franja horaria, la programación pone en cola una tarea con:
   programación;
 - un enlace a la programación (los detalles de la tarea lo muestran en **Programación**);
 - **Creada por** `schedule:<schedule id>`;
-- una clave de idempotencia formada por el id de la programación y la franja horaria.
+- una clave de idempotencia formada por el ID de la programación y la franja horaria.
 
 Cada franja horaria se dispara **como máximo una vez**, aunque haya varios workers en marcha. La
 tarea en sí se ejecuta después al menos una vez, con los [reintentos](help:jobs#retries) habituales.

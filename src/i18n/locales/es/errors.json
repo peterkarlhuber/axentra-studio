@@ -50,8 +50,8 @@
       "message": "La configuración actual del servidor no admite esta acción, por ejemplo crear productos en el modo de producto único. Un operador tendría que cambiar la configuración del servidor."
     },
     "module_disabled": {
-      "title": "Módulo no activado",
-      "message": "El módulo del servidor necesario para esta acción está desactivado. Un operador puede activarlo en la configuración del servidor de Axentra."
+      "title": "Módulo no habilitado",
+      "message": "El módulo del servidor necesario para esta acción está desactivado. Un operador puede habilitarlo en la configuración del servidor de Axentra."
     },
     "payment_provider_not_configured": {
       "title": "Proveedor de pagos no configurado",

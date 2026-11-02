@@ -42,7 +42,7 @@
     "sessionsRevoked_other": "{{count}} sesiones revocadas",
     "profileDescription": "Las membresías se gestionan en la pestaña Miembros de cada inquilino.",
     "noEmail": "Sin dirección de correo electrónico",
-    "noEmailInfo": "Este usuario solo inicia sesión mediante inicio de sesión único y no puede aceptar invitaciones, que están vinculadas a una dirección de correo electrónico. En su lugar, añade el usuario directamente a los inquilinos.",
+    "noEmailInfo": "Este usuario solo inicia sesión mediante inicio de sesión único y no puede aceptar invitaciones, que están vinculadas a una dirección de correo electrónico. En su lugar, añade al usuario directamente a los inquilinos.",
     "noEmailAbout": "Acerca de los usuarios sin dirección de correo electrónico"
   },
   "platformRoles": {
