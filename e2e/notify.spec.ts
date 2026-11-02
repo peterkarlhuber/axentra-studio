@@ -102,6 +102,18 @@ test('create a template, preview it, send it to a member and find it in the log 
   await page.getByRole('button', { name: 'Save new version' }).click();
   await expect(page.getByText('Version 2', { exact: true })).toBeVisible();
 
+  // ---- Reopen the saved template: the preview follows language and text changes ----
+  await page.reload();
+  await expect(page.getByText('Version 2', { exact: true })).toBeVisible();
+  await expect(page.getByText('Welcome Ada')).toBeVisible();
+  await page.getByRole('combobox', { name: 'Language' }).selectOption('de');
+  await expect(page.getByText('Willkommen Ada')).toBeVisible();
+  await page.getByRole('tab', { name: 'de', exact: true }).click();
+  await page.getByRole('textbox', { name: /^Subject/ }).fill('Servus {{ name }}');
+  await expect(page.getByText('Servus Ada')).toBeVisible();
+  await page.getByRole('textbox', { name: /^Subject/ }).fill('Willkommen {{ name }}');
+  await expect(page.getByText('Willkommen Ada')).toBeVisible();
+
   // ---- Send a test notification to a tenant member ----
   await page.getByRole('button', { name: 'Send test' }).click();
   const dialog = page.getByRole('dialog');
