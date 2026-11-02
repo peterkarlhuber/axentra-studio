@@ -5,7 +5,11 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { configureApi } from '@/api/client';
 import { getCsrfToken, setCsrfToken } from '@/api/csrf';
 import { jsonResponse, renderWithProviders, testMeta } from '@/test/utils';
-import { readPendingInvitation, writePendingInvitation } from '@/features/tenants/invitationLink';
+import {
+  invitationSentWithSso,
+  readPendingInvitation,
+  writePendingInvitation,
+} from '@/features/tenants/invitationLink';
 import { LoginPage } from './LoginPage';
 
 const unauthenticated = () =>
@@ -134,6 +138,16 @@ describe('LoginPage', () => {
     expect(start.searchParams.getAll('invitation')).toEqual(['axinv_abc']);
     expect(href.split('axinv_abc').length).toBe(2);
     expect(readPendingInvitation()).toBe('axinv_abc');
+    // Both sign-in paths are described: password confirms on the next page, SSO accepts.
+    expect(
+      screen.getByText(/with single sign-on, it is accepted as soon as you are signed in/),
+    ).toBeInTheDocument();
+    // Following the SSO link marks the tab, so the accept page trusts the server's outcome.
+    expect(invitationSentWithSso()).toBe(false);
+    const ssoLink = screen.getByRole('link', { name: /Corp SSO/ });
+    ssoLink.addEventListener('click', (event) => event.preventDefault());
+    await userEvent.setup().click(ssoLink);
+    expect(invitationSentWithSso()).toBe(true);
     const user = userEvent.setup();
     await user.type(screen.getByLabelText(/Email/), 'kim@example.com');
     await user.type(screen.getByLabelText(/Password/), 'correct horse');
@@ -147,6 +161,7 @@ describe('LoginPage', () => {
       route: `/login?return_to=${encodeURIComponent('/invitations/accept?token=t')}`,
     });
     expect(await screen.findByText(/This server has no sign-up/)).toBeInTheDocument();
+    expect(screen.getByText(/You confirm the invitation on the next page/)).toBeInTheDocument();
   });
 
   it('returns to a pending invitation after a failed single sign-on without return_to', async () => {
@@ -163,6 +178,7 @@ describe('LoginPage', () => {
       `${window.location.origin}/invitations/accept`,
     );
     expect(start.searchParams.get('invitation')).toBe('axinv_pending');
+    expect(screen.getByText(/It is accepted as soon as you are signed in/)).toBeInTheDocument();
     window.sessionStorage.clear();
   });
 

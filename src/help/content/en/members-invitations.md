@@ -121,11 +121,16 @@ This is what the invited person does:
    sign-in page offers single sign-on, sign in there with the invited address: the server creates
    your account because an invitation is open for it. There is no sign-up with a password; ask the
    person who invited you or an administrator.
-3. Check the account shown under **Signed in as** and choose **Accept invitation**. Nothing
-   happens before you confirm. Studio takes the token out of the address bar as soon as the page
-   has read it, so it does not stay in the browser history; the **Invitation token** field is
-   filled in. If you only have the token, open **Accept invitation** at `/invitations/accept` and
-   paste it.
+3. Check the account shown under **Signed in as** and choose **Accept invitation**. After a password
+   sign-in, nothing happens before you confirm. Studio takes the token out of the address bar as
+   soon as the page has read it, so it does not stay in the browser history; the **Invitation
+   token** field is filled in. If you only have the token, open **Accept invitation** at
+   `/invitations/accept` and paste it.
+
+With single sign-on, the server accepts the invitation as soon as you are signed in. Studio checks
+that you are now a member of the tenant and shows **Invitation accepted** right away, without a
+second confirmation. If the server could not accept it (for example because you signed in with
+another address), the page asks for your confirmation as in step 3 and explains what went wrong.
 
 **Invitation accepted** names the tenant, the product and your role; **Open the tenant** takes you
 there. If you were already a member of the tenant, your existing role stays unchanged.

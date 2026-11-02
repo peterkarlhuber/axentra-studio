@@ -125,11 +125,16 @@ Isto é o que a pessoa convidada faz:
    página de login oferecer login único, entre por ali com o endereço convidado: o servidor cria
    sua conta porque há um convite aberto para ele. Não há cadastro com senha; fale com quem
    convidou você ou com um administrador.
-3. Confira a conta mostrada em **Conectado como** e escolha **Aceitar convite**. Nada acontece
-   antes da sua confirmação. O Studio tira o token da barra de endereço assim que a página o lê,
-   para que ele não fique no histórico do navegador; o campo **Token do convite** já vem
-   preenchido. Se você tiver só o token, abra **Aceitar convite** em `/invitations/accept` e
-   cole-o.
+3. Confira a conta mostrada em **Conectado como** e escolha **Aceitar convite**. Depois de entrar
+   com senha, nada acontece antes da sua confirmação. O Studio tira o token da barra de endereço
+   assim que a página o lê, para que ele não fique no histórico do navegador; o campo **Token do
+   convite** já vem preenchido. Se você tiver só o token, abra **Aceitar convite** em
+   `/invitations/accept` e cole-o.
+
+Com o login único, o servidor aceita o convite assim que você entra. O Studio confere que agora você
+é membro do tenant e mostra **Convite aceito** na hora, sem uma segunda confirmação. Se o servidor
+não conseguiu aceitá-lo (por exemplo, porque você entrou com outro endereço), a página pede a sua
+confirmação como no passo 3 e explica o que deu errado.
 
 **Convite aceito** mostra o tenant, o produto e sua função; **Abrir o tenant** leva você até ele.
 Se você já era membro do tenant, sua função atual continua a mesma.

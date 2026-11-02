@@ -126,11 +126,17 @@ So geht die eingeladene Person vor:
    Bietet die Anmeldeseite Single Sign-on an, melde dich dort mit der eingeladenen Adresse an: Der
    Server legt dein Konto an, weil für sie eine Einladung offen ist. Eine Registrierung mit Passwort
    gibt es nicht; wende dich an die Person, die dich eingeladen hat, oder an eine Administration.
-3. Prüfe das unter **Angemeldet als** angezeigte Konto und wähle **Einladung annehmen**. Vor deiner
-   Bestätigung passiert nichts. Studio entfernt das Token aus der Adresszeile, sobald die Seite es
-   gelesen hat, damit es nicht im Browserverlauf bleibt; das Feld **Einladungs-Token** ist
-   ausgefüllt. Hast du nur das Token, öffne **Einladung annehmen** unter `/invitations/accept` und
-   füge es ein.
+3. Prüfe das unter **Angemeldet als** angezeigte Konto und wähle **Einladung annehmen**. Nach einer
+   Anmeldung mit Passwort passiert vor deiner Bestätigung nichts. Studio entfernt das Token aus der
+   Adresszeile, sobald die Seite es gelesen hat, damit es nicht im Browserverlauf bleibt; das Feld
+   **Einladungs-Token** ist ausgefüllt. Hast du nur das Token, öffne **Einladung annehmen** unter
+   `/invitations/accept` und füge es ein.
+
+Mit Single Sign-on nimmt der Server die Einladung an, sobald du angemeldet bist. Studio prüft, dass
+du jetzt Mitglied des Mandanten bist, und zeigt sofort **Einladung angenommen**, ohne zweite
+Bestätigung. Konnte der Server sie nicht annehmen (etwa weil du dich mit einer anderen Adresse
+angemeldet hast), bittet die Seite wie in Schritt 3 um deine Bestätigung und erklärt, was nicht
+geklappt hat.
 
 **Einladung angenommen** nennt Mandant, Produkt und deine Rolle; **Mandant öffnen** bringt dich
 dorthin. Warst du bereits Mitglied des Mandanten, bleibt deine bisherige Rolle unverändert.

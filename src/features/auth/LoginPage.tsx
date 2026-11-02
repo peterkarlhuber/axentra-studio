@@ -18,6 +18,7 @@ import { describeError } from '@/lib/errors';
 import {
   ACCEPT_INVITATION_PATH,
   invitationTokenFromPath,
+  markInvitationSentWithSso,
   readPendingInvitation,
   withoutInvitationToken,
   writePendingInvitation,
@@ -142,6 +143,11 @@ export function LoginPage() {
       {invitation && !error ? (
         <Alert tone="info" title={t('login.invitation.title')}>
           {t('login.invitation.body')}{' '}
+          {providers.length === 0
+            ? t('login.invitation.confirmNextPage')
+            : meta.auth.password
+              ? t('login.invitation.confirmOrSso')
+              : t('login.invitation.acceptedAtSso')}{' '}
           {providers.length > 0
             ? t('login.invitation.noAccountSso')
             : t('login.invitation.noAccountPassword')}{' '}
@@ -205,6 +211,7 @@ export function LoginPage() {
                 key={provider.id}
                 className={buttonClassName({ variant: 'secondary', size: 'lg', fullWidth: true })}
                 href={apiUrl(`/v1/auth/oidc/${encodeURIComponent(provider.id)}/start?${oidcQuery}`)}
+                onClick={invitationToken ? markInvitationSentWithSso : undefined}
               >
                 <KeyRound aria-hidden width={16} height={16} />
                 {t('login.continueWith', { provider: provider.name })}

@@ -15,8 +15,13 @@ All notable changes to Axentra Studio are documented here. The format follows
   only in the dedicated `invitation` parameter, which Axentra stores encrypted and redacts; other
   return-path parameters and the hash are kept. The token is kept for the tab, so the accept page
   still finds it after the round trip. With `invitation`, Axentra also lets an invited address
-  without an account sign up and accepts the invitation right after the sign-in (the accept page
-  then reports the token as no longer usable if the person confirms again).
+  without an account sign up and accepts the invitation right after the sign-in. Back on the accept
+  page, Studio reads Axentra's `invitation_accepted=<tenant id>` (trusted only in the tab that
+  started that sign-on, and only when `/v1/me` lists the tenant), shows **Invitation accepted**
+  without a second confirmation and forgets the token; otherwise the page asks for the
+  confirmation as before. The sign-in page and the members and invitations help (all six
+  languages) describe both paths: a password sign-in still confirms on the next page. Known
+  limitation: the token is still in the start URL's query string (docs/TODO.md).
 
 ### Fixed
 
