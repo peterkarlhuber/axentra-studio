@@ -158,7 +158,7 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   of all six languages (UI strings and help) fixed terms, meaning, typography and label parity
   (2026-11-02). Still open, by a native speaker per language: tone and naturalness of the long help
   texts (most articles were skimmed, 12 per language read in full); de "Kulanzzeit" vs
-  "Übergangsfrist" and "anlegen" vs "erstellen"; en "Canceled" (US) vs the server's "Cancelled";
+  "Übergangsfrist" and "anlegen" vs "erstellen"; en "Cancelled" vs US "Canceled";
   es quote style and the meaning of "registros"; pt-BR "inquilino" vs "tenant", "direito" and
   "substituição"; fr "Studio" vs "le Studio"; it "Verificatosi" and the `_many` plural forms.
 - **The e2e backend uses fixed names.** `scripts/e2e-backend.sh` drops and recreates
