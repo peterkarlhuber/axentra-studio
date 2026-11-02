@@ -24,3 +24,6 @@ public/config.local.json
 .vscode/*
 !.vscode/extensions.json
 *.log
+
+# e2e backend state (scripts/e2e-backend.sh)
+.e2e-backend/

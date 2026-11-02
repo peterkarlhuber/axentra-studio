@@ -34,3 +34,8 @@ All notable changes to Axentra Studio are documented here. The format follows
 - Docker image on nginx-unprivileged with an optional `/v1` reverse proxy, runtime
   `config.json`, and security headers including a CSP without inline scripts.
 - CI workflow for typecheck, lint, formatting, i18n parity, tests and build.
+- End-to-end against a real backend: `scripts/e2e-backend.sh` (PostgreSQL role without
+  superuser, all modules, first admin via setup token, optional worker), CI jobs `contract`
+  (drift check against `api/BACKEND_REF`) and `e2e` (all Playwright specs, report artifact), an
+  a11y/responsive harness over every registered route (`e2e/a11y.spec.ts`), and
+  `docs/COMPATIBILITY.md` and `docs/TODO.md`.

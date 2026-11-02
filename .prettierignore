@@ -7,3 +7,4 @@ src/api/schema.d.ts
 public/branding
 test-results
 playwright-report
+.e2e-backend
