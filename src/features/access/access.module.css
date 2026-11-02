@@ -38,6 +38,12 @@
   border-radius: var(--ax-radius-md);
   background: var(--ax-color-surface-2);
 }
+.groupLabel {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ax-space-2);
+}
 .groupName {
   font-family: var(--ax-font-mono);
   font-weight: var(--ax-weight-semibold);

@@ -23,6 +23,9 @@ export const queryKeys = {
   user: (userId: string) => ['users', userId] as const,
   userSessions: (userId: string) => ['users', userId, 'sessions'] as const,
   roles: (productId: string) => ['products', productId, 'roles'] as const,
+  productPermissions: (productId: string, includeRetired = false) =>
+    ['products', productId, 'permissions', { includeRetired }] as const,
+  storagePolicy: (productId: string) => ['products', productId, 'storage', 'policy'] as const,
   apiKeys: (productId: string, params?: unknown) =>
     ['products', productId, 'api-keys', params ?? {}] as const,
   collections: (productId: string) => ['products', productId, 'collections'] as const,

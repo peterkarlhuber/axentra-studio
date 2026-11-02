@@ -137,6 +137,23 @@ export function FileDetailDrawer({
               { label: t('fields.id'), value: info.id, mono: true },
               { label: t('fields.status'), value: <StatusPill status={info.status} /> },
               { label: t('fields.type'), value: info.content_type, mono: true },
+              ...(info.stored_inert
+                ? [
+                    {
+                      label: t('fields.inert'),
+                      value: (
+                        <span className={layout.cellStack}>
+                          <span>
+                            {info.original_content_type
+                              ? t('fields.inertWithType', { type: info.original_content_type })
+                              : t('fields.inertNoType')}
+                          </span>
+                          <span className={layout.muted}>{t('fields.inertHelp')}</span>
+                        </span>
+                      ),
+                    },
+                  ]
+                : []),
               {
                 label: t('fields.size'),
                 value: `${formatBytes(info.size, format.locale)} (${t('fields.bytes', {

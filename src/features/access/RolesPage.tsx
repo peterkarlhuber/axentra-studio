@@ -28,6 +28,7 @@ import {
 import { fieldErrors } from '@/lib/errors';
 import { slugify } from '@/lib/slug';
 import { PermissionChecklist } from './PermissionChecklist';
+import { grantableFor } from './permission-groups';
 import styles from './access.module.css';
 
 type EditorState =
@@ -247,18 +248,15 @@ function RoleEditor({
   const effectiveKey = keyTouched ? key : slugify(name, '_');
   const [description, setDescription] = useState(role?.description ?? '');
   const [permissions, setPermissions] = useState<string[]>(role?.permissions ?? []);
+  // Built-in and product-defined permissions of this product (active ones only).
   const catalog = useQuery({
-    queryKey: queryKeys.permissions,
-    queryFn: accessApi.permissions,
-    staleTime: 10 * 60_000,
+    queryKey: queryKeys.productPermissions(productId),
+    queryFn: () => accessApi.productPermissions(productId),
+    staleTime: 60_000,
   });
   const effectiveScope = role?.scope ?? scope;
   // Tenant roles hold tenant permissions; product roles also product ones; never platform.
-  const allowed = asItems(catalog.data).filter(
-    (permission) =>
-      permission.scope === 'tenant' ||
-      (permission.scope === 'product' && effectiveScope === 'product'),
-  );
+  const allowed = grantableFor(asItems(catalog.data), effectiveScope);
   const allowedNames = new Set(allowed.map((permission) => permission.name));
   const selectedAllowed = catalog.data
     ? permissions.filter((name) => allowedNames.has(name))

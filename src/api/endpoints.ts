@@ -21,6 +21,8 @@ import type {
   FilePatch,
   ProductStorageUsage,
   QuotaInput,
+  StoragePolicy,
+  StoragePolicyInput,
   TenantStorageUsage,
   Health,
   Invitation,
@@ -381,6 +383,16 @@ const keyPath = (productId: string, keyId: string) => ({
 
 export const accessApi = {
   permissions: () => unwrap<Permission[]>(api().GET('/v1/permissions')),
+  /** Everything grantable in the product: built-in product/tenant and product-defined permissions. */
+  productPermissions: (productId: string, includeRetired = false) =>
+    unwrap<Permission[]>(
+      api().GET('/v1/products/{product_id}/permissions', {
+        params: {
+          ...productPath(productId),
+          query: includeRetired ? { include_retired: true } : {},
+        },
+      }),
+    ),
   roles: (productId: string) =>
     unwrap<Role[]>(
       api().GET('/v1/products/{product_id}/roles', { params: productPath(productId) }),
@@ -659,6 +671,19 @@ export const storageApi = {
     unwrap<TenantStorageUsage>(
       api().GET('/v1/products/{product_id}/tenants/{tenant_id}/storage/usage', {
         params: tenantPath(productId, tenantId),
+      }),
+    ),
+  /** The product's effective content-type policy for blocked file types (`product:read`). */
+  policy: (productId: string) =>
+    unwrap<StoragePolicy>(
+      api().GET('/v1/products/{product_id}/storage/policy', { params: productPath(productId) }),
+    ),
+  /** Replaces the policy keys of `settings.storage`; `If-Match` is the product version. */
+  setPolicy: (productId: string, body: StoragePolicyInput, version?: number) =>
+    unwrap<StoragePolicy>(
+      api().PUT('/v1/products/{product_id}/storage/policy', {
+        params: { ...productPath(productId), header: ifMatch(version) },
+        body,
       }),
     ),
   /** `null` inherits the product/installation default; `If-Match` is the `quota_version`. */

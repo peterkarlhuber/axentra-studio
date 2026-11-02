@@ -1,8 +1,10 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toApiError, type ApiError } from '@/api/errors';
-import type { FileInfo, TenantStorageUsage } from '@/api/models';
+import { storageApi } from '@/api/endpoints';
+import type { FileInfo, StoragePolicy, TenantStorageUsage } from '@/api/models';
+import { queryKeys } from '@/api/queryKeys';
 import { uploadFile, type UploadProgress } from '@/api/upload';
 import { Alert, Button, Dialog, FormField, Input, Textarea, layout } from '@/components/ui';
 import { describeError } from '@/lib/errors';
@@ -43,6 +45,13 @@ export function UploadDialog({
   const [error, setError] = useState<ApiError | null>(null);
   const abort = useRef<AbortController | null>(null);
   const busy = progress !== null;
+  // The product's content-type policy (`product:read`); falls back to the installation setting.
+  const policy = useQuery({
+    queryKey: queryKeys.storagePolicy(productId),
+    queryFn: () => storageApi.policy(productId),
+    staleTime: 60_000,
+    retry: false,
+  });
 
   const bytes = (value: number) => formatBytes(value, format.locale);
   const parsedMetadata = parseMetadata(metadata);
@@ -160,7 +169,7 @@ export function UploadDialog({
             })}
           </p>
         ) : null}
-        <TypePolicy limits={limits} />
+        <TypePolicy limits={limits} policy={policy.data} />
         {typeNotAllowed ? <Alert tone="warning">{t('upload.typeNotAllowed')}</Alert> : null}
         {overQuota || filesFull ? <Alert tone="warning">{t('upload.quotaWarning')}</Alert> : null}
         <FormField label={t('upload.name')} help={t('upload.nameHelp')}>
@@ -213,17 +222,36 @@ export function UploadDialog({
   );
 }
 
-function TypePolicy({ limits }: { limits: StorageLimits | undefined }) {
+function TypePolicy({
+  limits,
+  policy,
+}: {
+  limits: StorageLimits | undefined;
+  policy: StoragePolicy | undefined;
+}) {
   const { t } = useTranslation('storage');
-  if (!limits) return <p className={layout.muted}>{t('upload.policyUnknown')}</p>;
+  if (!limits && !policy) return <p className={layout.muted}>{t('upload.policyUnknown')}</p>;
+  const allowed = policy?.allowed_content_types ?? limits?.allowedContentTypes ?? [];
+  const inert = policy ? policy.blocked_types === 'store_inert' : limits?.storeBlockedAsInert;
+  const extraBlocked = [
+    ...(policy?.blocked_extensions ?? []).map((ext) => `.${ext}`),
+    ...(policy?.blocked_content_types ?? []),
+  ];
+  const inertExtensions = (policy?.inert_extensions ?? []).map((ext) => `.${ext}`);
   return (
     <ul className={styles.policy}>
       <li>
-        {limits.allowedContentTypes.length > 0
-          ? t('upload.allowedTypes', { types: limits.allowedContentTypes.join(', ') })
+        {allowed.length > 0
+          ? t('upload.allowedTypes', { types: allowed.join(', ') })
           : t('upload.allTypes')}
       </li>
-      <li>{limits.storeBlockedAsInert ? t('upload.blockedInert') : t('upload.blockedRefused')}</li>
+      <li>{inert ? t('upload.blockedInert') : t('upload.blockedRefused')}</li>
+      {!inert && inertExtensions.length > 0 ? (
+        <li>{t('upload.inertExtensions', { extensions: inertExtensions.join(', ') })}</li>
+      ) : null}
+      {extraBlocked.length > 0 ? (
+        <li>{t('upload.extraBlocked', { items: extraBlocked.join(', ') })}</li>
+      ) : null}
     </ul>
   );
 }

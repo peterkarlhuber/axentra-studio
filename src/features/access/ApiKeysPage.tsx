@@ -280,10 +280,11 @@ function CreateKeyDialog({
   const [name, setName] = useState('');
   const [tenantId, setTenantId] = useState('');
   const [permissions, setPermissions] = useState<string[]>([]);
+  // Built-in and product-defined permissions of this product (active ones only).
   const catalog = useQuery({
-    queryKey: queryKeys.permissions,
-    queryFn: accessApi.permissions,
-    staleTime: 10 * 60_000,
+    queryKey: queryKeys.productPermissions(productId),
+    queryFn: () => accessApi.productPermissions(productId),
+    staleTime: 60_000,
   });
 
   const create = useMutation({
@@ -354,7 +355,7 @@ function CreateKeyDialog({
           <PermissionChecklist
             legend={t('keys.permissions')}
             permissions={asItems(catalog.data).filter(
-              (permission) => permission.scope !== 'platform',
+              (permission) => permission.scope !== 'platform' && !permission.retired_at,
             )}
             value={permissions}
             onChange={setPermissions}

@@ -36,7 +36,11 @@
     "updated": "Geändert",
     "expires": "Läuft ab",
     "never": "Nie",
-    "metadata": "Labels (Metadaten)"
+    "metadata": "Labels (Metadaten)",
+    "inert": "Inert gespeichert",
+    "inertWithType": "Ja, hochgeladen als {{type}}",
+    "inertNoType": "Ja",
+    "inertHelp": "Ein gesperrter Dateityp, den die Inhaltstyp-Richtlinie des Produkts als undurchsichtigen Anhang aufbewahrt. Er wird nur heruntergeladen, nie angezeigt."
   },
   "filter": {
     "label": "Dateien filtern",
@@ -119,7 +123,9 @@
       "unsupported_media_typeBody": "Der Server lehnt diesen Dateityp ab. Programme, HTML, SVG und Skripte sind gesperrt, und der Server lässt möglicherweise nur bestimmte Typen zu.",
       "quota_exceeded": "Speicherkontingent erschöpft",
       "quota_exceededBody": "Der Mandant hat sein Speicher- oder Dateikontingent erreicht. Löschen Sie Dateien oder erhöhen Sie das Kontingent."
-    }
+    },
+    "inertExtensions": "Als inerte Anhänge angenommen: {{extensions}}.",
+    "extraBlocked": "Von diesem Produkt zusätzlich gesperrt: {{items}}."
   },
   "detail": {
     "title": "Datei"
@@ -183,6 +189,34 @@
     "days_one": "{{formatted}} Tag",
     "days_other": "{{formatted}} Tage",
     "backupTitle": "Backups werden nicht gemeldet",
-    "backupBody": "Die API meldet weder den Backup-Status noch, wie lange Metadaten gelöschter Dateien aufbewahrt werden. Beides gehört zum Serverbetrieb."
+    "backupBody": "Die API meldet weder den Backup-Status noch, wie lange Metadaten gelöschter Dateien aufbewahrt werden. Beides gehört zum Serverbetrieb.",
+    "blockedProduct": "{{value}} ({{source}})"
+  },
+  "policy": {
+    "title": "Inhaltstyp-Richtlinie für Dateien",
+    "description": "Was in diesem Produkt mit hochgeladenen ausführbaren Dateien, HTML, SVG und Skripten geschieht. Gesperrte Dateien werden nie angezeigt; höchstens werden sie zum Herunterladen aufbewahrt.",
+    "readOnly": "Sie können diese Richtlinie ansehen; zum Ändern ist product:manage nötig.",
+    "mode": "Gesperrte Dateitypen",
+    "modeHelp": "Geprüft werden angegebener Typ, Dateiendung und Inhalt (auch Skripte, die mit #! beginnen).",
+    "inherit": "Standard der Installation ({{mode}})",
+    "refuse": "Hochladen ablehnen",
+    "store_inert": "Als inerten Anhang speichern",
+    "source": {
+      "product": "Für dieses Produkt festgelegt",
+      "installation": "Von der Installation übernommen"
+    },
+    "blockedExtensions": "Zusätzlich gesperrte Endungen",
+    "blockedExtensionsHelp": "Durch Kommas getrennt, ohne Punkt, z. B. „py, rb“. Kann die integrierte Liste nur erweitern.",
+    "blockedContentTypes": "Zusätzlich gesperrte Inhaltstypen",
+    "blockedContentTypesHelp": "Durch Kommas getrennt, z. B. „text/x-python“.",
+    "inertExtensions": "Als inerte Anhänge angenommene Endungen",
+    "inertExtensionsHelp": "Gesperrte Endungen, die auch dann als inerte Anhänge aufbewahrt werden, wenn Uploads abgelehnt werden, z. B. „html, sh“.",
+    "builtIn": "Immer gesperrt",
+    "builtInExtensions": "Endungen",
+    "builtInTypes": "Inhaltstypen",
+    "inertNote": "Inerte Dateien werden als application/octet-stream gespeichert und als Anhang mit nosniff heruntergeladen; ihr ursprünglicher Typ wird nur zur Anzeige aufbewahrt.",
+    "saved": "Inhaltstyp-Richtlinie gespeichert",
+    "loadError": "Die Inhaltstyp-Richtlinie konnte nicht geladen werden.",
+    "moduleOff": "Das Speichermodul ist auf diesem Server nicht aktiviert."
   }
 }

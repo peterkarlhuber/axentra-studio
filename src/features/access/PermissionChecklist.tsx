@@ -1,7 +1,7 @@
 import { useId, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Permission } from '@/api/models';
-import { Checkbox, FormField, Input } from '@/components/ui';
+import { Badge, Checkbox, FormField, Input } from '@/components/ui';
 import { groupPermissions } from './permission-groups';
 import styles from './access.module.css';
 
@@ -63,12 +63,19 @@ export function PermissionChecklist({
           const count = names.filter((name) => selected.has(name)).length;
           const state = count === 0 ? false : count === names.length ? true : 'indeterminate';
           return (
-            <div key={group.resource} className={styles.group}>
+            <div key={`${group.source}:${group.resource}`} className={styles.group}>
               <Checkbox
                 checked={state}
                 onCheckedChange={(on) => toggle(names, on)}
                 disabled={disabled}
-                label={<span className={styles.groupName}>{group.resource}</span>}
+                label={
+                  <span className={styles.groupLabel}>
+                    <span className={styles.groupName}>{group.resource}</span>
+                    {group.source === 'product' ? (
+                      <Badge tone="brand">{t('permissions.productDefined')}</Badge>
+                    ) : null}
+                  </span>
+                }
                 description={t('permissions.groupCount', { selected: count, total: names.length })}
               />
               <div className={styles.items}>
@@ -80,7 +87,12 @@ export function PermissionChecklist({
                     disabled={disabled}
                     label={<code>{permission.name}</code>}
                     description={
-                      [permission.description, permission.scope ? `(${permission.scope})` : null]
+                      [
+                        permission.description,
+                        permission.scope
+                          ? `(${t(`permissions.scopes.${permission.scope}`)})`
+                          : null,
+                      ]
                         .filter(Boolean)
                         .join(' ') || undefined
                     }

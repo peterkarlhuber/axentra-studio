@@ -8,6 +8,23 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Product-defined permissions (Axentra G-1, needs a backend with
+  `GET /v1/products/{id}/permissions`): the role and API key editors load the product's catalog
+  (built-in plus the product's own permissions, retired ones left out), group product permissions
+  by namespace and resource after the built-in groups and mark them with a "Product" badge. New
+  read-only page **Access & API Keys → Permissions** (`/p/:productId/permissions`) lists the
+  product's own permissions (scope, description, extra role grants, read-only flag, declared by
+  code or API, active/retired with a "Show retired" switch) and the built-in ones.
+- Per-product storage content-type policy (Axentra G-7, needs
+  `GET/PUT /v1/products/{id}/storage/policy`): the product detail has a **Files** tab (storage
+  module only) to choose refuse or keep blocked types as inert attachments (or inherit the
+  installation default), add blocked extensions/content types and extensions accepted as inert,
+  with the built-in blocklist shown read-only and `If-Match` on the product version. The upload
+  dialog and the data overview show the product's effective policy; the file drawer marks files
+  stored inert with their original type.
+- e2e spec `e2e/permissions-policy.spec.ts`; component tests for the permission grouping, the
+  Permissions page, the policy card and the inert file details.
+
 - Implementation report `docs/AXENTRA_STUDIO_IMPLEMENTATION_REPORT.md` (architecture, features,
   backend contract, tests and CI, security, design and branding, compatibility, acceptance
   criteria 17-30) with screenshots in `docs/screenshots/`, taken against a real backend by
@@ -74,6 +91,14 @@ All notable changes to Axentra Studio are documented here. The format follows
   (drift check against `api/BACKEND_REF`) and `e2e` (all Playwright specs, report artifact), an
   a11y/responsive harness over every registered route (`e2e/a11y.spec.ts`), and
   `docs/COMPATIBILITY.md` and `docs/TODO.md`.
+
+### Changed
+
+- `api/openapi.json`, `api/SOURCE` and `src/api/schema.d.ts` are synced from the Axentra branch
+  with product permissions and the storage policy (`67cd0ac`, API still 1.0). `api/BACKEND_REF`
+  intentionally stays at `7511a37` until that backend change is merged; until the re-pin,
+  `npm run api:check` and the unit check "pins the same backend commit"
+  (`scripts/contract-check.test.mjs`) fail by design.
 
 ### Security
 

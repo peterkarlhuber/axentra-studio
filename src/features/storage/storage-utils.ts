@@ -116,3 +116,13 @@ export function numberSetting(section: unknown, key: string): number | undefined
   const value = (section as Record<string, unknown>)[key];
   return typeof value === 'number' ? value : undefined;
 }
+
+/** "py, .RB  sh" -> ["py", "rb", "sh"] (the server validates and normalizes again). */
+export function parseList(raw: string, { extensions = false } = {}): string[] {
+  const items = raw
+    .split(/[\s,;]+/)
+    .map((item) => item.trim().toLowerCase())
+    .map((item) => (extensions ? item.replace(/^\.+/, '') : item))
+    .filter(Boolean);
+  return [...new Set(items)];
+}
