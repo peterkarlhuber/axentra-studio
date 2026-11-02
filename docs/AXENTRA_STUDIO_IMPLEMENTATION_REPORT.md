@@ -112,7 +112,7 @@ and never shows demo data.
 ## 3. Screenshots
 
 Taken on 2026-11-02 with [`scripts/report-screenshots.mjs`](../scripts/report-screenshots.mjs)
-(Playwright, Chromium, English UI) against a real Axentra at the pinned commit `7511a37`, started
+(Playwright, Chromium, English UI) against a real Axentra at the pinned commit `2ff428c` (all 21 re-shot for the new logo), started
 with `scripts/e2e-backend.sh up --ref pinned --install --worker` (PostgreSQL 16, non-superuser
 role, multi-product mode, all modules, worker and notification dispatcher running), and the
 production build served by `vite preview`. The data shown (product "Acme Projects", tenants,
@@ -300,15 +300,16 @@ real Docker image in CI, and tests in browsers other than Chromium.
 
 ## 8. Design system and branding
 
-- **Logo: the existing Axentra logo, not replaced.** `public/branding/axentra-logo.png` is a
-  byte-identical copy of `assets/branding/axentra-logo.png` in `peterkarlhuber/axentra`
-  (commit `1c5974594168bd1eb1430e41e7e4802a205ede64`, git blob
-  `d82648e04ab1285e09543db031467133b70f767f`; `git hash-object` of Studio's file gives the same
-  blob id in this run, and backend `master` still has that blob). All other brand files (transparent
-  and on-dark lockups, square marks, favicon, apple-touch icon) are derived from it by
-  [`scripts/derive-branding.py`](../scripts/derive-branding.py) (Pillow, reproducible byte for byte);
-  provenance and method: [public/branding/README.md](../public/branding/README.md). The logo appears
-  on the sign-in and setup pages (light and dark variants) and as the mark in the sidebar.
+- **Logo (current state): the official Axentra logo masters.** The two masters supplied by the
+  owner (`branding-src/axentra-logo-transparent.png` and `axentra-logo-white.png`, 2048 x 640, not
+  served) replaced the earlier copy of the old logo. Every served brand file (light and on-dark
+  lockups, symbol, favicons, apple-touch icon) is derived from them by
+  [`scripts/derive_branding.py`](../scripts/derive_branding.py), the derivation script shared by all
+  repositories that ship the logo, vendored unchanged; provenance and the regenerate command:
+  [public/branding/README.md](../public/branding/README.md). One component,
+  `src/components/layout/Logo.tsx`, picks the file: the sign-in, setup and public help pages show
+  the lockup matching the theme, the navy sidebar shows the white-wordmark lockup when expanded and
+  the symbol when collapsed, and the loading screen shows the symbol.
 - **Design tokens derived from the logo** ([DESIGN_SYSTEM.md](DESIGN_SYSTEM.md),
   `src/styles/tokens.css`): brand primitives cyan `#06C4F5`, blue `#3488FA`, violet `#7846F9`, ink
   `#06034C`; semantic tokens for both themes; components use semantic tokens only. The navy sidebar

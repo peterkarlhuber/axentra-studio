@@ -16,6 +16,12 @@
   height: 36px;
   flex: none;
 }
+.compact {
+  gap: var(--ax-space-2);
+}
+.compact .lockup {
+  height: 30px;
+}
 .product {
   padding: 1px 6px;
   border: 1px solid rgba(136, 176, 248, 0.35);
