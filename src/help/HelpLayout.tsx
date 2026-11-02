@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation } from 'react-router';
 import { SplashScreen } from '@/components/layout/FullPageMessage';
+import { Logo } from '@/components/layout/Logo';
 import { loginPath, useSession } from '@/app/auth';
 import { MetaContext } from '@/app/contexts';
 import { AppShell } from '@/app/shell/AppShell';
@@ -34,20 +35,7 @@ function PublicHelpLayout() {
       </a>
       <header className={styles.publicHeader}>
         <Link to="/help" className={styles.publicBrand}>
-          <img
-            src="/branding/axentra-logo-transparent.png"
-            alt={t('app.name')}
-            width={139}
-            height={48}
-            className={styles.logoLight}
-          />
-          <img
-            src="/branding/axentra-logo-on-dark.png"
-            alt={t('app.name')}
-            width={139}
-            height={48}
-            className={styles.logoDark}
-          />
+          <Logo height={36} alt={t('app.name')} />
         </Link>
         <div className={styles.publicActions}>
           <label className={styles.publicLanguage}>

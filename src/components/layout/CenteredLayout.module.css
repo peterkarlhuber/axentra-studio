@@ -32,16 +32,9 @@
   max-width: 640px;
 }
 .logo {
-  height: 65px;
-}
-.logoDark {
-  display: none;
-}
-:global([data-theme='dark']) .logoLight {
-  display: none;
-}
-:global([data-theme='dark']) .logoDark {
-  display: block;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
 }
 .card {
   position: relative;

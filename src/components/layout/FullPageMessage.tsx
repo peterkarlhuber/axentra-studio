@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 import { HexIcon } from '@/components/ui';
 import { CenteredLayout } from './CenteredLayout';
+import { Logo } from './Logo';
 import styles from './FullPageMessage.module.css';
 
 export function FullPageMessage({
@@ -32,13 +33,7 @@ export function FullPageMessage({
 export function SplashScreen({ label }: { label: string }) {
   return (
     <div className={styles.splash} role="status" aria-live="polite">
-      <img
-        src="/branding/axentra-mark-192.png"
-        alt=""
-        width={72}
-        height={72}
-        className={styles.pulse}
-      />
+      <Logo variant="mark" height={72} alt="" className={styles.pulse} />
       <span className="ax-sr-only">{label}</span>
     </div>
   );

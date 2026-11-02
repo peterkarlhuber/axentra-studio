@@ -4,44 +4,45 @@
 
 | | |
 | --- | --- |
-| Source | [`peterkarlhuber/axentra`](https://github.com/peterkarlhuber/axentra) `assets/branding/axentra-logo.png` |
-| Commit | `1c5974594168bd1eb1430e41e7e4802a205ede64` (git blob `d82648e04ab1285e09543db031467133b70f767f`) |
-| Owner | Same owner as this repository |
+| Masters | [`branding-src/axentra-logo-transparent.png`](../../branding-src/axentra-logo-transparent.png) and [`branding-src/axentra-logo-white.png`](../../branding-src/axentra-logo-white.png) |
+| Owner | The official Axentra logo, supplied by the brand owner (same owner as this repository) |
+| Same masters in | [`peterkarlhuber/axentra`](https://github.com/peterkarlhuber/axentra) `assets/branding/` |
 | License | MIT (see `LICENSE` in both repositories) |
 
-`axentra-logo.png` is a byte-identical copy of the original (1254 × 433 px, white background).
-Do not edit it. All other files are derived from it with
-[`scripts/derive-branding.py`](../../scripts/derive-branding.py) (Python 3 with Pillow), which
-reproduces them byte for byte:
+The masters are 2048 × 640 px, symbol left, black wordmark right; the white master is the
+transparent one flattened on white. They live outside `public/`, so they are not served. Do not
+edit them, and never edit a derived file by hand: regenerate it.
+
+All files below are derived from the transparent master by
+[`scripts/derive_branding.py`](../../scripts/derive_branding.py), the derivation script shared by
+every repository that ships the logo and vendored here unchanged (Python 3 with Pillow and NumPy).
+It never redraws the artwork: it defringes the anti-aliased edges, recolors the wordmark to white
+for dark surfaces, trims, pads and resamples.
+
+## Regenerate
 
 ```bash
-python3 scripts/derive-branding.py          # rewrites public/branding/* and the favicons
+python3 scripts/derive_branding.py --product axentra --masters branding-src --check
+python3 scripts/derive_branding.py --product axentra --masters branding-src \
+  --out public/branding --favicon-out public --sets web,favicons
+# Keep the served name of the light lockup (used by the Logo component and links elsewhere).
+mv public/branding/axentra-logo.png public/branding/axentra-logo-transparent.png
+# Web-app icons: Studio has no web app manifest, so these are not used.
+rm public/icon-192.png public/icon-512.png public/icon-maskable-512.png
 ```
 
 ## Files
 
 | File | Size | Use |
 | --- | --- | --- |
-| `axentra-logo.png` | 1254 × 433 | Original lockup on white. Reference only. |
-| `axentra-logo-transparent.png` | 627 × 217 | Lockup with the white background knocked out; for light surfaces (login, setup). |
-| `axentra-logo-on-dark.png` | 627 × 217 | Same, with the navy wordmark recoloured to `#F1F4FF`; for dark surfaces (login in dark theme). |
-| `axentra-mark.png` | 512 × 512 | Square hexagon mark, transparent. |
-| `axentra-mark-192.png` | 192 × 192 | Splash screen and large icons. |
-| `axentra-mark-64.png` | 64 × 64 | Sidebar mark (rendered at 32 px for high-density screens). |
-| `../favicon.ico` | 16–64 | Browser tab icon. |
-| `../apple-touch-icon.png` | 180 × 180 | Home-screen icon on a white tile. |
+| `axentra-logo-transparent.png` | 960 × 238 | Lockup with black wordmark (the script's `axentra-logo.png`), for light surfaces: sign-in, setup and public help pages in the light theme. |
+| `axentra-logo-on-dark.png` | 960 × 238 | Lockup with white wordmark, for dark surfaces: those pages in the dark theme and the navy sidebar (both themes). |
+| `axentra-mark.png` | 512 × 512 | Symbol only, transparent; loading screen. Same file on light and dark surfaces. |
+| `axentra-mark-128.png` | 128 × 128 | Symbol for small sizes; collapsed sidebar (32 px). |
+| `../favicon.ico` | 16, 32, 48 | Browser tab icon. |
+| `../favicon-16.png`, `../favicon-32.png` | 16, 32 | PNG tab icons (linked in `index.html`). |
+| `../apple-touch-icon.png` | 180 × 180 | Home-screen icon on an opaque white tile. |
 
-## How the derivation works
-
-1. **Background knockout.** For each pixel, the darkest channel decides the alpha: at or above
-   246 the pixel becomes fully transparent, at or below 170 it stays opaque, and in between it
-   gets proportional alpha and its colour is "un-mixed" from white. This keeps the anti-aliased
-   edges coloured instead of leaving a grey halo on dark backgrounds.
-2. **Mark.** The hexagon icon is cropped (x 78–431, y 19–413), centred on a square canvas with a
-   12 px margin and resized.
-3. **On-dark lockup.** Everything right of x = 470 (the "Axentra" wordmark) is recoloured to the
-   light text colour; the icon keeps its original gradient colours, which have enough contrast
-   on the navy sidebar.
-
-The sidebar does not use the bitmap wordmark: it shows the mark next to "Axentra" set in the
-display font, so the text stays crisp at every zoom level and follows the theme tokens.
+`src/components/layout/Logo.tsx` is the only place that picks one of these files. It follows the
+`data-theme` attribute on `<html>` for the lockup; the collapsed sidebar and the loading screen use
+the symbol.

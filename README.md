@@ -278,7 +278,9 @@ docker/                nginx config, proxy template, entrypoint script
 docs/                  ADR, design system, UX guidelines, COMPATIBILITY.md, TODO.md
 e2e/                   Playwright specs (smoke, a11y harness, areas) + routes.ts, support.ts
 public/                config.json, theme-init.js, favicons, branding/ (see its README)
+branding-src/          the two official logo masters (not served)
 scripts/               i18n parity check, API sync + contract check, e2e backend, branding
+                       (derive_branding.py)
 src/api/               typed client: openapi-fetch, CSRF, problem+json errors, compatibility
 src/app/               bootstrap (MetaGate), router, guards, auth, permissions, shell
 src/components/ui/     design system components
@@ -398,5 +400,7 @@ rules 8-12) to decide what it offers; the server stays authoritative.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The Axentra logo is used with permission of the same owner; see
-[public/branding/README.md](public/branding/README.md).
+MIT, see [LICENSE](LICENSE). The Axentra logo is used with permission of the same owner. The
+official masters are in `branding-src/`; every served logo and icon is derived from them with
+`scripts/derive_branding.py` (provenance, file list and regenerate command:
+[public/branding/README.md](public/branding/README.md)).

@@ -40,7 +40,7 @@ export function Sidebar({
           onClick={onNavigate}
           aria-label={t('common:app.home')}
         >
-          <Brand collapsed={isCollapsed} />
+          <Brand collapsed={isCollapsed} compact={variant === 'drawer'} />
         </Link>
       </div>
       <div className={styles.accent} aria-hidden="true" />

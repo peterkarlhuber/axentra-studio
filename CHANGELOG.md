@@ -8,6 +8,17 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- New official Axentra logo. The two logo masters live in `branding-src/` (not served) and every
+  brand file is derived from them by `scripts/derive_branding.py`, the shared derivation script
+  (replaces `scripts/derive-branding.py`). The sign-in, setup and public help pages show the lockup
+  matching the theme; the sidebar shows the official lockup with a white wordmark when expanded and
+  the symbol when collapsed; the loading screen shows the symbol. One component
+  (`src/components/layout/Logo.tsx`) picks the file everywhere. New favicons (`favicon.ico` with
+  16/32/48 px, `favicon-16.png`, `favicon-32.png`) and apple-touch icon. The served paths
+  `/branding/axentra-logo-transparent.png` and `/branding/axentra-logo-on-dark.png` stay the same.
+  Removed: the copy of the old logo (`public/branding/axentra-logo.png`) and the old
+  `axentra-mark-64.png` and `axentra-mark-192.png`. All screenshots in `docs/screenshots/` were
+  re-taken.
 - All languages address the user informally (German now uses "du" throughout).
 - Many interface texts were reworded while writing the help: error messages say what happened,
   why and what to do; empty states and confirmations name the consequence.
