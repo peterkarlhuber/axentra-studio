@@ -8,6 +8,8 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Security
 
+- Backend pin `api/BACKEND_REF` is axentra `024da57` (axentra #25: AX-R1 cursor validation; #26: AX-R2
+  `invitation_accepted` after single sign-on). The OpenAPI contract is unchanged.
 - Single sign-on for an invitation no longer puts the invitation token into `return_to` of
   `GET /v1/auth/oidc/{provider}/start` (re-review AX-R2). Axentra stores `return_to` in plain text
   with the login state (`axentra_login_states.return_to`) and does not redact it in its access log.
