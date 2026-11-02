@@ -23,22 +23,36 @@ armazena apenas um hash dele, então ninguém, nem mesmo um administrador, conse
 2. Informe um **Nome** que diga onde a chave é usada, por exemplo `billing-worker production`.
 3. Se quiser, escolha um **Escopo de tenant** (veja [chaves vinculadas a tenant](#tenant-scope)).
    Deixe **Produto inteiro** para uma chave que funcione em todos os tenants.
-4. Selecione as **Permissões** de que o serviço precisa, e nada além disso. A lista funciona como
+4. Se quiser, escolha uma **Expiração**: **Nunca** (padrão), **Em 30 dias**, **Em 90 dias**, **Em
+   365 dias**, ou **Em uma data…** e depois uma **Data de expiração** (veja [expiração](#expiry)).
+5. Selecione as **Permissões** de que o serviço precisa, e nada além disso. A lista funciona como
    descrito em [funções e permissões](help:roles-permissions#checklist).
-5. Escolha **Criar chave**.
-6. Copie o segredo de **Segredo da chave de API** para o seu gerenciador de segredos.
-7. Marque **Guardei o segredo em local seguro** e escolha **Concluído**.
+6. Escolha **Criar chave**.
+7. Copie o segredo de **Segredo da chave de API** para o seu gerenciador de segredos.
+8. Marque **Guardei o segredo em local seguro** e escolha **Concluído**.
 
 > [!CAUTION]
 > O diálogo do segredo não pode ser fechado com Escape nem clicando fora dele, e o segredo não pode
 > ser mostrado de novo. Se ele se perder, [rotacione a chave](#rotate) para obter um novo segredo.
 
-| Campo                    | O que faz                                           | Valores permitidos / padrão                                                                           |
-| ------------------------ | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Nome**                 | Rótulo na lista e no log de auditoria.              | 1–200 caracteres. Não precisa ser único.                                                              |
-| **Escopo de tenant**     | Vincula a chave a um tenant.                        | **Produto inteiro** (padrão) ou um tenant. Aparece quando o módulo de tenants está habilitado.        |
-| **Permissões**           | O que a chave pode fazer.                           | 1–100 permissões de escopo produto ou tenant, inclusive as definidas pelo produto que estejam ativas. |
-| Expiração (`expires_at`) | Momento a partir do qual a chave para de funcionar. | Não é definida no Studio: chaves criadas aqui nunca expiram. Disponível pela API.                     |
+| Campo                | O que faz                                           | Valores permitidos / padrão                                                                                                |
+| -------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Nome**             | Rótulo na lista e no log de auditoria.              | 1–200 caracteres. Não precisa ser único.                                                                                   |
+| **Escopo de tenant** | Vincula a chave a um tenant.                        | **Produto inteiro** (padrão) ou um tenant. Aparece quando o módulo de tenants está habilitado.                             |
+| **Permissões**       | O que a chave pode fazer.                           | 1–100 permissões de escopo produto ou tenant, inclusive as definidas pelo produto que estejam ativas.                      |
+| **Expiração**        | Momento a partir do qual a chave para de funcionar. | **Nunca** (padrão), 30, 90 ou 365 dias após a criação, ou o fim de um dia escolhido (depois de hoje, no seu fuso horário). |
+
+### Expiração {#expiry}
+
+Uma chave com expiração para de funcionar nesse momento: ela é recusada como uma chave revogada e
+aparece como **Expirado**. Escolha uma expiração para chaves necessárias só por um tempo, por
+exemplo para uma migração ou o teste de um parceiro; serviços permanentes costumam usar chaves sem
+expiração e [rotacioná-las](#rotate) periodicamente.
+
+A expiração não pode ser alterada depois da criação, e a rotação a mantém: crie uma chave nova antes
+que a antiga expire e mude o serviço. Chaves que um serviço cria com outra chave nunca duram mais
+que a chave que as cria (veja [chaves derivadas](#derived-keys)); chaves criadas no Studio pertencem
+à sua conta, então essa regra não se aplica a elas.
 
 ### Chaves vinculadas a tenant {#tenant-scope}
 

@@ -75,7 +75,7 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P2
 
-- **Studio cannot set an API key expiry or list a user's memberships.** Both are API-only today.
+- **Studio cannot list a user's memberships.** API-only today.
 - **"Sign out all other sessions" revokes one by one.** There is no revoke-all endpoint (backend).
 
 - **Role ceiling needs the role catalog.** Studio disables roles above the caller only when
@@ -88,7 +88,8 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   `403` explanation otherwise.
 - **API key expiry inheritance is text only.** Studio creates keys with a user session, so the
   "inherits the creating key's expiry" rule (`422` for a later `expires_at`) never applies to
-  Studio's own create form; the page explains it, and the revoke confirmation says that derived
+  Studio's own create form (which offers an optional expiry: presets or a date); the expiry info
+  tip and the help explain it, and the revoke confirmation says that derived
   keys are revoked too. The confirmation does not list those derived keys (they could be found
   through `created_by`, which holds the creating key's actor id; not built).
 

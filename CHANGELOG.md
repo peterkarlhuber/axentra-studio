@@ -8,6 +8,10 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- **New API key** offers an optional **Expiry**: never (default), in 30, 90 or 365 days, or the
+  end of a chosen day (after today, local time zone; validated before sending). The info tip and
+  the API keys article (new section "Expiry", six languages) explain that an expiry cannot be
+  extended, that rotation keeps it and how derived keys inherit it. The list already showed it.
 - Help (webhooks, webhook receiver tutorial; six languages): webhook deliveries now retry on their
   own schedule (Axentra `events.webhook_backoff_base_seconds` 120 s doubling, at most 6 hours per
   wait), so the default 8 attempts span about 2 to 4¼ hours instead of a few minutes.

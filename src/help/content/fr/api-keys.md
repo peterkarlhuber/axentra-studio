@@ -23,22 +23,38 @@ empreinte : personne, pas même un administrateur, ne peut l’afficher de nouv
 2. Saisis un **Nom** qui indique où la clé est utilisée, par exemple `billing-worker production`.
 3. Choisis éventuellement une **Portée locataire** (voir les [clés liées à un locataire](#tenant-scope)). Laisse **Tout
    le produit** pour une clé qui fonctionne dans tous les locataires.
-4. Sélectionne les **Autorisations** dont le service a besoin, et pas davantage. La liste fonctionne comme décrit dans
+4. Choisis éventuellement une **Expiration** : **Jamais** (par défaut), **Dans 30 jours**, **Dans 90
+   jours**, **Dans 365 jours**, ou **À une date…** puis une **Date d’expiration** (voir
+   [expiration](#expiry)).
+5. Sélectionne les **Autorisations** dont le service a besoin, et pas davantage. La liste fonctionne comme décrit dans
    [rôles et autorisations](help:roles-permissions#checklist).
-5. Choisis **Créer la clé**.
-6. Copie le secret affiché sous **Secret de la clé d’API** dans ton gestionnaire de secrets.
-7. Coche **J’ai conservé le secret en lieu sûr** et choisis **Terminé**.
+6. Choisis **Créer la clé**.
+7. Copie le secret affiché sous **Secret de la clé d’API** dans ton gestionnaire de secrets.
+8. Coche **J’ai conservé le secret en lieu sûr** et choisis **Terminé**.
 
 > [!CAUTION]
 > La boîte de dialogue du secret ne peut pas être fermée avec Échap ni par un clic à l’extérieur, et le secret ne peut plus être
 > affiché ensuite. S’il est perdu, [renouvelle la clé](#rotate) pour obtenir un nouveau secret.
 
-| Champ                     | Effet                                             | Valeurs autorisées / par défaut                                                                                    |
-| ------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Nom**                   | Libellé dans la liste et dans le journal d’audit. | 1 à 200 caractères. Pas forcément unique.                                                                          |
-| **Portée locataire**      | Lie la clé à un locataire.                        | **Tout le produit** (par défaut) ou un locataire. Affiché quand le module des locataires est activé.               |
-| **Autorisations**         | Ce que la clé a le droit de faire.                | 1 à 100 autorisations de portée produit ou locataire, y compris les autorisations actives définies par le produit. |
-| Expiration (`expires_at`) | Moment après lequel la clé cesse de fonctionner.  | Non définie dans Studio : les clés créées ici n’expirent jamais. Disponible via l’API.                             |
+| Champ                | Effet                                             | Valeurs autorisées / par défaut                                                                                                     |
+| -------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Nom**              | Libellé dans la liste et dans le journal d’audit. | 1 à 200 caractères. Pas forcément unique.                                                                                           |
+| **Portée locataire** | Lie la clé à un locataire.                        | **Tout le produit** (par défaut) ou un locataire. Affiché quand le module des locataires est activé.                                |
+| **Autorisations**    | Ce que la clé a le droit de faire.                | 1 à 100 autorisations de portée produit ou locataire, y compris les autorisations actives définies par le produit.                  |
+| **Expiration**       | Moment après lequel la clé cesse de fonctionner.  | **Jamais** (par défaut), 30, 90 ou 365 jours après la création, ou la fin d’un jour choisi (après aujourd’hui, ton fuseau horaire). |
+
+### Expiration {#expiry}
+
+Une clé avec une expiration cesse de fonctionner à ce moment : elle est refusée comme une clé
+révoquée et apparaît comme **Expiré**. Choisis une expiration pour les clés nécessaires seulement
+pendant un temps, par exemple pour une migration ou le test d’un partenaire ; les services
+permanents utilisent en général des clés sans expiration et en [renouvellent le secret](#rotate)
+régulièrement.
+
+L’expiration ne peut pas être modifiée après la création, et le renouvellement la conserve : crée
+une nouvelle clé avant que l’ancienne expire et bascule le service. Les clés qu’un service crée avec
+une autre clé ne survivent jamais à la clé qui les crée (voir [clés dérivées](#derived-keys)) ; les
+clés créées dans Studio appartiennent à ton compte, cette règle ne s’applique donc pas à elles.
 
 ### Clés liées à un locataire {#tenant-scope}
 
