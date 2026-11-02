@@ -8,6 +8,10 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Implementation report `docs/AXENTRA_STUDIO_IMPLEMENTATION_REPORT.md` (architecture, features,
+  backend contract, tests and CI, security, design and branding, compatibility, acceptance
+  criteria 17-30) with screenshots in `docs/screenshots/`, taken against a real backend by
+  `scripts/report-screenshots.mjs`.
 - Notifications (notify module) and Monitoring: templates with versions (`If-Match`), locale
   variants, variables and sample data, a live server preview in a sandboxed frame (no scripts, no
   network), test sends with an `Idempotency-Key`, the message log with attempts, redacted last
