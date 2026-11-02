@@ -20,20 +20,21 @@ export const SKIP_NO_ADMIN =
   'Set AXENTRA_E2E_EMAIL and AXENTRA_E2E_PASSWORD to an existing admin account (scripts/e2e-backend.sh does) to run the signed-in checks.';
 
 /**
- * Frames that can never run a script: notification previews (src/features/notify/RenderedView.tsx)
- * are `sandbox=""` on purpose, so axe cannot be injected into them and a frame-aware run waits
- * until the test times out. Their content is the template author's email HTML, not Studio UI.
+ * Studio's only frames are notification previews (src/features/notify/RenderedView.tsx). They are
+ * `sandbox=""` on purpose, so axe cannot be injected into them: a frame-aware run then waits until
+ * the test times out, and Chromium logs "Blocked script execution in 'about:srcdoc'". The preview
+ * frame can appear after a debounced request, so checking for it first is racy. axe therefore
+ * always runs on the top document only (the frame element itself, e.g. its title, is still
+ * checked); the frame content is the template author's email HTML, not Studio UI.
  */
-const SCRIPTLESS_FRAMES = 'iframe[sandbox]:not([sandbox~="allow-scripts"])';
-
 /** WCAG 2.1 A/AA via axe-core; the message names rule, help and offending selectors. */
 export async function expectNoA11yViolations(page: Page) {
-  let builder = new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
-  if ((await page.locator(SCRIPTLESS_FRAMES).count()) > 0) {
-    // Top document only (the frame element itself, e.g. its title, is still checked).
-    builder = builder.setLegacyMode().options({ iframes: false });
-  }
-  const results = await builder.analyze();
+  // `options()` replaces all run options, so it must come before `withTags()`.
+  const results = await new AxeBuilder({ page })
+    .setLegacyMode()
+    .options({ iframes: false })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .analyze();
   expect(
     results.violations.map(
       (violation) =>
@@ -62,11 +63,20 @@ export async function expectNoHorizontalScroll(page: Page) {
  * `allow` lists expected messages, e.g. the browser's own log line for the `401` that
  * `GET /v1/auth/session` answers while nobody is signed in.
  */
+/**
+ * axe-core (also in legacy mode) evaluates its source in every frame of the page. For the
+ * deliberately script-less notification preview (`sandbox=""`, `srcdoc`) Chromium refuses that and
+ * logs this line. It is caused by the test tooling, not by Studio, and proves the sandbox works.
+ */
+const AXE_INJECTION_INTO_SANDBOXED_PREVIEW =
+  /^Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set\.$/;
+
 export function trackConsoleErrors(page: Page, allow: RegExp[] = []) {
   const errors: string[] = [];
   page.on('console', (message) => {
     if (message.type() !== 'error') return;
     const text = message.text();
+    if (AXE_INJECTION_INTO_SANDBOXED_PREVIEW.test(text)) return;
     if (allow.some((pattern) => pattern.test(text))) return;
     errors.push(`console: ${text.slice(0, 300)}`);
   });
