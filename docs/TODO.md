@@ -13,24 +13,39 @@ the backend's `docs/TODO.md`.
 
 ## P0
 
-- **First CI run of the `contract` and `e2e` jobs.** Both ran locally only (see
-  [COMPATIBILITY.md](COMPATIBILITY.md)). Confirm them on GitHub Actions (the `e2e` job now runs
-  twice, `mode: multi` and `mode: single`), then fill in the Studio commit in the compatibility
-  table.
+None open. (The first GitHub Actions runs of the `contract` and `e2e` jobs passed on PR #2 and
+PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P1
 
-- **Phase 2/3 areas.** Files, jobs, events, webhooks, usage, plans, subscriptions and
-  notifications show only "module not enabled" / "not yet available in Studio"
-  (`futureModule()` in `src/app/router.tsx`). Screens are being built per area; the a11y harness
-  (`e2e/a11y.spec.ts`) picks new routes up automatically.
-- **Records are read-only.** The record browser lists and filters; creating, editing and deleting
-  records is not in Studio.
+- **Re-pin `api/BACKEND_REF` to include search.** Axentra `master` is at `f80429f` (PR #11,
+  search module, API still 1.0, two new paths under `/v1/products/{id}/tenants/{tid}/search`).
+  Studio pins `7511a37`; `npm run api:check` against `f80429f` fails with exactly those two
+  backend-only paths. Run `npm run api:sync -- --sha f80429f129f76bc019118bd825bef637feaf8ecf`, the
+  full e2e suite against that commit, and add a row to [COMPATIBILITY.md](COMPATIBILITY.md) (and
+  the backend's mirror). Integration check: contract and e2e jobs green on the re-pin PR.
+- **Search UI for the new backend search module.** Axentra's `search` module (tenant-scoped
+  PostgreSQL full-text index; `GET .../search` with `search:query`, `PUT`/`DELETE
+.../search/documents/{kind}/{ref_id}` with `search:index`) has no Studio page. Needs the re-pin
+  above first; then a per-tenant search page (query, kind filter, highlighted results, cursor
+  paging), module gating on `search`, permissions, i18n, component tests and an e2e spec
+  (backend reference: `docs/modules/SEARCH.md` in the Axentra repository).
+- **Phase 1 pages have no component tests.** `ApiKeysPage`, `RolesPage`, `SetupPage`,
+  `DashboardPage`, `ProductsPage`, `ProductDetailPage`, `HealthPage`, `NotFoundPage`,
+  `SettingsPage`, `AcceptInvitationPage`, `InvitationsPage`, `TenantsPage`, `TenantDetailPage`,
+  `UsersPage` and `UserDetailPage` have no Vitest test (shared parts such as `MembersPanel`, the
+  data table, dialogs, guards and the API client do). They are rendered by the e2e a11y sweep, but
+  their actions are not asserted anywhere.
+- **Write flows without an e2e spec.** Creating products and tenants, suspending a tenant, creating
+  and editing custom roles, creating, rotating and revoking API keys (one-time secret), revoking
+  sessions, changing the password and signing out are not driven by any Playwright spec (only the
+  initial render of their pages is checked). Area specs cover files, records, usage, billing,
+  events, jobs, schedules, webhooks, notifications, monitoring and the member/invitation rules.
 - **Interactive states are not covered by the a11y harness.** `e2e/a11y.spec.ts` checks the
   initial render of every route. Open dialogs, menus, drawers, toasts and form error states are
   checked only where an area spec does so explicitly.
-- **Route parameters need fixtures.** The harness fills `:productId`, `:tenantId` and `:userId`
-  from the e2e backend. A new detail route with another parameter (for example `:fileId`) is
+- **Route parameters need fixtures.** The harness fills `:productId`, `:tenantId`, `:userId`,
+  `:jobId`, `:webhookId` and `:templateKey` from the e2e backend. A new detail route with another parameter (for example `:fileId`) is
   skipped with "no fixture for :fileId" until `scripts/e2e-backend.sh` creates such an object and
   `e2e/a11y.spec.ts` maps it.
 
@@ -69,6 +84,11 @@ the backend's `docs/TODO.md`.
 - **`style-src 'unsafe-inline'` in the CSP.** Required by Radix UI's inline positioning and
   scroll-lock styles; a stricter policy breaks dialogs. Scripts never run inline.
 - **HSTS is not set by the Docker image.** Add it at the TLS terminator.
+- **The Docker image is not built or tested in CI.** CI runs the e2e suite against `vite preview`,
+  which sends no security headers. The production CSP of `docker/40-axentra-studio.sh` was
+  exercised once locally without Docker (headers emulated, see the implementation report); a CI job
+  that builds the image and runs the smoke and a11y specs against it (`AXENTRA_E2E_BASE_URL`) is
+  missing.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 

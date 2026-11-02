@@ -8,6 +8,10 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Implementation report `docs/AXENTRA_STUDIO_IMPLEMENTATION_REPORT.md` (architecture, features,
+  backend contract, tests and CI, security, design and branding, compatibility, acceptance
+  criteria 17-30) with screenshots in `docs/screenshots/`, taken against a real backend by
+  `scripts/report-screenshots.mjs`.
 - Single-product mode tested end to end: `scripts/e2e-backend.sh --mode single|multi`
   (`AXENTRA_E2E_MODE`) starts Axentra in either deployment model, the specs work in the one
   product in single mode (`specProduct()` in `e2e/support.ts`), `e2e/single-product.spec.ts`

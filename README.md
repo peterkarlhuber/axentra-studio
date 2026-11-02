@@ -244,6 +244,9 @@ and checks the vendored contract against that commit in the `contract` job
 (`npm run api:check`). Details, the compatibility matrix and the update procedure:
 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md). Open work: [docs/TODO.md](docs/TODO.md).
 
+Implementation status, test evidence, screenshots and the acceptance criteria:
+[docs/AXENTRA_STUDIO_IMPLEMENTATION_REPORT.md](docs/AXENTRA_STUDIO_IMPLEMENTATION_REPORT.md).
+
 ## Usage & Billing
 
 - `/p/:id/usage`: overview (daily chart of a meter across tenants, totals per tenant), meters,
