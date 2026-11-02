@@ -53,7 +53,7 @@ Le nouveau mot de passe doit
 
 - être au moins aussi long que le minimum du serveur (par défaut 12 caractères, voir
   `password_min_length` dans [Paramètres](help:settings#settings-tree)) et compter au plus
-  1024 caractères,
+  1 024 caractères,
 - ne pas être ton adresse e-mail,
 - contenir au moins 4 caractères différents.
 

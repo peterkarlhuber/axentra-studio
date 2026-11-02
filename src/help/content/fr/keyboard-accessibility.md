@@ -69,7 +69,7 @@ lecteurs d’écran annoncent la nouvelle page.
 
 ## Zoom et taille du texte {#zoom}
 
-Tu peux agrandir le navigateur jusqu’à 200 % sans perdre de contenu ni de fonctions. Sur les
+Tu peux agrandir le navigateur jusqu’à 200 % sans perdre de contenu ni de fonctions. Sur les
 fenêtres étroites (et en cas de zoom), la mise en page s’adapte :
 
 | Largeur de la fenêtre | Mise en page                                                                                              |

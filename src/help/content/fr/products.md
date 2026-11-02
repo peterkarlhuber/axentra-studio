@@ -42,7 +42,7 @@ opérateurs dans l’onglet **Membres**.
 | --------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | **Nom**         | Nom affiché dans Studio et dans les e-mails, par exemple les e-mails d’invitation. | 1 à 200 caractères. Modifiable ultérieurement.                                                                                  |
 | **Slug**        | Identifiant stable, adapté aux URL.                                                | 2 à 63 lettres minuscules, chiffres et tirets, commençant par une lettre ou un chiffre ; unique sur le serveur. Non modifiable. |
-| **Description** | Texte libre affiché dans la liste des produits.                                    | Jusqu’à 2 000 caractères. Facultatif.                                                                                           |
+| **Description** | Texte libre affiché dans la liste des produits.                                    | Jusqu’à 2 000 caractères. Facultatif.                                                                                           |
 | **ID**          | Identifiant généré (`prd_…`) utilisé par l’API.                                    | Attribué par le serveur.                                                                                                        |
 | **Statut**      | **Actif** ou **Archivé**.                                                          | Voir [archiver un produit](#archive).                                                                                           |
 
@@ -73,7 +73,7 @@ Les modifications s’appliquent immédiatement à tous les locataires du produi
 
 > [!WARNING]
 > **Enregistrer les modifications** remplace l’objet de paramètres en entier. Si tu supprimes une clé du texte, elle est retirée
-> du produit. L’objet peut compter jusqu’à environ 32 000 caractères.
+> du produit. L’objet peut compter jusqu’à environ 32 000 caractères.
 
 > [!IMPORTANT]
 > Modifier les paramètres exige `product:manage` (propriétaires et administrateurs du produit). Sans cette autorisation, l’onglet
@@ -182,7 +182,7 @@ objet entre accolades, par exemple `{"key": "value"}`. Les tableaux, les simples
 sont refusés.
 
 **Vérifie ta saisie : « settings are too large »** ou un message concernant `storage`. L’objet dépasse
-environ 32 000 caractères, ou la partie `storage` n’est pas valide. Raccourcis-le, ou modifie la
+environ 32 000 caractères, ou la partie `storage` n’est pas valide. Raccourcis-le, ou modifie la
 politique de stockage dans l’onglet **Fichiers**.
 
 **Modifié entre-temps.** Une autre personne a enregistré le produit pendant que tu le modifiais. Recharge la

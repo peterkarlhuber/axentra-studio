@@ -85,7 +85,7 @@ espace réservé doit être déclaré comme variable ; si le texte en utilise q
 le Studio propose **Déclarer les espaces réservés utilisés**.
 
 Lors de l’envoi d’un message, chaque espace réservé doit avoir une valeur (chaîne, nombre ou
-true/false, 10 000 caractères au maximum). Les valeurs sont insérées telles quelles dans le corps
+true/false, 10 000 caractères au maximum). Les valeurs sont insérées telles quelles dans le corps
 texte ; dans le corps HTML, elles sont échappées. Les objets ne contiennent jamais de saut de
 ligne.
 
@@ -243,7 +243,7 @@ celles-ci. Définir des préférences pour un locataire nécessite `notify:prefe
 | Seulement **Mes préférences**                                                                   | Tu n’as pas `notify:manage`                                                                                              | Demande à un administrateur du produit si tu as besoin des modèles                                                      |
 | **Vérifie ta saisie** à l’enregistrement                                                        | Clé ou catégorie invalide, espace réservé non déclaré, syntaxe `{{ … }}` non prise en charge ou absence de variante `en` | Lis le message du serveur ; corrige le champ ou l’espace réservé indiqué                                                |
 | L’aperçu signale une valeur manquante                                                           | Une variable déclarée n’a pas de valeur d’exemple                                                                        | Renseigne la **Valeur d’exemple**                                                                                       |
-| **Conflit** « un modèle avec cette clé existe »                                                 | Les clés sont uniques par produit                                                                                        | Choisis une autre clé ou modifie le modèle existant                                                                     |
+| **Conflit** « a template with this key exists »                                                 | Les clés sont uniques par produit                                                                                        | Choisis une autre clé ou modifie le modèle existant                                                                     |
 | **Modifié entre-temps**                                                                         | Quelqu’un d’autre a enregistré le modèle                                                                                 | Recharge la page ; tes modifications non enregistrées sont perdues, copie-les donc d’abord                              |
 | Pas d’icône d’envoi pour un modèle                                                              | Il est **Système uniquement**, ou tu n’as pas `notify:send`                                                              | Comportement normal pour les invitations ; demande un rôle avec `notify:send`                                           |
 | « Tu n’as pas l’autorisation notify:send dans ce locataire »                                    | Ton rôle ne couvre pas ce locataire                                                                                      | Choisis un autre locataire ou demande un rôle                                                                           |

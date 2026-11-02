@@ -15,7 +15,7 @@
     "last": "Dernière valeur"
   },
   "period": {
-    "none": "Jamais réinitialisé",
+    "none": "Aucune réinitialisation",
     "day": "Quotidienne (UTC)",
     "month": "Mensuelle (UTC)",
     "billing_period": "Période de facturation"
@@ -117,8 +117,8 @@
     "periodDescription": "Par compteur, avec la limite effective et son origine.",
     "periodAt": "Période contenant",
     "periodAtHelp": "Laisse vide pour la période en cours.",
-    "ofLimit": "{{used}} sur {{limit}} utilisés ({{percent}} %), réservations comprises",
-    "usedOfLimit": "{{meter}} : {{percent}} % de la limite utilisés",
+    "ofLimit": "{{used}} sur {{limit}} utilisés ({{percent}} %), réservations comprises",
+    "usedOfLimit": "{{meter}} : {{percent}} % de la limite utilisée",
     "overLimit": "Limite dépassée",
     "period": "Période",
     "periodRange": "Du {{from}} au {{to}}",

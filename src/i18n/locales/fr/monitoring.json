@@ -54,7 +54,7 @@
     "token": "Jeton Bearer",
     "tokenHelp": "Conservé uniquement dans cette page tant qu’elle est ouverte ; jamais stocké.",
     "useToken": "Charger les métriques",
-    "tokenInfo": "Le jeton est le secret que l’opérateur a configuré dans observability.metrics_token_ref. Il est envoyé uniquement à /metrics, en tant que bearer token."
+    "tokenInfo": "Le jeton est le secret que l’opérateur a configuré dans observability.metrics_token_ref. Il est envoyé uniquement à /metrics, en tant que jeton Bearer."
   },
   "ops": {
     "title": "Conservation et traçage",

@@ -5,7 +5,7 @@ keywords: tutoriel, pas à pas, exemple, mesure de l’utilisation, metering, qu
 ---
 
 Dans ce tutoriel, tu limites les appels d’API d’un client par le biais de son offre. Tu crées un
-compteur `api_calls`, une offre gratuite **Starter** qui autorise 1 000 appels par mois et active
+compteur `api_calls`, une offre gratuite **Starter** qui autorise 1 000 appels par mois et active
 une fonctionnalité d’export, tu y abonnes le locataire `acme`, tu enregistres l’utilisation avec une
 clé d’API et tu regardes le quota se remplir dans le Studio. À la fin, tu provoques volontairement
 une requête refusée. Compte environ 15 minutes.
@@ -64,7 +64,7 @@ L’offre porte désormais `limit.api_calls: 1000` et `feature.export: true`. D�
 2. Dans **Abonnement**, choisis **Abonner à une offre**, puis **Starter (starter)**, et choisis
    **Abonner**.
 3. L’abonnement affiche **Actif**. **Droits effectifs** liste `export: on` sous
-   **Fonctionnalités** et `api_calls` 1 000 sous **Limites**.
+   **Fonctionnalités** et `api_calls` 1 000 sous **Limites**.
 
 ## Étape 4 : créer une clé d’API pour enregistrer l’utilisation {#step-api-key}
 
@@ -144,7 +144,7 @@ curl -sS -X POST "$AX/v1/products/$PID/tenants/$TID/usage/events" \
 
 1. Ouvre [Utilisation](app:usage), onglet **Utilisation par locataire**, et choisis `acme` (ou
    sélectionne **Utilisation** dans l’en-tête de la page de facturation du locataire).
-2. La carte `api_calls` affiche 951 appels, une barre à 95 %, les badges **Issue de l’offre** et
+2. La carte `api_calls` affiche 951 appels, une barre à 95 %, les badges **Issue de l’offre** et
    **Limite stricte**, et **Restant** 49 appels.
 3. **Événements d’utilisation** liste les deux événements avec leurs clés d’idempotence et la
    propriété `endpoint`.
@@ -153,7 +153,7 @@ curl -sS -X POST "$AX/v1/products/$PID/tenants/$TID/usage/events" \
 
 ## Étape 7 : dépasser la limite {#step-exceed}
 
-Essaie d’enregistrer 50 appels de plus (951 + 50 > 1 000) :
+Essaie d’enregistrer 50 appels de plus (951 + 50 > 1 000) :
 
 ```bash
 curl -sS -i -X POST "$AX/v1/products/$PID/tenants/$TID/usage/events" \
@@ -185,7 +185,7 @@ une offre supérieure.
 
 ## Étape 8 : donner plus de marge au locataire {#step-override}
 
-Imaginons que tu acceptes d’accorder à `acme` 2 000 appels pour cette période :
+Imaginons que tu acceptes d’accorder à `acme` 2 000 appels pour cette période :
 
 1. Dans **Utilisation par locataire**, choisis **Définir une dérogation** sur la carte
    `api_calls`.
@@ -224,7 +224,7 @@ tous les locataires de l’offre, modifie plutôt le droit de l’offre. Détail
 | `401`                                                               | La clé est erronée, révoquée ou expirée                                            | Vérifie `$KEY` ; crée une nouvelle clé                                                      |
 | `403`                                                               | La clé n’a pas `usage:record`, ou elle est liée à un autre locataire               | Vérifie les autorisations de la clé et sa **Portée locataire**                              |
 | `404`                                                               | Mauvais identifiant de produit ou de locataire, ou la clé de compteur n’existe pas | Compare les identifiants avec le Studio ; vérifie la clé du compteur                        |
-| `409` « le compteur est inactif »                                   | Le compteur a été désactivé                                                        | Choisis **Activer** dans **Compteurs**                                                      |
+| `409` « the meter is inactive »                                     | Le compteur a été désactivé                                                        | Choisis **Activer** dans **Compteurs**                                                      |
 | `409` pour la clé d’idempotence                                     | La clé a déjà été utilisée avec un autre corps                                     | Utilise une nouvelle `Idempotency-Key`                                                      |
 | `422`                                                               | `Idempotency-Key` manquante, ou quantité invalide                                  | Envoie l’en-tête ; utilise une quantité supérieure ou égale à 0 avec 6 décimales au maximum |
 | La carte affiche **Valeur par défaut du compteur** et la limite 100 | L’abonnement n’est pas actif, ou l’offre n’a pas de `limit.api_calls`              | Vérifie les étapes 2 et 3                                                                   |

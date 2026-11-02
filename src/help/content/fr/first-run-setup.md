@@ -73,7 +73,7 @@ Le serveur vérifie le mot de passe et le refuse s’il enfreint l’une de ces 
 | Règle                         | Valeur par défaut                                                                              |
 | ----------------------------- | ---------------------------------------------------------------------------------------------- |
 | Longueur minimale             | 12 caractères (paramètre d’opérateur `security.password_min_length`, au moins 8).              |
-| Longueur maximale             | 1024 caractères.                                                                               |
+| Longueur maximale             | 1 024 caractères.                                                                              |
 | Différent de l’adresse e-mail | Le mot de passe ne doit pas être identique à l’adresse e-mail (sans tenir compte de la casse). |
 | Pas trivial                   | Au moins 4 caractères différents.                                                              |
 

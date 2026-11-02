@@ -47,7 +47,7 @@
     "invalidJson": "Ce JSON n’est pas valide.",
     "mustBeObject": "Les paramètres doivent être un objet JSON, par exemple {\"key\": \"value\"}.",
     "saved": "Produit enregistré",
-    "jsonInfo": "Le code de ton produit peut lire ces valeurs. Axentra utilise lui-même certaines clés : invitation_accept_url (lien dans les e-mails d’invitation), default_locale (langue de repli des notifications) et storage (défini dans l’onglet Fichiers). L’enregistrement remplace l’objet entier ; il peut faire jusqu’à environ 32 000 caractères."
+    "jsonInfo": "Le code de ton produit peut lire ces valeurs. Axentra utilise lui-même certaines clés : invitation_accept_url (lien dans les e-mails d’invitation), default_locale (langue de repli des notifications) et storage (défini dans l’onglet Fichiers). L’enregistrement remplace l’objet entier ; il peut faire jusqu’à environ 32 000 caractères."
   },
   "lifecycle": {
     "archive": "Archiver",
