@@ -45,12 +45,16 @@ The table gives an overview. The sections below explain each code with causes an
 | ----------------------------------- | --------------------------------- | ------------- | ------------------------------------------------ |
 | **Please check your input**         | `validation_failed`               | 422 (or 400)  | Values were rejected                             |
 | **Request not understood**          | `bad_request`                     | 400           | The request could not be read                    |
+| **Invalid signature**               | `invalid_signature`               | 400           | Payment provider webhook rejected                |
 | **Please sign in**                  | `unauthenticated`                 | 401           | No valid session                                 |
 | **Not permitted**                   | `forbidden`                       | 403           | Missing permission or inactive product or tenant |
 | **Please sign in again**            | `reauthentication_required`       | 403           | Needs a recent sign-in                           |
 | **Not found**                       | `not_found`                       | 404           | Does not exist, or not visible to you            |
 | **Module not enabled**              | `module_disabled`                 | 404           | Server module switched off                       |
+| **Action not supported**            | `method_not_allowed`              | 405           | Not offered at this address                      |
 | **Conflict**                        | `conflict`                        | 409           | Clashes with existing data or state              |
+| **Setup is already complete**       | `setup_already_completed`         | 409           | An administrator exists                          |
+| **Email address in use**            | `email_taken`                     | 409           | Another account has the address                  |
 | **Not available in this mode**      | `mode_not_supported`              | 409           | Not possible in this server mode                 |
 | **Payment provider not configured** | `payment_provider_not_configured` | 409           | Billing needs a provider                         |
 | **Changed in the meantime**         | `precondition_failed`             | 412           | Someone else saved first                         |
@@ -59,6 +63,7 @@ The table gives an overview. The sections below explain each code with causes an
 | **Too many requests**               | `rate_limited`                    | 429           | Slow down                                        |
 | **Quota exceeded**                  | `quota_exceeded`                  | 429           | Tenant quota or plan limit used up               |
 | **Server error**                    | `internal`                        | 500 and above | Server-side failure                              |
+| **Request failed**                  | `error`                           | other         | HTTP error without a specific code               |
 | **Server not reachable**            | `network_error`                   | none          | No answer from the server                        |
 | **Unexpected error**                | `unknown`                         | other         | Not recognized                                   |
 
@@ -82,6 +87,16 @@ for example because a value had the wrong format.
 
 **What to do:** reload the page and repeat the action. If it happens again, report it with the
 request ID; Studio normally sends only well-formed requests.
+
+### Invalid signature {#invalid-signature}
+
+**What happened:** the server rejected a webhook from the payment provider because its signature
+did not match (`invalid_signature`, HTTP 400). Only the payment provider calls that endpoint; you
+do not see this code for your own actions in Studio.
+
+**What to do:** nothing in Studio. An operator checks that the webhook secret in the server
+configuration matches the one at the payment provider. See
+[Plans and subscriptions](help:plans-subscriptions).
 
 ### Please sign in {#unauthenticated}
 
@@ -152,6 +167,15 @@ or tenant to add you.
 **What to do:** ask your operator to enable the module in the server configuration. The
 [modules reference](help:modules-reference) lists what each module powers.
 
+### Action not supported {#method-not-allowed}
+
+**What happened:** the server does not offer this action at this address (`method_not_allowed`,
+HTTP 405). Studio sends only requests the server's API describes, so Studio and the server
+probably have different versions.
+
+**What to do:** reload the page. If it happens again, report it with the request ID and the server
+version shown at the bottom of the sidebar.
+
 ### Conflict {#conflict}
 
 **What happened:** the request clashes with existing data or with the current state of the item
@@ -170,6 +194,22 @@ translated text.
 | `only failed or dead jobs can be retried`, `the job is already succeeded`                                     | The job is no longer in a state that allows the action; reload.                |
 | `the delivery is already queued or in progress`                                                               | Wait for the running delivery to finish.                                       |
 
+### Setup is already complete {#setup-already-completed}
+
+**What happened:** first-run setup was submitted although the server already has a platform
+administrator (`setup_already_completed`, HTTP 409), for example because someone completed setup
+in another tab in the meantime.
+
+**What to do:** sign in with the administrator account. See [First-run setup](help:first-run-setup).
+
+### Email address in use {#email-taken}
+
+**What happened:** another account already has this email address (`email_taken`, HTTP 409).
+Email addresses are unique, regardless of upper and lower case.
+
+**What to do:** use a different address, or sign in with the existing account. During setup this
+happens when single sign-on created an account with the address before the first administrator.
+
 ### Already used for a different request {#idempotency-conflict}
 
 Some actions (enqueue a job, publish an event, send a notification, record usage) carry an
@@ -184,12 +224,15 @@ Submit again to create a new item. See the glossary entry
 **What happened:** the server runs in a mode that does not support the action
 (`mode_not_supported`).
 
-**Typical causes:** creating or archiving products on a server in single-product mode, or
-opening the local mailbox of notifications when the server does not use the local test mail
-provider.
+**Typical causes:** creating or archiving products on a server in single-product mode; changing
+the plan of a subscription that Stripe manages (Stripe owns it: change it in Stripe, for example
+in the customer portal, and Stripe updates Axentra); or opening the local mailbox of notifications
+when the server does not use the local test mail provider. The server message names the case.
 
-**What to do:** nothing in Studio; an operator would have to change the server configuration.
-See [Products](help:products) and [server configuration](help:server-configuration).
+**What to do:** for a Stripe subscription, make the change in Stripe. Otherwise nothing in Studio;
+an operator would have to change the server configuration.
+See [Products](help:products), [Plans and subscriptions](help:plans-subscriptions) and
+[server configuration](help:server-configuration).
 
 ### Payment provider not configured {#payment-provider-not-configured}
 
@@ -260,6 +303,14 @@ reverse proxy in front of the server also appears as **Server error**.
 **What to do:** try again after a moment. Your change may not have been saved, so check before
 repeating destructive actions. If it keeps failing, report it to your operator with the request
 ID and the time.
+
+### Request failed {#error}
+
+**What happened:** the server refused the request with an HTTP error that has no more specific
+code (`error`).
+
+**What to do:** check the **Server message** and the **HTTP status** under **Technical details**
+and try again. If it keeps happening, report it with the request ID.
 
 ### Server not reachable {#network-error}
 
@@ -371,9 +422,8 @@ also hidden because of the server mode (for example **New product** in single-pr
 ### A page shows Not permitted although you can open it {#page-forbidden}
 
 The sidebar shows almost every area (only **Audit log** is hidden without an audit permission);
-whether you may read an area's data is decided when the page loads. An
-area without the read permission shows **Not permitted** with the missing permission in the
-server message.
+whether you may read an area's data is decided when the page loads. An area without the read
+permission shows **Not permitted** with the missing permission in the server message.
 
 ### Sign-in or saving fails with Not permitted {#csrf-origin}
 

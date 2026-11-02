@@ -75,9 +75,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P2
 
-- **Unmapped error codes.** `method_not_allowed` and the generic `error` fall back to "Unexpected
-  error"; `mode_not_supported` is also used for a Stripe plan change and a missing mailbox, so its
-  message is too narrow.
 - **Webhook retries give up after minutes.** With the defaults (8 attempts, 2 s base) a delivery
   is dead after about 2-5 minutes, so a short receiver outage loses events until someone redelivers
   (backend setting; the help explains redelivery).

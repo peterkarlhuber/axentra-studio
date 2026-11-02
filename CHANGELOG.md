@@ -8,6 +8,12 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- Every error code the Axentra API can answer with has its own message (six languages) and a
+  troubleshooting section: new `method_not_allowed` (405), the generic `error`, `invalid_signature`,
+  `setup_already_completed` and `email_taken` (Axentra's new setup conflict codes), and
+  `KNOWN_ERROR_CODES` now lists the codes `errors.json` already translated. `405`, `413` and `415`
+  without a code map to their codes. The `mode_not_supported` message and article also name the
+  Stripe subscription and test mailbox cases.
 - The sidebar lists **Audit log** only for users who may read audit events (`platform:audit`, or
   `audit:read` in one of their products, from `GET /v1/me`); before, everyone saw it and got a
   `403` state. **Settings** (personal preferences for everyone) and **System health** /

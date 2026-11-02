@@ -44,12 +44,16 @@ A tabela dá uma visão geral. As seções abaixo explicam cada código, com cau
 | ----------------------------------------- | --------------------------------- | ------------ | ---------------------------------------------------- |
 | **Verifique os dados informados**         | `validation_failed`               | 422 (ou 400) | Valores foram rejeitados                             |
 | **Requisição não compreendida**           | `bad_request`                     | 400          | A requisição não pôde ser lida                       |
+| **Assinatura inválida**                   | `invalid_signature`               | 400          | Webhook do provedor de pagamento recusado            |
 | **Faça login**                            | `unauthenticated`                 | 401          | Nenhuma sessão válida                                |
 | **Não permitido**                         | `forbidden`                       | 403          | Falta permissão, ou o produto ou tenant está inativo |
 | **Faça login novamente**                  | `reauthentication_required`       | 403          | Exige um login recente                               |
 | **Não encontrado**                        | `not_found`                       | 404          | Não existe, ou não é visível para você               |
 | **Módulo não habilitado**                 | `module_disabled`                 | 404          | Módulo do servidor desligado                         |
+| **Ação não suportada**                    | `method_not_allowed`              | 405          | Não oferecida neste endereço                         |
 | **Conflito**                              | `conflict`                        | 409          | Conflita com dados ou estado existentes              |
+| **A configuração já foi concluída**       | `setup_already_completed`         | 409          | Já existe um administrador                           |
+| **Endereço de e-mail em uso**             | `email_taken`                     | 409          | Outra conta tem o endereço                           |
 | **Indisponível neste modo**               | `mode_not_supported`              | 409          | Não é possível neste modo do servidor                |
 | **Provedor de pagamento não configurado** | `payment_provider_not_configured` | 409          | A cobrança precisa de um provedor                    |
 | **Alterado nesse meio-tempo**             | `precondition_failed`             | 412          | Outra pessoa salvou antes                            |
@@ -58,6 +62,7 @@ A tabela dá uma visão geral. As seções abaixo explicam cada código, com cau
 | **Muitas requisições**                    | `rate_limited`                    | 429          | Reduza o ritmo                                       |
 | **Cota excedida**                         | `quota_exceeded`                  | 429          | Cota do tenant ou limite do plano esgotado           |
 | **Erro no servidor**                      | `internal`                        | 500 ou acima | Falha do lado do servidor                            |
+| **A requisição falhou**                   | `error`                           | outro        | Erro HTTP sem código específico                      |
 | **Servidor inacessível**                  | `network_error`                   | nenhum       | Nenhuma resposta do servidor                         |
 | **Erro inesperado**                       | `unknown`                         | outro        | Não reconhecido                                      |
 
@@ -82,6 +87,15 @@ por exemplo porque um valor estava no formato errado.
 
 **O que fazer:** recarregue a página e repita a ação. Se acontecer de novo, relate o problema com o
 ID da requisição; normalmente o Studio envia apenas requisições bem formadas.
+
+### Assinatura inválida {#invalid-signature}
+
+**O que aconteceu:** o servidor recusou um webhook do provedor de pagamento porque a assinatura não
+conferia (`invalid_signature`, HTTP 400). Só o provedor de pagamento chama esse endpoint; você não
+vê este código nas suas próprias ações no Studio.
+
+**O que fazer:** nada no Studio. Um operador verifica se o segredo do webhook na configuração do
+servidor é o mesmo do provedor de pagamento. Veja [Planos e assinaturas](help:plans-subscriptions).
 
 ### Faça login {#unauthenticated}
 
@@ -153,6 +167,15 @@ ao tenant que adicione você.
 **O que fazer:** peça ao seu operador que habilite o módulo na configuração do servidor. A
 [referência de módulos](help:modules-reference) lista o que cada módulo oferece.
 
+### Ação não suportada {#method-not-allowed}
+
+**O que aconteceu:** o servidor não oferece esta ação neste endereço (`method_not_allowed`,
+HTTP 405). O Studio só envia requisições que a API do servidor descreve, então provavelmente o
+Studio e o servidor têm versões diferentes.
+
+**O que fazer:** recarregue a página. Se acontecer de novo, relate o problema com o ID da
+requisição e a versão do servidor mostrada no rodapé da barra lateral.
+
 ### Conflito {#conflict}
 
 **O que aconteceu:** a requisição conflita com dados existentes ou com o estado atual do item
@@ -171,6 +194,23 @@ traduzido.
 | `only failed or dead jobs can be retried`, `the job is already succeeded`                                     | O job não está mais em um estado que permita a ação; recarregue.                               |
 | `the delivery is already queued or in progress`                                                               | Aguarde a entrega em andamento terminar.                                                       |
 
+### A configuração já foi concluída {#setup-already-completed}
+
+**O que aconteceu:** a configuração inicial foi enviada, embora o servidor já tenha um
+administrador da plataforma (`setup_already_completed`, HTTP 409), por exemplo porque alguém a
+concluiu nesse meio-tempo em outra aba.
+
+**O que fazer:** entre com a conta de administrador. Veja
+[Configuração inicial](help:first-run-setup).
+
+### Endereço de e-mail em uso {#email-taken}
+
+**O que aconteceu:** outra conta já tem este endereço de e-mail (`email_taken`, HTTP 409).
+Endereços de e-mail são únicos, sem diferenciar maiúsculas e minúsculas.
+
+**O que fazer:** use outro endereço ou entre com a conta existente. Na configuração inicial isso
+acontece quando o login único criou uma conta com o endereço antes do primeiro administrador.
+
 ### Já usada para outra requisição {#idempotency-conflict}
 
 Algumas ações (enfileirar um job, publicar um evento, enviar uma notificação, registrar uso) levam
@@ -184,12 +224,16 @@ chave**. Envie de novo para criar um novo item. Veja o verbete do glossário
 
 **O que aconteceu:** o servidor roda em um modo que não oferece a ação (`mode_not_supported`).
 
-**Causas típicas:** criar ou arquivar produtos em um servidor no modo de produto único, ou abrir a
-caixa de correio local das notificações quando o servidor não usa o provedor local de e-mail de
-teste.
+**Causas típicas:** criar ou arquivar produtos em um servidor no modo de produto único; alterar o
+plano de uma assinatura gerenciada pelo Stripe (ela pertence ao Stripe: altere-a no Stripe, por
+exemplo no portal do cliente, e o Stripe atualiza o Axentra); ou abrir a caixa de correio local das
+notificações quando o servidor não usa o provedor local de e-mail de teste. A mensagem do servidor
+informa o caso.
 
-**O que fazer:** nada no Studio; um operador teria de alterar a configuração do servidor. Veja
-[Produtos](help:products) e [configuração do servidor](help:server-configuration).
+**O que fazer:** uma assinatura do Stripe se altera no Stripe. Fora isso, nada no Studio; um
+operador teria de alterar a configuração do servidor. Veja [Produtos](help:products),
+[Planos e assinaturas](help:plans-subscriptions) e
+[configuração do servidor](help:server-configuration).
 
 ### Provedor de pagamento não configurado {#payment-provider-not-configured}
 
@@ -260,6 +304,14 @@ internos; o ID da requisição liga o seu relato à entrada de log do servidor. 
 **O que fazer:** tente de novo depois de um instante. A sua alteração pode não ter sido salva, então
 verifique antes de repetir ações destrutivas. Se continuar falhando, relate ao seu operador com o ID
 da requisição e o horário.
+
+### A requisição falhou {#error}
+
+**O que aconteceu:** o servidor recusou a requisição com um erro HTTP sem código mais específico
+(`error`).
+
+**O que fazer:** confira a **Mensagem do servidor** e o **Status HTTP** em **Detalhes técnicos** e
+tente de novo. Se continuar acontecendo, relate o problema com o ID da requisição.
 
 ### Servidor inacessível {#network-error}
 
@@ -376,8 +428,9 @@ também ficam ocultas por causa do modo do servidor (por exemplo **Novo produto*
 ### Uma página mostra Não permitido, embora você consiga abri-la {#page-forbidden}
 
 A barra lateral mostra quase todas as áreas (só **Log de auditoria** fica oculto sem uma permissão
-de auditoria); se você pode ler os dados de uma área é decidido quando a página carrega. Uma área sem a permissão de leitura mostra **Não permitido**, com a permissão que
-falta na mensagem do servidor.
+de auditoria); se você pode ler os dados de uma área é decidido quando a página carrega. Uma área
+sem a permissão de leitura mostra **Não permitido**, com a permissão que falta na mensagem do
+servidor.
 
 ### O login ou o salvamento falha com Não permitido {#csrf-origin}
 

@@ -46,12 +46,16 @@ La tabella offre una panoramica. Le sezioni seguenti spiegano ogni codice con ca
 | ----------------------------------------- | --------------------------------- | --------------- | ------------------------------------------------------------ |
 | **Verifica i dati inseriti**              | `validation_failed`               | 422 (o 400)     | Alcuni valori sono stati rifiutati                           |
 | **Richiesta non compresa**                | `bad_request`                     | 400             | Non è stato possibile leggere la richiesta                   |
+| **Firma non valida**                      | `invalid_signature`               | 400             | Webhook del fornitore di pagamenti rifiutato                 |
 | **Accedi**                                | `unauthenticated`                 | 401             | Nessuna sessione valida                                      |
 | **Non consentito**                        | `forbidden`                       | 403             | Autorizzazione mancante, oppure prodotto o tenant non attivo |
 | **Accedi di nuovo**                       | `reauthentication_required`       | 403             | Serve un accesso recente                                     |
 | **Non trovato**                           | `not_found`                       | 404             | Non esiste, oppure non è visibile per te                     |
 | **Modulo non abilitato**                  | `module_disabled`                 | 404             | Modulo del server disattivato                                |
+| **Azione non supportata**                 | `method_not_allowed`              | 405             | Non offerta a questo indirizzo                               |
 | **Conflitto**                             | `conflict`                        | 409             | In conflitto con dati o stato esistenti                      |
+| **La configurazione è già completata**    | `setup_already_completed`         | 409             | Esiste già un amministratore                                 |
+| **Indirizzo email già in uso**            | `email_taken`                     | 409             | Un altro account ha l’indirizzo                              |
 | **Non disponibile in questa modalità**    | `mode_not_supported`              | 409             | Non possibile in questa modalità del server                  |
 | **Provider di pagamento non configurato** | `payment_provider_not_configured` | 409             | La fatturazione richiede un provider                         |
 | **Modificato nel frattempo**              | `precondition_failed`             | 412             | Qualcun altro ha salvato prima di te                         |
@@ -60,6 +64,7 @@ La tabella offre una panoramica. Le sezioni seguenti spiegano ogni codice con ca
 | **Troppe richieste**                      | `rate_limited`                    | 429             | Rallenta                                                     |
 | **Quota superata**                        | `quota_exceeded`                  | 429             | Quota del tenant o limite del piano esaurito                 |
 | **Errore del server**                     | `internal`                        | 500 e superiori | Errore lato server                                           |
+| **Richiesta non riuscita**                | `error`                           | altro           | Errore HTTP senza codice specifico                           |
 | **Server non raggiungibile**              | `network_error`                   | nessuno         | Nessuna risposta dal server                                  |
 | **Errore imprevisto**                     | `unknown`                         | altro           | Non riconosciuto                                             |
 
@@ -84,6 +89,16 @@ HTTP 400), per esempio perché un valore aveva un formato errato.
 
 **Cosa fare:** ricarica la pagina e ripeti l'azione. Se succede di nuovo, segnalalo con l'ID
 richiesta; normalmente Studio invia solo richieste ben formate.
+
+### Firma non valida {#invalid-signature}
+
+**Cosa è successo:** il server ha rifiutato un webhook del fornitore di pagamenti perché la firma
+non corrispondeva (`invalid_signature`, HTTP 400). Solo il fornitore di pagamenti chiama quell'endpoint;
+non vedi questo codice per le tue azioni in Studio.
+
+**Cosa fare:** niente in Studio. Un operatore verifica che il segreto del webhook nella
+configurazione del server corrisponda a quello del fornitore di pagamenti. Vedi
+[Piani e abbonamenti](help:plans-subscriptions).
 
 ### Accedi {#unauthenticated}
 
@@ -158,6 +173,15 @@ prodotto o al tenant di aggiungerti.
 **Cosa fare:** chiedi al tuo operatore di abilitare il modulo nella configurazione del server. Il
 [riferimento dei moduli](help:modules-reference) elenca cosa rende possibile ogni modulo.
 
+### Azione non supportata {#method-not-allowed}
+
+**Cosa è successo:** il server non offre questa azione a questo indirizzo (`method_not_allowed`,
+HTTP 405). Studio invia solo richieste descritte dall'API del server, quindi probabilmente Studio e
+server hanno versioni diverse.
+
+**Cosa fare:** ricarica la pagina. Se succede di nuovo, segnalalo con l'ID richiesta e la versione
+del server mostrata in fondo alla barra laterale.
+
 ### Conflitto {#conflict}
 
 **Cosa è successo:** la richiesta è in conflitto con dati esistenti o con lo stato attuale
@@ -176,6 +200,24 @@ dopo il testo tradotto.
 | `only failed or dead jobs can be retried`, `the job is already succeeded`                                     | Il job non è più in uno stato che consente l'azione; ricarica.                                             |
 | `the delivery is already queued or in progress`                                                               | Attendi che la consegna in corso termini.                                                                  |
 
+### La configurazione è già completata {#setup-already-completed}
+
+**Cosa è successo:** la configurazione iniziale è stata inviata anche se il server ha già un
+amministratore della piattaforma (`setup_already_completed`, HTTP 409), ad esempio perché qualcuno
+l'ha completata nel frattempo in un'altra scheda.
+
+**Cosa fare:** accedi con l'account di amministratore. Vedi
+[Configurazione iniziale](help:first-run-setup).
+
+### Indirizzo email già in uso {#email-taken}
+
+**Cosa è successo:** un altro account ha già questo indirizzo email (`email_taken`, HTTP 409). Gli
+indirizzi email sono univoci, senza distinzione tra maiuscole e minuscole.
+
+**Cosa fare:** usa un altro indirizzo oppure accedi con l'account esistente. Durante la
+configurazione iniziale succede quando l'accesso unico ha creato un account con l'indirizzo prima
+del primo amministratore.
+
 ### Già utilizzata per una richiesta diversa {#idempotency-conflict}
 
 Alcune azioni (accodare un job, pubblicare un evento, inviare una notifica, registrare utilizzo)
@@ -189,12 +231,16 @@ del glossario [chiave di idempotenza](help:glossary#idempotency-key).
 
 **Cosa è successo:** il server è in una modalità che non supporta l'azione (`mode_not_supported`).
 
-**Cause tipiche:** creare o archiviare prodotti su un server in modalità a prodotto singolo, oppure
-aprire la casella di posta locale delle notifiche quando il server non usa il provider di posta
-locale per i test.
+**Cause tipiche:** creare o archiviare prodotti su un server in modalità a prodotto singolo;
+cambiare il piano di un abbonamento gestito da Stripe (appartiene a Stripe: modificalo in Stripe,
+ad esempio nel portale clienti, e Stripe aggiorna Axentra); oppure aprire la casella di posta locale
+delle notifiche quando il server non usa il provider di posta locale per i test. Il messaggio del
+server indica il caso.
 
-**Cosa fare:** niente in Studio; un operatore dovrebbe cambiare la configurazione del server. Vedi
-[Prodotti](help:products) e [configurazione del server](help:server-configuration).
+**Cosa fare:** un abbonamento Stripe si modifica in Stripe. Altrimenti niente in Studio; un
+operatore dovrebbe cambiare la configurazione del server. Vedi [Prodotti](help:products),
+[Piani e abbonamenti](help:plans-subscriptions) e
+[configurazione del server](help:server-configuration).
 
 ### Provider di pagamento non configurato {#payment-provider-not-configured}
 
@@ -269,6 +315,14 @@ del server. Anche un `502`, `503` o `504` di un reverse proxy davanti al server 
 **Cosa fare:** riprova dopo un momento. La modifica potrebbe non essere stata salvata, quindi
 controlla prima di ripetere azioni distruttive. Se continua a non funzionare, segnalalo al tuo
 operatore con l'ID richiesta e l'orario.
+
+### Richiesta non riuscita {#error}
+
+**Cosa è successo:** il server ha rifiutato la richiesta con un errore HTTP senza un codice più
+specifico (`error`).
+
+**Cosa fare:** controlla il **Messaggio del server** e lo **Stato HTTP** in **Dettagli tecnici** e
+riprova. Se continua a succedere, segnalalo con l'ID richiesta.
 
 ### Server non raggiungibile {#network-error}
 
@@ -385,8 +439,9 @@ modalità a prodotto singolo).
 ### Una pagina mostra Non consentito anche se puoi aprirla {#page-forbidden}
 
 La barra laterale mostra quasi tutte le aree (solo **Registro di audit** è nascosto senza
-un'autorizzazione di audit); se puoi leggerne i dati viene deciso quando la pagina si carica. Un'area senza l'autorizzazione di lettura mostra **Non consentito** con l'autorizzazione
-mancante nel messaggio del server.
+un'autorizzazione di audit); se puoi leggerne i dati viene deciso quando la pagina si carica.
+Un'area senza l'autorizzazione di lettura mostra **Non consentito** con l'autorizzazione mancante
+nel messaggio del server.
 
 ### L'accesso o il salvataggio fallisce con Non consentito {#csrf-origin}
 

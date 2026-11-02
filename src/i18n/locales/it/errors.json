@@ -47,7 +47,7 @@
     },
     "mode_not_supported": {
       "title": "Non disponibile in questa modalità",
-      "message": "La configurazione attuale del server non supporta questa azione, ad esempio la creazione di prodotti in modalità a prodotto singolo. Un operatore dovrebbe modificare la configurazione del server."
+      "message": "La configurazione del server non consente questa azione qui, ad esempio creare prodotti in modalità a prodotto singolo, modificare un abbonamento gestito da Stripe (modificalo in Stripe) o aprire la casella di prova quando il server invia email reali. Il messaggio del server indica il motivo; solo un operatore può modificare la configurazione."
     },
     "module_disabled": {
       "title": "Modulo non abilitato",
@@ -76,6 +76,26 @@
     "unsupported_media_type": {
       "title": "Tipo non accettato",
       "message": "Il server non accetta questo tipo di contenuto, ad esempio un tipo di file bloccato come un eseguibile o un file HTML o SVG. Usa un altro tipo di file."
+    },
+    "method_not_allowed": {
+      "title": "Azione non supportata",
+      "message": "Il server non offre questa azione a questo indirizzo (HTTP 405). Probabilmente le versioni di Studio e del server non corrispondono. Ricarica la pagina; se il problema persiste, segnalalo indicando l'ID richiesta."
+    },
+    "error": {
+      "title": "Richiesta non riuscita",
+      "message": "Il server ha rifiutato la richiesta con un errore HTTP senza un codice più specifico. Controlla il messaggio del server e lo stato HTTP in Dettagli tecnici e riprova; se il problema persiste, segnalalo indicando l'ID richiesta."
+    },
+    "invalid_signature": {
+      "title": "Firma non valida",
+      "message": "La firma di un webhook del fornitore di pagamenti non corrispondeva. Riguarda la connessione del server al fornitore di pagamenti, non Studio; un operatore dovrebbe controllare il segreto del webhook."
+    },
+    "setup_already_completed": {
+      "title": "La configurazione è già completata",
+      "message": "Su questo server esiste già un amministratore della piattaforma, quindi la configurazione non può essere eseguita di nuovo. Accedi con un account esistente."
+    },
+    "email_taken": {
+      "title": "Indirizzo email già in uso",
+      "message": "Un altro account usa già questo indirizzo email. Usa un altro indirizzo oppure accedi con l'account esistente."
     }
   }
 }
