@@ -8,6 +8,7 @@ import {
   Database,
   FileClock,
   FolderOpen,
+  HardDrive,
   KeyRound,
   LayoutDashboard,
   ListChecks,
@@ -120,6 +121,15 @@ export const NAVIGATION: NavGroup[] = [
     id: 'data',
     labelKey: 'groups.data',
     items: [
+      // Data & Storage: overview of collections, storage usage and retention
+      {
+        id: 'dataOverview',
+        labelKey: 'dataOverview',
+        icon: HardDrive,
+        to: p('data'),
+        scope: 'product',
+        module: 'records',
+      },
       {
         id: 'records',
         labelKey: 'records',

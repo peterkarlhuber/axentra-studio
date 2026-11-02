@@ -32,6 +32,11 @@ export function onUnauthenticated(listener: UnauthenticatedListener): () => void
   return () => unauthenticatedListeners.delete(listener);
 }
 
+/** For requests outside openapi-fetch (XHR file uploads): report a 401 the same way. */
+export function reportUnauthenticated(): void {
+  unauthenticatedListeners.forEach((listener) => listener());
+}
+
 const axentraMiddleware: Middleware = {
   onRequest({ request }) {
     const token = getCsrfToken();

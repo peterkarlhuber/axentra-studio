@@ -28,6 +28,11 @@ All notable changes to Axentra Studio are documented here. The format follows
   effective settings, profile with password and sessions.
 - "Module not enabled" and "not yet available in Studio" states for files, jobs, events,
   webhooks, usage, plans, subscriptions and notifications.
+- Data & Storage: Files (per-tenant list with filters and server sort, upload with progress and
+  the server's size/type limits, honest 413/415/429 errors, metadata detail and label editing,
+  downloads and shareable links through signed download URLs, delete with `If-Match`), tenant
+  storage usage and quota editing, a Data overview (collections, storage per tenant, storage
+  configuration and reported retention), and record create/edit/delete with `If-Match`.
 - German and English translations with a parity check (`npm run i18n:check`).
 - Brand assets derived from the original logo with a reproducible script
   (`scripts/derive-branding.py`, provenance in `public/branding/README.md`).

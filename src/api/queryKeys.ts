@@ -30,4 +30,12 @@ export const queryKeys = {
     ['products', productId, 'records', tenantId, collection, params ?? {}] as const,
   audit: (params?: unknown) => ['audit', 'list', params ?? {}] as const,
   auditEvent: (eventId: string) => ['audit', eventId] as const,
+  // ---- Data & Storage ----
+  files: (productId: string, tenantId: string, params?: unknown) =>
+    ['products', productId, 'files', tenantId, 'list', params ?? {}] as const,
+  file: (productId: string, tenantId: string, fileId: string) =>
+    ['products', productId, 'files', tenantId, fileId] as const,
+  tenantStorage: (productId: string, tenantId: string) =>
+    ['products', productId, 'storage', tenantId] as const,
+  productStorage: (productId: string) => ['products', productId, 'storage', 'product'] as const,
 };

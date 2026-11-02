@@ -37,5 +37,28 @@
   },
   "record": {
     "title": "Record"
+  },
+  "descriptionWrite": "Browse, create, change and delete the JSON records that tenants store in collections.",
+  "write": {
+    "create": "New record",
+    "createTitle": "New record",
+    "createDescription": "Store a JSON object in a collection of the selected tenant. A new collection name creates the collection.",
+    "createSubmit": "Create record",
+    "editTitle": "Edit record",
+    "edit": "Edit",
+    "delete": "Delete record",
+    "collectionHelp": "Lowercase letters, digits and underscores, starting with a letter.",
+    "collectionInvalid": "Use lowercase letters, digits and underscores, starting with a letter (at most 63 characters).",
+    "dataHelp": "A JSON object, at most 256 KiB. Saving replaces the whole object.",
+    "dataError": {
+      "json": "This is not valid JSON.",
+      "object": "Record data must be a JSON object."
+    },
+    "versionNote": "Editing version {{version}}. If someone else changed the record in the meantime, saving is refused.",
+    "created": "Record {{id}} created",
+    "updated": "Record {{id}} saved",
+    "deleted": "Record {{id}} deleted",
+    "deleteTitle": "Delete record?",
+    "deleteBody": "Record {{id}} is deleted permanently. This cannot be undone."
   }
 }

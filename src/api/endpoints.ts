@@ -12,6 +12,12 @@ import type {
   AuthSession,
   CollectionStats,
   DataRecord,
+  DownloadUrl,
+  FileInfo,
+  FilePatch,
+  ProductStorageUsage,
+  QuotaInput,
+  TenantStorageUsage,
   Health,
   Invitation,
   InvitationInput,
@@ -453,4 +459,164 @@ export const auditApi = {
 
 export const settingsApi = {
   get: () => unwrap<ServerSettings>(api().GET('/v1/settings')),
+};
+
+// ---- Data & Storage: record writes, files, storage usage and quotas ---------------------
+
+const recordPath = (productId: string, tenantId: string, collection: string, recordId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, collection, record_id: recordId },
+});
+
+/** Record writes (`records:write`); replace and delete send `If-Match` with the version. */
+export const recordsWriteApi = {
+  create: (
+    productId: string,
+    tenantId: string,
+    collection: string,
+    data: Record<string, unknown>,
+  ) =>
+    unwrap<DataRecord>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/records/{collection}', {
+        params: { path: { product_id: productId, tenant_id: tenantId, collection } },
+        body: data,
+      }),
+    ),
+  replace: (
+    productId: string,
+    tenantId: string,
+    collection: string,
+    recordId: string,
+    data: Record<string, unknown>,
+    version?: number,
+  ) =>
+    unwrap<DataRecord>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/records/{collection}/{record_id}', {
+        params: {
+          ...recordPath(productId, tenantId, collection, recordId),
+          header: ifMatch(version),
+        },
+        body: data,
+      }),
+    ),
+  remove: (
+    productId: string,
+    tenantId: string,
+    collection: string,
+    recordId: string,
+    version?: number,
+  ) =>
+    unwrap<unknown>(
+      api().DELETE(
+        '/v1/products/{product_id}/tenants/{tenant_id}/records/{collection}/{record_id}',
+        {
+          params: {
+            ...recordPath(productId, tenantId, collection, recordId),
+            header: ifMatch(version),
+          },
+        },
+      ),
+    ),
+};
+
+export type FileSort = 'created_at' | '-created_at' | 'name' | '-name' | 'size' | '-size';
+
+export interface FileListParams extends ListParams {
+  q?: string;
+  /** Exact type or `type/*`. */
+  content_type?: string;
+  /** Containment filter on the metadata labels, serialized as JSON. */
+  metadata?: Record<string, unknown>;
+  created_by?: string;
+  sort?: FileSort;
+}
+
+const filePath = (productId: string, tenantId: string, fileId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, file_id: fileId },
+});
+
+/** Files of one tenant. Uploads go through `uploadFile` (`./upload.ts`) for progress events. */
+export const filesApi = {
+  list: (productId: string, tenantId: string, params: FileListParams = {}) => {
+    const { metadata, ...rest } = params;
+    const query = cleanQuery({
+      ...rest,
+      metadata: metadata && Object.keys(metadata).length > 0 ? JSON.stringify(metadata) : undefined,
+    });
+    return unwrap<Page<FileInfo>>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/files', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          query: query as {
+            q?: string;
+            content_type?: string;
+            metadata?: string;
+            created_by?: string;
+            sort?: FileSort;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    );
+  },
+  get: (productId: string, tenantId: string, fileId: string) =>
+    unwrap<FileInfo>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}', {
+        params: filePath(productId, tenantId, fileId),
+      }),
+    ),
+  update: (
+    productId: string,
+    tenantId: string,
+    fileId: string,
+    body: FilePatch,
+    version?: number,
+  ) =>
+    unwrap<FileInfo>(
+      api().PATCH('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}', {
+        params: { ...filePath(productId, tenantId, fileId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  remove: (productId: string, tenantId: string, fileId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}', {
+        params: { ...filePath(productId, tenantId, fileId), header: ifMatch(version) },
+      }),
+    ),
+  /** Short-lived download URL; without `ttl_seconds` the server uses its maximum. */
+  downloadUrl: (productId: string, tenantId: string, fileId: string, ttlSeconds?: number) =>
+    unwrap<DownloadUrl>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}/download-url', {
+        params: filePath(productId, tenantId, fileId),
+        body: ttlSeconds === undefined ? {} : { ttl_seconds: ttlSeconds },
+      }),
+    ),
+};
+
+export const storageApi = {
+  /** All tenants' usage (`collections:read`), tenants paginated by id. */
+  productUsage: (productId: string, params?: ListParams) =>
+    unwrap<ProductStorageUsage>(
+      api().GET('/v1/products/{product_id}/storage/usage', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  tenantUsage: (productId: string, tenantId: string) =>
+    unwrap<TenantStorageUsage>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/storage/usage', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  /** `null` inherits the product/installation default; `If-Match` is the `quota_version`. */
+  setQuota: (productId: string, tenantId: string, body: QuotaInput, version?: number) =>
+    unwrap<TenantStorageUsage>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/storage/quota', {
+        params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
+        body,
+      }),
+    ),
 };

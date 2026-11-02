@@ -4,9 +4,10 @@ The admin UI for [Axentra](https://github.com/peterkarlhuber/axentra), the multi
 backend. Studio is a separate, static single-page app that talks to the Axentra HTTP API
 (`/v1`) like any other client. It has no backend of its own and no privileged access.
 
-- Products, tenants, users, invitations, members, roles, API keys, records (read-only),
-  audit log, system health, effective server settings, and your own profile and sessions.
-- Sections for modules that are not part of Phase 1 (files, jobs, events, webhooks, usage,
+- Products, tenants, users, invitations, members, roles, API keys, records, files and storage
+  quotas (see "Data & Storage" below), audit log, system health, effective server settings, and
+  your own profile and sessions.
+- Sections for modules that Studio has no screens for yet (jobs, events, webhooks, usage,
   plans, subscriptions, notifications) exist as routes. They show "module not enabled" or "not
   yet available in Studio" and never show demo data.
 - German and English, light and dark theme, usable from 360 px wide, keyboard and screen
@@ -192,7 +193,8 @@ search, realtime`; the first four are always on.
   sessions are plain arrays without cursors. Tenants, users, audit and records are cursor pages.
 - Tenants have no `sort` parameter; filters are `q` and `status` (`active` / `suspended`).
 - Records: `where` is a JSON-encoded containment filter, `sort` is one of `id`, `created_at`,
-  `updated_at` with an optional `-`. Studio's record browser is read-only.
+  `updated_at` with an optional `-`. Create, replace and delete need `records:write` in the
+  tenant; replace and delete send `If-Match` with the record version.
 - `POST /v1/auth/setup` returns a session: the new admin is signed in immediately.
 - Products and tenants need a `slug` (Studio derives one from the name; you can edit it).
 - Roles have `key`, `scope` and `builtin`; built-in roles have no `id`. Members reference roles
@@ -202,6 +204,24 @@ search, realtime`; the first four are always on.
   once so it can be delivered without email.
 - Health is `{status: ok|unavailable, checks: {name: boolean}}`, also as the body of a `503`.
 - `Me` carries `platform_permissions`; `Me.user` is `null` for API-key principals.
+
+### Data & Storage
+
+- `/p/:productId/files?tenant=…`: files of one tenant (`files:read`; upload, label edit and
+  delete with `files:write`). Uploads use `XMLHttpRequest` (`src/api/upload.ts`) because `fetch`
+  cannot report upload progress; it sends the same credentials, CSRF and client headers.
+- Size and type limits come from `GET /v1/settings` `storage` (readable with `platform:settings`
+  or `product:manage`). Without that access Studio says the server checks them; the server
+  always enforces them and its `413`/`415`/`429` answers are explained with the server message
+  and request id.
+- Downloads ask for a signed URL (`POST …/download-url`) and open its `path` through the API
+  origin Studio is configured for (the absolute `url` is built from the server's `public_url`);
+  presigned S3 URLs are used as given. "Create download link" shows the URL and its expiry.
+- Tenant usage and quota (`PUT …/storage/quota` with `If-Match: quota_version`,
+  `tenants:update`) on the Files page; product-wide usage per tenant on `/p/:productId/data`
+  (`collections:read`), next to collection statistics, the storage configuration and the
+  audit/job retention periods the server reports. Backups and the retention of deleted file
+  metadata are not reported by the API and are shown as such.
 
 ## License
 

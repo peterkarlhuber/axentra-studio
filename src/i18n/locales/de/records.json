@@ -37,5 +37,28 @@
   },
   "record": {
     "title": "Datensatz"
+  },
+  "descriptionWrite": "Durchsuchen, anlegen, ändern und löschen Sie die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
+  "write": {
+    "create": "Neuer Datensatz",
+    "createTitle": "Neuer Datensatz",
+    "createDescription": "Speichern Sie ein JSON-Objekt in einer Sammlung des ausgewählten Mandanten. Ein neuer Sammlungsname legt die Sammlung an.",
+    "createSubmit": "Datensatz anlegen",
+    "editTitle": "Datensatz bearbeiten",
+    "edit": "Bearbeiten",
+    "delete": "Datensatz löschen",
+    "collectionHelp": "Kleinbuchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben.",
+    "collectionInvalid": "Verwenden Sie Kleinbuchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
+    "dataHelp": "Ein JSON-Objekt, höchstens 256 KiB. Speichern ersetzt das ganze Objekt.",
+    "dataError": {
+      "json": "Das ist kein gültiges JSON.",
+      "object": "Datensatzdaten müssen ein JSON-Objekt sein."
+    },
+    "versionNote": "Sie bearbeiten Version {{version}}. Hat jemand anderes den Datensatz inzwischen geändert, wird das Speichern abgelehnt.",
+    "created": "Datensatz {{id}} angelegt",
+    "updated": "Datensatz {{id}} gespeichert",
+    "deleted": "Datensatz {{id}} gelöscht",
+    "deleteTitle": "Datensatz löschen?",
+    "deleteBody": "Datensatz {{id}} wird endgültig gelöscht. Das lässt sich nicht rückgängig machen."
   }
 }
