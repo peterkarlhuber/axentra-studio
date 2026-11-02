@@ -77,14 +77,46 @@
   },
   "accept": {
     "title": "Aceptar invitación",
-    "description": "Únete a un inquilino con el enlace de invitación o el token que recibiste. Debes haber iniciado sesión con la cuenta de la dirección de correo electrónico invitada.",
+    "description": "Únete a un inquilino con el enlace de invitación o el token que recibiste. Inicia sesión con la cuenta de la dirección de correo electrónico a la que se envió la invitación, revisa los datos y confirma.",
     "token": "Token de invitación",
+    "tokenHelp": "Pega el token de la invitación si no abriste el enlace.",
+    "tokenFromLink": "Tomado de tu enlace de invitación. Ya no aparece en la barra de direcciones.",
     "submit": "Aceptar invitación",
     "successTitle": "Invitación aceptada",
-    "successBody": "Ya tienes acceso. Puede tardar un momento en aparecer en todas partes.",
-    "continue": "Continuar",
-    "invalid": "Esta invitación no es válida, ha caducado, se revocó o ya se usó. Pide una invitación nueva.",
-    "wrongEmail": "Esta invitación se envió a otra dirección de correo electrónico. Inicia sesión con la cuenta de esa dirección o pide una invitación para tu propia dirección."
+    "successBody": "Ahora eres miembro con el rol {{role}}. Puede tardar un momento en que el acceso aparezca en todas partes.",
+    "continue": "Ir a la página de inicio",
+    "successBodyNamed": "Ahora eres miembro de {{tenant}} en {{product}} con el rol {{role}}.",
+    "openTenant": "Abrir el inquilino",
+    "signedInAs": "Sesión iniciada como <strong>{{account}}</strong>.",
+    "switchAccount": "Usar otra cuenta",
+    "switchAccountAction": "Cerrar sesión y usar la dirección invitada",
+    "noEmailTitle": "Tu cuenta no tiene dirección de correo electrónico",
+    "noEmail": "Las invitaciones están vinculadas a una dirección de correo electrónico, así que una cuenta sin dirección no puede aceptarlas. Inicia sesión con la cuenta de la dirección invitada o pide a quien te invitó que añada tu cuenta al inquilino directamente.",
+    "outcomes": {
+      "invalid": {
+        "title": "Esta invitación no se puede usar",
+        "body": "El servidor no indica cuál de estos motivos se aplica:",
+        "expired": "caducó (las invitaciones son válidas 7 días),",
+        "used": "ya se aceptó, por ti o en otra pestaña,",
+        "revoked": "se revocó,",
+        "mistyped": "el enlace o el token está incompleto o mal escrito.",
+        "next": "Pide a quien te invitó una invitación nueva."
+      },
+      "wrongEmail": {
+        "title": "Invitación para otra dirección de correo electrónico",
+        "body": "La invitación se envió a una dirección distinta de la de la cuenta con la que iniciaste sesión ({{account}}). Cierra sesión e inicia sesión con la dirección invitada, o pide una invitación para tu propia dirección."
+      },
+      "noEmail": {
+        "title": "Tu cuenta no tiene dirección de correo electrónico"
+      },
+      "unreachable": {
+        "title": "No se pudo contactar con el servidor",
+        "body": "Tu invitación no ha cambiado. Comprueba tu conexión y vuelve a intentarlo en un momento."
+      },
+      "other": {
+        "title": "La invitación no se aceptó"
+      }
+    }
   },
   "search": "Buscar inquilinos",
   "searchPlaceholder": "Nombre o slug",

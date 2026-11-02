@@ -77,14 +77,46 @@
   },
   "accept": {
     "title": "Accepter l’invitation",
-    "description": "Rejoins un locataire avec le lien ou le jeton d’invitation que tu as reçu. Tu dois être connecté avec le compte de l’adresse e-mail invitée.",
+    "description": "Rejoins un locataire avec le lien ou le jeton d’invitation que tu as reçu. Connecte-toi avec le compte de l’adresse e-mail à laquelle l’invitation a été envoyée, vérifie les informations et confirme.",
     "token": "Jeton d’invitation",
+    "tokenHelp": "Colle le jeton de l’invitation si tu n’as pas ouvert le lien.",
+    "tokenFromLink": "Repris de ton lien d’invitation. Il n’apparaît plus dans la barre d’adresse.",
     "submit": "Accepter l’invitation",
     "successTitle": "Invitation acceptée",
-    "successBody": "Tu as maintenant accès. L’accès peut mettre quelques instants à apparaître partout.",
-    "continue": "Continuer",
-    "invalid": "Cette invitation n’est pas valide, a expiré, a été révoquée ou a déjà été utilisée. Demande une nouvelle invitation.",
-    "wrongEmail": "Cette invitation a été envoyée à une autre adresse e-mail. Connecte-toi avec le compte de cette adresse ou demande une invitation pour ta propre adresse."
+    "successBody": "Tu es maintenant membre avec le rôle {{role}}. L’accès peut mettre quelques instants à apparaître partout.",
+    "continue": "Aller à la page d’accueil",
+    "successBodyNamed": "Tu es maintenant membre de {{tenant}} dans {{product}} avec le rôle {{role}}.",
+    "openTenant": "Ouvrir le locataire",
+    "signedInAs": "Connecté en tant que <strong>{{account}}</strong>.",
+    "switchAccount": "Utiliser un autre compte",
+    "switchAccountAction": "Se déconnecter et utiliser l’adresse invitée",
+    "noEmailTitle": "Ton compte n’a pas d’adresse e-mail",
+    "noEmail": "Les invitations sont liées à une adresse e-mail : un compte sans adresse ne peut donc pas les accepter. Connecte-toi avec le compte de l’adresse invitée ou demande à la personne qui t’a invité d’ajouter directement ton compte au locataire.",
+    "outcomes": {
+      "invalid": {
+        "title": "Cette invitation ne peut pas être utilisée",
+        "body": "Le serveur n’indique pas laquelle de ces raisons s’applique :",
+        "expired": "elle a expiré (les invitations sont valables 7 jours),",
+        "used": "elle a déjà été acceptée, par toi ou dans un autre onglet,",
+        "revoked": "elle a été révoquée,",
+        "mistyped": "le lien ou le jeton est incomplet ou mal saisi.",
+        "next": "Demande une nouvelle invitation à la personne qui t’a invité."
+      },
+      "wrongEmail": {
+        "title": "Invitation pour une autre adresse e-mail",
+        "body": "L’invitation a été envoyée à une autre adresse que celle du compte avec lequel tu es connecté ({{account}}). Déconnecte-toi et connecte-toi avec l’adresse invitée, ou demande une invitation pour ta propre adresse."
+      },
+      "noEmail": {
+        "title": "Ton compte n’a pas d’adresse e-mail"
+      },
+      "unreachable": {
+        "title": "Le serveur est injoignable",
+        "body": "Ton invitation n’a pas été modifiée. Vérifie ta connexion et réessaie dans un instant."
+      },
+      "other": {
+        "title": "L’invitation n’a pas été acceptée"
+      }
+    }
   },
   "search": "Rechercher des locataires",
   "searchPlaceholder": "Nom ou slug",

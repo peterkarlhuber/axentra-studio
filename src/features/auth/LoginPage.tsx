@@ -15,6 +15,7 @@ import { SplashScreen } from '@/components/layout/FullPageMessage';
 import { Alert, Button, FormField, Input, buttonClassName } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
+import { ACCEPT_INVITATION_PATH, readPendingInvitation } from '@/features/tenants/invitationLink';
 import { AuthLanguageSwitch } from './AuthLanguageSwitch';
 import styles from './auth.module.css';
 
@@ -39,7 +40,15 @@ export function LoginPage() {
   const location = useLocation();
   const queryClient = useQueryClient();
   const [params] = useSearchParams();
-  const returnTo = safeReturnPath(params.get('return_to'));
+  const requested = params.get('return_to');
+  // A failed single sign-on comes back without `return_to`: an invitation opened in this tab
+  // still leads back to its accept page.
+  const returnTo = requested
+    ? safeReturnPath(requested)
+    : readPendingInvitation()
+      ? ACCEPT_INVITATION_PATH
+      : '/';
+  const invitation = returnTo.split('?')[0] === ACCEPT_INVITATION_PATH;
   const ssoError = params.get('login_error');
   const prefill = (location.state as { email?: string } | null)?.email ?? '';
   const [email, setEmail] = useState(prefill);
@@ -108,7 +117,15 @@ export function LoginPage() {
         </Alert>
       ) : null}
 
-      {params.get('return_to') && !error && !ssoError ? (
+      {invitation && !error ? (
+        <Alert tone="info" title={t('login.invitation.title')}>
+          {t('login.invitation.body')}{' '}
+          {providers.length > 0
+            ? t('login.invitation.noAccountSso')
+            : t('login.invitation.noAccountPassword')}{' '}
+          <HelpLink topic="members-invitations#accept" />
+        </Alert>
+      ) : requested && !error && !ssoError ? (
         <Alert tone="info">{t('login.sessionEnded')}</Alert>
       ) : null}
 
