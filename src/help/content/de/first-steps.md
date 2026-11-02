@@ -37,7 +37,7 @@ darin.
 4. Ergänze optional eine **Beschreibung**.
 5. Wähle **Produkt anlegen**.
 
-**Erwartetes Ergebnis:** Studio meldet „Produkt „Example CRM“ angelegt“ und öffnet die Seite des
+**Erwartetes Ergebnis:** Studio meldet „Produkt ‚Example CRM‘ angelegt“ und öffnet die Seite des
 Produkts.
 
 **Prüfe es:** Öffne den Tab **Mitglieder**. Dein Konto ist mit der Rolle **Product owner** aufgeführt:
@@ -56,7 +56,7 @@ anderen Mandanten getrennt.
 3. Gib als **Name** `Acme Ltd` ein. Studio leitet den **Kurznamen** `acme-ltd` ab.
 4. Wähle **Mandant anlegen**.
 
-**Erwartetes Ergebnis:** Studio meldet „Mandant „Acme Ltd“ angelegt“ und öffnet die Seite des
+**Erwartetes Ergebnis:** Studio meldet „Mandant ‚Acme Ltd‘ angelegt“ und öffnet die Seite des
 Mandanten mit den Tabs **Details**, **Mitglieder** und **Einladungen**. Der Status ist **Aktiv**.
 
 **Prüfe es:** Zurück im Dashboard zeigt **Mandanten** jetzt `1`. Notiere dir die **ID** des

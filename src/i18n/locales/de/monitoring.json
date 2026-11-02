@@ -54,11 +54,11 @@
     "token": "Bearer-Token",
     "tokenHelp": "Wird nur auf dieser Seite gehalten, solange sie geöffnet ist, und nie gespeichert.",
     "useToken": "Metriken laden",
-    "tokenInfo": "Das Token ist das Geheimnis, das der Betrieb in observability.metrics_token_ref hinterlegt hat. Es wird nur an /metrics gesendet, als Bearer-Token."
+    "tokenInfo": "Das Token ist das Geheimnis, das der Betreiber in observability.metrics_token_ref hinterlegt hat. Es wird nur an /metrics gesendet, als Bearer-Token."
   },
   "ops": {
     "title": "Aufbewahrung und Tracing",
-    "forbidden": "Einstellungen zu Aufbewahrung und Tracing sehen nur Plattform-Administratoren und Produktverantwortliche (GET /v1/settings).",
+    "forbidden": "Einstellungen zu Aufbewahrung und Tracing sehen nur Plattform-Administratoren sowie Produktinhaber und -administratoren (GET /v1/settings).",
     "retentionTitle": "Wartung und Aufbewahrung",
     "retentionHelp": "Aufbewahrungsfristen laut GET /v1/settings. Die Daten werden entfernt, wenn die Wartungsaufgabe läuft.",
     "auditRetention": "Audit-Ereignisse",

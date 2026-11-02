@@ -169,7 +169,7 @@ Seitenleiste (**Hilfecenter**), über den Hilfe-Button (?) in der oberen Leiste 
 Dokumentation**) oder über den Link auf der Anmelde- und der Einrichtungsseite; es funktioniert auch
 ohne Anmeldung.
 
-- **Suche**: Tippe in das Suchfeld („Hilfe durchsuchen, zum Beispiel „API-Schlüssel““). Studio
+- **Suche**: Tippe in das Suchfeld (Platzhalter: _Hilfe durchsuchen, zum Beispiel „API-Schlüssel“_). Studio
   durchsucht alle Artikel in deiner Sprache, und jeder Treffer öffnet den passenden Abschnitt.
 - **Hier beginnen**: die Artikel für neue Benutzer.
 - **Artikel** haben ein Inhaltsverzeichnis (**Auf dieser Seite**), **Zurück** und **Weiter**,

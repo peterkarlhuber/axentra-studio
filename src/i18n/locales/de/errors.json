@@ -7,7 +7,7 @@
   "codes": {
     "validation_failed": {
       "title": "Bitte prüfe deine Eingaben",
-      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
+      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die unten markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
     },
     "bad_request": {
       "title": "Anfrage nicht verstanden",
@@ -47,19 +47,19 @@
     },
     "mode_not_supported": {
       "title": "In diesem Modus nicht verfügbar",
-      "message": "Die aktuelle Serverkonfiguration unterstützt diese Aktion nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb. Dafür müsste der Betrieb die Serverkonfiguration ändern."
+      "message": "Die aktuelle Serverkonfiguration unterstützt diese Aktion nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb. Dafür müsste ein Betreiber die Serverkonfiguration ändern."
     },
     "module_disabled": {
       "title": "Modul nicht aktiviert",
-      "message": "Das Servermodul, das diese Aktion braucht, ist ausgeschaltet. Der Betrieb kann es in der Konfiguration des Axentra-Servers aktivieren."
+      "message": "Das Servermodul, das diese Aktion braucht, ist ausgeschaltet. Ein Betreiber kann es in der Konfiguration des Axentra-Servers aktivieren."
     },
     "payment_provider_not_configured": {
       "title": "Kein Zahlungsanbieter eingerichtet",
-      "message": "Diese Abrechnungsaktion braucht einen Zahlungsanbieter, aber auf dem Server ist keiner eingerichtet. Der Betrieb muss den Zahlungsanbieter in der Serverkonfiguration einrichten."
+      "message": "Diese Abrechnungsaktion braucht einen Zahlungsanbieter, aber auf dem Server ist keiner eingerichtet. Ein Betreiber muss den Zahlungsanbieter in der Serverkonfiguration einrichten."
     },
     "internal": {
       "title": "Serverfehler",
-      "message": "Der Server oder ein Dienst dahinter ist bei der Anfrage fehlgeschlagen; deine Änderung wurde möglicherweise nicht gespeichert. Versuche es gleich noch einmal; scheitert es weiterhin, melde es dem Betrieb mit der Anfrage-ID."
+      "message": "Der Server oder ein Dienst dahinter ist bei der Anfrage fehlgeschlagen; deine Änderung wurde möglicherweise nicht gespeichert. Versuche es gleich noch einmal; scheitert es weiterhin, melde es deinem Betreiber mit der Anfrage-ID."
     },
     "network_error": {
       "title": "Server nicht erreichbar",
@@ -71,7 +71,7 @@
     },
     "payload_too_large": {
       "title": "Zu groß",
-      "message": "Die Anfrage oder Datei ist größer, als der Server annimmt. Verwende eine kleinere Datei oder weniger Daten oder frage den Betrieb nach der Größengrenze."
+      "message": "Die Anfrage oder Datei ist größer, als der Server annimmt. Verwende eine kleinere Datei oder weniger Daten oder frage einen Betreiber nach der Größengrenze."
     },
     "unsupported_media_type": {
       "title": "Typ nicht zulässig",

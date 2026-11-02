@@ -42,7 +42,7 @@
   "record": {
     "title": "Datensatz"
   },
-  "descriptionWrite": "Durchsuche, lege an, ändere und lösche die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
+  "descriptionWrite": "Durchsuche, erstelle, ändere und lösche die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
   "write": {
     "create": "Neuer Datensatz",
     "createTitle": "Neuer Datensatz",

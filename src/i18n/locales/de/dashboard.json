@@ -43,8 +43,8 @@
     "disabled": "nicht aktiviert",
     "environment": "Umgebung",
     "modeAbout": "Über den Modus",
-    "modeInfo": "Einzelprodukt: Der Server bedient genau ein Produkt, das er aus seiner Konfiguration anlegt; Produkte lassen sich nicht anlegen oder archivieren. Mehrere Produkte: Plattform-Administratoren legen Produkte an und archivieren sie. Den Modus legt der Betrieb in der Serverkonfiguration fest.",
+    "modeInfo": "Einzelprodukt: Der Server bedient genau ein Produkt, das er aus seiner Konfiguration anlegt; Produkte lassen sich nicht anlegen oder archivieren. Mehrere Produkte: Plattform-Administratoren legen Produkte an und archivieren sie. Den Modus legt der Betreiber in der Serverkonfiguration fest.",
     "modulesAbout": "Über Module",
-    "modulesInfo": "Funktionsblöcke des Servers. Grüne Module sind aktiviert, graue nicht; ihre Einträge in der Seitenleiste zeigen „Aus“. Ein Modul kann nur der Serverbetrieb einschalten."
+    "modulesInfo": "Funktionsblöcke des Servers. Grüne Module sind aktiviert, graue nicht; ihre Einträge in der Seitenleiste zeigen „Aus“. Ein Modul kann nur der Serverbetreiber einschalten."
   }
 }

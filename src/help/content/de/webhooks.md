@@ -15,7 +15,7 @@ erneut senden kannst.
 > [!IMPORTANT]
 > Webhooks erfordern das Servermodul `events`. Endpunkte und Zustellungen ansehen erfordert
 > `webhooks:read` (Product owner, Product admin, Support und Product viewer). Anlegen, Bearbeiten,
-> Testen, Geheimnis erneuern, erneut Zustellen und Löschen erfordern `webhooks:manage` (Product owner
+> Testen, Geheimnis erneuern, erneutes Zustellen und Löschen erfordern `webhooks:manage` (Product owner
 > und Product admin); ohne diese Berechtigung sind die Buttons ausgeblendet und **Einstellungen** ist
 > schreibgeschützt. Damit Zustellungen gesendet werden, muss ein Worker-Prozess laufen.
 
@@ -29,8 +29,8 @@ webhook-delivery
 2. Ein Worker sucht **aktivierte** Endpunkte, deren **Ereignistypen** zum Typ passen und deren
    **Mandantenfilter** leer ist oder dem Mandanten des Ereignisses entspricht. Für jeden Treffer legt
    er eine Zustellung mit dem Status **Ausstehend** an.
-3. Der Worker sendet die signierte Anfrage. Eine `2xx`-Antwort macht die Zustellung **Zugestellt**.
-4. Jede andere Antwort, eine Zeitüberschreitung oder ein Verbindungsfehler macht sie zu
+3. Der Worker sendet die signierte Anfrage. Eine `2xx`-Antwort setzt die Zustellung auf **Zugestellt**.
+4. Jede andere Antwort, eine Zeitüberschreitung oder ein Verbindungsfehler setzt sie auf
    **Fehlgeschlagen, wird wiederholt**: Die Zustellung wird nach einer wachsenden Wartezeit erneut gesendet. Nach
    dem letzten Versuch ist sie **Endgültig fehlgeschlagen**.
 5. Eine Zustellung, die nicht ausstehend ist, kannst du **Erneut zustellen**, zum Beispiel nachdem du
