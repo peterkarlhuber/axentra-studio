@@ -19,7 +19,7 @@ All notable changes to Axentra Studio are documented here. The format follows
   languages, also in the **Signing in** help): Axentra now refuses an invitation on the `GET` start (security
   review round 4, R4-1), which Studio does not use (it sends invitations with the `POST` start only; its
   `405` fallback is the token-free `GET` start). The vendored contract and `api/BACKEND_REF` are synced from the
-  axentra fix (descriptions only, no shape change) and are re-pinned to its merge commit.
+  axentra fix (descriptions only, no shape change): axentra `2767a2e` (axentra #29).
 - An invitation token is kept out of every URL that Studio builds or keeps (security review round 3, NF-2
   and NF-3, the rest of AX-R2). The emailed link itself still carries it on its first request, which the
   image's access log no longer records (entry above):
