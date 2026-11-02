@@ -43,8 +43,7 @@
     "suspended": "Inquilino suspendido",
     "activated": "Inquilino reactivado",
     "suspendTitle": "¿Suspender inquilino?",
-    "suspendBody": "Los miembros de “{{name}}” y sus claves de API pierden el acceso hasta que se reactive el inquilino. Los operadores del producto también pierden el acceso a sus datos; solo los administradores de la plataforma pueden seguir abriéndolo. No se elimina ningún dato.",
-    "suspendedNotice": "Este inquilino está suspendido. Sus miembros, los operadores del producto y las claves de API no pueden acceder a él."
+    "suspendBody": "Los miembros de “{{name}}” y sus claves de API pierden el acceso hasta que se reactive el inquilino. Los operadores del producto aún pueden abrir el inquilino y reactivarlo, pero no acceder a sus datos; solo los administradores de la plataforma pueden. No se elimina ningún dato."
   },
   "invitations": {
     "title": "Invitaciones",
@@ -77,18 +76,67 @@
   },
   "accept": {
     "title": "Aceptar invitación",
-    "description": "Únete a un inquilino con el enlace de invitación o el token que recibiste. Debes haber iniciado sesión con la cuenta de la dirección de correo electrónico invitada.",
+    "description": "Únete a un inquilino con el enlace de invitación o el token que recibiste. Inicia sesión con la cuenta de la dirección de correo electrónico a la que se envió la invitación, revisa los datos y confirma.",
     "token": "Token de invitación",
+    "tokenHelp": "Pega el token de la invitación si no abriste el enlace.",
+    "tokenFromLink": "Tomado de tu enlace de invitación. Ya no aparece en la barra de direcciones.",
     "submit": "Aceptar invitación",
     "successTitle": "Invitación aceptada",
-    "successBody": "Ya tienes acceso. Puede tardar un momento en aparecer en todas partes.",
-    "continue": "Continuar",
-    "invalid": "Esta invitación no es válida, ha caducado, se revocó o ya se usó. Pide una invitación nueva.",
-    "wrongEmail": "Esta invitación se envió a otra dirección de correo electrónico. Inicia sesión con la cuenta de esa dirección o pide una invitación para tu propia dirección."
+    "successBody": "Ahora eres miembro con el rol {{role}}. Puede tardar un momento en que el acceso aparezca en todas partes.",
+    "continue": "Ir a la página de inicio",
+    "successBodyNamed": "Ahora eres miembro de {{tenant}} en {{product}} con el rol {{role}}.",
+    "openTenant": "Abrir el inquilino",
+    "signedInAs": "Sesión iniciada como <strong>{{account}}</strong>.",
+    "switchAccount": "Usar otra cuenta",
+    "switchAccountAction": "Cerrar sesión y usar la dirección invitada",
+    "noEmailTitle": "Tu cuenta no tiene dirección de correo electrónico",
+    "noEmail": "Las invitaciones están vinculadas a una dirección de correo electrónico, así que una cuenta sin dirección no puede aceptarlas. Inicia sesión con la cuenta de la dirección invitada o pide a quien te invitó que añada tu cuenta al inquilino directamente.",
+    "outcomes": {
+      "invalid": {
+        "title": "Esta invitación no se puede usar",
+        "body": "El servidor no indica cuál de estos motivos se aplica:",
+        "expired": "caducó (las invitaciones son válidas 7 días),",
+        "used": "ya se aceptó, por ti o en otra pestaña,",
+        "revoked": "se revocó,",
+        "mistyped": "el enlace o el token está incompleto o mal escrito.",
+        "next": "Pide a quien te invitó una invitación nueva."
+      },
+      "wrongEmail": {
+        "title": "Invitación para otra dirección de correo electrónico",
+        "body": "La invitación se envió a una dirección distinta de la de la cuenta con la que iniciaste sesión ({{account}}). Cierra sesión e inicia sesión con la dirección invitada, o pide una invitación para tu propia dirección."
+      },
+      "noEmail": {
+        "title": "Tu cuenta no tiene dirección de correo electrónico"
+      },
+      "unreachable": {
+        "title": "No se pudo contactar con el servidor",
+        "body": "Tu invitación no ha cambiado. Comprueba tu conexión y vuelve a intentarlo en un momento."
+      },
+      "other": {
+        "title": "La invitación no se aceptó"
+      }
+    }
   },
   "search": "Buscar inquilinos",
   "searchPlaceholder": "Nombre o slug",
   "filters": {
     "allStatuses": "Todos los estados"
+  },
+  "actionsFor": "Acciones para {{name}}",
+  "reactivate": {
+    "title": "¿Reactivar inquilino?",
+    "body": "Los miembros de “{{name}}” y sus claves de API recuperan el acceso de inmediato, con los mismos roles y permisos que antes. Sus datos vuelven a estar disponibles."
+  },
+  "suspendedBanner": {
+    "title": "Este inquilino está suspendido",
+    "body": "Sus miembros y claves de API no tienen acceso, y no se pueden abrir sus miembros, invitaciones, registros, archivos, uso ni facturación. No se ha eliminado ningún dato.",
+    "bodyPlatform": "Sus miembros, los operadores del producto y las claves de API no pueden acceder a sus datos; tu rol de plataforma sí. No se ha eliminado ningún dato.",
+    "canReactivate": "Reactiva el inquilino para restablecer el acceso.",
+    "askOperator": "Un propietario o administrador del producto puede reactivarlo."
+  },
+  "suspendedData": {
+    "title": "No disponible mientras el inquilino esté suspendido",
+    "body": "Los miembros y las invitaciones de un inquilino suspendido no se pueden ver ni cambiar. Un propietario o administrador del producto puede reactivar el inquilino.",
+    "bodyCanReactivate": "Los miembros y las invitaciones de un inquilino suspendido no se pueden ver ni cambiar. Reactiva el inquilino para volver a gestionarlos."
   }
 }

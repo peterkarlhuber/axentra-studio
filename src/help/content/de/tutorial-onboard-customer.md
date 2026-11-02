@@ -84,11 +84,13 @@ Status **Aktiv** und ohne Mitglieder. Notiere die **ID** des Mandanten (`ten_…
 > [!NOTE]
 > Der Einladungslink wird aus der Produkteinstellung `invitation_accept_url` gebildet (in den
 > **Einstellungen (JSON)** des Produkts), zum Beispiel
-> `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Ohne diese
-> Einstellung zeigt der Link auf `/accept-invitation` unter der öffentlichen Adresse der API. Lass
-> ihn auf die Seite deines Produkts zeigen, die Einladungen annimmt, oder auf die Studio-eigene
-> Seite `https://studio.example.com/invitations/accept?token={token}`, wenn deine Kunden Studio
-> verwenden.
+> `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Ohne
+> diese Einstellung gilt die Servereinstellung `notify.invitation_accept_url`; ohne diese zeigt der
+> Link auf `/accept-invitation` unter der öffentlichen Adresse der API, das Studio auf seine
+> Annahmeseite weiterleitet, wenn es unter dieser Adresse läuft. Lass den Link auf die Seite deines
+> Produkts zeigen, die Einladungen annimmt, oder auf die Studio-Seite
+> `https://studio.example.com/invitations/accept?token={token}`, wenn deine Kunden Studio unter
+> einer eigenen Adresse nutzen.
 
 **Prüfen:** Der Tab **Einladungen** zeigt die Einladung mit dem Status **Ausstehend** und einem
 Ablaufdatum 7 Tage in der Zukunft.
@@ -111,29 +113,30 @@ Adresse gleich.
 
 Das tut die eingeladene Person. Schick ihr diese Anleitung.
 
-1. **Ein Konto mit genau der eingeladenen E-Mail-Adresse haben.**
+1. **Den Einladungslink öffnen.** Ist die Person nicht angemeldet, landet sie bei **Anmelden**, wo
+   die Einladung erwähnt wird, und nach der Anmeldung wieder bei der Einladung.
+2. **Mit genau der eingeladenen E-Mail-Adresse anmelden.**
    - Bietet dein Server **Single Sign-on** an, meldet sich die Person mit **Weiter mit …** an. Für
      eine bestätigte E-Mail-Adresse mit offener Einladung wird automatisch ein Konto angelegt.
    - Bei **nur Passwortanmeldung** muss das Konto bereits existieren. Axentra bietet über die API
      keine Selbstregistrierung: Konten für die Passwortanmeldung legt der Code deines Produkts an.
      Siehe [Benutzer](help:users).
-2. **Den Einladungslink öffnen.** Ist die Person nicht angemeldet, landet sie bei **Anmelden** und
-   nach der Anmeldung wieder bei der Einladung. Mit einem Token statt eines Links öffnet sie nach
-   der Anmeldung **Einladung annehmen** (Adresse `/invitations/accept`) und fügt das
-   **Einladungs-Token** ein.
-3. Wähle **Einladung annehmen**.
+3. **Bestätigen.** Die Seite zeigt das Konto unter **Angemeldet als**; die Person wählt **Einladung
+   annehmen**. Mit einem Token statt eines Links öffnet sie nach der Anmeldung **Einladung
+   annehmen** (Adresse `/invitations/accept`) und fügt das **Einladungs-Token** ein.
 
-**Erwartetes Ergebnis:** „Einladung angenommen. Du hast jetzt Zugriff.“ Die Person sieht jetzt das
-Produkt und den Mandanten entsprechend ihrer Rolle. Es kann einen Moment dauern, bis der Zugriff
-überall sichtbar ist.
+**Erwartetes Ergebnis:** **Einladung angenommen** mit Mandant, Produkt und Rolle. Die Person sieht
+jetzt den Mandanten entsprechend ihrer Rolle. Es kann einen Moment dauern, bis der Zugriff überall
+sichtbar ist.
 
 **Prüfen (du):** Im Tab **Mitglieder** des Mandanten steht die Person mit der Rolle **Owner**. Unter
 **Einladungen** ist der Status **Angenommen**.
 
 > [!WARNING]
 > Einladungen sind an die Adresse gebunden. Meldet sich die Person mit einer anderen Adresse an,
-> scheitert das Annehmen mit **Nicht erlaubt**. Eine angenommene, widerrufene oder abgelaufene
-> Einladung lässt sich nicht noch einmal verwenden: Lege eine neue an.
+> zeigt Studio **Einladung für eine andere E-Mail-Adresse** und bietet **Abmelden und eingeladene
+> Adresse verwenden** an. Eine angenommene, widerrufene oder abgelaufene Einladung lässt sich nicht
+> noch einmal verwenden (**Diese Einladung kann nicht verwendet werden**): Lege eine neue an.
 
 ## Schritt 6: Rollen bei Bedarf anpassen {#change-role}
 
@@ -206,15 +209,15 @@ Alle mit dem Ergebnis **Erfolgreich**. Ein Annahmeversuch mit dem falschen Konto
 
 ## Fehlerbehebung {#troubleshooting}
 
-| Problem                                                 | Ursache und Lösung                                                                                                                                                                                     |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Owner** lässt sich nicht auswählen                    | Dir fehlt der Owner-Rang oder ein Teil der Berechtigungen der Rolle (Rollenobergrenze). Frag einen Product owner oder einen Plattform-Administrator.                                                   |
-| **Konflikt** beim Einladen                              | Für diese Adresse gibt es in diesem Mandanten bereits eine offene Einladung. Verwende oder widerrufe sie.                                                                                              |
-| **Benutzer nicht gefunden** bei **Mitglied hinzufügen** | Kein für dich sichtbares Konto hat diese Adresse. Verwende **Stattdessen einladen**.                                                                                                                   |
-| Der Kunde erhält keine E-Mail                           | Das Modul `notify` ist aus, oder die Zustellung ist fehlgeschlagen. Schick Link oder Token selbst; prüfe die [Benachrichtigungen](help:notifications).                                                 |
-| Der Link öffnet „Seite nicht gefunden“                  | Die Produkteinstellung `invitation_accept_url` fehlt oder ist falsch (siehe [Zustellung](help:tutorial-onboard-customer#delivery)). Schick das Token und lass es unter `/invitations/accept` einfügen. |
-| Das Annehmen scheitert mit **Nicht erlaubt**            | Die Person ist mit einem Konto angemeldet, dessen E-Mail-Adresse von der eingeladenen abweicht. Melde dich mit dem richtigen Konto an oder lade die tatsächliche Adresse ein.                          |
-| Das Annehmen scheitert mit **Nicht gefunden**           | Die Einladung wurde bereits angenommen, widerrufen oder ist älter als 7 Tage. Lege eine neue Einladung an.                                                                                             |
-| Single Sign-on scheitert mit „kein Konto“               | Keine offene Einladung für die bestätigte Adresse, und die Registrierung ist aus. Prüfe die eingeladene Adresse; siehe [Anmelden](help:signing-in#sso-errors).                                         |
-| Die Integration erhält `403`                            | Dem Schlüssel fehlt eine Berechtigung, oder der Mandant ist gesperrt.                                                                                                                                  |
-| Keine Ereignisse im Audit-Protokoll                     | Prüfe den Filter **Produkt** und ob du `audit:read` hast.                                                                                                                                              |
+| Problem                                                                 | Ursache und Lösung                                                                                                                                                                                                                                                                                                    |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Owner** lässt sich nicht auswählen                                    | Dir fehlt der Owner-Rang oder ein Teil der Berechtigungen der Rolle (Rollenobergrenze). Frag einen Product owner oder einen Plattform-Administrator.                                                                                                                                                                  |
+| **Konflikt** beim Einladen                                              | Für diese Adresse gibt es in diesem Mandanten bereits eine offene Einladung. Verwende oder widerrufe sie.                                                                                                                                                                                                             |
+| **Benutzer nicht gefunden** bei **Mitglied hinzufügen**                 | Kein für dich sichtbares Konto hat diese Adresse. Verwende **Stattdessen einladen**.                                                                                                                                                                                                                                  |
+| Der Kunde erhält keine E-Mail                                           | Das Modul `notify` ist aus, oder die Zustellung ist fehlgeschlagen. Schick Link oder Token selbst; prüfe die [Benachrichtigungen](help:notifications).                                                                                                                                                                |
+| Der Link öffnet „Seite nicht gefunden“ oder eine Seite der API          | Studio läuft unter einer eigenen Adresse, und weder die Servereinstellung `notify.invitation_accept_url` noch die Produkteinstellung `invitation_accept_url` zeigt darauf (siehe [Zustellung](help:tutorial-onboard-customer#delivery)). Bis dahin schick das Token und lass es unter `/invitations/accept` einfügen. |
+| Beim Annehmen erscheint **Einladung für eine andere E-Mail-Adresse**    | Die Person ist mit einem Konto angemeldet, dessen E-Mail-Adresse von der eingeladenen abweicht. Wähle **Abmelden und eingeladene Adresse verwenden** oder lade die richtige Adresse ein.                                                                                                                              |
+| Beim Annehmen erscheint **Diese Einladung kann nicht verwendet werden** | Die Einladung wurde bereits angenommen, widerrufen oder ist älter als 7 Tage, oder das Token ist unvollständig. Lege eine neue Einladung an.                                                                                                                                                                          |
+| Single Sign-on scheitert mit „kein Konto“                               | Keine offene Einladung für die bestätigte Adresse, und die Registrierung ist aus. Prüfe die eingeladene Adresse; siehe [Anmelden](help:signing-in#sso-errors).                                                                                                                                                        |
+| Die Integration erhält `403`                                            | Dem Schlüssel fehlt eine Berechtigung, oder der Mandant ist gesperrt.                                                                                                                                                                                                                                                 |
+| Keine Ereignisse im Audit-Protokoll                                     | Prüfe den Filter **Produkt** und ob du `audit:read` hast.                                                                                                                                                                                                                                                             |

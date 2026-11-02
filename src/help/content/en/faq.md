@@ -49,7 +49,8 @@ a new one; a grace period keeps the old secret working while you update your ser
 ## What happens to the data when I suspend a tenant? {#suspend-data}
 
 Nothing is deleted. Members and API keys lose access until the tenant is reactivated; platform
-administrators can still inspect it. Deleting a tenant, in contrast, removes the tenant and all
+administrators can still inspect it. Product owners and admins can reactivate it from the tenant's page in
+Studio. Deleting a tenant, in contrast, removes the tenant and all
 its data and cannot be undone. See [Tenants](help:tenants).
 
 ## Why do I see "Not found" for something that exists? {#not-found-exists}

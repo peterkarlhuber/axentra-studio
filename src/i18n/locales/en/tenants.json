@@ -43,8 +43,7 @@
     "suspended": "Tenant suspended",
     "activated": "Tenant reactivated",
     "suspendTitle": "Suspend tenant?",
-    "suspendBody": "Members of “{{name}}” and its API keys lose access until the tenant is reactivated. Product operators lose access to its data too; only platform administrators can still open it. No data is deleted.",
-    "suspendedNotice": "This tenant is suspended. Its members, product operators and API keys cannot access it."
+    "suspendBody": "Members of “{{name}}” and its API keys lose access until the tenant is reactivated. Product operators can still open the tenant and reactivate it, but not its data; only platform administrators can. No data is deleted."
   },
   "invitations": {
     "title": "Invitations",
@@ -77,18 +76,67 @@
   },
   "accept": {
     "title": "Accept invitation",
-    "description": "Join a tenant with the invitation link or token you received. You must be signed in with the account for the invited email address.",
+    "description": "Join a tenant with the invitation link or token you received. Sign in with the account for the email address the invitation was sent to, check the details and confirm.",
     "token": "Invitation token",
+    "tokenHelp": "Paste the token from the invitation if you did not open the link.",
+    "tokenFromLink": "Filled in from your invitation link. It is no longer shown in the address bar.",
     "submit": "Accept invitation",
     "successTitle": "Invitation accepted",
-    "successBody": "You now have access. It may take a moment until it appears everywhere.",
-    "continue": "Continue",
-    "invalid": "This invitation is invalid, expired, revoked or already used. Ask for a new invitation.",
-    "wrongEmail": "This invitation was sent to a different email address. Sign in with the account for that address, or ask for an invitation to your own address."
+    "successBody": "You are now a member with the role {{role}}. It may take a moment until the access appears everywhere.",
+    "continue": "Go to the start page",
+    "successBodyNamed": "You are now a member of {{tenant}} in {{product}} with the role {{role}}.",
+    "openTenant": "Open the tenant",
+    "signedInAs": "Signed in as <strong>{{account}}</strong>.",
+    "switchAccount": "Use another account",
+    "switchAccountAction": "Sign out and use the invited address",
+    "noEmailTitle": "Your account has no email address",
+    "noEmail": "Invitations are bound to an email address, so an account without one cannot accept them. Sign in with the account for the invited address, or ask the person who invited you to add your account to the tenant directly.",
+    "outcomes": {
+      "invalid": {
+        "title": "This invitation cannot be used",
+        "body": "The server does not say which of these applies:",
+        "expired": "it has expired (invitations are valid for 7 days),",
+        "used": "it was already accepted, by you or in another tab,",
+        "revoked": "it was revoked,",
+        "mistyped": "the link or token is incomplete or mistyped.",
+        "next": "Ask the person who invited you for a new invitation."
+      },
+      "wrongEmail": {
+        "title": "Invitation for another email address",
+        "body": "The invitation was sent to a different address than the one of the account you are signed in with ({{account}}). Sign out and sign in with the invited address, or ask for an invitation to your own address."
+      },
+      "noEmail": {
+        "title": "Your account has no email address"
+      },
+      "unreachable": {
+        "title": "The server could not be reached",
+        "body": "Your invitation was not changed. Check your connection and try again in a moment."
+      },
+      "other": {
+        "title": "The invitation was not accepted"
+      }
+    }
   },
   "search": "Search tenants",
   "searchPlaceholder": "Name or slug",
   "filters": {
     "allStatuses": "All statuses"
+  },
+  "actionsFor": "Actions for {{name}}",
+  "reactivate": {
+    "title": "Reactivate tenant?",
+    "body": "Members of “{{name}}” and its API keys regain access immediately, with the same roles and permissions as before. Its data becomes available again."
+  },
+  "suspendedBanner": {
+    "title": "This tenant is suspended",
+    "body": "Its members and API keys are locked out, and its members, invitations, records, files, usage and billing cannot be opened. No data has been deleted.",
+    "bodyPlatform": "Its members, product operators and API keys cannot access its data; your platform role still can. No data has been deleted.",
+    "canReactivate": "Reactivate the tenant to restore access.",
+    "askOperator": "A product owner or admin can reactivate it."
+  },
+  "suspendedData": {
+    "title": "Not available while the tenant is suspended",
+    "body": "Members and invitations of a suspended tenant cannot be viewed or changed. A product owner or admin can reactivate the tenant.",
+    "bodyCanReactivate": "Members and invitations of a suspended tenant cannot be viewed or changed. Reactivate the tenant to manage them again."
   }
 }

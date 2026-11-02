@@ -107,7 +107,8 @@ HTTP 403).
   for what each permission allows and which built-in roles hold it.
 - **The product is archived or the tenant is suspended.** Then only platform administrators
   (full access) and platform viewers (read access) can still work in it; everyone else, including
-  API keys, gets `the product or tenant is not active`.
+  API keys, gets `the product or tenant is not active`. Product owners and admins can still open a
+  suspended tenant's page and [reactivate](help:tenants#reactivate) it.
 - **The role ceiling.** You tried to assign a role that has permissions you do not hold yourself,
   or an owner role without being an owner. See [role ceiling](help:security#role-ceiling).
 - **API key permissions.** You tried to give a new key a permission you do not hold
@@ -389,6 +390,17 @@ must belong to the same site (for example `studio.example.com` and `api.example.
 password _and_ for an unknown address; the server does not reveal which. After too many attempts
 you see [Too many requests](#rate-limited). A disabled account cannot sign in at all. See
 [Signing in](help:signing-in).
+
+### An invitation link does not work {#invitation-link}
+
+- **Page not found** or a page of the API: the link points to an address where Studio does not
+  run. Ask your operator to set `notify.invitation_accept_url`, see
+  [Members and invitations](help:members-invitations#delivery).
+- **This invitation cannot be used**: the invitation expired, was already used or revoked, or the
+  link is incomplete. Ask the person who invited you for a new invitation.
+- **Invitation for another email address**: choose **Sign out and use the invited address**.
+
+See [Accept an invitation](help:members-invitations#accept).
 
 ### A one-time secret was lost {#secret-lost}
 

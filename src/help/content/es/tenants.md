@@ -29,6 +29,9 @@ Abre [Inquilinos](app:tenants). Usa **Buscar inquilinos** para filtrar por nombr
 **Estado** para mostrar solo los inquilinos con estado **Activo** o **Suspendido**. La columna **Miembros**
 cuenta las membresías del inquilino.
 
+Para encontrar rápido los inquilinos suspendidos, elige **Suspendido** en el filtro **Estado**; el
+filtro se mantiene en la dirección de la página, así que puedes guardar o compartir la lista filtrada.
+
 ## Crear un inquilino {#create}
 
 1. Abre [Inquilinos](app:tenants) y elige **Nuevo inquilino**.
@@ -72,32 +75,33 @@ Mientras un inquilino está suspendido:
 - sus miembros no pueden acceder a él; sus solicitudes se rechazan con **No permitido**;
 - las claves de API vinculadas al inquilino, y las claves de todo el producto que trabajan en él,
   también se rechazan;
-- los operadores de producto también pierden el acceso a los datos del inquilino y a su página; el
-  inquilino sigue en la lista de [Inquilinos](app:tenants) con el estado **Suspendido**;
+- los operadores de producto pierden el acceso a los datos del inquilino (miembros, invitaciones,
+  registros, archivos, uso, facturación); aún pueden abrir su página, que muestra **Este inquilino
+  está suspendido**, y reactivarlo. El inquilino sigue en la lista de [Inquilinos](app:tenants) con
+  el estado **Suspendido**;
 - los administradores de la plataforma mantienen el acceso completo y los observadores de la
   plataforma, el acceso de lectura;
 - no se elimina ningún dato.
 
 ## Reactivar un inquilino {#reactivate}
 
-1. Abre el inquilino suspendido.
-2. Elige **Reactivar inquilino**.
+Para reactivar necesitas `tenants:update`, que tienen los propietarios y administradores del
+producto; no hace falta ser administrador de la plataforma.
 
-Los miembros y las claves vuelven a funcionar de inmediato.
+1. Abre el inquilino suspendido, por ejemplo desde [Inquilinos](app:tenants) con el filtro
+   **Estado** en **Suspendido**. La página muestra el aviso **Este inquilino está suspendido**.
+2. Elige **Reactivar inquilino**. En la lista, la misma acción está en el menú de acciones (**⋯**)
+   de la fila de un inquilino suspendido.
+3. Lee la confirmación y elige **Reactivar inquilino**.
 
-> [!WARNING]
-> Solo los administradores de la plataforma (y los observadores de la plataforma, en modo de solo
-> lectura) pueden abrir la página de un inquilino suspendido. Un propietario o administrador del
-> producto que no sea administrador de la plataforma recibe ahí **No permitido** y no puede llegar a
-> **Reactivar inquilino** en Studio. Pídeselo a un administrador de la plataforma o reactívalo a
-> través de la API con `tenants:update`:
->
-> ```http
-> PATCH /v1/products/prd_01EXAMPLE/tenants/ten_01EXAMPLE
-> Content-Type: application/json
->
-> {"status": "active"}
-> ```
+Los miembros y las claves vuelven a funcionar de inmediato, con los mismos roles y permisos que
+antes, y el estado cambia a **Activo** en la página del inquilino y en la lista. El registro de
+auditoría guarda el cambio como `tenancy.tenant.update` con el estado anterior y el nuevo.
+
+Mientras el inquilino está suspendido, sus pestañas **Miembros** e **Invitaciones** muestran **No
+disponible mientras el inquilino esté suspendido** en lugar de sus listas, porque el servidor
+mantiene cerrados los datos del inquilino. Quien no tiene `tenants:update` (por ejemplo, los
+observadores o el soporte del producto) ve el aviso, pero no la acción **Reactivar inquilino**.
 
 ## Eliminar un inquilino {#delete}
 
@@ -138,8 +142,10 @@ inquilinos eliminados se pueden reutilizar.
 **Revisa los datos introducidos: «slug must be 2-63 lowercase letters, digits or dashes».** Quita
 del slug las mayúsculas, los espacios y los caracteres especiales.
 
-**No permitido al abrir un inquilino.** El inquilino está suspendido (consulta
-[reactivar](#reactivate)), el producto está archivado o te falta `tenant:read` en él.
+**No permitido al abrir un inquilino.** El inquilino está suspendido y eres uno de sus miembros
+(solo los operadores de producto y los administradores de la plataforma pueden abrir un inquilino
+suspendido; consulta [reactivar](#reactivate)), el producto está archivado o te falta `tenant:read`
+en él.
 
 **No encontrado al abrir un inquilino.** El inquilino se eliminó o no tienes ninguna relación con él
 (Axentra responde igual en ambos casos para que no se puedan sondear los ID de inquilino).
@@ -152,3 +158,9 @@ por ejemplo `acme`, no el nombre visible.
 
 **No aparece el botón Nuevo inquilino.** Te falta `tenants:create`. Pídeselo a un propietario o
 administrador del producto.
+
+**No aparece la acción Reactivar inquilino.** Te falta `tenants:update`. Pídeselo a un propietario o
+administrador del producto.
+
+**Modificado mientras tanto al reactivar.** Otra persona cambió el inquilino antes. Studio lo vuelve
+a cargar; revisa el estado y elige de nuevo **Reactivar inquilino** si sigue suspendido.

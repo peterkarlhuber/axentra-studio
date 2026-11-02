@@ -84,13 +84,18 @@ invito**.
 
 ### Come l'invito raggiunge la persona {#delivery}
 
-- **Modulo delle notifiche abilitato:** Axentra mette in coda un'email di invito all'indirizzo con
-  il link di accettazione, e Studio mostra lo stesso link così puoi inviarlo anche tu. Il link punta
-  all'impostazione di prodotto `invitation_accept_url`, se impostata (vedi
-  [impostazioni del prodotto](help:products#settings)); altrimenti a `/accept-invitation`
-  sull'URL pubblico del server. Per mandare le persone direttamente alla pagina di accettazione di
-  Studio, imposta `invitation_accept_url` su
-  `https://<your Studio address>/invitations/accept?token={token}`.
+- **Modulo notifiche attivo:** Axentra mette in coda un'email di invito all'indirizzo con il link
+  di accettazione, e Studio mostra lo stesso link così puoi inviarlo anche tu. Il link usa
+  l'impostazione di prodotto `invitation_accept_url`, se impostata (vedi
+  [impostazioni del prodotto](help:products#settings)); altrimenti l'impostazione del server
+  `notify.invitation_accept_url` (vedi
+  [configurazione del server](help:server-configuration#user-visible-settings)); altrimenti
+  `/accept-invitation` sull'URL pubblico del server. Studio serve `/accept-invitation` e lo
+  inoltra alla sua pagina **Accetta invito**, quindi il valore predefinito funziona quando Studio
+  gira all'indirizzo dell'API. Se Studio ha un indirizzo proprio (per esempio
+  `https://studio.example.com` accanto a `https://api.example.com`), il valore predefinito punta
+  all'API: imposta `notify.invitation_accept_url` (o l'impostazione di prodotto) su
+  `https://<your Studio address>/invitations/accept`.
 - **Modulo delle notifiche disattivato:** non viene inviata alcuna email e non c'è alcun link.
   Condividi il **Token di invito**; la persona lo inserisce nella pagina **Accetta invito** di
   Studio.
@@ -114,22 +119,27 @@ link e il token smettono subito di funzionare.
 
 ## Accettare un invito {#accept}
 
-Ecco che cosa fa la persona invitata:
+Ecco cosa fa la persona invitata:
 
-1. Accedi a Studio con l'account il cui indirizzo email è quello invitato. Chi non ha un account può
-   crearne uno accedendo tramite single sign-on con quell'indirizzo (se il tuo server offre il
-   single sign-on); non esiste una registrazione autonoma con password.
-2. Apri il link di invito. Se hai solo il token, apri **Accetta invito** in `/invitations/accept` e
-   incollalo in **Token di invito**.
-3. Scegli **Accetta invito**.
+1. Apri il link di invito. Se non hai effettuato l'accesso, **Accedi** indica che stai accedendo
+   per un invito e poi ti riporta all'invito, anche dopo il single sign-on.
+2. Accedi con l'account il cui indirizzo email è l'indirizzo invitato. Non hai ancora un account?
+   Se la pagina di accesso offre il single sign-on, accedi lì con l'indirizzo invitato: il server
+   crea il tuo account perché c'è un invito aperto per quell'indirizzo. Non esiste la registrazione
+   con password; rivolgiti a chi ti ha invitato o a un amministratore.
+3. Controlla l'account mostrato in **Accesso effettuato come** e scegli **Accetta invito**. Non
+   succede nulla prima della tua conferma. Studio toglie il token dalla barra degli indirizzi appena
+   la pagina lo ha letto, così non resta nella cronologia del browser; il campo **Token di invito**
+   è già compilato. Se hai solo il token, apri **Accetta invito** in `/invitations/accept` e
+   incollalo.
 
-Studio conferma **Invito accettato** e il tenant compare nel tuo prodotto. Se eri già membro del
-tenant, il tuo ruolo esistente resta invariato.
+**Invito accettato** indica il tenant, il prodotto e il tuo ruolo; **Apri il tenant** ti porta lì.
+Se eri già membro del tenant, il tuo ruolo attuale resta invariato.
 
 > [!IMPORTANT]
-> Un invito può essere accettato solo da un utente che ha eseguito l'accesso e il cui account ha
+> Un invito può essere accettato solo da un utente che ha effettuato l'accesso con un account che ha
 > esattamente l'indirizzo email invitato (maiuscole e minuscole non contano). Gli utenti senza
-> indirizzo email non possono accettare inviti; aggiungili invece direttamente.
+> indirizzo email non possono accettare inviti; aggiungili direttamente.
 
 ## Limite dei ruoli: quali ruoli puoi assegnare {#role-ceiling}
 
@@ -185,12 +195,25 @@ l'ultimo proprietario.
 prodotto (per esempio un errore di battitura nel campo di testo libero del ruolo), oppure è un ruolo
 di prodotto.
 
-**All'accettazione: Non trovato, "the invitation is invalid or expired".** Il token è errato,
-oppure l'invito è già stato accettato, revocato o ha più di 7 giorni. Chiedi un nuovo invito.
+**All'accettazione: Questo invito non può essere usato.** Il server risponde allo stesso modo per
+un invito scaduto (dopo 7 giorni), già accettato o revocato, e per un link o un token incompleto o
+scritto male, così nessuno può sondare gli inviti. Chiedi a chi ti ha invitato un nuovo invito.
 
-**All'accettazione: Non consentito, "this invitation was sent to another email address".** Hai
-eseguito l'accesso con un account di un altro indirizzo, oppure con uno senza indirizzo email.
-Accedi con l'indirizzo invitato oppure chiedi un invito per il tuo indirizzo.
+**All'accettazione: Invito per un altro indirizzo email.** Hai effettuato l'accesso con un account
+di un altro indirizzo. Scegli **Esci e usa l'indirizzo invitato**: dopo l'accesso con l'indirizzo
+invitato, Studio ti riporta all'invito. Oppure chiedi un invito per il tuo indirizzo.
+
+**All'accettazione: Il tuo account non ha un indirizzo email.** Questi account non possono
+accettare inviti. Accedi con l'indirizzo invitato oppure chiedi a chi ti ha invitato di aggiungere
+direttamente il tuo account al tenant.
+
+**All'accettazione: Il server non è raggiungibile.** Non è stato modificato nulla. Controlla la
+connessione e scegli **Riprova**.
+
+**Il link di invito apre "non trovata" o una pagina dell'API.** Il link punta a un indirizzo dove
+Studio non gira. Imposta l'impostazione del server `notify.invitation_accept_url` (o l'impostazione
+di prodotto `invitation_accept_url`) sulla pagina di accettazione di Studio, vedi
+[la consegna](#delivery). Nel frattempo invia il token e fallo incollare in `/invitations/accept`.
 
 **La persona invitata non riesce ad accedere.** Non ha ancora un account. Studio non può creare
 account e non esiste una registrazione con password. Una persona invitata ottiene un account

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Building2, Plus, Search } from 'lucide-react';
+import { Building2, CircleCheck, MoreHorizontal, Plus, Search } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router';
@@ -13,6 +13,10 @@ import {
   Card,
   DataTable,
   Dialog,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
   EmptyState,
   FormField,
   Input,
@@ -29,6 +33,9 @@ import { slugify } from '@/lib/slug';
 import { useDebouncedValue } from '@/lib/useDebouncedValue';
 import { useCursorList } from '@/lib/useCursorList';
 import { HelpLink } from '@/help/HelpLink';
+import menuStyles from '@/components/ui/IconButton.module.css';
+import { ReactivateTenantDialog } from './ReactivateTenantDialog';
+import { useSetTenantStatus } from './tenantStatus';
 
 export function TenantsPage() {
   const { t } = useTranslation('tenants');
@@ -40,7 +47,20 @@ export function TenantsPage() {
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
-  const [status, setStatus] = useState<'' | 'active' | 'suspended'>('');
+  // The status filter lives in the URL (`?status=suspended`), so a filtered list can be linked.
+  const statusParam = searchParams.get('status');
+  const status: '' | 'active' | 'suspended' =
+    statusParam === 'active' || statusParam === 'suspended' ? statusParam : '';
+  const setStatus = (next: '' | 'active' | 'suspended') =>
+    setSearchParams(
+      (current) => {
+        const params = new URLSearchParams(current);
+        if (next) params.set('status', next);
+        else params.delete('status');
+        return params;
+      },
+      { replace: true },
+    );
   const q = useDebouncedValue(search.trim(), 300);
   const creating = searchParams.get('new') === '1' && can('tenants:create');
   const [name, setName] = useState('');
@@ -48,6 +68,8 @@ export function TenantsPage() {
   const [slugTouched, setSlugTouched] = useState(false);
   const effectiveSlug = slugTouched ? slug : slugify(name);
   const filtered = Boolean(q || status);
+  const setTenantStatus = useSetTenantStatus(productId);
+  const [reactivating, setReactivating] = useState<Tenant | null>(null);
 
   const params = { q, status };
   const { tableProps } = useCursorList(queryKeys.tenants(productId, params), (cursor) =>
@@ -124,6 +146,30 @@ export function TenantsPage() {
     },
   ];
 
+  if (can('tenants:update')) {
+    columns.push({
+      id: 'actions',
+      header: <span className="ax-sr-only">{t('common:table.actions')}</span>,
+      align: 'end',
+      cell: (tenant) =>
+        tenant.status === 'suspended' ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={`${menuStyles.iconButton} ${menuStyles.sm}`}
+              aria-label={t('actionsFor', { name: tenant.name })}
+            >
+              <MoreHorizontal aria-hidden />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem icon={<CircleCheck />} onSelect={() => setReactivating(tenant)}>
+                {t('detail.activate')}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : null,
+    });
+  }
+
   const fields = create.error ? fieldErrors(create.error) : {};
 
   return (
@@ -186,6 +232,18 @@ export function TenantsPage() {
           {...tableProps}
         />
       </Card>
+      <ReactivateTenantDialog
+        tenant={reactivating}
+        open={reactivating !== null}
+        onOpenChange={(open) => {
+          if (!open) setReactivating(null);
+        }}
+        onConfirm={() =>
+          reactivating
+            ? setTenantStatus.mutateAsync({ tenant: reactivating, status: 'active' })
+            : Promise.resolve()
+        }
+      />
       <Dialog
         open={creating}
         onOpenChange={setCreating}

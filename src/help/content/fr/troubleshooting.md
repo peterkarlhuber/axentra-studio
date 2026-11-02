@@ -115,7 +115,8 @@ sessions) lorsque tu changes ton mot de passe. Les durées exactes sont fixées 
 - **Le produit est archivé ou le locataire est suspendu.** Seuls les administrateurs de la
   plateforme (accès complet) et les lecteurs de la plateforme (accès en lecture) peuvent alors
   encore y travailler ; tous les autres, clés d’API comprises, obtiennent
-  `the product or tenant is not active`.
+  `the product or tenant is not active`. Les propriétaires et les administrateurs du produit
+  peuvent toujours ouvrir la page d’un locataire suspendu et le [réactiver](help:tenants#reactivate).
 - **Le plafond de rôle.** Tu as tenté d’attribuer un rôle comportant des autorisations que tu ne
   possèdes pas toi-même, ou un rôle de propriétaire sans être propriétaire. Voir
   [Plafond de rôle](help:security#role-ceiling).
@@ -423,6 +424,19 @@ exemple `studio.example.com` et `api.example.com`). Voir [Sécurité](help:secur
 un mot de passe erroné _comme_ pour une adresse inconnue ; le serveur ne révèle pas lequel des deux.
 Après trop de tentatives, tu vois [Trop de requêtes](#rate-limited). Un compte désactivé ne peut pas
 du tout se connecter. Voir [Connexion](help:signing-in).
+
+### Un lien d’invitation ne fonctionne pas {#invitation-link}
+
+- **Page introuvable** ou une page de l’API : le lien pointe vers une adresse où le Studio ne tourne
+  pas. Demande à ton exploitant de régler `notify.invitation_accept_url`, voir
+  [Membres et invitations](help:members-invitations#delivery).
+- **Cette invitation ne peut pas être utilisée** : l’invitation a expiré, a déjà été utilisée ou a
+  été révoquée, ou le lien est incomplet. Demande une nouvelle invitation à la personne qui t’a
+  invité.
+- **Invitation pour une autre adresse e-mail** : choisis **Se déconnecter et utiliser l’adresse
+  invitée**.
+
+Voir [Accepter une invitation](help:members-invitations#accept).
 
 ### Un secret à usage unique a été perdu {#secret-lost}
 

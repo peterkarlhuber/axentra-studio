@@ -77,12 +77,15 @@ habilitado, um **Link do convite**. Os dois são exibidos apenas uma vez.
   instrução do [passo 5](help:tutorial-onboard-customer#accept-invitation).
 
 > [!NOTE]
-> O link do convite é montado a partir da configuração de produto `invitation_accept_url` (nas
+> O link do convite é montado a partir da configuração de produto `invitation_accept_url` (em
 > **Configurações (JSON)** do produto), por exemplo
 > `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Sem essa
-> configuração, o link aponta para `/accept-invitation` no endereço público da API. Aponte-o para a
-> página do seu produto que aceita convites, ou para a própria página do Studio,
-> `https://studio.example.com/invitations/accept?token={token}`, se os seus clientes usam o Studio.
+> configuração, vale a configuração do servidor `notify.invitation_accept_url`; sem ela, o link
+> aponta para `/accept-invitation` no endereço público da API, que o Studio redireciona para sua
+> página de aceite quando roda nesse endereço. Aponte o link para a página do seu produto que aceita
+> convites, ou para a página do Studio
+> `https://studio.example.com/invitations/accept?token={token}` se seus clientes usam o Studio em
+> um endereço próprio.
 
 **Confira:** a guia **Convites** mostra o convite com o status **Pendente** e uma data de expiração 7
 dias à frente.
@@ -104,28 +107,29 @@ O Axentra não revela se um endereço tem conta: o convite funciona da mesma for
 
 Isto é o que a pessoa convidada faz. Envie estas instruções a ela.
 
-1. **Ter uma conta com exatamente o endereço de e-mail convidado.**
+1. **Abrir o link do convite.** Se não estiver conectada, a pessoa vai para **Entrar**, que menciona
+   o convite, e depois de entrar volta a ele.
+2. **Entrar exatamente com o endereço de e-mail convidado.**
    - Se o seu servidor oferece **login único**, a pessoa entra com **Continuar com …**. Uma conta é
-     criada automaticamente para um endereço de e-mail verificado que tenha um convite em aberto.
-   - **Apenas com login por senha**, a conta já precisa existir. O Axentra não tem autocadastro pela
-     API: contas para login por senha são criadas pelo código do seu próprio produto. Veja
+     criada automaticamente para um endereço de e-mail verificado que tem um convite aberto.
+   - Com **apenas login por senha**, a conta já precisa existir. O Axentra não oferece cadastro
+     próprio pela API: as contas para login por senha são criadas pelo código do seu produto. Veja
      [usuários](help:users).
-2. **Abrir o link do convite.** Se não estiver conectada, a pessoa é levada para **Entrar** e, depois
-   do login, de volta ao convite. Com um token em vez de um link, ela abre **Aceitar convite**
-   (endereço `/invitations/accept`) depois de entrar e cola o **Token do convite**.
-3. Escolher **Aceitar convite**.
+3. **Confirmar.** A página mostra a conta em **Conectado como**; a pessoa escolhe **Aceitar
+   convite**. Com um token em vez de um link, ela abre **Aceitar convite** (endereço
+   `/invitations/accept`) depois de entrar e cola o **Token do convite**.
 
-**Resultado esperado:** "Convite aceito. Agora você tem acesso." A pessoa passa a ver o produto e o
-tenant de acordo com a função dela. Pode levar um momento até que o acesso apareça em todos os
-lugares.
+**Resultado esperado:** **Convite aceito**, com o tenant, o produto e a função. A pessoa agora vê o
+tenant de acordo com a função. Pode levar um momento até que o acesso apareça em todos os lugares.
 
 **Confira (você):** na guia **Membros** do tenant, a pessoa aparece com a função **Owner**. Em
 **Convites**, o status é **Aceito**.
 
 > [!WARNING]
-> Os convites são vinculados ao endereço. Se a pessoa entrar com outro endereço, o aceite falha com
-> **Não permitido**. Um convite aceito, revogado ou expirado não pode ser usado de novo: crie um
-> novo.
+> Convites são vinculados ao endereço. Se a pessoa entrar com outro endereço, o Studio mostra
+> **Convite para outro endereço de e-mail** e oferece **Sair e usar o endereço convidado**. Um
+> convite aceito, revogado ou expirado não pode ser usado de novo (**Este convite não pode ser
+> usado**): crie um novo.
 
 ## Passo 6: Ajustar funções, se necessário {#change-role}
 
@@ -196,15 +200,15 @@ Todos com o resultado **Sucesso**. Uma tentativa de aceite com a conta errada ap
 
 ## Solução de problemas {#troubleshooting}
 
-| Problema                                           | Causa e solução                                                                                                                                                                                    |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Owner** não pode ser selecionado                 | Você não tem nível de proprietário ou algumas das permissões da função (teto de funções). Peça a um proprietário do produto ou a um administrador da plataforma.                                   |
-| **Conflito** ao convidar                           | Já existe um convite em aberto para este endereço neste tenant. Use-o ou revogue-o.                                                                                                                |
-| **Usuário não encontrado** em **Adicionar membro** | Nenhuma conta que você consegue ver tem este endereço. Use **Enviar convite**.                                                                                                                     |
-| O cliente não recebe e-mail                        | O módulo `notify` está desligado, ou a entrega do e-mail falhou. Envie você mesmo o link ou o token; verifique as [notificações](help:notifications).                                              |
-| O link abre uma página "não encontrada"            | A configuração de produto `invitation_accept_url` está ausente ou errada (veja [entrega](help:tutorial-onboard-customer#delivery)). Envie o token e peça que seja colado em `/invitations/accept`. |
-| O aceite falha com **Não permitido**               | A pessoa está conectada com uma conta cujo e-mail é diferente do endereço convidado. Entre com a conta certa ou convide o endereço correto.                                                        |
-| O aceite falha com **Não encontrado**              | O convite já foi aceito, revogado ou tem mais de 7 dias. Crie um novo convite.                                                                                                                     |
-| O login único falha com "no account"               | Não há convite em aberto para o endereço verificado, e o cadastro está desligado. Verifique o endereço convidado; veja [como entrar](help:signing-in#sso-errors).                                  |
-| A integração recebe `403`                          | Falta uma permissão à chave, ou o tenant está suspenso.                                                                                                                                            |
-| Nenhum evento no log de auditoria                  | Verifique o filtro **Produto** e se você tem `audit:read`.                                                                                                                                         |
+| Problema                                                     | Causa e solução                                                                                                                                                                                                                                                                                             |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Owner** não pode ser selecionado                           | Você não tem nível de proprietário ou algumas das permissões da função (teto de funções). Peça a um proprietário do produto ou a um administrador da plataforma.                                                                                                                                            |
+| **Conflito** ao convidar                                     | Já existe um convite em aberto para este endereço neste tenant. Use-o ou revogue-o.                                                                                                                                                                                                                         |
+| **Usuário não encontrado** em **Adicionar membro**           | Nenhuma conta que você consegue ver tem este endereço. Use **Enviar convite**.                                                                                                                                                                                                                              |
+| O cliente não recebe e-mail                                  | O módulo `notify` está desligado, ou a entrega do e-mail falhou. Envie você mesmo o link ou o token; verifique as [notificações](help:notifications).                                                                                                                                                       |
+| O link abre uma página "não encontrada" ou uma página da API | O Studio roda em endereço próprio, e nem a configuração do servidor `notify.invitation_accept_url` nem a configuração de produto `invitation_accept_url` apontam para ele (veja [entrega](help:tutorial-onboard-customer#delivery)). Até lá, envie o token e peça que seja colado em `/invitations/accept`. |
+| Ao aceitar aparece **Convite para outro endereço de e-mail** | A pessoa está conectada com uma conta cujo e-mail é diferente do endereço convidado. Escolha **Sair e usar o endereço convidado** ou convide o endereço certo.                                                                                                                                              |
+| Ao aceitar aparece **Este convite não pode ser usado**       | O convite já foi aceito, revogado ou tem mais de 7 dias, ou o token está incompleto. Crie um novo convite.                                                                                                                                                                                                  |
+| O login único falha com "no account"                         | Não há convite em aberto para o endereço verificado, e o cadastro está desligado. Verifique o endereço convidado; veja [como entrar](help:signing-in#sso-errors).                                                                                                                                           |
+| A integração recebe `403`                                    | Falta uma permissão à chave, ou o tenant está suspenso.                                                                                                                                                                                                                                                     |
+| Nenhum evento no log de auditoria                            | Verifique o filtro **Produto** e se você tem `audit:read`.                                                                                                                                                                                                                                                  |

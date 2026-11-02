@@ -135,16 +135,17 @@ Si en su lugar Studio muestra **No se puede conectar con Axentra**, es que no pu
 
 ## Ajustes del servidor que cambian lo que ven los usuarios {#user-visible-settings}
 
-| Ajuste del servidor                                   | Efecto en Studio                                                                                                                        | Predeterminado                                |
-| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `security.password_login`                             | Formulario de inicio de sesión con contraseña en la página de inicio de sesión                                                          | activado                                      |
-| Proveedores `[[oidc]]`                                | Botones de inicio de sesión único en la página de inicio de sesión                                                                      | ninguno                                       |
-| `security.session_ttl_hours` / `session_idle_minutes` | Cuándo deben volver a iniciar sesión los usuarios                                                                                       | 12 h / 120 min                                |
-| `security.password_min_length`                        | Longitud mínima de las contraseñas nuevas                                                                                               | 12                                            |
-| `security.first_password` / `fresh_login_minutes`     | Si los usuarios de inicio de sesión único pueden establecer una contraseña en su [perfil](help:profile#set-password) y en cuánto tiempo | permitido en 5 min                            |
-| `security.max_body_bytes`, `storage.max_file_bytes`   | Solicitud y subida de archivo más grandes                                                                                               | 10 MiB / 50 MiB                               |
-| `observability.metrics_enabled` / `metrics_token_ref` | Si **Métricas** en Monitorización muestra datos o pide un token                                                                         | activado; desactivado en producción sin token |
-| `observability.audit_retention_days`                  | Hasta dónde llega el registro de auditoría después de `axentra maintenance purge`                                                       | 365                                           |
+| Ajuste del servidor                                   | Efecto en Studio                                                                                                                                                                                             | Predeterminado                                |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| `security.password_login`                             | Formulario de inicio de sesión con contraseña en la página de inicio de sesión                                                                                                                               | activado                                      |
+| Proveedores `[[oidc]]`                                | Botones de inicio de sesión único en la página de inicio de sesión                                                                                                                                           | ninguno                                       |
+| `security.session_ttl_hours` / `session_idle_minutes` | Cuándo deben volver a iniciar sesión los usuarios                                                                                                                                                            | 12 h / 120 min                                |
+| `security.password_min_length`                        | Longitud mínima de las contraseñas nuevas                                                                                                                                                                    | 12                                            |
+| `security.first_password` / `fresh_login_minutes`     | Si los usuarios de inicio de sesión único pueden establecer una contraseña en su [perfil](help:profile#set-password) y en cuánto tiempo                                                                      | permitido en 5 min                            |
+| `security.max_body_bytes`, `storage.max_file_bytes`   | Solicitud y subida de archivo más grandes                                                                                                                                                                    | 10 MiB / 50 MiB                               |
+| `observability.metrics_enabled` / `metrics_token_ref` | Si **Métricas** en Monitorización muestra datos o pide un token                                                                                                                                              | activado; desactivado en producción sin token |
+| `observability.audit_retention_days`                  | Hasta dónde llega el registro de auditoría después de `axentra maintenance purge`                                                                                                                            | 365                                           |
+| `notify.invitation_accept_url`                        | Adónde llevan los enlaces de invitación (prevalece la `invitation_accept_url` propia del producto). Defínelo como `https://<your Studio address>/invitations/accept` cuando Studio tenga su propia dirección | `/accept-invitation` en `security.public_url` |
 
 Cámbialos en el archivo TOML del servidor o como variables de entorno
 `AXENTRA__<SECTION>__<KEY>` (por ejemplo `AXENTRA__SECURITY__SESSION_TTL_HOURS=8`) y reinicia la
@@ -189,3 +190,8 @@ En el repositorio de Studio: `README.md` (configuración e imagen de contenedor)
   `single`.
 - El registro de auditoría muestra la dirección del proxy como **Dirección IP**: añade el proxy a
   `security.trusted_proxies`.
+- Los enlaces de invitación abren una página de la API o **Página no encontrada**: Studio tiene su
+  propia dirección. Define `notify.invitation_accept_url` como
+  `https://<your Studio address>/invitations/accept` y reinicia la API. Los enlaces ya enviados
+  siguen apuntando a la API; envía a esas personas el token o una invitación nueva. Consulta
+  [Miembros e invitaciones](help:members-invitations#delivery).

@@ -106,7 +106,8 @@ em que você estava. Dados de formulário não salvos são perdidos. Veja [Sess�
   para saber o que cada permissão permite e quais funções integradas a têm.
 - **O produto está arquivado ou o tenant está suspenso.** Nesse caso, apenas administradores da
   plataforma (acesso total) e leitores da plataforma (acesso de leitura) ainda podem trabalhar nele;
-  todos os outros, incluindo chaves de API, recebem `the product or tenant is not active`.
+  todos os outros, incluindo chaves de API, recebem `the product or tenant is not active`. Proprietários e administradores do
+  produto ainda podem abrir a página de um tenant suspenso e [reativá-lo](help:tenants#reactivate).
 - **O teto de funções.** Você tentou atribuir uma função com permissões que você mesmo não tem, ou
   uma função de proprietário sem ser proprietário. Veja [teto de funções](help:security#role-ceiling).
 - **Permissões de chaves de API.** Você tentou dar a uma nova chave uma permissão que você não tem
@@ -394,6 +395,17 @@ endereços diferentes, os dois precisam pertencer ao mesmo site (por exemplo `st
 senha errada _quanto_ para um endereço desconhecido; o servidor não revela qual é o caso. Depois de
 tentativas demais, você vê [Muitas requisições](#rate-limited). Uma conta desabilitada não consegue
 entrar de forma alguma. Veja [Como entrar](help:signing-in).
+
+### Um link de convite não funciona {#invitation-link}
+
+- **Página não encontrada** ou uma página da API: o link aponta para um endereço onde o Studio não
+  roda. Peça a quem opera o servidor que defina `notify.invitation_accept_url`; veja
+  [Membros e convites](help:members-invitations#delivery).
+- **Este convite não pode ser usado**: o convite expirou, já foi usado ou revogado, ou o link está
+  incompleto. Peça um novo convite a quem convidou você.
+- **Convite para outro endereço de e-mail**: escolha **Sair e usar o endereço convidado**.
+
+Veja [Aceitar um convite](help:members-invitations#accept).
 
 ### Um segredo de exibição única foi perdido {#secret-lost}
 

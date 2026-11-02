@@ -81,9 +81,11 @@ is enabled, an **Invitation link**. Both are shown only once.
 > The invitation link is built from the product setting `invitation_accept_url` (in the product's
 > **Settings (JSON)**), for example
 > `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Without
-> that setting, the link points to `/accept-invitation` on the API's public address. Point it at the
-> page of your product that accepts invitations, or at Studio's own page
-> `https://studio.example.com/invitations/accept?token={token}` if your customers use Studio.
+> it, the server setting `notify.invitation_accept_url` applies; without that, the link points to
+> `/accept-invitation` on the API's public address, which Studio forwards to its accept page when
+> it runs on that address. Point the link at the page of your product that accepts invitations,
+> or at Studio's page `https://studio.example.com/invitations/accept?token={token}` if your
+> customers use Studio on its own address.
 
 **Check it:** The **Invitations** tab shows the invitation with status **Pending** and an expiry date
 7 days ahead.
@@ -105,27 +107,30 @@ Axentra does not reveal whether an address has an account: inviting works the sa
 
 This is what the invited person does. Send them these instructions.
 
-1. **Have an account with exactly the invited email address.**
+1. **Open the invitation link.** If not signed in, the person is taken to **Sign in**, which
+   mentions the invitation, and after signing in back to it.
+2. **Sign in with exactly the invited email address.**
    - If your server offers **single sign-on**, the person signs in with **Continue with …**. An
      account is created automatically for a verified email address that has an open invitation.
    - With **password sign-in only**, the account must already exist. Axentra has no
-     self-registration over the API: accounts for password sign-in are created by your product's own
-     code. See [users](help:users).
-2. **Open the invitation link.** If not signed in, the person is taken to **Sign in** and, after
-   signing in, back to the invitation. With a token instead of a link, they open **Accept
-   invitation** (address `/invitations/accept`) after signing in and paste the **Invitation token**.
-3. Choose **Accept invitation**.
+     self-registration over the API: accounts for password sign-in are created by your product's
+     own code. See [users](help:users).
+3. **Confirm.** The page shows the account under **Signed in as**; the person chooses **Accept
+   invitation**. With a token instead of a link, they open **Accept invitation** (address
+   `/invitations/accept`) after signing in and paste the **Invitation token**.
 
-**Expected result:** "Invitation accepted. You now have access." The person now sees the product and
-the tenant according to their role. It can take a moment until the access shows everywhere.
+**Expected result:** **Invitation accepted**, naming the tenant, the product and the role. The
+person now sees the tenant according to their role. It can take a moment until the access shows
+everywhere.
 
 **Check it (you):** On the tenant's **Members** tab, the person is listed with the role **Owner**.
 On **Invitations**, the status is **Accepted**.
 
 > [!WARNING]
-> Invitations are bound to the address. If the person signs in with another address, accepting
-> fails with **Not permitted**. An invitation that was accepted, revoked or has expired cannot be
-> used again: create a new one.
+> Invitations are bound to the address. If the person signs in with another address, Studio shows
+> **Invitation for another email address** and offers **Sign out and use the invited address**. An
+> invitation that was accepted, revoked or has expired cannot be used again (**This invitation
+> cannot be used**): create a new one.
 
 ## Step 6: Adjust roles if needed {#change-role}
 
@@ -193,15 +198,15 @@ All with the outcome **Success**. An accept attempt with the wrong account appea
 
 ## Troubleshooting {#troubleshooting}
 
-| Problem                                | Cause and fix                                                                                                                                                                             |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Owner** cannot be selected           | You lack owner rank or some of the role's permissions (role ceiling). Ask a product owner or platform administrator.                                                                      |
-| **Conflict** when inviting             | An open invitation for this address already exists in this tenant. Use or revoke it.                                                                                                      |
-| **User not found** in **Add member**   | No account you can see has this address. Use **Send invitation instead**.                                                                                                                 |
-| The customer gets no email             | The `notify` module is off, or mail delivery failed. Send the link or token yourself; check [notifications](help:notifications).                                                          |
-| The link opens a "page not found"      | The product setting `invitation_accept_url` is missing or wrong (see [delivery](help:tutorial-onboard-customer#delivery)). Send the token and have it pasted under `/invitations/accept`. |
-| Accepting fails with **Not permitted** | The person is signed in with an account whose email differs from the invited address. Sign in with the right account, or invite the actual address.                                       |
-| Accepting fails with **Not found**     | The invitation was already accepted, revoked or is older than 7 days. Create a new invitation.                                                                                            |
-| Single sign-on fails with "no account" | No open invitation for the verified address, and sign-up is off. Check the invited address; see [signing in](help:signing-in#sso-errors).                                                 |
-| The integration gets `403`             | The key lacks a permission, or the tenant is suspended.                                                                                                                                   |
-| No events in the audit log             | Check the **Product** filter and that you have `audit:read`.                                                                                                                              |
+| Problem                                                  | Cause and fix                                                                                                                                                                                                                                                                                     |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Owner** cannot be selected                             | You lack owner rank or some of the role's permissions (role ceiling). Ask a product owner or platform administrator.                                                                                                                                                                              |
+| **Conflict** when inviting                               | An open invitation for this address already exists in this tenant. Use or revoke it.                                                                                                                                                                                                              |
+| **User not found** in **Add member**                     | No account you can see has this address. Use **Send invitation instead**.                                                                                                                                                                                                                         |
+| The customer gets no email                               | The `notify` module is off, or mail delivery failed. Send the link or token yourself; check [notifications](help:notifications).                                                                                                                                                                  |
+| The link opens a "page not found" or a page of the API   | Studio runs on its own address, and neither the server setting `notify.invitation_accept_url` nor the product setting `invitation_accept_url` points to it (see [delivery](help:tutorial-onboard-customer#delivery)). Until fixed, send the token and have it pasted under `/invitations/accept`. |
+| Accepting shows **Invitation for another email address** | The person is signed in with an account whose email differs from the invited address. Choose **Sign out and use the invited address**, or invite the actual address.                                                                                                                              |
+| Accepting shows **This invitation cannot be used**       | The invitation was already accepted, revoked or is older than 7 days, or the token is incomplete. Create a new invitation.                                                                                                                                                                        |
+| Single sign-on fails with "no account"                   | No open invitation for the verified address, and sign-up is off. Check the invited address; see [signing in](help:signing-in#sso-errors).                                                                                                                                                         |
+| The integration gets `403`                               | The key lacks a permission, or the tenant is suspended.                                                                                                                                                                                                                                           |
+| No events in the audit log                               | Check the **Product** filter and that you have `audit:read`.                                                                                                                                                                                                                                      |

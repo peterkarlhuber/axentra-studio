@@ -29,6 +29,9 @@ Open [Tenants](app:tenants). Use **Search tenants** to filter by name or slug an
 filter to show only **Active** or **Suspended** tenants. The **Members** column counts the
 tenant's memberships.
 
+To find suspended tenants quickly, choose **Suspended** in the **Status** filter; the filter is
+kept in the page address, so you can bookmark or share the filtered list.
+
 ## Create a tenant {#create}
 
 1. Open [Tenants](app:tenants) and choose **New tenant**.
@@ -72,30 +75,32 @@ While a tenant is suspended:
 
 - its members cannot access it; their requests are refused with **Not permitted**;
 - API keys bound to the tenant, and product-wide keys working in it, are refused too;
-- product operators also lose access to the tenant's data and its page; the tenant stays in the
-  [Tenants](app:tenants) list with the status **Suspended**;
+- product operators lose access to the tenant's data (members, invitations, records, files,
+  usage, billing); they can still open the tenant's page, which shows **This tenant is suspended**,
+  and reactivate it. The tenant stays in the [Tenants](app:tenants) list with the status
+  **Suspended**;
 - platform administrators keep full access and platform viewers keep read access;
 - no data is deleted.
 
 ## Reactivate a tenant {#reactivate}
 
-1. Open the suspended tenant.
-2. Choose **Reactivate tenant**.
+Reactivating needs `tenants:update`, which product owners and product admins hold; you do not
+need to be a platform administrator.
 
-Members and keys work again immediately.
+1. Open the suspended tenant, for example from [Tenants](app:tenants) with the **Status** filter set
+   to **Suspended**. The page shows the **This tenant is suspended** banner.
+2. Choose **Reactivate tenant**. In the list, the same action is in the actions menu (**⋯**) of a
+   suspended tenant's row.
+3. Read the confirmation and choose **Reactivate tenant**.
 
-> [!WARNING]
-> Only platform administrators (and platform viewers, read-only) can open a suspended tenant's
-> page. A product owner or admin who is not a platform administrator gets **Not permitted** there
-> and cannot reach **Reactivate tenant** in Studio. Ask a platform administrator, or reactivate
-> through the API with `tenants:update`:
->
-> ```http
-> PATCH /v1/products/prd_01EXAMPLE/tenants/ten_01EXAMPLE
-> Content-Type: application/json
->
-> {"status": "active"}
-> ```
+Members and keys work again immediately, with the same roles and permissions as before, and the
+status changes to **Active** in the tenant page and the list. The change is recorded in the audit
+log as `tenancy.tenant.update` with the previous and the new status.
+
+While the tenant is suspended, its **Members** and **Invitations** tabs show **Not available while
+the tenant is suspended** instead of their lists, because the server keeps the tenant's data closed.
+People without `tenants:update` (for example product viewers or support) see the banner but no
+**Reactivate tenant** action.
 
 ## Delete a tenant {#delete}
 
@@ -133,8 +138,9 @@ deleted tenants can be reused.
 **Please check your input: "slug must be 2-63 lowercase letters, digits or dashes".** Remove
 capitals, spaces and special characters from the slug.
 
-**Not permitted when opening a tenant.** The tenant is suspended (see [reactivate](#reactivate)),
-or the product is archived, or you lack `tenant:read` in it.
+**Not permitted when opening a tenant.** The tenant is suspended and you are one of its members
+(only product operators and platform administrators can open a suspended tenant; see
+[reactivate](#reactivate)), or the product is archived, or you lack `tenant:read` in it.
 
 **Not found when opening a tenant.** The tenant was deleted, or you have no relation to it at all
 (Axentra answers the same way so that tenant IDs cannot be probed).
@@ -146,3 +152,8 @@ page and repeat your change.
 `acme`, not the display name.
 
 **No New tenant button.** You lack `tenants:create`. Ask a product owner or admin.
+
+**No Reactivate tenant action.** You lack `tenants:update`. Ask a product owner or admin.
+
+**Changed in the meantime when reactivating.** Someone else changed the tenant first. Studio reloads
+it; check the status and choose **Reactivate tenant** again if it is still suspended.

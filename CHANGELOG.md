@@ -6,6 +6,19 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- Product owners and admins who are not platform administrators can reactivate a suspended tenant
+  (needs axentra with the suspended-tenant read fix). The tenant page loads, shows a **This tenant
+  is suspended** banner that says what suspension means and who can lift it, and offers
+  **Reactivate tenant** with a confirmation only to users with `tenants:update`. The Members and
+  Invitations tabs show one explanation instead of failing with `403` (platform roles still see the
+  data). The tenant list offers **Reactivate tenant** in the row menu of suspended tenants, and its
+  status filter is kept in the address (`?status=suspended`). Help (tenants, troubleshooting, FAQ)
+  describes the flow in all six languages instead of the API workaround. Vitest and a Playwright
+  spec (`e2e/tenant-suspension.spec.ts`, real backend, product owner without a platform role and a
+  member of the tenant) cover it; `scripts/e2e-backend.sh` creates two plain users for such specs.
+
 ### Changed
 
 - GitHub social preview `branding-src/social-preview.png` (1280 × 640, not served): the Axentra
@@ -163,6 +176,18 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Fixed
 
+- Invitation links: Axentra's default link `<public_url>/accept-invitation?token=…` ended on "page
+  not found". `/accept-invitation` is now a public alias of `/invitations/accept` (history replace,
+  query kept), so links already sent work when Studio runs on the API origin; split-origin
+  deployments set Axentra's new `notify.invitation_accept_url`. Signed-out visitors keep the token
+  through password and single sign-on login. The accept page removes the token from the address
+  bar, keeps it for the tab only, still waits for confirmation, shows the signed-in account and
+  explains every outcome with a next step (accepted with tenant and role, unusable invitation,
+  another address with "sign out and use the invited address", account without email, server not
+  reachable with retry). The sign-in page explains an invitation sign-in and how people without an
+  account get one. Help articles updated in all six languages; new `e2e/invitations.spec.ts`;
+  `scripts/e2e-backend.sh` points invitation links at the preview origin when the backend supports
+  the setting.
 - The full Playwright suite passes against one `scripts/e2e-backend.sh run --worker` backend: the
   worker loads the e2e job handlers, billing uses the `manual` provider, webhook retries are short,
   the a11y route sweep gets job, webhook, template and subscription fixtures (no skipped routes),

@@ -43,8 +43,7 @@
     "suspended": "Tenant sospeso",
     "activated": "Tenant riattivato",
     "suspendTitle": "Sospendere il tenant?",
-    "suspendBody": "I membri di “{{name}}” e le relative chiavi API perdono l'accesso finché il tenant non viene riattivato. Anche gli operatori del prodotto perdono l'accesso ai suoi dati; solo gli amministratori della piattaforma possono ancora aprirlo. Nessun dato viene eliminato.",
-    "suspendedNotice": "Questo tenant è sospeso. I suoi membri, gli operatori del prodotto e le chiavi API non possono accedervi."
+    "suspendBody": "I membri di “{{name}}” e le relative chiavi API perdono l'accesso finché il tenant non viene riattivato. Gli operatori del prodotto possono ancora aprire il tenant e riattivarlo, ma non accedere ai suoi dati; possono farlo solo gli amministratori della piattaforma. Nessun dato viene eliminato."
   },
   "invitations": {
     "title": "Inviti",
@@ -77,18 +76,67 @@
   },
   "accept": {
     "title": "Accetta invito",
-    "description": "Unisciti a un tenant con il link di invito o il token che hai ricevuto. Devi aver effettuato l'accesso con l'account dell'indirizzo email invitato.",
+    "description": "Unisciti a un tenant con il link di invito o il token che hai ricevuto. Accedi con l'account dell'indirizzo email a cui è stato inviato l'invito, controlla i dati e conferma.",
     "token": "Token di invito",
+    "tokenHelp": "Incolla il token dell'invito se non hai aperto il link.",
+    "tokenFromLink": "Ripreso dal tuo link di invito. Non compare più nella barra degli indirizzi.",
     "submit": "Accetta invito",
     "successTitle": "Invito accettato",
-    "successBody": "Ora hai accesso. Potrebbe essere necessario qualche istante prima che sia visibile ovunque.",
-    "continue": "Continua",
-    "invalid": "Questo invito non è valido, è scaduto, è stato revocato o è già stato usato. Chiedi un nuovo invito.",
-    "wrongEmail": "Questo invito è stato inviato a un altro indirizzo email. Accedi con l'account di quell'indirizzo oppure chiedi un invito per il tuo indirizzo."
+    "successBody": "Ora sei membro con il ruolo {{role}}. Potrebbe essere necessario qualche istante prima che l'accesso sia visibile ovunque.",
+    "continue": "Vai alla pagina iniziale",
+    "successBodyNamed": "Ora sei membro di {{tenant}} in {{product}} con il ruolo {{role}}.",
+    "openTenant": "Apri il tenant",
+    "signedInAs": "Accesso effettuato come <strong>{{account}}</strong>.",
+    "switchAccount": "Usa un altro account",
+    "switchAccountAction": "Esci e usa l'indirizzo invitato",
+    "noEmailTitle": "Il tuo account non ha un indirizzo email",
+    "noEmail": "Gli inviti sono legati a un indirizzo email, quindi un account senza indirizzo non può accettarli. Accedi con l'account dell'indirizzo invitato oppure chiedi a chi ti ha invitato di aggiungere direttamente il tuo account al tenant.",
+    "outcomes": {
+      "invalid": {
+        "title": "Questo invito non può essere usato",
+        "body": "Il server non dice quale di questi motivi vale:",
+        "expired": "è scaduto (gli inviti valgono 7 giorni),",
+        "used": "è già stato accettato, da te o in un’altra scheda,",
+        "revoked": "è stato revocato,",
+        "mistyped": "il link o il token è incompleto o scritto male.",
+        "next": "Chiedi a chi ti ha invitato un nuovo invito."
+      },
+      "wrongEmail": {
+        "title": "Invito per un altro indirizzo email",
+        "body": "L'invito è stato inviato a un indirizzo diverso da quello dell'account con cui hai effettuato l'accesso ({{account}}). Esci e accedi con l'indirizzo invitato, oppure chiedi un invito per il tuo indirizzo."
+      },
+      "noEmail": {
+        "title": "Il tuo account non ha un indirizzo email"
+      },
+      "unreachable": {
+        "title": "Il server non è raggiungibile",
+        "body": "Il tuo invito non è stato modificato. Controlla la connessione e riprova tra un momento."
+      },
+      "other": {
+        "title": "L'invito non è stato accettato"
+      }
+    }
   },
   "search": "Cerca tenant",
   "searchPlaceholder": "Nome o slug",
   "filters": {
     "allStatuses": "Tutti gli stati"
+  },
+  "actionsFor": "Azioni per {{name}}",
+  "reactivate": {
+    "title": "Riattivare il tenant?",
+    "body": "I membri di “{{name}}” e le relative chiavi API riottengono subito l'accesso, con gli stessi ruoli e permessi di prima. I suoi dati tornano disponibili."
+  },
+  "suspendedBanner": {
+    "title": "Questo tenant è sospeso",
+    "body": "I suoi membri e le chiavi API sono bloccati, e i suoi membri, inviti, record, file, utilizzo e fatturazione non si possono aprire. Nessun dato è stato eliminato.",
+    "bodyPlatform": "I suoi membri, gli operatori del prodotto e le chiavi API non possono accedere ai suoi dati; il tuo ruolo di piattaforma sì. Nessun dato è stato eliminato.",
+    "canReactivate": "Riattiva il tenant per ripristinare l'accesso.",
+    "askOperator": "Un proprietario o un amministratore del prodotto può riattivarlo."
+  },
+  "suspendedData": {
+    "title": "Non disponibile finché il tenant è sospeso",
+    "body": "I membri e gli inviti di un tenant sospeso non si possono vedere né modificare. Un proprietario o un amministratore del prodotto può riattivare il tenant.",
+    "bodyCanReactivate": "I membri e gli inviti di un tenant sospeso non si possono vedere né modificare. Riattiva il tenant per gestirli di nuovo."
   }
 }

@@ -12,6 +12,10 @@ export const e2e = {
   jobId: process.env.AXENTRA_E2E_JOB_ID,
   webhookId: process.env.AXENTRA_E2E_WEBHOOK_ID,
   templateKey: process.env.AXENTRA_E2E_TEMPLATE_KEY,
+  /** Plain users without any role (scripts/e2e-backend.sh); specs give them product or tenant roles. */
+  operatorEmail: process.env.AXENTRA_E2E_OPERATOR_EMAIL,
+  memberEmail: process.env.AXENTRA_E2E_MEMBER_EMAIL,
+  userPassword: process.env.AXENTRA_E2E_USER_PASSWORD,
 };
 
 export const SKIP_NO_API =
@@ -103,11 +107,14 @@ export function trackConsoleErrors(page: Page, allow: RegExp[] = []) {
   };
 }
 
-/** Signs in through the UI. */
-export async function signIn(page: Page) {
+/** Signs in through the UI, as the platform admin unless other credentials are given. */
+export async function signIn(
+  page: Page,
+  credentials: { email?: string; password?: string } = { email: e2e.email, password: e2e.password },
+) {
   await page.goto('/login');
-  await page.getByLabel(/email/i).fill(e2e.email ?? '');
-  await page.getByLabel(/password/i).fill(e2e.password ?? '');
+  await page.getByLabel(/email/i).fill(credentials.email ?? '');
+  await page.getByLabel(/password/i).fill(credentials.password ?? '');
   await page.getByRole('button', { name: /sign in/i }).click();
   await expect(page).not.toHaveURL(/\/login/);
 }

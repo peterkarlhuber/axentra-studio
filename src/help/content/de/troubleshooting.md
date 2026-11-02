@@ -114,7 +114,8 @@ Seite, auf der du warst. Nicht gespeicherte Formulareingaben gehen verloren. Sie
   steht, was jede Berechtigung erlaubt und welche integrierten Rollen sie haben.
 - **Das Produkt ist archiviert oder der Mandant gesperrt.** Dann können nur noch
   Plattform-Administratoren (voller Zugriff) und Plattform-Betrachter (Lesezugriff) darin
-  arbeiten; alle anderen, auch API-Schlüssel, erhalten `the product or tenant is not active`.
+  arbeiten; alle anderen, auch API-Schlüssel, erhalten `the product or tenant is not active`. Product owner und Product admins können die
+  Seite eines gesperrten Mandanten trotzdem öffnen und ihn [reaktivieren](help:tenants#reactivate).
 - **Die Rollenobergrenze.** Du wolltest eine Rolle vergeben, die Berechtigungen enthält, die du
   selbst nicht hast, oder eine Owner-Rolle, ohne selbst Owner zu sein. Siehe
   [Rollenobergrenze](help:security#role-ceiling).
@@ -418,6 +419,19 @@ Studio und API unter verschiedenen Adressen, müssen beide zur selben Site gehö
 falschen Passwort _und_ bei einer unbekannten Adresse; der Server verrät nicht, was zutrifft. Nach
 zu vielen Versuchen siehst du [Zu viele Anfragen](#rate-limited). Ein deaktiviertes Konto kann sich
 überhaupt nicht anmelden. Siehe [An- und Abmelden](help:signing-in).
+
+### Ein Einladungslink funktioniert nicht {#invitation-link}
+
+- **Seite nicht gefunden** oder eine Seite der API: Der Link zeigt auf eine Adresse, unter der
+  Studio nicht läuft. Bitte deinen Betrieb, `notify.invitation_accept_url` zu setzen, siehe
+  [Mitglieder und Einladungen](help:members-invitations#delivery).
+- **Diese Einladung kann nicht verwendet werden**: Die Einladung ist abgelaufen, wurde bereits
+  verwendet oder widerrufen, oder der Link ist unvollständig. Bitte die Person, die dich eingeladen
+  hat, um eine neue Einladung.
+- **Einladung für eine andere E-Mail-Adresse**: Wähle **Abmelden und eingeladene Adresse
+  verwenden**.
+
+Siehe [Eine Einladung annehmen](help:members-invitations#accept).
 
 ### Ein einmal angezeigtes Geheimnis ist verloren {#secret-lost}
 

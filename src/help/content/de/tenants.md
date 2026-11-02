@@ -29,6 +29,9 @@ hierarchy
 Filter **Status** zeigst du nur **Aktiv** oder **Gesperrt** an. Die Spalte **Mitglieder** zählt die
 Mitgliedschaften des Mandanten.
 
+Um gesperrte Mandanten schnell zu finden, wähle im Filter **Status** den Wert **Gesperrt**; der Filter
+bleibt in der Adresse der Seite erhalten, sodass du die gefilterte Liste speichern oder teilen kannst.
+
 ## Einen Mandanten anlegen {#create}
 
 1. Öffne [Mandanten](app:tenants) und wähle **Neuer Mandant**.
@@ -73,31 +76,33 @@ Solange ein Mandant gesperrt ist:
 - können seine Mitglieder nicht auf ihn zugreifen; ihre Anfragen werden mit **Nicht erlaubt** abgelehnt;
 - werden auch an den Mandanten gebundene API-Schlüssel und produktweite Schlüssel, die in ihm arbeiten,
   abgelehnt;
-- verlieren auch Produktverantwortliche den Zugriff auf die Daten und die Seite des Mandanten; der
-  Mandant bleibt mit dem Status **Gesperrt** in der Liste [Mandanten](app:tenants);
+- verlieren Produktverantwortliche den Zugriff auf die Daten des Mandanten (Mitglieder, Einladungen,
+  Datensätze, Dateien, Nutzung, Abrechnung); sie können seine Seite aber weiterhin öffnen, die
+  **Dieser Mandant ist gesperrt** anzeigt, und ihn reaktivieren. Der Mandant bleibt mit dem Status
+  **Gesperrt** in der Liste [Mandanten](app:tenants);
 - behalten Plattform-Administratoren vollen Zugriff und Personen mit Plattform-Leserecht Lesezugriff;
 - werden keine Daten gelöscht.
 
 ## Einen Mandanten reaktivieren {#reactivate}
 
-1. Öffne den gesperrten Mandanten.
-2. Wähle **Mandant reaktivieren**.
+Zum Reaktivieren brauchst du `tenants:update`; das haben Product owner und Product admins. Du musst
+kein Plattform-Administrator sein.
 
-Mitglieder und Schlüssel funktionieren sofort wieder.
+1. Öffne den gesperrten Mandanten, zum Beispiel über [Mandanten](app:tenants) mit dem Filter
+   **Status** auf **Gesperrt**. Die Seite zeigt den Hinweis **Dieser Mandant ist gesperrt**.
+2. Wähle **Mandant reaktivieren**. In der Liste findest du dieselbe Aktion im Aktionsmenü (**⋯**)
+   der Zeile eines gesperrten Mandanten.
+3. Lies die Bestätigung und wähle **Mandant reaktivieren**.
 
-> [!WARNING]
-> Nur Plattform-Administratoren (und Personen mit Plattform-Leserecht, nur lesend) können die Seite
-> eines gesperrten Mandanten öffnen. Ein Product owner oder Product admin, der kein
-> Plattform-Administrator ist, erhält dort **Nicht erlaubt** und kommt in Studio nicht an **Mandant
-> reaktivieren** heran. Bitte einen Plattform-Administrator darum oder reaktiviere über die API mit
-> `tenants:update`:
->
-> ```http
-> PATCH /v1/products/prd_01EXAMPLE/tenants/ten_01EXAMPLE
-> Content-Type: application/json
->
-> {"status": "active"}
-> ```
+Mitglieder und Schlüssel funktionieren sofort wieder, mit denselben Rollen und Berechtigungen wie
+vorher, und der Status wechselt auf der Mandantenseite und in der Liste zu **Aktiv**. Das
+Audit-Protokoll hält die Änderung als `tenancy.tenant.update` mit dem vorherigen und dem neuen Status
+fest.
+
+Solange der Mandant gesperrt ist, zeigen seine Tabs **Mitglieder** und **Einladungen** statt ihrer
+Listen **Nicht verfügbar, solange der Mandant gesperrt ist**, weil der Server die Daten des Mandanten
+gesperrt hält. Wer `tenants:update` nicht hat (zum Beispiel Product viewer oder Support), sieht den
+Hinweis, aber keine Aktion **Mandant reaktivieren**.
 
 ## Einen Mandanten löschen {#delete}
 
@@ -139,8 +144,10 @@ Kurznamen gelöschter Mandanten können wiederverwendet werden.
 **Bitte prüfe deine Eingaben: „slug must be 2-63 lowercase letters, digits or dashes“.** Entferne
 Großbuchstaben, Leerzeichen und Sonderzeichen aus dem Kurznamen.
 
-**Nicht erlaubt beim Öffnen eines Mandanten.** Der Mandant ist gesperrt (siehe
-[Reaktivieren](#reactivate)), das Produkt ist archiviert, oder dir fehlt darin `tenant:read`.
+**Nicht erlaubt beim Öffnen eines Mandanten.** Der Mandant ist gesperrt und du bist eines seiner
+Mitglieder (nur Produktverantwortliche und Plattform-Administratoren können einen gesperrten Mandanten
+öffnen; siehe [Reaktivieren](#reactivate)), das Produkt ist archiviert, oder dir fehlt darin
+`tenant:read`.
 
 **Nicht gefunden beim Öffnen eines Mandanten.** Der Mandant wurde gelöscht, oder du hast überhaupt
 keine Beziehung zu ihm (Axentra antwortet in beiden Fällen gleich, damit sich Mandanten-IDs nicht
@@ -154,3 +161,10 @@ angezeigt wird, zum Beispiel `acme`, nicht den Anzeigenamen.
 
 **Kein Button Neuer Mandant.** Dir fehlt `tenants:create`. Wende dich an einen Product owner oder
 Product admin.
+
+**Keine Aktion Mandant reaktivieren.** Dir fehlt `tenants:update`. Wende dich an einen Product owner
+oder Product admin.
+
+**Zwischenzeitlich geändert beim Reaktivieren.** Jemand anderes hat den Mandanten zuerst geändert.
+Studio lädt ihn neu; prüfe den Status und wähle erneut **Mandant reaktivieren**, falls er noch
+gesperrt ist.

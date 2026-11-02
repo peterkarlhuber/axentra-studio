@@ -109,7 +109,9 @@ in cui eri. I dati non salvati nei moduli vanno persi. Vedi [Sessione terminata]
   per sapere cosa consente ogni autorizzazione e quali ruoli predefiniti la possiedono.
 - **Il prodotto è archiviato o il tenant è sospeso.** In tal caso possono ancora lavorarci solo gli
   amministratori della piattaforma (accesso completo) e i visualizzatori della piattaforma (accesso
-  in lettura); tutti gli altri, chiavi API comprese, ricevono `the product or tenant is not active`.
+  in lettura); tutti gli altri, chiavi API comprese, ricevono `the product or tenant is not active`. I proprietari e gli amministratori del
+  prodotto possono comunque aprire la pagina di un tenant sospeso e
+  [riattivarlo](help:tenants#reactivate).
 - **Il tetto dei ruoli.** Hai cercato di assegnare un ruolo con autorizzazioni che non possiedi,
   oppure un ruolo di proprietario senza essere proprietario. Vedi
   [tetto dei ruoli](help:security#role-ceiling).
@@ -403,6 +405,17 @@ trovano su indirizzi diversi, entrambi devono appartenere allo stesso sito (per 
 una password errata _sia_ per un indirizzo sconosciuto; il server non rivela quale dei due. Dopo
 troppi tentativi vedi [Troppe richieste](#rate-limited). Un account disattivato non può accedere in
 alcun modo. Vedi [Accesso](help:signing-in).
+
+### Un link di invito non funziona {#invitation-link}
+
+- **Pagina non trovata** o una pagina dell'API: il link punta a un indirizzo dove Studio non gira.
+  Chiedi a chi gestisce il server di impostare `notify.invitation_accept_url`, vedi
+  [Membri e inviti](help:members-invitations#delivery).
+- **Questo invito non può essere usato**: l'invito è scaduto, è già stato usato o revocato, oppure
+  il link è incompleto. Chiedi a chi ti ha invitato un nuovo invito.
+- **Invito per un altro indirizzo email**: scegli **Esci e usa l'indirizzo invitato**.
+
+Vedi [Accettare un invito](help:members-invitations#accept).
 
 ### Un segreto mostrato una sola volta è andato perso {#secret-lost}
 
