@@ -127,11 +127,16 @@ Ecco cosa fa la persona invitata:
    Se la pagina di accesso offre il single sign-on, accedi lì con l'indirizzo invitato: il server
    crea il tuo account perché c'è un invito aperto per quell'indirizzo. Non esiste la registrazione
    con password; rivolgiti a chi ti ha invitato o a un amministratore.
-3. Controlla l'account mostrato in **Accesso effettuato come** e scegli **Accetta invito**. Non
-   succede nulla prima della tua conferma. Studio toglie il token dalla barra degli indirizzi appena
-   la pagina lo ha letto, così non resta nella cronologia del browser; il campo **Token di invito**
-   è già compilato. Se hai solo il token, apri **Accetta invito** in `/invitations/accept` e
-   incollalo.
+3. Controlla l'account mostrato in **Accesso effettuato come** e scegli **Accetta invito**. Dopo un
+   accesso con password, non succede nulla prima della tua conferma. Studio toglie il token dalla
+   barra degli indirizzi appena la pagina lo ha letto, così non resta nella cronologia del browser;
+   il campo **Token di invito** è già compilato. Se hai solo il token, apri **Accetta invito** in
+   `/invitations/accept` e incollalo.
+
+Con il single sign-on, il server accetta l'invito appena hai effettuato l'accesso. Studio verifica
+che ora sei membro del tenant e mostra subito **Invito accettato**, senza una seconda conferma. Se
+il server non è riuscito ad accettarlo (per esempio perché hai effettuato l'accesso con un altro
+indirizzo), la pagina ti chiede la conferma come al passo 3 e spiega che cosa non ha funzionato.
 
 **Invito accettato** indica il tenant, il prodotto e il tuo ruolo; **Apri il tenant** ti porta lì.
 Se eri già membro del tenant, il tuo ruolo attuale resta invariato.

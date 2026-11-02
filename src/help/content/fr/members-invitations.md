@@ -124,10 +124,16 @@ Voici ce que fait la personne invitée :
    a pas d’inscription avec mot de passe ; adresse-toi à la personne qui t’a invité ou à un
    administrateur.
 3. Vérifie le compte affiché sous **Connecté en tant que** et choisis **Accepter l’invitation**.
-   Rien ne se passe avant ta confirmation. Le Studio retire le jeton de la barre d’adresse dès que
-   la page l’a lu, pour qu’il ne reste pas dans l’historique du navigateur ; le champ **Jeton
-   d’invitation** est rempli. Si tu n’as que le jeton, ouvre **Accepter l’invitation** à l’adresse
-   `/invitations/accept` et colle-le.
+   Après une connexion par mot de passe, rien ne se passe avant ta confirmation. Le Studio retire le
+   jeton de la barre d’adresse dès que la page l’a lu, pour qu’il ne reste pas dans l’historique du
+   navigateur ; le champ **Jeton d’invitation** est rempli. Si tu n’as que le jeton, ouvre
+   **Accepter l’invitation** à l’adresse `/invitations/accept` et colle-le.
+
+Avec l’authentification unique, le serveur accepte l’invitation dès que tu es connecté. Le Studio
+vérifie que tu es désormais membre du locataire et affiche aussitôt **Invitation acceptée**, sans
+seconde confirmation. Si le serveur n’a pas pu l’accepter (par exemple parce que tu t’es connecté
+avec une autre adresse), la page te demande ta confirmation comme à l’étape 3 et explique ce qui n’a
+pas fonctionné.
 
 **Invitation acceptée** indique le locataire, le produit et ton rôle ; **Ouvrir le locataire** t’y
 amène. Si tu étais déjà membre du locataire, ton rôle actuel reste inchangé.

@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CheckCircle2, LogOut, MailCheck, RefreshCw } from 'lucide-react';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { invitationsApi, meApi } from '@/api/endpoints';
 import { toApiError } from '@/api/errors';
 import type { Me, TenantMember } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
-import { useReauthenticate, useSession } from '@/app/auth';
+import { useMe, useReauthenticate, useSession } from '@/app/auth';
 import {
   Alert,
   Button,
@@ -17,19 +17,25 @@ import {
   FormField,
   Input,
   PageHeader,
+  Skeleton,
   layout,
 } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
 import {
   ACCEPT_INVITATION_PATH,
+  INVITATION_ACCEPTED_PARAM,
   acceptInvitationPath,
+  clearInvitationSentWithSso,
+  invitationSentWithSso,
   readPendingInvitation,
   writePendingInvitation,
 } from './invitationLink';
 
 interface Accepted {
-  membership: TenantMember;
+  productId: string;
+  tenantId: string;
+  role: string;
   tenantName?: string;
   productName?: string;
 }
@@ -38,7 +44,30 @@ interface Accepted {
 function describeMembership(me: Me | undefined, membership: TenantMember): Accepted {
   const product = me?.products.find((entry) => entry.product.id === membership.product_id);
   const tenant = product?.tenants.find((entry) => entry.tenant.id === membership.tenant_id);
-  return { membership, productName: product?.product.name, tenantName: tenant?.tenant.name };
+  return {
+    productId: membership.product_id,
+    tenantId: membership.tenant_id,
+    role: membership.role,
+    productName: product?.product.name,
+    tenantName: tenant?.tenant.name,
+  };
+}
+
+/** The membership `/v1/me` lists for `tenantId`, if the user is a member of that tenant. */
+function membershipOf(me: Me, tenantId: string): Accepted | null {
+  for (const product of me.products) {
+    const tenant = product.tenants.find((entry) => entry.tenant.id === tenantId);
+    if (tenant?.role) {
+      return {
+        productId: product.product.id,
+        tenantId,
+        role: tenant.role,
+        productName: product.product.name,
+        tenantName: tenant.tenant.name,
+      };
+    }
+  }
+  return null;
 }
 
 type Outcome = 'invalid' | 'wrongEmail' | 'noEmail' | 'unreachable' | 'other';
@@ -71,7 +100,21 @@ export function AcceptInvitationPage() {
   const user = session.data?.user;
   const hasEmail = Boolean(user?.email);
 
-  const fromUrl = new URLSearchParams(location.search).get('token')?.trim() || null;
+  const me = useMe();
+  const query = new URLSearchParams(location.search);
+  const fromUrl = query.get('token')?.trim() || null;
+  // After a single sign-on that this tab started with the invitation, the server has already
+  // accepted it and names the tenant. Trusted only together with that tab marker, and only
+  // once `/v1/me` confirms the membership: no second confirmation that would fail.
+  const acceptedParam = query.get(INVITATION_ACCEPTED_PARAM)?.trim() || null;
+  const [ssoTenant] = useState(() =>
+    acceptedParam && invitationSentWithSso() ? acceptedParam : null,
+  );
+  const ssoAccepted = useMemo(
+    () => (ssoTenant && me.data ? membershipOf(me.data, ssoTenant) : null),
+    [ssoTenant, me.data],
+  );
+  const ssoPending = Boolean(ssoTenant) && me.isPending;
   const [token, setToken] = useState(() => fromUrl ?? readPendingInvitation() ?? '');
   const [fromLink, setFromLink] = useState(() => Boolean(fromUrl ?? readPendingInvitation()));
 
@@ -84,16 +127,25 @@ export function AcceptInvitationPage() {
   }
 
   useEffect(() => {
-    if (!fromUrl) return;
-    writePendingInvitation(fromUrl);
+    if (!fromUrl && !acceptedParam) return;
+    if (fromUrl) writePendingInvitation(fromUrl);
     const rest = new URLSearchParams(location.search);
     rest.delete('token');
+    rest.delete(INVITATION_ACCEPTED_PARAM);
     const search = rest.toString();
     void navigate(
       { pathname: ACCEPT_INVITATION_PATH, search: search ? `?${search}` : '', hash: location.hash },
       { replace: true },
     );
-  }, [fromUrl, location.search, location.hash, navigate]);
+  }, [fromUrl, acceptedParam, location.search, location.hash, navigate]);
+
+  // The single sign-on outcome is settled once `/v1/me` is known: a confirmed membership ends
+  // the invitation for this tab; otherwise the page asks for the confirmation as usual.
+  useEffect(() => {
+    if (!ssoTenant || me.isPending) return;
+    clearInvitationSentWithSso();
+    if (ssoAccepted) writePendingInvitation(null);
+  }, [ssoTenant, me.isPending, ssoAccepted]);
 
   const accept = useMutation({
     mutationFn: async (): Promise<Accepted> => {
@@ -123,9 +175,19 @@ export function AcceptInvitationPage() {
   const described = accept.error ? describeError(t, accept.error) : null;
   const account = user?.email ?? user?.name ?? '';
 
-  if (accept.isSuccess) {
-    const { membership, tenantName, productName } = accept.data;
-    const tenantPath = `/p/${encodeURIComponent(membership.product_id)}/tenants/${encodeURIComponent(membership.tenant_id)}`;
+  if (ssoPending) {
+    return (
+      <div className={layout.stack}>
+        <PageHeader title={t('accept.title')} help="members-invitations#accept" />
+        <Skeleton height={32} width={240} />
+      </div>
+    );
+  }
+
+  const done = accept.data ?? ssoAccepted;
+  if (done) {
+    const { productId, tenantId, role, tenantName, productName } = done;
+    const tenantPath = `/p/${encodeURIComponent(productId)}/tenants/${encodeURIComponent(tenantId)}`;
     return (
       <div className={layout.stack}>
         <PageHeader title={t('accept.title')} help="members-invitations#accept" />
@@ -137,10 +199,10 @@ export function AcceptInvitationPage() {
               tenantName
                 ? t('accept.successBodyNamed', {
                     tenant: tenantName,
-                    product: productName ?? membership.product_id,
-                    role: membership.role,
+                    product: productName ?? productId,
+                    role,
                   })
-                : t('accept.successBody', { role: membership.role })
+                : t('accept.successBody', { role })
             }
             action={
               <div className={layout.actions}>

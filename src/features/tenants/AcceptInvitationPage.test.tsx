@@ -10,8 +10,11 @@ import { AcceptInvitationAlias } from './AcceptInvitationAlias';
 import { AcceptInvitationPage } from './AcceptInvitationPage';
 import {
   acceptInvitationPath,
+  invitationSentWithSso,
   invitationTokenFromPath,
+  markInvitationSentWithSso,
   readPendingInvitation,
+  withoutInvitationToken,
   writePendingInvitation,
 } from './invitationLink';
 
@@ -119,6 +122,15 @@ describe('invitation links', () => {
     expect(invitationTokenFromPath('/audit?token=x')).toBeNull();
   });
 
+  it('strips only the token from accept-page return paths', () => {
+    expect(withoutInvitationToken(acceptInvitationPath(TOKEN))).toBe('/invitations/accept');
+    expect(withoutInvitationToken(`/invitations/accept?a=1&token=${TOKEN}&b=2#x`)).toBe(
+      '/invitations/accept?a=1&b=2#x',
+    );
+    expect(withoutInvitationToken('/invitations/accept')).toBe('/invitations/accept');
+    expect(withoutInvitationToken('/audit?token=x')).toBe('/audit?token=x');
+  });
+
   it('forwards the public /accept-invitation link to the accept page and strips the token', async () => {
     const calls = setup(`/accept-invitation?token=${encodeURIComponent(TOKEN)}`, () =>
       jsonResponse(membership),
@@ -152,6 +164,50 @@ describe('invitation links', () => {
     const body = calls.find((call) => call.path === '/v1/invitations/accept')?.body;
     expect(JSON.parse(String(body))).toEqual({ token: TOKEN });
     expect(readPendingInvitation()).toBeNull();
+  });
+
+  it('shows an invitation accepted during single sign-on without a second confirmation', async () => {
+    writePendingInvitation(TOKEN);
+    markInvitationSentWithSso();
+    const calls = setup('/invitations/accept?invitation_accepted=ten_1', () =>
+      problem(404, 'not_found', 'the invitation is invalid or expired'),
+    );
+    expect(await screen.findByText('Invitation accepted')).toBeInTheDocument();
+    expect(screen.getByText(/member of Acme in CRM with the role member/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Open the tenant' })).toHaveAttribute(
+      'href',
+      '/p/prd_1/tenants/ten_1',
+    );
+    expect(screen.queryByRole('button', { name: 'Accept invitation' })).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByTestId('where')).toHaveTextContent(/^\/invitations\/accept$/),
+    );
+    expect(readPendingInvitation()).toBeNull();
+    expect(invitationSentWithSso()).toBe(false);
+    expect(calls.some((call) => call.path === '/v1/invitations/accept')).toBe(false);
+  });
+
+  it('asks for the confirmation when /v1/me does not list the tenant named after single sign-on', async () => {
+    writePendingInvitation(TOKEN);
+    markInvitationSentWithSso();
+    setup('/invitations/accept?invitation_accepted=ten_other', () => jsonResponse(membership));
+    expect(await screen.findByLabelText(/Invitation token/)).toHaveValue(TOKEN);
+    expect(screen.getByRole('button', { name: 'Accept invitation' })).toBeInTheDocument();
+    await waitFor(() => expect(invitationSentWithSso()).toBe(false));
+    expect(readPendingInvitation()).toBe(TOKEN);
+    expect(screen.getByTestId('where')).toHaveTextContent(/^\/invitations\/accept$/);
+  });
+
+  it('ignores invitation_accepted when this tab started no single sign-on with the invitation', async () => {
+    writePendingInvitation(TOKEN);
+    setup('/invitations/accept?invitation_accepted=ten_1', () => jsonResponse(membership));
+    expect(await screen.findByLabelText(/Invitation token/)).toHaveValue(TOKEN);
+    expect(screen.getByRole('button', { name: 'Accept invitation' })).toBeInTheDocument();
+    expect(screen.queryByText('Invitation accepted')).not.toBeInTheDocument();
+    expect(readPendingInvitation()).toBe(TOKEN);
+    await waitFor(() =>
+      expect(screen.getByTestId('where')).toHaveTextContent(/^\/invitations\/accept$/),
+    );
   });
 
   it('restores the token of this tab after a sign-in without it', async () => {

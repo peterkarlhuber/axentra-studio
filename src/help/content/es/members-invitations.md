@@ -128,11 +128,16 @@ Esto es lo que hace la persona invitada:
    no tienes cuenta? Si la página de inicio de sesión ofrece inicio de sesión único, inicia sesión
    allí con la dirección invitada: el servidor crea tu cuenta porque hay una invitación abierta para
    ella. No hay registro con contraseña; pide ayuda a quien te invitó o a un administrador.
-3. Comprueba la cuenta que aparece en **Sesión iniciada como** y elige **Aceptar invitación**. No
-   ocurre nada antes de que confirmes. Studio quita el token de la barra de direcciones en cuanto la
-   página lo ha leído, para que no quede en el historial del navegador; el campo **Token de
-   invitación** está rellenado. Si solo tienes el token, abre **Aceptar invitación** en
-   `/invitations/accept` y pégalo.
+3. Comprueba la cuenta que aparece en **Sesión iniciada como** y elige **Aceptar invitación**. Tras
+   iniciar sesión con contraseña, no ocurre nada antes de que confirmes. Studio quita el token de la
+   barra de direcciones en cuanto la página lo ha leído, para que no quede en el historial del
+   navegador; el campo **Token de invitación** está rellenado. Si solo tienes el token, abre
+   **Aceptar invitación** en `/invitations/accept` y pégalo.
+
+Con el inicio de sesión único, el servidor acepta la invitación en cuanto inicias sesión. Studio
+comprueba que ahora eres miembro del inquilino y muestra **Invitación aceptada** de inmediato, sin
+una segunda confirmación. Si el servidor no pudo aceptarla (por ejemplo, porque iniciaste sesión con
+otra dirección), la página te pide la confirmación como en el paso 3 y explica qué falló.
 
 **Invitación aceptada** indica el inquilino, el producto y tu rol; **Abrir el inquilino** te lleva
 allí. Si ya eras miembro del inquilino, tu rol actual no cambia.

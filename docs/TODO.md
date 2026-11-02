@@ -66,6 +66,13 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P2
 
+- **The invitation token is in the query string of the single sign-on start (backend).** Studio
+  sends it only in `invitation=` of `GET /v1/auth/oidc/{provider}/start`, never in `return_to`, so
+  Axentra stores it encrypted and redacts it in its access log. A reverse proxy or load balancer in
+  front of Axentra that logs full request URLs still records it. Follow-up: a `POST` start (token in
+  the form body, answered with the redirect), then Studio submits a form instead of following a
+  link. Until then, operators should not log query strings of `/v1/auth/oidc/*/start`.
+
 - **Tenant-scoped pages of a suspended tenant answer `403` for product operators.** The tenant page
   explains the suspension and closes its Members and Invitations tabs, but other screens that load
   the tenant's data (for example its subscription page `/p/:productId/subscriptions/:tenantId`)
