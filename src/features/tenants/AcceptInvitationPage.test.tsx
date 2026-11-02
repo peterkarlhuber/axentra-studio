@@ -12,6 +12,7 @@ import {
   acceptInvitationPath,
   invitationTokenFromPath,
   readPendingInvitation,
+  withoutInvitationToken,
   writePendingInvitation,
 } from './invitationLink';
 
@@ -117,6 +118,15 @@ describe('invitation links', () => {
     expect(invitationTokenFromPath(path)).toBe(TOKEN);
     expect(invitationTokenFromPath('/invitations/accept')).toBeNull();
     expect(invitationTokenFromPath('/audit?token=x')).toBeNull();
+  });
+
+  it('strips only the token from accept-page return paths', () => {
+    expect(withoutInvitationToken(acceptInvitationPath(TOKEN))).toBe('/invitations/accept');
+    expect(withoutInvitationToken(`/invitations/accept?a=1&token=${TOKEN}&b=2#x`)).toBe(
+      '/invitations/accept?a=1&b=2#x',
+    );
+    expect(withoutInvitationToken('/invitations/accept')).toBe('/invitations/accept');
+    expect(withoutInvitationToken('/audit?token=x')).toBe('/audit?token=x');
   });
 
   it('forwards the public /accept-invitation link to the accept page and strips the token', async () => {

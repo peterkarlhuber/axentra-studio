@@ -6,6 +6,18 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ## [Unreleased]
 
+### Security
+
+- Single sign-on for an invitation no longer puts the invitation token into `return_to` of
+  `GET /v1/auth/oidc/{provider}/start` (re-review AX-R2). Axentra stores `return_to` in plain text
+  with the login state (`axentra_login_states.return_to`) and does not redact it in its access log.
+  The sign-in page now sends `return_to=<Studio>/invitations/accept` without the token and the token
+  only in the dedicated `invitation` parameter, which Axentra stores encrypted and redacts; other
+  return-path parameters and the hash are kept. The token is kept for the tab, so the accept page
+  still finds it after the round trip. With `invitation`, Axentra also lets an invited address
+  without an account sign up and accepts the invitation right after the sign-in (the accept page
+  then reports the token as no longer usable if the person confirms again).
+
 ### Fixed
 
 - Product owners and admins who are not platform administrators can reactivate a suspended tenant

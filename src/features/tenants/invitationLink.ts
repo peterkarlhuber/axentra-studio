@@ -39,6 +39,22 @@ export function invitationTokenFromPath(path: string): string | null {
   return token?.trim() ? token.trim() : null;
 }
 
+/**
+ * A Studio return path without the invitation token (the accept page path keeps its other
+ * query parameters and hash). Used where the path leaves the browser, such as `return_to` of a
+ * single sign-on start, which the server stores and proxies may log.
+ */
+export function withoutInvitationToken(path: string): string {
+  if (invitationTokenFromPath(path) === null) return path;
+  const hashAt = path.indexOf('#');
+  const beforeHash = hashAt === -1 ? path : path.slice(0, hashAt);
+  const hash = hashAt === -1 ? '' : path.slice(hashAt);
+  const query = new URLSearchParams(beforeHash.split('?')[1] ?? '');
+  query.delete('token');
+  const search = query.toString();
+  return `${ACCEPT_INVITATION_PATH}${search ? `?${search}` : ''}${hash}`;
+}
+
 /** Accept page path, optionally with the token (only for return paths through a sign-in). */
 export function acceptInvitationPath(token?: string | null): string {
   return token

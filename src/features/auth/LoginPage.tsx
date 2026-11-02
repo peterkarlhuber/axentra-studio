@@ -15,7 +15,13 @@ import { SplashScreen } from '@/components/layout/FullPageMessage';
 import { Alert, Button, FormField, Input, buttonClassName } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
-import { ACCEPT_INVITATION_PATH, readPendingInvitation } from '@/features/tenants/invitationLink';
+import {
+  ACCEPT_INVITATION_PATH,
+  invitationTokenFromPath,
+  readPendingInvitation,
+  withoutInvitationToken,
+  writePendingInvitation,
+} from '@/features/tenants/invitationLink';
 import { AuthLanguageSwitch } from './AuthLanguageSwitch';
 import styles from './auth.module.css';
 
@@ -49,6 +55,9 @@ export function LoginPage() {
       ? ACCEPT_INVITATION_PATH
       : '/';
   const invitation = returnTo.split('?')[0] === ACCEPT_INVITATION_PATH;
+  // The token of an invitation sign-in: from the return path, else the one kept for this tab.
+  const linkToken = invitationTokenFromPath(returnTo);
+  const invitationToken = invitation ? (linkToken ?? readPendingInvitation()) : null;
   const ssoError = params.get('login_error');
   const prefill = (location.state as { email?: string } | null)?.email ?? '';
   const [email, setEmail] = useState(prefill);
@@ -59,6 +68,11 @@ export function LoginPage() {
   useEffect(() => {
     document.title = `${t('login.title')} · ${t('common:app.name')}`;
   }, [t]);
+
+  // A single sign-on returns to the accept page without the token, so keep it for this tab.
+  useEffect(() => {
+    if (linkToken) writePendingInvitation(linkToken);
+  }, [linkToken]);
 
   if (meta.setup_required) return <Navigate to="/setup" replace />;
   if (session.isPending) return <SplashScreen label={t('common:states.loading')} />;
@@ -85,8 +99,16 @@ export function LoginPage() {
   };
 
   // OIDC: the API redirects back to `return_to`. With a separate API origin the target must
-  // be an absolute Studio URL.
-  const oidcReturn = isSameOriginApi() ? returnTo : `${window.location.origin}${returnTo}`;
+  // be an absolute Studio URL. An invitation token never goes into `return_to`, which the
+  // server stores in plain text with the login state and does not redact in its access log:
+  // it goes in the dedicated `invitation` parameter, which the server keeps encrypted and
+  // redacts. That parameter also lets an invited address without an account sign up, and the
+  // server accepts the invitation right after the sign-in.
+  const oidcTarget = withoutInvitationToken(returnTo);
+  const oidcReturn = isSameOriginApi() ? oidcTarget : `${window.location.origin}${oidcTarget}`;
+  const oidcQuery = `return_to=${encodeURIComponent(oidcReturn)}${
+    invitationToken ? `&invitation=${encodeURIComponent(invitationToken)}` : ''
+  }`;
   const providers = meta.auth.oidc ?? [];
   const described = error ? describeError(t, error) : null;
   const invalidCredentials =
@@ -182,9 +204,7 @@ export function LoginPage() {
               <a
                 key={provider.id}
                 className={buttonClassName({ variant: 'secondary', size: 'lg', fullWidth: true })}
-                href={apiUrl(
-                  `/v1/auth/oidc/${encodeURIComponent(provider.id)}/start?return_to=${encodeURIComponent(oidcReturn)}`,
-                )}
+                href={apiUrl(`/v1/auth/oidc/${encodeURIComponent(provider.id)}/start?${oidcQuery}`)}
               >
                 <KeyRound aria-hidden width={16} height={16} />
                 {t('login.continueWith', { provider: provider.name })}
