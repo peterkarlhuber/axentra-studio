@@ -87,7 +87,7 @@
     },
     "invalid_signature": {
       "title": "Ungültige Signatur",
-      "message": "Die Signatur eines Webhooks des Zahlungsanbieters stimmte nicht. Das betrifft die Verbindung des Servers zum Zahlungsanbieter, nicht Studio; der Betrieb sollte das Webhook-Geheimnis prüfen."
+      "message": "Die Signatur eines Webhooks des Zahlungsanbieters stimmte nicht. Das betrifft die Verbindung des Servers zum Zahlungsanbieter, nicht Studio; ein Betreiber sollte das Webhook-Geheimnis prüfen."
     },
     "setup_already_completed": {
       "title": "Die Einrichtung ist bereits abgeschlossen",

@@ -477,7 +477,7 @@ zu vielen Versuchen siehst du [Zu viele Anfragen](#rate-limited). Ein deaktivier
 ### Ein Einladungslink funktioniert nicht {#invitation-link}
 
 - **Seite nicht gefunden** oder eine Seite der API: Der Link zeigt auf eine Adresse, unter der
-  Studio nicht läuft. Bitte deinen Betrieb, `notify.invitation_accept_url` zu setzen, siehe
+  Studio nicht läuft. Bitte deinen Betreiber, `notify.invitation_accept_url` zu setzen, siehe
   [Mitglieder und Einladungen](help:members-invitations#delivery).
 - **Diese Einladung kann nicht verwendet werden**: Die Einladung ist abgelaufen, wurde bereits
   verwendet oder widerrufen, oder der Link ist unvollständig. Bitte die Person, die dich eingeladen
