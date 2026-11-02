@@ -2764,7 +2764,7 @@ export interface components {
              */
             created_at: string;
             /** Email */
-            email: string;
+            email: string | null;
             /** Id */
             id: string;
             /** Name */
@@ -3461,7 +3461,7 @@ export interface components {
              */
             created_at: string;
             /** Email */
-            email: string;
+            email: string | null;
             /** Name */
             name: string;
             /** Product Id */
@@ -4489,7 +4489,7 @@ export interface components {
              */
             created_at: string;
             /** Email */
-            email: string;
+            email: string | null;
             /**
              * Has Password
              * @default false

@@ -42,6 +42,7 @@ const NOTIFIER_PERMISSIONS = [
   'notify:manage',
   'tenant:read',
   'members:read',
+  'search:query',
   'members:manage',
   'notify:send',
   'records:read',

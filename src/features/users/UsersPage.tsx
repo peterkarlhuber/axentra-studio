@@ -42,9 +42,9 @@ export function UsersPage() {
       cell: (user) => (
         <span className={layout.cellStack}>
           <Link className={layout.link} to={`/p/${productId}/users/${encodeURIComponent(user.id)}`}>
-            {user.name || user.email}
+            {user.name || user.email || user.id}
           </Link>
-          <span className={layout.muted}>{user.email}</span>
+          <span className={layout.muted}>{user.email ?? user.id}</span>
         </span>
       ),
     },

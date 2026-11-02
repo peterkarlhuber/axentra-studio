@@ -72,7 +72,8 @@ export type UserPatch = Schemas['UserUpdate'];
 /** Shape shared by product and tenant members, used by the generic members table. */
 export interface MemberLike {
   user_id: string;
-  email: string;
+  /** `null` for users without an email address (external identity only). */
+  email: string | null;
   name: string;
   role: string;
   created_at: string;

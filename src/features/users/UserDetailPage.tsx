@@ -41,7 +41,7 @@ export function UserDetailPage() {
     queryFn: () => usersApi.sessions(userId),
     enabled: canManage,
   });
-  useCrumbLabel(user.data?.name || user.data?.email);
+  useCrumbLabel(user.data?.name || user.data?.email || user.data?.id);
 
   const setStatus = useMutation({
     mutationFn: (status: 'active' | 'disabled') => usersApi.update(userId, { status }),
@@ -70,7 +70,7 @@ export function UserDetailPage() {
   return (
     <div className={layout.stack}>
       <PageHeader
-        title={data.name || data.email}
+        title={data.name || data.email || data.id}
         meta={
           <>
             <StatusPill status={data.status} />
@@ -150,11 +150,11 @@ export function UserDetailPage() {
         title={confirm === 'disable' ? t('detail.disableTitle') : t('detail.revokeTitle')}
         description={
           confirm === 'disable'
-            ? t('detail.disableBody', { name: data.name || data.email })
-            : t('detail.revokeBody', { name: data.name || data.email })
+            ? t('detail.disableBody', { name: data.name || data.email || data.id })
+            : t('detail.revokeBody', { name: data.name || data.email || data.id })
         }
         confirmLabel={confirm === 'disable' ? t('detail.disable') : t('detail.revokeSessions')}
-        confirmText={confirm === 'disable' ? data.email : undefined}
+        confirmText={confirm === 'disable' ? (data.email ?? data.id) : undefined}
         onConfirm={async () => {
           try {
             if (confirm === 'disable') {

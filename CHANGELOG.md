@@ -6,6 +6,13 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- Backend pin `api/BACKEND_REF` is axentra `2ff428c` (axentra #13 and #14). Users without an email
+  address (external identity only, axentra migration `0007`) are shown by name or id in the user list,
+  user detail, members panels, platform role and disable confirmations (the confirmation text is the
+  user id then). The e2e notifier role includes `search:query`, which the backend's viewer role holds.
+
 ### Added
 
 - Product-defined permissions (Axentra G-1, needs a backend with
