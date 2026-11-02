@@ -26,7 +26,7 @@ questa autorizzazione vedi solo **Le mie preferenze**.
 
 **Statistiche di consegna** conta i messaggi di questo prodotto per stato, in totale e nelle
 **Ultime 24 ore**, e mostra il **Provider di consegna**, i **Tentativi di consegna (24 h)** e il
-**Messaggio in coda più vecchio**. La scheda si aggiorna ogni 30 secondi. Un messaggio in coda da
+**Messaggio in coda più vecchio**. Il riquadro si aggiorna ogni 30 secondi. Un messaggio in coda da
 molto tempo di solito significa che nessun dispatcher è in esecuzione (vedi
 [Risoluzione dei problemi](help:notifications#troubleshooting)).
 
@@ -109,7 +109,7 @@ del prodotto, altrimenti l'inglese.
 
 L'**Anteprima** accanto all'editor viene generata dal server a partire dallo stato attuale, non
 salvato, con i tuoi valori di esempio, un attimo dopo che smetti di scrivere. Scegli la lingua nel
-selettore dell'anteprima; "Generata nella lingua …" ti dice quale variante è stata usata.
+selettore dell'anteprima; “Generata nella lingua …” ti dice quale variante è stata usata.
 L'anteprima compare quando ogni lingua ha un oggetto e un testo.
 
 L'HTML viene mostrato in un riquadro isolato: gli script non vengono mai eseguiti e immagini,
@@ -165,14 +165,14 @@ Il contenuto può mancare: i modelli sensibili non lo mostrano mai, la conservaz
 Studio indica quale caso si applica. Dall'ultimo errore il server rimuove token, chiavi e password.
 
 > [!NOTE]
-> La consegna è "almeno una volta": dopo un crash un messaggio può essere consegnato due volte. I
+> La consegna è “almeno una volta”: dopo un crash un messaggio può essere consegnato due volte. I
 > messaggi hanno un Message-ID stabile, così i server di posta possono riconoscere i duplicati.
 > L'ordine dei messaggi non è garantito.
 
 ## Casella di posta {#mailbox}
 
 La **Casella di posta** esiste solo quando il server usa il provider locale di sviluppo
-(`notify.provider = "local"`). Quel provider non invia nulla; conserva qui ciò che ha "consegnato",
+(`notify.provider = "local"`). Quel provider non invia nulla; conserva qui ciò che ha “consegnato”,
 così puoi controllare i modelli su server di sviluppo e di test. Filtra per **Destinatario** e apri
 un messaggio per vederlo come è stato consegnato.
 
@@ -229,10 +229,10 @@ serve `notify:preferences` in quel tenant (membri e amministratori ce l'hanno).
 | Solo **Le mie preferenze**                                               | Non hai `notify:manage`                                                                                             | Chiedi a un amministratore del prodotto, se ti servono i modelli                                            |
 | **Verifica i dati inseriti** al salvataggio                              | Chiave o categoria non valida, segnaposto non dichiarato, sintassi `{{ … }}` non supportata o nessuna variante `en` | Leggi il messaggio del server; correggi il campo o il segnaposto indicato                                   |
 | L'anteprima segnala che manca un valore                                  | Una variabile dichiarata non ha un valore di esempio                                                                | Compila il **Valore di esempio**                                                                            |
-| **Conflitto** "esiste già un modello con questa chiave"                  | Le chiavi sono univoche per prodotto                                                                                | Scegli un'altra chiave o modifica il modello esistente                                                      |
+| **Conflitto** “a template with this key exists”                          | Le chiavi sono univoche per prodotto                                                                                | Scegli un'altra chiave o modifica il modello esistente                                                      |
 | **Modificato nel frattempo**                                             | Qualcun altro ha salvato il modello                                                                                 | Ricarica; le modifiche non salvate vanno perse, quindi copiale prima                                        |
 | Nessuna icona di invio per un modello                                    | È **Solo sistema**, oppure non hai `notify:send`                                                                    | Normale per gli inviti; altrimenti chiedi un ruolo con `notify:send`                                        |
-| "Non hai l'autorizzazione notify:send in questo tenant"                  | Il tuo ruolo non copre quel tenant                                                                                  | Scegli un altro tenant o chiedi un ruolo                                                                    |
+| “Non hai l'autorizzazione notify:send in questo tenant”                  | Il tuo ruolo non copre quel tenant                                                                                  | Scegli un altro tenant o chiedi un ruolo                                                                    |
 | **Non consentito** durante l'invio a un indirizzo                        | L'indirizzo non è di un membro e non hai `notify:send_external`                                                     | Invia a un membro, oppure chiedi a un proprietario del prodotto                                             |
 | **Non trovato** per un membro                                            | L'utente non è membro del tenant                                                                                    | Scegli un membro del tenant selezionato                                                                     |
 | I messaggi restano **In coda**; **Messaggio in coda più vecchio** cresce | Nessun dispatcher è in esecuzione                                                                                   | Chiedi all'operatore di eseguire `axentra notify-dispatch --loop` o un worker                               |

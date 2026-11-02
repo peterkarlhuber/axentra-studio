@@ -43,7 +43,7 @@
     },
     "quota_exceeded": {
       "title": "Quota dépassé",
-      "message": "Un quota ou une limite de l’offre de ce locataire est épuisé, le serveur a donc refusé l’action. Libère de l’espace ou réduis l’utilisation, ou demande à une personne qui en a l’accès d’augmenter le quota ou de changer d’offre."
+      "message": "Un quota ou une limite de l’offre de ce locataire est épuisé, le serveur a donc refusé l’action. Libère de l’espace ou réduis l’utilisation, ou demande à une personne disposant de l’accès nécessaire d’augmenter le quota ou de changer d’offre."
     },
     "mode_not_supported": {
       "title": "Indisponible dans ce mode",

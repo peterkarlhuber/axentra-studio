@@ -275,20 +275,20 @@ quindi ogni ping risulta nuovo per la tua deduplicazione.
 3. Scegli **Pubblica**.
 
 Entro pochi secondi il ricevitore stampa `tutorial.hello evt_… tenant=… data=…`. Nella scheda
-**Consegne** dell'endpoint, la consegna risulta **Consegnato** con **Risposta** `200`.
+**Consegne** dell'endpoint, la consegna risulta **Consegnata** con **Risposta** `200`.
 
 ## Passo 8: osservare un errore e consegnare di nuovo {#check-deliveries}
 
 1. Arresta il ricevitore.
 2. Pubblica un altro evento `tutorial.hello`.
 3. Apri la scheda **Consegne** dell'endpoint e scegli **Aggiorna**. La consegna mostra **Non
-   riuscito, nuovo tentativo**; i suoi dettagli mostrano l'**Ultimo errore** e il **Prossimo
+   riuscita, nuovo tentativo**; i suoi dettagli mostrano l'**Ultimo errore** e il **Prossimo
    tentativo**.
 4. Avvia di nuovo il ricevitore. Un tentativo automatico successivo va a buon fine oppure, se tutti
    i tentativi sono stati usati (circa 2-4¼ ore con le impostazioni predefinite; il secondo
-   tentativo arriva 1-2 minuti dopo il primo), la consegna risulta **Esaurito**.
+   tentativo arriva 1-2 minuti dopo il primo), la consegna risulta **Esaurita**.
 5. Per una consegna esaurita, apri i suoi dettagli e scegli **Consegna di nuovo**. Passa a **In
-   attesa** e poi a **Consegnato**.
+   attesa** e poi a **Consegnata**.
 
 Come leggere i dettagli della consegna:
 
@@ -299,7 +299,7 @@ Come leggere i dettagli della consegna:
 | **Risposta** `301`/`302`                                    | Un reindirizzamento; Axentra non li segue. Usa l'URL finale.                                       |
 | Nessun codice di risposta, **Ultimo errore** con un timeout | Il ricevitore ha impiegato più di 10 secondi.                                                      |
 | Nessun codice di risposta, `unresolvable: …`                | Il nome host non esiste (per esempio un tunnel scaduto).                                           |
-| **Esaurito**, `refused: …`                                  | L'URL viene risolto in un indirizzo privato o locale.                                              |
+| **Esaurita**, `refused: …`                                  | L'URL viene risolto in un indirizzo privato o locale.                                              |
 
 ## Passo 9: ruotare il segreto senza interruzioni {#rotate}
 
@@ -321,7 +321,7 @@ quello dell'endpoint (per esempio quello precedente a una rotazione), un framewo
 corpo prima che tu lo leggessi (usa il corpo grezzo, non il JSON analizzato), oppure l'orologio del
 ricevitore è sfasato di più di 5 minuti: sincronizzalo con NTP.
 
-**"webhook urls must not point to local hosts" durante la creazione dell'endpoint.** Hai inserito
+**“webhook urls must not point to local hosts” durante la creazione dell'endpoint.** Hai inserito
 `localhost` o un indirizzo privato. Usa l'indirizzo HTTPS pubblico del tunnel.
 
 **Il ping funziona, ma gli eventi pubblicati non arrivano.** Controlla i **Tipi di evento**

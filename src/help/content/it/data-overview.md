@@ -8,18 +8,18 @@ La **Panoramica dati** mostra, per il prodotto corrente, che cosa è conservato 
 regole: le raccolte di record in cui scrivono i tenant, lo spazio per i file che ogni tenant usa
 rispetto alla sua quota, la configurazione dell'archiviazione del server e i periodi di conservazione
 riportati dal server. È una pagina di sola lettura: non modifica nulla. Le quote si modificano nella
-schermata [File](help:files#quota) e la policy sui tipi di contenuto nella tab **File** del prodotto
+schermata [File](help:files#quota) e la policy sui tipi di contenuto nella scheda **File** del prodotto
 (vedi [Impostare la policy sui tipi di contenuto](#content-type-policy)).
 
-Gli operatori di prodotto la usano per rispondere a domande come "quale tenant è vicino alla sua
-quota di spazio?", "quali raccolte esistono?" e "per quanto tempo il server conserva gli eventi di
-audit?".
+Gli operatori di prodotto la usano per rispondere a domande come “quale tenant è vicino alla sua
+quota di spazio?”, “quali raccolte esistono?” e “per quanto tempo il server conserva gli eventi di
+audit?”.
 
 > [!IMPORTANT]
-> La pagina richiede il modulo del server `data` (record). La scheda **Archiviazione file** richiede
+> La pagina richiede il modulo del server `data` (record). Il riquadro **Archiviazione file** richiede
 > anche il modulo `storage`. Le statistiche richiedono l'autorizzazione `collections:read`, concessa
 > dai ruoli di prodotto **Product owner**, **Product admin**, **Support** e **Product viewer**, oltre
-> che dai ruoli nella piattaforma. Le schede **Configurazione dell'archiviazione** e
+> che dai ruoli nella piattaforma. I riquadri **Configurazione dell'archiviazione** e
 > **Conservazione** richiedono `platform:settings` o `product:manage`. Vedi
 > [Ruoli e autorizzazioni](help:roles-permissions).
 
@@ -34,7 +34,7 @@ Un operatore abilita i moduli nella [configurazione del server](help:server-conf
 
 ## Che cosa mostra la pagina {#what-you-see}
 
-| Scheda                                | Contenuto                                                                              | Mostrata quando                                                                   |
+| Riquadro                              | Contenuto                                                                              | Mostrato quando                                                                   |
 | ------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | **Raccolte di record**                | Numero di raccolte e di record, poi una riga per ogni raccolta                         | Possiedi `collections:read`                                                       |
 | **Archiviazione file**                | Byte e file usati dall'intero prodotto, le quote predefinite, una riga per ogni tenant | Possiedi `collections:read` e il modulo `storage` è abilitato                     |
@@ -66,7 +66,7 @@ alcun record.
 
 ## Spazio per tenant {#storage-per-tenant}
 
-La scheda **Archiviazione file** inizia con quattro valori: **Spazio utilizzato** e **File** per
+Il riquadro **Archiviazione file** inizia con quattro valori: **Spazio utilizzato** e **File** per
 l'intero prodotto (solo file attivi), e la **Quota di spazio predefinita** e la **Quota di file
 predefinita** che valgono per ogni tenant senza una quota propria.
 
@@ -86,7 +86,7 @@ Ciascuno dei due limiti (byte e file) viene determinato separatamente, in questo
 1. La quota propria del tenant, impostata con **Modifica quota** nella schermata
    [File](help:files#quota).
 2. Il valore predefinito del prodotto: `quota_bytes` / `quota_files` nella sezione `storage` delle
-   impostazioni del prodotto (pagina del prodotto, tab **Impostazioni**, campo **Impostazioni
+   impostazioni del prodotto (pagina del prodotto, scheda **Impostazioni**, campo **Impostazioni
    (JSON)**).
 3. Il valore predefinito dell'installazione: `storage.default_quota_bytes` /
    `storage.default_quota_files` nella configurazione del server.
@@ -105,7 +105,7 @@ L'esempio imposta come valore predefinito del prodotto 10 GiB (in byte) e 10.000
 
 ## Configurazione dell'archiviazione {#storage-configuration}
 
-Questa scheda mostra le impostazioni effettive del server. Fanno parte della configurazione del
+Questo riquadro mostra le impostazioni effettive del server. Fanno parte della configurazione del
 server e non possono essere modificate in Studio.
 
 | Impostazione                    | Che cosa fa                                                                                                                                        | Predefinito |
@@ -127,10 +127,10 @@ _allegato inerte_, cioè come `application/octet-stream` opaco che può essere s
 visualizzato.
 
 1. Apri il prodotto: **Prodotti**, poi il nome del prodotto.
-2. Scegli la tab **File**. (La tab è nascosta quando il modulo `storage` non è abilitato.)
+2. Scegli la scheda **File**. (La scheda è nascosta quando il modulo `storage` non è abilitato.)
 3. In **Policy sui tipi di contenuto dei file**, scegli il comportamento e gli elenchi (tabella
    sotto).
-4. Scegli **Salva**.
+4. Scegli **Salva modifiche**.
 
 | Impostazione                                  | Che cosa fa                                                                                                                                                                                                                                                                                                                                                       | Valori consentiti / predefinito                                   |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
@@ -170,7 +170,7 @@ tutti i suoi dati).
 
 ## Backup {#backups}
 
-La scheda **I backup non vengono riportati** è intenzionale: l'API non riporta né lo stato dei
+Il riquadro **I backup non vengono riportati** è intenzionale: l'API non riporta né lo stato dei
 backup né per quanto tempo vengono conservati i metadati dei file eliminati. Entrambi fanno parte
 della gestione del server. Per impostazione predefinita la pulizia rimuove le righe di metadati dei
 file eliminati dopo 30 giorni; i backup del database e il registro di audit conservano più a lungo
@@ -186,19 +186,19 @@ a un proprietario del prodotto un ruolo di prodotto, oppure usa [Record](help:re
 possibile conservare file. Un operatore aggiunge `storage` ai moduli abilitati; vedi
 [Riferimento dei moduli](help:modules-reference).
 
-**Mancano le schede Configurazione dell'archiviazione e Conservazione.** Richiedono
+**Mancano i riquadri Configurazione dell'archiviazione e Conservazione.** Richiedono
 `platform:settings` o `product:manage`. I visualizzatori del prodotto e il personale di supporto non
-le vedono.
+li vedono.
 
 **Un tenant mostra un utilizzo maggiore della somma dei suoi file.** I file scaduti vengono
 conteggiati fino alla pulizia successiva. Chiedi a un operatore se `axentra storage purge` viene
 eseguito regolarmente.
 
-**Il salvataggio della policy sui tipi di contenuto non riesce con "Modificato nel frattempo".**
+**Il salvataggio della policy sui tipi di contenuto non riesce con “Modificato nel frattempo”.**
 Qualcuno ha modificato il prodotto (impostazioni, nome o policy) dopo che hai aperto la pagina.
 Ricarica la pagina e applica di nuovo la modifica.
 
-**Il salvataggio della policy non riesce con "Verifica i dati inseriti".** Una voce non è
+**Il salvataggio della policy non riesce con “Verifica i dati inseriti”.** Una voce non è
 un'estensione valida (lettere minuscole, cifre, `_`, `+` o `-`, al massimo 16 caratteri, senza
 punto) né un tipo di contenuto valido (`type/subtype`), oppure un elenco ha più di 100 voci. Il
 messaggio sotto il campo indica il problema.

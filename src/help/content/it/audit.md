@@ -6,9 +6,9 @@ keywords: audit, registro di audit, traccia di audit, cronologia, registro attiv
 
 Il **Registro di audit** registra le azioni amministrative e rilevanti per la sicurezza sul server
 Axentra: chi ha agito (un utente, una chiave API o il sistema), cosa ha fatto, su quale oggetto,
-con quale esito e quando. Usalo per rispondere a domande come "chi ha revocato questa chiave API?",
-"perché questo utente non riesce più ad accedere?" o "cosa è successo durante la richiesta con
-questo ID richiesta?".
+con quale esito e quando. Usalo per rispondere a domande come “chi ha revocato questa chiave API?”,
+“perché questo utente non riesce più ad accedere?” o “cosa è successo durante la richiesta con
+questo ID richiesta?”.
 
 È il server stesso a scrivere gli eventi. Studio si limita a leggerli: nessuno può modificare o
 eliminare un singolo evento di audit, nemmeno un amministratore della piattaforma.

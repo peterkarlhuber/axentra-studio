@@ -23,7 +23,7 @@ Strada facendo impari i termini più importanti. Se uno è nuovo per te, consult
 > - Per il [passaggio 4](help:first-steps#create-api-key) e la relativa verifica ti serve una riga
 >   di comando con `curl`.
 
-Usa nomi di esempio. Questo tutorial usa il prodotto "Example CRM" e il tenant "Acme Ltd".
+Usa nomi di esempio. Questo tutorial usa il prodotto “Example CRM” e il tenant “Acme Ltd”.
 
 ## Passaggio 1: creare un prodotto {#create-product}
 
@@ -36,13 +36,13 @@ al suo interno.
 4. Facoltativamente aggiungi una **Descrizione**.
 5. Scegli **Crea prodotto**.
 
-**Risultato atteso:** Studio segnala "Prodotto “Example CRM” creato" e apre la pagina del prodotto.
+**Risultato atteso:** Studio segnala «Prodotto “Example CRM” creato» e apre la pagina del prodotto.
 
-**Verifica:** apri la tab **Membri**. Il tuo account è elencato con il ruolo **Product owner**
+**Verifica:** apri la scheda **Membri**. Il tuo account è elencato con il ruolo **Product owner**
 (proprietario del prodotto): chi crea un prodotto ne diventa il proprietario. Il prodotto compare anche nel selettore
 di prodotto in alto.
 
-Ora scegli **Apri dashboard**. Si apre la dashboard di "Example CRM"; tutti i contatori mostrano `0`
+Ora scegli **Apri dashboard**. Si apre la dashboard di “Example CRM”; tutti i contatori mostrano `0`
 tranne **Utenti** (tu, come operatore del prodotto) ed **Eventi di audit (24 h)**.
 
 ## Passaggio 2: creare un tenant {#create-tenant}
@@ -55,11 +55,11 @@ da quelli di tutti gli altri tenant.
 3. Inserisci il **Nome** `Acme Ltd`. Studio ricava lo **Slug** `acme-ltd`.
 4. Scegli **Crea tenant**.
 
-**Risultato atteso:** Studio segnala "Tenant “Acme Ltd” creato" e apre la pagina del tenant con le
-tab **Dettagli**, **Membri** e **Inviti**. Lo stato è **Attivo**.
+**Risultato atteso:** Studio segnala «Tenant “Acme Ltd” creato» e apre la pagina del tenant con le
+schede **Dettagli**, **Membri** e **Inviti**. Lo stato è **Attivo**.
 
 **Verifica:** tornando alla dashboard, **Tenant** mostra ora `1`. Annota l'**ID** del tenant nella
-tab **Dettagli** (inizia con `ten_`); ti servirà nel passaggio 4.
+scheda **Dettagli** (inizia con `ten_`); ti servirà nel passaggio 4.
 
 > [!NOTE]
 > Un nuovo tenant non ha membri. Li aggiungi nel passaggio successivo.
@@ -69,7 +69,7 @@ tab **Dettagli** (inizia con `ten_`); ti servirà nel passaggio 4.
 Le persone entrano in un tenant tramite un **invito** (oppure vengono aggiunte direttamente se hanno
 già un account che puoi vedere).
 
-1. Nella pagina del tenant, apri la tab **Inviti**.
+1. Nella pagina del tenant, apri la scheda **Inviti**.
 2. Scegli **Invita membro**.
 3. Inserisci l'**Indirizzo email** di un collega, per esempio `maria@example.com`.
 4. Lascia **Ruolo** su **Member** oppure scegli un altro ruolo. I ruoli che superano le tue
@@ -83,7 +83,7 @@ invia anche l'invito per email), altrimenti solo il **Token di invito**.
 6. Copia il link o il token e invialo al tuo collega tramite un canale di cui ti fidi, poi scegli
    **Fatto**.
 
-**Verifica:** la tab **Inviti** elenca l'invito con stato **In attesa** e una data di scadenza di
+**Verifica:** la scheda **Inviti** elenca l'invito con stato **In attesa** e una data di scadenza di
 sette giorni dopo.
 
 > [!IMPORTANT]
@@ -113,7 +113,7 @@ chiave API**, che inizia con `axk_`. Copialo subito: viene mostrato solo questa 
 
 ### Provare la chiave {#try-api-key}
 
-Chiama l'API con la chiave. Sostituisci l'indirizzo, l'ID del prodotto (dalla scheda **Server** della
+Chiama l'API con la chiave. Sostituisci l'indirizzo, l'ID del prodotto (dal riquadro **Server** della
 dashboard, **ID prodotto**) e l'ID del tenant:
 
 ```bash
@@ -144,7 +144,7 @@ imparare a usare l'API, vedi le [nozioni di base sull'API](help:api-basics).
 Tutto ciò che hai appena fatto è stato registrato.
 
 1. Apri [Registro di audit](app:audit).
-2. In **Prodotto**, scegli "Example CRM" e applica il filtro.
+2. In **Prodotto**, scegli “Example CRM” e applica il filtro.
 
 **Risultato atteso:** vedi, dal più recente, `access.api_key.create`, `tenancy.invitation.create`,
 `tenancy.tenant.create` e (in modalità multiprodotto) `tenancy.product.create`, ciascuno con te come

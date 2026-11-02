@@ -225,7 +225,7 @@
     "explain": "Cette offre est payante. Le Studio crée une session de paiement ; les informations de paiement sont saisies uniquement sur la page hébergée du prestataire.",
     "unavailable": "Cette offre payante nécessite un paiement, que le serveur ne propose pas ici.",
     "liveBlocked": "Les paiements réels sont activés. Le Studio ne lance pas de paiements en argent réel ; utilise le processus de paiement de ton produit.",
-    "changeNeedsCheckout": "Le passage à cette offre payante nécessite un paiement auprès du prestataire. Résilie l’abonnement actuel et abonne-toi à nouveau.",
+    "changeNeedsCheckout": "Le passage à cette offre payante nécessite un paiement auprès du prestataire. Résilie l’abonnement actuel, puis abonne à nouveau le locataire.",
     "readyTitle": "Session de paiement créée",
     "readyBody": "Ouvre la page de paiement hébergée de {{provider}} pour finaliser l’abonnement. L’abonnement reste incomplet jusqu’à ce que le prestataire le confirme.",
     "open": "Ouvrir la page de paiement",

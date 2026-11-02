@@ -31,10 +31,10 @@ webhook-delivery
    **Filtro tenant** è vuoto o uguale al tenant dell'evento. Per ogni corrispondenza crea una
    consegna con lo stato **In attesa**.
 3. Il worker invia la richiesta firmata. Una risposta `2xx` porta la consegna allo stato
-   **Consegnato**.
+   **Consegnata**.
 4. Qualsiasi altra risposta, un timeout o un errore di connessione la portano allo stato **Non
-   riuscito, nuovo tentativo**: viene inviata di nuovo dopo un'attesa crescente. Dopo l'ultimo
-   tentativo diventa **Esaurito**.
+   riuscita, nuovo tentativo**: viene inviata di nuovo dopo un'attesa crescente. Dopo l'ultimo
+   tentativo diventa **Esaurita**.
 5. Puoi usare **Consegna di nuovo** per una consegna che non è in attesa, per esempio dopo aver
    corretto il ricevitore.
 
@@ -119,7 +119,7 @@ disattivato, così puoi provare un ricevitore prima di attivarlo. Il suo corpo c
 
 ## Controllare le consegne {#deliveries}
 
-La tab **Consegne** di un endpoint elenca le sue consegne dalla più recente: **Evento** (tipo e id
+La scheda **Consegne** di un endpoint elenca le sue consegne dalla più recente: **Evento** (tipo e id
 della consegna), **Stato**, **Risposta** (il codice di stato HTTP), **Tentativi**, **Durata** e
 **Creato**. Filtra per **Stato**; **Aggiorna** carica lo stato più recente.
 
@@ -128,9 +128,9 @@ della consegna), **Stato**, **Risposta** (il codice di stato HTTP), **Tentativi*
 | Stato                             | Significato                                                                                                               |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | **In attesa**                     | In attesa di invio, in fase di invio oppure rimessa in coda da **Consegna di nuovo**.                                     |
-| **Consegnato**                    | Il ricevitore ha risposto con uno stato `2xx`.                                                                            |
-| **Non riuscito, nuovo tentativo** | L'ultimo tentativo non è riuscito; è previsto un altro tentativo (**Prossimo tentativo**).                                |
-| **Esaurito**                      | Nessun altro tentativo automatico: sono stati usati tutti, l'URL è stato rifiutato oppure l'endpoint è stato disattivato. |
+| **Consegnata**                    | Il ricevitore ha risposto con uno stato `2xx`.                                                                            |
+| **Non riuscita, nuovo tentativo** | L'ultimo tentativo non è riuscito; è previsto un altro tentativo (**Prossimo tentativo**).                                |
+| **Esaurita**                      | Nessun altro tentativo automatico: sono stati usati tutti, l'URL è stato rifiutato oppure l'endpoint è stato disattivato. |
 
 ### Dettagli della consegna {#delivery-detail}
 
@@ -156,7 +156,7 @@ lettura della risposta. (Le versioni di Axentra precedenti a questo calendario u
 breve dei job ed esaurivano tutti i tentativi in pochi minuti.)
 
 Un ricevitore che resta irraggiungibile più a lungo non perde eventi, ma le sue consegne terminano
-come **Esaurito**: consegnale di nuovo quando torna disponibile. Axentra non disattiva gli endpoint
+come **Esaurita**: consegnale di nuovo quando torna disponibile. Axentra non disattiva gli endpoint
 che continuano a fallire e non applica limiti di frequenza per endpoint.
 
 Due casi terminano una consegna senza ulteriori tentativi: un URL che il server rifiuta (vedi
@@ -195,11 +195,11 @@ fino al termine del periodo.
 
 ## Modificare o disattivare un endpoint {#edit}
 
-Apri la tab **Impostazioni** dell'endpoint, modifica **URL**, **Descrizione**, **Tipi di evento** o
-**Attivato** e scegli **Salva**. **Annulla modifiche** ripristina i valori salvati.
+Apri la scheda **Impostazioni** dell'endpoint, modifica **URL**, **Descrizione**, **Tipi di evento** o
+**Attivato** e scegli **Salva modifiche**. **Annulla modifiche** ripristina i valori salvati.
 
 Disattivando **Attivato** si interrompono le nuove consegne. Le consegne ancora in attesa di un
-tentativo terminano come **Esaurito** con l'errore `endpoint disabled`; consegnale di nuovo dopo aver
+tentativo terminano come **Esaurita** con l'errore `endpoint disabled`; consegnale di nuovo dopo aver
 riattivato l'endpoint. Gli eventi pubblicati mentre l'endpoint era disattivato non vengono consegnati
 in seguito.
 
@@ -261,15 +261,15 @@ distribuiti su circa 2-4¼ ore, timeout di 10 secondi, 4096 byte di corpo della 
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**"webhook urls must use https".** Usa un URL `https://`. `http://` funziona solo sui server di
+**“webhook urls must use https”.** Usa un URL `https://`. `http://` funziona solo sui server di
 sviluppo che lo consentono.
 
-**"webhook urls must not point to local hosts" oppure "… private, loopback or link-local
-addresses".** L'URL punta alla tua macchina o a una rete interna. Usa un indirizzo HTTPS pubblico,
+**“webhook urls must not point to local hosts” oppure “… private, loopback or link-local
+addresses”.** L'URL punta alla tua macchina o a una rete interna. Usa un indirizzo HTTPS pubblico,
 per esempio tramite un servizio di tunnel durante lo sviluppo (vedi il
 [tutorial](help:tutorial-webhook-receiver#public-url)).
 
-**"event_types needs 1-50 type patterns".** Aggiungi almeno un tipo di evento, oppure `*` per tutti.
+**“event_types needs 1-50 type patterns”.** Aggiungi almeno un tipo di evento, oppure `*` per tutti.
 
 **Ping di test non riuscito con HTTP 401 o 403.** Il ricevitore ha rifiutato la firma. Verifica che
 usi il segreto attuale (il valore completo, compreso `whsec_`), il corpo grezzo della richiesta e un
@@ -283,10 +283,10 @@ ricevitore: leggi **Ultimo errore**. `unresolvable` significa che il nome host n
 timeout significa che il ricevitore non ha risposto entro 10 secondi. Rispondi rapidamente ed esegui
 il lavoro lento dopo aver risposto.
 
-**Consegne Esaurito con "refused: …".** L'host ora viene risolto in un indirizzo privato. Correggi la
+**Consegne in stato Esaurita con “refused: …”.** L'host ora viene risolto in un indirizzo privato. Correggi la
 voce DNS o l'URL, poi consegna di nuovo.
 
-**Consegne Esaurito con "endpoint disabled".** L'endpoint è stato disattivato mentre le consegne
+**Consegne in stato Esaurita con “endpoint disabled”.** L'endpoint è stato disattivato mentre le consegne
 erano in attesa. Attivalo e consegna di nuovo.
 
 **Per un evento non compare alcuna consegna.** Verifica che l'endpoint sia attivato, che un pattern
@@ -295,10 +295,10 @@ l'endpoint esistesse non vengono consegnati. Se l'evento è nel
 [registro eventi](help:events#event-log) ma non succede nulla, potrebbe non essere in esecuzione
 alcun worker.
 
-**"Conflitto" su Consegna di nuovo.** La consegna è già in coda o in fase di invio. Attendi e scegli
+**“Conflitto” su Consegna di nuovo.** La consegna è già in coda o in fase di invio. Attendi e scegli
 **Aggiorna**.
 
-**"Modificato nel frattempo" durante il salvataggio o l'eliminazione.** Qualcun altro ha modificato
+**“Modificato nel frattempo” durante il salvataggio o l'eliminazione.** Qualcun altro ha modificato
 l'endpoint. Ricarica la pagina e ripeti la modifica.
 
 **Il ricevitore ha elaborato un evento due volte.** È previsto con la consegna almeno una volta.

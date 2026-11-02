@@ -100,7 +100,7 @@ au total. Ne mets pas de secrets dans les noms ni dans les étiquettes : ils ap
 ## Quota de stockage {#quota}
 
 La carte **Utilisation du stockage** compare les octets et le nombre de fichiers du locataire à son quota
-effectif. La jauge passe à une couleur d’avertissement à 80 % et à une couleur critique à 95 %. La ligne en dessous
+effectif. La jauge passe à une couleur d’avertissement à 80 % et à une couleur critique à 95 %. La ligne en dessous
 indique l’origine du quota : **Quota défini pour ce locataire**, **Quota hérité du produit ou de la valeur par défaut
 du serveur**, ou **Aucun quota : illimité**. La façon dont les valeurs par défaut sont déterminées est expliquée dans
 l’[Aperçu des données](help:data-overview#quotas).
