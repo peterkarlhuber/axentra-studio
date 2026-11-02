@@ -41,7 +41,7 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   (backend reference: `docs/modules/SEARCH.md` in the Axentra repository).
 - **Phase 1 pages have no component tests.** `ApiKeysPage`, `RolesPage`, `SetupPage`,
   `DashboardPage`, `ProductsPage`, `ProductDetailPage`, `HealthPage`, `NotFoundPage`,
-  `SettingsPage`, `AcceptInvitationPage`, `InvitationsPage`,
+  `SettingsPage`, `InvitationsPage`,
   `UsersPage` and `UserDetailPage` have no Vitest test (shared parts such as `MembersPanel`, the
   data table, dialogs, guards and the API client do). They are rendered by the e2e a11y sweep, but
   their actions are not asserted anywhere.
@@ -63,11 +63,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   only users the caller can see (`404` otherwise), and there is no product-level invitation, so a
   product owner who is not a platform admin cannot add an operator without an account they can
   see. Studio explains this in the add dialog.
-
-- **Default invitation link does not open Studio (backend).** Without
-  `notify.invitation_accept_url` the server links to `<public_url>/accept-invitation`, a path Studio
-  does not serve (Studio's page is `/invitations/accept`). The help tells administrators to set the
-  URL; the default should point to a working page.
 
 ## P2
 
@@ -143,6 +138,10 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P3
 
+- **A failed single sign-on drops `return_to` (backend).** Axentra sends a failed OIDC login to
+  `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
+  for the tab and returns to it after the next sign-in, but other deep links are lost.
+
 - **Single-product mode with leftover products.** Axentra accepts `mode = "single"` on a database
   that also holds other products as long as the configured slug exists. Studio then hides the
   switcher; a platform admin reaches the other products only through the Products page (and they
@@ -169,6 +168,13 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   and ports (all configurable through environment variables).
 
 ## Recently fixed
+
+- The default invitation link (`<public_url>/accept-invitation?token=…`) ended on "page not
+  found": Studio served its accept page only at `/invitations/accept`. `/accept-invitation` is now a
+  public alias; the accept page strips the token from the address bar and explains every outcome.
+  Split-origin deployments set the new backend setting `notify.invitation_accept_url` (Axentra);
+  links sent before that still point to the API origin. Covered by
+  `src/features/tenants/AcceptInvitationPage.test.tsx` and `e2e/invitations.spec.ts`.
 
 - The product switcher's accessible name ("Switch product") did not contain its visible text
   (axe `label-content-name-mismatch`, WCAG 2.5.3) on every signed-in desktop page. Found by the

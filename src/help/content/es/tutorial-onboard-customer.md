@@ -82,11 +82,14 @@ personalizado. Consulta [roles y permisos](help:roles-permissions).
 
 > [!NOTE]
 > El enlace de invitación se construye a partir del ajuste de producto `invitation_accept_url` (en
-> la **Configuración (JSON)** del producto), por ejemplo
+> **Ajustes (JSON)** del producto), por ejemplo
 > `{"invitation_accept_url": "https://app.example.com/accept-invitation?token={token}"}`. Sin ese
-> ajuste, el enlace apunta a `/accept-invitation` en la dirección pública de la API. Haz que apunte a
-> la página de tu producto que acepta invitaciones, o a la página propia de Studio
-> `https://studio.example.com/invitations/accept?token={token}` si tus clientes usan Studio.
+> ajuste se aplica el ajuste del servidor `notify.invitation_accept_url`; sin este, el enlace apunta
+> a `/accept-invitation` en la dirección pública de la API, que Studio redirige a su página de
+> aceptación cuando se ejecuta en esa dirección. Haz que el enlace apunte a la página de tu producto
+> que acepta invitaciones, o a la página de Studio
+> `https://studio.example.com/invitations/accept?token={token}` si tus clientes usan Studio en su
+> propia dirección.
 
 **Compruébalo:** la pestaña **Invitaciones** muestra la invitación con el estado **Pendiente** y una
 fecha de caducidad 7 días después.
@@ -108,29 +111,31 @@ Axentra no revela si una dirección tiene cuenta: invitar funciona igual para to
 
 Esto es lo que hace la persona invitada. Envíale estas instrucciones.
 
-1. **Ten una cuenta exactamente con la dirección de correo electrónico invitada.**
+1. **Abrir el enlace de invitación.** Si no ha iniciado sesión, llega a **Iniciar sesión**, que
+   menciona la invitación, y después de iniciar sesión vuelve a ella.
+2. **Iniciar sesión exactamente con la dirección de correo electrónico invitada.**
    - Si tu servidor ofrece **inicio de sesión único**, la persona inicia sesión con **Continuar con
-     …**. Se crea automáticamente una cuenta para una dirección de correo verificada que tenga una
+     …**. Se crea una cuenta automáticamente para una dirección de correo verificada que tiene una
      invitación abierta.
-   - Con **solo inicio de sesión con contraseña**, la cuenta ya debe existir. Axentra no tiene
-     registro propio a través de la API: las cuentas para el inicio de sesión con contraseña las
-     crea el código de tu propio producto. Consulta [usuarios](help:users).
-2. **Abre el enlace de invitación.** Si no ha iniciado sesión, la persona llega a **Iniciar
-   sesión** y, tras iniciarla, vuelve a la invitación. Con un token en lugar de un enlace, abre
-   **Aceptar invitación** (dirección `/invitations/accept`) después de iniciar sesión y pega el
-   **Token de invitación**.
-3. Elige **Aceptar invitación**.
+   - Con **solo inicio de sesión con contraseña**, la cuenta ya debe existir. Axentra no ofrece
+     registro propio por la API: las cuentas para el inicio de sesión con contraseña las crea el
+     código de tu producto. Consulta [usuarios](help:users).
+3. **Confirmar.** La página muestra la cuenta en **Sesión iniciada como**; la persona elige **Aceptar
+   invitación**. Con un token en lugar de un enlace, abre **Aceptar invitación** (dirección
+   `/invitations/accept`) después de iniciar sesión y pega el **Token de invitación**.
 
-**Resultado esperado:** «Invitación aceptada. Ya tienes acceso.» La persona ve ahora el producto y
-el inquilino según su rol. Puede tardar un momento hasta que el acceso aparezca en todas partes.
+**Resultado esperado:** **Invitación aceptada**, con el inquilino, el producto y el rol. La persona
+ve ahora el inquilino según su rol. Puede tardar un momento en que el acceso aparezca en todas
+partes.
 
 **Compruébalo (tú):** en la pestaña **Miembros** del inquilino, la persona aparece con el rol
 **Owner**. En **Invitaciones**, el estado es **Aceptada**.
 
 > [!WARNING]
 > Las invitaciones están vinculadas a la dirección. Si la persona inicia sesión con otra dirección,
-> la aceptación falla con **No permitido**. Una invitación aceptada, revocada o caducada no se puede
-> volver a usar: crea una nueva.
+> Studio muestra **Invitación para otra dirección de correo electrónico** y ofrece **Cerrar sesión y
+> usar la dirección invitada**. Una invitación aceptada, revocada o caducada no se puede volver a
+> usar (**Esta invitación no se puede usar**): crea una nueva.
 
 ## Paso 6: Ajustar los roles si hace falta {#change-role}
 
@@ -202,15 +207,15 @@ Todos con el resultado **Éxito**. Un intento de aceptación con la cuenta equiv
 
 ## Solución de problemas {#troubleshooting}
 
-| Problema                                         | Causa y solución                                                                                                                                                                                    |
-| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| No se puede seleccionar **Owner**                | Te falta el rango de propietario o algunos de los permisos del rol (techo de roles). Pregunta a un propietario del producto o a un administrador de la plataforma.                                  |
-| **Conflicto** al invitar                         | Ya existe una invitación abierta para esta dirección en este inquilino. Úsala o revócala.                                                                                                           |
-| **Usuario no encontrado** en **Añadir miembro**  | Ninguna cuenta que puedas ver tiene esta dirección. Usa **Enviar invitación en su lugar**.                                                                                                          |
-| El cliente no recibe ningún correo               | El módulo `notify` está desactivado o falló el envío del correo. Envía tú el enlace o el token; revisa [notificaciones](help:notifications).                                                        |
-| El enlace abre una página de «no encontrado»     | Falta el ajuste de producto `invitation_accept_url` o es incorrecto (consulta [la entrega](help:tutorial-onboard-customer#delivery)). Envía el token y pide que lo peguen en `/invitations/accept`. |
-| La aceptación falla con **No permitido**         | La persona ha iniciado sesión con una cuenta cuyo correo no coincide con la dirección invitada. Inicia sesión con la cuenta correcta o invita a la dirección real.                                  |
-| La aceptación falla con **No encontrado**        | La invitación ya se aceptó, se revocó o tiene más de 7 días. Crea una invitación nueva.                                                                                                             |
-| El inicio de sesión único falla con «no account» | No hay ninguna invitación abierta para la dirección verificada y el registro está desactivado. Comprueba la dirección invitada; consulta [inicio de sesión](help:signing-in#sso-errors).            |
-| La integración recibe `403`                      | A la clave le falta un permiso, o el inquilino está suspendido.                                                                                                                                     |
-| No hay eventos en el registro de auditoría       | Comprueba el filtro **Producto** y que tengas `audit:read`.                                                                                                                                         |
+| Problema                                                                    | Causa y solución                                                                                                                                                                                                                                                                                                    |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| No se puede seleccionar **Owner**                                           | Te falta el rango de propietario o algunos de los permisos del rol (techo de roles). Pregunta a un propietario del producto o a un administrador de la plataforma.                                                                                                                                                  |
+| **Conflicto** al invitar                                                    | Ya existe una invitación abierta para esta dirección en este inquilino. Úsala o revócala.                                                                                                                                                                                                                           |
+| **Usuario no encontrado** en **Añadir miembro**                             | Ninguna cuenta que puedas ver tiene esta dirección. Usa **Enviar invitación en su lugar**.                                                                                                                                                                                                                          |
+| El cliente no recibe ningún correo                                          | El módulo `notify` está desactivado o falló el envío del correo. Envía tú el enlace o el token; revisa [notificaciones](help:notifications).                                                                                                                                                                        |
+| El enlace abre una página de «no encontrado» o una página de la API         | Studio se ejecuta en su propia dirección y ni el ajuste del servidor `notify.invitation_accept_url` ni el ajuste de producto `invitation_accept_url` apuntan a ella (consulta [la entrega](help:tutorial-onboard-customer#delivery)). Mientras tanto, envía el token y pide que lo peguen en `/invitations/accept`. |
+| Al aceptar aparece **Invitación para otra dirección de correo electrónico** | La persona ha iniciado sesión con una cuenta cuyo correo no coincide con la dirección invitada. Elige **Cerrar sesión y usar la dirección invitada** o invita a la dirección correcta.                                                                                                                              |
+| Al aceptar aparece **Esta invitación no se puede usar**                     | La invitación ya se aceptó, se revocó o tiene más de 7 días, o el token está incompleto. Crea una invitación nueva.                                                                                                                                                                                                 |
+| El inicio de sesión único falla con «no account»                            | No hay ninguna invitación abierta para la dirección verificada y el registro está desactivado. Comprueba la dirección invitada; consulta [inicio de sesión](help:signing-in#sso-errors).                                                                                                                            |
+| La integración recibe `403`                                                 | A la clave le falta un permiso, o el inquilino está suspendido.                                                                                                                                                                                                                                                     |
+| No hay eventos en el registro de auditoría                                  | Comprueba el filtro **Producto** y que tengas `audit:read`.                                                                                                                                                                                                                                                         |

@@ -76,14 +76,46 @@
   },
   "accept": {
     "title": "Aceitar convite",
-    "description": "Entre em um tenant com o link ou o token de convite que você recebeu. Você precisa estar conectado com a conta do endereço de e-mail convidado.",
+    "description": "Entre em um tenant com o link ou o token de convite que você recebeu. Entre com a conta do endereço de e-mail para o qual o convite foi enviado, confira os dados e confirme.",
     "token": "Token do convite",
+    "tokenHelp": "Cole o token do convite se você não abriu o link.",
+    "tokenFromLink": "Preenchido a partir do seu link de convite. Ele não aparece mais na barra de endereço.",
     "submit": "Aceitar convite",
     "successTitle": "Convite aceito",
-    "successBody": "Agora você tem acesso. Pode levar um momento até que ele apareça em todos os lugares.",
-    "continue": "Continuar",
-    "invalid": "Este convite é inválido, expirou, foi revogado ou já foi usado. Peça um novo convite.",
-    "wrongEmail": "Este convite foi enviado para outro endereço de e-mail. Entre com a conta desse endereço ou peça um convite para o seu próprio endereço."
+    "successBody": "Agora você é membro com a função {{role}}. Pode levar um momento até que o acesso apareça em todos os lugares.",
+    "continue": "Ir para a página inicial",
+    "successBodyNamed": "Agora você é membro de {{tenant}} em {{product}} com a função {{role}}.",
+    "openTenant": "Abrir o tenant",
+    "signedInAs": "Conectado como <strong>{{account}}</strong>.",
+    "switchAccount": "Usar outra conta",
+    "switchAccountAction": "Sair e usar o endereço convidado",
+    "noEmailTitle": "Sua conta não tem endereço de e-mail",
+    "noEmail": "Convites são vinculados a um endereço de e-mail, então uma conta sem endereço não pode aceitá-los. Entre com a conta do endereço convidado ou peça a quem convidou você que adicione sua conta diretamente ao tenant.",
+    "outcomes": {
+      "invalid": {
+        "title": "Este convite não pode ser usado",
+        "body": "O servidor não informa qual destes motivos se aplica:",
+        "expired": "ele expirou (convites valem 7 dias),",
+        "used": "ele já foi aceito, por você ou em outra aba,",
+        "revoked": "ele foi revogado,",
+        "mistyped": "o link ou o token está incompleto ou foi digitado errado.",
+        "next": "Peça um novo convite a quem convidou você."
+      },
+      "wrongEmail": {
+        "title": "Convite para outro endereço de e-mail",
+        "body": "O convite foi enviado para um endereço diferente do da conta com a qual você está conectado ({{account}}). Saia e entre com o endereço convidado, ou peça um convite para o seu próprio endereço."
+      },
+      "noEmail": {
+        "title": "Sua conta não tem endereço de e-mail"
+      },
+      "unreachable": {
+        "title": "Não foi possível acessar o servidor",
+        "body": "Seu convite não foi alterado. Verifique sua conexão e tente de novo em instantes."
+      },
+      "other": {
+        "title": "O convite não foi aceito"
+      }
+    }
   },
   "search": "Pesquisar tenants",
   "searchPlaceholder": "Nome ou slug",

@@ -76,14 +76,46 @@
   },
   "accept": {
     "title": "Einladung annehmen",
-    "description": "Tritt mit dem erhaltenen Einladungslink oder -Token einem Mandanten bei. Du musst mit dem Konto der eingeladenen E-Mail-Adresse angemeldet sein.",
+    "description": "Tritt mit dem erhaltenen Einladungslink oder -Token einem Mandanten bei. Melde dich mit dem Konto der E-Mail-Adresse an, an die die Einladung ging, prüfe die Angaben und bestätige.",
     "token": "Einladungs-Token",
+    "tokenHelp": "Füge den Token aus der Einladung ein, falls du den Link nicht geöffnet hast.",
+    "tokenFromLink": "Aus deinem Einladungslink übernommen. Er steht nicht mehr in der Adresszeile.",
     "submit": "Einladung annehmen",
     "successTitle": "Einladung angenommen",
-    "successBody": "Du hast jetzt Zugriff. Es kann einen Moment dauern, bis er überall sichtbar ist.",
-    "continue": "Weiter",
-    "invalid": "Diese Einladung ist ungültig, abgelaufen, widerrufen oder bereits verwendet. Bitte um eine neue Einladung.",
-    "wrongEmail": "Diese Einladung wurde an eine andere E-Mail-Adresse geschickt. Melde dich mit dem Konto dieser Adresse an oder bitte um eine Einladung an deine eigene Adresse."
+    "successBody": "Du bist jetzt Mitglied mit der Rolle {{role}}. Es kann einen Moment dauern, bis der Zugriff überall sichtbar ist.",
+    "continue": "Zur Startseite",
+    "successBodyNamed": "Du bist jetzt Mitglied von {{tenant}} in {{product}} mit der Rolle {{role}}.",
+    "openTenant": "Mandant öffnen",
+    "signedInAs": "Angemeldet als <strong>{{account}}</strong>.",
+    "switchAccount": "Anderes Konto verwenden",
+    "switchAccountAction": "Abmelden und eingeladene Adresse verwenden",
+    "noEmailTitle": "Dein Konto hat keine E-Mail-Adresse",
+    "noEmail": "Einladungen sind an eine E-Mail-Adresse gebunden, deshalb kann ein Konto ohne Adresse sie nicht annehmen. Melde dich mit dem Konto der eingeladenen Adresse an oder bitte die Person, die dich eingeladen hat, dein Konto direkt zum Mandanten hinzuzufügen.",
+    "outcomes": {
+      "invalid": {
+        "title": "Diese Einladung kann nicht verwendet werden",
+        "body": "Der Server sagt nicht, welcher Grund zutrifft:",
+        "expired": "sie ist abgelaufen (Einladungen gelten 7 Tage),",
+        "used": "sie wurde bereits angenommen, von dir oder in einem anderen Tab,",
+        "revoked": "sie wurde widerrufen,",
+        "mistyped": "der Link oder Token ist unvollständig oder falsch eingegeben.",
+        "next": "Bitte die Person, die dich eingeladen hat, um eine neue Einladung."
+      },
+      "wrongEmail": {
+        "title": "Einladung für eine andere E-Mail-Adresse",
+        "body": "Die Einladung ging an eine andere Adresse als die des Kontos, mit dem du angemeldet bist ({{account}}). Melde dich ab und mit der eingeladenen Adresse an oder bitte um eine Einladung an deine eigene Adresse."
+      },
+      "noEmail": {
+        "title": "Dein Konto hat keine E-Mail-Adresse"
+      },
+      "unreachable": {
+        "title": "Der Server ist nicht erreichbar",
+        "body": "Deine Einladung wurde nicht verändert. Prüfe deine Verbindung und versuche es gleich noch einmal."
+      },
+      "other": {
+        "title": "Die Einladung wurde nicht angenommen"
+      }
+    }
   },
   "search": "Mandanten suchen",
   "searchPlaceholder": "Name oder Kurzname",

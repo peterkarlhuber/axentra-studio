@@ -406,6 +406,17 @@ una password errata _sia_ per un indirizzo sconosciuto; il server non rivela qua
 troppi tentativi vedi [Troppe richieste](#rate-limited). Un account disattivato non può accedere in
 alcun modo. Vedi [Accesso](help:signing-in).
 
+### Un link di invito non funziona {#invitation-link}
+
+- **Pagina non trovata** o una pagina dell'API: il link punta a un indirizzo dove Studio non gira.
+  Chiedi a chi gestisce il server di impostare `notify.invitation_accept_url`, vedi
+  [Membri e inviti](help:members-invitations#delivery).
+- **Questo invito non può essere usato**: l'invito è scaduto, è già stato usato o revocato, oppure
+  il link è incompleto. Chiedi a chi ti ha invitato un nuovo invito.
+- **Invito per un altro indirizzo email**: scegli **Esci e usa l'indirizzo invitato**.
+
+Vedi [Accettare un invito](help:members-invitations#accept).
+
 ### Un segreto mostrato una sola volta è andato perso {#secret-lost}
 
 I segreti delle chiavi API, i segreti di firma dei webhook e i link di invito vengono mostrati una

@@ -425,6 +425,19 @@ un mot de passe erroné _comme_ pour une adresse inconnue ; le serveur ne rév�
 Après trop de tentatives, tu vois [Trop de requêtes](#rate-limited). Un compte désactivé ne peut pas
 du tout se connecter. Voir [Connexion](help:signing-in).
 
+### Un lien d’invitation ne fonctionne pas {#invitation-link}
+
+- **Page introuvable** ou une page de l’API : le lien pointe vers une adresse où le Studio ne tourne
+  pas. Demande à ton exploitant de régler `notify.invitation_accept_url`, voir
+  [Membres et invitations](help:members-invitations#delivery).
+- **Cette invitation ne peut pas être utilisée** : l’invitation a expiré, a déjà été utilisée ou a
+  été révoquée, ou le lien est incomplet. Demande une nouvelle invitation à la personne qui t’a
+  invité.
+- **Invitation pour une autre adresse e-mail** : choisis **Se déconnecter et utiliser l’adresse
+  invitée**.
+
+Voir [Accepter une invitation](help:members-invitations#accept).
+
 ### Un secret à usage unique a été perdu {#secret-lost}
 
 Les secrets de clés d’API, les secrets de signature de webhooks et les liens d’invitation ne sont

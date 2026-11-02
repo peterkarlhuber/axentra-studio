@@ -408,6 +408,18 @@ tanto con una contraseña incorrecta _como_ con una dirección desconocida; el s
 cuál de las dos. Tras demasiados intentos ves [Demasiadas solicitudes](#rate-limited). Una cuenta
 desactivada no puede iniciar sesión en absoluto. Consulta [Iniciar sesión](help:signing-in).
 
+### Un enlace de invitación no funciona {#invitation-link}
+
+- **Página no encontrada** o una página de la API: el enlace apunta a una dirección donde Studio no
+  se ejecuta. Pide a tu equipo de operaciones que defina `notify.invitation_accept_url`; consulta
+  [Miembros e invitaciones](help:members-invitations#delivery).
+- **Esta invitación no se puede usar**: la invitación caducó, ya se usó o se revocó, o el enlace
+  está incompleto. Pide a quien te invitó una invitación nueva.
+- **Invitación para otra dirección de correo electrónico**: elige **Cerrar sesión y usar la
+  dirección invitada**.
+
+Consulta [Aceptar una invitación](help:members-invitations#accept).
+
 ### Se perdió un secreto de un solo uso {#secret-lost}
 
 Los secretos de las claves de API, los secretos de firma de los webhooks y los enlaces de invitación

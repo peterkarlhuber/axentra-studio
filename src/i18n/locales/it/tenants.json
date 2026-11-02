@@ -76,14 +76,46 @@
   },
   "accept": {
     "title": "Accetta invito",
-    "description": "Unisciti a un tenant con il link di invito o il token che hai ricevuto. Devi aver effettuato l'accesso con l'account dell'indirizzo email invitato.",
+    "description": "Unisciti a un tenant con il link di invito o il token che hai ricevuto. Accedi con l'account dell'indirizzo email a cui è stato inviato l'invito, controlla i dati e conferma.",
     "token": "Token di invito",
+    "tokenHelp": "Incolla il token dell'invito se non hai aperto il link.",
+    "tokenFromLink": "Ripreso dal tuo link di invito. Non compare più nella barra degli indirizzi.",
     "submit": "Accetta invito",
     "successTitle": "Invito accettato",
-    "successBody": "Ora hai accesso. Potrebbe essere necessario qualche istante prima che sia visibile ovunque.",
-    "continue": "Continua",
-    "invalid": "Questo invito non è valido, è scaduto, è stato revocato o è già stato usato. Chiedi un nuovo invito.",
-    "wrongEmail": "Questo invito è stato inviato a un altro indirizzo email. Accedi con l'account di quell'indirizzo oppure chiedi un invito per il tuo indirizzo."
+    "successBody": "Ora sei membro con il ruolo {{role}}. Potrebbe essere necessario qualche istante prima che l'accesso sia visibile ovunque.",
+    "continue": "Vai alla pagina iniziale",
+    "successBodyNamed": "Ora sei membro di {{tenant}} in {{product}} con il ruolo {{role}}.",
+    "openTenant": "Apri il tenant",
+    "signedInAs": "Accesso effettuato come <strong>{{account}}</strong>.",
+    "switchAccount": "Usa un altro account",
+    "switchAccountAction": "Esci e usa l'indirizzo invitato",
+    "noEmailTitle": "Il tuo account non ha un indirizzo email",
+    "noEmail": "Gli inviti sono legati a un indirizzo email, quindi un account senza indirizzo non può accettarli. Accedi con l'account dell'indirizzo invitato oppure chiedi a chi ti ha invitato di aggiungere direttamente il tuo account al tenant.",
+    "outcomes": {
+      "invalid": {
+        "title": "Questo invito non può essere usato",
+        "body": "Il server non dice quale di questi motivi vale:",
+        "expired": "è scaduto (gli inviti valgono 7 giorni),",
+        "used": "è già stato accettato, da te o in un’altra scheda,",
+        "revoked": "è stato revocato,",
+        "mistyped": "il link o il token è incompleto o scritto male.",
+        "next": "Chiedi a chi ti ha invitato un nuovo invito."
+      },
+      "wrongEmail": {
+        "title": "Invito per un altro indirizzo email",
+        "body": "L'invito è stato inviato a un indirizzo diverso da quello dell'account con cui hai effettuato l'accesso ({{account}}). Esci e accedi con l'indirizzo invitato, oppure chiedi un invito per il tuo indirizzo."
+      },
+      "noEmail": {
+        "title": "Il tuo account non ha un indirizzo email"
+      },
+      "unreachable": {
+        "title": "Il server non è raggiungibile",
+        "body": "Il tuo invito non è stato modificato. Controlla la connessione e riprova tra un momento."
+      },
+      "other": {
+        "title": "L'invito non è stato accettato"
+      }
+    }
   },
   "search": "Cerca tenant",
   "searchPlaceholder": "Nome o slug",

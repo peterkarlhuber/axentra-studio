@@ -23,8 +23,9 @@
 #      (both dropped first if they exist, so RLS is enforced exactly as in production),
 #   2. writes a config (state dir/axentra.toml) for the chosen deployment mode (`mode = "multi"`,
 #      or `mode = "single"` with a [product] section) with every module enabled (storage: local,
-#      notify: local provider, events with plain-http/private webhook targets and short retries,
-#      usage, billing: manual) that allows the Studio preview origin; environment "test", so the
+#      notify: local provider, with invitation links to the Studio preview origin's
+#      /accept-invitation when the backend supports notify.invitation_accept_url; events with
+#      plain-http/private webhook targets and short retries, usage, billing: manual) that allows the Studio preview origin; environment "test", so the
 #      development-only webhook settings are accepted (the backend refuses them in production),
 #   3. `axentra migrate`, `axentra admin setup-token`, `axentra serve` (+ workers with --worker),
 #   4. creates the first platform admin through POST /v1/auth/setup with the setup token, then
@@ -231,6 +232,14 @@ PY
     # creating, archiving and restoring products (409 mode_not_supported).
     product_section=$'\n[product]\nslug = "studio-e2e"\nname = "Studio e2e"\n'
   fi
+  # Invitation links lead to Studio (the preview origin, which proxies /v1 to the API) through
+  # Studio's public /accept-invitation alias, like a split-origin deployment. Only for backends
+  # that know notify.invitation_accept_url (older ones refuse unknown settings and keep the
+  # default <public_url>/accept-invitation).
+  local notify_extra=""
+  if "$py" -c 'import sys; from axentra.config.settings import NotifySettings; sys.exit(0 if "invitation_accept_url" in NotifySettings.model_fields else 1)' 2>/dev/null; then
+    notify_extra="invitation_accept_url = \"http://127.0.0.1:$PREVIEW_PORT/accept-invitation\""
+  fi
   cat >"$STATE/axentra.toml" <<TOML
 # Written by scripts/e2e-backend.sh for Studio's end-to-end tests. Never use for anything else.
 environment = "test"
@@ -254,6 +263,7 @@ max_file_bytes = 1048576  # 1 MiB: e2e/storage.spec.ts asserts this limit in the
 
 [notify]
 provider = "local"
+$notify_extra
 
 [billing]
 # "manual": paid plans can be subscribed without a checkout, so e2e/billing.spec.ts covers prices.

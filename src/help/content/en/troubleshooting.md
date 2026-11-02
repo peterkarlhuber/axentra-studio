@@ -391,6 +391,17 @@ password _and_ for an unknown address; the server does not reveal which. After t
 you see [Too many requests](#rate-limited). A disabled account cannot sign in at all. See
 [Signing in](help:signing-in).
 
+### An invitation link does not work {#invitation-link}
+
+- **Page not found** or a page of the API: the link points to an address where Studio does not
+  run. Ask your operator to set `notify.invitation_accept_url`, see
+  [Members and invitations](help:members-invitations#delivery).
+- **This invitation cannot be used**: the invitation expired, was already used or revoked, or the
+  link is incomplete. Ask the person who invited you for a new invitation.
+- **Invitation for another email address**: choose **Sign out and use the invited address**.
+
+See [Accept an invitation](help:members-invitations#accept).
+
 ### A one-time secret was lost {#secret-lost}
 
 API key secrets, webhook signing secrets and invitation links are shown only once and cannot be

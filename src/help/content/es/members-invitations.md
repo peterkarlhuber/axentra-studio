@@ -85,13 +85,18 @@ disponible) y el **Token de invitación**.
 
 ### Cómo llega la invitación a la persona {#delivery}
 
-- **Módulo de notificaciones habilitado:** Axentra pone en cola un correo de invitación a la
-  dirección con el enlace para aceptarla, y Studio muestra el mismo enlace para que también puedas
-  enviarlo tú. El enlace apunta al ajuste de producto `invitation_accept_url`, si está definido
-  (consulta la [configuración del producto](help:products#settings)); si no, a
-  `/accept-invitation` en la URL pública del servidor. Para enviar a las personas directamente a la
-  página de aceptación de Studio, establece `invitation_accept_url` en
-  `https://<your Studio address>/invitations/accept?token={token}`.
+- **Módulo de notificaciones activado:** Axentra pone en cola un correo de invitación a la
+  dirección con el enlace de aceptación, y Studio muestra el mismo enlace para que también puedas
+  enviarlo tú. El enlace usa el ajuste de producto `invitation_accept_url` si está definido
+  (consulta la [configuración del producto](help:products#settings)); si no, el ajuste del
+  servidor `notify.invitation_accept_url` (consulta la
+  [configuración del servidor](help:server-configuration#user-visible-settings)); si no,
+  `/accept-invitation` en la URL pública del servidor. Studio atiende `/accept-invitation` y lo
+  redirige a su página **Aceptar invitación**, así que el valor predeterminado funciona cuando
+  Studio se ejecuta en la dirección de la API. Si Studio tiene su propia dirección (por ejemplo
+  `https://studio.example.com` junto a `https://api.example.com`), el valor predeterminado apunta a
+  la API: define `notify.invitation_accept_url` (o el ajuste de producto) como
+  `https://<your Studio address>/invitations/accept`.
 - **Módulo de notificaciones desactivado:** no se envía ningún correo y no hay enlace. Comparte el
   **Token de invitación**; la persona lo introduce en la página **Aceptar invitación** de Studio.
 
@@ -117,22 +122,25 @@ invitación?**. El enlace y el token dejan de funcionar de inmediato.
 
 Esto es lo que hace la persona invitada:
 
-1. Inicia sesión en Studio con la cuenta cuya dirección de correo electrónico es la invitada. Una
-   persona sin cuenta puede crearla iniciando sesión mediante inicio de sesión único con esa
-   dirección (si tu servidor ofrece inicio de sesión único); no existe el registro propio con
-   contraseña.
-2. Abre el enlace de invitación. Si solo tienes el token, abre **Aceptar invitación** en
-   `/invitations/accept` y pégalo en **Token de invitación**.
-3. Elige **Aceptar invitación**.
+1. Abre el enlace de invitación. Si no has iniciado sesión, **Iniciar sesión** indica que inicias
+   sesión para una invitación y después te devuelve a ella, también tras el inicio de sesión único.
+2. Inicia sesión con la cuenta cuya dirección de correo electrónico es la dirección invitada. ¿Aún
+   no tienes cuenta? Si la página de inicio de sesión ofrece inicio de sesión único, inicia sesión
+   allí con la dirección invitada: el servidor crea tu cuenta porque hay una invitación abierta para
+   ella. No hay registro con contraseña; pide ayuda a quien te invitó o a un administrador.
+3. Comprueba la cuenta que aparece en **Sesión iniciada como** y elige **Aceptar invitación**. No
+   ocurre nada antes de que confirmes. Studio quita el token de la barra de direcciones en cuanto la
+   página lo ha leído, para que no quede en el historial del navegador; el campo **Token de
+   invitación** está rellenado. Si solo tienes el token, abre **Aceptar invitación** en
+   `/invitations/accept` y pégalo.
 
-Studio confirma **Invitación aceptada** y el inquilino aparece en tu producto. Si ya eras miembro del
-inquilino, tu rol actual no cambia.
+**Invitación aceptada** indica el inquilino, el producto y tu rol; **Abrir el inquilino** te lleva
+allí. Si ya eras miembro del inquilino, tu rol actual no cambia.
 
 > [!IMPORTANT]
-> Una invitación solo la puede aceptar un usuario con la sesión iniciada cuya cuenta tenga
-> exactamente la dirección de correo electrónico invitada (sin distinguir mayúsculas y minúsculas).
-> Los usuarios sin dirección de correo electrónico no pueden aceptar invitaciones; añádelos
-> directamente.
+> Solo puede aceptar una invitación un usuario con sesión iniciada cuya cuenta tenga exactamente la
+> dirección de correo electrónico invitada (sin distinguir mayúsculas y minúsculas). Los usuarios
+> sin dirección de correo electrónico no pueden aceptar invitaciones; añádelos directamente.
 
 ## Techo de roles: qué roles puedes asignar {#role-ceiling}
 
@@ -188,12 +196,27 @@ propietario.
 producto (por ejemplo, por un error tipográfico en el campo de texto libre del rol) o es un rol de
 producto.
 
-**Al aceptar: No encontrado, «the invitation is invalid or expired».** El token es incorrecto, o la
-invitación ya se aceptó, se revocó o tiene más de 7 días. Pide una invitación nueva.
+**Al aceptar: Esta invitación no se puede usar.** El servidor responde lo mismo para una
+invitación caducada (tras 7 días), ya aceptada o revocada, y para un enlace o token incompleto o mal
+escrito, para que nadie pueda sondear invitaciones. Pide a quien te invitó una invitación nueva.
 
-**Al aceptar: No permitido, «this invitation was sent to another email address».** Has iniciado
-sesión con una cuenta de otra dirección o con una sin dirección de correo electrónico. Inicia sesión
-con la dirección invitada o pide una invitación para tu dirección.
+**Al aceptar: Invitación para otra dirección de correo electrónico.** Has iniciado sesión con una
+cuenta de otra dirección. Elige **Cerrar sesión y usar la dirección invitada**: cuando inicies sesión
+con la dirección invitada, Studio te devuelve a la invitación. O pide una invitación para tu propia
+dirección.
+
+**Al aceptar: Tu cuenta no tiene dirección de correo electrónico.** Esas cuentas no pueden aceptar
+invitaciones. Inicia sesión con la dirección invitada o pide a quien te invitó que añada tu cuenta
+al inquilino directamente.
+
+**Al aceptar: No se pudo contactar con el servidor.** No se cambió nada. Comprueba tu conexión y
+elige **Reintentar**.
+
+**El enlace de invitación abre «no encontrado» o una página de la API.** El enlace apunta a una
+dirección donde Studio no se ejecuta. Define el ajuste del servidor `notify.invitation_accept_url`
+(o el ajuste de producto `invitation_accept_url`) con la página de aceptación de Studio; consulta
+[la entrega](#delivery). Mientras tanto, envía el token y pide que lo peguen en
+`/invitations/accept`.
 
 **La persona invitada no puede iniciar sesión.** Todavía no tiene cuenta. Studio no puede crear
 cuentas y no existe el registro con contraseña. Una persona invitada obtiene una cuenta iniciando

@@ -5,6 +5,7 @@ import { RootLayout } from './RootLayout';
 import { HomeRedirect, ModuleGate, ProductScope, RequireAuth } from './guards';
 import { AppShell } from './shell/AppShell';
 import { HelpLayout } from '@/help/HelpLayout';
+import { AcceptInvitationAlias } from '@/features/tenants/AcceptInvitationAlias';
 
 /* Feature pages are code-split per route. */
 const lazyPage =
@@ -19,6 +20,8 @@ export const routes: RouteObject[] = [
     children: [
       { path: 'setup', lazy: lazyPage(() => import('@/features/auth/SetupPage'), 'SetupPage') },
       { path: 'login', lazy: lazyPage(() => import('@/features/auth/LoginPage'), 'LoginPage') },
+      // Public: the path of Axentra's default invitation link; forwards to /invitations/accept.
+      { path: 'accept-invitation', element: <AcceptInvitationAlias /> },
       {
         // Public: readable before sign-in (inside the Studio shell when signed in).
         path: 'help',

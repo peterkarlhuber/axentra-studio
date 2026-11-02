@@ -59,11 +59,11 @@ modules use keys in it.
 
 Changes apply immediately to all tenants of the product.
 
-| Key in Settings (JSON)  | Used by       | What it does                                                                                                                                                                                             |
-| ----------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `invitation_accept_url` | Notifications | Link used in invitation emails. `{token}` is replaced by the invitation token; without it, `?token=…` is appended. Must start with `http://` or `https://`. See [invitations](help:members-invitations). |
-| `default_locale`        | Notifications | Fallback language for notification templates, for example `"en"`.                                                                                                                                        |
-| `storage`               | Files         | Storage quotas and the upload content-type policy. Edit the policy on the **Files** tab instead. See [files](help:files).                                                                                |
+| Key in Settings (JSON)  | Used by       | What it does                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `invitation_accept_url` | Notifications | Link used in invitation emails. `{token}` is replaced by the invitation token; without it, `?token=…` is appended. Must start with `http://` or `https://`. See [invitations](help:members-invitations). If the key is not set, the server setting `notify.invitation_accept_url` applies, otherwise `/accept-invitation` on the API's public address. |
+| `default_locale`        | Notifications | Fallback language for notification templates, for example `"en"`.                                                                                                                                                                                                                                                                                      |
+| `storage`               | Files         | Storage quotas and the upload content-type policy. Edit the policy on the **Files** tab instead. See [files](help:files).                                                                                                                                                                                                                              |
 
 ```json
 {

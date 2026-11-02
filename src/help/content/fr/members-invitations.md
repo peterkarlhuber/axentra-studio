@@ -80,12 +80,18 @@ La boîte de dialogue **Invitation créée** affiche alors le **Lien d’invitat
 
 ### Comment l’invitation parvient à la personne {#delivery}
 
-- **Module de notifications activé :** Axentra met en file d’attente un e-mail d’invitation vers l’adresse, avec le
-  lien d’acceptation, et Studio affiche le même lien pour que tu puisses aussi l’envoyer toi-même. Le lien pointe vers
-  le paramètre de produit `invitation_accept_url`, s’il est défini (voir les
-  [paramètres du produit](help:products#settings)) ; sinon vers `/accept-invitation` sur l’URL publique du
-  serveur. Pour envoyer les personnes directement vers la page d’acceptation de Studio, définis `invitation_accept_url` sur
-  `https://<your Studio address>/invitations/accept?token={token}`.
+- **Module de notifications activé :** Axentra met en file d’attente un e-mail d’invitation vers
+  l’adresse avec le lien d’acceptation, et le Studio affiche le même lien pour que tu puisses aussi
+  l’envoyer toi-même. Le lien utilise le paramètre de produit `invitation_accept_url` s’il est
+  défini (voir les [paramètres du produit](help:products#settings)), sinon le paramètre de serveur
+  `notify.invitation_accept_url` (voir la
+  [configuration du serveur](help:server-configuration#user-visible-settings)), sinon
+  `/accept-invitation` sur l’URL publique du serveur. Le Studio sert `/accept-invitation` et le
+  redirige vers sa page **Accepter l’invitation** : la valeur par défaut fonctionne donc quand le
+  Studio tourne à l’adresse de l’API. Si le Studio a sa propre adresse (par exemple
+  `https://studio.example.com` à côté de `https://api.example.com`), la valeur par défaut pointe
+  vers l’API : règle `notify.invitation_accept_url` (ou le paramètre de produit) sur
+  `https://<your Studio address>/invitations/accept`.
 - **Module de notifications désactivé :** aucun e-mail n’est envoyé et il n’y a pas de lien. Partage le
   **Jeton d’invitation** ; la personne le saisit sur la page **Accepter l’invitation** de Studio.
 
@@ -108,22 +114,28 @@ lien et le jeton cessent immédiatement de fonctionner.
 
 ## Accepter une invitation {#accept}
 
-Voici ce que fait la personne invitée :
+Voici ce que fait la personne invitée :
 
-1. Se connecter à Studio avec le compte dont l’adresse e-mail est l’adresse invitée. Une personne
-   sans compte peut en créer un en se connectant par authentification unique avec cette adresse
-   (quand ton serveur propose l’authentification unique) ; il n’existe pas d’inscription libre avec mot de passe.
-2. Ouvrir le lien d’invitation. Si elle n’a que le jeton, ouvrir **Accepter l’invitation** à l’adresse
-   `/invitations/accept` et le coller dans **Jeton d’invitation**.
-3. Choisir **Accepter l’invitation**.
+1. Ouvre le lien d’invitation. Si tu n’es pas connecté, **Connexion** indique que tu te connectes
+   pour une invitation et te ramène ensuite vers elle, y compris après l’authentification unique.
+2. Connecte-toi avec le compte dont l’adresse e-mail est l’adresse invitée. Pas encore de compte ?
+   Si la page de connexion propose l’authentification unique, connecte-toi par ce biais avec
+   l’adresse invitée : le serveur crée ton compte, car une invitation est ouverte pour elle. Il n’y
+   a pas d’inscription avec mot de passe ; adresse-toi à la personne qui t’a invité ou à un
+   administrateur.
+3. Vérifie le compte affiché sous **Connecté en tant que** et choisis **Accepter l’invitation**.
+   Rien ne se passe avant ta confirmation. Le Studio retire le jeton de la barre d’adresse dès que
+   la page l’a lu, pour qu’il ne reste pas dans l’historique du navigateur ; le champ **Jeton
+   d’invitation** est rempli. Si tu n’as que le jeton, ouvre **Accepter l’invitation** à l’adresse
+   `/invitations/accept` et colle-le.
 
-Studio confirme **Invitation acceptée** et le locataire apparaît dans le produit. Si la personne était
-déjà membre du locataire, son rôle existant reste inchangé.
+**Invitation acceptée** indique le locataire, le produit et ton rôle ; **Ouvrir le locataire** t’y
+amène. Si tu étais déjà membre du locataire, ton rôle actuel reste inchangé.
 
 > [!IMPORTANT]
-> Une invitation ne peut être acceptée que par un utilisateur connecté dont le compte a exactement l’adresse e-mail
-> invitée (la casse n’a pas d’importance). Les utilisateurs sans adresse e-mail ne peuvent pas accepter
-> d’invitations ; ajoute-les plutôt directement.
+> Seul un utilisateur connecté dont le compte a exactement l’adresse e-mail invitée peut accepter
+> une invitation (la casse ne compte pas). Les utilisateurs sans adresse e-mail ne peuvent pas
+> accepter d’invitation ; ajoute-les directement.
 
 ## Plafond des rôles : quels rôles tu peux attribuer {#role-ceiling}
 
@@ -175,12 +187,27 @@ et les administrateurs de la plateforme peuvent gérer les propriétaires.
 **Vérifie ta saisie : « unknown tenant role … ».** La clé de rôle n’existe pas dans ce
 produit (par exemple une faute de frappe dans le champ de rôle en texte libre), ou il s’agit d’un rôle de produit.
 
-**À l’acceptation : Introuvable, « the invitation is invalid or expired ».** Le jeton est erroné, ou
-l’invitation a déjà été acceptée ou révoquée, ou elle a plus de 7 jours. Demande une nouvelle invitation.
+**À l’acceptation : Cette invitation ne peut pas être utilisée.** Le serveur répond de la même
+façon pour une invitation expirée (après 7 jours), déjà acceptée ou révoquée, et pour un lien ou un
+jeton incomplet ou mal saisi, afin que personne ne puisse sonder les invitations. Demande une
+nouvelle invitation à la personne qui t’a invité.
 
-**À l’acceptation : Non autorisé, « this invitation was sent to another email address ».** Tu es
-connecté avec un compte associé à une autre adresse, ou sans adresse e-mail. Connecte-toi avec
-l’adresse invitée, ou demande une invitation à ton adresse.
+**À l’acceptation : Invitation pour une autre adresse e-mail.** Tu es connecté avec un compte pour
+une autre adresse. Choisis **Se déconnecter et utiliser l’adresse invitée** : une fois connecté avec
+l’adresse invitée, le Studio te ramène à l’invitation. Ou demande une invitation pour ta propre
+adresse.
+
+**À l’acceptation : Ton compte n’a pas d’adresse e-mail.** Ces comptes ne peuvent pas accepter
+d’invitation. Connecte-toi avec l’adresse invitée ou demande à la personne qui t’a invité d’ajouter
+directement ton compte au locataire.
+
+**À l’acceptation : Le serveur est injoignable.** Rien n’a été modifié. Vérifie ta connexion et
+choisis **Réessayer**.
+
+**Le lien d’invitation ouvre « introuvable » ou une page de l’API.** Le lien pointe vers une adresse
+où le Studio ne tourne pas. Règle le paramètre de serveur `notify.invitation_accept_url` (ou le
+paramètre de produit `invitation_accept_url`) sur la page d’acceptation du Studio, voir
+[la remise](#delivery). En attendant, envoie le jeton et fais-le coller sous `/invitations/accept`.
 
 **La personne invitée ne peut pas se connecter.** Elle n’a pas encore de compte. Studio ne peut pas créer de comptes et
 il n’existe pas d’inscription par mot de passe. Une personne invitée obtient un compte en se connectant par authentification

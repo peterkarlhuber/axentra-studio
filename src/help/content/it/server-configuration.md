@@ -137,16 +137,17 @@ Se invece Studio mostra **Impossibile connettersi ad Axentra**, non è riuscito 
 
 ## Impostazioni del server che cambiano ciò che vedono gli utenti {#user-visible-settings}
 
-| Impostazione del server                               | Effetto in Studio                                                                                                               | Predefinito                                   |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `security.password_login`                             | Modulo di accesso con password nella pagina di accesso                                                                          | attivo                                        |
-| Provider `[[oidc]]`                                   | Pulsanti di single sign-on nella pagina di accesso                                                                              | nessuno                                       |
-| `security.session_ttl_hours` / `session_idle_minutes` | Quando gli utenti devono accedere di nuovo                                                                                      | 12 h / 120 min                                |
-| `security.password_min_length`                        | Lunghezza minima delle nuove password                                                                                           | 12                                            |
-| `security.first_password` / `fresh_login_minutes`     | Se e con quanta rapidità gli utenti single sign-on possono impostare una password nel loro [profilo](help:profile#set-password) | consentito entro 5 min                        |
-| `security.max_body_bytes`, `storage.max_file_bytes`   | Richiesta e caricamento di file più grandi consentiti                                                                           | 10 MiB / 50 MiB                               |
-| `observability.metrics_enabled` / `metrics_token_ref` | Se **Metriche** in Monitoraggio mostra dati o chiede un token                                                                   | attivo; disattivato in produzione senza token |
-| `observability.audit_retention_days`                  | Fino a quando risale il registro di audit dopo `axentra maintenance purge`                                                      | 365                                           |
+| Impostazione del server                               | Effetto in Studio                                                                                                                                                                     | Predefinito                                   |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `security.password_login`                             | Modulo di accesso con password nella pagina di accesso                                                                                                                                | attivo                                        |
+| Provider `[[oidc]]`                                   | Pulsanti di single sign-on nella pagina di accesso                                                                                                                                    | nessuno                                       |
+| `security.session_ttl_hours` / `session_idle_minutes` | Quando gli utenti devono accedere di nuovo                                                                                                                                            | 12 h / 120 min                                |
+| `security.password_min_length`                        | Lunghezza minima delle nuove password                                                                                                                                                 | 12                                            |
+| `security.first_password` / `fresh_login_minutes`     | Se e con quanta rapidità gli utenti single sign-on possono impostare una password nel loro [profilo](help:profile#set-password)                                                       | consentito entro 5 min                        |
+| `security.max_body_bytes`, `storage.max_file_bytes`   | Richiesta e caricamento di file più grandi consentiti                                                                                                                                 | 10 MiB / 50 MiB                               |
+| `observability.metrics_enabled` / `metrics_token_ref` | Se **Metriche** in Monitoraggio mostra dati o chiede un token                                                                                                                         | attivo; disattivato in produzione senza token |
+| `observability.audit_retention_days`                  | Fino a quando risale il registro di audit dopo `axentra maintenance purge`                                                                                                            | 365                                           |
+| `notify.invitation_accept_url`                        | Dove portano i link di invito (prevale l'`invitation_accept_url` del prodotto). Impostalo su `https://<your Studio address>/invitations/accept` quando Studio ha un indirizzo proprio | `/accept-invitation` su `security.public_url` |
 
 Modificali nel file TOML del server o come variabili d'ambiente `AXENTRA__<SECTION>__<KEY>` (per
 esempio `AXENTRA__SECURITY__SESSION_TTL_HOURS=8`) e riavvia l'API. In produzione i segreti si
@@ -188,3 +189,8 @@ Nel repository di Studio: `README.md` (configurazione e immagine container) e
   modalità `single`.
 - Il registro di audit mostra l'indirizzo del proxy come **Indirizzo IP**: aggiungi il proxy a
   `security.trusted_proxies`.
+- I link di invito aprono una pagina dell'API o **Pagina non trovata**: Studio ha un indirizzo
+  proprio. Imposta `notify.invitation_accept_url` su
+  `https://<your Studio address>/invitations/accept` e riavvia l'API. I link già inviati puntano
+  ancora all'API; invia a quelle persone il token o un nuovo invito. Vedi
+  [Membri e inviti](help:members-invitations#delivery).

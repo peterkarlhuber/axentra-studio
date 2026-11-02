@@ -132,16 +132,17 @@ see [Troubleshooting](#troubleshooting).
 
 ## Server settings that change what users see {#user-visible-settings}
 
-| Server setting                                        | Effect in Studio                                                                                              | Default                               |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `security.password_login`                             | Password sign-in form on the sign-in page                                                                     | on                                    |
-| `[[oidc]]` providers                                  | Single sign-on buttons on the sign-in page                                                                    | none                                  |
-| `security.session_ttl_hours` / `session_idle_minutes` | When users must sign in again                                                                                 | 12 h / 120 min                        |
-| `security.password_min_length`                        | Minimum length for new passwords                                                                              | 12                                    |
-| `security.first_password` / `fresh_login_minutes`     | Whether and how quickly single sign-on users can set a password in their [profile](help:profile#set-password) | allowed within 5 min                  |
-| `security.max_body_bytes`, `storage.max_file_bytes`   | Largest request and file upload                                                                               | 10 MiB / 50 MiB                       |
-| `observability.metrics_enabled` / `metrics_token_ref` | Whether **Metrics** on Monitoring shows data or asks for a token                                              | on; off in production without a token |
-| `observability.audit_retention_days`                  | How far back the audit log goes after `axentra maintenance purge`                                             | 365                                   |
+| Server setting                                        | Effect in Studio                                                                                                                                                         | Default                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| `security.password_login`                             | Password sign-in form on the sign-in page                                                                                                                                | on                                            |
+| `[[oidc]]` providers                                  | Single sign-on buttons on the sign-in page                                                                                                                               | none                                          |
+| `security.session_ttl_hours` / `session_idle_minutes` | When users must sign in again                                                                                                                                            | 12 h / 120 min                                |
+| `security.password_min_length`                        | Minimum length for new passwords                                                                                                                                         | 12                                            |
+| `security.first_password` / `fresh_login_minutes`     | Whether and how quickly single sign-on users can set a password in their [profile](help:profile#set-password)                                                            | allowed within 5 min                          |
+| `security.max_body_bytes`, `storage.max_file_bytes`   | Largest request and file upload                                                                                                                                          | 10 MiB / 50 MiB                               |
+| `observability.metrics_enabled` / `metrics_token_ref` | Whether **Metrics** on Monitoring shows data or asks for a token                                                                                                         | on; off in production without a token         |
+| `observability.audit_retention_days`                  | How far back the audit log goes after `axentra maintenance purge`                                                                                                        | 365                                           |
+| `notify.invitation_accept_url`                        | Where invitation links lead (a product's own `invitation_accept_url` wins). Set it to `https://<your Studio address>/invitations/accept` when Studio has its own address | `/accept-invitation` on `security.public_url` |
 
 Change these in the server's TOML file or as environment variables
 `AXENTRA__<SECTION>__<KEY>` (for example `AXENTRA__SECURITY__SESSION_TTL_HOURS=8`) and restart
@@ -180,3 +181,7 @@ In the Studio repository: `README.md` (configuration and container image) and
   mode.
 - Audit log shows the proxy's address as **IP address**: add the proxy to
   `security.trusted_proxies`.
+- Invitation links open a page of the API or **Page not found**: Studio has its own address. Set
+  `notify.invitation_accept_url` to `https://<your Studio address>/invitations/accept` and restart
+  the API. Links sent before still point to the API; send those people the token or a new
+  invitation. See [Members and invitations](help:members-invitations#delivery).
