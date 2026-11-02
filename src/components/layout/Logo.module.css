@@ -1,0 +1,16 @@
+.themed {
+  display: inline-block;
+  flex: none;
+}
+.themed img {
+  display: block;
+}
+.dark {
+  display: none !important;
+}
+:global([data-theme='dark']) .light {
+  display: none !important;
+}
+:global([data-theme='dark']) .dark {
+  display: block !important;
+}
