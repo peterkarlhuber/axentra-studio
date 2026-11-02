@@ -1,0 +1,80 @@
+{
+  "title": "Monitoring",
+  "description": "Health checks, metrics of the API process, retention and tracing as reported by the Axentra server.",
+  "health": {
+    "readiness": "Readiness",
+    "readinessHelp": "GET /v1/health/ready – each dependency check. A failing check makes the server answer 503.",
+    "liveness": "Liveness",
+    "livenessHelp": "GET /v1/health/live – the server process responds."
+  },
+  "metrics": {
+    "title": "Metrics",
+    "description": "GET /metrics – Prometheus counters of the API process that answered this request.",
+    "perProcess": "Values are counted since this API process started. Each process (and the separate notification dispatcher or worker) keeps its own counters, so scrape every process for a complete picture.",
+    "kpiLabel": "Key figures",
+    "kpi": {
+      "requests": "HTTP requests",
+      "errors5xx": "Server errors (5xx)",
+      "errors4xx": "Client errors (4xx)",
+      "latency": "Average response time",
+      "authFailures": "Refused (401/403)",
+      "notifyEnqueued": "Notifications enqueued",
+      "notifySent": "Notifications delivered",
+      "notifyFailed": "Notification deliveries failed"
+    },
+    "ms": "{{value}} ms",
+    "notExposed": "not reported",
+    "groups": {
+      "http": "HTTP",
+      "auth": "Authentication",
+      "database": "Database pool",
+      "notify": "Notifications",
+      "jobs": "Jobs and events",
+      "other": "Other metrics"
+    },
+    "types": {
+      "counter": "Counter",
+      "gauge": "Gauge",
+      "histogram": "Histogram",
+      "summary": "Summary",
+      "untyped": "Untyped"
+    },
+    "value": "Value",
+    "count": "Count",
+    "average": "Average",
+    "noSamples": "No values recorded yet.",
+    "truncated": "Showing the {{shown}} largest of {{total}} series.",
+    "empty": "The server reported no metrics.",
+    "disabledTitle": "Metrics are not available",
+    "disabledBody": "The server answers 404: metrics are switched off (observability.metrics_enabled = false), or this is a production server without observability.metrics_token_ref, where metrics stay disabled until a token is configured.",
+    "tokenRequiredTitle": "A metrics token is required",
+    "tokenRequiredBody": "This server protects /metrics with a bearer token (observability.metrics_token_ref). Enter the token to view the metrics.",
+    "tokenRejected": "The server did not accept this token.",
+    "tokenTitle": "Metrics token",
+    "token": "Bearer token",
+    "tokenHelp": "Kept only in this page while it is open; never stored.",
+    "useToken": "Load metrics"
+  },
+  "ops": {
+    "title": "Retention and tracing",
+    "forbidden": "Retention and tracing settings are shown to platform administrators and product managers only (GET /v1/settings).",
+    "retentionTitle": "Maintenance and retention",
+    "retentionHelp": "Retention periods reported by GET /v1/settings. Data is removed when the maintenance task runs.",
+    "auditRetention": "Audit events",
+    "jobRetention": "Finished jobs",
+    "notifyContentRetention": "Notification content",
+    "notifyMessageRetention": "Notification messages",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "notReported": "not reported by the server",
+    "purgeHint": "Retention is applied by running",
+    "tracingTitle": "Tracing and logging",
+    "tracingHelp": "OpenTelemetry and log settings reported by GET /v1/settings.",
+    "otel": "OpenTelemetry tracing",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "logLevel": "Log level",
+    "notifyProvider": "Notification provider",
+    "environment": "Environment"
+  }
+}

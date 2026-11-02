@@ -8,6 +8,13 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Notifications (notify module) and Monitoring: templates with versions (`If-Match`), locale
+  variants, variables and sample data, a live server preview in a sandboxed frame (no scripts, no
+  network), test sends with an `Idempotency-Key`, the message log with attempts, redacted last
+  error and retry, delivery statistics, the local mailbox, own preferences with locked
+  categories; a Monitoring page with per-check readiness (503 bodies), liveness, parsed
+  `GET /metrics` values (optional bearer token, kept in memory only) and retention/tracing from
+  `GET /v1/settings`. `/metrics` is proxied by `vite dev/preview` and the Docker image.
 - Project setup: Vite, React 19, strict TypeScript, React Router 7, TanStack Query, ESLint,
   Prettier, Vitest, Playwright with axe-core (see `docs/adr/0001-frontend-stack.md`).
 - Typed API client from the vendored Axentra OpenAPI contract (`api/openapi.json`, synced with

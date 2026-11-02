@@ -41,5 +41,7 @@
   "health": "System health",
   "settings": "Settings",
   "profile": "Profile",
-  "acceptInvitation": "Accept invitation"
+  "acceptInvitation": "Accept invitation",
+  "monitoring": "Monitoring",
+  "notifyNewTemplate": "New template"
 }

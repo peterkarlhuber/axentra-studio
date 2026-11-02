@@ -43,6 +43,19 @@ import type {
   User,
   UserPatch,
   UserSession,
+  // notify / observability areas
+  NotifyDraftPreviewInput,
+  NotifyMailboxEntry,
+  NotifyMessage,
+  NotifyMessageStatus,
+  NotifyPreferences,
+  NotifyPreviewInput,
+  NotifyRendered,
+  NotifySendInput,
+  NotifyStats,
+  NotifyTemplate,
+  NotifyTemplateInput,
+  NotifyTemplatePatch,
 } from './models';
 
 export interface ListParams {
@@ -453,4 +466,159 @@ export const auditApi = {
 
 export const settingsApi = {
   get: () => unwrap<ServerSettings>(api().GET('/v1/settings')),
+};
+
+// ---- Notifications (notify module) -----------------------------------------------------
+
+const templatePath = (productId: string, key: string) => ({
+  path: { product_id: productId, key },
+});
+
+export interface NotifyMessageListParams extends ListParams {
+  tenant_id?: string;
+  status?: NotifyMessageStatus | '';
+  template_key?: string;
+  recipient?: string;
+  since?: string;
+}
+
+export interface NotifyMailboxParams extends ListParams {
+  recipient?: string;
+}
+
+export const notifyApi = {
+  templates: (productId: string) =>
+    unwrap<NotifyTemplate[]>(
+      api().GET('/v1/products/{product_id}/notify/templates', { params: productPath(productId) }),
+    ),
+  template: (productId: string, key: string) =>
+    unwrap<NotifyTemplate>(
+      api().GET('/v1/products/{product_id}/notify/templates/{key}', {
+        params: templatePath(productId, key),
+      }),
+    ),
+  createTemplate: (productId: string, body: NotifyTemplateInput) =>
+    unwrap<NotifyTemplate>(
+      api().POST('/v1/products/{product_id}/notify/templates', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  updateTemplate: (productId: string, key: string, body: NotifyTemplatePatch, version?: number) =>
+    unwrap<NotifyTemplate>(
+      api().PATCH('/v1/products/{product_id}/notify/templates/{key}', {
+        params: { ...templatePath(productId, key), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  deleteTemplate: (productId: string, key: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/notify/templates/{key}', {
+        params: { ...templatePath(productId, key), header: ifMatch(version) },
+      }),
+    ),
+  previewTemplate: (productId: string, key: string, body: NotifyPreviewInput) =>
+    unwrap<NotifyRendered>(
+      api().POST('/v1/products/{product_id}/notify/templates/{key}/preview', {
+        params: templatePath(productId, key),
+        body,
+      }),
+    ),
+  previewDraft: (productId: string, body: NotifyDraftPreviewInput) =>
+    unwrap<NotifyRendered>(
+      api().POST('/v1/products/{product_id}/notify/templates/preview', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  send: (productId: string, tenantId: string, body: NotifySendInput, idempotencyKey: string) =>
+    unwrap<NotifyMessage>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/notify/send', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          header: { 'Idempotency-Key': idempotencyKey },
+        },
+        body,
+      }),
+    ),
+  messages: (productId: string, params?: NotifyMessageListParams) =>
+    unwrap<Page<NotifyMessage>>(
+      api().GET('/v1/products/{product_id}/notify/messages', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            tenant_id?: string;
+            status?: NotifyMessageStatus;
+            template_key?: string;
+            recipient?: string;
+            since?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  message: (productId: string, messageId: string) =>
+    unwrap<NotifyMessage>(
+      api().GET('/v1/products/{product_id}/notify/messages/{message_id}', {
+        params: { path: { product_id: productId, message_id: messageId } },
+      }),
+    ),
+  retry: (productId: string, messageId: string) =>
+    unwrap<NotifyMessage>(
+      api().POST('/v1/products/{product_id}/notify/messages/{message_id}/retry', {
+        params: { path: { product_id: productId, message_id: messageId } },
+      }),
+    ),
+  mailbox: (productId: string, params?: NotifyMailboxParams) =>
+    unwrap<Page<NotifyMailboxEntry>>(
+      api().GET('/v1/products/{product_id}/notify/mailbox', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { recipient?: string; limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  stats: (productId: string, tenantId?: string) =>
+    unwrap<NotifyStats>(
+      api().GET('/v1/products/{product_id}/notify/stats', {
+        params: { ...productPath(productId), query: cleanQuery({ tenant_id: tenantId }) },
+      }),
+    ),
+  preferences: (productId: string, tenantId?: string) =>
+    unwrap<NotifyPreferences>(
+      api().GET('/v1/products/{product_id}/notify/preferences/me', {
+        params: { ...productPath(productId), query: cleanQuery({ tenant_id: tenantId }) },
+      }),
+    ),
+  setPreferences: (productId: string, optedOut: string[], version?: number, tenantId?: string) =>
+    unwrap<NotifyPreferences>(
+      api().PUT('/v1/products/{product_id}/notify/preferences/me', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery({ tenant_id: tenantId }),
+          header: ifMatch(version),
+        },
+        body: { opted_out: optedOut },
+      }),
+    ),
+};
+
+// ---- Observability (GET /metrics, outside /v1) ----------------------------------------
+
+export const observabilityApi = {
+  /**
+   * Prometheus text exposition. The token is the operator's `observability.metrics_token_ref`
+   * value; it is only kept in memory by the caller and sent as a bearer token.
+   */
+  metrics: (token?: string) =>
+    unwrap<string>(
+      api().GET('/metrics', {
+        parseAs: 'text',
+        headers: {
+          Accept: 'text/plain',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      }),
+    ),
 };

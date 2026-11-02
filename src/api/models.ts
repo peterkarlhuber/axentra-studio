@@ -79,3 +79,19 @@ export interface MemberLike {
 }
 
 export type UserPreferences = { theme?: 'light' | 'dark' | 'system'; [key: string]: unknown };
+
+// ---- Notifications (notify module) ----------------------------------------------------
+export type NotifyTemplate = Schemas['Template'];
+export type NotifyTemplateVariant = Schemas['TemplateVariant'];
+export type NotifyTemplateInput = Schemas['TemplateCreate'];
+export type NotifyTemplatePatch = Schemas['TemplateUpdate'];
+export type NotifyDraftPreviewInput = Schemas['DraftPreviewRequest'];
+export type NotifyPreviewInput = Schemas['PreviewRequest'];
+export type NotifyRendered = Schemas['RenderedContent'];
+export type NotifySendInput = Schemas['SendRequest'];
+export type NotifyMessage = Schemas['Message'];
+export type NotifyMessageStatus = NotifyMessage['status'];
+export type NotifyMailboxEntry = Schemas['MailboxEntry'];
+export type NotifyStats = Schemas['DeliveryStats'];
+export type NotifyStatusCounts = Schemas['StatusCounts'];
+export type NotifyPreferences = Schemas['Preferences'];

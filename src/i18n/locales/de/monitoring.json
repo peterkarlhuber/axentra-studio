@@ -1,0 +1,80 @@
+{
+  "title": "Monitoring",
+  "description": "Statusprüfungen, Metriken des API-Prozesses, Aufbewahrung und Tracing, wie sie der Axentra-Server meldet.",
+  "health": {
+    "readiness": "Bereitschaft",
+    "readinessHelp": "GET /v1/health/ready – jede Prüfung einer Abhängigkeit. Schlägt eine Prüfung fehl, antwortet der Server mit 503.",
+    "liveness": "Erreichbarkeit",
+    "livenessHelp": "GET /v1/health/live – der Serverprozess antwortet."
+  },
+  "metrics": {
+    "title": "Metriken",
+    "description": "GET /metrics – Prometheus-Zähler des API-Prozesses, der diese Anfrage beantwortet hat.",
+    "perProcess": "Die Werte zählen seit dem Start dieses API-Prozesses. Jeder Prozess (auch der separate Benachrichtigungs-Dispatcher oder Worker) hat eigene Zähler; für ein vollständiges Bild fragen Sie jeden Prozess ab.",
+    "kpiLabel": "Kennzahlen",
+    "kpi": {
+      "requests": "HTTP-Anfragen",
+      "errors5xx": "Serverfehler (5xx)",
+      "errors4xx": "Clientfehler (4xx)",
+      "latency": "Mittlere Antwortzeit",
+      "authFailures": "Abgewiesen (401/403)",
+      "notifyEnqueued": "Eingereihte Benachrichtigungen",
+      "notifySent": "Zugestellte Benachrichtigungen",
+      "notifyFailed": "Fehlgeschlagene Zustellungen"
+    },
+    "ms": "{{value}} ms",
+    "notExposed": "nicht gemeldet",
+    "groups": {
+      "http": "HTTP",
+      "auth": "Authentifizierung",
+      "database": "Datenbank-Pool",
+      "notify": "Benachrichtigungen",
+      "jobs": "Jobs und Ereignisse",
+      "other": "Weitere Metriken"
+    },
+    "types": {
+      "counter": "Zähler",
+      "gauge": "Messwert",
+      "histogram": "Histogramm",
+      "summary": "Zusammenfassung",
+      "untyped": "Ohne Typ"
+    },
+    "value": "Wert",
+    "count": "Anzahl",
+    "average": "Mittelwert",
+    "noSamples": "Noch keine Werte erfasst.",
+    "truncated": "Es werden die {{shown}} größten von {{total}} Reihen angezeigt.",
+    "empty": "Der Server hat keine Metriken gemeldet.",
+    "disabledTitle": "Metriken sind nicht verfügbar",
+    "disabledBody": "Der Server antwortet mit 404: Metriken sind ausgeschaltet (observability.metrics_enabled = false), oder es ist ein Produktivserver ohne observability.metrics_token_ref, auf dem Metriken bis zur Konfiguration eines Tokens deaktiviert bleiben.",
+    "tokenRequiredTitle": "Ein Metrik-Token ist erforderlich",
+    "tokenRequiredBody": "Dieser Server schützt /metrics mit einem Bearer-Token (observability.metrics_token_ref). Geben Sie das Token ein, um die Metriken anzuzeigen.",
+    "tokenRejected": "Der Server hat dieses Token nicht akzeptiert.",
+    "tokenTitle": "Metrik-Token",
+    "token": "Bearer-Token",
+    "tokenHelp": "Wird nur auf dieser Seite gehalten, solange sie geöffnet ist, und nie gespeichert.",
+    "useToken": "Metriken laden"
+  },
+  "ops": {
+    "title": "Aufbewahrung und Tracing",
+    "forbidden": "Einstellungen zu Aufbewahrung und Tracing sehen nur Plattform-Administratoren und Produktverantwortliche (GET /v1/settings).",
+    "retentionTitle": "Wartung und Aufbewahrung",
+    "retentionHelp": "Aufbewahrungsfristen laut GET /v1/settings. Die Daten werden entfernt, wenn die Wartungsaufgabe läuft.",
+    "auditRetention": "Audit-Ereignisse",
+    "jobRetention": "Abgeschlossene Jobs",
+    "notifyContentRetention": "Inhalt von Benachrichtigungen",
+    "notifyMessageRetention": "Benachrichtigungen",
+    "days_one": "{{count}} Tag",
+    "days_other": "{{count}} Tage",
+    "notReported": "vom Server nicht gemeldet",
+    "purgeHint": "Die Aufbewahrung wird angewendet durch",
+    "tracingTitle": "Tracing und Protokollierung",
+    "tracingHelp": "OpenTelemetry- und Protokolleinstellungen laut GET /v1/settings.",
+    "otel": "OpenTelemetry-Tracing",
+    "enabled": "Aktiviert",
+    "disabled": "Deaktiviert",
+    "logLevel": "Protokollstufe",
+    "notifyProvider": "Benachrichtigungsanbieter",
+    "environment": "Umgebung"
+  }
+}

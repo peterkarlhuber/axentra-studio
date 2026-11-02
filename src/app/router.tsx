@@ -70,6 +70,15 @@ export const routes: RouteObject[] = [
                 handle: { crumb: 'health' },
                 lazy: lazyPage(() => import('@/features/system/HealthPage'), 'HealthPage'),
               },
+              // ---- monitoring area ----
+              {
+                path: 'monitoring',
+                handle: { crumb: 'monitoring' },
+                lazy: lazyPage(
+                  () => import('@/features/monitoring/MonitoringPage'),
+                  'MonitoringPage',
+                ),
+              },
               {
                 path: 'settings',
                 handle: { crumb: 'settings' },
@@ -202,7 +211,37 @@ export const routes: RouteObject[] = [
                   futureModule('usage', 'usage', 'usage'),
                   futureModule('plans', 'billing', 'plans'),
                   futureModule('subscriptions', 'billing', 'subscriptions'),
-                  futureModule('notifications', 'notifications', 'notifications'),
+                  // ---- notify area ----
+                  {
+                    path: 'notifications',
+                    handle: { crumb: 'notifications' },
+                    element: <ModuleGate module="notifications" titleKey="notifications" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/notify/NotificationsPage'),
+                          'NotificationsPage',
+                        ),
+                      },
+                      {
+                        path: 'templates/new',
+                        handle: { crumb: 'notifyNewTemplate' },
+                        lazy: lazyPage(
+                          () => import('@/features/notify/TemplateEditorPage'),
+                          'TemplateEditorPage',
+                        ),
+                      },
+                      {
+                        path: 'templates/:templateKey',
+                        handle: { crumbParam: 'templateKey' },
+                        lazy: lazyPage(
+                          () => import('@/features/notify/TemplateEditorPage'),
+                          'TemplateEditorPage',
+                        ),
+                      },
+                    ],
+                  },
                 ],
               },
               {
