@@ -56,6 +56,8 @@ export type RevokeResult = Schemas['RevokeResult'];
 // Request bodies
 export type SetupInput = Schemas['SetupRequest'];
 export type PasswordLoginInput = Schemas['PasswordLogin'];
+export type OidcStartInput = Schemas['OidcStartRequest'];
+export type OidcStartAnswer = Schemas['OidcStartAnswer'];
 export type MePatch = Schemas['MeUpdate'];
 export type PasswordChangeInput = Schemas['PasswordChange'];
 export type ProductInput = Schemas['ProductCreate'];

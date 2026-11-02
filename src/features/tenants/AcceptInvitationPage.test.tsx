@@ -113,10 +113,13 @@ afterEach(() => {
 });
 
 describe('invitation links', () => {
-  it('keeps accept-page return paths through sign-in, with the token', () => {
+  it('keeps accept-page return paths through sign-in, the token only for the tab', () => {
     const path = acceptInvitationPath(TOKEN);
     expect(safeReturnPath(path)).toBe(path);
-    expect(loginPath(path)).toBe(`/login?return_to=${encodeURIComponent(path)}`);
+    // The sign-in page URL never holds the token; the tab keeps it for the accept page.
+    expect(readPendingInvitation()).toBeNull();
+    expect(loginPath(path)).toBe(`/login?return_to=${encodeURIComponent('/invitations/accept')}`);
+    expect(readPendingInvitation()).toBe(TOKEN);
     expect(invitationTokenFromPath(path)).toBe(TOKEN);
     expect(invitationTokenFromPath('/invitations/accept')).toBeNull();
     expect(invitationTokenFromPath('/audit?token=x')).toBeNull();
@@ -245,10 +248,12 @@ describe('invitation links', () => {
     );
     expect(await screen.findByText('login page')).toBeInTheDocument();
     expect(calls.some((call) => call.path === '/v1/auth/logout')).toBe(true);
-    // The sign-in returns to the accept page with the token.
+    // The sign-in returns to the accept page; the token is kept for the tab, not in the URL.
     const where = screen.getByTestId('where').textContent ?? '';
+    expect(where).not.toContain('axinv');
     const returnTo = new URLSearchParams(where.split('?')[1]).get('return_to') ?? '';
-    expect(invitationTokenFromPath(returnTo)).toBe(TOKEN);
+    expect(returnTo).toBe('/invitations/accept');
+    expect(readPendingInvitation()).toBe(TOKEN);
   });
 
   it('explains that an account without an email address cannot accept', async () => {

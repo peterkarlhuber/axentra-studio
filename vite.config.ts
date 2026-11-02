@@ -19,14 +19,17 @@ export default defineConfig(({ mode }) => {
     '/metrics': { target: apiTarget, changeOrigin: false, xfwd: true },
   };
 
+  const securityHeaders = { 'Referrer-Policy': 'no-referrer' };
+
   return {
     plugins: [react()],
     define: { __STUDIO_VERSION__: JSON.stringify(pkg.version) },
     resolve: {
       alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
     },
-    server: { port: 5173, strictPort: false, proxy },
-    preview: { port: 4173, proxy },
+    // Same Referrer-Policy as the Docker image (docker/40-axentra-studio.sh) and index.html.
+    server: { port: 5173, strictPort: false, proxy, headers: securityHeaders },
+    preview: { port: 4173, proxy, headers: securityHeaders },
     build: {
       target: 'es2022',
       sourcemap: true,

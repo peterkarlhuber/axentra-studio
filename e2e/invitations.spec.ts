@@ -1,4 +1,4 @@
-import { expect, test, type Browser, type Page } from '@playwright/test';
+import { expect, test, type Browser, type Page, type Request } from '@playwright/test';
 import { specProduct } from './support';
 import {
   api,
@@ -138,21 +138,45 @@ test('the emailed link survives sign-in, leaves the address bar and joins the te
   const link = studioLink(created, baseURL ?? '');
 
   const invitee = await signedOutPage(browser, baseURL);
+  // No request of the page carries a Referer (the link's address holds the token at first).
+  const referers: string[] = [];
+  const headerReads: Promise<void>[] = [];
+  const recordReferer = (request: Request) => {
+    headerReads.push(
+      request
+        .allHeaders()
+        .then((headers) => {
+          if (headers.referer) referers.push(`${request.url()} <- ${headers.referer}`);
+        })
+        .catch(() => undefined),
+    );
+  };
+  invitee.page.on('request', recordReferer);
   await invitee.page.goto(link);
-  // Signed out: the sign-in page explains why and keeps the token in return_to.
+  // Signed out: the sign-in page explains why. The token is kept for the tab only: it is not
+  // in the sign-in page address (security review round 3, NF-3).
   await expect(invitee.page).toHaveURL(/\/login\?return_to=/);
   const returnTo = new URL(invitee.page.url()).searchParams.get('return_to') ?? '';
-  expect(returnTo).toBe(`/invitations/accept?token=${encodeURIComponent(created.token)}`);
+  expect(returnTo).toBe('/invitations/accept');
+  expect(invitee.page.url()).not.toContain(created.token);
+  expect(
+    await invitee.page.evaluate(() =>
+      document.querySelector('meta[name="referrer"]')?.getAttribute('content'),
+    ),
+  ).toBe('no-referrer');
   await expect(
     invitee.page.getByRole('status').filter({ hasText: 'Sign in to accept your invitation' }),
   ).toBeVisible();
   await expectNoHorizontalScroll(invitee.page);
   await signInOnLoginPage(invitee.page, fixture.invitee);
 
-  // Back on the accept page; the token is gone from the address bar but filled in.
+  // Back on the accept page; the token is not in the address bar but filled in.
   await expect(invitee.page).toHaveURL(/\/invitations\/accept$/);
   expect(invitee.page.url()).not.toContain(created.token);
   await expect(invitee.page.getByLabel(/Invitation token/)).toHaveValue(created.token);
+  invitee.page.off('request', recordReferer);
+  await Promise.all(headerReads);
+  expect(referers).toEqual([]);
   await expect(invitee.page.getByTestId('accept-signed-in-as')).toContainText(
     fixture.invitee.email,
   );
@@ -195,6 +219,34 @@ test('the emailed link survives sign-in, leaves the address bar and joins the te
     .filter({ hasText: 'This invitation cannot be used' });
   await expect(used).toContainText('Ask the person who invited you for a new invitation.');
   await invitee.context.close();
+});
+
+test('other spellings of the invitation link never put the token in a URL', async ({
+  page,
+  browser,
+  baseURL,
+}, testInfo) => {
+  test.setTimeout(120_000);
+  const fixture = await createFixture(page, testInfo.project.name);
+  const created = await invite(page, fixture);
+  const token = encodeURIComponent(created.token);
+  for (const variant of [
+    `/invitations/accept/?token=${token}`,
+    `/INVITATIONS/Accept?token=${token}`,
+    `/accept-invitation?token=${token}`,
+  ]) {
+    const visitor = await signedOutPage(browser, baseURL);
+    const urls: string[] = [];
+    visitor.page.on('request', (request) => urls.push(request.url()));
+    await visitor.page.goto(variant);
+    await expect(visitor.page).toHaveURL(/\/login\?return_to=%2Finvitations%2Faccept$/);
+    await expect(
+      visitor.page.getByRole('status').filter({ hasText: 'Sign in to accept your invitation' }),
+    ).toBeVisible();
+    // Only the very first document request carried the link; nothing after it.
+    expect(urls.slice(1).filter((url) => url.includes(created.token))).toEqual([]);
+    await visitor.context.close();
+  }
 });
 
 test('unknown tokens and invitations for another address are explained', async ({

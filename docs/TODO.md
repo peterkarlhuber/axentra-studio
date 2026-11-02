@@ -18,25 +18,10 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P1
 
-- **Re-pin `api/BACKEND_REF` to the merged product-permissions/storage-policy backend.** The
-  vendored contract (`api/openapi.json`, `src/api/schema.d.ts`, `api/SOURCE`) is synced from the
-  unmerged Axentra commit `67cd0ac` (product-defined permissions, per-product content-type
-  policy), while `api/BACKEND_REF` still pins `7511a37`, so the `contract` CI job and the unit
-  check "pins the same backend commit" fail, and the CI e2e job (which runs the pinned backend)
-  cannot pass `e2e/permissions-policy.spec.ts` or load the new Permissions page and Files tab.
-  After the backend merge: `npm run api:sync -- --sha <merge sha>`, full e2e in both modes, a row
-  in [COMPATIBILITY.md](COMPATIBILITY.md). This also covers the search re-pin below.
-
-- **Re-pin `api/BACKEND_REF` to include search.** Axentra `master` is at `f80429f` (PR #11,
-  search module, API still 1.0, two new paths under `/v1/products/{id}/tenants/{tid}/search`).
-  Studio pins `7511a37`; `npm run api:check` against `f80429f` fails with exactly those two
-  backend-only paths. Run `npm run api:sync -- --sha f80429f129f76bc019118bd825bef637feaf8ecf`, the
-  full e2e suite against that commit, and add a row to [COMPATIBILITY.md](COMPATIBILITY.md) (and
-  the backend's mirror). Integration check: contract and e2e jobs green on the re-pin PR.
 - **Search UI for the new backend search module.** Axentra's `search` module (tenant-scoped
   PostgreSQL full-text index; `GET .../search` with `search:query`, `PUT`/`DELETE
-.../search/documents/{kind}/{ref_id}` with `search:index`) has no Studio page. Needs the re-pin
-  above first; then a per-tenant search page (query, kind filter, highlighted results, cursor
+.../search/documents/{kind}/{ref_id}` with `search:index`) has no Studio page (the vendored
+  contract includes it). Needed: a per-tenant search page (query, kind filter, highlighted results, cursor
   paging), module gating on `search`, permissions, i18n, component tests and an e2e spec
   (backend reference: `docs/modules/SEARCH.md` in the Axentra repository).
 - **Phase 1 pages have no component tests.** `ApiKeysPage`, `RolesPage`, `SetupPage`,
@@ -65,13 +50,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   see. Studio explains this in the add dialog.
 
 ## P2
-
-- **The invitation token is in the query string of the single sign-on start (backend).** Studio
-  sends it only in `invitation=` of `GET /v1/auth/oidc/{provider}/start`, never in `return_to`, so
-  Axentra stores it encrypted and redacts it in its access log. A reverse proxy or load balancer in
-  front of Axentra that logs full request URLs still records it. Follow-up: a `POST` start (token in
-  the form body, answered with the redirect), then Studio submits a form instead of following a
-  link. Until then, operators should not log query strings of `/v1/auth/oidc/*/start`.
 
 - **Tenant-scoped pages of a suspended tenant answer `403` for product operators.** The tenant page
   explains the suspension and closes its Members and Invitations tabs, but other screens that load

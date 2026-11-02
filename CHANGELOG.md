@@ -8,6 +8,26 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Security
 
+- An invitation token is in no URL any more (security review round 3, NF-2 and NF-3, the rest of AX-R2):
+  - Studio reads it once and removes it from the address bar at once (`history.replaceState`, no history
+    entry): at startup, before the router runs, for the invitation link and for a sign-in page whose
+    `return_to` holds one, and in `loginPath()`, the `/accept-invitation` alias and the accept page for
+    in-app navigations. The tab keeps it in sessionStorage (memory when storage is blocked); the sign-in
+    page address is `/login?return_to=%2Finvitations%2Faccept`.
+  - Paths are compared after normalization (percent-decoding, case, repeated and trailing slashes), as the
+    router matches them: `/invitations/accept/?token=`, `/INVITATIONS/accept?token=`,
+    `/invitations/%61ccept?TOKEN=` and the alias are all treated as the accept page.
+  - Single sign-on with an invitation uses Axentra's new `POST /v1/auth/oidc/{provider}/start` with the
+    token in the JSON body and then navigates to the returned identity provider URL; the link itself is
+    the plain `GET` start without the token (also used for sign-ons without an invitation, unchanged). A
+    backend without the `POST` start (`405`) signs on without the invitation. `return_to` of a sign-on
+    start never carries a token-like parameter (`token`, `*_token`, `invitation`).
+  - `<meta name="referrer" content="no-referrer">` replaces `strict-origin-when-cross-origin`: the meta
+    element overrode the image's `Referrer-Policy: no-referrer` header, so same-origin requests (through
+    the `/v1` proxy) sent the full address, token included, as `Referer`, which nginx's combined log
+    records. The Vite dev and preview servers send the header too.
+  - Backend pin `api/BACKEND_REF` is axentra `f3ed8d2` (axentra #28: `POST /v1/auth/oidc/{provider}/start`,
+    secret-free `return_to`, encoded-token redaction); the vendored contract is synced from it.
 - Backend pin `api/BACKEND_REF` is axentra `024da57` (axentra #25: AX-R1 cursor validation; #26: AX-R2
   `invitation_accepted` after single sign-on). The OpenAPI contract is unchanged.
 - Single sign-on for an invitation no longer puts the invitation token into `return_to` of
@@ -22,8 +42,8 @@ All notable changes to Axentra Studio are documented here. The format follows
   started that sign-on, and only when `/v1/me` lists the tenant), shows **Invitation accepted**
   without a second confirmation and forgets the token; otherwise the page asks for the
   confirmation as before. The sign-in page and the members and invitations help (all six
-  languages) describe both paths: a password sign-in still confirms on the next page. Known
-  limitation: the token is still in the start URL's query string (docs/TODO.md).
+  languages) describe both paths: a password sign-in still confirms on the next page. The token
+  in the start URL's query string is gone with the `POST` start (entry above).
 
 ### Fixed
 
