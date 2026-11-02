@@ -8,6 +8,9 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- First-run setup tells "setup already completed" from "email address in use" by the new error
+  codes (`setup_already_completed`, `email_taken`); the message text is only a fallback for older
+  backends that answer `conflict` for both.
 - Every error code the Axentra API can answer with has its own message (six languages) and a
   troubleshooting section: new `method_not_allowed` (405), the generic `error`, `invalid_signature`,
   `setup_already_completed` and `email_taken` (Axentra's new setup conflict codes), and

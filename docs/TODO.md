@@ -78,8 +78,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 - **Webhook retries give up after minutes.** With the defaults (8 attempts, 2 s base) a delivery
   is dead after about 2-5 minutes, so a short receiver outage loses events until someone redelivers
   (backend setting; the help explains redelivery).
-- **Setup `409` is parsed by message text.** "Setup already done" and "email already taken" share
-  the status; Studio tells them apart by the message, which breaks if the backend rewords it.
 - **Studio cannot set an API key expiry or list a user's memberships.** Both are API-only today.
 - **"Sign out all other sessions" revokes one by one.** There is no revoke-all endpoint (backend).
 
