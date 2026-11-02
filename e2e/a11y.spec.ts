@@ -31,6 +31,9 @@ const NOT_FOUND_PATH = '/e2e-route-that-does-not-exist';
 const params: Record<string, string | undefined> = {
   productId: e2e.productId,
   tenantId: e2e.tenantId,
+  jobId: e2e.jobId,
+  webhookId: e2e.webhookId,
+  templateKey: e2e.templateKey,
   userId: undefined, // filled from GET /v1/me in beforeAll
 };
 

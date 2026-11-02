@@ -63,3 +63,13 @@ All notable changes to Axentra Studio are documented here. The format follows
   (drift check against `api/BACKEND_REF`) and `e2e` (all Playwright specs, report artifact), an
   a11y/responsive harness over every registered route (`e2e/a11y.spec.ts`), and
   `docs/COMPATIBILITY.md` and `docs/TODO.md`.
+
+### Fixed
+
+- The full Playwright suite passes against one `scripts/e2e-backend.sh run --worker` backend: the
+  worker loads the e2e job handlers, billing uses the `manual` provider, webhook retries are short,
+  the a11y route sweep gets job, webhook, template and subscription fixtures (no skipped routes),
+  and specs no longer assume a stopped notification dispatcher. The new-template page no longer
+  sends an incomplete draft to the preview endpoint (which answered 422).
+- Switching between light and dark theme changes colours instantly; button colour transitions
+  no longer fade through intermediate colours that briefly failed WCAG contrast.

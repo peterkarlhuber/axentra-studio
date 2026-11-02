@@ -8,6 +8,10 @@ export const e2e = {
   password: process.env.AXENTRA_E2E_PASSWORD,
   productId: process.env.AXENTRA_E2E_PRODUCT_ID,
   tenantId: process.env.AXENTRA_E2E_TENANT_ID,
+  /** Fixtures for the a11y route sweep, created by scripts/e2e-backend.sh in that product. */
+  jobId: process.env.AXENTRA_E2E_JOB_ID,
+  webhookId: process.env.AXENTRA_E2E_WEBHOOK_ID,
+  templateKey: process.env.AXENTRA_E2E_TEMPLATE_KEY,
 };
 
 export const SKIP_NO_API =
@@ -15,11 +19,21 @@ export const SKIP_NO_API =
 export const SKIP_NO_ADMIN =
   'Set AXENTRA_E2E_EMAIL and AXENTRA_E2E_PASSWORD to an existing admin account (scripts/e2e-backend.sh does) to run the signed-in checks.';
 
+/**
+ * Frames that can never run a script: notification previews (src/features/notify/RenderedView.tsx)
+ * are `sandbox=""` on purpose, so axe cannot be injected into them and a frame-aware run waits
+ * until the test times out. Their content is the template author's email HTML, not Studio UI.
+ */
+const SCRIPTLESS_FRAMES = 'iframe[sandbox]:not([sandbox~="allow-scripts"])';
+
 /** WCAG 2.1 A/AA via axe-core; the message names rule, help and offending selectors. */
 export async function expectNoA11yViolations(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    .analyze();
+  let builder = new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
+  if ((await page.locator(SCRIPTLESS_FRAMES).count()) > 0) {
+    // Top document only (the frame element itself, e.g. its title, is still checked).
+    builder = builder.setLegacyMode().options({ iframes: false });
+  }
+  const results = await builder.analyze();
   expect(
     results.violations.map(
       (violation) =>

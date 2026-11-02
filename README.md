@@ -164,17 +164,27 @@ as you like, `scripts/e2e-backend.sh down` at the end). `up`:
    **non-superuser** role `AXENTRA_E2E_DB_ROLE` (RLS enforced as in production); both are dropped
    first if they exist;
 2. writes `.e2e-backend/axentra.toml` (secrets in files next to it, mode 600): multi-product mode,
-   every module enabled (storage: local, notify: local provider, events, usage, billing: `fake`),
-   the Studio preview origin `http://127.0.0.1:$AXENTRA_E2E_PORT` allowed, webhooks to local http
-   targets allowed;
+   every module enabled (storage: local, notify: local provider, events, usage, billing:
+   `manual`), environment `test`, the Studio preview origin `http://127.0.0.1:$AXENTRA_E2E_PORT`
+   allowed, webhooks to local http targets allowed (refused in production) with short retries
+   (3 attempts, 0.5 s backoff base) so failing deliveries end as dead within seconds;
 3. runs `axentra migrate`, `axentra admin setup-token` and `axentra serve` on
-   `AXENTRA_E2E_API_PORT` (default 18080); with `--worker` also `axentra worker` and
+   `AXENTRA_E2E_API_PORT` (default 18080); with `--worker` also
+   `axentra worker --load axentra_e2e_jobs` (with `e2e/fixtures` on `PYTHONPATH`) and
    `axentra notify-dispatch --loop` for job, webhook and notification flows;
 4. creates the first platform admin with the setup token (`POST /v1/auth/setup`), a product and a
-   tenant;
+   tenant, and in that product the fixtures the a11y route sweep needs: a free plan the tenant
+   subscribes to, a job, a webhook endpoint (for an event type nothing publishes) and a
+   notification template;
 5. exports `AXENTRA_E2E_API`, `AXENTRA_E2E_EMAIL`, `AXENTRA_E2E_PASSWORD`,
-   `AXENTRA_E2E_PRODUCT_ID`, `AXENTRA_E2E_TENANT_ID`, `AXENTRA_E2E_BACKEND_SHA`,
-   `AXENTRA_E2E_MODULES`, `AXENTRA_E2E_WORKER` and `AXENTRA_E2E_PORT` for Playwright.
+   `AXENTRA_E2E_PRODUCT_ID`, `AXENTRA_E2E_TENANT_ID`, `AXENTRA_E2E_JOB_ID`,
+   `AXENTRA_E2E_WEBHOOK_ID`, `AXENTRA_E2E_TEMPLATE_KEY`, `AXENTRA_E2E_BACKEND_SHA`,
+   `AXENTRA_E2E_MODULES`, `AXENTRA_E2E_WORKER`, `AXENTRA_E2E_NOTIFY_DISPATCH` (a one-shot
+   `notify-dispatch --once` command) and `AXENTRA_E2E_PORT` for Playwright.
+
+Every spec that changes data creates its own product (unique slug per run and project); the a11y
+sweep only reads the fixture product. So specs are independent of each other, of their order and
+of what earlier runs left in the database.
 
 `down` stops all processes and drops the database and the role; logs stay in `.e2e-backend/run/`.
 `scripts/e2e-backend.sh --help` lists every option and variable.
@@ -312,7 +322,8 @@ search, realtime`; the first four are always on.
 - e2e (`e2e/events.spec.ts`) needs an API with `events.webhook_allow_http` and
   `events.webhook_allow_private_targets` (development only, for the local webhook receivers the
   spec starts) and, for job flows, `AXENTRA_E2E_WORKER=1` with a worker running
-  `PYTHONPATH=e2e/fixtures axentra worker --load axentra_e2e_jobs`.
+  `PYTHONPATH=e2e/fixtures axentra worker --load axentra_e2e_jobs`; `--worker` of
+  `scripts/e2e-backend.sh` sets all of this up.
 
 ## License
 

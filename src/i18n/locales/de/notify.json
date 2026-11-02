@@ -124,7 +124,8 @@
     "text": "Text",
     "noHtml": "Diese Fassung hat keinen HTML-Teil; Empfänger erhalten die Textfassung.",
     "renderedIn": "Erzeugt in der Sprache „{{locale}}“.",
-    "frameLabel": "HTML-Vorschau der Vorlage"
+    "frameLabel": "HTML-Vorschau der Vorlage",
+    "incomplete": "Geben Sie für jede Sprache einen Betreff und einen Text ein, um die Vorschau zu sehen."
   },
   "send": {
     "open": "Test senden",

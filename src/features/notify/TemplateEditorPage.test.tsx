@@ -61,7 +61,14 @@ describe('TemplateEditorPage', () => {
       NEW_PATH,
     );
     const user = userEvent.setup();
-    await fill(user, await screen.findByRole('textbox', { name: /^Template key/ }), 'welcome');
+    const keyField = await screen.findByRole('textbox', { name: /^Template key/ });
+    // An empty draft is not sent for preview (the server would answer 422).
+    expect(
+      screen.getByText('Enter a subject and a text for every language to see the preview.'),
+    ).toBeInTheDocument();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    expect(calls.some((call) => call.url.endsWith(`${base}/preview`))).toBe(false);
+    await fill(user, keyField, 'welcome');
     await fill(user, screen.getByRole('textbox', { name: /^Subject/ }), 'Welcome {{ name }}');
     await fill(user, screen.getByRole('textbox', { name: /^Text/ }), 'Hi {{ name }}');
     await fill(

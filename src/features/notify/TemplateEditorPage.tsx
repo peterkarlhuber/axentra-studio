@@ -247,9 +247,15 @@ function TemplateEditor({
     },
     400,
   );
+  // The server requires a subject and a text in every language; until the draft has them the
+  // preview would only answer 422, so it waits and says what is missing instead.
+  const previewReady = Object.values(previewInput.variants).every(
+    (variant) => variant.subject.length > 0 && variant.text.length > 0,
+  );
   const preview = useQuery({
     queryKey: ['products', productId, 'notify', 'draft-preview', previewInput],
     queryFn: () => notifyApi.previewDraft(productId, previewInput),
+    enabled: previewReady,
     retry: false,
     placeholderData: (previous) => previous,
   });
@@ -620,12 +626,14 @@ function TemplateEditor({
             aria-live="polite"
             aria-busy={preview.isFetching || undefined}
           >
-            {previewError ? (
+            {!previewReady ? (
+              <p className={layout.muted}>{t('preview.incomplete')}</p>
+            ) : previewError ? (
               <Alert tone="warning" title={previewError.title}>
                 {previewError.error.detail ?? previewError.message}
               </Alert>
             ) : null}
-            {preview.data ? (
+            {previewReady && preview.data ? (
               <>
                 <p className={layout.muted}>
                   {t('preview.renderedIn', { locale: preview.data.locale })}
@@ -637,7 +645,7 @@ function TemplateEditor({
                   label={t('preview.frameLabel')}
                 />
               </>
-            ) : preview.isPending ? (
+            ) : previewReady && preview.isPending ? (
               <Skeleton height={200} />
             ) : null}
           </div>

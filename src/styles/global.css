@@ -143,3 +143,11 @@ svg {
     scroll-behavior: auto !important;
   }
 }
+
+/* A theme switch changes every colour at once: without this, buttons and other controls with a
+   colour transition fade through intermediate colours that briefly miss the contrast targets. */
+[data-theme-switching] *,
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+  transition: none !important;
+}

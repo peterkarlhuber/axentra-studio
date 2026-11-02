@@ -12,18 +12,24 @@
 #                   (`--ref pinned` reads api/BACKEND_REF). A private repo needs AXENTRA_REPO_TOKEN.
 #   --install       create a venv in the state dir and `pip install "<checkout>[server]"`
 #                   (default: use $AXENTRA_PYTHON, which must already have axentra installed)
-#   --worker        also run `axentra worker` (jobs, schedules, webhooks) and
-#                   `axentra notify-dispatch --loop` (notification delivery)
+#   --worker        also run `axentra worker --load axentra_e2e_jobs` (jobs, schedules, webhooks,
+#                   plus the e2e job handlers in e2e/fixtures) and `axentra notify-dispatch --loop`
+#                   (notification delivery)
 #
 # What `up` does:
 #   1. creates database $AXENTRA_E2E_DB owned by the NON-superuser role $AXENTRA_E2E_DB_ROLE
 #      (both dropped first if they exist, so RLS is enforced exactly as in production),
 #   2. writes a config (state dir/axentra.toml) with every module enabled (storage: local,
-#      notify: local provider, events, usage, billing: fake) that allows the Studio preview origin,
+#      notify: local provider, events with plain-http/private webhook targets and short retries,
+#      usage, billing: manual) that allows the Studio preview origin; environment "test", so the
+#      development-only webhook settings are accepted (the backend refuses them in production),
 #   3. `axentra migrate`, `axentra admin setup-token`, `axentra serve` (+ workers with --worker),
-#   4. creates the first platform admin through POST /v1/auth/setup with the setup token, then a
-#      product and a tenant through the API,
-#   5. writes the exports for Playwright (AXENTRA_E2E_API, _EMAIL, _PASSWORD, _PRODUCT_ID, ...).
+#   4. creates the first platform admin through POST /v1/auth/setup with the setup token, then
+#      fixtures through the API: a product with a tenant, a free plan the tenant subscribes to, a
+#      job, a webhook endpoint (no matching events) and a notification template, so every route
+#      of the a11y sweep (e2e/a11y.spec.ts) has its parameters,
+#   5. writes the exports for Playwright (AXENTRA_E2E_API, _EMAIL, _PASSWORD, _PRODUCT_ID,
+#      _TENANT_ID, _JOB_ID, _WEBHOOK_ID, _TEMPLATE_KEY, _WORKER, _NOTIFY_DISPATCH, ...).
 #
 # Env (all optional except the PostgreSQL URL):
 #   AXENTRA_E2E_PG_URL     superuser URL (fallback AXENTRA_TEST_DATABASE_URL)
@@ -203,7 +209,6 @@ PY
   umask 077
   printf '%s' "$app_url" >"$STATE/secrets/database_url"
   "$py" -m axentra.cli keys generate --kid e2e | tr -d '\n' >"$STATE/secrets/master_keys"
-  "$py" -c 'import secrets; print("whsec_" + secrets.token_urlsafe(24), end="")' >"$STATE/secrets/billing_webhook"
   umask 022
   local base="http://127.0.0.1:$API_PORT"
   cat >"$STATE/axentra.toml" <<TOML
@@ -231,13 +236,18 @@ max_file_bytes = 1048576  # 1 MiB: e2e/storage.spec.ts asserts this limit in the
 provider = "local"
 
 [billing]
-provider = "fake"
-webhook_secret_ref = "file:$STATE/secrets/billing_webhook"
+# "manual": paid plans can be subscribed without a checkout, so e2e/billing.spec.ts covers prices.
+# Neither manual nor fake ever moves money.
+provider = "manual"
 
 [events]
-# Lets e2e specs point webhooks at a local receiver.
+# Lets e2e specs point webhooks at a local receiver (refused in production by the backend).
 webhook_allow_private_targets = true
 webhook_allow_http = true
+# Failing webhook deliveries end as "dead" within seconds (e2e/events.spec.ts waits for that).
+webhook_max_attempts = 3
+backoff_base_seconds = 0.5
+backoff_max_seconds = 5
 
 [observability]
 log_format = "text"
@@ -269,8 +279,9 @@ TOML
     die "axentra serve did not become ready on $base (port in use?)"
   fi
   if [[ "$WORKER" == "1" ]]; then
-    log "starting axentra worker and notify-dispatch --loop"
-    nohup "${AX[@]}" worker --shutdown-timeout 5 >"$STATE/run/worker.log" 2>&1 &
+    log "starting axentra worker (+ e2e/fixtures/axentra_e2e_jobs) and notify-dispatch --loop"
+    PYTHONPATH="$ROOT/e2e/fixtures${PYTHONPATH:+:$PYTHONPATH}" \
+      nohup "${AX[@]}" worker --shutdown-timeout 5 --load axentra_e2e_jobs >"$STATE/run/worker.log" 2>&1 &
     echo $! >"$STATE/worker.pid"
     nohup "${AX[@]}" notify-dispatch --loop --interval 0.5 >"$STATE/run/notify.log" 2>&1 &
     echo $! >"$STATE/notify.pid"
@@ -282,7 +293,9 @@ TOML
   # 4. first admin (setup token), a product and a tenant, through the API like a browser would
   local email="studio-e2e-admin@example.com" password csrf product_id tenant_id jar="$STATE/run/cookies.txt"
   password="$("$py" -c 'import secrets; print("pw-" + secrets.token_urlsafe(18))')"
-  json_get() { "$py" -c 'import json,sys; print(json.load(sys.stdin)[sys.argv[1]])' "$1"; }
+  json_get() { # json_get <dotted.key>
+    "$py" -c 'import functools,json,sys; print(functools.reduce(lambda o, k: o[k], sys.argv[1].split("."), json.load(sys.stdin)))' "$1"
+  }
   post() { # post <path> <json>; fails on HTTP >= 400 and shows the problem body
     local out code
     out="$(curl -sS -b "$jar" -c "$jar" -H 'Content-Type: application/json' \
@@ -298,6 +311,19 @@ TOML
   csrf="$(post /v1/auth/setup "$setup_body" | json_get csrf_token)"
   product_id="$(post /v1/products '{"name": "Studio e2e", "slug": "studio-e2e"}' | json_get id)"
   tenant_id="$(post "/v1/products/$product_id/tenants" '{"name": "E2E tenant", "slug": "e2e-tenant"}' | json_get id)"
+  log "creating fixtures: free plan + subscription, job, webhook endpoint, notification template"
+  post "/v1/products/$product_id/billing/plans" \
+    '{"key": "e2e-free", "name": "E2E free", "entitlements": {"feature.e2e": true}}' >/dev/null
+  post "/v1/products/$product_id/tenants/$tenant_id/billing/subscription" '{"plan": "e2e-free"}' >/dev/null
+  local job_id webhook_id template_key="e2e.fixture"
+  job_id="$(post "/v1/products/$product_id/jobs" \
+    "{\"kind\": \"studio.e2e.ok\", \"tenant_id\": \"$tenant_id\", \"payload\": {\"fixture\": true}}" | json_get id)"
+  # Port 9 (discard) and an event type nothing publishes: the endpoint never receives a delivery.
+  webhook_id="$(post "/v1/products/$product_id/webhooks" \
+    '{"url": "http://127.0.0.1:9/e2e-fixture", "event_types": ["e2e.fixture.never"], "description": "a11y sweep fixture"}' |
+    json_get endpoint.id)"
+  post "/v1/products/$product_id/notify/templates" \
+    "{\"key\": \"$template_key\", \"name\": \"E2E fixture\", \"category\": \"onboarding\", \"variables\": [\"name\"], \"sample_data\": {\"name\": \"Ada\"}, \"variants\": {\"en\": {\"subject\": \"Hello {{ name }}\", \"text\": \"Hi {{ name }}.\", \"html\": \"<p>Hi {{ name }}.</p>\"}}}" >/dev/null
   rm -f "$jar"
 
   # 5. exports for Playwright
@@ -311,10 +337,14 @@ export AXENTRA_E2E_EMAIL=$email
 export AXENTRA_E2E_PASSWORD=$password
 export AXENTRA_E2E_PRODUCT_ID=$product_id
 export AXENTRA_E2E_TENANT_ID=$tenant_id
+export AXENTRA_E2E_JOB_ID=$job_id
+export AXENTRA_E2E_WEBHOOK_ID=$webhook_id
+export AXENTRA_E2E_TEMPLATE_KEY=$template_key
 export AXENTRA_E2E_BACKEND_SHA=$sha
 export AXENTRA_E2E_MODULES=$modules
 export AXENTRA_E2E_WORKER=$WORKER
 export AXENTRA_E2E_CONFIG=$STATE/axentra.toml
+export AXENTRA_E2E_NOTIFY_DISPATCH=$(printf '%q' "$(printf '%q ' "${AX[@]}")notify-dispatch --once")
 ENV
   umask 022
   log "ready: API $base, modules $modules, backend $sha"

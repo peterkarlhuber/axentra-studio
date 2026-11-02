@@ -124,7 +124,8 @@
     "text": "Text",
     "noHtml": "This version has no HTML body; recipients get the text version.",
     "renderedIn": "Rendered in language “{{locale}}”.",
-    "frameLabel": "HTML preview of the template"
+    "frameLabel": "HTML preview of the template",
+    "incomplete": "Enter a subject and a text for every language to see the preview."
   },
   "send": {
     "open": "Send test",

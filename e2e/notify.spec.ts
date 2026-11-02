@@ -14,10 +14,13 @@ import {
  * Notifications against a real Axentra with `notify.provider = "local"`.
  *
  * - AXENTRA_E2E_API, AXENTRA_E2E_EMAIL, AXENTRA_E2E_PASSWORD: API and an existing platform admin.
- * - AXENTRA_E2E_NOTIFY_DISPATCH (optional): shell command that delivers queued notifications,
- *   e.g. `axentra --config /path/axentra.toml notify-dispatch --once`. Without it the test stops
- *   after checking that the message is queued.
+ * - Delivery: with AXENTRA_E2E_WORKER=1 a `notify-dispatch --loop` is running
+ *   (scripts/e2e-backend.sh --worker) and the test waits for it. Otherwise
+ *   AXENTRA_E2E_NOTIFY_DISPATCH (optional) is a shell command that delivers queued
+ *   notifications once, e.g. `axentra --config /path/axentra.toml notify-dispatch --once`.
+ *   Without either the test stops after checking that the message is queued.
  */
+const dispatchLoop = process.env.AXENTRA_E2E_WORKER === '1';
 const dispatch = process.env.AXENTRA_E2E_NOTIFY_DISPATCH;
 
 test.skip(!api, 'AXENTRA_E2E_API is not set: start an Axentra API to run the notification tests.');
@@ -110,21 +113,27 @@ test('create a template, preview it, send it to a member and find it in the log 
   await page.goto(`/p/${product.id}/notifications?tab=messages`);
   const row = page.getByRole('row').filter({ hasText: key });
   await expect(row).toBeVisible();
-  await expect(row.getByText('Queued')).toBeVisible();
+  // A running dispatcher may already have delivered it.
+  await expect(row.getByText(dispatchLoop ? /^(Queued|Sending|Sent)$/ : 'Queued')).toBeVisible();
   await expectNoHorizontalScroll(page);
   await expectAccessibleInBothThemes(page);
 
-  if (!dispatch) {
+  if (!dispatchLoop && !dispatch) {
     testInfo.annotations.push({
       type: 'skipped-part',
-      description: 'AXENTRA_E2E_NOTIFY_DISPATCH not set: delivery and mailbox not checked.',
+      description:
+        'Neither AXENTRA_E2E_WORKER=1 nor AXENTRA_E2E_NOTIFY_DISPATCH set: delivery and mailbox not checked.',
     });
     return;
   }
-  execSync(dispatch, { stdio: 'pipe', timeout: 60_000 });
+  if (!dispatchLoop && dispatch) execSync(dispatch, { stdio: 'pipe', timeout: 60_000 });
 
-  await page.reload();
-  await expect(page.getByRole('row').filter({ hasText: key }).getByText('Sent')).toBeVisible();
+  await expect(async () => {
+    await page.reload();
+    await expect(page.getByRole('row').filter({ hasText: key }).getByText('Sent')).toBeVisible({
+      timeout: 2_000,
+    });
+  }).toPass({ timeout: 30_000 });
   await page
     .getByRole('row')
     .filter({ hasText: key })
@@ -153,6 +162,7 @@ test('create a template, preview it, send it to a member and find it in the log 
   await expect(onboarding).toBeChecked();
   await onboarding.click();
   await page.getByRole('button', { name: 'Save preferences' }).click();
-  await expect(page.getByText('Preferences saved.')).toBeVisible();
+  // exact: the live region also announces it, prefixed with the toast's context.
+  await expect(page.getByText('Preferences saved.', { exact: true })).toBeVisible();
   await expectAccessibleInBothThemes(page);
 });

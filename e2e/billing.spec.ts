@@ -202,7 +202,7 @@ test('plans, subscribing a tenant and entitlements', async ({ page }, testInfo) 
   await expect(page.getByRole('link', { name: 'Globex' })).toBeVisible();
   await checkPage(page);
   await page.goto(`/p/${productId}/dashboard`);
-  await expect(page.getByRole('heading', { name: 'Billing' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Billing', exact: true })).toBeVisible();
   await expect(page.getByText('1 active plan of 1')).toBeVisible();
   await checkPage(page);
 });
