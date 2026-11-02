@@ -8,6 +8,11 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- **Sign out all other sessions** no longer fails as a whole when one request fails: it reads the
+  session list fresh, never revokes the session the server marks as current (and revokes nothing
+  without that marker), sends at most 4 requests at a time, counts an already ended session as
+  done, reports how many sessions could not be signed out with the first reason, and always
+  reloads the list. No new backend endpoint (see docs/TODO.md).
 - **New API key** offers an optional **Expiry**: never (default), in 30, 90 or 365 days, or the
   end of a chosen day (after today, local time zone; validated before sending). The info tip and
   the API keys article (new section "Expiry", six languages) explain that an expiry cannot be

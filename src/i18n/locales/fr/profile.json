@@ -37,6 +37,11 @@
     "description": "Navigateurs et appareils sur lesquels tu es connecté.",
     "revoked": "Session révoquée",
     "revokeOthers": "Déconnecter toutes les autres sessions",
-    "othersRevoked": "Toutes les autres sessions ont été déconnectées"
+    "othersRevoked_one": "{{count}} autre session déconnectée",
+    "othersRevoked_many": "{{count}} d’autres sessions déconnectées",
+    "othersRevoked_other": "{{count}} autres sessions déconnectées",
+    "othersPartial_one": "{{count}} des {{total}} autres sessions n’a pas pu être déconnectée",
+    "othersPartial_many": "{{count}} des {{total}} autres sessions n’ont pas pu être déconnectées",
+    "othersPartial_other": "{{count}} des {{total}} autres sessions n’ont pas pu être déconnectées"
   }
 }

@@ -76,7 +76,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 ## P2
 
 - **Studio cannot list a user's memberships.** API-only today.
-- **"Sign out all other sessions" revokes one by one.** There is no revoke-all endpoint (backend).
 
 - **Role ceiling needs the role catalog.** Studio disables roles above the caller only when
   `GET .../roles` is readable (`roles:read`); otherwise the role is a free-text field and the
@@ -131,6 +130,13 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P3
 
+- **"Sign out all other sessions" sends one request per session (backend endpoint decided
+  against for now).** Axentra offers `DELETE /v1/auth/sessions/{id}` for the caller and an admin
+  endpoint that ends _all_ sessions of a user, including the current one. A user has a handful of
+  sessions, so Studio revokes the others one by one (at most 4 at a time, from a freshly read list,
+  never the session marked `current`), counts an already ended session (`404`) as done, reports
+  how many failed and reloads the list. A server-side "all but this one" endpoint would only be
+  worth it for atomicity or users with very many sessions.
 - **Single-product mode with leftover products.** Axentra accepts `mode = "single"` on a database
   that also holds other products as long as the configured slug exists. Studio then hides the
   switcher; a platform admin reaches the other products only through the Products page (and they

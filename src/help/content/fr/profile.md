@@ -108,6 +108,10 @@ Pour mettre fin à toutes les sessions sauf celle que tu utilises, choisis **Dé
 autres sessions** dans l’en-tête de **Tes sessions**. Le bouton apparaît dès qu’il existe au moins
 une autre session.
 
+Ta session actuelle n’est jamais déconnectée. Chaque autre session est déconnectée séparément ; si
+certaines ne peuvent pas l’être (par exemple à cause de la limite de requêtes), Studio t’indique
+combien, la liste affiche celles qui sont encore actives, et tu peux choisir à nouveau le bouton.
+
 > [!TIP]
 > Tu t’es connecté sur un ordinateur partagé ou perdu ? Révoque cette session ici. Si tu penses que
 > quelqu’un d’autre connaît ton mot de passe, change-le : cela déconnecte aussi toutes les autres

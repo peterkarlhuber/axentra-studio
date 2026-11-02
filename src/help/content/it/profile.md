@@ -101,6 +101,10 @@ Per terminare tutte le sessioni tranne quella che stai usando, scegli **Disconne
 sessioni** nell'intestazione di **Le tue sessioni**. Il pulsante compare quando esiste almeno
 un'altra sessione.
 
+La tua sessione attuale non viene mai disconnessa. Ogni altra sessione viene disconnessa
+separatamente; se alcune non possono esserlo (ad esempio per il limite di richieste), Studio ti dice
+quante, l'elenco mostra quelle ancora attive e puoi scegliere di nuovo il pulsante.
+
 > [!TIP]
 > Hai effettuato l'accesso su un computer condiviso o smarrito? Revoca qui quella sessione. Se
 > pensi che qualcun altro conosca la tua password, cambiala: in questo modo disconnetti anche tutte
