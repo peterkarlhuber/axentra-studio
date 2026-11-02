@@ -279,8 +279,9 @@ Within a few seconds the receiver prints `tutorial.hello evt_… tenant=… data
 2. Publish another `tutorial.hello` event.
 3. Open the endpoint's **Deliveries** tab and choose **Refresh**. The delivery shows **Failed,
    retrying**; its details show the **Last error** and the **Next attempt**.
-4. Start the receiver again. A later automatic attempt succeeds, or, if all attempts were used (about
-   two to five minutes with default settings), the delivery is **Dead**.
+4. Start the receiver again. A later automatic attempt succeeds, or, if all attempts were used
+   (about 2 to 4¼ hours with default settings; the second attempt follows 1 to 2 minutes after the
+   first), the delivery is **Dead**.
 5. For a dead delivery, open its details and choose **Redeliver**. It becomes **Pending** and then
    **Delivered**.
 

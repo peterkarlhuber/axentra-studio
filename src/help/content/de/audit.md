@@ -27,7 +27,7 @@ Audit-Ereignis bearbeiten oder löschen, auch kein Plattform-Administrator.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | `platform:audit`                                     | Jedes Ereignis der Installation, auch Anmeldungen, Einrichtung und andere Ereignisse ohne Produkt | **Alle Produkte** (Standard) oder ein Produkt                 |
 | `audit:read` in einem Produkt, kein `platform:audit` | Nur die Ereignisse eines Produkts; Studio beginnt mit dem zuletzt verwendeten Produkt             | Eines deiner Produkte; **Alle Produkte** wird nicht angeboten |
-| Keins von beiden                                     | Einen Fehler **Nicht erlaubt**                                                                    | –                                                             |
+| Keins von beiden                                     | **Audit-Protokoll** fehlt in der Seitenleiste; ein direkter Link zeigt **Nicht erlaubt**          | –                                                             |
 
 Der Server prüft die Berechtigung bei jeder Anfrage. Wählst du ein Produkt, das du nicht lesen
 darfst, kommt **Nicht erlaubt** zurück, und ein Ereignis, das du nicht lesen darfst, lässt sich

@@ -25,7 +25,9 @@ import {
   Webhook,
   type LucideIcon,
 } from 'lucide-react';
+import type { Me } from '@/api/models';
 import type { StudioModule } from './modules';
+import { canAccess } from './permissions';
 
 export interface NavItem {
   id: string;
@@ -36,6 +38,24 @@ export interface NavItem {
   to: (productId: string) => string;
   scope: 'product' | 'platform';
   module?: StudioModule;
+  /**
+   * Shown only when this returns true for the signed-in user. Only for screens that are useless
+   * without a permission; a direct visit still explains the refusal (`403` state). Screens that
+   * offer something to everyone (Settings: personal preferences; Monitoring and System health:
+   * public readiness checks) stay visible and explain the parts the user cannot read.
+   */
+  visibleTo?: (me: Me) => boolean;
+}
+
+/**
+ * The audit log needs `platform:audit` (installation-wide) or `audit:read` in a product
+ * (`GET /v1/audit`); tenant roles never grant it.
+ */
+export function canReadAudit(me: Me): boolean {
+  return (
+    canAccess(me, 'platform:audit') ||
+    me.products.some((access) => canAccess(me, 'audit:read', access))
+  );
 }
 
 export interface NavGroup {
@@ -252,6 +272,7 @@ export const NAVIGATION: NavGroup[] = [
         to: platform('/audit'),
         scope: 'platform',
         module: 'audit',
+        visibleTo: canReadAudit,
       },
       {
         id: 'health',

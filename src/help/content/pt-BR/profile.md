@@ -99,6 +99,10 @@ Para encerrar todas as sessões, exceto a que você está usando, escolha **Sair
 sessões** no cabeçalho de **Suas sessões**. O botão aparece quando existe pelo menos uma outra
 sessão.
 
+Sua sessão atual nunca é encerrada. Cada uma das outras sessões é encerrada separadamente; se
+algumas não puderem ser encerradas (por exemplo, por causa do limite de requisições), o Studio
+informa quantas, a lista mostra as que continuam ativas e você pode escolher o botão de novo.
+
 > [!TIP]
 > Entrou em um computador compartilhado ou perdido? Revogue essa sessão aqui. Se você acha que
 > outra pessoa conhece a sua senha, altere-a: isso também encerra todas as outras sessões.

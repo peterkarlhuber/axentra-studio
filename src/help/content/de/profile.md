@@ -105,6 +105,10 @@ Um alle Sitzungen außer der aktuellen zu beenden, wähle **Alle anderen Sitzung
 von **Deine Sitzungen**. Die Schaltfläche erscheint, sobald mindestens eine andere Sitzung
 existiert.
 
+Deine aktuelle Sitzung wird nie abgemeldet. Jede andere Sitzung wird einzeln abgemeldet; klappt das
+bei einigen nicht (zum Beispiel wegen des Anfragelimits), sagt Studio dir, wie viele, die Liste
+zeigt die noch aktiven, und du kannst die Schaltfläche erneut wählen.
+
 > [!TIP]
 > Auf einem gemeinsam genutzten oder verlorenen Computer angemeldet? Beende diese Sitzung hier.
 > Glaubst du, dass jemand anderes dein Passwort kennt, ändere es: Das meldet auch alle anderen

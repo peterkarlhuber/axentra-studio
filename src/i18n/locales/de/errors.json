@@ -47,7 +47,7 @@
     },
     "mode_not_supported": {
       "title": "In diesem Modus nicht verfügbar",
-      "message": "Die aktuelle Serverkonfiguration unterstützt diese Aktion nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb. Dafür müsste der Betrieb die Serverkonfiguration ändern."
+      "message": "Die Serverkonfiguration erlaubt diese Aktion hier nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb, das Ändern eines Abonnements, das Stripe verwaltet (ändere es in Stripe), oder das Öffnen des Test-Postfachs, wenn der Server echte E-Mails versendet. Die Servermeldung nennt den Grund; nur der Betrieb kann die Konfiguration ändern."
     },
     "module_disabled": {
       "title": "Modul nicht aktiviert",
@@ -76,6 +76,26 @@
     "unsupported_media_type": {
       "title": "Typ nicht zulässig",
       "message": "Der Server akzeptiert diese Art von Inhalt nicht, zum Beispiel einen gesperrten Dateityp wie eine ausführbare Datei, HTML oder SVG. Verwende einen anderen Dateityp."
+    },
+    "method_not_allowed": {
+      "title": "Aktion nicht unterstützt",
+      "message": "Der Server bietet diese Aktion unter dieser Adresse nicht an (HTTP 405). Wahrscheinlich passen die Versionen von Studio und Server nicht zusammen. Lade die Seite neu; passiert es wieder, melde es mit der Anfrage-ID."
+    },
+    "error": {
+      "title": "Anfrage fehlgeschlagen",
+      "message": "Der Server hat die Anfrage mit einem HTTP-Fehler ohne genaueren Code abgelehnt. Prüfe die Servermeldung und den HTTP-Status unter Technische Details und versuche es erneut; passiert es wieder, melde es mit der Anfrage-ID."
+    },
+    "invalid_signature": {
+      "title": "Ungültige Signatur",
+      "message": "Die Signatur eines Webhooks des Zahlungsanbieters stimmte nicht. Das betrifft die Verbindung des Servers zum Zahlungsanbieter, nicht Studio; der Betrieb sollte das Webhook-Geheimnis prüfen."
+    },
+    "setup_already_completed": {
+      "title": "Die Einrichtung ist bereits abgeschlossen",
+      "message": "Auf diesem Server gibt es bereits eine Plattform-Administration, deshalb kann die Einrichtung nicht noch einmal laufen. Melde dich mit einem bestehenden Konto an."
+    },
+    "email_taken": {
+      "title": "E-Mail-Adresse wird verwendet",
+      "message": "Ein anderes Konto verwendet diese E-Mail-Adresse bereits. Nimm eine andere Adresse oder melde dich mit dem bestehenden Konto an."
     }
   }
 }

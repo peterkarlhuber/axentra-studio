@@ -142,10 +142,15 @@ Wähle das Details-Symbol am Ende einer Zeile. Das Panel zeigt **Zustellungs-ID*
 ## Wiederholungen {#retries}
 
 Fehlgeschlagene Zustellungen werden automatisch über die Job-Warteschlange wiederholt, mit den
-Standardeinstellungen bis zu **8 Versuche** (`events.webhook_max_attempts`). Die Wartezeit vor Versuch
-_n + 1_ liegt zwischen der Hälfte und dem Ganzen von `2 × 2^(n−1)` Sekunden (2, 4, 8 … 128 Sekunden),
-sodass mit den Standardeinstellungen alle Versuche innerhalb von etwa zwei bis fünf Minuten verbraucht
-sind. Jeder Versuch wartet höchstens 10 Sekunden auf die Verbindung und auf jedes Lesen der Antwort.
+Standardeinstellungen bis zu **8 Versuche** (`events.webhook_max_attempts`). Webhooks haben einen
+eigenen, langsameren Zeitplan als andere Jobs: Die Wartezeit vor Versuch _n + 1_ liegt zwischen der
+Hälfte und dem Ganzen von `120 × 2^(n−1)` Sekunden, höchstens 6 Stunden
+(`events.webhook_backoff_base_seconds`, `events.webhook_backoff_max_seconds`). Mit den
+Standardeinstellungen sind das etwa 2, 4, 8, 16, 32, 64 und 128 Minuten; der letzte Versuch läuft
+also etwa **2 bis 4¼ Stunden** nach dem ersten, und ein Ausfall des Empfängers von bis zu etwa zwei
+Stunden wird immer überbrückt. Jeder Versuch wartet höchstens 10 Sekunden auf die Verbindung und auf
+jedes Lesen der Antwort. (Axentra-Versionen vor diesem Zeitplan nutzten die kurze Job-Wartezeit und
+verbrauchten alle Versuche innerhalb weniger Minuten.)
 
 Ein Empfänger, der länger ausfällt, verliert keine Ereignisse, aber seine Zustellungen enden als
 **Endgültig fehlgeschlagen**: Stelle sie erneut zu, sobald er wieder erreichbar ist. Axentra
@@ -239,8 +244,8 @@ vorher neu.
 | **Aktiviert**                   | Ob neue Zustellungen gesendet werden.                     | Standardmäßig an.                                                       |
 | **Übergangsfrist** (Erneuerung) | Wie lange das bisherige Geheimnis noch Anfragen signiert. | Keine, 1 Stunde, 24 Stunden, 7 Tage (API: bis zu 7 Tage in Sekunden).   |
 
-Serverseitige Standardwerte (Betreiber können sie in `[events]` ändern): 8 Versuche, 10 Sekunden
-Zeitlimit, 4096 Bytes gespeicherter Antworttext.
+Serverseitige Standardwerte (Betreiber können sie in `[events]` ändern): 8 Versuche, Wiederholungen
+über etwa 2 bis 4¼ Stunden verteilt, 10 Sekunden Zeitlimit, 4096 Bytes gespeicherter Antworttext.
 
 ## Gut zu wissen {#good-to-know}
 

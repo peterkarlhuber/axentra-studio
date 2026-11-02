@@ -27,7 +27,7 @@ eliminare un singolo evento di audit, nemmeno un amministratore della piattaform
 | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `platform:audit`                                    | Ogni evento dell'installazione, compresi accessi, configurazione iniziale e altri eventi senza prodotto | **Tutti i prodotti** (predefinito) o un prodotto           |
 | `audit:read` in un prodotto, senza `platform:audit` | Solo gli eventi di un prodotto; Studio parte dal prodotto che hai usato per ultimo                      | Uno dei tuoi prodotti; **Tutti i prodotti** non è proposto |
-| Nessuna delle due                                   | Un errore **Non consentito**                                                                            | –                                                          |
+| Nessuna delle due                                   | **Registro di audit** non compare nella barra laterale; un link diretto mostra **Non consentito**       | –                                                          |
 
 Il server verifica l'autorizzazione a ogni richiesta. Se selezioni un prodotto che non puoi
 leggere ricevi **Non consentito**, e un evento che non puoi leggere non si apre nel dettaglio (vedi

@@ -47,7 +47,7 @@
     },
     "mode_not_supported": {
       "title": "No disponible en este modo",
-      "message": "La configuración actual del servidor no admite esta acción, por ejemplo crear productos en el modo de producto único. Un operador tendría que cambiar la configuración del servidor."
+      "message": "La configuración del servidor no permite esta acción aquí, por ejemplo crear productos en el modo de producto único, cambiar una suscripción que gestiona Stripe (cámbiala en Stripe) o abrir el buzón de prueba cuando el servidor envía correos reales. El mensaje del servidor indica el motivo; solo un operador puede cambiar la configuración."
     },
     "module_disabled": {
       "title": "Módulo no activado",
@@ -76,6 +76,26 @@
     "unsupported_media_type": {
       "title": "Tipo no aceptado",
       "message": "El servidor no acepta este tipo de contenido, por ejemplo un tipo de archivo bloqueado como un ejecutable o un archivo HTML o SVG. Usa otro tipo de archivo."
+    },
+    "method_not_allowed": {
+      "title": "Acción no admitida",
+      "message": "El servidor no ofrece esta acción en esta dirección (HTTP 405). Probablemente las versiones de Studio y del servidor no coinciden. Recarga la página; si sigue ocurriendo, infórmalo indicando el ID de solicitud."
+    },
+    "error": {
+      "title": "La solicitud falló",
+      "message": "El servidor rechazó la solicitud con un error HTTP sin un código más específico. Revisa el mensaje del servidor y el estado HTTP en Detalles técnicos y vuelve a intentarlo; si sigue ocurriendo, infórmalo indicando el ID de solicitud."
+    },
+    "invalid_signature": {
+      "title": "Firma no válida",
+      "message": "La firma de un webhook del proveedor de pagos no coincidía. Esto afecta a la conexión del servidor con el proveedor de pagos, no a Studio; un operador debería revisar el secreto del webhook."
+    },
+    "setup_already_completed": {
+      "title": "La configuración ya está completa",
+      "message": "Ya existe un administrador de la plataforma en este servidor, así que la configuración no puede volver a ejecutarse. Inicia sesión con una cuenta existente."
+    },
+    "email_taken": {
+      "title": "Dirección de correo en uso",
+      "message": "Otra cuenta ya usa esta dirección de correo. Usa otra dirección o inicia sesión con la cuenta existente."
     }
   }
 }

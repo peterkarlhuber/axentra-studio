@@ -40,8 +40,12 @@ Entries that belong to a product (from **Dashboard** to **Notifications**, excep
 shown only when a product is selected. **Products**, **Audit log**, **System health**,
 **Monitoring** and **Settings** are platform-wide.
 
-The sidebar shows the same entries to everybody. If you open a page you have no permission for, the
-page tells you so (**Not permitted**), and actions you may not perform are not offered.
+The sidebar shows the same entries to everybody, with one exception: **Audit log** appears only if
+you may read audit events (`audit:read` in one of your products, or `platform:audit`).
+**Settings**, **System health** and **Monitoring** are always listed because they offer something
+to everyone (your preferences, the public health checks); the parts you may not read say so there.
+If you open a page you have no permission for, for example through a saved link, the page tells
+you so (**Not permitted**), and actions you may not perform are not offered.
 
 ### Entries marked "Off" {#module-off}
 

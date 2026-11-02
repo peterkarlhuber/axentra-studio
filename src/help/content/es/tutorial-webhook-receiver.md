@@ -284,8 +284,8 @@ En pocos segundos, el receptor imprime `tutorial.hello evt_… tenant=… data=�
 3. Abre la pestaña **Entregas** del endpoint y elige **Actualizar**. La entrega muestra **Fallida,
    reintentando**; sus detalles muestran el **Último error** y el **Próximo intento**.
 4. Vuelve a iniciar el receptor. Un intento automático posterior tiene éxito o, si se agotaron todos
-   los intentos (unos dos a cinco minutos con la configuración predeterminada), la entrega queda
-   **Fallida definitivamente**.
+   los intentos (unas 2 a 4¼ horas con la configuración predeterminada; el segundo intento llega 1 a
+   2 minutos después del primero), la entrega queda **Fallida definitivamente**.
 5. Para una entrega fallida definitivamente, abre sus detalles y elige **Volver a entregar**. Pasa a
    **Pendiente** y después a **Entregada**.
 

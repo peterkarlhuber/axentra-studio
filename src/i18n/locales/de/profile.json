@@ -37,6 +37,9 @@
     "description": "Browser und Geräte, in denen du angemeldet bist.",
     "revoked": "Sitzung beendet",
     "revokeOthers": "Alle anderen Sitzungen abmelden",
-    "othersRevoked": "Alle anderen Sitzungen abgemeldet"
+    "othersRevoked_one": "{{count}} andere Sitzung abgemeldet",
+    "othersRevoked_other": "{{count}} andere Sitzungen abgemeldet",
+    "othersPartial_one": "{{count}} von {{total}} anderen Sitzungen konnte nicht abgemeldet werden",
+    "othersPartial_other": "{{count}} von {{total}} anderen Sitzungen konnten nicht abgemeldet werden"
   }
 }

@@ -171,7 +171,7 @@ passiert ist:
 
 - **Nutzung** (Modul `usage`) zählt den Verbrauch pro Mandant mit **Zählern**, zum Beispiel
   API-Aufrufe oder Speicher, und kann **Kontingente** durchsetzen. Siehe [Nutzung](help:usage).
-- **Abrechnung** (Modul `billing`) definiert **Tarife** mit Preisen und Leistungsansprüchen und weist
+- **Abrechnung** (Modul `billing`) definiert **Tarife** mit Preisen und Leistungen und weist
   sie Mandanten als **Abonnements** zu. Studio verarbeitet nie Kartendaten. Siehe
   [Tarife und Abonnements](help:plans-subscriptions).
 

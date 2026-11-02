@@ -282,3 +282,52 @@ test('without notify:send_external only members are offered, and roles above the
     await context.close();
   }
 });
+
+/** Hrefs of the main navigation (on narrow screens it lives in the drawer). */
+async function navigationHrefs(page: Page): Promise<string[]> {
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  const menu = page.getByRole('button', { name: 'Open navigation' });
+  const drawer = await menu.isVisible();
+  if (drawer) await menu.click();
+  const links = page.locator('nav[aria-label="Main navigation"] a[href]');
+  await expect(links.first()).toBeAttached();
+  const hrefs = await links.evaluateAll((nodes) =>
+    nodes.map((node) => node.getAttribute('href') ?? ''),
+  );
+  if (drawer) await page.keyboard.press('Escape');
+  return hrefs;
+}
+
+test('the sidebar hides the audit log without an audit permission; a direct link explains it', async ({
+  page,
+  browser,
+  baseURL,
+}, testInfo) => {
+  test.skip(
+    !worker,
+    'Needs the e2e worker (scripts/e2e-backend.sh run --worker) for the second account.',
+  );
+  test.setTimeout(240_000);
+  const fixture = await createFixture(page, testInfo.project.name);
+  // The platform admin sees it.
+  await page.goto(`/p/${fixture.productId}/dashboard`);
+  expect(await navigationHrefs(page)).toContain('/audit');
+
+  const notifier = await createNotifier(page, fixture); // no audit:read, no platform role
+  const { context, page: other } = await signInAs(browser, baseURL, notifier);
+  try {
+    await other.setViewportSize(page.viewportSize() ?? { width: 1280, height: 720 });
+    await other.goto(`/p/${fixture.productId}/dashboard`);
+    const hrefs = await navigationHrefs(other);
+    expect(hrefs).not.toContain('/audit');
+    // Preferences and the public health checks stay reachable for everyone.
+    expect(hrefs).toEqual(expect.arrayContaining(['/settings', '/health', '/monitoring']));
+
+    await other.goto('/audit');
+    await expect(other.getByRole('heading', { name: 'Audit log', level: 1 })).toBeVisible();
+    await expect(other.getByText('Not permitted').first()).toBeVisible();
+    await expectNoHorizontalScroll(other);
+  } finally {
+    await context.close();
+  }
+});

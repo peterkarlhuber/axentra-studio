@@ -48,12 +48,16 @@ et ses solutions.
 | ----------------------------------------- | --------------------------------- | ------------ | ------------------------------------------------------- |
 | **Vérifie ta saisie**                     | `validation_failed`               | 422 (ou 400) | Des valeurs ont été rejetées                            |
 | **Requête incomprise**                    | `bad_request`                     | 400          | La requête n’a pas pu être lue                          |
+| **Signature non valide**                  | `invalid_signature`               | 400          | Webhook du prestataire de paiement rejeté               |
 | **Connecte-toi**                          | `unauthenticated`                 | 401          | Aucune session valide                                   |
 | **Non autorisé**                          | `forbidden`                       | 403          | Autorisation manquante, ou produit ou locataire inactif |
 | **Reconnecte-toi**                        | `reauthentication_required`       | 403          | Nécessite une connexion récente                         |
 | **Introuvable**                           | `not_found`                       | 404          | N’existe pas, ou n’est pas visible pour toi             |
 | **Module non activé**                     | `module_disabled`                 | 404          | Module serveur désactivé                                |
+| **Action non prise en charge**            | `method_not_allowed`              | 405          | Non proposée à cette adresse                            |
 | **Conflit**                               | `conflict`                        | 409          | Conflit avec des données ou un état existants           |
+| **L’installation est déjà terminée**      | `setup_already_completed`         | 409          | Un administrateur existe                                |
+| **Adresse e-mail déjà utilisée**          | `email_taken`                     | 409          | Un autre compte a l’adresse                             |
 | **Indisponible dans ce mode**             | `mode_not_supported`              | 409          | Impossible dans ce mode de serveur                      |
 | **Prestataire de paiement non configuré** | `payment_provider_not_configured` | 409          | La facturation nécessite un prestataire                 |
 | **Modifié entre-temps**                   | `precondition_failed`             | 412          | Quelqu’un d’autre a enregistré avant toi                |
@@ -62,6 +66,7 @@ et ses solutions.
 | **Trop de requêtes**                      | `rate_limited`                    | 429          | Ralentis                                                |
 | **Quota dépassé**                         | `quota_exceeded`                  | 429          | Quota du locataire ou limite de l’offre épuisé          |
 | **Erreur du serveur**                     | `internal`                        | 500 et plus  | Défaillance côté serveur                                |
+| **La requête a échoué**                   | `error`                           | autre        | Erreur HTTP sans code précis                            |
 | **Serveur injoignable**                   | `network_error`                   | aucun        | Aucune réponse du serveur                               |
 | **Erreur inattendue**                     | `unknown`                         | autre        | Non reconnue                                            |
 
@@ -86,6 +91,16 @@ HTTP 400), par exemple parce qu’une valeur avait un format incorrect.
 
 **Que faire :** recharge la page et répète l’action. Si cela se reproduit, signale-le avec l’ID de
 requête ; normalement, le Studio n’envoie que des requêtes bien formées.
+
+### Signature non valide {#invalid-signature}
+
+**Ce qui s’est passé :** le serveur a rejeté un webhook du prestataire de paiement parce que sa
+signature ne correspondait pas (`invalid_signature`, HTTP 400). Seul le prestataire de paiement
+appelle ce point de terminaison ; tu ne vois pas ce code pour tes propres actions dans le Studio.
+
+**Que faire :** rien dans le Studio. Un opérateur vérifie que le secret du webhook dans la
+configuration du serveur correspond à celui du prestataire de paiement. Voir
+[Offres et abonnements](help:plans-subscriptions).
 
 ### Connecte-toi {#unauthenticated}
 
@@ -168,6 +183,15 @@ produit ou au locataire de t’ajouter.
 **Que faire :** demande à ton opérateur d’activer le module dans la configuration du serveur. La
 [référence des modules](help:modules-reference) indique ce que fait fonctionner chaque module.
 
+### Action non prise en charge {#method-not-allowed}
+
+**Ce qui s’est passé :** le serveur ne propose pas cette action à cette adresse
+(`method_not_allowed`, HTTP 405). Le Studio n’envoie que des requêtes décrites par l’API du serveur ;
+le Studio et le serveur ont donc probablement des versions différentes.
+
+**Que faire :** recharge la page. Si cela se reproduit, signale-le avec l’ID de requête et la
+version du serveur affichée en bas de la barre latérale.
+
 ### Conflit {#conflict}
 
 **Ce qui s’est passé :** la requête entre en conflit avec des données existantes ou avec l’état
@@ -186,6 +210,24 @@ l’affiche après le texte traduit.
 | `only failed or dead jobs can be retried`, `the job is already succeeded`                                     | La tâche n’est plus dans un état qui permet l’action ; recharge la page.                                       |
 | `the delivery is already queued or in progress`                                                               | Attends la fin de la livraison en cours.                                                                       |
 
+### L’installation est déjà terminée {#setup-already-completed}
+
+**Ce qui s’est passé :** l’installation initiale a été envoyée alors que le serveur a déjà un
+administrateur de la plateforme (`setup_already_completed`, HTTP 409), par exemple parce que
+quelqu’un l’a terminée entre-temps dans un autre onglet.
+
+**Que faire :** connecte-toi avec le compte administrateur. Voir
+[Installation initiale](help:first-run-setup).
+
+### Adresse e-mail déjà utilisée {#email-taken}
+
+**Ce qui s’est passé :** un autre compte possède déjà cette adresse e-mail (`email_taken`,
+HTTP 409). Les adresses e-mail sont uniques, sans distinction de majuscules et minuscules.
+
+**Que faire :** utilise une autre adresse ou connecte-toi avec le compte existant. Pendant
+l’installation, cela arrive quand l’authentification unique a créé un compte avec cette adresse
+avant le premier administrateur.
+
 ### Déjà utilisée pour une autre requête {#idempotency-conflict}
 
 Certaines actions (mettre une tâche en file d’attente, publier un événement, envoyer une
@@ -201,12 +243,16 @@ créer un nouvel élément. Voir l’entrée du glossaire
 **Ce qui s’est passé :** le serveur tourne dans un mode qui ne prend pas en charge l’action
 (`mode_not_supported`).
 
-**Causes typiques :** créer ou archiver des produits sur un serveur en mode mono-produit, ou ouvrir
-la boîte de réception locale des notifications alors que le serveur n’utilise pas le prestataire
-d’e-mail de test local.
+**Causes typiques :** créer ou archiver des produits sur un serveur en mode mono-produit ;
+modifier l’offre d’un abonnement géré par Stripe (il appartient à Stripe : modifie-le dans Stripe,
+par exemple dans le portail client, et Stripe met Axentra à jour) ; ou ouvrir la boîte de réception
+locale des notifications alors que le serveur n’utilise pas le prestataire d’e-mail de test local.
+Le message du serveur indique le cas.
 
-**Que faire :** rien dans le Studio ; un opérateur devrait modifier la configuration du serveur.
-Voir [Produits](help:products) et [Configuration du serveur](help:server-configuration).
+**Que faire :** un abonnement Stripe se modifie dans Stripe. Sinon, rien dans le Studio ; un
+opérateur devrait modifier la configuration du serveur. Voir [Produits](help:products),
+[Offres et abonnements](help:plans-subscriptions) et
+[Configuration du serveur](help:server-configuration).
 
 ### Prestataire de paiement non configuré {#payment-provider-not-configured}
 
@@ -286,6 +332,14 @@ de détails internes ; l’ID de requête relie ton signalement à l’entrée 
 **Que faire :** réessaie après un moment. Ta modification n’a peut-être pas été enregistrée :
 vérifie avant de répéter des actions destructrices. Si l’échec persiste, signale-le à ton opérateur
 avec l’ID de requête et l’heure.
+
+### La requête a échoué {#error}
+
+**Ce qui s’est passé :** le serveur a refusé la requête avec une erreur HTTP sans code plus précis
+(`error`).
+
+**Que faire :** vérifie le **Message du serveur** et le **Statut HTTP** dans **Détails techniques**,
+puis réessaie. Si cela se reproduit, signale-le avec l’ID de requête.
 
 ### Serveur injoignable {#network-error}
 
@@ -405,9 +459,10 @@ produit** en mode mono-produit).
 
 ### Une page affiche Non autorisé alors que tu peux l’ouvrir {#page-forbidden}
 
-La barre latérale affiche toutes les sections ; le droit de lire leurs données est déterminé au
-chargement de la page. Une section sans l’autorisation de lecture affiche **Non autorisé** avec
-l’autorisation manquante dans le message du serveur.
+La barre latérale affiche presque toutes les sections (seul **Journal d’audit** est masqué sans
+autorisation d’audit) ; le droit de lire leurs données est déterminé au chargement de la page. Une
+section sans l’autorisation de lecture affiche **Non autorisé** avec l’autorisation manquante dans
+le message du serveur.
 
 ### La connexion ou l’enregistrement échoue avec Non autorisé {#csrf-origin}
 
