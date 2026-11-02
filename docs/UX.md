@@ -33,6 +33,7 @@ How Studio is organized and how its screens behave. Visual rules are in
 | `/p/:productId/roles`                                                                | Built-in roles (read-only) and custom roles                                    |
 | `/p/:productId/api-keys`                                                             | API keys: create, rotate with grace period, revoke                             |
 | `/p/:productId/records`                                                              | Read-only record browser per tenant and collection                             |
+| `/p/:productId/jobs[/:jobId]`, `/schedules`, `/events`, `/webhooks[/:webhookId]`     | Events & Jobs: jobs, schedules, event log and live stream, webhook endpoints   |
 | `/p/:productId/{files,jobs,events,webhooks,usage,plans,subscriptions,notifications}` | Phase 2/3 sections: module state only                                          |
 | `/audit`                                                                             | Audit log with filters and event detail                                        |
 | `/health`                                                                            | Readiness and liveness checks                                                  |
@@ -48,7 +49,7 @@ The sidebar groups, in this order:
 2. **Identity & Tenants**: Tenants, Users, Invitations
 3. **Access & API Keys**: Roles, API keys
 4. **Data & Storage**: Records, Files
-5. **Events & Jobs**: Jobs, Events, Webhooks
+5. **Events & Jobs**: Jobs, Schedules, Events, Webhooks
 6. **Usage & Billing**: Usage, Plans, Subscriptions
 7. Notifications
 8. **Audit & Monitoring**: Audit log, System health

@@ -203,6 +203,24 @@ search, realtime`; the first four are always on.
 - Health is `{status: ok|unavailable, checks: {name: boolean}}`, also as the body of a `503`.
 - `Me` carries `platform_permissions`; `Me.user` is `null` for API-key principals.
 
+### Events & Jobs
+
+- Pages: `/p/:productId/jobs[/:jobId]`, `/schedules`, `/events` (log and `?view=live`),
+  `/webhooks[/:webhookId]`. They need the `events` module; actions follow `jobs:read`,
+  `jobs:manage`, `webhooks:read`, `webhooks:manage` and `events:publish`.
+- The live views read the SSE endpoints (`/events/stream`, `/jobs/stream`) with `fetch`
+  (credentials included) instead of `EventSource`: Axentra names each message after the event
+  type, which `EventSource` can only receive with a listener per known name, and `fetch` can tell
+  a lost permission (401/403, or the stream's `event: error`) from a network drop. Reconnects
+  honour `retry:` and send the last seen id as `Last-Event-ID`, so no event is skipped.
+- Cron expressions are checked in the browser with the server's rules (5 fields, UTC, no
+  names); the server stays authoritative and its explanation is shown on rejection. Next runs
+  come from the API (`next_run_at`); there is no preview endpoint for unsaved expressions.
+- e2e (`e2e/events.spec.ts`) needs an API with `events.webhook_allow_http` and
+  `events.webhook_allow_private_targets` (development only, for the local webhook receivers the
+  spec starts) and, for job flows, `AXENTRA_E2E_WORKER=1` with a worker running
+  `PYTHONPATH=e2e/fixtures axentra worker --load axentra_e2e_jobs`.
+
 ## License
 
 MIT, see [LICENSE](LICENSE). The Axentra logo is used with permission of the same owner; see

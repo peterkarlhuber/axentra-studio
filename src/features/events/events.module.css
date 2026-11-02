@@ -1,0 +1,292 @@
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-4) var(--ax-space-5);
+  align-items: end;
+}
+.filterActions {
+  display: flex;
+  gap: var(--ax-space-2);
+  flex-wrap: wrap;
+}
+.sectionTitle {
+  font-size: var(--ax-text-md);
+  margin-top: var(--ax-space-2);
+}
+
+/* Job counters */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--ax-space-3);
+  margin: 0 0 var(--ax-space-3);
+  padding: 0;
+  list-style: none;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--ax-space-3);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-surface-2);
+  color: var(--ax-color-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.stat:hover {
+  border-color: var(--ax-color-control-border);
+}
+.stat:focus-visible {
+  outline: 2px solid var(--ax-color-focus);
+  outline-offset: 2px;
+}
+.statValue {
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-text-2xl);
+  font-weight: var(--ax-weight-semibold);
+  color: var(--ax-color-heading);
+  line-height: 1.2;
+}
+.statLabel {
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+}
+
+/* Live streams */
+.liveRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ax-space-3);
+  padding: 0 var(--ax-space-5) var(--ax-space-4);
+}
+.liveRow > :first-child {
+  flex: 1 1 260px;
+}
+.streamBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ax-space-3);
+}
+.streamState {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ax-space-2);
+  font-size: var(--ax-text-sm);
+  font-weight: var(--ax-weight-semibold);
+  color: var(--ax-color-text-muted);
+}
+.streamDot {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background: transparent;
+}
+.stream_open {
+  color: var(--ax-color-success);
+}
+.stream_open .streamDot {
+  background: currentColor;
+}
+.stream_connecting,
+.stream_reconnecting {
+  color: var(--ax-color-info);
+}
+.stream_paused {
+  color: var(--ax-color-warning);
+}
+.stream_closed {
+  color: var(--ax-color-danger);
+}
+.liveNote {
+  margin: 0;
+  padding: 0 var(--ax-space-5) var(--ax-space-4);
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+}
+.liveList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ax-color-border);
+}
+.liveItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+  min-width: 0;
+  padding: var(--ax-space-3) var(--ax-space-5);
+  border-bottom: 1px solid var(--ax-color-border);
+}
+.liveHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--ax-space-2);
+  min-width: 0;
+}
+.liveDetails summary {
+  cursor: pointer;
+  color: var(--ax-color-link);
+  font-size: var(--ax-text-sm);
+}
+.liveDetails[open] summary {
+  margin-bottom: var(--ax-space-2);
+}
+
+.typeCode {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+  overflow-wrap: anywhere;
+}
+.url {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.tag {
+  padding: 1px 6px;
+  border-radius: var(--ax-radius-xs);
+  background: var(--ax-color-surface-2);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-xs);
+}
+
+.errorText,
+.responseBody {
+  margin: 0;
+  max-height: 260px;
+  overflow: auto;
+  padding: var(--ax-space-3);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-surface-2);
+  color: var(--ax-color-text);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.errorText {
+  border-color: var(--ax-color-danger);
+}
+.errorText:focus-visible,
+.responseBody:focus-visible {
+  outline: 2px solid var(--ax-color-focus);
+  outline-offset: 2px;
+}
+
+/* Schedule form */
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-3);
+  min-width: 0;
+  margin: 0;
+  padding: var(--ax-space-4);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-md);
+}
+.legend {
+  padding: 0 var(--ax-space-1);
+  font-size: var(--ax-text-sm);
+  font-weight: var(--ax-weight-semibold);
+}
+.radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ax-space-4);
+}
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ax-space-2);
+  min-height: 2.25rem;
+  cursor: pointer;
+}
+.radio input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--ax-color-primary);
+}
+.monoInput {
+  font-family: var(--ax-font-mono);
+}
+.presets,
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ax-space-2);
+}
+
+/* Event type chips */
+.typesField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+  min-width: 0;
+}
+.typesActions {
+  display: flex;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ax-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ax-space-1);
+  max-width: 100%;
+  padding: 2px 2px 2px 10px;
+  border: 1px solid var(--ax-color-control-border);
+  border-radius: var(--ax-radius-full);
+  background: var(--ax-color-surface-2);
+  font-size: var(--ax-text-sm);
+  overflow-wrap: anywhere;
+}
+.chipRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ax-color-text-muted);
+  cursor: pointer;
+}
+.chipRemove:hover {
+  color: var(--ax-color-danger);
+}
+.chipRemove:focus-visible {
+  outline: 2px solid var(--ax-color-focus);
+  outline-offset: 1px;
+}
+.chipRemove svg {
+  width: 14px;
+  height: 14px;
+}
+.hint {
+  margin: 0;
+  font-size: var(--ax-text-sm);
+  color: var(--ax-color-text-muted);
+}

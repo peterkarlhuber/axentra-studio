@@ -1,5 +1,5 @@
 import { ShieldAlert } from 'lucide-react';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Checkbox, CopyField, Dialog } from '@/components/ui';
 import styles from './access.module.css';
@@ -12,10 +12,17 @@ export function SecretRevealDialog({
   secret,
   keyName,
   onClose,
+  title,
+  secretLabel,
+  children,
 }: {
   secret: string | null;
   keyName: string;
   onClose: () => void;
+  /** Overrides for other one-time secrets (e.g. webhook signing secrets). */
+  title?: string;
+  secretLabel?: string;
+  children?: ReactNode;
 }) {
   const { t } = useTranslation('access');
   const [stored, setStored] = useState(false);
@@ -28,7 +35,7 @@ export function SecretRevealDialog({
       open={secret !== null}
       onOpenChange={(open) => (open ? undefined : stored ? close() : undefined)}
       dismissible={false}
-      title={t('keys.secretTitle', { name: keyName })}
+      title={title ?? t('keys.secretTitle', { name: keyName })}
       footer={
         <Button variant="primary" disabled={!stored} onClick={close}>
           {t('common:actions.done')}
@@ -39,7 +46,10 @@ export function SecretRevealDialog({
         <Alert tone="warning" title={t('keys.secretWarningTitle')}>
           {t('keys.secretWarningBody')}
         </Alert>
-        {secret ? <CopyField label={t('keys.secret')} value={secret} secret /> : null}
+        {secret ? (
+          <CopyField label={secretLabel ?? t('keys.secret')} value={secret} secret />
+        ) : null}
+        {children}
         <Checkbox
           checked={stored}
           onCheckedChange={setStored}

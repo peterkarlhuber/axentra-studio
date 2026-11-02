@@ -30,4 +30,19 @@ export const queryKeys = {
     ['products', productId, 'records', tenantId, collection, params ?? {}] as const,
   audit: (params?: unknown) => ['audit', 'list', params ?? {}] as const,
   auditEvent: (eventId: string) => ['audit', eventId] as const,
+  // Events & Jobs (module `events`)
+  jobs: (productId: string, params?: unknown) =>
+    ['products', productId, 'jobs', 'list', params ?? {}] as const,
+  jobStats: (productId: string) => ['products', productId, 'jobs', 'stats'] as const,
+  job: (productId: string, jobId: string) => ['products', productId, 'jobs', jobId] as const,
+  schedules: (productId: string) => ['products', productId, 'schedules'] as const,
+  events: (productId: string, params?: unknown) =>
+    ['products', productId, 'events', 'list', params ?? {}] as const,
+  event: (productId: string, eventId: string) =>
+    ['products', productId, 'events', eventId] as const,
+  webhooks: (productId: string) => ['products', productId, 'webhooks', 'list'] as const,
+  webhook: (productId: string, webhookId: string) =>
+    ['products', productId, 'webhooks', webhookId] as const,
+  deliveries: (productId: string, webhookId: string, params?: unknown) =>
+    ['products', productId, 'webhooks', webhookId, 'deliveries', params ?? {}] as const,
 };

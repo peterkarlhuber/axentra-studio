@@ -28,6 +28,12 @@ All notable changes to Axentra Studio are documented here. The format follows
   effective settings, profile with password and sessions.
 - "Module not enabled" and "not yet available in Studio" states for files, jobs, events,
   webhooks, usage, plans, subscriptions and notifications.
+- Events & Jobs (module `events`): jobs with counters, status/kind/tenant filters, live updates,
+  detail (attempts, redacted error, payload, result), retry, cancel and enqueue with an
+  idempotency key; schedules (interval or validated UTC cron) with enable/disable, edit
+  (`If-Match`) and delete; event log with filters, publish and a live SSE view (resume with
+  `Last-Event-ID`, pause/resume, connection state); webhook endpoints with event type patterns,
+  one-time signing secret, rotation with grace period, test ping, delivery log and redelivery.
 - German and English translations with a parity check (`npm run i18n:check`).
 - Brand assets derived from the original logo with a reproducible script
   (`scripts/derive-branding.py`, provenance in `public/branding/README.md`).

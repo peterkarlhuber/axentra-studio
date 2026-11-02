@@ -196,9 +196,74 @@ export const routes: RouteObject[] = [
                     ],
                   },
                   futureModule('files', 'files', 'files'),
-                  futureModule('jobs', 'jobs', 'jobs'),
-                  futureModule('events', 'events', 'events'),
-                  futureModule('webhooks', 'webhooks', 'webhooks'),
+                  // ---- Events & Jobs (module `events`) ----
+                  {
+                    path: 'jobs',
+                    handle: { crumb: 'jobs' },
+                    element: <ModuleGate module="jobs" titleKey="jobs" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/events/JobsPage'), 'JobsPage'),
+                      },
+                      {
+                        path: ':jobId',
+                        handle: { crumbParam: 'jobId' },
+                        lazy: lazyPage(
+                          () => import('@/features/events/JobDetailPage'),
+                          'JobDetailPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'schedules',
+                    handle: { crumb: 'schedules' },
+                    element: <ModuleGate module="schedules" titleKey="schedules" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/events/SchedulesPage'),
+                          'SchedulesPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'events',
+                    handle: { crumb: 'events' },
+                    element: <ModuleGate module="events" titleKey="events" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/events/EventsPage'), 'EventsPage'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'webhooks',
+                    handle: { crumb: 'webhooks' },
+                    element: <ModuleGate module="webhooks" titleKey="webhooks" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/events/WebhooksPage'),
+                          'WebhooksPage',
+                        ),
+                      },
+                      {
+                        path: ':webhookId',
+                        handle: { crumbParam: 'webhookId' },
+                        lazy: lazyPage(
+                          () => import('@/features/events/WebhookDetailPage'),
+                          'WebhookDetailPage',
+                        ),
+                      },
+                    ],
+                  },
+                  // ---- end Events & Jobs ----
                   futureModule('usage', 'usage', 'usage'),
                   futureModule('plans', 'billing', 'plans'),
                   futureModule('subscriptions', 'billing', 'subscriptions'),

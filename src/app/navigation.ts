@@ -1,6 +1,7 @@
 import {
   Activity,
   BarChart3,
+  CalendarClock,
   Bell,
   Boxes,
   Building2,
@@ -149,6 +150,14 @@ export const NAVIGATION: NavGroup[] = [
         to: p('jobs'),
         scope: 'product',
         module: 'jobs',
+      },
+      {
+        id: 'schedules',
+        labelKey: 'schedules',
+        icon: CalendarClock,
+        to: p('schedules'),
+        scope: 'product',
+        module: 'schedules',
       },
       {
         id: 'events',

@@ -32,6 +32,7 @@
   "files": "Dateien",
   "jobs": "Jobs",
   "events": "Ereignisse",
+  "schedules": "Zeitpläne",
   "webhooks": "Webhooks",
   "usage": "Nutzung",
   "plans": "Tarife",
