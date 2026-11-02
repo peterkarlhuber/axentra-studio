@@ -43,6 +43,7 @@
   "detail": {
     "subtitle": "Audit event",
     "details": "Details",
-    "noDetails": "This event has no additional details."
+    "noDetails": "This event has no additional details.",
+    "notFound": "The full event could not be loaded: it no longer exists or you may not read it. The values from the list are shown."
   }
 }

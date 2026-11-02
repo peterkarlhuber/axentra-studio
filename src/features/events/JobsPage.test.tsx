@@ -114,6 +114,52 @@ describe('JobsPage', { timeout: 20_000 }, () => {
     expect(post?.headers.get('Idempotency-Key')).toMatch(/.{8,}/);
   });
 
+  it('explains a 409 idempotency conflict and a 403 for kinds not open to the caller', async () => {
+    let attempt = 0;
+    const { calls } = mockApi(({ method, path }) => {
+      if (path.endsWith('/jobs/stats')) return jsonResponse(stats);
+      if (method === 'GET' && path.endsWith('/jobs')) return page([]);
+      if (method === 'POST' && path === `/v1/products/${PID}/jobs`) {
+        attempt += 1;
+        if (attempt === 1)
+          return jsonResponse(
+            {
+              code: 'conflict',
+              status: 409,
+              detail: 'the idempotency key was already used for a different request',
+            },
+            { status: 409 },
+          );
+        return jsonResponse(
+          {
+            code: 'forbidden',
+            status: 403,
+            detail: 'missing permission jobs:manage (job kind x is not open to tenant callers)',
+          },
+          { status: 403 },
+        );
+      }
+      return undefined;
+    });
+    const user = userEvent.setup();
+    render();
+    await user.click(await screen.findByRole('button', { name: 'Enqueue job' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Enqueue job' });
+    await user.type(within(dialog).getByLabelText(/^Kind/), 'reports.send');
+    const keyField = within(dialog).getByLabelText(/^Idempotency key/);
+    const firstKey = (keyField as HTMLInputElement).value;
+    await user.click(within(dialog).getByRole('button', { name: 'Enqueue' }));
+    expect(
+      await within(dialog).findByText('Already used for a different request'),
+    ).toBeInTheDocument();
+    await user.click(within(dialog).getByRole('button', { name: 'Use a new key' }));
+    expect((keyField as HTMLInputElement).value).not.toBe(firstKey);
+    await user.click(within(dialog).getByRole('button', { name: 'Enqueue' }));
+    expect(await within(dialog).findByText(/is not open to tenant callers/)).toBeInTheDocument();
+    const posts = calls.filter((call) => call.method === 'POST' && call.path.endsWith('/jobs'));
+    expect(posts[1]?.headers.get('Idempotency-Key')).not.toBe(firstKey);
+  });
+
   it('hides management actions without jobs:manage', async () => {
     mockApi(
       ({ method, path }) => {

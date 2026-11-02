@@ -17,6 +17,10 @@
       "title": "Nicht erlaubt",
       "message": "Sie haben keine Berechtigung für diese Aktion."
     },
+    "reauthentication_required": {
+      "title": "Bitte erneut anmelden",
+      "message": "Aus Sicherheitsgründen erfordert diese Aktion eine frische Anmeldung. Melden Sie sich erneut an und wiederholen Sie sie dann."
+    },
     "not_found": {
       "title": "Nicht gefunden",
       "message": "Dieses Element existiert nicht oder Sie haben keinen Zugriff darauf."

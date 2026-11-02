@@ -76,15 +76,19 @@ export function TemplatesPanel({ productId }: { productId: string }) {
     {
       id: 'version',
       header: t('fields.version'),
-      cell: (template) =>
-        template.builtin ? (
-          <Badge tone="brand">{t('templates.builtin')}</Badge>
-        ) : (
-          <span className={layout.tags}>
-            <Badge>{t('templates.versionShort', { version: template.version })}</Badge>
-            {template.sensitive ? <Badge tone="warning">{t('fields.sensitive')}</Badge> : null}
-          </span>
-        ),
+      cell: (template) => (
+        <span className={layout.tags}>
+          {template.builtin ? (
+            <Badge tone="brand">{t('templates.builtin')}</Badge>
+          ) : (
+            <>
+              <Badge>{t('templates.versionShort', { version: template.version })}</Badge>
+              {template.sensitive ? <Badge tone="warning">{t('fields.sensitive')}</Badge> : null}
+            </>
+          )}
+          {template.system_only ? <Badge tone="info">{t('templates.systemOnly')}</Badge> : null}
+        </span>
+      ),
     },
     {
       id: 'updated',
@@ -98,7 +102,7 @@ export function TemplatesPanel({ productId }: { productId: string }) {
       align: 'end',
       cell: (template) => (
         <span className={layout.tags}>
-          {canSend ? (
+          {canSend && !template.system_only ? (
             <IconButton
               size="sm"
               icon={<Send />}
@@ -121,7 +125,15 @@ export function TemplatesPanel({ productId }: { productId: string }) {
   ];
 
   return (
-    <Card flush title={t('templates.title')} description={t('templates.description')}>
+    <Card
+      flush
+      title={t('templates.title')}
+      description={
+        templates.data?.some((template) => template.system_only)
+          ? `${t('templates.description')} ${t('templates.systemOnlyListHint')}`
+          : t('templates.description')
+      }
+    >
       <DataTable
         caption={t('templates.title')}
         columns={columns}

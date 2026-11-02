@@ -33,7 +33,26 @@ the backend's `docs/TODO.md`.
   skipped with "no fixture for :fileId" until `scripts/e2e-backend.sh` creates such an object and
   `e2e/a11y.spec.ts` maps it.
 
+- **No invitations for product operators (backend).** `POST /v1/products/{id}/members` resolves
+  only users the caller can see (`404` otherwise), and there is no product-level invitation, so a
+  product owner who is not a platform admin cannot add an operator without an account they can
+  see. Studio explains this in the add dialog.
+
 ## P2
+
+- **Role ceiling needs the role catalog.** Studio disables roles above the caller only when
+  `GET .../roles` is readable (`roles:read`); otherwise the role is a free-text field and the
+  server's `403` explains a refusal. The ceiling is computed from `GET /v1/me`; a role changed
+  while the page is open is noticed after the next `/v1/me` refresh.
+- **Job kinds open to tenant callers are not listed (backend).** Callers without `jobs:manage`
+  may enqueue only kinds opened with `enqueue_permission`, but the API does not expose which kinds
+  those are. Studio offers "Enqueue job" only to `jobs:manage` holders and shows the server's
+  `403` explanation otherwise.
+- **API key expiry inheritance is text only.** Studio creates keys with a user session, so the
+  "inherits the creating key's expiry" rule (`422` for a later `expires_at`) never applies to
+  Studio's own create form; the page explains it, and the revoke confirmation says that derived
+  keys are revoked too. The confirmation does not list those derived keys (they could be found
+  through `created_by`, which holds the creating key's actor id; not built).
 
 - **Separate API origin needs a same-site setup.** Axentra's session cookie is `SameSite=Lax`, so
   with `apiBaseUrl` pointing to another origin the API and Studio must share the registrable domain

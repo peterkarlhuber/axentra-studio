@@ -18,6 +18,7 @@ import {
   useToast,
 } from '@/components/ui';
 import { describeError } from '@/lib/errors';
+import { isIdempotencyConflict } from '@/api/errors';
 import { TenantPicker } from '@/features/shared/TenantPicker';
 import {
   displayValue,
@@ -65,11 +66,16 @@ export function SendTestDialog({
   const [sent, setSent] = useState<NotifyMessage | null>(null);
   const [preview, setPreview] = useState<NotifyRendered | null>(null);
   const canSendHere = tenantId ? can('notify:send', { tenantId }) : true;
+  // Free-form addresses outside the tenant's members need the product permission
+  // `notify:send_external` (product owners/admins); everyone else sends to members only.
+  const canSendExternal = can('notify:send_external');
+  const recipientKind: RecipientKind = canSendExternal ? kind : 'member';
+  const [conflict, setConflict] = useState(false);
 
   const members = useQuery({
     queryKey: queryKeys.tenantMembers(productId, tenantId),
     queryFn: () => tenantsApi.members(productId, tenantId),
-    enabled: Boolean(tenantId) && kind === 'member',
+    enabled: Boolean(tenantId) && recipientKind === 'member',
   });
 
   const variables = () =>
@@ -96,27 +102,38 @@ export function SendTestDialog({
         tenantId,
         {
           template_key: template.key,
-          to: kind === 'member' ? { user_id: userId } : { email: email.trim() },
+          to: recipientKind === 'member' ? { user_id: userId } : { email: email.trim() },
           variables: variables(),
           locale: locale || null,
         },
         idempotencyKey,
       ),
     onSuccess: (message) => {
+      setConflict(false);
       setSent(message);
       // The next send from this dialog is a new message, not a replay.
       setIdempotencyKey(newIdempotencyKey());
       toast.success(t('send.queued', { status: t(`status.${message.status}`) }));
       void queryClient.invalidateQueries({ queryKey: ['products', productId, 'notify'] });
     },
-    onError: showError,
+    onError: (error) => {
+      // 409: the key was already used for a different request (e.g. an earlier attempt with
+      // other values reached the server). A new key makes the next click a new message.
+      if (isIdempotencyConflict(error)) {
+        setConflict(true);
+        setIdempotencyKey(newIdempotencyKey());
+        return;
+      }
+      setConflict(false);
+      showError(error);
+    },
   });
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     send.mutate();
   };
-  const recipientReady = kind === 'member' ? Boolean(userId) : email.trim().includes('@');
+  const recipientReady = recipientKind === 'member' ? Boolean(userId) : email.trim().includes('@');
   const previewError = previewMutation.error ? describeError(t, previewMutation.error) : null;
 
   return (
@@ -162,13 +179,17 @@ export function SendTestDialog({
           help={t('send.tenantHelp')}
         />
         {!canSendHere ? <Alert tone="warning">{t('send.noPermission')}</Alert> : null}
-        <FormField label={t('send.recipientKind')}>
-          <Select value={kind} onChange={(event) => setKind(event.target.value as RecipientKind)}>
-            <option value="member">{t('send.toMember')}</option>
-            <option value="email">{t('send.toEmail')}</option>
-          </Select>
-        </FormField>
-        {kind === 'member' ? (
+        {canSendExternal ? (
+          <FormField label={t('send.recipientKind')}>
+            <Select value={kind} onChange={(event) => setKind(event.target.value as RecipientKind)}>
+              <option value="member">{t('send.toMember')}</option>
+              <option value="email">{t('send.toEmail')}</option>
+            </Select>
+          </FormField>
+        ) : (
+          <Alert tone="info">{t('send.membersOnly')}</Alert>
+        )}
+        {recipientKind === 'member' ? (
           <FormField
             label={t('send.member')}
             help={tenantId ? t('send.memberHelp') : t('send.chooseTenantFirst')}
@@ -246,6 +267,11 @@ export function SendTestDialog({
             label={t('send.previewTitle', { locale: preview.locale })}
           />
         </div>
+      ) : null}
+      {conflict ? (
+        <Alert tone="warning" title={t('common:idempotency.conflictTitle')}>
+          {t('common:idempotency.conflictRenewed')}
+        </Alert>
       ) : null}
       {sent ? (
         <Alert tone="success" title={t('send.sentTitle')}>

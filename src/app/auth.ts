@@ -89,6 +89,33 @@ export function useLogout() {
   });
 }
 
+/**
+ * Ends the session and opens the sign-in page with a return path, for actions the server
+ * allows only shortly after a sign-in (`403 reauthentication_required`).
+ */
+export function useReauthenticate() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async (returnTo: string) => {
+      try {
+        await authApi.logout();
+      } catch (error) {
+        if (!(isApiError(error) && error.isUnauthenticated)) throw error;
+      }
+      return returnTo;
+    },
+    onSuccess: (returnTo) => {
+      setCsrfToken(null);
+      queryClient.setQueryData(queryKeys.session, null);
+      queryClient.removeQueries({
+        predicate: (query) => query.queryKey[0] !== 'meta' && query.queryKey[1] !== 'session',
+      });
+      void navigate(loginPath(returnTo), { replace: true });
+    },
+  });
+}
+
 export interface PermissionScope {
   /** Defaults to the product of the current `/p/:productId` route. */
   productId?: string;
@@ -125,9 +152,18 @@ export function useErrorToast() {
     (error: unknown) => {
       const described = describeError(t, error);
       if (described.error.isUnauthenticated) return; // handled by the global redirect
+      // For refusals and conflicts the server's explanation (e.g. which permission of a role
+      // the caller lacks) is added after the translated message.
+      const serverDetail = described.error.detail;
+      const explain =
+        (described.error.isForbidden || described.error.status === 409) &&
+        serverDetail &&
+        serverDetail !== described.message;
       const detail = described.issues.length
         ? described.issues.map((issue) => `${issue.field}: ${issue.message}`).join('; ')
-        : described.message;
+        : explain
+          ? `${described.message} ${t('errors:serverMessage')}: ${serverDetail}`
+          : described.message;
       toast.error(
         described.title,
         detail,

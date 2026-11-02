@@ -6,6 +6,7 @@ import {
   isPlatformAdmin,
   permissionMatches,
   productAccess,
+  roleCeilingBlock,
 } from './permissions';
 
 const now = '2026-01-01T00:00:00Z';
@@ -80,5 +81,57 @@ describe('permissions', () => {
 
   it('denies everything without a session', () => {
     expect(canAccess(null, 'product:read')).toBe(false);
+  });
+});
+
+describe('roleCeilingBlock', () => {
+  const owner = { key: 'tenant_owner', permissions: ['members:manage'] };
+  const viewer = { key: 'viewer', permissions: ['tenant:read'] };
+  const productOwner = { key: 'product_owner', permissions: ['product:read'] };
+  const tenantOnly = (role: string): ProductAccess => ({
+    product: product('p1'),
+    role: null,
+    permissions: ['product:read'],
+    tenants: [{ tenant: tenant('t1'), role, permissions: ['members:manage', 'tenant:read'] }],
+  });
+
+  it('refuses roles with permissions the caller lacks', () => {
+    const user = me();
+    expect(roleCeilingBlock(user, access, 'tenant', 't1', viewer)).toEqual({
+      reason: 'permissions',
+      missing: ['tenant:read'],
+    });
+    expect(roleCeilingBlock(user, access, 'tenant', 't1', { key: 'x', permissions: [] })).toBe(
+      null,
+    );
+  });
+
+  it('keeps the tenant owner role to owners and product operators', () => {
+    const admin = tenantOnly('tenant_admin');
+    expect(roleCeilingBlock(me({ products: [admin] }), admin, 'tenant', 't1', owner)).toEqual({
+      reason: 'owner',
+    });
+    const tenantOwner = tenantOnly('tenant_owner');
+    expect(
+      roleCeilingBlock(me({ products: [tenantOwner] }), tenantOwner, 'tenant', 't1', owner),
+    ).toBe(null);
+    // `access` is a product operator (product_support) with members:manage in t1.
+    expect(roleCeilingBlock(me(), access, 'tenant', 't1', owner)).toBe(null);
+  });
+
+  it('needs the product owner role for product owners; platform admins are exempt', () => {
+    const productAdmin: ProductAccess = { ...access, role: 'product_admin' };
+    expect(
+      roleCeilingBlock(
+        me({ products: [productAdmin] }),
+        productAdmin,
+        'product',
+        undefined,
+        productOwner,
+      ),
+    ).toEqual({ reason: 'owner' });
+    const admin = me({ platform_role: 'platform_admin' });
+    expect(roleCeilingBlock(admin, undefined, 'product', undefined, productOwner)).toBe(null);
+    expect(roleCeilingBlock(me(), access, 'tenant', 't1', undefined)).toBe(null);
   });
 });

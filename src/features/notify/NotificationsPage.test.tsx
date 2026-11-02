@@ -54,6 +54,13 @@ describe('NotificationsPage', () => {
     expect(
       screen.queryByRole('button', { name: 'Delete template Tenant invitation' }),
     ).not.toBeInTheDocument();
+    // `invitation` is system-only: no "Send test", a badge and an explanation instead.
+    expect(screen.getByText('System only')).toBeInTheDocument();
+    expect(screen.getByText(/cannot be sent as a test/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Send test.*Welcome/ })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /Send test.*Tenant invitation/ }),
+    ).not.toBeInTheDocument();
     const statsTable = await screen.findByRole('table', { name: 'Messages by status' });
     expect(within(statsTable).getByRole('row', { name: /Sent 7 3/ })).toBeInTheDocument();
     expect(screen.getByText('12')).toBeInTheDocument();

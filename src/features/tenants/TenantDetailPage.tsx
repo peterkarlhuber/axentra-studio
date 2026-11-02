@@ -142,6 +142,7 @@ export function TenantDetailPage() {
                 <MembersPanel
                   productId={productId}
                   scope="tenant"
+                  tenantId={tenant.id}
                   caption={t('detail.members')}
                   queryKey={queryKeys.tenantMembers(productId, tenant.id)}
                   list={() => tenantsApi.members(productId, tenant.id)}
@@ -150,6 +151,13 @@ export function TenantDetailPage() {
                     tenantsApi.updateMember(productId, tenant.id, userId, role)
                   }
                   remove={(userId) => tenantsApi.removeMember(productId, tenant.id, userId)}
+                  invite={async (body) => {
+                    const created = await tenantsApi.invite(productId, tenant.id, body);
+                    void queryClient.invalidateQueries({
+                      queryKey: queryKeys.invitations(productId, tenant.id),
+                    });
+                    return created;
+                  }}
                   canManage={can('members:manage', scope)}
                 />
               </Card>

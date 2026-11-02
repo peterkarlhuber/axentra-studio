@@ -56,6 +56,7 @@ export const template: NotifyTemplate = {
   variables: ['name'],
   sample_data: { name: 'Ada' },
   sensitive: false,
+  system_only: false,
   version: 3,
   created_at: '2026-01-01T00:00:00Z',
   updated_at: '2026-01-02T00:00:00Z',
@@ -74,6 +75,7 @@ export const builtinTemplate: NotifyTemplate = {
   version: 0,
   category: 'transactional',
   sensitive: true,
+  system_only: true,
 };
 
 export function makeMessage(patch: Partial<NotifyMessage> = {}): NotifyMessage {

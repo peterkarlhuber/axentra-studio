@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient, type QueryKey } from '@tanstack/react-query';
-import { Trash2, UserPlus } from 'lucide-react';
+import { MailPlus, Trash2, UserPlus } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { MemberLike } from '@/api/models';
+import { isApiError } from '@/api/errors';
+import type { MemberLike, NewInvitation } from '@/api/models';
 import { useErrorToast } from '@/app/auth';
 import {
+  Alert,
   Button,
   ConfirmDialog,
   DataTable,
@@ -18,30 +20,45 @@ import {
   useToast,
   type Column,
 } from '@/components/ui';
+import { InvitationSecret } from './InvitationSecret';
+import { ProblemAlert } from './ProblemAlert';
 import { RoleSelect } from './RoleSelect';
-import { useRoleOptions } from './useRoleOptions';
+import { someRoleBlocked, useRoleCeiling } from './useRoleOptions';
 
 export interface MembersPanelProps {
   productId: string;
   scope: 'product' | 'tenant';
+  /** The tenant (scope "tenant"), for the role ceiling of tenant roles. */
+  tenantId?: string;
   queryKey: QueryKey;
   list: () => Promise<MemberLike[]>;
   add: (body: { email: string; role: string }) => Promise<unknown>;
   updateRole: (userId: string, role: string) => Promise<unknown>;
   remove: (userId: string) => Promise<unknown>;
+  /**
+   * Invite by email when adding fails with `404` (the server resolves only users the caller
+   * can already see). Tenants only: Axentra has no invitations for product operators.
+   */
+  invite?: (body: { email: string; role: string }) => Promise<NewInvitation>;
   canManage: boolean;
   caption: string;
 }
 
-/** Membership table with add / change role / remove, shared by products and tenants. */
+/**
+ * Membership table with add / change role / remove, shared by products and tenants.
+ * Roles above the caller's own level (role ceiling) are not offered, members holding such a
+ * role cannot be changed here, and an address the server does not resolve can be invited.
+ */
 export function MembersPanel({
   productId,
   scope,
+  tenantId,
   queryKey,
   list,
   add,
   updateRole,
   remove,
+  invite,
   canManage,
   caption,
 }: MembersPanelProps) {
@@ -49,25 +66,40 @@ export function MembersPanel({
   const toast = useToast();
   const showError = useErrorToast();
   const queryClient = useQueryClient();
-  const { roles, isError: rolesUnavailable } = useRoleOptions(productId, scope);
+  const { roles, rolesUnavailable, blockFor } = useRoleCeiling(productId, scope, tenantId);
   const members = useQuery({ queryKey, queryFn: list });
   const [adding, setAdding] = useState(false);
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
   const [removing, setRemoving] = useState<MemberLike | null>(null);
+  const [invitation, setInvitation] = useState<NewInvitation | null>(null);
+  const ceilingApplies = !rolesUnavailable && someRoleBlocked(roles, blockFor);
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey });
+  // A member removed in the meantime answers 404: refresh the list along with the message.
+  const onRowError = (error: unknown) => {
+    showError(error);
+    if (isApiError(error) && error.isNotFound) void invalidate();
+  };
 
   const addMutation = useMutation({
     mutationFn: () => add({ email: email.trim(), role }),
     onSuccess: () => {
       toast.success(t('members.added'));
-      setAdding(false);
-      setEmail('');
-      setRole('');
+      closeAdd(false);
       void invalidate();
     },
-    onError: showError,
+  });
+
+  const inviteMutation = useMutation({
+    mutationFn: () => {
+      if (!invite) throw new Error('invite is not available');
+      return invite({ email: email.trim(), role });
+    },
+    onSuccess: (result) => {
+      toast.success(t('members.invited', { email: result.invitation.email }));
+      setInvitation(result);
+    },
   });
 
   const roleMutation = useMutation({
@@ -76,8 +108,21 @@ export function MembersPanel({
       toast.success(t('members.roleChanged'));
       void invalidate();
     },
-    onError: showError,
+    onError: onRowError,
   });
+
+  function closeAdd(open: boolean) {
+    setAdding(open);
+    if (!open) {
+      setEmail('');
+      setRole('');
+      setInvitation(null);
+      addMutation.reset();
+      inviteMutation.reset();
+    }
+  }
+
+  const userNotFound = isApiError(addMutation.error) && addMutation.error.isNotFound;
 
   const columns: Column<MemberLike>[] = [
     {
@@ -95,10 +140,11 @@ export function MembersPanel({
       id: 'role',
       header: t('members.role'),
       cell: (member) =>
-        canManage ? (
+        canManage && !blockFor(member.role) ? (
           <RoleSelect
             roles={roles}
             unavailable={rolesUnavailable}
+            blockFor={blockFor}
             value={member.role}
             aria-label={t('members.roleFor', { name: member.name || member.email })}
             disabled={roleMutation.isPending}
@@ -108,6 +154,11 @@ export function MembersPanel({
                 : undefined
             }
           />
+        ) : canManage ? (
+          <span className={layout.cellStack}>
+            <span>{member.role}</span>
+            <span className={layout.muted}>{t('members.aboveYourLevel')}</span>
+          </span>
         ) : (
           member.role
         ),
@@ -124,20 +175,22 @@ export function MembersPanel({
       id: 'actions',
       header: <span className="ax-sr-only">{t('table.actions')}</span>,
       align: 'end',
-      cell: (member) => (
-        <IconButton
-          variant="danger"
-          size="sm"
-          label={t('members.removeNamed', { name: member.name || member.email })}
-          icon={<Trash2 />}
-          onClick={() => setRemoving(member)}
-        />
-      ),
+      cell: (member) =>
+        blockFor(member.role) ? null : (
+          <IconButton
+            variant="danger"
+            size="sm"
+            label={t('members.removeNamed', { name: member.name || member.email })}
+            icon={<Trash2 />}
+            onClick={() => setRemoving(member)}
+          />
+        ),
     });
   }
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    inviteMutation.reset();
     addMutation.mutate();
   };
 
@@ -164,39 +217,85 @@ export function MembersPanel({
       />
       <Dialog
         open={adding}
-        onOpenChange={setAdding}
-        title={t('members.add')}
-        description={t('members.addDescription')}
+        onOpenChange={closeAdd}
+        title={invitation ? t('members.invitedTitle') : t('members.add')}
+        description={invitation ? undefined : t('members.addDescription')}
         footer={
-          <>
-            <Button variant="ghost" onClick={() => setAdding(false)}>
-              {t('actions.cancel')}
+          invitation ? (
+            <Button variant="primary" onClick={() => closeAdd(false)}>
+              {t('actions.done')}
             </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              form="add-member-form"
-              loading={addMutation.isPending}
-              disabled={!email.trim() || !role}
-            >
-              {t('members.add')}
-            </Button>
-          </>
+          ) : (
+            <>
+              <Button variant="ghost" onClick={() => closeAdd(false)}>
+                {t('actions.cancel')}
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
+                form="add-member-form"
+                loading={addMutation.isPending}
+                disabled={!email.trim() || !role || inviteMutation.isPending}
+              >
+                {t('members.add')}
+              </Button>
+            </>
+          )
         }
       >
-        <form id="add-member-form" className={layout.form} onSubmit={submit}>
-          <FormField label={t('members.email')} required>
-            <Input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-          </FormField>
-          <FormField label={t('members.role')} required>
-            <RoleSelect
-              roles={roles}
-              unavailable={rolesUnavailable}
-              value={role}
-              onChange={setRole}
-            />
-          </FormField>
-        </form>
+        {invitation ? (
+          <InvitationSecret invitation={invitation} />
+        ) : (
+          <form id="add-member-form" className={layout.form} onSubmit={submit}>
+            <FormField label={t('members.email')} required>
+              <Input
+                type="email"
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  if (addMutation.isError) addMutation.reset();
+                }}
+              />
+            </FormField>
+            <FormField
+              label={t('members.role')}
+              help={ceilingApplies ? t('members.ceilingHelp') : undefined}
+              required
+            >
+              <RoleSelect
+                roles={roles}
+                unavailable={rolesUnavailable}
+                blockFor={blockFor}
+                value={role}
+                onChange={setRole}
+              />
+            </FormField>
+            {userNotFound ? (
+              <Alert tone="warning" title={t('members.notFoundTitle')}>
+                {invite ? (
+                  <>
+                    <p>{t('members.notFoundInvite')}</p>
+                    <div className={layout.actions}>
+                      <Button
+                        icon={<MailPlus />}
+                        loading={inviteMutation.isPending}
+                        disabled={!role}
+                        onClick={() => inviteMutation.mutate()}
+                      >
+                        {t('members.inviteInstead')}
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <p>{t('members.notFoundOperator')}</p>
+                )}
+              </Alert>
+            ) : (
+              <ProblemAlert error={addMutation.error} />
+            )}
+            <ProblemAlert error={inviteMutation.error} />
+          </form>
+        )}
       </Dialog>
       <ConfirmDialog
         open={removing !== null}
@@ -213,7 +312,7 @@ export function MembersPanel({
             toast.success(t('members.removed'));
             void invalidate();
           } catch (error) {
-            showError(error);
+            onRowError(error);
             throw error;
           }
         }}

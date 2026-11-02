@@ -6,6 +6,7 @@ import {
   ListChecks,
   MoreHorizontal,
   Plus,
+  RefreshCw,
   RotateCcw,
   Search,
 } from 'lucide-react';
@@ -13,11 +14,13 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { eventsApi, jobsApi, type JobListParams } from '@/api/endpoints';
+import { isIdempotencyConflict } from '@/api/errors';
 import type { Job, JobStats, JobStatus } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useCan, useErrorToast } from '@/app/auth';
 import { useProductScope } from '@/app/contexts';
 import {
+  Alert,
   Button,
   ButtonLink,
   Card,
@@ -509,7 +512,24 @@ function EnqueueJobDialog({
       }
     >
       <form id="enqueue-form" className={layout.form} onSubmit={submit} noValidate>
-        <FormError error={enqueue.error} />
+        {isIdempotencyConflict(enqueue.error) ? (
+          <Alert tone="warning" title={t('common:idempotency.conflictTitle')}>
+            <p>{t('common:idempotency.conflictManual')}</p>
+            <div className={layout.actions}>
+              <Button
+                icon={<RefreshCw />}
+                onClick={() => {
+                  setIdempotencyKey(newIdempotencyKey());
+                  enqueue.reset();
+                }}
+              >
+                {t('common:idempotency.newKey')}
+              </Button>
+            </div>
+          </Alert>
+        ) : (
+          <FormError error={enqueue.error} />
+        )}
         <FormField
           label={t('jobs.kind')}
           help={t('jobs.kindHelp')}

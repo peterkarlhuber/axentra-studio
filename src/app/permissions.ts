@@ -51,3 +51,55 @@ export function canAccess(
 export function canInAnyTenant(access: ProductAccess | undefined, permission: string): boolean {
   return Boolean(access?.tenants.some((entry) => hasPermission(entry.permissions, permission)));
 }
+
+// ---- Role ceiling (security adaptation, Axentra 7511a37) ----
+
+/** The owner role of each membership scope; assigning, changing or removing it needs owner rank. */
+export const OWNER_ROLE = { product: 'product_owner', tenant: 'tenant_owner' } as const;
+
+export type CeilingScope = keyof typeof OWNER_ROLE;
+
+/** Why the caller may not assign (or change a member with) a role; `null` when it may. */
+export type CeilingBlock =
+  { reason: 'permissions'; missing: string[] } | { reason: 'owner' } | null;
+
+/**
+ * Mirrors the server's role ceiling (SECURITY_MODEL.md, rule 8): a role can be assigned, and a
+ * member holding it changed or removed, only if every permission of the role is in the caller's
+ * own grant in that scope; the scope's owner role additionally needs owner rank (owner of the
+ * scope, a product operator for tenants, or a platform admin). Platform admins are exempt.
+ * Unknown roles (free-text input) are not checked here; the server answers `403`.
+ */
+export function roleCeilingBlock(
+  me: Me | null | undefined,
+  access: ProductAccess | undefined,
+  scope: CeilingScope,
+  tenantId: string | undefined,
+  role: { key: string; permissions: readonly string[] } | undefined,
+): CeilingBlock {
+  if (!me || !role) return null;
+  if (isPlatformAdmin(me)) return null;
+  const missing = role.permissions.filter(
+    (permission) => !canAccess(me, permission, access, scope === 'tenant' ? tenantId : undefined),
+  );
+  if (missing.length > 0) return { reason: 'permissions', missing };
+  if (role.key === OWNER_ROLE[scope] && !hasOwnerRank(me, access, scope, tenantId)) {
+    return { reason: 'owner' };
+  }
+  return null;
+}
+
+/** Owner rank for the scope's owner role (see `roleCeilingBlock`). */
+export function hasOwnerRank(
+  me: Me | null | undefined,
+  access: ProductAccess | undefined,
+  scope: CeilingScope,
+  tenantId: string | undefined,
+): boolean {
+  if (!me) return false;
+  if (isPlatformAdmin(me)) return true;
+  if (scope === 'product') return access?.role === OWNER_ROLE.product;
+  if (access?.role) return true; // any product operator
+  const tenant = access?.tenants.find((entry) => entry.tenant.id === tenantId);
+  return tenant?.role === OWNER_ROLE.tenant;
+}

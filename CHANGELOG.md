@@ -64,6 +64,20 @@ All notable changes to Axentra Studio are documented here. The format follows
   a11y/responsive harness over every registered route (`e2e/a11y.spec.ts`), and
   `docs/COMPATIBILITY.md` and `docs/TODO.md`.
 
+### Security
+
+- Adapted to Axentra's security fixes (backend `7511a37`, contract synced): role options above the
+  caller's own grant (role ceiling, owner roles only for owners) are listed but disabled in member
+  and invitation forms, members holding such a role cannot be changed or removed there, and the
+  server's `403` explanation is shown; adding a user the caller cannot see (`404`) offers "Send
+  invitation instead" for tenants and explains the limit for product members; the send-test
+  dialog offers free-form addresses only with `notify:send_external` and never offers system-only
+  templates (`invitation`, badge and explanation); `409` idempotency conflicts are explained (new
+  key for event publish, notification send and on request for job enqueue); a first password that
+  needs a fresh sign-in (`reauthentication_required`) leads to the login page with a return path;
+  API key texts describe inherited expiry and cascading revocation; an audit event the caller may
+  not read (`404`) keeps the list values. New e2e spec `e2e/security.spec.ts`.
+
 ### Fixed
 
 - The full Playwright suite passes against one `scripts/e2e-backend.sh run --worker` backend: the

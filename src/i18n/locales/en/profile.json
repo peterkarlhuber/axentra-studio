@@ -25,7 +25,9 @@
     "submit": "Change password",
     "changed": "Password changed",
     "setTitle": "Set a password",
-    "setDescription": "You currently sign in with single sign-on only. A password enables password sign-in as well."
+    "setDescription": "You currently sign in with single sign-on only. A password enables password sign-in as well. For your security this needs a recent sign-in.",
+    "reauth": "Sign in again",
+    "reauthBody": "Setting a first password is only allowed shortly after you signed in. Sign in again (you come back here), then set the password within a few minutes."
   },
   "sessions": {
     "title": "Your sessions",
