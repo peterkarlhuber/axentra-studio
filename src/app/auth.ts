@@ -9,6 +9,7 @@ import type { AuthSession } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useToast } from '@/components/ui';
 import { describeError } from '@/lib/errors';
+import { takeInvitationToken } from '@/features/tenants/invitationLink';
 import { useOptionalProductScope } from './contexts';
 import { canAccess, isPlatformAdmin, productAccess } from './permissions';
 
@@ -61,8 +62,13 @@ export function safeReturnPath(value: string | null | undefined): string {
   return value;
 }
 
+/**
+ * The sign-in page that comes back to `returnTo`. An invitation token in `returnTo` never goes
+ * into the address bar: it moves to the tab's pending invitation, and the accept page finds it
+ * there after the sign-in.
+ */
 export function loginPath(returnTo?: string): string {
-  const target = safeReturnPath(returnTo);
+  const target = takeInvitationToken(safeReturnPath(returnTo));
   return target === '/' ? '/login' : `/login?return_to=${encodeURIComponent(target)}`;
 }
 

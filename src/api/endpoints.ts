@@ -37,6 +37,8 @@ import type {
   MeterUsage,
   NewApiKey,
   NewInvitation,
+  OidcStartAnswer,
+  OidcStartInput,
   Page,
   PasswordChangeInput,
   PasswordLoginInput,
@@ -164,6 +166,14 @@ export const authApi = {
   setup: (body: SetupInput) => unwrap<AuthSession>(api().POST('/v1/auth/setup', { body })),
   loginPassword: (body: PasswordLoginInput) =>
     unwrap<AuthSession>(api().POST('/v1/auth/login/password', { body })),
+  /**
+   * Single sign-on start with the invitation in the body (never in a URL). Sets the login
+   * cookie; the browser then navigates to `redirect_url` (the identity provider).
+   */
+  oidcStart: (provider: string, body: OidcStartInput) =>
+    unwrap<OidcStartAnswer>(
+      api().POST('/v1/auth/oidc/{provider}/start', { params: { path: { provider } }, body }),
+    ),
   session: () => unwrap<AuthSession>(api().GET('/v1/auth/session')),
   logout: () => unwrap<unknown>(api().POST('/v1/auth/logout')),
   sessions: () => unwrap<UserSession[]>(api().GET('/v1/auth/sessions')),

@@ -6,7 +6,9 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#0d0b3f" />
     <meta name="description" content="Axentra Studio - admin console for the Axentra platform" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- No Referer on any request: the address can hold an invitation token for a moment, and a
+         same-origin proxy would log the full URL (the Docker image also sends the header). -->
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />

@@ -8,6 +8,11 @@ import { createRoot } from 'react-dom/client';
 import { configureApi } from './api/client';
 import { loadRuntimeConfig } from './api/config';
 import { App } from './app/App';
+import { captureInvitationFromAddressBar } from './features/tenants/invitationLink';
+
+// An invitation token leaves the address bar before anything else runs (no history entry,
+// no Referer, not in the sign-in page URL); the tab keeps it for the accept page.
+captureInvitationFromAddressBar();
 
 const [config] = await Promise.all([loadRuntimeConfig(), i18nReady]);
 configureApi({ baseUrl: config.apiBaseUrl });

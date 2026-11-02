@@ -28,7 +28,9 @@ import {
   acceptInvitationPath,
   clearInvitationSentWithSso,
   invitationSentWithSso,
+  invitationTokenFromPath,
   readPendingInvitation,
+  withoutInvitationToken,
   writePendingInvitation,
 } from './invitationLink';
 
@@ -85,10 +87,11 @@ function outcomeOf(error: unknown, hasEmail: boolean): Outcome {
 
 /**
  * `POST /v1/invitations/accept` for the signed-in user. The token comes from the link
- * (`?token=`, also via the public `/accept-invitation` alias) or is pasted. It is moved out of
- * the address bar at once (history replace), so it neither stays in the history nor leaks in a
- * `Referer`; the tab keeps it until the invitation is accepted. Nothing is sent before the user
- * confirms.
+ * (`?token=`, usually taken out of the address bar at startup already, see
+ * `captureInvitationFromAddressBar`), from the tab's pending invitation or is pasted. A token
+ * still in the address bar is moved out of it at once (history replace), so it neither stays in
+ * the history nor leaks in a `Referer`; the tab keeps it until the invitation is accepted.
+ * Nothing is sent before the user confirms.
  */
 export function AcceptInvitationPage() {
   const { t } = useTranslation('tenants');
@@ -102,7 +105,8 @@ export function AcceptInvitationPage() {
 
   const me = useMe();
   const query = new URLSearchParams(location.search);
-  const fromUrl = query.get('token')?.trim() || null;
+  // Any spelling the router accepts (`/INVITATIONS/accept/?TOKEN=`): see invitationLink.ts.
+  const fromUrl = invitationTokenFromPath(`${location.pathname}${location.search}`);
   // After a single sign-on that this tab started with the invitation, the server has already
   // accepted it and names the tenant. Trusted only together with that tab marker, and only
   // once `/v1/me` confirms the membership: no second confirmation that would fail.
@@ -129,15 +133,15 @@ export function AcceptInvitationPage() {
   useEffect(() => {
     if (!fromUrl && !acceptedParam) return;
     if (fromUrl) writePendingInvitation(fromUrl);
-    const rest = new URLSearchParams(location.search);
-    rest.delete('token');
+    const cleaned = withoutInvitationToken(`${location.pathname}${location.search}`);
+    const rest = new URLSearchParams(cleaned.split('?')[1] ?? '');
     rest.delete(INVITATION_ACCEPTED_PARAM);
     const search = rest.toString();
     void navigate(
       { pathname: ACCEPT_INVITATION_PATH, search: search ? `?${search}` : '', hash: location.hash },
       { replace: true },
     );
-  }, [fromUrl, acceptedParam, location.search, location.hash, navigate]);
+  }, [fromUrl, acceptedParam, location.pathname, location.search, location.hash, navigate]);
 
   // The single sign-on outcome is settled once `/v1/me` is known: a confirmed membership ends
   // the invitation for this tab; otherwise the page asks for the confirmation as usual.

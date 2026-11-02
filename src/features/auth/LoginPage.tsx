@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { KeyRound, LogIn } from 'lucide-react';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { apiUrl, isSameOriginApi } from '@/api/client';
@@ -15,11 +15,15 @@ import { SplashScreen } from '@/components/layout/FullPageMessage';
 import { Alert, Button, FormField, Input, buttonClassName } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
+import { browserNavigation, isNavigableUrl } from '@/lib/browser';
 import {
   ACCEPT_INVITATION_PATH,
+  clearInvitationSentWithSso,
   invitationTokenFromPath,
+  isInvitationPath,
   markInvitationSentWithSso,
   readPendingInvitation,
+  ssoReturnPath,
   withoutInvitationToken,
   writePendingInvitation,
 } from '@/features/tenants/invitationLink';
@@ -55,25 +59,46 @@ export function LoginPage() {
     : readPendingInvitation()
       ? ACCEPT_INVITATION_PATH
       : '/';
-  const invitation = returnTo.split('?')[0] === ACCEPT_INVITATION_PATH;
-  // The token of an invitation sign-in: from the return path, else the one kept for this tab.
+  const invitation = isInvitationPath(returnTo.split(/[?#]/)[0] ?? '');
+  // The token of an invitation sign-in: from the return path (only when the sign-in page was
+  // reached with one, see the effect below), else the one kept for this tab.
   const linkToken = invitationTokenFromPath(returnTo);
   const invitationToken = invitation ? (linkToken ?? readPendingInvitation()) : null;
-  const ssoError = params.get('login_error');
+  const loginError = params.get('login_error');
   const prefill = (location.state as { email?: string } | null)?.email ?? '';
   const [email, setEmail] = useState(prefill);
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<unknown>(null);
+  const [ssoStarting, setSsoStarting] = useState<string | null>(null);
+  const [ssoError, setSsoError] = useState<unknown>(null);
 
   useEffect(() => {
     document.title = `${t('login.title')} · ${t('common:app.name')}`;
   }, [t]);
 
-  // A single sign-on returns to the accept page without the token, so keep it for this tab.
+  // A token in `return_to` (an address typed or bookmarked before Studio moved tokens out of
+  // it) is kept for this tab and leaves the address bar at once (history replace): it must
+  // not stay in the history or reach a request's `Referer`.
   useEffect(() => {
-    if (linkToken) writePendingInvitation(linkToken);
-  }, [linkToken]);
+    if (!linkToken || !requested) return;
+    writePendingInvitation(linkToken);
+    const rest = new URLSearchParams(location.search);
+    rest.set('return_to', withoutInvitationToken(returnTo));
+    void navigate(
+      { pathname: location.pathname, search: `?${rest.toString()}`, hash: location.hash },
+      { replace: true, state: location.state },
+    );
+  }, [linkToken, requested, returnTo, location, navigate]);
+
+  // Back from the identity provider through the back/forward cache: the buttons work again.
+  useEffect(() => {
+    const reset = (event: PageTransitionEvent) => {
+      if (event.persisted) setSsoStarting(null);
+    };
+    window.addEventListener('pageshow', reset);
+    return () => window.removeEventListener('pageshow', reset);
+  }, []);
 
   if (meta.setup_required) return <Navigate to="/setup" replace />;
   if (session.isPending) return <SplashScreen label={t('common:states.loading')} />;
@@ -100,18 +125,47 @@ export function LoginPage() {
   };
 
   // OIDC: the API redirects back to `return_to`. With a separate API origin the target must
-  // be an absolute Studio URL. An invitation token never goes into `return_to`, which the
-  // server stores in plain text with the login state and does not redact in its access log:
-  // it goes in the dedicated `invitation` parameter, which the server keeps encrypted and
-  // redacts. That parameter also lets an invited address without an account sign up, and the
-  // server accepts the invitation right after the sign-in.
-  const oidcTarget = withoutInvitationToken(returnTo);
+  // be an absolute Studio URL. An invitation token is never in a URL: not in `return_to`
+  // (stored in plain text with the login state) and not in the start URL's query (recorded by
+  // proxies that log full URLs). With an invitation, Studio starts the sign-on with
+  // `POST /v1/auth/oidc/{provider}/start` and the token in the JSON body; the server keeps it
+  // encrypted, lets an invited address without an account sign up and accepts the invitation
+  // right after the sign-in. Without one, the plain `GET` start link is used, as always.
+  const oidcTarget = ssoReturnPath(returnTo);
   const oidcReturn = isSameOriginApi() ? oidcTarget : `${window.location.origin}${oidcTarget}`;
-  const oidcQuery = `return_to=${encodeURIComponent(oidcReturn)}${
-    invitationToken ? `&invitation=${encodeURIComponent(invitationToken)}` : ''
-  }`;
+  const oidcQuery = `return_to=${encodeURIComponent(oidcReturn)}`;
+  const startUrl = (providerId: string) =>
+    apiUrl(`/v1/auth/oidc/${encodeURIComponent(providerId)}/start?${oidcQuery}`);
+
+  const startWithInvitation = async (event: MouseEvent<HTMLAnchorElement>, providerId: string) => {
+    if (!invitationToken) return;
+    event.preventDefault();
+    if (ssoStarting) return;
+    setSsoStarting(providerId);
+    setSsoError(null);
+    markInvitationSentWithSso();
+    try {
+      const { redirect_url: target } = await authApi.oidcStart(providerId, {
+        return_to: oidcReturn,
+        invitation: invitationToken,
+      });
+      if (!isNavigableUrl(target)) throw new Error('unexpected single sign-on redirect');
+      browserNavigation.assign(target);
+    } catch (caught) {
+      clearInvitationSentWithSso();
+      setSsoStarting(null);
+      if (isApiError(caught) && caught.status === 405) {
+        // An Axentra without the POST start: sign on without the invitation; the token stays
+        // with this tab and the accept page asks for the confirmation afterwards.
+        browserNavigation.assign(startUrl(providerId));
+        return;
+      }
+      setSsoError(caught);
+    }
+  };
   const providers = meta.auth.oidc ?? [];
   const described = error ? describeError(t, error) : null;
+  const ssoDescribed = ssoError ? describeError(t, ssoError) : null;
   const invalidCredentials =
     isApiError(error) && (error.status === 401 || error.code === 'unauthenticated');
 
@@ -131,11 +185,11 @@ export function LoginPage() {
         <p className={styles.subtitle}>{t('login.subtitle')}</p>
       </div>
 
-      {ssoError && !error ? (
+      {loginError && !error ? (
         <Alert tone="danger" title={t('login.ssoErrorTitle')}>
-          {SSO_ERRORS.has(ssoError)
-            ? t(`login.ssoErrors.${ssoError}`)
-            : t('login.ssoErrors.unknown', { code: ssoError.slice(0, 64) })}{' '}
+          {SSO_ERRORS.has(loginError)
+            ? t(`login.ssoErrors.${loginError}`)
+            : t('login.ssoErrors.unknown', { code: loginError.slice(0, 64) })}{' '}
           <HelpLink topic="signing-in#sso-errors" />
         </Alert>
       ) : null}
@@ -153,7 +207,7 @@ export function LoginPage() {
             : t('login.invitation.noAccountPassword')}{' '}
           <HelpLink topic="members-invitations#accept" />
         </Alert>
-      ) : requested && !error && !ssoError ? (
+      ) : requested && !error && !loginError ? (
         <Alert tone="info">{t('login.sessionEnded')}</Alert>
       ) : null}
 
@@ -205,13 +259,30 @@ export function LoginPage() {
       {providers.length > 0 ? (
         <>
           {meta.auth.password ? <p className={styles.divider}>{t('login.or')}</p> : null}
+          {ssoDescribed ? (
+            <Alert tone="danger" title={ssoDescribed.title}>
+              {ssoDescribed.message}
+              {ssoDescribed.requestId ? (
+                <>
+                  {' '}
+                  ({t('errors:requestId')}: <code>{ssoDescribed.requestId}</code>)
+                </>
+              ) : null}
+            </Alert>
+          ) : null}
           <div className={styles.providers}>
             {providers.map((provider) => (
               <a
                 key={provider.id}
                 className={buttonClassName({ variant: 'secondary', size: 'lg', fullWidth: true })}
-                href={apiUrl(`/v1/auth/oidc/${encodeURIComponent(provider.id)}/start?${oidcQuery}`)}
-                onClick={invitationToken ? markInvitationSentWithSso : undefined}
+                // Without JavaScript (or for a new tab) the link signs on without the invitation.
+                href={startUrl(provider.id)}
+                aria-busy={ssoStarting === provider.id || undefined}
+                onClick={
+                  invitationToken
+                    ? (event) => void startWithInvitation(event, provider.id)
+                    : undefined
+                }
               >
                 <KeyRound aria-hidden width={16} height={16} />
                 {t('login.continueWith', { provider: provider.name })}
