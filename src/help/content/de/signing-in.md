@@ -141,6 +141,7 @@ Schlägt das Single Sign-on fehl, schickt dich der Server zurück zur Anmeldesei
 | Kein Konto (`signup_disabled`)                                              | Für dich existiert kein Konto, und die Registrierung ist ausgeschaltet.                                                                      | Bitte einen Administrator um eine [Einladung](help:members-invitations) und melde dich dann erneut an. |
 | Konto deaktiviert (`account_disabled`)                                      | Dein Konto ist deaktiviert.                                                                                                                  | Wende dich an einen Administrator.                                                                     |
 | Zu viele Versuche (`rate_limited`)                                          | Aus deinem Netzwerk wurden zu viele Anmeldungen gestartet.                                                                                   | Warte eine Minute.                                                                                     |
+| Einladung hier nicht angenommen (`invitation_requires_post`)                | Ein Single-Sign-on-Link enthielt ein Einladungs-Token in seiner Adresse, das der Server ablehnt.                                             | Öffne den Einladungslink aus deiner E-Mail noch einmal und melde dich über die Anmeldeseite an.        |
 
 ## Fehlerbehebung {#troubleshooting}
 

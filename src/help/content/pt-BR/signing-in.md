@@ -141,6 +141,7 @@ Quando o login único falha, o servidor envia você de volta à página de login
 | Sem conta (`signup_disabled`)                                  | Não existe conta para você e o cadastro está desabilitado.                                                                                    | Peça um [convite](help:members-invitations) a um administrador e entre novamente. |
 | Conta desabilitada (`account_disabled`)                        | Sua conta está desabilitada.                                                                                                                  | Fale com um administrador.                                                        |
 | Tentativas demais (`rate_limited`)                             | Logins demais iniciados a partir da sua rede.                                                                                                 | Aguarde um minuto.                                                                |
+| Convite não aceito aqui (`invitation_requires_post`)           | Um link de login único continha um token de convite no endereço, o que o servidor recusa.                                                     | Abra novamente o link do convite do seu e-mail e entre pela página de entrada.    |
 
 ## Solução de problemas {#troubleshooting}
 
