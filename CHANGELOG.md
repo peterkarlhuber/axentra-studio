@@ -26,8 +26,8 @@ All notable changes to Axentra Studio are documented here. The format follows
     element overrode the image's `Referrer-Policy: no-referrer` header, so same-origin requests (through
     the `/v1` proxy) sent the full address, token included, as `Referer`, which nginx's combined log
     records. The Vite dev and preview servers send the header too.
-  - Vendored contract synced from the Axentra branch `wip/nf23` (`1f863c0`, local placeholder pin; to be
-    re-pinned after the backend merge, docs/TODO.md).
+  - Backend pin `api/BACKEND_REF` is axentra `f3ed8d2` (axentra #28: `POST /v1/auth/oidc/{provider}/start`,
+    secret-free `return_to`, encoded-token redaction); the vendored contract is synced from it.
 - Backend pin `api/BACKEND_REF` is axentra `024da57` (axentra #25: AX-R1 cursor validation; #26: AX-R2
   `invitation_accepted` after single sign-on). The OpenAPI contract is unchanged.
 - Single sign-on for an invitation no longer puts the invitation token into `return_to` of

@@ -18,32 +18,10 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P1
 
-- **Re-pin `api/BACKEND_REF` to the merged Axentra with the `POST` OIDC start (NF-2/NF-3).** The
-  vendored contract and `api/BACKEND_REF` point at the local, unpushed Axentra commit `1f863c0`
-  (branch `wip/nf23`), which adds `POST /v1/auth/oidc/{provider}/start`. After the backend merge:
-  `npm run api:sync -- --sha <merge sha>` and the invitation e2e spec against it. Against an
-  Axentra without that route the sign-in page answers the `405` by signing on without the
-  invitation (the accept page then asks for the confirmation).
-
-- **Re-pin `api/BACKEND_REF` to the merged product-permissions/storage-policy backend.** The
-  vendored contract (`api/openapi.json`, `src/api/schema.d.ts`, `api/SOURCE`) is synced from the
-  unmerged Axentra commit `67cd0ac` (product-defined permissions, per-product content-type
-  policy), while `api/BACKEND_REF` still pins `7511a37`, so the `contract` CI job and the unit
-  check "pins the same backend commit" fail, and the CI e2e job (which runs the pinned backend)
-  cannot pass `e2e/permissions-policy.spec.ts` or load the new Permissions page and Files tab.
-  After the backend merge: `npm run api:sync -- --sha <merge sha>`, full e2e in both modes, a row
-  in [COMPATIBILITY.md](COMPATIBILITY.md). This also covers the search re-pin below.
-
-- **Re-pin `api/BACKEND_REF` to include search.** Axentra `master` is at `f80429f` (PR #11,
-  search module, API still 1.0, two new paths under `/v1/products/{id}/tenants/{tid}/search`).
-  Studio pins `7511a37`; `npm run api:check` against `f80429f` fails with exactly those two
-  backend-only paths. Run `npm run api:sync -- --sha f80429f129f76bc019118bd825bef637feaf8ecf`, the
-  full e2e suite against that commit, and add a row to [COMPATIBILITY.md](COMPATIBILITY.md) (and
-  the backend's mirror). Integration check: contract and e2e jobs green on the re-pin PR.
 - **Search UI for the new backend search module.** Axentra's `search` module (tenant-scoped
   PostgreSQL full-text index; `GET .../search` with `search:query`, `PUT`/`DELETE
-.../search/documents/{kind}/{ref_id}` with `search:index`) has no Studio page. Needs the re-pin
-  above first; then a per-tenant search page (query, kind filter, highlighted results, cursor
+.../search/documents/{kind}/{ref_id}` with `search:index`) has no Studio page (the vendored
+  contract includes it). Needed: a per-tenant search page (query, kind filter, highlighted results, cursor
   paging), module gating on `search`, permissions, i18n, component tests and an e2e spec
   (backend reference: `docs/modules/SEARCH.md` in the Axentra repository).
 - **Phase 1 pages have no component tests.** `ApiKeysPage`, `RolesPage`, `SetupPage`,
