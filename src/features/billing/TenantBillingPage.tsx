@@ -46,6 +46,8 @@ import {
   useToast,
 } from '@/components/ui';
 import { formatQuantity } from '@/features/usage/usage-utils';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { useFormatters } from '@/lib/format';
 import {
   daysUntil,
@@ -95,7 +97,7 @@ export function TenantBillingPage() {
   if (!canRead) {
     return (
       <div className={layout.stack}>
-        <PageHeader title={title} documentTitle={t('tenant.title')} />
+        <PageHeader title={title} documentTitle={t('tenant.title')} help="plans-subscriptions" />
         <EmptyState title={t('noAccess')} description={t('noAccessBody')} />
       </div>
     );
@@ -107,6 +109,7 @@ export function TenantBillingPage() {
         title={title}
         documentTitle={t('tenant.title')}
         description={t('tenant.description')}
+        help="plans-subscriptions"
         meta={<code className={layout.mono}>{tenantId}</code>}
         actions={
           isModuleEnabled(meta.modules, 'usage') && can('usage:read', scope) ? (
@@ -260,7 +263,10 @@ function SubscriptionCard({
             </Alert>
           ) : null}
           {current?.status === 'past_due' ? (
-            <Alert tone="warning">{t('subscription.pastDueNotice')}</Alert>
+            <Alert tone="warning">
+              {t('subscription.pastDueNotice')}{' '}
+              <HelpLink topic="plans-subscriptions#status">{t('common:help.learnMore')}</HelpLink>
+            </Alert>
           ) : null}
           {current?.status === 'incomplete' ? (
             <Alert tone="warning">{t('subscription.incompleteNotice')}</Alert>
@@ -388,10 +394,15 @@ function SubscriptionCard({
         onOpenChange={(open) => (open ? undefined : setConfirm(null))}
         tone={confirm === 'resume' ? 'primary' : 'danger'}
         title={t(`subscription.confirm.${confirm ?? 'cancelAtEnd'}.title`)}
-        description={t(`subscription.confirm.${confirm ?? 'cancelAtEnd'}.body`, {
-          plan: current?.plan_key,
-          date: dateTime(current?.current_period_end),
-        })}
+        description={
+          <>
+            {t(`subscription.confirm.${confirm ?? 'cancelAtEnd'}.body`, {
+              plan: current?.plan_key,
+              date: dateTime(current?.current_period_end),
+            })}{' '}
+            <HelpLink topic="plans-subscriptions#cancel">{t('common:help.learnMore')}</HelpLink>
+          </>
+        }
         confirmLabel={t(`subscription.confirm.${confirm ?? 'cancelAtEnd'}.action`)}
         confirmText={confirm === 'cancelNow' ? current?.plan_key : undefined}
         onConfirm={runConfirm}
@@ -500,9 +511,20 @@ function PlanChoiceDialog({
       onOpenChange={(open) => (open ? undefined : onClose())}
       title={mode === 'change' ? t('subscription.changePlan') : t('subscription.subscribe')}
       description={
-        mode === 'change'
-          ? t('subscription.changeDescription', { plan: subscription?.plan_key })
-          : t('subscription.subscribeDescription')
+        <>
+          {mode === 'change'
+            ? t('subscription.changeDescription', { plan: subscription?.plan_key })
+            : t('subscription.subscribeDescription')}{' '}
+          <HelpLink
+            topic={
+              mode === 'change'
+                ? 'plans-subscriptions#change-plan'
+                : 'plans-subscriptions#subscribe'
+            }
+          >
+            {t('common:help.learnMore')}
+          </HelpLink>
+        </>
       }
       footer={
         <>
@@ -645,9 +667,14 @@ function StatusDialog({
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       title={t('subscription.setStatus')}
-      description={t('subscription.statusDescription', {
-        status: t(`status.${subscription.status}`, { defaultValue: subscription.status }),
-      })}
+      description={
+        <>
+          {t('subscription.statusDescription', {
+            status: t(`status.${subscription.status}`, { defaultValue: subscription.status }),
+          })}{' '}
+          <HelpLink topic="plans-subscriptions#set-status">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>
@@ -711,7 +738,14 @@ function EntitlementsCard({
   return (
     <Card
       title={t('entitlements.effectiveTitle')}
-      description={t('entitlements.effectiveDescription')}
+      description={
+        <>
+          {t('entitlements.effectiveDescription')}{' '}
+          <InfoTip label={t('info.entitlementsLabel')} topic="plans-subscriptions#overrides">
+            {t('info.entitlements')}
+          </InfoTip>
+        </>
+      }
       actions={
         canManage && data ? (
           <Button size="sm" icon={<Pencil />} onClick={() => setEditing(true)}>
@@ -853,7 +887,12 @@ function OverridesDialog({
       size="lg"
       onOpenChange={(open) => (open ? undefined : onClose())}
       title={t('entitlements.editOverrides')}
-      description={t('entitlements.overridesDescription')}
+      description={
+        <>
+          {t('entitlements.overridesDescription')}{' '}
+          <HelpLink topic="plans-subscriptions#overrides">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>

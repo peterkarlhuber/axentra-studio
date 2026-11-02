@@ -1,0 +1,66 @@
+{
+  "title": "Utilisateurs",
+  "description": "Les personnes qui ont accès à ce produit : ses opérateurs et les membres de ses locataires.",
+  "search": "Rechercher des utilisateurs",
+  "searchPlaceholder": "Nom ou e-mail",
+  "filters": {
+    "allStatuses": "Tous les statuts"
+  },
+  "fields": {
+    "name": "Nom",
+    "email": "Adresse e-mail",
+    "status": "Statut",
+    "locale": "Langue",
+    "lastLogin": "Dernière connexion",
+    "created": "Créé le",
+    "platformRole": "Rôle sur la plateforme",
+    "password": "Connexion par mot de passe"
+  },
+  "empty": {
+    "title": "Aucun utilisateur pour l’instant",
+    "body": "Les utilisateurs apparaissent ici dès qu’ils sont membres de ce produit ou de l’un de ses locataires.",
+    "filteredTitle": "Aucun utilisateur correspondant",
+    "filteredBody": "Essaie une autre recherche ou un autre filtre de statut."
+  },
+  "detail": {
+    "profile": "Profil",
+    "sessions": "Sessions actives",
+    "disable": "Désactiver l’utilisateur",
+    "enable": "Activer l’utilisateur",
+    "disableTitle": "Désactiver l’utilisateur ?",
+    "disableBody": "{{name}} ne peut plus se connecter et toutes ses sessions prennent fin immédiatement. Les adhésions restent, et les clés d’API créées par cet utilisateur continuent de fonctionner.",
+    "disabled": "Utilisateur désactivé",
+    "enabled": "Utilisateur activé",
+    "disabledNotice": "Cet utilisateur est désactivé et ne peut pas se connecter.",
+    "revokeSessions": "Déconnecter partout",
+    "revokeTitle": "Déconnecter partout ?",
+    "revokeBody": "Toutes les sessions de {{name}} prennent fin immédiatement. L’utilisateur peut se reconnecter.",
+    "hasPassword": "Mot de passe défini",
+    "noPassword": "Aucun mot de passe (authentification unique uniquement)",
+    "sessionsRevoked_many": "{{count}} de sessions révoquées",
+    "sessionsRevoked_one": "{{count}} session révoquée",
+    "sessionsRevoked_other": "{{count}} sessions révoquées",
+    "profileDescription": "Les adhésions se gèrent dans l’onglet Membres de chaque locataire.",
+    "noEmail": "Aucune adresse e-mail",
+    "noEmailInfo": "Cet utilisateur se connecte uniquement via l’authentification unique et ne peut pas accepter d’invitations, qui sont liées à une adresse e-mail. Ajoute-le plutôt directement aux locataires.",
+    "noEmailAbout": "À propos des utilisateurs sans adresse e-mail"
+  },
+  "platformRoles": {
+    "none": "Aucun rôle sur la plateforme",
+    "platform_viewer": "Lecteur de la plateforme",
+    "platform_admin": "Administrateur de la plateforme",
+    "help": {
+      "none": "Accès uniquement via les adhésions aux produits et aux locataires.",
+      "platform_viewer": "Accès en lecture seule à tous les produits, aux paramètres et au journal d’audit de l’ensemble de l’installation.",
+      "platform_admin": "Contrôle total de l’ensemble de l’installation, y compris tous les produits et utilisateurs."
+    }
+  },
+  "platformRole": {
+    "title": "Rôle sur la plateforme",
+    "description": "Autorisations valables pour toute l’installation, indépendamment des produits.",
+    "apply": "Changer le rôle sur la plateforme",
+    "saved": "Rôle sur la plateforme modifié",
+    "confirmTitle": "Changer le rôle sur la plateforme ?",
+    "confirmBody": "{{name}} reçoit le rôle sur la plateforme « {{role}} ». Cela modifie l’accès à tous les produits de ce serveur."
+  }
+}

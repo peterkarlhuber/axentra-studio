@@ -9,7 +9,16 @@
     "apiKeys": "API-Schlüssel",
     "audit24h": "Audit-Ereignisse (24 h)",
     "records": "Datensätze",
-    "denied24h": "Abgelehnte Anfragen (24 h)"
+    "denied24h": "Abgelehnte Anfragen (24 h)",
+    "about": "Über „{{label}}“",
+    "hints": {
+      "tenants": "Alle Mandanten dieses Produkts, aktive und gesperrte.",
+      "users": "Personen mit Zugriff auf dieses Produkt: Mitglieder seiner Mandanten und Produktverantwortliche, jede Person einmal gezählt.",
+      "apiKeys": "Nicht widerrufene API-Schlüssel dieses Produkts, abgelaufene eingeschlossen.",
+      "records": "Datensätze in allen Sammlungen und Mandanten dieses Produkts.",
+      "audit24h": "Audit-Ereignisse dieses Produkts in den letzten 24 Stunden, erlaubte und abgelehnte.",
+      "denied24h": "Abgelehnte Anfragen der letzten 24 Stunden, etwa wegen einer fehlenden Berechtigung. Ein plötzlicher Anstieg deutet oft auf einen falsch eingerichteten API-Schlüssel oder eine falsche Rolle hin."
+    }
   },
   "actions": {
     "newTenant": "Neuer Mandant",
@@ -32,6 +41,10 @@
     "modules": "Module",
     "enabled": "aktiviert",
     "disabled": "nicht aktiviert",
-    "environment": "Umgebung"
+    "environment": "Umgebung",
+    "modeAbout": "Über den Modus",
+    "modeInfo": "Einzelprodukt: Der Server bedient genau ein Produkt, das er aus seiner Konfiguration anlegt; Produkte lassen sich nicht anlegen oder archivieren. Mehrere Produkte: Plattform-Administratoren legen Produkte an und archivieren sie. Den Modus legt der Betrieb in der Serverkonfiguration fest.",
+    "modulesAbout": "Über Module",
+    "modulesInfo": "Funktionsblöcke des Servers. Grüne Module sind aktiviert, graue nicht; ihre Einträge in der Seitenleiste zeigen „Aus“. Ein Modul kann nur der Serverbetrieb einschalten."
   }
 }

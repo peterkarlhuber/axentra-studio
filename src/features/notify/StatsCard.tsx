@@ -4,6 +4,7 @@ import { notifyApi } from '@/api/endpoints';
 import type { NotifyStatusCounts } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { Badge, Card, DetailList, ErrorState, Skeleton, Time, layout } from '@/components/ui';
+import { InfoTip } from '@/help/InfoTip';
 import { useFormatters } from '@/lib/format';
 import { MESSAGE_STATUSES } from './notify-utils';
 import styles from './notify.module.css';
@@ -65,7 +66,17 @@ export function StatsCard({ productId }: { productId: string }) {
               },
               { label: t('stats.attempts24h'), value: format.number(stats.data.attempts_24h) },
               {
-                label: t('stats.oldestQueued'),
+                label: (
+                  <span className={layout.tags}>
+                    {t('stats.oldestQueued')}
+                    <InfoTip
+                      label={t('info.oldestQueuedLabel')}
+                      topic="notifications#troubleshooting"
+                    >
+                      {t('info.oldestQueued')}
+                    </InfoTip>
+                  </span>
+                ),
                 value: stats.data.oldest_queued_at ? (
                   <Time value={stats.data.oldest_queued_at} />
                 ) : (

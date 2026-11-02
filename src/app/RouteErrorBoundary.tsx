@@ -19,6 +19,9 @@ export function RouteErrorBoundary() {
       <Button variant="primary" onClick={() => window.location.reload()}>
         {t('crash.reload')}
       </Button>
+      <p className={styles.body}>
+        <a href="/help/troubleshooting#something-went-wrong">{t('help:tip.learnMore')}</a>
+      </p>
     </div>
   );
 }

@@ -1,0 +1,65 @@
+{
+  "title": "Productos",
+  "description": "Los productos son aplicaciones aisladas en este servidor de Axentra, cada una con sus propios inquilinos, usuarios y claves.",
+  "descriptionSingle": "Este servidor funciona en modo de producto único, con exactamente un producto.",
+  "singleMode": {
+    "title": "Modo de producto único",
+    "body": "El servidor crea su único producto a partir de su configuración. En este modo no se pueden crear, archivar ni restaurar productos; para ejecutar varios productos, un operador debe establecer mode = \"multi\" en la configuración del servidor."
+  },
+  "openDashboard": "Abrir panel",
+  "openDashboardFor": "Abrir el panel de {{name}}",
+  "fields": {
+    "name": "Nombre",
+    "description": "Descripción",
+    "status": "Estado",
+    "id": "ID",
+    "slug": "Slug",
+    "created": "Creado",
+    "updated": "Actualizado",
+    "settings": "Configuración (JSON)"
+  },
+  "create": {
+    "open": "Nuevo producto",
+    "title": "Crear producto",
+    "description": "Un producto tiene sus propios inquilinos, usuarios, roles y claves de API.",
+    "submit": "Crear producto",
+    "success": "Producto “{{name}}” creado",
+    "slugHelp": "Identificador apto para URL, derivado del nombre. Debe ser único en este servidor.",
+    "slugInfo": "Letras minúsculas, dígitos y guiones (de 2 a 63 caracteres), empezando por una letra o un dígito. El slug aparece en las URL y en la configuración, y no se puede cambiar más adelante."
+  },
+  "empty": {
+    "title": "Aún no hay productos",
+    "body": "No eres miembro de ningún producto. Solicita acceso a un administrador de la plataforma.",
+    "bodyAdmin": "Crea el primer producto para empezar a administrar inquilinos y usuarios."
+  },
+  "tabs": {
+    "label": "Secciones del producto",
+    "details": "Detalles",
+    "settings": "Configuración",
+    "files": "Archivos",
+    "members": "Miembros"
+  },
+  "settings": {
+    "title": "Configuración del producto",
+    "description": "Los cambios se aplican de inmediato a todos los inquilinos de este producto.",
+    "readOnly": "Puedes ver esta configuración, pero no cambiarla.",
+    "jsonHelp": "Configuración específica del producto como objeto JSON.",
+    "invalidJson": "No es un JSON válido.",
+    "mustBeObject": "La configuración debe ser un objeto JSON, por ejemplo {\"key\": \"value\"}.",
+    "saved": "Producto guardado",
+    "jsonInfo": "El código de tu producto puede leer estos valores. Axentra usa algunas claves por sí mismo: invitation_accept_url (enlace en los correos de invitación), default_locale (idioma de reserva de las notificaciones) y storage (se define en la pestaña Archivos). Al guardar se reemplaza el objeto completo; puede tener hasta unos 32.000 caracteres."
+  },
+  "lifecycle": {
+    "archive": "Archivar",
+    "restore": "Restaurar",
+    "archiveTitle": "¿Archivar producto?",
+    "archiveBody": "“{{name}}” quedará oculto para sus operadores y los miembros de sus inquilinos, y sus claves de API dejarán de funcionar hasta que se restaure. Los administradores de la plataforma conservan el acceso. No se elimina ningún dato.",
+    "restoreTitle": "¿Restaurar producto?",
+    "restoreBody": "“{{name}}” vuelve a estar activo.",
+    "archiveSuccess": "Producto archivado",
+    "restoreSuccess": "Producto restaurado",
+    "archivedNotice": "Este producto está archivado: sus operadores, los miembros de sus inquilinos y sus claves de API no tienen acceso. Restáuralo para hacer cambios.",
+    "singleMode": "El servidor funciona en modo de producto único, por lo que este producto no se puede archivar. Puedes cambiar su nombre, descripción, configuración y miembros."
+  },
+  "membersDescription": "Operadores de este producto. Su rol se aplica en todos los inquilinos; los miembros de cada inquilino se gestionan en ese inquilino."
+}

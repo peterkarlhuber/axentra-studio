@@ -8,12 +8,38 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- All languages address the user informally (German now uses "du" throughout).
+- Many interface texts were reworded while writing the help: error messages say what happened,
+  why and what to do; empty states and confirmations name the consequence.
+- Focus returns to the element that opened the help panel; a URL fragment (`#section`) is no
+  longer overridden by the route focus on navigation.
+
 - Backend pin `api/BACKEND_REF` is axentra `2ff428c` (axentra #13 and #14). Users without an email
   address (external identity only, axentra migration `0007`) are shown by name or id in the user list,
   user detail, members panels, platform role and disable confirmations (the confirmation text is the
   user id then). The e2e notifier role includes `search:query`, which the backend's viewer role holds.
 
 ### Added
+
+- In-app help system. A help center at `/help` (public, also reachable when the API is down or
+  incompatible) with 39 articles in 13 chapters written against the real product: introduction,
+  getting started, every Studio area, developers, security, three tutorials, troubleshooting
+  (one entry per API error code), FAQ and reference (permissions, modules, keyboard, glossary,
+  limitations). Search over titles, keywords and sections with deep links, table of contents,
+  related topics, previous/next, copyable code examples, localized diagrams (architecture, role
+  hierarchy, job lifecycle, webhook delivery, key rotation) and stable `#anchor` links.
+  Contextual help: a help button in page headers opens the page's article in a side panel without
+  leaving the page, info tips (`FormField info`) explain fields with keyboard-operable toggletips,
+  error states link to their troubleshooting entry, and the sidebar, top bar and sign-in screens
+  link to the help center. Authoring rules in `docs/HELP_AUTHORING.md`; `npm run help:check`
+  (also in CI) verifies files, front matter, anchors, structure parity, links and topics used in
+  code.
+- Spanish, French, Brazilian Portuguese and Italian for the whole interface and the help, next
+  to English and German. Language menus name each language in its own language; any `pt` browser
+  language selects Brazilian Portuguese. Terminology is fixed in `docs/i18n/TERMINOLOGY.md`.
+  `npm run i18n:check` now compares every language with English (keys, placeholders, plural
+  categories per language), rejects formal address and reports values left in English unless
+  they are listed in `src/i18n/untranslated.json`.
 
 - Product-defined permissions (Axentra G-1, needs a backend with
   `GET /v1/products/{id}/permissions`): the role and API key editors load the product's catalog

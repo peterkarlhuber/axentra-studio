@@ -7,6 +7,7 @@ import type { FileInfo, StoragePolicy, TenantStorageUsage } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { uploadFile, type UploadProgress } from '@/api/upload';
 import { Alert, Button, Dialog, FormField, Input, Textarea, layout } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
 import { useFormatters } from '@/lib/format';
 import {
@@ -137,6 +138,8 @@ export function UploadDialog({
         <FormField
           label={t('upload.file')}
           required
+          info={t('upload.fileInfo')}
+          infoTopic="files#content-types"
           help={
             limits?.maxFileBytes !== undefined
               ? t('upload.maxSize', { size: bytes(limits.maxFileBytes) })
@@ -184,6 +187,8 @@ export function UploadDialog({
         <FormField
           label={t('upload.metadata')}
           help={t('upload.metadataHelp')}
+          info={t('upload.metadataInfo')}
+          infoTopic="files#labels"
           error={metadataError}
         >
           <Textarea
@@ -196,7 +201,12 @@ export function UploadDialog({
             placeholder='{"kind": "invoice"}'
           />
         </FormField>
-        <FormField label={t('upload.expires')} help={t('upload.expiresHelp')}>
+        <FormField
+          label={t('upload.expires')}
+          help={t('upload.expiresHelp')}
+          info={t('upload.expiresInfo')}
+          infoTopic="files#expiry"
+        >
           <Input
             type="datetime-local"
             value={expires}
@@ -230,7 +240,14 @@ function TypePolicy({
   policy: StoragePolicy | undefined;
 }) {
   const { t } = useTranslation('storage');
-  if (!limits && !policy) return <p className={layout.muted}>{t('upload.policyUnknown')}</p>;
+  if (!limits && !policy) {
+    return (
+      <p className={layout.muted}>
+        {t('upload.policyUnknown')}{' '}
+        <HelpLink topic="files#content-types">{t('upload.rulesLink')}</HelpLink>
+      </p>
+    );
+  }
   const allowed = policy?.allowed_content_types ?? limits?.allowedContentTypes ?? [];
   const inert = policy ? policy.blocked_types === 'store_inert' : limits?.storeBlockedAsInert;
   const extraBlocked = [
@@ -252,6 +269,9 @@ function TypePolicy({
       {extraBlocked.length > 0 ? (
         <li>{t('upload.extraBlocked', { items: extraBlocked.join(', ') })}</li>
       ) : null}
+      <li>
+        <HelpLink topic="files#content-types">{t('upload.rulesLink')}</HelpLink>
+      </li>
     </ul>
   );
 }
@@ -269,6 +289,11 @@ function UploadError({ error }: { error: ApiError }) {
       {error.detail ? (
         <p>
           {t('errors:serverMessage')}: {error.detail}
+        </p>
+      ) : null}
+      {specific ? (
+        <p>
+          <HelpLink topic="files#troubleshooting" />
         </p>
       ) : null}
       {described.requestId ? (

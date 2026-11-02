@@ -1,0 +1,122 @@
+en	pt-BR	note
+product	produto	
+tenant	tenant	kept in English (standard SaaS term in BR); masculine: o tenant, os tenants
+user	usuário	
+member	membro	
+membership	associação	
+invitation	convite	
+role	função	not 'papel'
+built-in role	função integrada	
+custom role	função personalizada	
+permission	permissão	
+scope	escopo	
+API key	chave de API	
+secret	segredo	
+signing secret	segredo de assinatura	
+grace period	período de carência	
+rotate	rotacionar	
+revoke	revogar	
+record	registro	
+collection	coleção	
+file	arquivo	never 'ficheiro'
+upload	enviar / envio	verb/noun
+download	baixar / download	verb 'baixar'; noun 'link de download'
+label (file metadata)	rótulo	
+metadata	metadados	
+storage	armazenamento	
+quota	cota	
+override	substituição	
+retention	retenção	
+purge	limpeza	
+inert attachment	anexo inerte	
+content type	tipo de conteúdo	
+job	job	kept in English; masculine
+worker	worker	kept
+handler	handler	kept (developer term)
+payload	payload	kept
+queue / enqueue	fila / enfileirar	
+schedule	agendamento	
+cron expression	expressão cron	
+event	evento	
+event type	tipo de evento	
+job kind	tipo	same word as event type
+webhook	webhook	kept
+endpoint	endpoint	kept
+delivery	entrega	
+redeliver	reenviar	
+stream	stream	kept
+live	ao vivo	
+idempotency key	chave de idempotência	
+usage	uso	
+meter	medidor	
+aggregation	agregação	
+reset period	período de redefinição	
+hard / soft limit	limite rígido / flexível	
+reservation	reserva	
+commit (reservation)	confirmar	
+release (reservation)	liberar	
+plan	plano	
+subscription	assinatura	
+subscribe	assinar	
+entitlement	direito	plural 'direitos'
+feature	recurso	
+trial	avaliação	'em avaliação' for trialing
+past due	em atraso	
+billing	cobrança	
+checkout	checkout	kept
+payment provider	provedor de pagamento	
+live payments	pagamentos reais	
+minor units	unidades menores	
+proration	cálculo proporcional	
+notification	notificação	
+template	modelo	
+mailbox	caixa de correio	
+outbox	caixa de saída	
+message log	log de mensagens	
+dispatcher	dispatcher	kept
+placeholder	placeholder	kept
+preview	pré-visualização	
+sensitive	sensível	
+suppressed	suprimida	
+opt out	cancelar o recebimento	
+audit log	log de auditoria	
+actor	autor	
+outcome	resultado	
+request	requisição	
+request ID	ID da requisição	
+redacted	censurado	
+health	integridade	
+system health	integridade do sistema	
+readiness	prontidão	
+liveness	atividade	
+monitoring	monitoramento	
+metrics	métricas	
+tracing	rastreamento	
+log	log	kept
+settings	configurações	
+configuration	configuração	
+preferences	preferências	
+module	módulo	
+enabled / disabled	habilitado / desabilitado	activate/deactivate → ativar/desativar
+platform admin	administrador da plataforma	
+platform viewer	leitor da plataforma	
+owner	proprietário	
+operator	operador	
+suspend	suspender	
+reactivate	reativar	
+archive	arquivar	
+restore	restaurar	
+delete	excluir	not 'apagar' / 'deletar'
+remove	remover	
+sign in / sign out	entrar / sair	noun: login
+single sign-on	login único (SSO)	
+session	sessão	
+dashboard	painel	
+overview	visão geral	
+status	status	standard in pt-BR
+slug	slug	kept
+backend	backend	kept
+bearer token	bearer token	kept
+token	token	kept
+tab	guia	
+Axentra / Axentra Studio / Stripe / Prometheus / OpenTelemetry	(unchanged)	product names

@@ -17,6 +17,7 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
 import { isIdempotencyConflict } from '@/api/errors';
 import { TenantPicker } from '@/features/shared/TenantPicker';
@@ -142,7 +143,12 @@ export function SendTestDialog({
       onOpenChange={(open) => (open ? undefined : onClose())}
       size="lg"
       title={t('send.title', { name: template.name || template.key })}
-      description={t('send.description')}
+      description={
+        <>
+          {t('send.description')}{' '}
+          <HelpLink topic="notifications#send-test">{t('common:help.learnMore')}</HelpLink>
+        </>
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>

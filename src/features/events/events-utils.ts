@@ -47,6 +47,16 @@ export function kindProblem(kind: string): 'invalid' | 'reserved' | null {
   return null;
 }
 
+/** Event types: `^[a-z][a-z0-9_.:-]{0,149}$` (longer than job kinds); `axentra.` is reserved. */
+export const EVENT_TYPE_PATTERN = /^[a-z][a-z0-9_.:-]{0,149}$/;
+export function eventTypeProblem(type: string): 'invalid' | 'reserved' | null {
+  const value = type.trim();
+  if (!value) return null;
+  if (!EVENT_TYPE_PATTERN.test(value)) return 'invalid';
+  if (value.startsWith('axentra.')) return 'reserved';
+  return null;
+}
+
 /** Parse a JSON object from a textarea; empty text is `{}`. */
 export function parseJsonObject(
   text: string,

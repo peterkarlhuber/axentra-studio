@@ -21,3 +21,9 @@
   color: var(--ax-color-danger);
   font-weight: var(--ax-weight-medium);
 }
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-1);
+  min-width: 0;
+}

@@ -158,3 +158,21 @@
   color: var(--ax-color-text-muted);
   overflow-wrap: anywhere;
 }
+.helpButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: var(--ax-radius-full);
+  color: var(--ax-color-text-muted);
+}
+.helpButton:hover {
+  background: var(--ax-color-surface-2);
+  color: var(--ax-color-text);
+}
+.helpButton svg {
+  width: 20px;
+  height: 20px;
+}

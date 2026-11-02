@@ -1,0 +1,50 @@
+{
+  "title": "Tableau de bord",
+  "description": "Vue d’ensemble de ce produit.",
+  "overview": "Vue d’ensemble",
+  "noStats": "Le serveur n’a signalé aucun compteur pour ce produit.",
+  "stats": {
+    "tenants": "Locataires",
+    "users": "Utilisateurs",
+    "apiKeys": "Clés d’API",
+    "audit24h": "Événements d’audit (24 h)",
+    "records": "Enregistrements",
+    "denied24h": "Requêtes refusées (24 h)",
+    "about": "À propos de « {{label}} »",
+    "hints": {
+      "tenants": "Tous les locataires de ce produit, actifs et suspendus.",
+      "users": "Les personnes qui ont accès à ce produit : membres de ses locataires et opérateurs du produit, chacune comptée une seule fois.",
+      "apiKeys": "Les clés de ce produit qui ne sont pas révoquées. Les clés expirées sont incluses.",
+      "records": "Les enregistrements de toutes les collections et de tous les locataires de ce produit.",
+      "audit24h": "Les événements d’audit de ce produit des dernières 24 heures, autorisés et refusés.",
+      "denied24h": "Les requêtes des dernières 24 heures qui ont été refusées, par exemple parce qu’il manquait une autorisation. Une hausse soudaine indique souvent une clé d’API ou un rôle mal configuré."
+    }
+  },
+  "actions": {
+    "newTenant": "Nouveau locataire",
+    "newApiKey": "Nouvelle clé d’API"
+  },
+  "health": {
+    "title": "État du système",
+    "details": "Détails"
+  },
+  "server": {
+    "title": "Serveur",
+    "name": "Version du serveur",
+    "api": "Version de l’API",
+    "mode": "Mode",
+    "modes": {
+      "single": "Produit unique",
+      "multi": "Multiproduit"
+    },
+    "productId": "ID du produit",
+    "modules": "Modules",
+    "enabled": "activé",
+    "disabled": "non activé",
+    "environment": "Environnement",
+    "modeAbout": "À propos du mode",
+    "modeInfo": "Produit unique : le serveur sert exactement un produit, créé à partir de sa configuration ; impossible de créer ou d’archiver des produits. Multiproduit : les administrateurs de la plateforme créent et archivent les produits. L’opérateur définit le mode dans la configuration du serveur.",
+    "modulesAbout": "À propos des modules",
+    "modulesInfo": "Les blocs fonctionnels du serveur. Les modules verts sont activés ; les gris ne le sont pas, et leurs entrées dans la barre latérale affichent « Désactivé ». Seul l’opérateur du serveur peut activer un module."
+  }
+}

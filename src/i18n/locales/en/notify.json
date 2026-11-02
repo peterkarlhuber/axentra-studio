@@ -206,5 +206,14 @@
     "saved": "Preferences saved.",
     "empty": "No categories yet",
     "emptyBody": "Categories appear once the product has templates."
+  },
+  "info": {
+    "category": "2–41 lowercase letters, digits or “_”. A category appears in recipients’ preferences as soon as a template uses it.",
+    "html": "A value inserted into a link (href) controls where the link points. Keep links in the template or build them in your backend.",
+    "statusLabel": "About message statuses",
+    "status": "Queued: waiting for the dispatcher. Sending: being delivered. Sent: accepted by the provider. Failed: permanent error or all attempts used. Suppressed: the recipient opted out or has no email address.",
+    "oldestQueuedLabel": "About queued messages",
+    "oldestQueued": "A separate dispatcher process delivers the messages. If this time keeps growing, no dispatcher is running.",
+    "scope": "Categories turned off for the whole product stay off in every tenant. A tenant setting can only turn off more categories."
   }
 }

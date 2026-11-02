@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { metaApi } from '@/api/endpoints';
 import { queryKeys } from '@/api/queryKeys';
 import { ErrorState, Skeleton, StatusPill, layout } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { useFormatters } from '@/lib/format';
 import { healthChecks } from './health-utils';
 import styles from './system.module.css';
@@ -49,7 +50,12 @@ export function HealthSummary({ compact = false }: { compact?: boolean }) {
           })}
         </span>
       </div>
-      {query.data.status !== 'ok' ? <p className={layout.muted}>{t('health.notReady')}</p> : null}
+      {query.data.status !== 'ok' ? (
+        <p className={layout.muted}>
+          {t('health.notReady')}{' '}
+          <HelpLink topic="health-monitoring#troubleshooting">{t('health.notReadyLink')}</HelpLink>
+        </p>
+      ) : null}
       {checks.length > 0 ? (
         <ul className={styles.checks}>
           {(compact ? checks.slice(0, 8) : checks).map((check) => (

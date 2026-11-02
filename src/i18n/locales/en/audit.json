@@ -1,6 +1,6 @@
 {
   "title": "Audit log",
-  "description": "Who did what, when – recorded for every change on the server.",
+  "description": "Who did what, and when: sign-ins, access changes and other administrative actions on the server.",
   "openDetails": "Show details for {{action}}",
   "fields": {
     "id": "Event ID",
@@ -45,5 +45,16 @@
     "details": "Details",
     "noDetails": "This event has no additional details.",
     "notFound": "The full event could not be loaded: it no longer exists or you may not read it. The values from the list are shown."
+  },
+  "info": {
+    "search": "Matches part of the action, the target ID, the actor's name or the actor ID, ignoring case. Request IDs are not searched.",
+    "productAdmin": "“All products” also includes installation-wide events that belong to no product, such as sign-ins.",
+    "productScoped": "You see events of products where you may read the audit log (audit:read). Installation-wide events, such as sign-ins, need the platform permission platform:audit.",
+    "action": "The exact action name, such as tenancy.tenant.create. End it with * to match every action that starts with it, such as tenancy.*.",
+    "range": "In your local time. “From” includes that moment, “Until” does not.",
+    "outcomeLabel": "About outcomes",
+    "outcome": "Success: carried out. Denied: refused by the server, for example a wrong password. Failure: attempted but did not succeed.",
+    "requestIdLabel": "About the request ID",
+    "requestId": "Identifies the HTTP request that caused this event. Error messages and the server logs show the same ID."
   }
 }

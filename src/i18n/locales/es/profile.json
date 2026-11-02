@@ -1,0 +1,42 @@
+{
+  "title": "Perfil",
+  "description": "Tu cuenta, contraseña y sesiones.",
+  "account": {
+    "title": "Cuenta",
+    "email": "Correo electrónico",
+    "id": "ID de usuario",
+    "platformRole": "Rol de plataforma",
+    "noPlatformRole": "Ninguno",
+    "products": "Productos",
+    "noProducts": "Sin membresías de producto"
+  },
+  "name": {
+    "title": "Nombre visible",
+    "label": "Nombre",
+    "saved": "Nombre guardado",
+    "info": "Se muestra en el menú de usuario, en las listas de miembros y como actor de tus acciones en el registro de auditoría. Los eventos de auditoría anteriores conservan el nombre antiguo."
+  },
+  "password": {
+    "title": "Cambiar contraseña",
+    "description": "Al cambiar la contraseña se cierran todas tus demás sesiones. Este navegador sigue con la sesión iniciada.",
+    "current": "Contraseña actual",
+    "new": "Nueva contraseña",
+    "confirm": "Repetir nueva contraseña",
+    "mismatch": "Las nuevas contraseñas no coinciden.",
+    "submit": "Cambiar contraseña",
+    "changed": "Contraseña cambiada",
+    "setTitle": "Establecer una contraseña",
+    "setDescription": "Actualmente solo inicias sesión mediante inicio de sesión único. Una contraseña habilita también el inicio de sesión con contraseña. Por tu seguridad, esto requiere un inicio de sesión reciente.",
+    "reauth": "Volver a iniciar sesión",
+    "reauthBody": "Solo se permite establecer una primera contraseña poco después de iniciar sesión. Vuelve a iniciar sesión (regresarás aquí) y establece la contraseña en unos minutos.",
+    "rules": "Al menos la longitud mínima del servidor (12 caracteres salvo que el operador la haya cambiado), distinta de tu dirección de correo electrónico y con al menos 4 caracteres diferentes.",
+    "setSubmit": "Establecer contraseña"
+  },
+  "sessions": {
+    "title": "Tus sesiones",
+    "description": "Navegadores y dispositivos en los que tienes la sesión iniciada.",
+    "revoked": "Sesión revocada",
+    "revokeOthers": "Cerrar todas las demás sesiones",
+    "othersRevoked": "Se cerraron todas las demás sesiones"
+  }
+}

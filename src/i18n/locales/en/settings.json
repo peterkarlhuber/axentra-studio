@@ -8,11 +8,15 @@
     "languageHelp": "Used for the Studio interface.",
     "theme": "Theme",
     "saving": "Saving…",
-    "storedHint": "Changes apply immediately."
+    "storedHint": "Changes apply immediately.",
+    "languageInfo": "Also sets date, time and number formats. Your choice is saved in this browser and in your account; a browser without a choice of its own takes the one from your account when you sign in."
   },
   "server": {
     "title": "Server configuration",
     "description": "Effective, non-secret configuration of this Axentra server (read-only).",
-    "empty": "The server returned no settings."
+    "empty": "The server returned no settings.",
+    "forbidden": "The server configuration is shown to platform administrators and to product owners and admins only.",
+    "changeHint": "These values are set by the operator in the server configuration and cannot be changed here.",
+    "changeLink": "How to change them"
   }
 }

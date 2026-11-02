@@ -1,15 +1,18 @@
 {
   "title": "Datensätze",
-  "description": "Durchsuchen Sie die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
+  "description": "Durchsuche die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
   "collections": {
     "title": "Sammlungen",
     "empty": "Keine Sammlungen",
     "emptyBody": "Sammlungen erscheinen, sobald Datensätze über die API geschrieben werden.",
-    "stats": "{{records}} Datensätze in {{tenants}} Mandanten"
+    "stats": "{{records}} Datensätze in {{tenants}} Mandanten",
+    "noList": "Die Liste aller Sammlungen erfordert eine Produktrolle. Gib den Namen einer Sammlung ein, um sie zu öffnen.",
+    "openLabel": "Name der Sammlung",
+    "open": "Öffnen"
   },
   "pick": {
     "title": "Mandant und Sammlung auswählen",
-    "body": "Datensätze gehören immer zu einem Mandanten. Wählen Sie beides aus, um sie anzusehen."
+    "body": "Datensätze gehören immer zu einem Mandanten. Wähle beides aus, um sie anzusehen."
   },
   "listDescription": "Neueste zuerst. Datensätze passen, wenn sie alle Filter enthalten.",
   "tableCaption": "Datensätze in {{collection}}",
@@ -33,32 +36,36 @@
     "add": "Filter hinzufügen",
     "active": "Aktive Filter",
     "remove": "Filter auf {{field}} entfernen",
-    "valueHelp": "JSON-Werte (true, 42, null) werden typgenau verglichen, anderer Text als Zeichenkette."
+    "valueHelp": "JSON-Werte (true, 42, null) werden typgenau verglichen, anderer Text als Zeichenkette.",
+    "valueInfo": "Ein Datensatz passt, wenn er diesen Wert enthält. Ein Objektwert wie {\"city\": \"Graz\"} passt auf Datensätze, deren Feld diese Schlüssel enthält; so filterst du verschachtelte Felder."
   },
   "record": {
     "title": "Datensatz"
   },
-  "descriptionWrite": "Durchsuchen, anlegen, ändern und löschen Sie die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
+  "descriptionWrite": "Durchsuche, lege an, ändere und lösche die JSON-Datensätze, die Mandanten in Sammlungen speichern.",
   "write": {
     "create": "Neuer Datensatz",
     "createTitle": "Neuer Datensatz",
-    "createDescription": "Speichern Sie ein JSON-Objekt in einer Sammlung des ausgewählten Mandanten. Ein neuer Sammlungsname legt die Sammlung an.",
+    "createDescription": "Speichere ein JSON-Objekt in einer Sammlung des ausgewählten Mandanten. Ein neuer Sammlungsname legt die Sammlung an.",
     "createSubmit": "Datensatz anlegen",
     "editTitle": "Datensatz bearbeiten",
     "edit": "Bearbeiten",
     "delete": "Datensatz löschen",
     "collectionHelp": "Kleinbuchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben.",
-    "collectionInvalid": "Verwenden Sie Kleinbuchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
+    "collectionInvalid": "Verwende Kleinbuchstaben, Ziffern und Unterstriche, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
     "dataHelp": "Ein JSON-Objekt, höchstens 256 KiB. Speichern ersetzt das ganze Objekt.",
     "dataError": {
       "json": "Das ist kein gültiges JSON.",
       "object": "Datensatzdaten müssen ein JSON-Objekt sein."
     },
-    "versionNote": "Sie bearbeiten Version {{version}}. Hat jemand anderes den Datensatz inzwischen geändert, wird das Speichern abgelehnt.",
+    "versionNote": "Du bearbeitest Version {{version}}. Hat jemand anderes den Datensatz inzwischen geändert, wird das Speichern abgelehnt.",
     "created": "Datensatz {{id}} angelegt",
     "updated": "Datensatz {{id}} gespeichert",
     "deleted": "Datensatz {{id}} gelöscht",
     "deleteTitle": "Datensatz löschen?",
-    "deleteBody": "Datensatz {{id}} wird endgültig gelöscht. Das lässt sich nicht rückgängig machen."
+    "deleteBody": "Datensatz {{id}} wird endgültig gelöscht. Das lässt sich nicht rückgängig machen.",
+    "collectionInfo": "Sammlungen brauchen keine Einrichtung: Der erste Datensatz legt sie an, das Löschen ihres letzten Datensatzes entfernt sie. Ein Datensatz lässt sich später nicht in eine andere Sammlung verschieben.",
+    "dataInfo": "Speichern ersetzt das ganze Objekt: Felder, die du entfernst, werden gelöscht. ID, Version und Zeitstempel setzt der Server; nimm sie nicht in die Daten auf.",
+    "conflictLink": "Was, wenn jemand anderes ihn ändert?"
   }
 }

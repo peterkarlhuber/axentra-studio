@@ -19,6 +19,7 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { fieldErrors } from '@/lib/errors';
 import { parseList } from './storage-utils';
 import styles from './storage.module.css';
@@ -116,12 +117,15 @@ function PolicyForm({
     <Card
       title={t('policy.title')}
       description={canEdit ? t('policy.description') : t('policy.readOnly')}
+      actions={<HelpLink topic="data-overview#content-type-policy" />}
     >
       <form className={layout.form} onSubmit={submit} aria-label={t('policy.title')}>
         <FormField
           label={t('policy.mode')}
           help={`${t('policy.modeHelp')} ${t(`policy.source.${policy.blocked_types_source}`)}.`}
           error={fields.blocked_types}
+          info={t('policy.modeInfo')}
+          infoTopic="files#inert"
         >
           <Select
             value={mode}
@@ -139,6 +143,7 @@ function PolicyForm({
           label={t('policy.inertExtensions')}
           help={t('policy.inertExtensionsHelp')}
           error={fields.inert_extensions}
+          info={t('policy.inertExtensionsInfo')}
         >
           <Input
             value={inertExtensions}
@@ -153,6 +158,7 @@ function PolicyForm({
             label={t('policy.blockedExtensions')}
             help={t('policy.blockedExtensionsHelp')}
             error={fields.blocked_extensions}
+            info={t('policy.blockedInfo')}
           >
             <Input
               value={blockedExtensions}
@@ -166,6 +172,7 @@ function PolicyForm({
             label={t('policy.blockedContentTypes')}
             help={t('policy.blockedContentTypesHelp')}
             error={fields.blocked_content_types}
+            info={t('policy.blockedInfo')}
           >
             <Input
               value={blockedTypes}

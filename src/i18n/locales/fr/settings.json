@@ -1,0 +1,22 @@
+{
+  "title": "Paramètres",
+  "description": "Tes préférences personnelles et la configuration effective du serveur.",
+  "preferences": {
+    "title": "Préférences",
+    "description": "Enregistrées dans ce navigateur et dans ton compte.",
+    "language": "Langue",
+    "languageHelp": "Utilisée pour l’interface du Studio.",
+    "theme": "Thème",
+    "saving": "Enregistrement…",
+    "storedHint": "Les modifications s’appliquent immédiatement.",
+    "languageInfo": "Définit aussi les formats de date, d’heure et de nombre. Ton choix est enregistré dans ce navigateur et dans ton compte ; un navigateur sans choix propre reprend celui de ton compte lorsque tu te connectes."
+  },
+  "server": {
+    "title": "Configuration du serveur",
+    "description": "Configuration effective et non secrète de ce serveur Axentra (lecture seule).",
+    "empty": "Le serveur n’a renvoyé aucun paramètre.",
+    "forbidden": "La configuration du serveur n’est visible que par les administrateurs de la plateforme ainsi que par les propriétaires et administrateurs des produits.",
+    "changeHint": "Ces valeurs sont définies par l’opérateur dans la configuration du serveur et ne peuvent pas être modifiées ici.",
+    "changeLink": "Comment les modifier"
+  }
+}

@@ -26,6 +26,7 @@ import {
   type Column,
 } from '@/components/ui';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { InfoTip } from '@/help/InfoTip';
 import { useCursorList } from '@/lib/useCursorList';
 import { MESSAGE_STATUSES, messageTone } from './notify-utils';
 import { RenderedView } from './RenderedView';
@@ -106,7 +107,14 @@ export function MessagesPanel({ productId }: { productId: string }) {
     },
     {
       id: 'status',
-      header: t('fields.status'),
+      header: (
+        <span className={layout.tags}>
+          {t('fields.status')}
+          <InfoTip label={t('info.statusLabel')} topic="notifications#message-log">
+            {t('info.status')}
+          </InfoTip>
+        </span>
+      ),
       cell: (message) => (
         <Badge tone={messageTone(message.status)}>{t(`status.${message.status}`)}</Badge>
       ),

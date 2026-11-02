@@ -23,6 +23,8 @@ import {
 } from '@/components/ui';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { formatBytes, numberSetting, storageLimits, usagePercent } from './storage-utils';
 import styles from './storage.module.css';
 
@@ -37,14 +39,23 @@ export function DataOverviewPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('overview.title')} description={t('overview.description')} />
+      <PageHeader
+        title={t('overview.title')}
+        description={t('overview.description')}
+        help="data-overview"
+      />
       {!canStats ? (
         <Card>
           <EmptyState
             headingLevel={2}
             icon={<Lock />}
             title={t('overview.noAccessTitle')}
-            description={t('overview.noAccessBody')}
+            description={
+              <>
+                <p>{t('overview.noAccessBody')}</p>
+                <HelpLink topic="data-overview#what-you-see" />
+              </>
+            }
           />
         </Card>
       ) : (
@@ -59,7 +70,12 @@ export function DataOverviewPage() {
                 headingLevel={3}
                 icon={<HardDrive />}
                 title={t('overview.storageOffTitle')}
-                description={t('overview.storageOffBody')}
+                description={
+                  <>
+                    <p>{t('overview.storageOffBody')}</p>
+                    <HelpLink topic="data-overview#troubleshooting" />
+                  </>
+                }
               />
             </Card>
           )}
@@ -237,13 +253,27 @@ function ProductStorageCard({ productId }: { productId: string }) {
     },
     {
       id: 'quotaBytes',
-      header: t('overview.quotaBytes'),
+      header: (
+        <>
+          {t('overview.quotaBytes')}{' '}
+          <InfoTip label={t('overview.quotaInfoLabel')} topic="data-overview#quotas">
+            {t('overview.quotaInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (row) => quotaCell(row.bytes_used, row.quota_bytes, row.quota_bytes_override, bytes),
     },
     {
       id: 'quotaFiles',
-      header: t('overview.quotaFiles'),
+      header: (
+        <>
+          {t('overview.quotaFiles')}{' '}
+          <InfoTip label={t('overview.quotaInfoLabel')} topic="data-overview#quotas">
+            {t('overview.quotaInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (row) =>
         quotaCell(row.files_used, row.quota_files, row.quota_files_override, format.number),
@@ -353,7 +383,11 @@ function ConfigurationCards({
   return (
     <div className={layout.grid2}>
       {storageEnabled && limits ? (
-        <Card title={t('overview.configTitle')} description={t('overview.configBody')}>
+        <Card
+          title={t('overview.configTitle')}
+          description={t('overview.configBody')}
+          actions={<HelpLink topic="data-overview#storage-configuration" />}
+        >
           <DetailList
             items={[
               { label: t('overview.backend'), value: limits.backend, mono: true },
@@ -400,7 +434,11 @@ function ConfigurationCards({
           />
         </Card>
       )}
-      <Card title={t('overview.retentionTitle')} description={t('overview.retentionBody')}>
+      <Card
+        title={t('overview.retentionTitle')}
+        description={t('overview.retentionBody')}
+        actions={<HelpLink topic="data-overview#retention" />}
+      >
         <DetailList
           items={[
             { label: t('overview.auditRetention'), value: days(auditDays) },

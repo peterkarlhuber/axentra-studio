@@ -1,0 +1,71 @@
+{
+  "title": "Enregistrements",
+  "description": "Parcours les enregistrements JSON que les locataires stockent dans des collections.",
+  "collections": {
+    "title": "Collections",
+    "empty": "Aucune collection",
+    "emptyBody": "Les collections apparaissent dès que des enregistrements sont écrits via l’API.",
+    "stats": "{{records}} enregistrements dans {{tenants}} locataires",
+    "noList": "Pour lister toutes les collections, il faut un rôle de produit. Saisis le nom d’une collection pour l’ouvrir.",
+    "openLabel": "Nom de la collection",
+    "open": "Ouvrir"
+  },
+  "pick": {
+    "title": "Choisis un locataire et une collection",
+    "body": "Un enregistrement appartient toujours à un locataire. Choisis les deux pour les parcourir."
+  },
+  "listDescription": "Les plus récents d’abord. Un enregistrement correspond s’il satisfait tous les filtres.",
+  "tableCaption": "Enregistrements de {{collection}}",
+  "empty": "Aucun enregistrement correspondant",
+  "viewRecord": "Afficher l’enregistrement {{id}}",
+  "fields": {
+    "id": "ID",
+    "data": "Données",
+    "version": "Version",
+    "created": "Créé le",
+    "updated": "Modifié le",
+    "collection": "Collection",
+    "tenant": "Locataire",
+    "createdBy": "Créé par",
+    "updatedBy": "Modifié par"
+  },
+  "filter": {
+    "label": "Filtrer les enregistrements",
+    "field": "Champ",
+    "value": "Égal à",
+    "add": "Ajouter un filtre",
+    "active": "Filtres actifs",
+    "remove": "Supprimer le filtre sur {{field}}",
+    "valueHelp": "Les valeurs JSON (true, 42, null) sont comparées avec leur type ; tout autre texte est comparé comme chaîne.",
+    "valueInfo": "Un enregistrement correspond s’il contient cette valeur. Une valeur objet comme {\"city\": \"Graz\"} correspond aux enregistrements dont le champ contient ces clés ; utilise-la pour filtrer des champs imbriqués."
+  },
+  "record": {
+    "title": "Enregistrement"
+  },
+  "descriptionWrite": "Parcours, crée, modifie et supprime les enregistrements JSON que les locataires stockent dans des collections.",
+  "write": {
+    "create": "Nouvel enregistrement",
+    "createTitle": "Nouvel enregistrement",
+    "createDescription": "Stocke un objet JSON dans une collection du locataire sélectionné. Un nouveau nom de collection crée la collection.",
+    "createSubmit": "Créer l’enregistrement",
+    "editTitle": "Modifier l’enregistrement",
+    "edit": "Modifier",
+    "delete": "Supprimer l’enregistrement",
+    "collectionHelp": "Lettres minuscules, chiffres et tirets bas, en commençant par une lettre.",
+    "collectionInvalid": "Utilise des lettres minuscules, des chiffres et des tirets bas, en commençant par une lettre (63 caractères au maximum).",
+    "dataHelp": "Un objet JSON de 256 Kio au maximum. L’enregistrement remplace l’objet entier.",
+    "dataError": {
+      "json": "Ce JSON n’est pas valide.",
+      "object": "Les données de l’enregistrement doivent être un objet JSON."
+    },
+    "versionNote": "Modification de la version {{version}}. Si quelqu’un d’autre a modifié l’enregistrement entre-temps, l’enregistrement des modifications sera refusé.",
+    "created": "Enregistrement {{id}} créé",
+    "updated": "Enregistrement {{id}} sauvegardé",
+    "deleted": "Enregistrement {{id}} supprimé",
+    "deleteTitle": "Supprimer l’enregistrement ?",
+    "deleteBody": "L’enregistrement {{id}} sera supprimé définitivement. Cette action est irréversible.",
+    "collectionInfo": "Les collections ne demandent aucune configuration : le premier enregistrement en crée une, et la suppression de son dernier enregistrement la supprime. Un enregistrement ne peut plus être déplacé vers une autre collection par la suite.",
+    "dataInfo": "L’enregistrement remplace l’objet entier : les champs que tu retires sont supprimés. L’ID, la version et les horodatages sont définis par le serveur ; ne les inclus pas.",
+    "conflictLink": "Et si quelqu’un d’autre le modifie ?"
+  }
+}

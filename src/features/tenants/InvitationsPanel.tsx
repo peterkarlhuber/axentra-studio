@@ -22,6 +22,8 @@ import {
   type Column,
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { InvitationSecret } from '@/features/shared/InvitationSecret';
 import { ProblemAlert } from '@/features/shared/ProblemAlert';
 import { RoleSelect } from '@/features/shared/RoleSelect';
@@ -95,7 +97,14 @@ export function InvitationsPanel({
     },
     {
       id: 'expires',
-      header: t('invitations.expires'),
+      header: (
+        <>
+          {t('invitations.expires')}{' '}
+          <InfoTip label={t('invitations.expiresAbout')} topic="members-invitations#expiry">
+            {t('invitations.expiresInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (inv) => <Time value={inv.expires_at} />,
     },
@@ -145,7 +154,14 @@ export function InvitationsPanel({
         open={open}
         onOpenChange={close}
         title={created ? t('invitations.createdTitle') : t('invitations.invite')}
-        description={created ? undefined : t('invitations.inviteDescription')}
+        description={
+          created ? undefined : (
+            <>
+              {t('invitations.inviteDescription')}{' '}
+              <HelpLink topic="members-invitations#delivery">{t('common:help.learnMore')}</HelpLink>
+            </>
+          )
+        }
         footer={
           created ? (
             <Button variant="primary" onClick={() => close(false)}>
@@ -173,7 +189,13 @@ export function InvitationsPanel({
           <InvitationSecret invitation={created} />
         ) : (
           <form id="invite-form" className={layout.form} onSubmit={submit}>
-            <FormField label={t('invitations.email')} error={fields.email} required>
+            <FormField
+              label={t('invitations.email')}
+              info={t('invitations.emailInfo')}
+              infoTopic="members-invitations#accept"
+              error={fields.email}
+              required
+            >
               <Input
                 type="email"
                 value={email}

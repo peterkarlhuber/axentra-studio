@@ -24,6 +24,7 @@ import { fieldErrors } from '@/lib/errors';
 import { useCursorList } from '@/lib/useCursorList';
 import { SecretRevealDialog } from '@/features/access/SecretRevealDialog';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { HelpLink } from '@/help/HelpLink';
 import { webhookFormInvalid, type WebhookFormValues } from './events-utils';
 import { TypeList, WebhookFields } from './WebhookFields';
 import { FormError } from './shared';
@@ -105,6 +106,7 @@ export function WebhooksPage() {
       <PageHeader
         title={t('webhooks.title')}
         description={t('webhooks.description')}
+        help="webhooks"
         actions={
           canManage ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -125,6 +127,9 @@ export function WebhooksPage() {
               icon={<Webhook />}
               title={t('webhooks.empty')}
               description={canManage ? t('webhooks.emptyBody') : undefined}
+              action={
+                <HelpLink topic="tutorial-webhook-receiver">{t('webhooks.emptyTutorial')}</HelpLink>
+              }
             />
           }
           {...tableProps}
@@ -153,6 +158,11 @@ export function WebhooksPage() {
         }}
       >
         <p className={layout.muted}>{t('webhooks.secretUsage')}</p>
+        <p>
+          <HelpLink topic="tutorial-webhook-receiver#verify-signature">
+            {t('webhooks.secretHowTo')}
+          </HelpLink>
+        </p>
       </SecretRevealDialog>
     </div>
   );

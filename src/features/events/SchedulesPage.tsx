@@ -35,6 +35,8 @@ import {
 import { fieldErrors } from '@/lib/errors';
 import { useCursorList } from '@/lib/useCursorList';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import menuStyles from '@/components/ui/IconButton.module.css';
 import { CRON_PRESETS, cronProblemText, validateCron } from './cron';
 import {
@@ -108,7 +110,14 @@ export function SchedulesPage() {
     },
     {
       id: 'timing',
-      header: t('schedules.timing'),
+      header: (
+        <>
+          {t('schedules.timing')}{' '}
+          <InfoTip label={t('schedules.timingInfoLabel')} topic="schedules#timezone">
+            {t('schedules.timingInfo')}
+          </InfoTip>
+        </>
+      ),
       cell: (schedule) => <Timing schedule={schedule} />,
     },
     {
@@ -193,6 +202,7 @@ export function SchedulesPage() {
       <PageHeader
         title={t('schedules.title')}
         description={t('schedules.description')}
+        help="schedules"
         actions={
           canManage ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -213,6 +223,7 @@ export function SchedulesPage() {
               icon={<CalendarClock />}
               title={t('schedules.empty')}
               description={canManage ? t('schedules.emptyBody') : undefined}
+              action={<HelpLink topic="schedules">{t('common:help.learnMore')}</HelpLink>}
             />
           }
           {...tableProps}
@@ -436,6 +447,8 @@ function ScheduleFormDialog({
             <div className={layout.row}>
               <FormField
                 label={t('schedules.intervalAmount')}
+                info={t('schedules.intervalInfo')}
+                infoTopic="schedules#interval"
                 error={
                   intervalIssue
                     ? t('validation.interval', {
@@ -471,6 +484,8 @@ function ScheduleFormDialog({
               <FormField
                 label={t('schedules.cron')}
                 help={t('schedules.cronHelp')}
+                info={t('schedules.cronInfo')}
+                infoTopic="schedules#cron-syntax"
                 error={
                   cronIssue && (touchedCron || cron.trim())
                     ? cronProblemText(t, cronIssue)
@@ -552,7 +567,13 @@ function ScheduleFormDialog({
               onChange={(event) => setPriority(event.target.value)}
             />
           </FormField>
-          <FormField label={t('jobs.maxAttempts')} error={fields.max_attempts}>
+          <FormField
+            label={t('jobs.maxAttempts')}
+            help={t('schedules.maxAttemptsHelp')}
+            info={t('jobs.maxAttemptsInfo')}
+            infoTopic="jobs#retries"
+            error={fields.max_attempts}
+          >
             <Input
               type="number"
               min={1}

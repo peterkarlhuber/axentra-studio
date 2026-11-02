@@ -25,13 +25,16 @@
     "title": "System health",
     "description": "Readiness and liveness of the Axentra server and its dependencies.",
     "readiness": "Readiness",
-    "readinessHelp": "GET /v1/health/ready – checks the server's dependencies.",
+    "readinessHelp": "Whether the server can serve requests: each dependency is checked (GET /v1/health/ready).",
     "liveness": "Liveness",
-    "livenessHelp": "GET /v1/health/live – the server process responds.",
+    "livenessHelp": "Whether the server process answers at all (GET /v1/health/live).",
     "versions": "Versions",
     "notReady": "The server reports that it is not ready to serve requests.",
     "noChecks": "The server did not report individual checks.",
-    "updated": "Updated {{time}}"
+    "updated": "Updated {{time}}",
+    "notReadyLink": "What to do",
+    "compatLabel": "About the version check",
+    "compatInfo": "Studio starts only when the server has the same API major version and at least this minor version. A newer minor version on the server is fine."
   },
   "notFound": {
     "title": "Page not found",

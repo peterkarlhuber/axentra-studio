@@ -4,6 +4,7 @@ import { settingsApi } from '@/api/endpoints';
 import { isApiError } from '@/api/errors';
 import { queryKeys } from '@/api/queryKeys';
 import { Badge, Card, DetailList, ErrorState, Skeleton, layout } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import styles from './monitoring.module.css';
 
 const KNOWN_OBSERVABILITY = [
@@ -46,7 +47,10 @@ export function OperationsPanel() {
     return (
       <Card title={t('ops.title')}>
         {isApiError(settings.error) && settings.error.isForbidden ? (
-          <p className={layout.muted}>{t('ops.forbidden')}</p>
+          <p className={layout.muted}>
+            {t('ops.forbidden')}{' '}
+            <HelpLink topic="health-monitoring#retention">{t('common:help.learnMore')}</HelpLink>
+          </p>
         ) : (
           <ErrorState
             error={settings.error}
@@ -90,7 +94,8 @@ export function OperationsPanel() {
           ]}
         />
         <p className={styles.note}>
-          {t('ops.purgeHint')} <code>axentra maintenance purge</code>
+          {t('ops.purgeHint')} <code>axentra maintenance purge</code>.{' '}
+          <HelpLink topic="health-monitoring#retention">{t('common:help.learnMore')}</HelpLink>
         </p>
       </Card>
       <Card title={t('ops.tracingTitle')} description={t('ops.tracingHelp')}>

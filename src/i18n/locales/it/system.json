@@ -1,0 +1,46 @@
+{
+  "bootstrap": {
+    "unreachableTitle": "Impossibile connettersi ad Axentra",
+    "unreachableBody": "Axentra Studio non è riuscito a caricare le informazioni del server (GET /v1/meta). Verifica che il server Axentra sia in esecuzione e che Studio sia configurato con l'indirizzo API corretto.",
+    "incompatibleTitle": "Versione del server incompatibile",
+    "incompatible": {
+      "major_mismatch": "Questo Studio usa una versione principale dell'API Axentra diversa da quella del server.",
+      "minor_too_low": "Il server è più vecchio di quanto richiesto da questo Studio. Aggiorna il server Axentra o usa uno Studio meno recente.",
+      "unparseable": "Il server ha riportato una versione API che questo Studio non riesce a interpretare."
+    },
+    "incompatibleHelp": "Usa una release di Studio corrispondente alla versione API del server. Consulta il README per la tabella di compatibilità.",
+    "serverApi": "Versione API del server",
+    "requiredApi": "Versione API richiesta",
+    "serverVersion": "Server",
+    "studioVersion": "Versione di Studio",
+    "sessionErrorTitle": "Impossibile verificare la sessione"
+  },
+  "module": {
+    "disabledTitle": "Modulo non abilitato su questo server",
+    "disabledBody": "Il server non segnala il modulo “{{module}}”. Abilitalo nella configurazione del server Axentra per usare questa sezione.",
+    "notInStudioTitle": "Non ancora disponibile in Studio",
+    "notInStudioBody": "Il server ha il modulo “{{module}}” abilitato, ma questa release di Studio non ha ancora schermate dedicate. Usa l'API o una release di Studio più recente."
+  },
+  "health": {
+    "title": "Stato del sistema",
+    "description": "Readiness e liveness del server Axentra e delle sue dipendenze.",
+    "readiness": "Readiness",
+    "readinessHelp": "Indica se il server può gestire le richieste: ogni dipendenza viene controllata (GET /v1/health/ready).",
+    "liveness": "Liveness",
+    "livenessHelp": "Indica se il processo del server risponde (GET /v1/health/live).",
+    "versions": "Versioni",
+    "notReady": "Il server segnala di non essere pronto a gestire richieste.",
+    "noChecks": "Il server non ha riportato controlli individuali.",
+    "updated": "Aggiornato {{time}}",
+    "notReadyLink": "Cosa fare",
+    "compatLabel": "Informazioni sul controllo della versione",
+    "compatInfo": "Studio si avvia solo se il server ha la stessa versione principale dell'API e almeno questa versione secondaria. Una versione secondaria più recente sul server va bene."
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "heading": "Impossibile trovare questa pagina",
+    "body": "L'indirizzo potrebbe essere errato oppure l'elemento è stato spostato o eliminato.",
+    "home": "Vai alla pagina iniziale"
+  },
+  "environment": "Ambiente"
+}

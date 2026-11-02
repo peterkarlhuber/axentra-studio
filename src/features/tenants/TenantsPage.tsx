@@ -28,6 +28,7 @@ import { fieldErrors } from '@/lib/errors';
 import { slugify } from '@/lib/slug';
 import { useDebouncedValue } from '@/lib/useDebouncedValue';
 import { useCursorList } from '@/lib/useCursorList';
+import { HelpLink } from '@/help/HelpLink';
 
 export function TenantsPage() {
   const { t } = useTranslation('tenants');
@@ -130,6 +131,7 @@ export function TenantsPage() {
       <PageHeader
         title={t('title')}
         description={t('description')}
+        help="tenants"
         actions={
           can('tenants:create') ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -169,7 +171,16 @@ export function TenantsPage() {
               headingLevel={3}
               icon={filtered ? <Search /> : <Building2 />}
               title={filtered ? t('empty.filteredTitle') : t('empty.title')}
-              description={filtered ? t('empty.filteredBody') : t('empty.body')}
+              description={
+                filtered ? (
+                  t('empty.filteredBody')
+                ) : (
+                  <>
+                    {t('empty.body')}{' '}
+                    <HelpLink topic="tenants#create">{t('common:help.learnMore')}</HelpLink>
+                  </>
+                )
+              }
             />
           }
           {...tableProps}
@@ -204,6 +215,8 @@ export function TenantsPage() {
           <FormField
             label={t('fields.slug')}
             help={t('create.slugHelp')}
+            info={t('create.slugInfo')}
+            infoTopic="tenants#create"
             error={fields.slug}
             required
           >

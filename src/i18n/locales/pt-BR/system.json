@@ -1,0 +1,46 @@
+{
+  "bootstrap": {
+    "unreachableTitle": "Não foi possível conectar ao Axentra",
+    "unreachableBody": "O Axentra Studio não conseguiu carregar as informações do servidor (GET /v1/meta). Verifique se o servidor Axentra está em execução e se o Studio está configurado com o endereço de API correto.",
+    "incompatibleTitle": "Versão do servidor incompatível",
+    "incompatible": {
+      "major_mismatch": "Este Studio usa uma versão principal da API do Axentra diferente da do servidor.",
+      "minor_too_low": "O servidor é mais antigo do que este Studio exige. Atualize o servidor Axentra ou use uma versão mais antiga do Studio.",
+      "unparseable": "O servidor informou uma versão de API que este Studio não consegue interpretar."
+    },
+    "incompatibleHelp": "Use uma versão do Studio compatível com a versão de API do servidor. Consulte a tabela de compatibilidade no README.",
+    "serverApi": "Versão da API do servidor",
+    "requiredApi": "Versão da API exigida",
+    "serverVersion": "Servidor",
+    "studioVersion": "Versão do Studio",
+    "sessionErrorTitle": "Não foi possível verificar sua sessão"
+  },
+  "module": {
+    "disabledTitle": "Módulo não habilitado neste servidor",
+    "disabledBody": "O servidor não informa o módulo “{{module}}”. Habilite-o na configuração do servidor Axentra para usar esta seção.",
+    "notInStudioTitle": "Ainda não disponível no Studio",
+    "notInStudioBody": "O servidor tem o módulo “{{module}}” habilitado, mas esta versão do Studio ainda não tem telas para ele. Use a API ou uma versão mais recente do Studio."
+  },
+  "health": {
+    "title": "Integridade do sistema",
+    "description": "Prontidão e atividade do servidor Axentra e de suas dependências.",
+    "readiness": "Prontidão",
+    "readinessHelp": "Indica se o servidor consegue atender requisições: cada dependência é verificada (GET /v1/health/ready).",
+    "liveness": "Atividade",
+    "livenessHelp": "Indica se o processo do servidor responde (GET /v1/health/live).",
+    "versions": "Versões",
+    "notReady": "O servidor informa que não está pronto para atender requisições.",
+    "noChecks": "O servidor não informou verificações individuais.",
+    "updated": "Atualizado {{time}}",
+    "notReadyLink": "O que fazer",
+    "compatLabel": "Sobre a verificação de versão",
+    "compatInfo": "O Studio só inicia quando o servidor tem a mesma versão principal da API e pelo menos esta versão secundária. Uma versão secundária mais nova no servidor não é problema."
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "heading": "Não encontramos esta página",
+    "body": "O endereço pode ter sido digitado incorretamente, ou o item foi movido ou excluído.",
+    "home": "Ir para a página inicial"
+  },
+  "environment": "Ambiente"
+}

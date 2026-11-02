@@ -1,5 +1,7 @@
 import { AlertTriangle, Lock, RefreshCw, SearchX, WifiOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { errorTopic } from '@/help/error-topics';
+import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
 import { Button } from './Button';
 import { EmptyState } from './EmptyState';
@@ -37,6 +39,9 @@ export function ErrorState({ error, onRetry, compact, headingLevel }: ErrorState
         description={
           <>
             <p>{described.message}</p>
+            <p className={styles.help}>
+              <HelpLink topic={errorTopic(apiError.code)} icon />
+            </p>
             {described.issues.length > 0 ? (
               <ul className={styles.issues}>
                 {described.issues.map((issue) => (

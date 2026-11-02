@@ -40,6 +40,8 @@ import {
 import { fieldErrors } from '@/lib/errors';
 import { useCursorList } from '@/lib/useCursorList';
 import { SecretRevealDialog } from '@/features/access/SecretRevealDialog';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { DELIVERY_STATUSES, webhookFormInvalid, type WebhookFormValues } from './events-utils';
 import { DeliveryStatusPill, FormError } from './shared';
 import { TypeList, WebhookFields } from './WebhookFields';
@@ -106,6 +108,7 @@ export function WebhookDetailPage() {
       <PageHeader
         title={<span className={styles.url}>{endpoint.url}</span>}
         documentTitle={endpoint.url}
+        help="webhooks"
         description={endpoint.description || undefined}
         meta={
           <>
@@ -141,7 +144,12 @@ export function WebhookDetailPage() {
           )}
         </Alert>
       ) : null}
-      {!endpoint.enabled ? <Alert tone="warning">{t('webhooks.disabledNotice')}</Alert> : null}
+      {!endpoint.enabled ? (
+        <Alert tone="warning">
+          {t('webhooks.disabledNotice')}{' '}
+          <HelpLink topic="webhooks#edit">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
+      ) : null}
       <Tabs
         label={t('webhooks.tabs')}
         value={tab}
@@ -221,7 +229,12 @@ export function WebhookDetailPage() {
           }
         }}
       >
-        <FormField label={t('webhooks.grace')} help={t('webhooks.graceHelp')}>
+        <FormField
+          label={t('webhooks.grace')}
+          help={t('webhooks.graceHelp')}
+          info={t('webhooks.graceInfo')}
+          infoTopic="webhooks#rotate-secret"
+        >
           <Select value={grace} onChange={(event) => setGrace(event.target.value)}>
             <option value="0">{t('webhooks.graceNone')}</option>
             <option value="3600">{t('webhooks.grace1h')}</option>
@@ -238,6 +251,11 @@ export function WebhookDetailPage() {
         onClose={() => setSecret(null)}
       >
         <p className={layout.muted}>{t('webhooks.secretUsage')}</p>
+        <p>
+          <HelpLink topic="tutorial-webhook-receiver#verify-signature">
+            {t('webhooks.secretHowTo')}
+          </HelpLink>
+        </p>
       </SecretRevealDialog>
       <ConfirmDialog
         open={deleting}
@@ -294,7 +312,14 @@ function Deliveries({
     },
     {
       id: 'status',
-      header: t('deliveries.status'),
+      header: (
+        <>
+          {t('deliveries.status')}{' '}
+          <InfoTip label={t('deliveries.statusInfoLabel')} topic="webhooks#delivery-statuses">
+            {t('deliveries.statusInfo')}
+          </InfoTip>
+        </>
+      ),
       cell: (delivery) => <DeliveryStatusPill status={delivery.status} />,
     },
     {
@@ -378,6 +403,11 @@ function Deliveries({
             icon={<Inbox />}
             title={status ? t('deliveries.emptyFiltered') : t('deliveries.empty')}
             description={status ? undefined : t('deliveries.emptyBody')}
+            action={
+              status ? undefined : (
+                <HelpLink topic="webhooks#test">{t('common:help.learnMore')}</HelpLink>
+              )
+            }
           />
         }
         {...tableProps}

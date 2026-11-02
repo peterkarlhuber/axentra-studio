@@ -11,23 +11,47 @@ import {
 interface StatDefinition {
   icon: LucideIcon;
   labelKey: string;
+  /** i18n key of the info tip that says what exactly is counted. */
+  hintKey: string;
   to?: (productId: string) => string;
 }
 
 /** Known overview counters; unknown numeric fields are still shown with their raw name. */
 export const KNOWN_STATS: Record<string, StatDefinition> = {
-  tenants: { icon: Building2, labelKey: 'stats.tenants', to: (p) => `/p/${p}/tenants` },
-  users: { icon: Users, labelKey: 'stats.users', to: (p) => `/p/${p}/users` },
-  api_keys: { icon: KeyRound, labelKey: 'stats.apiKeys', to: (p) => `/p/${p}/api-keys` },
-  records: { icon: Database, labelKey: 'stats.records', to: (p) => `/p/${p}/records` },
+  tenants: {
+    icon: Building2,
+    labelKey: 'stats.tenants',
+    hintKey: 'stats.hints.tenants',
+    to: (p) => `/p/${p}/tenants`,
+  },
+  users: {
+    icon: Users,
+    labelKey: 'stats.users',
+    hintKey: 'stats.hints.users',
+    to: (p) => `/p/${p}/users`,
+  },
+  api_keys: {
+    icon: KeyRound,
+    labelKey: 'stats.apiKeys',
+    hintKey: 'stats.hints.apiKeys',
+    to: (p) => `/p/${p}/api-keys`,
+  },
+  records: {
+    icon: Database,
+    labelKey: 'stats.records',
+    hintKey: 'stats.hints.records',
+    to: (p) => `/p/${p}/records`,
+  },
   audit_events_24h: {
     icon: FileClock,
     labelKey: 'stats.audit24h',
+    hintKey: 'stats.hints.audit24h',
     to: (p) => `/audit?product_id=${p}`,
   },
   denied_events_24h: {
     icon: ShieldAlert,
     labelKey: 'stats.denied24h',
+    hintKey: 'stats.hints.denied24h',
     to: (p) => `/audit?product_id=${p}&outcome=denied`,
   },
 };

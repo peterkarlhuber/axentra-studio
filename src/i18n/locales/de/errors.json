@@ -6,64 +6,76 @@
   "requestId": "Anfrage-ID",
   "codes": {
     "validation_failed": {
-      "title": "Bitte Eingaben prüfen",
-      "message": "Einige Werte wurden vom Server nicht akzeptiert."
+      "title": "Bitte prüfe deine Eingaben",
+      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
+    },
+    "bad_request": {
+      "title": "Anfrage nicht verstanden",
+      "message": "Der Server konnte die Anfrage nicht lesen, zum Beispiel weil ein Wert ein falsches Format hatte. Lade die Seite neu und versuche es erneut; passiert es wieder, melde es mit der Anfrage-ID."
     },
     "unauthenticated": {
-      "title": "Bitte anmelden",
-      "message": "Ihre Sitzung ist abgelaufen oder Sie sind nicht angemeldet."
+      "title": "Bitte melde dich an",
+      "message": "Du bist nicht angemeldet oder deine Sitzung ist beendet (nach längerer Untätigkeit, beim Abmelden oder weil sie widerrufen wurde). Melde dich erneut an, um dort weiterzumachen, wo du aufgehört hast."
     },
     "forbidden": {
       "title": "Nicht erlaubt",
-      "message": "Sie haben keine Berechtigung für diese Aktion."
+      "message": "Deine Rollen erlauben diese Aktion hier nicht, oder das Produkt ist archiviert bzw. der Mandant gesperrt. Bitte einen Inhaber oder Administrator dieses Produkts oder Mandanten um Zugriff."
     },
     "reauthentication_required": {
-      "title": "Bitte erneut anmelden",
-      "message": "Aus Sicherheitsgründen erfordert diese Aktion eine frische Anmeldung. Melden Sie sich erneut an und wiederholen Sie sie dann."
+      "title": "Bitte melde dich erneut an",
+      "message": "Aus Sicherheitsgründen ist diese Aktion nur kurz nach einer Anmeldung erlaubt. Melde dich erneut an und wiederhole dann die Aktion."
     },
     "not_found": {
       "title": "Nicht gefunden",
-      "message": "Dieses Element existiert nicht oder Sie haben keinen Zugriff darauf."
+      "message": "Dieses Element existiert nicht, wurde gelöscht oder du hast keinen Zugriff darauf (Axentra verrät keine Elemente, die du nicht sehen darfst). Prüfe die Adresse oder bitte um Zugriff."
     },
     "conflict": {
       "title": "Konflikt",
-      "message": "Das steht im Widerspruch zu vorhandenen Daten, zum Beispiel ein bereits vergebener Name."
+      "message": "Das steht im Widerspruch zu vorhandenen Daten oder zum aktuellen Zustand des Elements, zum Beispiel ein bereits vergebener Name oder Schlüssel. Lies die Servermeldung, ändere dann den Wert oder den Zustand und versuche es erneut."
     },
     "precondition_failed": {
       "title": "Zwischenzeitlich geändert",
-      "message": "Jemand anderes hat dieses Element geändert. Laden Sie es neu und wiederholen Sie Ihre Änderungen."
+      "message": "Jemand anderes hat dieses Element geändert, nachdem du es geöffnet hast; deine Änderung wurde daher nicht übernommen. Lade das Element neu und nimm deine Änderung erneut vor."
     },
     "rate_limited": {
       "title": "Zu viele Anfragen",
-      "message": "Bitte warten Sie einen Moment und versuchen Sie es erneut."
+      "message": "Der Server hat in kurzer Zeit zu viele Anfragen (oder fehlgeschlagene Anmeldeversuche) erhalten. Warte etwa eine Minute und versuche es erneut."
     },
     "quota_exceeded": {
       "title": "Kontingent überschritten",
-      "message": "Das Kontingent dieses Produkts oder Tarifs ist aufgebraucht."
+      "message": "Ein Kontingent oder Tariflimit dieses Mandanten ist aufgebraucht, daher hat der Server die Aktion abgelehnt. Gib Speicher oder Nutzung frei oder bitte jemanden mit Zugriff, das Kontingent zu erhöhen oder den Tarif zu ändern."
     },
     "mode_not_supported": {
       "title": "In diesem Modus nicht verfügbar",
-      "message": "Diese Aktion wird im aktuellen Servermodus (Einzel- oder Mehrproduktbetrieb) nicht unterstützt."
+      "message": "Die aktuelle Serverkonfiguration unterstützt diese Aktion nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb. Dafür müsste der Betrieb die Serverkonfiguration ändern."
+    },
+    "module_disabled": {
+      "title": "Modul nicht aktiviert",
+      "message": "Das Servermodul, das diese Aktion braucht, ist ausgeschaltet. Der Betrieb kann es in der Konfiguration des Axentra-Servers aktivieren."
+    },
+    "payment_provider_not_configured": {
+      "title": "Kein Zahlungsanbieter eingerichtet",
+      "message": "Diese Abrechnungsaktion braucht einen Zahlungsanbieter, aber auf dem Server ist keiner eingerichtet. Der Betrieb muss den Zahlungsanbieter in der Serverkonfiguration einrichten."
     },
     "internal": {
       "title": "Serverfehler",
-      "message": "Der Server konnte die Anfrage nicht abschließen. Bitte versuchen Sie es später erneut."
+      "message": "Der Server oder ein Dienst dahinter ist bei der Anfrage fehlgeschlagen; deine Änderung wurde möglicherweise nicht gespeichert. Versuche es gleich noch einmal; scheitert es weiterhin, melde es dem Betrieb mit der Anfrage-ID."
     },
     "network_error": {
       "title": "Server nicht erreichbar",
-      "message": "Der Axentra-Server ist nicht erreichbar. Prüfen Sie Ihre Verbindung oder den Serverstatus."
+      "message": "Studio hat keine Antwort vom Axentra-Server erhalten. Prüfe deine Netzwerkverbindung; funktioniert sie, ist der Server vielleicht nicht verfügbar oder startet neu. Versuche es gleich noch einmal."
     },
     "unknown": {
       "title": "Unerwarteter Fehler",
-      "message": "Die Anfrage ist aus unbekanntem Grund fehlgeschlagen."
+      "message": "Die Anfrage ist aus einem Grund fehlgeschlagen, den Studio nicht kennt. Versuche es erneut; passiert es wieder, melde es mit der Anfrage-ID und der Servermeldung."
     },
     "payload_too_large": {
       "title": "Zu groß",
-      "message": "Die Anfrage oder Datei überschreitet die Größengrenze des Servers."
+      "message": "Die Anfrage oder Datei ist größer, als der Server annimmt. Verwende eine kleinere Datei oder weniger Daten oder frage den Betrieb nach der Größengrenze."
     },
     "unsupported_media_type": {
       "title": "Typ nicht zulässig",
-      "message": "Der Server akzeptiert diesen Inhaltstyp nicht."
+      "message": "Der Server akzeptiert diese Art von Inhalt nicht, zum Beispiel einen gesperrten Dateityp wie eine ausführbare Datei, HTML oder SVG. Verwende einen anderen Dateityp."
     }
   }
 }

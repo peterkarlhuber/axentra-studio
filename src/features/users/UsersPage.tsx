@@ -69,7 +69,7 @@ export function UsersPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} />
+      <PageHeader title={t('title')} description={t('description')} help="users" />
       <Card flush>
         <div className={layout.toolbar} role="search">
           <FormField label={t('search')}>

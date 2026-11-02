@@ -1,0 +1,116 @@
+en	es	note
+Axentra / Axentra Studio / Studio	Axentra / Axentra Studio / Studio	product names, never translated
+product	producto	
+tenant	inquilino	standard in Spanish cloud UIs (Azure)
+user	usuario	
+member	miembro	
+membership	membresía	
+invitation	invitación	
+invite	invitar	
+role	rol	
+built-in role	rol integrado	
+custom role	rol personalizado	
+permission	permiso	ids like tenants:read stay untranslated
+scope	ámbito	
+API key	clave de API	
+secret	secreto	
+signing secret	secreto de firma	
+grace period	período de gracia	
+rotate	rotar	
+revoke	revocar	
+suspend	suspender	
+reactivate	reactivar	
+archive	archivar	
+restore	restaurar	
+delete	eliminar	
+remove	quitar	removing from a list/relation (members, filters, overrides)
+disable / enable	desactivar / activar	
+owner	propietario	role keys (owner, admin, member) stay as ids where quoted
+platform admin	administrador de la plataforma	
+platform viewer	observador de la plataforma	
+platform role	rol de plataforma	
+operator	operador	
+record	registro	
+collection	colección	
+file	archivo	
+upload	subir / subida	
+download link	enlace de descarga	
+label (metadata)	etiqueta (metadatos)	
+content type	tipo de contenido	
+inert	inerte	stored as opaque attachment
+quota	cuota	
+quota override	excepción de cuota	
+override	excepción	
+retention	retención	
+purge	purga	
+storage	almacenamiento	
+job	tarea	
+enqueue	poner en cola	
+worker	worker	kept English (technical role)
+handler	handler	kept English (developer term)
+payload	payload	kept English (developer term)
+kind (job)	tipo	
+schedule	programación	
+cron expression	expresión cron	
+fire (schedule)	dispararse	
+event	evento	
+publish	publicar	
+live	en directo	
+stream	flujo	
+webhook	webhook	kept English, standard
+endpoint	endpoint	kept English, standard
+delivery	entrega	
+redeliver	volver a entregar	
+test ping	ping de prueba	
+dead (job/delivery)	fallida definitivamente	
+idempotency key	clave de idempotencia	
+usage	uso	
+meter	medidor	
+aggregation	agregación	
+reset period	período de restablecimiento	
+hard / soft limit	límite estricto / flexible	
+reservation	reserva	
+commit / release (reservation)	confirmar / liberar	
+plan	plan	
+price	precio	
+minor units	unidades menores	
+trial	prueba	
+subscription	suscripción	
+subscribe	suscribir	
+entitlement	prestación	features and limits granted by a plan
+feature	función	
+past due	pago vencido	
+checkout	checkout	kept English (Stripe Checkout term)
+payment provider	proveedor de pagos	
+live payments	pagos reales	
+notification	notificación	
+template	plantilla	
+built-in default	predeterminada integrada	
+message log	historial de mensajes	
+outbox	bandeja de salida	
+mailbox	buzón	
+dispatcher	despachador	
+sensitive	confidencial	
+recipient	destinatario	
+opt out	darse de baja	
+audit log	registro de auditoría	
+event log	historial de eventos	'log' = historial except audit log
+actor	actor	
+health	estado del sistema	
+readiness	disponibilidad (readiness)	English kept in parentheses for ops users
+liveness	actividad (liveness)	English kept in parentheses for ops users
+monitoring	monitorización	
+metrics	métricas	
+tracing	trazas	
+bearer token	bearer token	kept English
+token	token	
+settings	configuración	
+preferences	preferencias	
+module	módulo	
+dashboard	panel	
+overview	resumen	
+slug	slug	kept English (URL identifier)
+single sign-on	inicio de sesión único	
+sign in / sign out	iniciar sesión / cerrar sesión	
+session	sesión	
+address form	tú (informal)	per product owner; imperatives in tú form

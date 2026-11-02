@@ -16,8 +16,13 @@ backend. Studio is a separate, static single-page app that talks to the Axentra 
   metrics, retention, tracing).
 - A section whose backend module is disabled shows "module not enabled" and never shows demo
   data.
-- German and English, light and dark theme, usable from 360 px wide, keyboard and screen
-  reader accessible (WCAG 2.1 AA as the target).
+- Built-in help: a help center at `/help` (39 articles in 13 chapters: getting started, every
+  screen, tutorials, troubleshooting, reference) with search, deep links and diagrams, page help
+  in a side panel and info tips on fields. It works signed out and without a reachable API. See
+  [docs/HELP_AUTHORING.md](docs/HELP_AUTHORING.md).
+- Six languages for interface and help: English, German, Spanish, French, Brazilian Portuguese
+  and Italian (informal address throughout). Light and dark theme, usable from 360 px wide,
+  keyboard and screen reader accessible (WCAG 2.2 AA as the target).
 
 ## Compatibility
 
@@ -56,20 +61,21 @@ right away.
 
 ## Scripts
 
-| Script                            | What it does                                                  |
-| --------------------------------- | ------------------------------------------------------------- |
-| `npm run dev`                     | Dev server with `/v1` proxy                                   |
-| `npm run build`                   | Type-check and build to `dist/`                               |
-| `npm run preview`                 | Serve `dist/` locally, also with the `/v1` proxy              |
-| `npm run typecheck`               | `tsc -b` (strict)                                             |
-| `npm run lint`                    | ESLint, zero warnings allowed                                 |
-| `npm run format` / `format:check` | Prettier                                                      |
-| `npm test`                        | Unit and component tests (Vitest, jsdom)                      |
-| `npm run e2e`                     | Playwright specs against a real API (see below)               |
-| `npm run i18n:check`              | German and English must have identical keys and placeholders  |
-| `npm run api:sync`                | Refresh the vendored OpenAPI contract and regenerate types    |
-| `npm run api:check`               | Contract drift check against a backend checkout (`--backend`) |
-| `npm run e2e:backend`             | `scripts/e2e-backend.sh`: real backend for e2e (see below)    |
+| Script                            | What it does                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------- |
+| `npm run dev`                     | Dev server with `/v1` proxy                                                           |
+| `npm run build`                   | Type-check and build to `dist/`                                                       |
+| `npm run preview`                 | Serve `dist/` locally, also with the `/v1` proxy                                      |
+| `npm run typecheck`               | `tsc -b` (strict)                                                                     |
+| `npm run lint`                    | ESLint, zero warnings allowed                                                         |
+| `npm run format` / `format:check` | Prettier                                                                              |
+| `npm test`                        | Unit and component tests (Vitest, jsdom)                                              |
+| `npm run e2e`                     | Playwright specs against a real API (see below)                                       |
+| `npm run i18n:check`              | All six languages: keys, placeholders, plurals, informal address, untranslated text   |
+| `npm run help:check`              | Help articles: all languages present, same anchors and structure, links, front matter |
+| `npm run api:sync`                | Refresh the vendored OpenAPI contract and regenerate types                            |
+| `npm run api:check`               | Contract drift check against a backend checkout (`--backend`)                         |
+| `npm run e2e:backend`             | `scripts/e2e-backend.sh`: real backend for e2e (see below)                            |
 
 CI (`.github/workflows/ci.yml`) runs `npm ci`, typecheck, lint, format check, i18n check, tests
 and build on Node 22 (`check`), the contract drift check against `api/BACKEND_REF` (`contract`)

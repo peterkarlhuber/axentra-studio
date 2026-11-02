@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { KeyRound, LogIn } from 'lucide-react';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { apiUrl, isSameOriginApi } from '@/api/client';
 import { setCsrfToken } from '@/api/csrf';
 import { authApi } from '@/api/endpoints';
@@ -13,9 +13,23 @@ import { useMeta } from '@/app/contexts';
 import { CenteredLayout } from '@/components/layout/CenteredLayout';
 import { SplashScreen } from '@/components/layout/FullPageMessage';
 import { Alert, Button, FormField, Input, buttonClassName } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
 import { AuthLanguageSwitch } from './AuthLanguageSwitch';
 import styles from './auth.module.css';
+
+/** `?login_error=<code>` values the server uses after a failed single sign-on (OIDC) login. */
+const SSO_ERRORS = new Set([
+  'login_expired',
+  'access_denied',
+  'provider_unavailable',
+  'login_failed',
+  'email_not_verified',
+  'domain_not_allowed',
+  'signup_disabled',
+  'account_disabled',
+  'rate_limited',
+]);
 
 export function LoginPage() {
   const { t } = useTranslation('auth');
@@ -26,6 +40,7 @@ export function LoginPage() {
   const queryClient = useQueryClient();
   const [params] = useSearchParams();
   const returnTo = safeReturnPath(params.get('return_to'));
+  const ssoError = params.get('login_error');
   const prefill = (location.state as { email?: string } | null)?.email ?? '';
   const [email, setEmail] = useState(prefill);
   const [password, setPassword] = useState('');
@@ -84,7 +99,16 @@ export function LoginPage() {
         <p className={styles.subtitle}>{t('login.subtitle')}</p>
       </div>
 
-      {params.get('return_to') && !error ? (
+      {ssoError && !error ? (
+        <Alert tone="danger" title={t('login.ssoErrorTitle')}>
+          {SSO_ERRORS.has(ssoError)
+            ? t(`login.ssoErrors.${ssoError}`)
+            : t('login.ssoErrors.unknown', { code: ssoError.slice(0, 64) })}{' '}
+          <HelpLink topic="signing-in#sso-errors" />
+        </Alert>
+      ) : null}
+
+      {params.get('return_to') && !error && !ssoError ? (
         <Alert tone="info">{t('login.sessionEnded')}</Alert>
       ) : null}
 
@@ -155,9 +179,15 @@ export function LoginPage() {
 
       {!meta.auth.password && providers.length === 0 ? (
         <Alert tone="warning" title={t('login.noMethodsTitle')}>
-          {t('login.noMethodsBody')}
+          {t('login.noMethodsBody')} <HelpLink topic="signing-in#troubleshooting" />
         </Alert>
       ) : null}
+
+      <p className={styles.helpRow}>
+        <HelpLink topic="signing-in">{t('login.help')}</HelpLink>
+        <span aria-hidden="true"> · </span>
+        <Link to="/help">{t('helpCenter')}</Link>
+      </p>
     </CenteredLayout>
   );
 }

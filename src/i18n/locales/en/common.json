@@ -138,5 +138,8 @@
     "conflictRenewed": "An earlier attempt with other values already used this request's idempotency key. A new key has been generated: submit again to create a new one.",
     "conflictManual": "This idempotency key was already used for a different request (or by another caller). Use a new key to create a new one, or repeat the original request unchanged.",
     "newKey": "Use a new key"
+  },
+  "help": {
+    "learnMore": "Learn more"
   }
 }

@@ -28,6 +28,7 @@ export function MonitoringPage() {
       <PageHeader
         title={t('title')}
         description={t('description')}
+        help="health-monitoring"
         actions={
           <Button
             icon={<RefreshCw />}

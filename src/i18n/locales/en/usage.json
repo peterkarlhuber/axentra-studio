@@ -132,7 +132,7 @@
     "title": "Quota override for {{meter}}",
     "description": "Replaces the plan and meter default limit for this tenant.",
     "limit": "Limit",
-    "limitHelp": "Leave empty for unlimited.",
+    "limitHelp": "Leave empty for no limit, even if the plan sets one.",
     "save": "Save override",
     "saved": "Quota override saved",
     "remove": "Remove override",
@@ -188,5 +188,17 @@
     "detail": "Tenants: {{tenants}} · events: {{events}}",
     "thisMonthNote": "Totals since the first day of the month (UTC), across all tenants.",
     "sampled": "Based on the first {{count}} tenant totals."
+  },
+  "info": {
+    "key": "Your product records usage with this key, and plan entitlements refer to it as “limit.” followed by the key.",
+    "aggregation": "Use Sum for things that add up, such as calls or messages. Use Maximum or Last value for a level you sample, such as stored bytes or seats.",
+    "resetPeriod": "Periods have fixed boundaries in UTC: a daily limit is available again at midnight UTC, not 24 hours after the first use. “Billing period” uses calendar months while the tenant has no active subscription.",
+    "defaultLimit": "Applies only to tenants without a quota override and without a plan limit for this meter. A change applies to the next recorded usage.",
+    "enforcement": "With a hard limit, the API answers 429 “quota_exceeded” and records nothing. With a soft limit, usage is always recorded and marked as over the limit. Plan limits use the meter’s enforcement.",
+    "periodAt": "Days are UTC days. Pick any date to see the period that contains it.",
+    "limitSourceLabel": "About the limit source",
+    "limitSource": "The first match wins: tenant override, then the plan’s limit, then the meter default. Without any of them the meter is unlimited.",
+    "quotaLimit": "The override replaces the plan and meter limit for this tenant until you remove it. Usage already recorded is not changed.",
+    "commit": "A commit is never refused by the limit, because the work is already done. Expired reservations can no longer be committed."
   }
 }

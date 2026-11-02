@@ -1,6 +1,6 @@
 {
   "title": "Benutzer",
-  "description": "Personen mit Zugriff auf dieses Produkt.",
+  "description": "Personen mit Zugriff auf dieses Produkt: seine Produktverantwortlichen und die Mitglieder seiner Mandanten.",
   "search": "Benutzer suchen",
   "searchPlaceholder": "Name oder E-Mail",
   "filters": {
@@ -20,7 +20,7 @@
     "title": "Noch keine Benutzer",
     "body": "Benutzer erscheinen hier, sobald sie Mitglied dieses Produkts oder eines seiner Mandanten sind.",
     "filteredTitle": "Keine passenden Benutzer",
-    "filteredBody": "Versuchen Sie eine andere Suche oder einen anderen Statusfilter."
+    "filteredBody": "Versuche es mit einer anderen Suche oder einem anderen Statusfilter."
   },
   "detail": {
     "profile": "Profil",
@@ -28,7 +28,7 @@
     "disable": "Benutzer deaktivieren",
     "enable": "Benutzer aktivieren",
     "disableTitle": "Benutzer deaktivieren?",
-    "disableBody": "{{name}} kann sich nicht mehr anmelden und alle Sitzungen enden sofort.",
+    "disableBody": "{{name}} kann sich nicht mehr anmelden und alle Sitzungen enden sofort. Mitgliedschaften bleiben bestehen, und API-Schlüssel, die die Person angelegt hat, funktionieren weiter.",
     "disabled": "Benutzer deaktiviert",
     "enabled": "Benutzer aktiviert",
     "disabledNotice": "Dieser Benutzer ist deaktiviert und kann sich nicht anmelden.",
@@ -38,7 +38,11 @@
     "hasPassword": "Passwort gesetzt",
     "noPassword": "Kein Passwort (nur Single Sign-on)",
     "sessionsRevoked_one": "{{count}} Sitzung beendet",
-    "sessionsRevoked_other": "{{count}} Sitzungen beendet"
+    "sessionsRevoked_other": "{{count}} Sitzungen beendet",
+    "profileDescription": "Mitgliedschaften verwaltest du im Reiter „Mitglieder“ des jeweiligen Mandanten.",
+    "noEmail": "Keine E-Mail-Adresse",
+    "noEmailInfo": "Dieser Benutzer meldet sich nur über Single Sign-on an und kann keine Einladungen annehmen, da diese an eine E-Mail-Adresse gebunden sind. Füge ihn stattdessen direkt zu Mandanten hinzu.",
+    "noEmailAbout": "Über Benutzer ohne E-Mail-Adresse"
   },
   "platformRoles": {
     "none": "Keine Plattformrolle",

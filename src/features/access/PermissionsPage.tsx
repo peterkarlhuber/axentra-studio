@@ -18,6 +18,7 @@ import {
   type Column,
 } from '@/components/ui';
 import { isProductPermission } from './permission-groups';
+import { InfoTip } from '@/help/InfoTip';
 
 /**
  * Read-only catalog of everything that can be granted in the product: the permissions the product
@@ -56,7 +57,17 @@ export function PermissionsPage() {
     { id: 'scope', header: t('catalog.scope'), hideOnMobile: true, cell: scopeBadge },
     {
       id: 'grants',
-      header: t('catalog.defaultRoles'),
+      header: (
+        <>
+          {t('catalog.defaultRoles')}{' '}
+          <InfoTip
+            label={t('catalog.defaultRolesAbout')}
+            topic="roles-permissions#product-permissions"
+          >
+            {t('catalog.defaultRolesInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (permission) => (
         <span className={layout.tags}>
@@ -72,7 +83,17 @@ export function PermissionsPage() {
     },
     {
       id: 'declared',
-      header: t('catalog.declaredBy'),
+      header: (
+        <>
+          {t('catalog.declaredBy')}{' '}
+          <InfoTip
+            label={t('catalog.declaredByAbout')}
+            topic="roles-permissions#product-permissions"
+          >
+            {t('catalog.declaredByInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (permission) =>
         permission.declared_by ? t(`catalog.declared.${permission.declared_by}`) : null,
@@ -105,7 +126,11 @@ export function PermissionsPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('catalog.title')} description={t('catalog.description')} />
+      <PageHeader
+        title={t('catalog.title')}
+        description={t('catalog.description')}
+        help="roles-permissions#product-permissions"
+      />
       <Card
         flush
         title={t('catalog.own')}

@@ -35,10 +35,12 @@ import {
 import { fieldErrors } from '@/lib/errors';
 import { useCursorList } from '@/lib/useCursorList';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import type { StreamMessage } from './event-stream';
 import {
   EVENT_PATTERN,
-  kindProblem,
+  eventTypeProblem,
   newIdempotencyKey,
   parseJsonObject,
   splitPatterns,
@@ -66,6 +68,7 @@ export function EventsPage() {
       <PageHeader
         title={t('events.title')}
         description={t('events.description')}
+        help="events"
         actions={
           canPublish ? (
             <Button variant="primary" icon={<Send />} onClick={() => setPublishing(true)}>
@@ -157,7 +160,14 @@ function EventLog({ productId }: { productId: string }) {
     },
     {
       id: 'actor',
-      header: t('events.actor'),
+      header: (
+        <>
+          {t('events.actor')}{' '}
+          <InfoTip label={t('events.actorInfoLabel')} topic="events#event-detail">
+            {t('events.actorInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (event) => (
         <span className={layout.cellStack}>
@@ -239,6 +249,11 @@ function EventLog({ productId }: { productId: string }) {
             icon={<Radio />}
             title={active ? t('events.emptyFiltered') : t('events.empty')}
             description={active ? undefined : t('events.emptyBody')}
+            action={
+              active ? undefined : (
+                <HelpLink topic="events#publish">{t('common:help.learnMore')}</HelpLink>
+              )
+            }
           />
         }
         {...tableProps}
@@ -435,7 +450,9 @@ function LiveEvents({ productId }: { productId: string }) {
           </Button>
         </div>
       </div>
-      <p className={styles.liveNote}>{t('live.note')}</p>
+      <p className={styles.liveNote}>
+        {t('live.note')} <HelpLink topic="events#live">{t('common:help.learnMore')}</HelpLink>
+      </p>
       {entries.length === 0 ? (
         <EmptyState
           compact
@@ -494,7 +511,7 @@ function PublishEventDialog({
   const [idempotencyKey, setIdempotencyKey] = useState(newIdempotencyKey);
   const [conflict, setConflict] = useState(false);
   const parsed = parseJsonObject(data);
-  const typeIssue = kindProblem(type);
+  const typeIssue = eventTypeProblem(type);
   const publish = useMutation({
     mutationFn: () =>
       eventsApi.publish(
@@ -567,6 +584,8 @@ function PublishEventDialog({
         <FormField
           label={t('events.type')}
           help={t('events.typeHelp')}
+          info={t('events.publishInfo')}
+          infoTopic="events#publish"
           error={typeIssue ? t(`validation.type.${typeIssue}`) : fields.type}
           required
         >

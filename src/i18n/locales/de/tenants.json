@@ -1,6 +1,6 @@
 {
   "title": "Mandanten",
-  "description": "Mandanten sind die Kunden oder Organisationen innerhalb dieses Produkts. Ihre Daten sind strikt getrennt.",
+  "description": "Mandanten sind die Kunden oder Organisationen innerhalb dieses Produkts. Die Daten der Mandanten sind strikt voneinander getrennt.",
   "fields": {
     "name": "Name",
     "slug": "Kurzname",
@@ -13,16 +13,17 @@
   "create": {
     "open": "Neuer Mandant",
     "title": "Mandant anlegen",
-    "description": "Nach dem Anlegen können Sie Mitglieder einladen.",
+    "description": "Nach dem Anlegen kannst du Mitglieder einladen.",
     "slugHelp": "URL-taugliche Kennung, aus dem Namen abgeleitet. Muss innerhalb des Produkts eindeutig sein.",
     "submit": "Mandant anlegen",
-    "success": "Mandant „{{name}}“ angelegt"
+    "success": "Mandant „{{name}}“ angelegt",
+    "slugInfo": "Kleinbuchstaben, Ziffern und Bindestriche (2–63 Zeichen), beginnend mit einem Buchstaben oder einer Ziffer. Der Kurzname lässt sich später nicht ändern und wird zur Bestätigung des Löschens eingetippt."
   },
   "empty": {
     "title": "Noch keine Mandanten",
-    "body": "Legen Sie für jeden Kunden bzw. jede Organisation, die dieses Produkt nutzt, einen Mandanten an.",
+    "body": "Lege für jeden Kunden bzw. jede Organisation, die dieses Produkt nutzt, einen Mandanten an.",
     "filteredTitle": "Keine passenden Mandanten",
-    "filteredBody": "Versuchen Sie eine andere Suche oder einen anderen Statusfilter."
+    "filteredBody": "Versuche es mit einer anderen Suche oder einem anderen Statusfilter."
   },
   "detail": {
     "tabs": "Mandantenbereiche",
@@ -35,32 +36,32 @@
     "records": "Datensätze ansehen",
     "delete": "Mandant löschen",
     "deleteTitle": "Mandant löschen?",
-    "deleteBody": "„{{name}}“ und alle zugehörigen Daten werden gelöscht. Das kann nicht rückgängig gemacht werden.",
+    "deleteBody": "„{{name}}“ wird zusammen mit seinen Datensätzen, Dateien, Mitgliedschaften, Einladungen und mandantengebundenen API-Schlüsseln gelöscht. Das kann nicht rückgängig gemacht werden.",
     "deleted": "Mandant „{{name}}“ gelöscht",
     "suspend": "Mandant sperren",
     "activate": "Mandant reaktivieren",
     "suspended": "Mandant gesperrt",
     "activated": "Mandant reaktiviert",
     "suspendTitle": "Mandant sperren?",
-    "suspendBody": "Mitglieder von „{{name}}“ verlieren den Zugriff, bis der Mandant reaktiviert wird. Es werden keine Daten gelöscht.",
-    "suspendedNotice": "Dieser Mandant ist gesperrt. Seine Mitglieder haben keinen Zugriff."
+    "suspendBody": "Mitglieder von „{{name}}“ und seine API-Schlüssel verlieren den Zugriff, bis der Mandant reaktiviert wird. Auch Produktverantwortliche haben keinen Zugriff mehr auf seine Daten; nur Plattform-Administratoren können ihn noch öffnen. Es werden keine Daten gelöscht.",
+    "suspendedNotice": "Dieser Mandant ist gesperrt. Seine Mitglieder, Produktverantwortlichen und API-Schlüssel haben keinen Zugriff."
   },
   "invitations": {
     "title": "Einladungen",
-    "description": "Laden Sie Personen per E-Mail in einen Mandanten ein.",
-    "pickTenant": "Wählen Sie einen Mandanten, um seine Einladungen zu sehen",
+    "description": "Lade Personen per E-Mail in einen Mandanten ein.",
+    "pickTenant": "Wähle einen Mandanten, um seine Einladungen zu sehen",
     "email": "E-Mail-Adresse",
     "role": "Rolle",
     "status": "Status",
     "expires": "Läuft ab",
     "empty": "Keine Einladungen",
     "invite": "Mitglied einladen",
-    "inviteDescription": "Die Person erhält eine Einladung zu diesem Mandanten.",
+    "inviteDescription": "Die Einladung gilt 7 Tage. Sind Benachrichtigungen aktiviert, verschickt Axentra den Link zusätzlich per E-Mail.",
     "send": "Einladung senden",
     "sent": "Einladung für {{email}} erstellt",
     "createdTitle": "Einladung erstellt",
     "oneTimeTitle": "Wird nur einmal angezeigt",
-    "oneTimeBody": "Geben Sie dies jetzt an die eingeladene Person weiter. Es kann nicht erneut angezeigt werden.",
+    "oneTimeBody": "Gib dies nur an die eingeladene Person weiter. Es kann nicht erneut angezeigt werden; geht es verloren, widerrufe die Einladung und erstelle eine neue.",
     "link": "Einladungslink",
     "token": "Einladungs-Token",
     "revoke": "Einladung widerrufen",
@@ -68,17 +69,22 @@
     "revokeTitle": "Einladung widerrufen?",
     "revokeBody": "Die Einladung für {{email}} wird ungültig.",
     "revoked": "Einladung widerrufen",
-    "tokenHelp": "Auf dem Server ist keine öffentliche URL konfiguriert, geben Sie daher das Token weiter. Die Person nimmt es nach der Anmeldung unter „Einladung annehmen“ an.",
-    "roleHelp": "Ohne Angabe wird „member“ verwendet."
+    "tokenHelp": "Es wurde kein Einladungslink erzeugt, weil Benachrichtigungen auf diesem Server nicht aktiviert sind. Gib daher das Token weiter. Die Person meldet sich an und gibt es unter „Einladung annehmen“ ein.",
+    "roleHelp": "Die Person erhält diese Rolle im Mandanten, sobald sie die Einladung annimmt.",
+    "emailInfo": "Annehmen kann die Einladung nur ein angemeldeter Benutzer, dessen Konto genau diese E-Mail-Adresse hat.",
+    "expiresInfo": "Einladungen gelten 7 Tage. Um eine zu verlängern, widerrufe sie und lade erneut ein.",
+    "expiresAbout": "Über den Ablauf von Einladungen"
   },
   "accept": {
     "title": "Einladung annehmen",
-    "description": "Treten Sie mit Ihrem Einladungs-Token einem Mandanten bei.",
+    "description": "Tritt mit dem erhaltenen Einladungslink oder -Token einem Mandanten bei. Du musst mit dem Konto der eingeladenen E-Mail-Adresse angemeldet sein.",
     "token": "Einladungs-Token",
     "submit": "Einladung annehmen",
     "successTitle": "Einladung angenommen",
-    "successBody": "Sie haben jetzt Zugriff. Es kann einen Moment dauern, bis er überall sichtbar ist.",
-    "continue": "Weiter"
+    "successBody": "Du hast jetzt Zugriff. Es kann einen Moment dauern, bis er überall sichtbar ist.",
+    "continue": "Weiter",
+    "invalid": "Diese Einladung ist ungültig, abgelaufen, widerrufen oder bereits verwendet. Bitte um eine neue Einladung.",
+    "wrongEmail": "Diese Einladung wurde an eine andere E-Mail-Adresse geschickt. Melde dich mit dem Konto dieser Adresse an oder bitte um eine Einladung an deine eigene Adresse."
   },
   "search": "Mandanten suchen",
   "searchPlaceholder": "Name oder Kurzname",
