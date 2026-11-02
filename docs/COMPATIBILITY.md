@@ -12,10 +12,11 @@ A row is added only when both checks below ran for that pair: the contract job (
 contract is byte-for-byte the backend's `openapi/axentra-v1.json` at that commit) and the e2e job
 (Playwright against a running server of that commit).
 
-| Studio version | Studio commit              | `REQUIRED_API` | Axentra version | Axentra commit (`api/BACKEND_REF`) | API version | Tested on  | Result                                                                                                                  |
-| -------------- | -------------------------- | -------------- | --------------- | ---------------------------------- | ----------- | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| 0.1.0 (unrel.) | PR #2, merge `0aed4fc`[^1] | 1.0            | 0.1.0.dev0      | `a2ca72a7270d`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 126 passed locally[^2]; CI: 180 passed, 0 failed                             |
-| 0.1.0 (unrel.) | PR #3, merge `ee7d9f2`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 186 passed, 0 failed, 0 skipped, twice locally[^3]; CI: 186 passed, 0 failed |
+| Studio version | Studio commit              | `REQUIRED_API` | Axentra version | Axentra commit (`api/BACKEND_REF`) | API version | Tested on  | Result                                                                                                                                     |
+| -------------- | -------------------------- | -------------- | --------------- | ---------------------------------- | ----------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0.1.0 (unrel.) | PR #2, merge `0aed4fc`[^1] | 1.0            | 0.1.0.dev0      | `a2ca72a7270d`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 126 passed locally[^2]; CI: 180 passed, 0 failed                                                |
+| 0.1.0 (unrel.) | PR #3, merge `ee7d9f2`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 186 passed, 0 failed, 0 skipped, twice locally[^3]; CI: 186 passed, 0 failed                    |
+| 0.1.0 (unrel.) | PR #4, merge `4d2df1a`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Both deployment modes[^4]: locally twice each, multi 188 passed / 10 skipped, single 196 passed / 2 skipped; CI: the same counts, 0 failed |
 
 [^1]:
     GitHub Actions ran the `contract` and `e2e` jobs on the pull request (the merge of its head into
@@ -23,8 +24,11 @@ contract is byte-for-byte the backend's `openapi/axentra-v1.json` at that commit
     [41375099609](https://github.com/peterkarlhuber/axentra-studio/actions/runs/41375099609)
     (contract job 125053499893, e2e job 125053499801), PR #3 run
     [41376595156](https://github.com/peterkarlhuber/axentra-studio/actions/runs/41376595156)
-    (contract job 125058075510, e2e job 125058075685). The merge commits on `master` have no CI run
-    of their own (the workflow's push trigger names `main`; see [TODO.md](TODO.md)).
+    (contract job 125058075510, e2e job 125058075685), PR #4 run
+    [41383014581](https://github.com/peterkarlhuber/axentra-studio/actions/runs/41383014581)
+    (contract job 125077688112, e2e jobs 125077688055 multi and 125077688056 single). Before PR #4
+    the workflow's push trigger named `main`, so the merge commits `f135199`, `0aed4fc` and
+    `ee7d9f2` on `master` have no CI run of their own; from `4d2df1a` on, pushes to `master` run CI.
 
 [^2]:
     `scripts/e2e-backend.sh run --worker` against the checkout at `a2ca72a`, PostgreSQL 16,
@@ -35,6 +39,13 @@ contract is byte-for-byte the backend's `openapi/axentra-v1.json` at that commit
     (backend security fixes: role ceiling, no user directory, `notify:send_external`, system-only
     templates, idempotency replays), environment `test`, PostgreSQL 16, Chromium desktop and
     360 px. Includes `e2e/security.spec.ts`.
+
+[^4]:
+    `scripts/e2e-backend.sh run --backend <checkout> --worker --mode multi|single` against the
+    checkout at `7511a37`, environment `test`, PostgreSQL 16, Chromium desktop and 360 px, 198
+    tests per run. The skips are exactly the mode-specific blocks of `e2e/single-product.spec.ts`
+    run against the other mode (5 single-mode tests x 2 projects in multi, 1 multi-mode test x 2
+    projects in single), each with its reason. Confirmed by the PR #4 CI run (see [^1]).
 
 ## What Studio checks at runtime
 
@@ -81,8 +92,11 @@ CI (`.github/workflows/ci.yml`):
   and `src/api/schema.d.ts` are exactly what `npm run api:sync` produces.
 - `e2e` installs `axentra[server]` from the same checkout (Python 3.12), runs the backend's own
   drift check (`axentra openapi export --check`), starts it with `scripts/e2e-backend.sh` and runs
-  every Playwright spec (Chromium, desktop and 360 px). The HTML report, traces and backend logs
-  are uploaded as the `playwright-report` artifact.
+  every Playwright spec (Chromium, desktop and 360 px). It is a matrix over both deployment models,
+  `mode: [multi, single]` (`scripts/e2e-backend.sh --mode`): multi-product with fixtures in a
+  created product, single-product with `mode = "single"` and a `[product]` section, the fixtures in
+  the product the backend creates on start. The HTML report, traces and backend logs are uploaded
+  per mode as `playwright-report-multi` and `playwright-report-single`.
 - The backend repository is public, so the jobs use the workflow token. If it becomes private,
   add a repository secret `AXENTRA_REPO_TOKEN` with read access to `peterkarlhuber/axentra`
   (fine-grained token: Contents read-only). Without it the checkout fails and the job stops with an

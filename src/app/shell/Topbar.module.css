@@ -74,6 +74,20 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Single-product mode: the same look without the button chrome (nothing to switch). */
+.productLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ax-space-2);
+  max-width: 260px;
+  min-height: 40px;
+  padding: 0 var(--ax-space-3);
+}
+@media (max-width: 600px) {
+  .productLabel {
+    display: none;
+  }
+}
 .chevron {
   width: 14px;
   height: 14px;

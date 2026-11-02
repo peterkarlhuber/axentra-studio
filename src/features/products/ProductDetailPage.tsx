@@ -106,6 +106,9 @@ export function ProductDetailPage() {
         }
       />
       {archived ? <Alert tone="warning">{t('lifecycle.archivedNotice')}</Alert> : null}
+      {meta.mode === 'single' && can('products:archive') ? (
+        <Alert tone="info">{t('lifecycle.singleMode')}</Alert>
+      ) : null}
       <Tabs
         label={t('tabs.label')}
         items={[

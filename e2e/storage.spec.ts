@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { settleAnimations, specProduct } from './support';
 
 /**
  * Data & Storage against a real Axentra API: upload, list, download and delete a file, a
@@ -26,6 +27,7 @@ async function expectNoA11yViolations(page: Page) {
   for (const colorScheme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme });
     await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme);
+    await settleAnimations(page);
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
@@ -60,25 +62,27 @@ async function login(page: Page) {
   await expect(page).not.toHaveURL(/\/login/);
 }
 
-/** A fresh product and tenant per test run, created through the API with the page's session. */
+/**
+ * A fresh tenant per test run (files and records are tenant-scoped), in a fresh product in
+ * multi-product mode or in the server's one product in single-product mode (see specProduct).
+ */
 async function createProductAndTenant(page: Page, label: string) {
   const session = await page.request.get('/v1/auth/session');
   const { csrf_token: csrf } = (await session.json()) as { csrf_token: string };
   const headers = { 'X-Axentra-CSRF': csrf };
   const suffix = `${label}-${Date.now().toString(36)}`;
-  const product = await page.request.post('/v1/products', {
-    headers,
-    data: { name: `Storage e2e ${suffix}`, slug: `st-${suffix}` },
+  const { id: productId } = await specProduct(page.request, {
+    name: `Storage e2e ${suffix}`,
+    slug: `st-${suffix}`,
   });
-  expect(product.status()).toBe(201);
-  const { id: productId } = (await product.json()) as { id: string };
+  const tenantName = `Tenant ${suffix}`;
   const tenant = await page.request.post(`/v1/products/${productId}/tenants`, {
     headers,
-    data: { name: `Tenant ${suffix}`, slug: `t-${suffix}` },
+    data: { name: tenantName, slug: `t-${suffix}` },
   });
   expect(tenant.status()).toBe(201);
   const { id: tenantId } = (await tenant.json()) as { id: string };
-  return { productId, tenantId };
+  return { productId, tenantId, tenantName };
 }
 
 test('files: upload, list, download, refuse a blocked type and delete', async ({
@@ -169,7 +173,10 @@ test('files: upload, list, download, refuse a blocked type and delete', async ({
 
 test('records: create, edit and delete; data overview', async ({ page }, testInfo) => {
   await login(page);
-  const { productId, tenantId } = await createProductAndTenant(page, `r${testInfo.project.name}`);
+  const { productId, tenantId, tenantName } = await createProductAndTenant(
+    page,
+    `r${testInfo.project.name}`,
+  );
 
   await page.goto(`/p/${productId}/records?tenant=${tenantId}`);
   await page.getByRole('button', { name: 'New record' }).click();
@@ -209,7 +216,8 @@ test('records: create, edit and delete; data overview', async ({ page }, testInf
   const collections = page.getByRole('table', { name: 'Record collections' });
   await expect(collections.getByRole('link', { name: 'e2e_notes' })).toBeVisible();
   const storage = page.getByRole('table', { name: 'Storage usage per tenant' });
-  await expect(storage.getByRole('link', { name: /Tenant / })).toBeVisible();
+  // By name: in single-product mode other specs' tenants share the product.
+  await expect(storage.getByRole('link', { name: tenantName, exact: true })).toBeVisible();
   await expect(page.getByText('Maximum file size')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Backups are not reported' })).toBeVisible();
   await expectNoA11yViolations(page);

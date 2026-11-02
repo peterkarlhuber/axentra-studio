@@ -141,6 +141,22 @@ put the public Studio URL into the API's `security.allowed_origins` (or make it 
 | `AXENTRA_PUBLIC_API_URL`  | Written to `config.json` as `apiBaseUrl`, added to `connect-src`. |
 | `AXENTRA_CSP_CONNECT_SRC` | Extra `connect-src` sources, space-separated.                     |
 
+## Deployment modes (single and multi product)
+
+Studio reads `mode` and `product` from `GET /v1/meta` and adapts; the API makes every decision
+(Axentra `docs/architecture/DEPLOYMENT_MODELS.md`). Both modes are covered by the e2e suite.
+
+|                     | `multi`                                              | `single`                                                              |
+| ------------------- | ---------------------------------------------------- | --------------------------------------------------------------------- |
+| Start page (`/`)    | last visited or first product, else the product list | the configured product's dashboard                                    |
+| Top bar             | product switcher (with "All products")               | static label with the product name, no switcher                       |
+| Products page       | list; "New product" for `products:create`            | the one product, read-only, with an explanation (no "New product")    |
+| Product page        | archive / restore for `products:archive`             | name, description, settings, members; no archive, with an explanation |
+| `/p/<unknown id>/…` | not-found error                                      | redirect to the same section of the one product                       |
+
+In single mode the backend answers `POST /v1/products`, `/archive` and `/restore` with
+`409 mode_not_supported`; Studio offers none of them, so that answer is never provoked from the UI.
+
 ## End-to-end tests
 
 The Playwright specs in `e2e/` run against a **real** Axentra. `scripts/e2e-backend.sh` starts one
@@ -152,6 +168,8 @@ export AXENTRA_E2E_PG_URL=postgresql://postgres:pg@127.0.0.1:5432/postgres   # s
 AXENTRA_PYTHON=../axentra/.venv/bin/python scripts/e2e-backend.sh run --worker
 # Or exactly the pinned commit (api/BACKEND_REF), installed into a venv in .e2e-backend/:
 scripts/e2e-backend.sh run --ref pinned --install --worker
+# Single-product deployment (Axentra `mode = "single"`); the default is --mode multi:
+scripts/e2e-backend.sh run --worker --mode single
 # Any command instead of `npm run e2e`:
 scripts/e2e-backend.sh run -- npx playwright test e2e/a11y.spec.ts --project mobile
 ```
@@ -163,8 +181,9 @@ as you like, `scripts/e2e-backend.sh down` at the end). `up`:
 1. creates the database `AXENTRA_E2E_DB` (default `axentra_studio_e2e`) owned by a
    **non-superuser** role `AXENTRA_E2E_DB_ROLE` (RLS enforced as in production); both are dropped
    first if they exist;
-2. writes `.e2e-backend/axentra.toml` (secrets in files next to it, mode 600): multi-product mode,
-   every module enabled (storage: local, notify: local provider, events, usage, billing:
+2. writes `.e2e-backend/axentra.toml` (secrets in files next to it, mode 600): the deployment mode
+   from `--mode` / `AXENTRA_E2E_MODE` (`multi`, the default, or `single` with a `[product]`
+   section, slug `studio-e2e`), every module enabled (storage: local, notify: local provider, events, usage, billing:
    `manual`), environment `test`, the Studio preview origin `http://127.0.0.1:$AXENTRA_E2E_PORT`
    allowed, webhooks to local http targets allowed (refused in production) with short retries
    (3 attempts, 0.5 s backoff base) so failing deliveries end as dead within seconds;
@@ -172,19 +191,25 @@ as you like, `scripts/e2e-backend.sh down` at the end). `up`:
    `AXENTRA_E2E_API_PORT` (default 18080); with `--worker` also
    `axentra worker --load axentra_e2e_jobs` (with `e2e/fixtures` on `PYTHONPATH`) and
    `axentra notify-dispatch --loop` for job, webhook and notification flows;
-4. creates the first platform admin with the setup token (`POST /v1/auth/setup`), a product and a
+4. creates the first platform admin with the setup token (`POST /v1/auth/setup`), a product
+   (multi: `POST /v1/products`; single: the one the backend created on start, read from
+   `GET /v1/meta`, after checking that `POST /v1/products` answers `409 mode_not_supported`) and a
    tenant, and in that product the fixtures the a11y route sweep needs: a free plan the tenant
    subscribes to, a job, a webhook endpoint (for an event type nothing publishes) and a
    notification template;
 5. exports `AXENTRA_E2E_API`, `AXENTRA_E2E_EMAIL`, `AXENTRA_E2E_PASSWORD`,
    `AXENTRA_E2E_PRODUCT_ID`, `AXENTRA_E2E_TENANT_ID`, `AXENTRA_E2E_JOB_ID`,
    `AXENTRA_E2E_WEBHOOK_ID`, `AXENTRA_E2E_TEMPLATE_KEY`, `AXENTRA_E2E_BACKEND_SHA`,
-   `AXENTRA_E2E_MODULES`, `AXENTRA_E2E_WORKER`, `AXENTRA_E2E_NOTIFY_DISPATCH` (a one-shot
+   `AXENTRA_E2E_MODULES`, `AXENTRA_E2E_MODE`, `AXENTRA_E2E_WORKER`, `AXENTRA_E2E_NOTIFY_DISPATCH` (a one-shot
    `notify-dispatch --once` command) and `AXENTRA_E2E_PORT` for Playwright.
 
-Every spec that changes data creates its own product (unique slug per run and project); the a11y
-sweep only reads the fixture product. So specs are independent of each other, of their order and
-of what earlier runs left in the database.
+Every spec that changes data gets its product from `specProduct()` in `e2e/support.ts`: in
+multi-product mode a new product (unique slug per run and project), in single-product mode the
+server's one product, where the spec creates its own tenant and gives every name and key it
+creates (meters, plans, roles, templates, categories, schedules, event types) a per-run suffix and
+reads product-wide counts from the API instead of assuming an empty product. The a11y sweep only
+reads the fixture product. So specs are independent of each other, of their order, of the other
+Playwright project and of what earlier runs left in the database, in both modes.
 
 `down` stops all processes and drops the database and the role; logs stay in `.e2e-backend/run/`.
 `scripts/e2e-backend.sh --help` lists every option and variable.
@@ -199,6 +224,12 @@ proxying `/v1` to the API, and runs every spec on a desktop and a 360 px phone p
   the route requires, in the light and the dark theme: no axe-core WCAG 2.1 A/AA violations, no
   page-level horizontal scroll, no console errors. A route whose parameter has no fixture is
   skipped with its name.
+- `e2e/single-product.spec.ts`: the deployment model. Single mode: the API refuses product
+  creation and archiving with `409 mode_not_supported`, Studio opens in the one product, shows no
+  product switcher, no "New product" and no archive action (with an explanation), sends an unknown
+  product id to the same section of the one product, and every navigation area loads. Multi mode:
+  the switcher and "New product" are offered. Each block is skipped, with that reason, against a
+  backend in the other mode.
 - `e2e/<area>.spec.ts`: area specs; use the helpers in `e2e/support.ts`.
 
 Without `AXENTRA_E2E_API` every test is skipped with a message (in CI that is an error). You can
@@ -206,7 +237,9 @@ also point the specs at any running server (`AXENTRA_E2E_API`, optionally `AXENT
 `AXENTRA_E2E_PASSWORD`) or at an already running Studio such as the Docker image
 (`AXENTRA_E2E_BASE_URL`). Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to use a preinstalled Chromium.
 
-CI runs the same script in the `e2e` job against the backend commit pinned in `api/BACKEND_REF`,
+CI runs the same script in the `e2e` job, once per deployment mode (matrix `mode: [multi, single]`,
+artifacts `playwright-report-multi` and `playwright-report-single`), against the backend commit
+pinned in `api/BACKEND_REF`,
 and checks the vendored contract against that commit in the `contract` job
 (`npm run api:check`). Details, the compatibility matrix and the update procedure:
 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md). Open work: [docs/TODO.md](docs/TODO.md).

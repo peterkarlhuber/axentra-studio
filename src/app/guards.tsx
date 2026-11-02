@@ -4,14 +4,16 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, Outlet, useLocation, useParams } from 'react-router';
 import { productsApi } from '@/api/endpoints';
+import { isApiError } from '@/api/errors';
 import { queryKeys } from '@/api/queryKeys';
 import { FullPageMessage, SplashScreen } from '@/components/layout/FullPageMessage';
 import { Button, EmptyState, ErrorState, PageHeader, Skeleton } from '@/components/ui';
 import { writePreference } from '@/lib/storage';
 import { loginPath, useMe, useSession } from './auth';
-import { ProductScopeContext, useMeta } from './contexts';
+import { ProductScopeContext, singleProductId, useMeta } from './contexts';
 import { IMPLEMENTED_MODULES, isModuleEnabled, MODULE_IDS, type StudioModule } from './modules';
 import { productAccess } from './permissions';
+import { switchProductPath } from './shell/shell-utils';
 import { useLastProductId } from './useLastProduct';
 
 /** Requires a signed-in session; otherwise sends the user to setup or login. */
@@ -63,6 +65,8 @@ export function HomeRedirect() {
 /** Validates `:productId` and provides product + access to product-scoped pages. */
 export function ProductScope() {
   const { productId = '' } = useParams();
+  const { pathname } = useLocation();
+  const single = singleProductId(useMeta());
   const { data: me } = useMe();
   const product = useQuery({
     queryKey: queryKeys.product(productId),
@@ -75,6 +79,16 @@ export function ProductScope() {
   }, [product.isSuccess, productId]);
 
   if (product.isError) {
+    // Single-product mode has one product: an unknown product id (an old bookmark, a link from
+    // another installation) leads to the same section of that product instead of an error.
+    if (
+      single &&
+      productId !== single &&
+      isApiError(product.error) &&
+      product.error.status === 404
+    ) {
+      return <Navigate to={switchProductPath(pathname, single)} replace />;
+    }
     return <ErrorState error={product.error} onRetry={() => void product.refetch()} />;
   }
 

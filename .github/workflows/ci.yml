@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
 
 permissions:
@@ -70,11 +70,16 @@ jobs:
         run: npm run api:check -- --backend .backend
 
   # Playwright against a real, PostgreSQL-backed Axentra at api/BACKEND_REF
-  # (scripts/e2e-backend.sh: non-superuser role, all modules, first admin via setup token).
+  # (scripts/e2e-backend.sh: non-superuser role, all modules, first admin via setup token),
+  # once per deployment model: multi-product and single-product (`--mode`).
   e2e:
-    name: End-to-end (Playwright, real backend)
+    name: End-to-end (Playwright, real backend, ${{ matrix.mode }}-product)
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [multi, single]
     services:
       postgres:
         image: postgres:16
@@ -127,15 +132,15 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Start the backend (+ worker) and run all Playwright specs
+      - name: Start the backend (+ worker) in ${{ matrix.mode }}-product mode and run all Playwright specs
         env:
           AXENTRA_PYTHON: python
-        run: scripts/e2e-backend.sh run --backend .backend --worker -- npx playwright test
+        run: scripts/e2e-backend.sh run --backend .backend --worker --mode ${{ matrix.mode }} -- npx playwright test
       - name: Upload the Playwright report and backend logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.mode }}
           path: |
             playwright-report/
             test-results/
