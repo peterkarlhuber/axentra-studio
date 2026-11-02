@@ -79,7 +79,7 @@ Due regole stabiliscono se un tipo di file viene accettato:
   sono bloccati, riconosciuti in base al tipo dichiarato, all'estensione del file e al contenuto
   (anche qualsiasi file che inizia con `#!`). A seconda della policy sui tipi di contenuto del
   prodotto, un file bloccato viene rifiutato oppure conservato come [allegato inerte](#inert). I
-  responsabili del prodotto impostano la policy nella tab **File** del prodotto; vedi
+  responsabili del prodotto impostano la policy nella scheda **File** del prodotto; vedi
   [Impostare la policy sui tipi di contenuto](help:data-overview#content-type-policy).
 - **Tipi consentiti.** Se l'operatore ha configurato un elenco di tipi consentiti
   (`storage.allowed_content_types`), vengono accettati solo questi tipi, per esempio
@@ -106,7 +106,7 @@ etichette: compaiono nel registro di audit.
 
 ## Quota di spazio {#quota}
 
-La scheda **Utilizzo dello spazio** confronta i byte e il numero di file del tenant con la sua quota
+Il riquadro **Utilizzo dello spazio** confronta i byte e il numero di file del tenant con la sua quota
 effettiva. L'indicatore assume un colore di avviso all'80 % e un colore critico al 95 %. La riga
 sottostante indica da dove proviene la quota: **Quota impostata per questo tenant**, **Quota
 ereditata dal valore predefinito del prodotto o del server** oppure **Nessuna quota: illimitato**.
@@ -118,7 +118,7 @@ restano.
 
 ### Modificare la quota di un tenant {#edit-quota}
 
-1. Nella scheda **Utilizzo dello spazio**, seleziona **Modifica quota**.
+1. Nel riquadro **Utilizzo dello spazio**, seleziona **Modifica quota**.
 2. Inserisci un **Limite di spazio** con la sua **Unità** (MiB, GiB, TiB) e/o un **Limite di file**.
    Lascia vuoto un campo per ereditare il valore predefinito del prodotto o del server; `0` blocca
    tutti i caricamenti.

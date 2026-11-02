@@ -8,7 +8,7 @@ Un **prodotto** è un'applicazione che gira sul tuo server Axentra, per esempio 
 di prenotazione. Ogni prodotto ha i propri tenant, utenti, ruoli, chiavi API e dati, e nulla viene
 condiviso tra i prodotti. Le persone che gestiscono un prodotto (invece di usarlo come clienti) ne
 sono gli **operatori**: hanno un ruolo di prodotto come **Product owner** (proprietario del prodotto) e sono
-elencate nella tab **Membri** del prodotto.
+elencate nella scheda **Membri** del prodotto.
 
 Apri l'elenco dei prodotti con [Prodotti](app:products) nella barra laterale. **Apri dashboard** ti
 porta all'interno di un prodotto; ogni altra schermata della barra laterale lavora poi all'interno di
@@ -30,7 +30,7 @@ quel prodotto.
 5. Scegli **Crea prodotto**.
 
 Studio apre la pagina del nuovo prodotto. Ne diventi proprietario (**Product owner**), quindi puoi
-aggiungere subito altri operatori nella tab **Membri**.
+aggiungere subito altri operatori nella scheda **Membri**.
 
 > [!NOTE]
 > Lo slug non può essere modificato in seguito. Scegline uno che ti vada bene vedere negli URL, nei
@@ -48,11 +48,11 @@ aggiungere subito altri operatori nella tab **Membri**.
 
 ## Modificare le impostazioni del prodotto {#settings}
 
-La tab **Impostazioni** di un prodotto contiene il nome, la descrizione e **Impostazioni (JSON)**: un
+La scheda **Impostazioni** di un prodotto contiene il nome, la descrizione e **Impostazioni (JSON)**: un
 oggetto JSON con la configurazione specifica del prodotto. Il codice del tuo prodotto può leggerlo e
 alcuni moduli di Axentra ne usano delle chiavi.
 
-1. Apri il prodotto da [Prodotti](app:products) e seleziona la tab **Impostazioni**.
+1. Apri il prodotto da [Prodotti](app:products) e seleziona la scheda **Impostazioni**.
 2. Modifica **Nome**, **Descrizione** o **Impostazioni (JSON)**.
 3. Scegli **Salva modifiche**.
 
@@ -62,7 +62,7 @@ Le modifiche si applicano immediatamente a tutti i tenant del prodotto.
 | ----------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `invitation_accept_url`       | Notifiche | Link usato nelle email di invito. `{token}` viene sostituito dal token di invito; se manca, viene aggiunto `?token=…`. Deve iniziare con `http://` o `https://`. Vedi [inviti](help:members-invitations). |
 | `default_locale`              | Notifiche | Lingua di riserva per i modelli di notifica, per esempio `"en"`.                                                                                                                                          |
-| `storage`                     | File      | Quote di archiviazione e policy sui tipi di contenuto per i caricamenti. Modifica invece la policy nella tab **File**. Vedi [file](help:files).                                                           |
+| `storage`                     | File      | Quote di archiviazione e policy sui tipi di contenuto per i caricamenti. Modifica invece la policy nella scheda **File**. Vedi [file](help:files).                                                        |
 
 ```json
 {
@@ -77,15 +77,15 @@ Le modifiche si applicano immediatamente a tutti i tenant del prodotto.
 
 > [!IMPORTANT]
 > Per modificare le impostazioni serve `product:manage` (proprietari e amministratori del prodotto).
-> Senza questa autorizzazione la tab mostra **Puoi visualizzare queste impostazioni, ma non
+> Senza questa autorizzazione la scheda mostra **Puoi visualizzare queste impostazioni, ma non
 > modificarle.** Un prodotto archiviato non può essere modificato in Studio; prima ripristinalo.
 
-La tab **File** (solo quando il modulo dei file è abilitato) contiene la policy di archiviazione del
+La scheda **File** (solo quando il modulo dei file è abilitato) contiene la policy di archiviazione del
 prodotto. È descritta in [file](help:files).
 
 ## Gestire gli operatori di prodotto {#members}
 
-La tab **Membri** elenca gli operatori del prodotto: gli utenti con un ruolo di prodotto. Le loro
+La scheda **Membri** elenca gli operatori del prodotto: gli utenti con un ruolo di prodotto. Le loro
 autorizzazioni di tenant valgono in **ogni** tenant del prodotto. I membri dei tenant si gestiscono
 invece in ciascun tenant, vedi [membri e inviti](help:members-invitations).
 
@@ -101,12 +101,12 @@ Nell'elenco compaiono anche i ruoli di prodotto personalizzati. Vedi
 
 ### Aggiungere un operatore {#add-operator}
 
-1. Apri la tab **Membri** e scegli **Aggiungi membro**.
+1. Apri la scheda **Membri** e scegli **Aggiungi membro**.
 2. Inserisci l'**Indirizzo email** della persona e scegli un **Ruolo**.
 3. Scegli **Aggiungi membro**.
 
 > [!IMPORTANT]
-> La tab **Membri** richiede `product_members:read`; aggiungere, modificare e rimuovere operatori
+> La scheda **Membri** richiede `product_members:read`; aggiungere, modificare e rimuovere operatori
 > richiede `product_members:manage` (proprietari del prodotto e amministratori della piattaforma).
 
 > [!NOTE]
@@ -189,7 +189,7 @@ semplici stringhe e virgole finali vengono rifiutati.
 
 **Verifica i dati inseriti: “settings are too large”** oppure un messaggio riguardante `storage`.
 L'oggetto supera circa 32.000 caratteri, oppure la parte `storage` non è valida. Accorcialo, oppure
-modifica la policy di archiviazione nella tab **File**.
+modifica la policy di archiviazione nella scheda **File**.
 
 **Modificato nel frattempo.** Qualcun altro ha salvato il prodotto mentre lo stavi modificando.
 Ricarica la pagina e applica di nuovo la tua modifica.

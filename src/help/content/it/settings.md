@@ -39,7 +39,7 @@ Una scelta fatta in un browser resta in quel browser finché non la cambi lì.
 
 ## Consultare la configurazione del server {#server-configuration}
 
-La scheda **Configurazione del server** mostra la configurazione effettiva e non segreta del server
+Il riquadro **Configurazione del server** mostra la configurazione effettiva e non segreta del server
 (`GET /v1/settings`) sotto forma di albero: gruppi come `limits` o `storage` contengono i rispettivi
 valori. Gli elenchi sono mostrati separati da virgole. Usala per rispondere a domande come “quali
 moduli sono abilitati?”, “quanto dura una sessione?” o “quanto può essere grande un file?” senza

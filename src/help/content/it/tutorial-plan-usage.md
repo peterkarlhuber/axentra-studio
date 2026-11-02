@@ -143,7 +143,7 @@ curl -sS -X POST "$AX/v1/products/$PID/tenants/$TID/usage/events" \
 
 1. Apri [Utilizzo](app:usage), scheda **Utilizzo per tenant**, e scegli `acme` (oppure seleziona
    **Utilizzo** nell'intestazione della pagina di fatturazione del tenant).
-2. La scheda `api_calls` mostra 951 chiamate, una barra al 95 %, i badge **Dal piano** e **Limite
+2. Il riquadro `api_calls` mostra 951 chiamate, una barra al 95 %, i badge **Dal piano** e **Limite
    rigido**, e **Rimanente** 49 chiamate.
 3. **Eventi di utilizzo** elenca entrambi gli eventi con le loro chiavi di idempotenza e la
    proprietà `endpoint`.
@@ -185,7 +185,7 @@ proporrebbe un upgrade.
 
 Supponi di accordarti per concedere ad `acme` 2.000 chiamate in questo periodo:
 
-1. In **Utilizzo per tenant**, scegli **Imposta override** sulla scheda `api_calls`.
+1. In **Utilizzo per tenant**, scegli **Imposta override** sul riquadro `api_calls`.
 2. Inserisci **Limite** `2000`, mantieni **Limite rigido** e scegli **Salva override**.
 3. Il badge diventa **Override del tenant**. Ripeti la richiesta del passo 7: viene accettata con
    `"source": "quota"`.
@@ -214,13 +214,13 @@ tenant del piano, modifica invece il diritto d'uso del piano. Dettagli:
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-| Cosa vedi                                                   | Perché                                                                         | Cosa fare                                                                        |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| `401`                                                       | La chiave è errata, revocata o scaduta                                         | Controlla `$KEY`; crea una nuova chiave                                          |
-| `403`                                                       | Alla chiave manca `usage:record`, oppure è legata a un altro tenant            | Controlla le autorizzazioni della chiave e l'**Ambito tenant**                   |
-| `404`                                                       | Id del prodotto o del tenant errato, oppure la chiave del contatore non esiste | Confronta gli id con Studio; controlla la chiave del contatore                   |
-| `409` “the meter is inactive”                               | Il contatore è stato disattivato                                               | **Attiva** il contatore in **Contatori**                                         |
-| `409` per la chiave di idempotenza                          | La chiave è stata già usata con un altro corpo                                 | Usa una nuova `Idempotency-Key`                                                  |
-| `422`                                                       | Manca `Idempotency-Key`, oppure la quantità non è valida                       | Invia l'header; usa una quantità maggiore o uguale a 0 con al massimo 6 decimali |
-| La scheda mostra **Predefinito del contatore** e limite 100 | L'abbonamento non è attivo, oppure il piano non ha `limit.api_calls`           | Controlla il passo 2 e il passo 3                                                |
-| `429` prima del previsto                                    | Contano anche le prenotazioni o altri eventi                                   | Controlla **Prenotato** ed **Eventi di utilizzo**                                |
+| Cosa vedi                                                     | Perché                                                                         | Cosa fare                                                                        |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `401`                                                         | La chiave è errata, revocata o scaduta                                         | Controlla `$KEY`; crea una nuova chiave                                          |
+| `403`                                                         | Alla chiave manca `usage:record`, oppure è legata a un altro tenant            | Controlla le autorizzazioni della chiave e l'**Ambito tenant**                   |
+| `404`                                                         | Id del prodotto o del tenant errato, oppure la chiave del contatore non esiste | Confronta gli id con Studio; controlla la chiave del contatore                   |
+| `409` “the meter is inactive”                                 | Il contatore è stato disattivato                                               | **Attiva** il contatore in **Contatori**                                         |
+| `409` per la chiave di idempotenza                            | La chiave è stata già usata con un altro corpo                                 | Usa una nuova `Idempotency-Key`                                                  |
+| `422`                                                         | Manca `Idempotency-Key`, oppure la quantità non è valida                       | Invia l'header; usa una quantità maggiore o uguale a 0 con al massimo 6 decimali |
+| Il riquadro mostra **Predefinito del contatore** e limite 100 | L'abbonamento non è attivo, oppure il piano non ha `limit.api_calls`           | Controlla il passo 2 e il passo 3                                                |
+| `429` prima del previsto                                      | Contano anche le prenotazioni o altri eventi                                   | Controlla **Prenotato** ed **Eventi di utilizzo**                                |

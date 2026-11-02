@@ -119,7 +119,7 @@ disattivato, così puoi provare un ricevitore prima di attivarlo. Il suo corpo c
 
 ## Controllare le consegne {#deliveries}
 
-La tab **Consegne** di un endpoint elenca le sue consegne dalla più recente: **Evento** (tipo e id
+La scheda **Consegne** di un endpoint elenca le sue consegne dalla più recente: **Evento** (tipo e id
 della consegna), **Stato**, **Risposta** (il codice di stato HTTP), **Tentativi**, **Durata** e
 **Creato**. Filtra per **Stato**; **Aggiorna** carica lo stato più recente.
 
@@ -190,7 +190,7 @@ fino al termine del periodo.
 
 ## Modificare o disattivare un endpoint {#edit}
 
-Apri la tab **Impostazioni** dell'endpoint, modifica **URL**, **Descrizione**, **Tipi di evento** o
+Apri la scheda **Impostazioni** dell'endpoint, modifica **URL**, **Descrizione**, **Tipi di evento** o
 **Attivato** e scegli **Salva modifiche**. **Annulla modifiche** ripristina i valori salvati.
 
 Disattivando **Attivato** si interrompono le nuove consegne. Le consegne ancora in attesa di un

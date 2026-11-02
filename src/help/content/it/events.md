@@ -35,7 +35,7 @@ corrisponde a `invoice.created` e `invoice.paid`, e `*` da solo corrisponde a og
 
 ## Consultare il registro eventi {#event-log}
 
-Apri [Eventi](app:events). La tab **Registro eventi** elenca gli eventi dal più recente con **Tipo**,
+Apri [Eventi](app:events). La scheda **Registro eventi** elenca gli eventi dal più recente con **Tipo**,
 **Tenant** (oppure **Livello prodotto**), **Autore** e **Verificatosi**. L'autore mostra il genere di
 chiamante (`user`, `api_key` o `system`) e il suo id. Scorri verso il basso e carica altri elementi
 per andare più indietro nel tempo.
@@ -57,7 +57,7 @@ server), **Chiave di idempotenza** (se chi ha pubblicato ne ha fornita una) e i 
 
 ## Osservare gli eventi in diretta {#live}
 
-Apri la tab **In diretta**. Studio apre una connessione al flusso di eventi del server e mostra gli
+Apri la scheda **In diretta**. Studio apre una connessione al flusso di eventi del server e mostra gli
 eventi **pubblicati da ora in poi**, con i più recenti in alto. Gli eventi precedenti si trovano nel
 **Registro eventi**.
 

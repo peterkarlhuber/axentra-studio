@@ -38,7 +38,7 @@ quell'indirizzo email), oppure dal codice di un prodotto che integra Axentra. Ve
 
 ## La pagina dell'utente {#profile}
 
-La scheda **Profilo** mostra:
+Il riquadro **Profilo** mostra:
 
 | Campo                          | Significato                                                                                                      |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
@@ -50,7 +50,7 @@ La scheda **Profilo** mostra:
 | **Ultimo accesso**, **Creato** | Data e ora.                                                                                                      |
 
 La pagina dell'utente non elenca le sue appartenenze. Per vedere o modificare che cosa può fare un
-utente in un tenant, apri la tab **Membri** del tenant; per gli operatori, la tab **Membri** del
+utente in un tenant, apri la scheda **Membri** del tenant; per gli operatori, la scheda **Membri** del
 prodotto.
 
 ### Utenti senza indirizzo email {#no-email}
@@ -104,7 +104,7 @@ appartenenze.
 | **Visualizzatore della piattaforma** | Accesso in sola lettura a tutti i prodotti, compresi i prodotti archiviati e i tenant sospesi, alle impostazioni e al registro di audit dell'intera installazione. |
 | **Amministratore della piattaforma** | Controllo completo dell'intera installazione: tutti i prodotti e gli utenti, creazione e archiviazione di prodotti, nessun limite dei ruoli.                       |
 
-1. Apri la pagina dell'utente. La scheda **Ruolo nella piattaforma** viene mostrata solo agli
+1. Apri la pagina dell'utente. Il riquadro **Ruolo nella piattaforma** viene mostrato solo agli
    amministratori della piattaforma.
 2. Scegli il nuovo **Ruolo nella piattaforma**.
 3. Scegli **Cambia ruolo nella piattaforma** e conferma. Per concedere **Amministratore della
@@ -118,7 +118,7 @@ appartenenze.
 ## Risoluzione dei problemi {#troubleshooting}
 
 **Non consentito nella schermata Utenti.** Non possiedi `product_users:read` in questo prodotto. I
-proprietari e i membri dei tenant non hanno questa autorizzazione; vedono i loro colleghi nella tab
+proprietari e i membri dei tenant non hanno questa autorizzazione; vedono i loro colleghi nella scheda
 **Membri** del tenant.
 
 **Mancano i pulsanti Disattiva utente e Disconnetti ovunque.** Richiedono `users:manage`, posseduta
@@ -136,5 +136,5 @@ della piattaforma.
 suoi tenant. Aggiungilo o invitalo, vedi [membri e inviti](help:members-invitations).
 
 **Un utente disattivato compare ancora nei tenant.** La disattivazione non rimuove le appartenenze.
-Rimuovile nella tab **Membri** del tenant se l'accesso non deve tornare quando l'utente viene
+Rimuovile nella scheda **Membri** del tenant se l'accesso non deve tornare quando l'utente viene
 riattivato.

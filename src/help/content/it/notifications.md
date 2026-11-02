@@ -26,7 +26,7 @@ questa autorizzazione vedi solo **Le mie preferenze**.
 
 **Statistiche di consegna** conta i messaggi di questo prodotto per stato, in totale e nelle
 **Ultime 24 ore**, e mostra il **Provider di consegna**, i **Tentativi di consegna (24 h)** e il
-**Messaggio in coda più vecchio**. La scheda si aggiorna ogni 30 secondi. Un messaggio in coda da
+**Messaggio in coda più vecchio**. Il riquadro si aggiorna ogni 30 secondi. Un messaggio in coda da
 molto tempo di solito significa che nessun dispatcher è in esecuzione (vedi
 [Risoluzione dei problemi](help:notifications#troubleshooting)).
 

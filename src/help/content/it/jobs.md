@@ -28,7 +28,7 @@ job.
 
 ### Contatori della panoramica {#overview}
 
-La scheda **Panoramica** conta i job per stato. Seleziona un contatore per mostrare solo quei job.
+Il riquadro **Panoramica** conta i job per stato. Seleziona un contatore per mostrare solo quei job.
 Sotto i contatori vedi quanti job sono riusciti e quanti non sono riusciti nelle ultime 24 ore (il
 numero dei non riusciti include i job **Esaurito**) e quando è stato creato il **Job in coda più
 vecchio**. Se quel momento continua ad allontanarsi nel tempo, nessun worker sta prelevando i job:

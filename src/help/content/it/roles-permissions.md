@@ -146,7 +146,7 @@ chiave diversa.
 dalla chiave maiuscole, trattini e spazi.
 
 **Conflitto: “the role is assigned N times; reassign those members first”.** Cambia il ruolo di quei
-membri (nelle tab **Membri** dei tenant e del prodotto) prima di eliminarlo.
+membri (nelle schede **Membri** dei tenant e del prodotto) prima di eliminarlo.
 
 **Verifica i dati inseriti: “permissions not allowed for a tenant role”.** Un ruolo di tenant può
 contenere solo autorizzazioni di tenant.

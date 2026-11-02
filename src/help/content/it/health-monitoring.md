@@ -13,17 +13,17 @@ sistema di monitoraggio (vedi [Per gli operatori](#for-operators)).
 
 > [!IMPORTANT]
 > Entrambe le pagine sono aperte a tutti gli utenti che hanno effettuato l'accesso e non dipendono
-> da un modulo. Le schede **Manutenzione e conservazione** e **Tracing e logging** richiedono
+> da un modulo. I riquadri **Manutenzione e conservazione** e **Tracing e logging** richiedono
 > `platform:settings` (ruoli nella piattaforma) o `product:manage` in almeno un prodotto
-> (**Product owner**, **Product admin**). La scheda **Metriche** dipende
+> (**Product owner**, **Product admin**). Il riquadro **Metriche** dipende
 > dalla configurazione delle metriche del server, non dal tuo ruolo (vedi [Metriche](#metrics)).
 
 ## Verificare se il server è integro {#check-health}
 
 1. Apri **Audit e monitoraggio** › **Stato del sistema** ([apri](app:health)).
-2. Leggi la scheda **Readiness**: lo stato complessivo e una riga per ogni controllo.
-3. Leggi la scheda **Liveness**: **OK** significa che il processo del server risponde.
-4. Scegli **Aggiorna** per ripetere subito il controllo. Entrambe le schede si aggiornano anche ogni
+2. Leggi il riquadro **Readiness**: lo stato complessivo e una riga per ogni controllo.
+3. Leggi il riquadro **Liveness**: **OK** significa che il processo del server risponde.
+4. Scegli **Aggiorna** per ripetere subito il controllo. Entrambi i riquadri si aggiornano anche ogni
    30 secondi; **Aggiornato …** indica quando è stato recuperato il risultato della readiness.
 
 ### Readiness {#readiness}
@@ -51,7 +51,7 @@ manca una dipendenza come il database.
 
 ### Versioni {#versions}
 
-La scheda **Versioni** in **Stato del sistema** mostra il nome e la versione del **Server**, la
+Il riquadro **Versioni** in **Stato del sistema** mostra il nome e la versione del **Server**, la
 **Versione API del server**, l'**Ambiente** (`development`, `test` o `production`), la **Versione
 di Studio** e la **Versione API richiesta** da questa build di Studio. Studio si rifiuta di avviarsi
 con un server la cui versione API non è compatibile; vedi
@@ -59,7 +59,7 @@ con un server la cui versione API non è compatibile; vedi
 
 ## Usare la pagina Monitoraggio {#monitoring}
 
-Apri **Audit e monitoraggio** › **Monitoraggio** ([apri](app:monitoring)). Mostra le stesse schede
+Apri **Audit e monitoraggio** › **Monitoraggio** ([apri](app:monitoring)). Mostra gli stessi riquadri
 **Readiness** e **Liveness** di **Stato del sistema**, più:
 
 - **Manutenzione e conservazione** e **Tracing e logging** (vedi [più sotto](#retention)),
@@ -70,7 +70,7 @@ caricate senza errori.
 
 ## Metriche {#metrics}
 
-La scheda **Metriche** legge l'endpoint Prometheus del server `GET /metrics` e lo mostra sotto
+Il riquadro **Metriche** legge l'endpoint Prometheus del server `GET /metrics` e lo mostra sotto
 forma di indicatori chiave e tabelle.
 
 | Indicatore chiave                                                                          | Calcolato da                                                                                             |

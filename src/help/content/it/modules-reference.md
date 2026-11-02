@@ -12,7 +12,7 @@ cosa dovrebbe abilitare un operatore.
 
 ## Quali moduli sono abilitati? {#check-modules}
 
-- La [Dashboard](app:dashboard) elenca tutti i moduli in **Moduli** nella scheda del server; i
+- La [Dashboard](app:dashboard) elenca tutti i moduli in **Moduli** nel riquadro del server; i
   moduli abilitati sono evidenziati, quelli disattivati sono grigi.
 - La pagina [Impostazioni](app:settings) (con `platform:settings` o `product:manage`) mostra la
   configurazione effettiva del server, compreso l'elenco dei moduli.

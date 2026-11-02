@@ -16,7 +16,7 @@ Gli operatori di un intero prodotto si gestiscono invece nel prodotto, vedi
 [prodotti](help:products#members).
 
 > [!IMPORTANT]
-> Per vedere le tab **Membri** e **Inviti** di un tenant serve `members:read` nel tenant;
+> Per vedere le schede **Membri** e **Inviti** di un tenant serve `members:read` nel tenant;
 > aggiungere, invitare, cambiare ruoli, rimuovere e revocare richiede `members:manage`. I
 > proprietari e gli amministratori del tenant possiedono entrambe; gli operatori **Support**
 > possiedono `members:manage` ma possono assegnare solo ruoli che rientrano nelle proprie
@@ -37,7 +37,7 @@ tra parentesi. Vedi [ruoli e autorizzazioni](help:roles-permissions).
 
 ## Aggiungere un utente esistente {#add}
 
-1. Apri il tenant da [Tenant](app:tenants) e seleziona la tab **Membri**.
+1. Apri il tenant da [Tenant](app:tenants) e seleziona la scheda **Membri**.
 2. Scegli **Aggiungi membro**.
 3. Inserisci l'**Indirizzo email** e scegli un **Ruolo**.
 4. Scegli **Aggiungi membro**.
@@ -66,7 +66,7 @@ ricevere un altro ruolo. Prima rendi proprietario qualcun altro.
 
 ## Invitare qualcuno via email {#invite}
 
-1. Apri il tenant e seleziona la tab **Inviti**, oppure apri [Inviti](app:invitations) e scegli il
+1. Apri il tenant e seleziona la scheda **Inviti**, oppure apri [Inviti](app:invitations) e scegli il
    tenant.
 2. Scegli **Invita membro**.
 3. Inserisci l'**Indirizzo email** e scegli un **Ruolo**. Studio preseleziona **Member**, oppure il

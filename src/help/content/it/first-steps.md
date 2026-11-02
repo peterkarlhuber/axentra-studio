@@ -38,7 +38,7 @@ al suo interno.
 
 **Risultato atteso:** Studio segnala «Prodotto “Example CRM” creato» e apre la pagina del prodotto.
 
-**Verifica:** apri la tab **Membri**. Il tuo account è elencato con il ruolo **Product owner**
+**Verifica:** apri la scheda **Membri**. Il tuo account è elencato con il ruolo **Product owner**
 (proprietario del prodotto): chi crea un prodotto ne diventa il proprietario. Il prodotto compare anche nel selettore
 di prodotto in alto.
 
@@ -56,10 +56,10 @@ da quelli di tutti gli altri tenant.
 4. Scegli **Crea tenant**.
 
 **Risultato atteso:** Studio segnala «Tenant “Acme Ltd” creato» e apre la pagina del tenant con le
-tab **Dettagli**, **Membri** e **Inviti**. Lo stato è **Attivo**.
+schede **Dettagli**, **Membri** e **Inviti**. Lo stato è **Attivo**.
 
 **Verifica:** tornando alla dashboard, **Tenant** mostra ora `1`. Annota l'**ID** del tenant nella
-tab **Dettagli** (inizia con `ten_`); ti servirà nel passaggio 4.
+scheda **Dettagli** (inizia con `ten_`); ti servirà nel passaggio 4.
 
 > [!NOTE]
 > Un nuovo tenant non ha membri. Li aggiungi nel passaggio successivo.
@@ -69,7 +69,7 @@ tab **Dettagli** (inizia con `ten_`); ti servirà nel passaggio 4.
 Le persone entrano in un tenant tramite un **invito** (oppure vengono aggiunte direttamente se hanno
 già un account che puoi vedere).
 
-1. Nella pagina del tenant, apri la tab **Inviti**.
+1. Nella pagina del tenant, apri la scheda **Inviti**.
 2. Scegli **Invita membro**.
 3. Inserisci l'**Indirizzo email** di un collega, per esempio `maria@example.com`.
 4. Lascia **Ruolo** su **Member** oppure scegli un altro ruolo. I ruoli che superano le tue
@@ -83,7 +83,7 @@ invia anche l'invito per email), altrimenti solo il **Token di invito**.
 6. Copia il link o il token e invialo al tuo collega tramite un canale di cui ti fidi, poi scegli
    **Fatto**.
 
-**Verifica:** la tab **Inviti** elenca l'invito con stato **In attesa** e una data di scadenza di
+**Verifica:** la scheda **Inviti** elenca l'invito con stato **In attesa** e una data di scadenza di
 sette giorni dopo.
 
 > [!IMPORTANT]
@@ -113,7 +113,7 @@ chiave API**, che inizia con `axk_`. Copialo subito: viene mostrato solo questa 
 
 ### Provare la chiave {#try-api-key}
 
-Chiama l'API con la chiave. Sostituisci l'indirizzo, l'ID del prodotto (dalla scheda **Server** della
+Chiama l'API con la chiave. Sostituisci l'indirizzo, l'ID del prodotto (dal riquadro **Server** della
 dashboard, **ID prodotto**) e l'ID del tenant:
 
 ```bash

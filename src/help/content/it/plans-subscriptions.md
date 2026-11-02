@@ -198,7 +198,7 @@ nell'intestazione della pagina apre l'utilizzo del tenant.
 
 ## Provider di pagamento {#payment-provider}
 
-La scheda **Provider di pagamento** in **Piani** e **Abbonamenti** mostra la configurazione del server:
+Il riquadro **Provider di pagamento** in **Piani** e **Abbonamenti** mostra la configurazione del server:
 
 | Provider            | Comportamento                                                                                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -211,7 +211,7 @@ da Studio** indica se Studio può avviare un checkout ospitato: solo con il prov
 Stripe con i pagamenti reali disattivati.
 
 Il provider viene scelto dall'operatore nella configurazione del server (`billing.provider`); non
-si può cambiare in Studio. La scheda richiede `platform:settings` o `product:manage`; altrimenti
+si può cambiare in Studio. Il riquadro richiede `platform:settings` o `product:manage`; altrimenti
 indica che la configurazione non è visibile per te. Vedi [Impostazioni](help:settings) e
 [Configurazione del server](help:server-configuration).
 

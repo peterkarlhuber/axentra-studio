@@ -13,7 +13,7 @@ trovano nella pagina [Impostazioni](help:settings#preferences) e nello stesso me
 
 ## Controllare il tuo account {#account}
 
-La scheda **Account** mostra:
+Il riquadro **Account** mostra:
 
 | Campo                       | Significato                                                                                               |
 | --------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ La nuova password deve
 
 ### Impostare una prima password (utenti single sign-on) {#set-password}
 
-Se hai sempre effettuato l'accesso solo tramite single sign-on, la scheda si chiama **Imposta una
+Se hai sempre effettuato l'accesso solo tramite single sign-on, il riquadro si chiama **Imposta una
 password** e non ha il campo **Password attuale**. Una password ti permette di accedere anche con
 email e password.
 

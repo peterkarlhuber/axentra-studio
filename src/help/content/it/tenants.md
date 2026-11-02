@@ -36,8 +36,8 @@ tenant.
 3. Controlla lo **Slug**. Studio lo ricava dal nome; puoi modificarlo prima di creare il tenant.
 4. Scegli **Crea tenant**.
 
-Studio apre il nuovo tenant. Non ha ancora membri: aggiungi la prima persona del cliente nella tab
-**Membri**, oppure invitala nella tab **Inviti**, di solito con il ruolo **Owner**. Vedi
+Studio apre il nuovo tenant. Non ha ancora membri: aggiungi la prima persona del cliente nella scheda
+**Membri**, oppure invitala nella scheda **Inviti**, di solito con il ruolo **Owner**. Vedi
 [membri e inviti](help:members-invitations).
 
 | Campo     | Che cosa fa                                                                              | Valori consentiti / predefinito                                                                                                                   |
@@ -53,7 +53,7 @@ Studio apre il nuovo tenant. Non ha ancora membri: aggiungi la prima persona del
 
 ## Rinominare un tenant {#rename}
 
-1. Apri il tenant e resta nella tab **Dettagli**.
+1. Apri il tenant e resta nella scheda **Dettagli**.
 2. Modifica il **Nome** in **Modifica tenant**.
 3. Scegli **Salva modifiche**.
 

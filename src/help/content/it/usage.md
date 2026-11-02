@@ -46,7 +46,7 @@ valori giornalieri, **Massimo** prende il valore giornaliero più alto, **Ultimo
 valore dell'ultimo giorno con utilizzo. Tutti i giorni sono giorni UTC, quindi un giorno può
 iniziare la sera o la mattina secondo la tua ora locale.
 
-La **Dashboard** del prodotto ha una scheda **Utilizzo di questo mese** con i totali per contatore
+La **Dashboard** del prodotto ha un riquadro **Utilizzo di questo mese** con i totali per contatore
 dal primo giorno del mese UTC corrente.
 
 ## Creare un contatore {#create-meter}
@@ -115,7 +115,7 @@ Nel menu delle azioni della riga (**Azioni per il contatore …**):
 ## Controllare utilizzo e limiti di un tenant {#tenant-usage}
 
 1. Apri la scheda **Utilizzo per tenant** e scegli il tenant (oppure seleziona un tenant in **Totali per tenant**).
-2. **Utilizzo nel periodo** mostra una scheda per ogni contatore attivo con:
+2. **Utilizzo nel periodo** mostra un riquadro per ogni contatore attivo con:
    - il valore nel periodo corrente e, per i contatori con limite, una barra con
      “_usato_ di _limite_ usato (_n_ %), prenotazioni incluse”;
    - la provenienza del limite (vedi sotto) e **Limite rigido** o **Limite flessibile**;
@@ -153,12 +153,12 @@ ne imposta una propria.
 
 Richiede l'autorizzazione di prodotto `usage:manage`.
 
-1. In **Utilizzo nel periodo**, scegli **Imposta override** sulla scheda del contatore.
+1. In **Utilizzo nel periodo**, scegli **Imposta override** sul riquadro del contatore.
 2. Inserisci un **Limite**. Lascialo vuoto per un override illimitato (il tenant non ha quindi alcun
    limite, anche se il suo piano ne prevede uno).
 3. Scegli l'**Applicazione** e **Salva override**.
 
-Il badge diventa **Override del tenant**. **Rimuovi override** (visibile solo sulle schede con un
+Il badge diventa **Override del tenant**. **Rimuovi override** (visibile solo sui riquadri con un
 override del tenant) fa tornare in vigore il limite del piano o il valore predefinito del
 contatore. Gli override valgono dal successivo utilizzo registrato; l'utilizzo già registrato
 resta. Le modifiche alle quote vengono registrate nel registro di audit.
@@ -250,7 +250,7 @@ L'API non offre un elenco delle prenotazioni, quindi Studio ne cerca una tramite
 | **Conflitto** durante l'eliminazione di un contatore               | Il contatore ha utilizzo registrato                                                     | **Disattiva** il contatore invece di eliminarlo                                                                                                      |
 | **Conflitto** “a meter with this key exists”                       | Le chiavi sono univoche per prodotto, anche per i contatori inattivi                    | Scegli un'altra chiave o riattiva il vecchio contatore                                                                                               |
 | **Modificato nel frattempo**                                       | Qualcun altro ha modificato il contatore                                                | Ricarica e ripeti la modifica                                                                                                                        |
-| Il tuo prodotto riceve `429 quota_exceeded`                        | Verrebbe superato un limite rigido                                                      | Controlla l'origine del limite sulla scheda; alza il limite del piano, imposta un override della quota o attendi la fine del periodo (`Retry-After`) |
+| Il tuo prodotto riceve `429 quota_exceeded`                        | Verrebbe superato un limite rigido                                                      | Controlla l'origine del limite sul riquadro; alza il limite del piano, imposta un override della quota o attendi la fine del periodo (`Retry-After`) |
 | Il tuo prodotto riceve `409` “the meter is inactive”               | Il contatore è stato disattivato                                                        | **Attiva** il contatore in **Contatori**                                                                                                             |
 | Il tuo prodotto riceve `409` per una chiave di idempotenza         | La chiave è stata riutilizzata con un corpo diverso                                     | Usa una nuova chiave per ogni evento di utilizzo distinto                                                                                            |
 | **Verifica i dati inseriti** durante la registrazione              | Quantità, `occurred_at` o `properties` fuori dai limiti indicati sopra                  | Correggi il valore; invia `occurred_at` con un fuso orario                                                                                           |

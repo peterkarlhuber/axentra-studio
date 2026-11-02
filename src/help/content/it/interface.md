@@ -18,8 +18,8 @@ prodotti se non ne hai ancora nessuno. Ogni schermata è composta da tre parti:
   corrente, ogni passaggio è cliccabile), a destra il **selettore di prodotto**, il pulsante della
   guida e il **menu utente**.
 - **Area dei contenuti**: il titolo della pagina con una descrizione di una riga, l'azione
-  principale della pagina a destra (per esempio **Nuovo tenant**) e, sotto, filtri, tabelle, schede
-  e tab.
+  principale della pagina a destra (per esempio **Nuovo tenant**) e, sotto, filtri, tabelle, riquadri
+  e schede.
 
 ## La barra laterale {#sidebar}
 
@@ -129,7 +129,7 @@ La **Dashboard** è la pagina iniziale di un prodotto. Mostra:
   **Richieste negate (24 h)**. Ogni contatore rimanda alla pagina corrispondente; il suo
   suggerimento (i) spiega esattamente che cosa viene contato. Se il server non restituisce
   contatori, vedi “Il server non ha restituito contatori per questo prodotto.”
-- Schede di **Utilizzo e fatturazione**, quando questi moduli sono abilitati e puoi leggerli.
+- Riquadri di **Utilizzo e fatturazione**, quando questi moduli sono abilitati e puoi leggerli.
 - **Stato del sistema**: il risultato del controllo di readiness del server, con **Dettagli**.
 - **Server**: **Versione del server**, **Versione API**, **Ambiente**, **Modalità**, **ID prodotto**
   e i **Moduli** con il loro stato (verde: abilitato, grigio: non abilitato).
@@ -147,7 +147,7 @@ chiave API** (con `api_keys:manage`).
 | **Richieste negate (24 h)** | Tentativi rifiutati nelle ultime 24 ore; apre il registro di audit filtrato sugli eventi negati. |
 
 > [!TIP]
-> La scheda **Server** risponde alla domanda più frequente del supporto: “Quale versione è in
+> Il riquadro **Server** risponde alla domanda più frequente del supporto: “Quale versione è in
 > esecuzione, e il modulo è almeno abilitato?”
 
 ## Elenchi e moduli {#lists-forms}
@@ -201,7 +201,7 @@ Tutto in Studio funziona con la tastiera:
 | Tab / Maiusc+Tab               | Controllo successivo / precedente. Il focus è sempre visibile.                                                   |
 | Tab subito dopo il caricamento | Raggiunge **Vai al contenuto principale**; Invio salta la navigazione.                                           |
 | Invio / Spazio                 | Attiva pulsanti, link, caselle di controllo, interruttori e suggerimenti informativi.                            |
-| Tasti freccia                  | Spostano la selezione nei menu, negli elenchi e tra le tab.                                                      |
+| Tasti freccia                  | Spostano la selezione nei menu, negli elenchi e tra le schede.                                                   |
 | Esc                            | Chiude un menu, una finestra, un suggerimento informativo o la navigazione mobile (non le finestre con segreti). |
 | F8                             | Salta all'area delle notifiche (messaggi brevi).                                                                 |
 

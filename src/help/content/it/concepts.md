@@ -139,7 +139,7 @@ Tra i moduli opzionali ci sono `storage` (file), `events` (job, pianificazioni, 
 
 In Studio, una voce della barra laterale il cui modulo non è abilitato resta visibile e mostra
 **Off**. Aprendola compare **Modulo non abilitato su questo server**, con l'id del modulo che
-l'operatore deve abilitare. La scheda **Server** della dashboard elenca tutti i moduli e il loro
+l'operatore deve abilitare. Il riquadro **Server** della dashboard elenca tutti i moduli e il loro
 stato. Vedi il [riferimento dei moduli](help:modules-reference).
 
 ## Chiave API {#api-key}
@@ -199,7 +199,7 @@ Il server funziona in una di due **modalità**, impostata dall'operatore:
 
 Tutto il resto (tenant, ruoli, percorsi API, autorizzazioni) funziona allo stesso modo in entrambe
 le modalità. Il passaggio da prodotto singolo a multiprodotto è una modifica di configurazione
-senza migrazione dei dati. La scheda **Server** della dashboard mostra la **Modalità** attuale.
+senza migrazione dei dati. Il riquadro **Server** della dashboard mostra la **Modalità** attuale.
 
 ## ID della richiesta {#request-id}
 
