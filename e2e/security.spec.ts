@@ -1,4 +1,5 @@
 import { expect, test, type Browser, type Page } from '@playwright/test';
+import { specProduct } from './support';
 import {
   api,
   apiClient,
@@ -21,6 +22,9 @@ import {
  * A second, non-admin account is created by the `studio.e2e.create_user` job of
  * e2e/fixtures/axentra_e2e_jobs.py (Axentra has no public API for that), so the worker must run
  * (`scripts/e2e-backend.sh run --worker`, AXENTRA_E2E_WORKER=1).
+ *
+ * Multi-product mode: a new product per test. Single-product mode: the server's one product
+ * (shared), with a new tenant, template and custom role per test (keys carry the suffix).
  */
 const worker = process.env.AXENTRA_E2E_WORKER === '1';
 
@@ -61,10 +65,9 @@ async function createFixture(page: Page, project: string): Promise<Fixture> {
   await login(page);
   const client = await apiClient(page);
   const me = await client.get<{ user: { id: string; email: string } }>('/v1/me');
-  const product = await client.post<{ id: string }>('/v1/products', {
+  const product = await specProduct(page.request, {
     name: `Security E2E ${suffix}`,
     slug: `security-e2e-${suffix}`,
-    description: '',
   });
   const tenant = await client.post<{ id: string }>(`/v1/products/${product.id}/tenants`, {
     name: `Tenant ${suffix}`,
@@ -112,16 +115,17 @@ async function createNotifier(page: Page, fixture: Fixture) {
     )
     .toBe('succeeded');
   const userId = result.result?.user_id ?? '';
+  const roleKey = `e2e_notifier_${fixture.suffix}`;
   await client.post(`/v1/products/${fixture.productId}/roles`, {
-    key: 'e2e_notifier',
-    name: 'E2E notifier',
+    key: roleKey,
+    name: `E2E notifier ${fixture.suffix}`,
     scope: 'product',
     description: 'notify:send without notify:send_external',
     permissions: NOTIFIER_PERMISSIONS,
   });
   await client.post(`/v1/products/${fixture.productId}/members`, {
     user_id: userId,
-    role: 'e2e_notifier',
+    role: roleKey,
   });
   return { email: userEmail, password: userPassword };
 }

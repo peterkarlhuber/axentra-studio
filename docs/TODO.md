@@ -14,8 +14,9 @@ the backend's `docs/TODO.md`.
 ## P0
 
 - **First CI run of the `contract` and `e2e` jobs.** Both ran locally only (see
-  [COMPATIBILITY.md](COMPATIBILITY.md)). Confirm them on GitHub Actions, then fill in the Studio
-  commit in the compatibility table.
+  [COMPATIBILITY.md](COMPATIBILITY.md)). Confirm them on GitHub Actions (the `e2e` job now runs
+  twice, `mode: multi` and `mode: single`), then fill in the Studio commit in the compatibility
+  table.
 
 ## P1
 
@@ -71,7 +72,18 @@ the backend's `docs/TODO.md`.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 
+- **Single-product e2e runs share one product.** With `--mode single` every spec, both
+  Playwright projects and both workers work in the same product at the same time. The specs use
+  per-run names and read product-wide counts from the API; the live event view only asserts "at
+  least one new event" there (`e2e/events.spec.ts`). A new spec must follow `specProduct()` in
+  `e2e/support.ts` or it will collide in single mode.
+
 ## P3
+
+- **Single-product mode with leftover products.** Axentra accepts `mode = "single"` on a database
+  that also holds other products as long as the configured slug exists. Studio then hides the
+  switcher; a platform admin reaches the other products only through the Products page (and they
+  cannot be archived there, the backend refuses it in single mode). Not covered by e2e.
 
 - **Dev-only `npm audit` findings.** `npm audit` reports 16 moderate findings, all in development
   tooling: `minimatch` (GHSA-g3hv-75wg-m249, ReDoS-style "globparts amplification") pulled in by

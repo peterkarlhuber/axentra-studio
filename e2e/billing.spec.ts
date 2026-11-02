@@ -1,11 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
+import { settleAnimations, specProduct } from './support';
 
 /**
  * Usage & Billing against a real Axentra API: a meter created in the UI, usage recorded through
  * the API, chart and data table; a plan created in the UI and a tenant subscribed to it. The
  * server must use the `manual` (or `fake`) billing provider; nothing here touches a real
  * payment provider.
+ *
+ * Multi-product mode: each test works in its own new product. Single-product mode: both tests
+ * (and both Playwright projects) share the server's one product, so tenant names, meter and plan
+ * keys carry a per-run tag, and product-wide numbers are read from the API instead of assumed.
  */
 const api = process.env.AXENTRA_E2E_API;
 const email = process.env.AXENTRA_E2E_EMAIL;
@@ -20,6 +25,7 @@ test.skip(
 test.describe.configure({ timeout: 120_000 });
 
 async function expectNoA11yViolations(page: Page) {
+  await settleAnimations(page);
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .analyze();
@@ -78,29 +84,32 @@ async function call(
 test('meters, recorded usage, chart and data table', async ({ page }, testInfo) => {
   await login(page);
   const suffix = `${testInfo.project.name}-${Date.now().toString(36)}`;
-  const product = await call(page.request, 'POST', '/v1/products', {
+  const tag = `${testInfo.project.name.slice(0, 1)}${Date.now().toString(36)}`;
+  const { id: productId } = await specProduct(page.request, {
     name: `Usage ${suffix}`,
     slug: `usage-${suffix}`,
   });
-  const productId = String(product.id);
+  const tenantName = `Acme ${tag}`;
   const tenant = await call(page.request, 'POST', `/v1/products/${productId}/tenants`, {
-    name: 'Acme',
-    slug: 'acme',
+    name: tenantName,
+    slug: `acme-${suffix}`,
   });
   const tenantId = String(tenant.id);
+  const meterKey = `api_calls_${tag}`;
+  const meterName = `API calls ${tag}`;
 
   // Create the meter in the UI.
   await page.goto(`/p/${productId}/usage?tab=meters`);
   await expect(page.getByRole('heading', { level: 1, name: 'Usage' })).toBeVisible();
   await page.getByRole('button', { name: 'New meter' }).click();
   const dialog = page.getByRole('dialog');
-  await dialog.getByLabel(/^Key/).fill('api_calls');
-  await dialog.getByLabel(/^Name/).fill('API calls');
+  await dialog.getByLabel(/^Key/).fill(meterKey);
+  await dialog.getByLabel(/^Name/).fill(meterName);
   await dialog.getByLabel(/^Unit/).fill('calls');
   await dialog.getByLabel(/^Default limit/).fill('100');
   await dialog.getByRole('button', { name: 'Create meter' }).click();
   await expect(dialog).toBeHidden();
-  await expect(page.getByRole('cell', { name: /api_calls/ })).toBeVisible();
+  await expect(page.getByRole('cell', { name: new RegExp(meterKey) })).toBeVisible();
   await checkPage(page);
 
   // Record usage through the API (as the product backend would), idempotently.
@@ -112,24 +121,32 @@ test('meters, recorded usage, chart and data table', async ({ page }, testInfo) 
       page.request,
       'POST',
       `/v1/products/${productId}/tenants/${tenantId}/usage/events`,
-      { meter: 'api_calls', quantity },
+      { meter: meterKey, quantity },
       { 'Idempotency-Key': `${suffix}-${key}` },
     );
   }
 
   // Product overview: chart, its data table and totals per tenant.
   await page.goto(`/p/${productId}/usage`);
-  const chart = page.getByRole('img', { name: /API calls, all tenants: bar chart/ });
+  // Chosen explicitly: in single-product mode the other project's meter is listed as well.
+  await page.getByLabel('Meter', { exact: true }).selectOption(meterKey);
+  const chart = page.getByRole('img', {
+    name: `${meterName}, all tenants: bar chart`,
+    exact: false,
+  });
   await expect(chart).toBeVisible();
   await expect(chart).toHaveAttribute('aria-label', /Total 12 calls/);
   await page.getByText('Show data table').click();
-  const table = page.getByRole('table', { name: /API calls, all tenants per day/ });
+  const table = page.getByRole('table', {
+    name: `${meterName}, all tenants per day`,
+    exact: false,
+  });
   await expect(table.getByRole('cell', { name: '12', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Acme' })).toBeVisible();
+  await expect(page.getByRole('link', { name: tenantName, exact: true })).toBeVisible();
   await checkPage(page);
 
   // Tenant view: current period against the meter default limit, and the events.
-  await page.getByRole('link', { name: 'Acme' }).click();
+  await page.getByRole('link', { name: tenantName, exact: true }).click();
   await expect(page.getByText(/12 of 100 calls used/)).toBeVisible();
   const events = page.getByRole('region', { name: 'Usage events' });
   await expect(events.getByRole('cell', { name: '7', exact: true })).toBeVisible();
@@ -144,24 +161,27 @@ test('plans, subscribing a tenant and entitlements', async ({ page }, testInfo) 
   test.skip(provider === 'stripe', 'Runs only with the manual or fake billing provider.');
 
   const suffix = `${testInfo.project.name}-${Date.now().toString(36)}`;
-  const product = await call(page.request, 'POST', '/v1/products', {
+  const tag = `${testInfo.project.name.slice(0, 1)}${Date.now().toString(36)}`;
+  const { id: productId } = await specProduct(page.request, {
     name: `Billing ${suffix}`,
     slug: `billing-${suffix}`,
   });
-  const productId = String(product.id);
+  const tenantName = `Globex ${tag}`;
   const tenant = await call(page.request, 'POST', `/v1/products/${productId}/tenants`, {
-    name: 'Globex',
-    slug: 'globex',
+    name: tenantName,
+    slug: `globex-${suffix}`,
   });
   const tenantId = String(tenant.id);
+  const planKey = `team-${tag}`;
+  const planName = `Team ${tag}`;
 
   await page.goto(`/p/${productId}/plans`);
   await expect(page.getByRole('heading', { level: 1, name: 'Plans' })).toBeVisible();
   await expect(page.getByText(/never asks for card or bank details/)).toBeVisible();
   await page.getByRole('button', { name: 'New plan' }).click();
   const dialog = page.getByRole('dialog');
-  await dialog.getByLabel(/^Name/).fill('Team');
-  await dialog.getByLabel(/^Key/).fill('team');
+  await dialog.getByLabel(/^Name/).fill(planName);
+  await dialog.getByLabel(/^Key/).fill(planKey);
   await dialog.getByLabel(/^Trial days/).fill('14');
   if (provider === 'manual') {
     await dialog.getByRole('button', { name: 'Add price' }).click();
@@ -173,16 +193,17 @@ test('plans, subscribing a tenant and entitlements', async ({ page }, testInfo) 
   await dialog.getByLabel(/^Feature name/).fill('sso');
   await dialog.getByRole('button', { name: 'Create plan' }).click();
   await expect(dialog).toBeHidden();
-  if (provider === 'manual') await expect(page.getByText('€19.90 / month')).toBeVisible();
+  const planRow = page.getByRole('row').filter({ hasText: planKey });
+  if (provider === 'manual') await expect(planRow.getByText('€19.90 / month')).toBeVisible();
   await checkPage(page);
 
   // Subscribe the tenant.
   await page.goto(`/p/${productId}/subscriptions/${tenantId}`);
-  await expect(page.getByRole('heading', { level: 1, name: 'Globex' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: tenantName })).toBeVisible();
   await expect(page.getByText('No subscription')).toBeVisible();
   await page.getByRole('button', { name: 'Subscribe to a plan' }).click();
   const subscribe = page.getByRole('dialog');
-  await subscribe.getByLabel(/^Plan/).selectOption('team');
+  await subscribe.getByLabel(/^Plan/).selectOption(planKey);
   await subscribe.getByRole('button', { name: 'Subscribe' }).click();
   await expect(subscribe).toBeHidden();
   await expect(page.getByText(/Trial ends in 14 days/)).toBeVisible();
@@ -199,10 +220,18 @@ test('plans, subscribing a tenant and entitlements', async ({ page }, testInfo) 
 
   // The product list shows the subscription; the dashboard summarizes it.
   await page.goto(`/p/${productId}/subscriptions`);
-  await expect(page.getByRole('link', { name: 'Globex' })).toBeVisible();
+  await expect(page.getByRole('link', { name: tenantName, exact: true })).toBeVisible();
   await checkPage(page);
+  // Counted from the API: in single-product mode other runs' plans are in the same product.
+  const plans = (await (
+    await page.request.get(`/v1/products/${productId}/billing/plans`)
+  ).json()) as { active: boolean }[];
+  const active = plans.filter((plan) => plan.active).length;
+  expect(active).toBeGreaterThanOrEqual(1);
   await page.goto(`/p/${productId}/dashboard`);
   await expect(page.getByRole('heading', { name: 'Billing', exact: true })).toBeVisible();
-  await expect(page.getByText('1 active plan of 1')).toBeVisible();
+  await expect(
+    page.getByText(`${active} active plan${active === 1 ? '' : 's'} of ${plans.length}`),
+  ).toBeVisible();
   await checkPage(page);
 });

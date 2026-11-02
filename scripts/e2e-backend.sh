@@ -12,6 +12,8 @@
 #                   (`--ref pinned` reads api/BACKEND_REF). A private repo needs AXENTRA_REPO_TOKEN.
 #   --install       create a venv in the state dir and `pip install "<checkout>[server]"`
 #                   (default: use $AXENTRA_PYTHON, which must already have axentra installed)
+#   --mode MODE     deployment model: `multi` (default) or `single` (see Axentra's
+#                   docs/architecture/DEPLOYMENT_MODELS.md); also AXENTRA_E2E_MODE
 #   --worker        also run `axentra worker --load axentra_e2e_jobs` (jobs, schedules, webhooks,
 #                   plus the e2e job handlers in e2e/fixtures) and `axentra notify-dispatch --loop`
 #                   (notification delivery)
@@ -19,17 +21,20 @@
 # What `up` does:
 #   1. creates database $AXENTRA_E2E_DB owned by the NON-superuser role $AXENTRA_E2E_DB_ROLE
 #      (both dropped first if they exist, so RLS is enforced exactly as in production),
-#   2. writes a config (state dir/axentra.toml) with every module enabled (storage: local,
+#   2. writes a config (state dir/axentra.toml) for the chosen deployment mode (`mode = "multi"`,
+#      or `mode = "single"` with a [product] section) with every module enabled (storage: local,
 #      notify: local provider, events with plain-http/private webhook targets and short retries,
 #      usage, billing: manual) that allows the Studio preview origin; environment "test", so the
 #      development-only webhook settings are accepted (the backend refuses them in production),
 #   3. `axentra migrate`, `axentra admin setup-token`, `axentra serve` (+ workers with --worker),
 #   4. creates the first platform admin through POST /v1/auth/setup with the setup token, then
-#      fixtures through the API: a product with a tenant, a free plan the tenant subscribes to, a
+#      fixtures through the API: a product (multi: POST /v1/products; single: the product the
+#      backend created on start from [product], read from GET /v1/meta, after checking that
+#      POST /v1/products is refused with 409 mode_not_supported) with a tenant, a free plan the tenant subscribes to, a
 #      job, a webhook endpoint (no matching events) and a notification template, so every route
 #      of the a11y sweep (e2e/a11y.spec.ts) has its parameters,
 #   5. writes the exports for Playwright (AXENTRA_E2E_API, _EMAIL, _PASSWORD, _PRODUCT_ID,
-#      _TENANT_ID, _JOB_ID, _WEBHOOK_ID, _TEMPLATE_KEY, _WORKER, _NOTIFY_DISPATCH, ...).
+#      _TENANT_ID, _JOB_ID, _WEBHOOK_ID, _TEMPLATE_KEY, _MODE, _WORKER, _NOTIFY_DISPATCH, ...).
 #
 # Env (all optional except the PostgreSQL URL):
 #   AXENTRA_E2E_PG_URL     superuser URL (fallback AXENTRA_TEST_DATABASE_URL)
@@ -39,6 +44,7 @@
 #   AXENTRA_E2E_PORT       Studio preview port allowed as origin (default 4173, as playwright.config.ts)
 #   AXENTRA_E2E_STATE_DIR  runtime files   (default .e2e-backend in the repository; git-ignored)
 #   AXENTRA_PYTHON         Python with axentra[server] (default: python3; ignored with --install)
+#   AXENTRA_E2E_MODE       multi | single (default multi; same as --mode)
 #   AXENTRA_E2E_WORKER=1   same as --worker
 set -euo pipefail
 
@@ -51,6 +57,7 @@ API_PORT="${AXENTRA_E2E_API_PORT:-18080}"
 PREVIEW_PORT="${AXENTRA_E2E_PORT:-4173}"
 PG_URL="${AXENTRA_E2E_PG_URL:-${AXENTRA_TEST_DATABASE_URL:-}}"
 WORKER="${AXENTRA_E2E_WORKER:-0}"
+MODE="${AXENTRA_E2E_MODE:-multi}"
 INSTALL=0
 BACKEND="${AXENTRA_BACKEND_DIR:-}"
 REF=""
@@ -76,11 +83,14 @@ while [[ $# -gt 0 ]]; do
     --ref) REF="$2"; shift 2 ;;
     --install) INSTALL=1; shift ;;
     --worker) WORKER=1; shift ;;
+    --mode) MODE="$2"; shift 2 ;;
     --) shift; RUN_CMD=("$@"); break ;;
     -h | --help) usage; exit 0 ;;
     *) die "unknown argument: $1 (see --help)" ;;
   esac
 done
+
+[[ "$MODE" == "multi" || "$MODE" == "single" ]] || die "--mode must be multi or single (got '$MODE')"
 
 # Identifiers are interpolated into SQL; allow only plain names.
 [[ "$DB" =~ ^[a-z_][a-z0-9_]{0,62}$ ]] || die "AXENTRA_E2E_DB must match ^[a-z_][a-z0-9_]*$"
@@ -211,12 +221,18 @@ PY
   "$py" -m axentra.cli keys generate --kid e2e | tr -d '\n' >"$STATE/secrets/master_keys"
   umask 022
   local base="http://127.0.0.1:$API_PORT"
+  local product_section=""
+  if [[ "$MODE" == "single" ]]; then
+    # Single-product mode: Axentra creates this product on start (idempotent) and refuses
+    # creating, archiving and restoring products (409 mode_not_supported).
+    product_section=$'\n[product]\nslug = "studio-e2e"\nname = "Studio e2e"\n'
+  fi
   cat >"$STATE/axentra.toml" <<TOML
 # Written by scripts/e2e-backend.sh for Studio's end-to-end tests. Never use for anything else.
 environment = "test"
-mode = "multi"
+mode = "$MODE"
 modules = ["identity", "tenancy", "access", "data", "audit", "storage", "events", "usage", "billing", "notify"]
-
+$product_section
 [database]
 url_ref = "file:$STATE/secrets/database_url"
 pool_max = 8
@@ -265,7 +281,7 @@ TOML
   local setup_token
   setup_token="$("${AX[@]}" admin setup-token)"
 
-  log "starting axentra serve on $base"
+  log "starting axentra serve on $base (mode $MODE)"
   nohup "${AX[@]}" serve --host 127.0.0.1 --port "$API_PORT" >"$STATE/run/server.log" 2>&1 &
   echo $! >"$STATE/server.pid"
   local ready=0
@@ -309,7 +325,18 @@ TOML
   local setup_body
   setup_body="$("$py" -c 'import json,sys; print(json.dumps({"setup_token": sys.argv[1], "email": sys.argv[2], "name": "Studio e2e admin", "password": sys.argv[3]}))' "$setup_token" "$email" "$password")"
   csrf="$(post /v1/auth/setup "$setup_body" | json_get csrf_token)"
-  product_id="$(post /v1/products '{"name": "Studio e2e", "slug": "studio-e2e"}' | json_get id)"
+  if [[ "$MODE" == "single" ]]; then
+    # The backend created its one product on start; creating another one must be refused.
+    local refused
+    refused="$(curl -sS -o /dev/null -w '%{http_code}' -b "$jar" -c "$jar" -H 'Content-Type: application/json' \
+      -H "X-Axentra-CSRF: $csrf" -X POST "$base/v1/products" --data '{"name": "Second", "slug": "second"}')"
+    [[ "$refused" == "409" ]] || die "single mode: POST /v1/products answered HTTP $refused, expected 409"
+    product_id="$(curl -fsS "$base/v1/meta" | json_get product.id)"
+    [[ -n "$product_id" ]] || die "single mode: GET /v1/meta reports no product"
+    log "single-product mode: using product $product_id (studio-e2e); POST /v1/products -> 409"
+  else
+    product_id="$(post /v1/products '{"name": "Studio e2e", "slug": "studio-e2e"}' | json_get id)"
+  fi
   tenant_id="$(post "/v1/products/$product_id/tenants" '{"name": "E2E tenant", "slug": "e2e-tenant"}' | json_get id)"
   log "creating fixtures: free plan + subscription, job, webhook endpoint, notification template"
   post "/v1/products/$product_id/billing/plans" \
@@ -343,11 +370,12 @@ export AXENTRA_E2E_TEMPLATE_KEY=$template_key
 export AXENTRA_E2E_BACKEND_SHA=$sha
 export AXENTRA_E2E_MODULES=$modules
 export AXENTRA_E2E_WORKER=$WORKER
+export AXENTRA_E2E_MODE=$MODE
 export AXENTRA_E2E_CONFIG=$STATE/axentra.toml
 export AXENTRA_E2E_NOTIFY_DISPATCH=$(printf '%q' "$(printf '%q ' "${AX[@]}")notify-dispatch --once")
 ENV
   umask 022
-  log "ready: API $base, modules $modules, backend $sha"
+  log "ready: API $base, mode $MODE, modules $modules, backend $sha"
   log "logs: $STATE/run/*.log"
 }
 

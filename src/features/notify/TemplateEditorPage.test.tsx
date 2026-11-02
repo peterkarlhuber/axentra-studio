@@ -166,6 +166,37 @@ describe('TemplateEditorPage', () => {
     expect(screen.queryByRole('button', { name: 'Send test' })).not.toBeInTheDocument();
   });
 
+  it('re-renders the preview when the preview locale or the text changes', async () => {
+    const me = makeMe(['notify:manage']);
+    const calls = mockApi(me, async (request, url) => {
+      if (url.pathname === `${base}/preview`) return rendered(request);
+      if (url.pathname === `${base}/welcome` && request.method === 'GET')
+        return jsonResponse(template);
+      return undefined;
+    });
+    renderInProduct(
+      <TemplateEditorPage />,
+      me,
+      `/p/${PRODUCT}/notifications/templates/welcome`,
+      EDIT_PATH,
+    );
+    const user = userEvent.setup();
+    expect(await screen.findByText('Version 3')).toBeInTheDocument();
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Language' }), 'de');
+    expect(await screen.findByText(/^Willkommen/, {}, { timeout: 3000 })).toBeInTheDocument();
+    const previews = calls.filter((call) => call.url.endsWith(`${base}/preview`));
+    const last = (await previews.at(-1)?.clone().json()) as { locale: string };
+    expect(last.locale).toBe('de');
+
+    await user.click(screen.getByRole('tab', { name: 'de' }));
+    const subjects = screen.getAllByRole('textbox', { name: /^Subject/ });
+    const deSubject = subjects.find((element) => element.getAttribute('lang') === 'de');
+    expect(deSubject).toBeDefined();
+    await user.clear(deSubject as HTMLElement);
+    await fill(user, deSubject as HTMLElement, 'Servus {{ name }}');
+    expect(await screen.findByText(/^Servus/, {}, { timeout: 3000 })).toBeInTheDocument();
+  });
+
   it('saves an edited built-in default as an override (create with the same key)', async () => {
     const me = makeMe(['notify:manage']);
     const calls = mockApi(me, (request, url) => {

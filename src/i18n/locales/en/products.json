@@ -2,6 +2,10 @@
   "title": "Products",
   "description": "Products are isolated applications on this Axentra server, each with its own tenants, users and keys.",
   "descriptionSingle": "This server runs in single-product mode with exactly one product.",
+  "singleMode": {
+    "title": "Single-product mode",
+    "body": "The server creates its one product from its configuration. Products cannot be created, archived or restored in this mode; to run several products, an operator sets mode = \"multi\" in the server configuration."
+  },
   "openDashboard": "Open dashboard",
   "openDashboardFor": "Open dashboard of {{name}}",
   "fields": {
@@ -51,6 +55,7 @@
     "restoreBody": "“{{name}}” becomes active again.",
     "archiveSuccess": "Product archived",
     "restoreSuccess": "Product restored",
-    "archivedNotice": "This product is archived. Restore it to make changes."
+    "archivedNotice": "This product is archived. Restore it to make changes.",
+    "singleMode": "The server runs in single-product mode, so this product cannot be archived. You can change its name, description, settings and members."
   }
 }

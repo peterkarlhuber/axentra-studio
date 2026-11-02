@@ -3,12 +3,14 @@
  */
 import AxeBuilder from '@axe-core/playwright';
 import { expect, type APIRequestContext, type Page } from '@playwright/test';
+import { settleAnimations } from './support';
 
 export const api = process.env.AXENTRA_E2E_API;
 export const email = process.env.AXENTRA_E2E_EMAIL;
 export const password = process.env.AXENTRA_E2E_PASSWORD;
 
 export async function expectNoA11yViolations(page: Page) {
+  await settleAnimations(page);
   const results = await new AxeBuilder({ page })
     // Notification previews are sandboxed frames without scripts: axe cannot run inside them
     // (and their content is the template author's email HTML, not Studio UI).

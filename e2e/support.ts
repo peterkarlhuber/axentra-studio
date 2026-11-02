@@ -27,8 +27,24 @@ export const SKIP_NO_ADMIN =
  * always runs on the top document only (the frame element itself, e.g. its title, is still
  * checked); the frame content is the template author's email HTML, not Studio UI.
  */
+/**
+ * Waits until finite CSS animations (toasts sliding in or fading out, dialogs opening) are done.
+ * axe measures colour contrast on the rendered pixels' styles, so a toast at half opacity during
+ * its fade-out is reported as a contrast violation although the settled UI passes. Infinite
+ * animations (spinners, skeleton shimmer) are ignored. A string expression: the e2e TypeScript
+ * config has no DOM types.
+ */
+export async function settleAnimations(page: Page) {
+  await page.waitForFunction(
+    `document.getAnimations().every((a) => a.playState !== 'running' || a.effect?.getTiming().iterations === Infinity)`,
+    undefined,
+    { timeout: 5_000 },
+  );
+}
+
 /** WCAG 2.1 A/AA via axe-core; the message names rule, help and offending selectors. */
 export async function expectNoA11yViolations(page: Page) {
+  await settleAnimations(page);
   // `options()` replaces all run options, so it must come before `withTags()`.
   const results = await new AxeBuilder({ page })
     .setLegacyMode()
@@ -108,3 +124,51 @@ export async function signInApi(request: APIRequestContext) {
 export const SIGNED_OUT_CONSOLE_ALLOW = [
   /^Failed to load resource: the server responded with a status of 401/,
 ];
+
+/**
+ * Deployment model of the e2e backend (`scripts/e2e-backend.sh --mode`). The specs read the
+ * actual mode from `GET /v1/meta`; this variable only says which one the run was started with.
+ */
+export const e2eMode = process.env.AXENTRA_E2E_MODE === 'single' ? 'single' : 'multi';
+
+export interface ServerMode {
+  mode: 'single' | 'multi';
+  /** Single-product mode: the one product (`meta.product`); null in multi-product mode. */
+  product: { id: string; name: string; slug: string } | null;
+}
+
+export async function serverMode(request: APIRequestContext): Promise<ServerMode> {
+  const response = await request.get('/v1/meta');
+  expect(response.ok(), `GET /v1/meta: ${response.status()}`).toBe(true);
+  const meta = (await response.json()) as ServerMode;
+  return { mode: meta.mode, product: meta.product ?? null };
+}
+
+/**
+ * The product a spec works in, with the signed-in session of `request`.
+ *
+ * - Multi-product mode: a new product (`POST /v1/products`), so the spec starts from an empty one.
+ * - Single-product mode: Axentra refuses `POST /v1/products` (409 `mode_not_supported`); the spec
+ *   works in the server's one product. Everything a spec creates there is shared with the other
+ *   specs and with the other Playwright project, so names and keys must be unique per run, and
+ *   product-wide counts must not assume an empty product (`shared` is then true).
+ */
+export async function specProduct(
+  request: APIRequestContext,
+  data: { name: string; slug: string; description?: string },
+): Promise<{ id: string; shared: boolean }> {
+  const server = await serverMode(request);
+  if (server.mode === 'single') {
+    expect(server.product, 'single-product mode without meta.product').not.toBeNull();
+    return { id: server.product?.id ?? '', shared: true };
+  }
+  const session = await request.get('/v1/auth/session');
+  const { csrf_token: csrf } = (await session.json()) as { csrf_token: string };
+  const response = await request.post('/v1/products', {
+    headers: { 'X-Axentra-CSRF': csrf },
+    data: { description: '', ...data },
+  });
+  expect(response.status(), `POST /v1/products: ${await response.text()}`).toBe(201);
+  const { id } = (await response.json()) as { id: string };
+  return { id, shared: false };
+}

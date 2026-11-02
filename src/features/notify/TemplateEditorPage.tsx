@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Lock, Plus, Save, Send, Trash2, Wand2, X } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import { notifyApi } from '@/api/endpoints';
@@ -240,14 +240,20 @@ function TemplateEditor({
         : undefined;
 
   // ---- Live preview of the unsaved draft (POST /notify/templates/preview) ----
-  const previewInput = useDebouncedValue(
-    {
+  // Debounce a serialized request: a fresh object on every render would restart the timer on
+  // each re-render, so the preview could stop following language and text changes.
+  const previewJson = useDebouncedValue(
+    JSON.stringify({
       variables: declared,
       sample_data: apiSampleData(draft, template),
       variants: apiVariants(draft),
       locale: draft.variants[previewLocale] ? previewLocale : 'en',
-    },
+    }),
     400,
+  );
+  const previewInput = useMemo(
+    () => JSON.parse(previewJson) as Parameters<typeof notifyApi.previewDraft>[1],
+    [previewJson],
   );
   // The server requires a subject and a text in every language; until the draft has them the
   // preview would only answer 422, so it waits and says what is missing instead.
