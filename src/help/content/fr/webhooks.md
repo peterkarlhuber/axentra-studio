@@ -132,11 +132,16 @@ la [tâche](help:jobs#job-detail)), **Créée le**, **Livrée le** et **Prochain
 
 ## Nouvelles tentatives {#retries}
 
-Les livraisons échouées sont relancées automatiquement via la file d’attente des tâches, jusqu’à **8 tentatives** avec les paramètres
-par défaut (`events.webhook_max_attempts`). L’attente avant la tentative _n + 1_ est comprise entre la moitié et la totalité de
-`2 × 2^(n−1)` secondes (2, 4, 8 … 128 secondes) : avec les paramètres par défaut, toutes les tentatives sont donc utilisées en
-deux à cinq minutes environ. Chaque tentative attend au plus 10 secondes pour la connexion et pour chaque
-lecture de la réponse.
+Les livraisons échouées sont relancées automatiquement via la file d’attente des tâches, jusqu’à **8
+tentatives** avec les paramètres par défaut (`events.webhook_max_attempts`). Les webhooks ont leur
+propre calendrier, plus lent que celui des autres tâches : l’attente avant la tentative _n + 1_ est
+comprise entre la moitié et la totalité de `120 × 2^(n−1)` secondes, 6 heures au plus
+(`events.webhook_backoff_base_seconds`, `events.webhook_backoff_max_seconds`). Avec les paramètres
+par défaut, les attentes sont d’environ 2, 4, 8, 16, 32, 64 et 128 minutes : la dernière tentative a
+donc lieu environ **2 à 4¼ heures** après la première, et une panne du récepteur d’environ deux
+heures au plus est toujours couverte. Chaque tentative attend au plus 10 secondes pour la connexion
+et pour chaque lecture de la réponse. (Les versions d’Axentra antérieures à ce calendrier
+utilisaient l’attente courte des tâches et épuisaient toutes les tentatives en quelques minutes.)
 
 Un récepteur indisponible plus longtemps ne perd aucun événement, mais ses livraisons finissent **Abandonnée** :
 relivre-les une fois qu’il est de nouveau disponible. Axentra ne désactive pas les points de terminaison qui échouent de façon répétée, et n’applique
@@ -225,8 +230,9 @@ Vérifie la signature sur les octets **bruts** du corps ; n’analyse pas puis 
 | **Activé**                          | Indique si les nouvelles livraisons sont envoyées.                    | Activé par défaut.                                                       |
 | **Délai de grâce** (renouvellement) | Durée pendant laquelle le secret précédent signe encore les requêtes. | Aucun, 1 heure, 24 heures, 7 jours (API : jusqu’à 7 jours, en secondes). |
 
-Valeurs par défaut côté serveur (les opérateurs peuvent les modifier dans `[events]`) : 8 tentatives, délai de 10 secondes,
-4096 octets de corps de réponse conservés.
+Valeurs par défaut côté serveur (les opérateurs peuvent les modifier dans `[events]`) : 8 tentatives
+réparties sur environ 2 à 4¼ heures, délai de 10 secondes, 4096 octets de corps de réponse
+conservés.
 
 ## Bon à savoir {#good-to-know}
 

@@ -145,10 +145,15 @@ Seleziona l'icona dei dettagli alla fine di una riga. Il pannello mostra **ID co
 ## Nuovi tentativi {#retries}
 
 Le consegne non riuscite vengono ritentate automaticamente tramite la coda dei job, fino a **8
-tentativi** con le impostazioni predefinite (`events.webhook_max_attempts`). L'attesa prima del
-tentativo _n + 1_ è compresa tra la metà e l'intero di `2 × 2^(n−1)` secondi (2, 4, 8 … 128 secondi),
-quindi con le impostazioni predefinite tutti i tentativi vengono usati in circa due-cinque minuti.
-Ogni tentativo attende al massimo 10 secondi per la connessione e per ogni lettura della risposta.
+tentativi** con le impostazioni predefinite (`events.webhook_max_attempts`). I webhook hanno un
+calendario proprio, più lento di quello degli altri job: l'attesa prima del tentativo _n + 1_ è
+compresa tra la metà e l'intero di `120 × 2^(n−1)` secondi, al massimo 6 ore
+(`events.webhook_backoff_base_seconds`, `events.webhook_backoff_max_seconds`). Con le impostazioni
+predefinite le attese sono di circa 2, 4, 8, 16, 32, 64 e 128 minuti, quindi l'ultimo tentativo
+avviene circa **2-4¼ ore** dopo il primo, e un'interruzione del ricevitore fino a circa due ore
+viene sempre coperta. Ogni tentativo attende al massimo 10 secondi per la connessione e per ogni
+lettura della risposta. (Le versioni di Axentra precedenti a questo calendario usavano l'attesa
+breve dei job ed esaurivano tutti i tentativi in pochi minuti.)
 
 Un ricevitore che resta irraggiungibile più a lungo non perde eventi, ma le sue consegne terminano
 come **Esaurito**: consegnale di nuovo quando torna disponibile. Axentra non disattiva gli endpoint
@@ -242,8 +247,8 @@ riserializzare prima il JSON.
 | **Attivato**                          | Se vengono inviate nuove consegne.                                      | Predefinito attivo.                                                     |
 | **Periodo di tolleranza** (rotazione) | Per quanto tempo il segreto precedente continua a firmare le richieste. | Nessuno, 1 ora, 24 ore, 7 giorni (API: fino a 7 giorni in secondi).     |
 
-Valori predefiniti lato server (gli operatori possono modificarli in `[events]`): 8 tentativi,
-timeout di 10 secondi, 4096 byte di corpo della risposta conservati.
+Valori predefiniti lato server (gli operatori possono modificarli in `[events]`): 8 tentativi
+distribuiti su circa 2-4¼ ore, timeout di 10 secondi, 4096 byte di corpo della risposta conservati.
 
 ## Buono a sapersi {#good-to-know}
 

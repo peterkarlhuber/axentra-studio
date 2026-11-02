@@ -146,10 +146,15 @@ intento**, además de:
 ## Reintentos {#retries}
 
 Las entregas fallidas se reintentan automáticamente a través de la cola de tareas, hasta **8
-intentos** con la configuración predeterminada (`events.webhook_max_attempts`). La espera antes del
-intento _n + 1_ está entre la mitad y el total de `2 × 2^(n−1)` segundos (2, 4, 8… 128 segundos), así
-que con la configuración predeterminada todos los intentos se consumen en unos dos a cinco minutos.
-Cada intento espera como máximo 10 segundos para la conexión y para cada lectura de la respuesta.
+intentos** con la configuración predeterminada (`events.webhook_max_attempts`). Los webhooks tienen
+su propio calendario, más lento que el de otras tareas: la espera antes del intento _n + 1_ está
+entre la mitad y el total de `120 × 2^(n−1)` segundos, como máximo 6 horas
+(`events.webhook_backoff_base_seconds`, `events.webhook_backoff_max_seconds`). Con la configuración
+predeterminada las esperas son de unos 2, 4, 8, 16, 32, 64 y 128 minutos, así que el último intento
+se ejecuta unas **2 a 4¼ horas** después del primero, y una caída del receptor de hasta unas dos
+horas siempre se cubre. Cada intento espera como máximo 10 segundos para la conexión y para cada
+lectura de la respuesta. (Las versiones de Axentra anteriores a este calendario usaban la espera
+corta de las tareas y agotaban todos los intentos en pocos minutos.)
 
 Un receptor que esté caído durante más tiempo no pierde eventos, pero sus entregas terminan como
 **Fallida definitivamente**: vuelve a entregarlas cuando esté de nuevo disponible. Axentra no
@@ -242,8 +247,9 @@ firma sobre los bytes **sin procesar** del cuerpo; no analices y vuelvas a seria
 | **Activado**                     | Si se envían entregas nuevas.                                 | Predeterminado: activado.                                               |
 | **Período de gracia** (rotación) | Cuánto tiempo sigue firmando solicitudes el secreto anterior. | Ninguno, 1 hora, 24 horas, 7 días (API: hasta 7 días en segundos).      |
 
-Valores predeterminados del servidor (los operadores pueden cambiarlos en `[events]`): 8 intentos,
-tiempo de espera de 10 segundos, 4096 bytes de cuerpo de respuesta guardado.
+Valores predeterminados del servidor (los operadores pueden cambiarlos en `[events]`): 8 intentos
+repartidos en unas 2 a 4¼ horas, tiempo de espera de 10 segundos, 4096 bytes de cuerpo de respuesta
+guardado.
 
 ## Conviene saber {#good-to-know}
 

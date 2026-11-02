@@ -285,8 +285,8 @@ Entro pochi secondi il ricevitore stampa `tutorial.hello evt_… tenant=… data
    riuscito, nuovo tentativo**; i suoi dettagli mostrano l'**Ultimo errore** e il **Prossimo
    tentativo**.
 4. Avvia di nuovo il ricevitore. Un tentativo automatico successivo va a buon fine oppure, se tutti
-   i tentativi sono stati usati (circa da due a cinque minuti con le impostazioni predefinite), la
-   consegna risulta **Esaurito**.
+   i tentativi sono stati usati (circa 2-4¼ ore con le impostazioni predefinite; il secondo
+   tentativo arriva 1-2 minuti dopo il primo), la consegna risulta **Esaurito**.
 5. Per una consegna esaurita, apri i suoi dettagli e scegli **Consegna di nuovo**. Passa a **In
    attesa** e poi a **Consegnato**.
 

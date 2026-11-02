@@ -287,7 +287,7 @@ Innerhalb weniger Sekunden gibt der Empfänger `tutorial.hello evt_… tenant=�
    Versuch**.
 4. Starte den Empfänger wieder. Ein späterer automatischer Versuch gelingt, oder die Zustellung ist
    **Endgültig fehlgeschlagen**, wenn alle Versuche aufgebraucht sind (mit den Standardeinstellungen
-   etwa zwei bis fünf Minuten).
+   nach etwa 2 bis 4¼ Stunden; der zweite Versuch folgt 1 bis 2 Minuten nach dem ersten).
 5. Öffne bei einer endgültig fehlgeschlagenen Zustellung die Details und wähle **Erneut zustellen**.
    Die Zustellung erhält den Status **Ausstehend** und dann **Zugestellt**.
 

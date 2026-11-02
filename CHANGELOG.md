@@ -8,6 +8,9 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- Help (webhooks, webhook receiver tutorial; six languages): webhook deliveries now retry on their
+  own schedule (Axentra `events.webhook_backoff_base_seconds` 120 s doubling, at most 6 hours per
+  wait), so the default 8 attempts span about 2 to 4¼ hours instead of a few minutes.
 - First-run setup tells "setup already completed" from "email address in use" by the new error
   codes (`setup_already_completed`, `email_taken`); the message text is only a fallback for older
   backends that answer `conflict` for both.

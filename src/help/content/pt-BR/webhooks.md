@@ -147,10 +147,15 @@ de:
 ## Novas tentativas {#retries}
 
 Entregas com falha são tentadas de novo automaticamente pela fila de jobs, até **8 tentativas** com
-as configurações padrão (`events.webhook_max_attempts`). A espera antes da tentativa _n + 1_ fica
-entre metade e o total de `2 × 2^(n−1)` segundos (2, 4, 8 … 128 segundos); assim, com as
-configurações padrão, todas as tentativas são usadas em cerca de dois a cinco minutos. Cada
-tentativa aguarda no máximo 10 segundos pela conexão e por cada leitura da resposta.
+as configurações padrão (`events.webhook_max_attempts`). Webhooks têm um cronograma próprio, mais
+lento que o de outros jobs: a espera antes da tentativa _n + 1_ fica entre metade e o total de `120
+× 2^(n−1)` segundos, no máximo 6 horas (`events.webhook_backoff_base_seconds`,
+`events.webhook_backoff_max_seconds`). Com as configurações padrão, as esperas são de cerca de 2, 4,
+8, 16, 32, 64 e 128 minutos; assim, a última tentativa ocorre cerca de **2 a 4¼ horas** depois da
+primeira, e uma queda do receptor de até cerca de duas horas é sempre coberta. Cada tentativa
+aguarda no máximo 10 segundos pela conexão e por cada leitura da resposta. (Versões do Axentra
+anteriores a esse cronograma usavam a espera curta dos jobs e esgotavam todas as tentativas em
+poucos minutos.)
 
 Um receptor que fica fora do ar por mais tempo que isso não perde eventos, mas as entregas dele
 terminam como **Falha definitiva**: reenvie-as quando ele voltar. O Axentra não desabilita
@@ -244,8 +249,8 @@ de novo antes.
 | **Habilitado**                    | Se novas entregas são enviadas.                               | Padrão: ativado.                                                      |
 | **Período de carência** (rotação) | Por quanto tempo o segredo anterior ainda assina requisições. | Nenhum, 1 hora, 24 horas, 7 dias (API: até 7 dias, em segundos).      |
 
-Padrões do servidor (os operadores podem alterá-los em `[events]`): 8 tentativas, tempo limite de
-10 segundos, 4096 bytes de corpo de resposta armazenado.
+Padrões do servidor (os operadores podem alterá-los em `[events]`): 8 tentativas distribuídas em
+cerca de 2 a 4¼ horas, tempo limite de 10 segundos, 4096 bytes de corpo de resposta armazenado.
 
 ## Bom saber {#good-to-know}
 
