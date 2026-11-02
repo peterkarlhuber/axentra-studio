@@ -41,9 +41,13 @@ Le voci che appartengono a un prodotto (da **Dashboard** a **Notifiche**, tranne
 vengono mostrate solo quando è selezionato un prodotto. **Prodotti**, **Registro di audit**,
 **Stato del sistema**, **Monitoraggio** e **Impostazioni** valgono per l'intera piattaforma.
 
-La barra laterale mostra le stesse voci a tutti. Se apri una pagina per cui non hai
-l'autorizzazione, la pagina te lo segnala (**Non consentito**) e le azioni che non puoi eseguire
-non vengono offerte.
+La barra laterale mostra le stesse voci a tutti, con un'eccezione: **Registro di audit** compare
+solo se puoi leggere gli eventi di audit (`audit:read` in uno dei tuoi prodotti, oppure
+`platform:audit`). **Impostazioni**, **Stato del sistema** e **Monitoraggio** compaiono sempre,
+perché offrono qualcosa a tutti (le tue preferenze, i controlli di stato pubblici); le parti che
+non puoi leggere te lo segnalano lì. Se apri una pagina per cui non hai l'autorizzazione, per
+esempio da un link salvato, la pagina te lo segnala (**Non consentito**) e le azioni che non puoi
+eseguire non vengono offerte.
 
 ### Voci contrassegnate con "Off" {#module-off}
 

@@ -39,9 +39,13 @@ Os itens que pertencem a um produto (de **Painel** até **Notificações**, exce
 aparecem quando um produto está selecionado. **Produtos**, **Log de auditoria**,
 **Integridade do sistema**, **Monitoramento** e **Configurações** valem para toda a plataforma.
 
-A barra lateral mostra os mesmos itens para todos. Se você abrir uma página para a qual não tem
-permissão, a página informa isso (**Não permitido**), e as ações que você não pode executar não são
-oferecidas.
+A barra lateral mostra os mesmos itens para todos, com uma exceção: **Log de auditoria** só aparece
+se você pode ler eventos de auditoria (`audit:read` em um dos seus produtos, ou `platform:audit`).
+**Configurações**, **Integridade do sistema** e **Monitoramento** aparecem sempre, porque oferecem
+algo a todos (suas preferências, as verificações públicas de integridade); as partes que você não
+pode ler informam isso ali. Se você abrir uma página para a qual não tem permissão, por exemplo por
+um link salvo, a página informa isso (**Não permitido**), e as ações que você não pode executar
+não são oferecidas.
 
 ### Itens marcados como “Desat.” {#module-off}
 

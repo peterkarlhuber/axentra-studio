@@ -27,7 +27,7 @@ modifier ni supprimer un événement d’audit, pas même un administrateur de l
 | --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
 | `platform:audit`                                    | Tous les événements de l’installation, y compris les connexions, l’installation et les autres événements sans produit | **Tous les produits** (par défaut) ou un produit               |
 | `audit:read` dans un produit, sans `platform:audit` | Uniquement les événements d’un produit ; le Studio démarre avec le dernier produit que tu as utilisé                  | L’un de tes produits ; **Tous les produits** n’est pas proposé |
-| Aucune des deux                                     | Une erreur **Non autorisé**                                                                                           | –                                                              |
+| Aucune des deux                                     | **Journal d’audit** n’apparaît pas dans la barre latérale ; un lien direct affiche **Non autorisé**                   | –                                                              |
 
 Le serveur vérifie l’autorisation à chaque requête. Sélectionner un produit que tu n’as pas le
 droit de lire renvoie **Non autorisé**, et un événement que tu n’as pas le droit de lire ne peut

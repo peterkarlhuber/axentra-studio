@@ -387,7 +387,8 @@ producto).
 
 ### Una página muestra No permitido aunque puedes abrirla {#page-forbidden}
 
-La barra lateral muestra todas las áreas; si puedes leer sus datos se decide al cargar la página.
+La barra lateral muestra casi todas las áreas (solo **Registro de auditoría** se oculta sin un
+permiso de auditoría); si puedes leer los datos de un área se decide al cargar la página.
 Un área sin el permiso de lectura muestra **No permitido** con el permiso que falta en el mensaje
 del servidor.
 

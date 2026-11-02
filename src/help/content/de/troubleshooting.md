@@ -399,8 +399,8 @@ Beispiel **Neues Produkt** im Einzelproduktbetrieb).
 
 ### Eine Seite zeigt Nicht erlaubt, obwohl du sie öffnen kannst {#page-forbidden}
 
-Die Seitenleiste zeigt jeden Bereich; ob du seine Daten lesen darfst, entscheidet sich beim Laden
-der Seite. Ein Bereich ohne Leseberechtigung zeigt **Nicht erlaubt** mit der fehlenden
+Die Seitenleiste zeigt fast jeden Bereich (nur **Audit-Protokoll** fehlt ohne Audit-Berechtigung);
+ob du die Daten eines Bereichs lesen darfst, entscheidet sich beim Laden der Seite. Ein Bereich ohne Leseberechtigung zeigt **Nicht erlaubt** mit der fehlenden
 Berechtigung in der Servermeldung.
 
 ### Anmelden oder Speichern scheitert mit Nicht erlaubt {#csrf-origin}

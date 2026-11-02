@@ -75,9 +75,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P2
 
-- **Sidebar shows screens the user cannot use.** Audit, Settings and Monitoring are listed for
-  everyone and answer with a `403` state. Hiding or marking them by permission (from `/v1/me`)
-  would be clearer; the help describes the current behaviour.
 - **Unmapped error codes.** `method_not_allowed` and the generic `error` fall back to "Unexpected
   error"; `mode_not_supported` is also used for a Stripe plan change and a missing mailbox, so its
   message is too narrow.

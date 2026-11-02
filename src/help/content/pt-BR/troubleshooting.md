@@ -375,8 +375,8 @@ também ficam ocultas por causa do modo do servidor (por exemplo **Novo produto*
 
 ### Uma página mostra Não permitido, embora você consiga abri-la {#page-forbidden}
 
-A barra lateral mostra todas as áreas; se você pode ler os dados de uma área é decidido quando a
-página carrega. Uma área sem a permissão de leitura mostra **Não permitido**, com a permissão que
+A barra lateral mostra quase todas as áreas (só **Log de auditoria** fica oculto sem uma permissão
+de auditoria); se você pode ler os dados de uma área é decidido quando a página carrega. Uma área sem a permissão de leitura mostra **Não permitido**, com a permissão que
 falta na mensagem do servidor.
 
 ### O login ou o salvamento falha com Não permitido {#csrf-origin}

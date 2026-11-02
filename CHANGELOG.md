@@ -8,6 +8,11 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- The sidebar lists **Audit log** only for users who may read audit events (`platform:audit`, or
+  `audit:read` in one of their products, from `GET /v1/me`); before, everyone saw it and got a
+  `403` state. **Settings** (personal preferences for everyone) and **System health** /
+  **Monitoring** (public readiness checks) stay visible and explain the parts the user cannot read;
+  items of disabled modules stay visible as before. A direct link still shows **Not permitted**.
 - New official Axentra logo. The two logo masters live in `branding-src/` (not served) and every
   brand file is derived from them by `scripts/derive_branding.py`, the shared derivation script
   (replaces `scripts/derive-branding.py`). The sign-in, setup and public help pages show the lockup

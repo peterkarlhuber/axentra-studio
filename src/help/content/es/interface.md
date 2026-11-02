@@ -41,9 +41,13 @@ Las entradas que pertenecen a un producto (de **Panel** a **Notificaciones**, sa
 solo se muestran cuando hay un producto seleccionado. **Productos**, **Registro de auditoría**,
 **Estado del sistema**, **Monitorización** y **Configuración** abarcan toda la plataforma.
 
-La barra lateral muestra las mismas entradas a todo el mundo. Si abres una página para la que no
-tienes permiso, la página te lo indica (**No permitido**), y no se ofrecen las acciones que no
-puedes realizar.
+La barra lateral muestra las mismas entradas a todo el mundo, con una excepción: **Registro de
+auditoría** solo aparece si puedes leer eventos de auditoría (`audit:read` en uno de tus productos,
+o `platform:audit`). **Configuración**, **Estado del sistema** y **Monitorización** aparecen siempre
+porque ofrecen algo a todos (tus preferencias, las comprobaciones públicas de estado); las partes
+que no puedes leer te lo indican allí. Si abres una página para la que no tienes permiso, por
+ejemplo desde un enlace guardado, la página te lo indica (**No permitido**), y no se ofrecen las
+acciones que no puedes realizar.
 
 ### Entradas marcadas como «Inactivo» {#module-off}
 

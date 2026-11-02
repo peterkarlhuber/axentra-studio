@@ -25,7 +25,7 @@ de auditoria, nem mesmo um administrador da plataforma.
 | ------------------------------------------------ | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | `platform:audit`                                 | Todos os eventos da instalação, incluindo logins, configuração inicial e outros eventos sem produto | **Todos os produtos** (padrão) ou um produto                |
 | `audit:read` em um produto, sem `platform:audit` | Apenas os eventos de um produto; o Studio começa pelo produto que você usou por último              | Um dos seus produtos; **Todos os produtos** não é oferecido |
-| Nenhuma das duas                                 | Um erro **Não permitido**                                                                           | –                                                           |
+| Nenhuma das duas                                 | **Log de auditoria** não aparece na barra lateral; um link direto mostra **Não permitido**          | –                                                           |
 
 O servidor verifica a permissão em cada requisição. Selecionar um produto que você não pode ler
 retorna **Não permitido**, e um evento que você não pode ler não pode ser aberto em detalhes (veja

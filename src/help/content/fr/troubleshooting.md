@@ -404,8 +404,8 @@ produit** en mode mono-produit).
 
 ### Une page affiche Non autorisé alors que tu peux l’ouvrir {#page-forbidden}
 
-La barre latérale affiche toutes les sections ; le droit de lire leurs données est déterminé au
-chargement de la page. Une section sans l’autorisation de lecture affiche **Non autorisé** avec
+La barre latérale affiche presque toutes les sections (seul **Journal d’audit** est masqué sans
+autorisation d’audit) ; le droit de lire leurs données est déterminé au chargement de la page. Une section sans l’autorisation de lecture affiche **Non autorisé** avec
 l’autorisation manquante dans le message du serveur.
 
 ### La connexion ou l’enregistrement échoue avec Non autorisé {#csrf-origin}

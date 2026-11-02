@@ -384,8 +384,8 @@ modalità a prodotto singolo).
 
 ### Una pagina mostra Non consentito anche se puoi aprirla {#page-forbidden}
 
-La barra laterale mostra tutte le aree; se puoi leggerne i dati viene deciso quando la pagina si
-carica. Un'area senza l'autorizzazione di lettura mostra **Non consentito** con l'autorizzazione
+La barra laterale mostra quasi tutte le aree (solo **Registro di audit** è nascosto senza
+un'autorizzazione di audit); se puoi leggerne i dati viene deciso quando la pagina si carica. Un'area senza l'autorizzazione di lettura mostra **Non consentito** con l'autorizzazione
 mancante nel messaggio del server.
 
 ### L'accesso o il salvataggio fallisce con Non consentito {#csrf-origin}

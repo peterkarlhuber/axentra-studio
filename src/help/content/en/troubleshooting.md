@@ -370,7 +370,8 @@ also hidden because of the server mode (for example **New product** in single-pr
 
 ### A page shows Not permitted although you can open it {#page-forbidden}
 
-The sidebar shows every area; whether you may read its data is decided when the page loads. An
+The sidebar shows almost every area (only **Audit log** is hidden without an audit permission);
+whether you may read an area's data is decided when the page loads. An
 area without the read permission shows **Not permitted** with the missing permission in the
 server message.
 

@@ -39,8 +39,13 @@ Les entrées qui appartiennent à un produit (de **Tableau de bord** à **Notifi
 affichées que lorsqu’un produit est sélectionné. **Produits**, **Journal d’audit**, **État du système**,
 **Supervision** et **Paramètres** concernent toute la plateforme.
 
-La barre latérale affiche les mêmes entrées pour tout le monde. Si tu ouvres une page pour laquelle tu n’as pas d’autorisation, la
-page te l’indique (**Non autorisé**), et les actions que tu n’as pas le droit d’effectuer ne sont pas proposées.
+La barre latérale affiche les mêmes entrées pour tout le monde, à une exception près : **Journal
+d’audit** n’apparaît que si tu peux lire les événements d’audit (`audit:read` dans l’un de tes
+produits, ou `platform:audit`). **Paramètres**, **État du système** et **Supervision** sont toujours
+affichés, car ils offrent quelque chose à tout le monde (tes préférences, les contrôles d’état
+publics) ; les parties que tu ne peux pas lire te l’indiquent. Si tu ouvres une page pour laquelle
+tu n’as pas d’autorisation, par exemple depuis un lien enregistré, la page te l’indique (**Non
+autorisé**), et les actions que tu n’as pas le droit d’effectuer ne sont pas proposées.
 
 ### Entrées marquées « Désactivé » {#module-off}
 
