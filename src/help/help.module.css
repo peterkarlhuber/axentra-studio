@@ -970,15 +970,6 @@
   height: 36px;
   width: auto;
 }
-.logoDark {
-  display: none;
-}
-:global([data-theme='dark']) .logoLight {
-  display: none;
-}
-:global([data-theme='dark']) .logoDark {
-  display: block;
-}
 .publicActions {
   display: flex;
   align-items: center;

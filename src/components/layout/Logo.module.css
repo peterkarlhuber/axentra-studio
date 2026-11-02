@@ -4,8 +4,6 @@
 }
 .themed img {
   display: block;
-  max-width: 100%;
-  height: auto;
 }
 .dark {
   display: none !important;
