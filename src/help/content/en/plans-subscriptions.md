@@ -194,7 +194,7 @@ usage.
 
 The **Payment provider** card on **Plans** and **Subscriptions** shows the server's configuration:
 
-| Provider               | Behaviour                                                                                                                            |
+| Provider               | Behavior                                                                                                                             |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | **Manual**             | Payment is collected outside Axentra. Subscriptions are created directly; an operator sets their status.                             |
 | **Test double (fake)** | Deterministic test provider without network access; paid plans go through a simulated checkout. Refused by the server in production. |

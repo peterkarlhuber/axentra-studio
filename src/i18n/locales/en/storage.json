@@ -97,7 +97,7 @@
     "tooLarge": "This file is larger than the server's limit of {{size}}.",
     "selected": "{{name}} · {{size}} · {{type}}",
     "typeUnknown": "type unknown",
-    "policyUnknown": "The server checks size, type and quota when you upload. The allowed types are visible to product managers and platform administrators.",
+    "policyUnknown": "The server checks size, type and quota when you upload. The allowed types are visible to product owners and admins and to platform administrators.",
     "allowedTypes": "Allowed types: {{types}}.",
     "allTypes": "All types except blocked ones",
     "blockedRefused": "Executables, HTML, SVG and scripts are refused (checked by declared type, content and file extension).",
