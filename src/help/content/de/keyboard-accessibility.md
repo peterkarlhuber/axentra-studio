@@ -12,16 +12,16 @@ einem Desktop-Bildschirm und auf einem 360 Pixel breiten Smartphone-Bildschirm.
 
 ## Bedienung mit der Tastatur {#keyboard}
 
-| Taste                                       | Was sie bewirkt                                                                                         |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| **Tab** / **Umschalt+Tab**                  | Zum nächsten oder vorherigen Bedienelement wechseln.                                                    |
-| **Tab** direkt nach dem Laden einer Seite   | Erreicht zuerst **Zum Hauptinhalt springen**; **Eingabe** springt an der Navigation vorbei.             |
-| **Eingabe**                                 | Einem Link folgen, eine Schaltfläche drücken, ein Formular absenden.                                    |
-| **Leertaste**                               | Eine Schaltfläche drücken, ein Kontrollkästchen ankreuzen, einen Schalter umlegen.                      |
-| **Pfeiltasten**                             | Sich in Menüs, Auswahllisten und Tabs bewegen; **Eingabe** oder **Leertaste** wählt aus.                |
-| **Esc**                                     | Einen Dialog, eine ausklappbare Leiste, ein Menü, einen Info-Tipp oder die mobile Navigation schließen. |
-| **F8**                                      | Zum Benachrichtigungsbereich springen (die Meldungen in der Bildschirmecke).                            |
-| **Eingabe** in einem Feld **Ereignistypen** | Fügt den eingegebenen Ereignistyp zur Liste hinzu.                                                      |
+| Taste                                       | Was sie bewirkt                                                                                        |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Tab** / **Umschalt+Tab**                  | Zum nächsten oder vorherigen Bedienelement wechseln.                                                   |
+| **Tab** direkt nach dem Laden einer Seite   | Erreicht zuerst **Zum Hauptinhalt springen**; **Eingabe** springt an der Navigation vorbei.            |
+| **Eingabe**                                 | Einem Link folgen, eine Schaltfläche drücken, ein Formular absenden.                                   |
+| **Leertaste**                               | Eine Schaltfläche drücken, ein Kontrollkästchen ankreuzen, einen Schalter umlegen.                     |
+| **Pfeiltasten**                             | Sich in Menüs, Auswahllisten und Tabs bewegen; **Eingabe** oder **Leertaste** wählt aus.               |
+| **Esc**                                     | Einen Dialog, eine ausklappbare Leiste, ein Menü, einen Infotipp oder die mobile Navigation schließen. |
+| **F8**                                      | Zum Benachrichtigungsbereich springen (die Meldungen in der Bildschirmecke).                           |
+| **Eingabe** in einem Feld **Ereignistypen** | Fügt den eingegebenen Ereignistyp zur Liste hinzu.                                                     |
 
 Gut zu wissen:
 
@@ -34,8 +34,8 @@ Gut zu wissen:
 - **Gefährliche Aktionen** fragen nach einer Bestätigung; manche, etwa das Widerrufen eines
   API-Schlüssels, verlangen zusätzlich die Eingabe eines Namens (**Zur Bestätigung … eingeben**).
   Das schützt vor versehentlichen Tastendrücken.
-- **Info-Tipps** (die kleinen (i)-Schaltflächen neben Beschriftungen) öffnen sich mit **Eingabe**
-  oder **Leertaste** und schließen sich mit **Esc**. Info-Tipps funktionieren mit Tastatur, Touch und
+- **Infotipps** (die kleinen (i)-Schaltflächen neben Beschriftungen) öffnen sich mit **Eingabe**
+  oder **Leertaste** und schließen sich mit **Esc**. Infotipps funktionieren mit Tastatur, Touch und
   Screenreader, nicht nur beim Überfahren mit der Maus.
 - **Tabellen** mit vielen Spalten scrollen in einem eigenen, beschrifteten Bereich. Fokussiere den
   Bereich mit **Tab** und scrolle ihn mit den Pfeiltasten.
@@ -51,7 +51,7 @@ kündigen die neue Seite an.
 
 - **Landmarks:** Jede Seite hat eine Kopfzeile, die Hauptnavigation und den Hauptinhalt sowie
   genau eine Hauptüberschrift.
-- **Brotkrumen-Navigation** und **Hauptnavigation** sind beschriftet. Bereiche ausgeschalteter
+- **Brotkrümelnavigation** und **Hauptnavigation** sind beschriftet. Bereiche ausgeschalteter
   Module in der Seitenleiste werden als „Modul nicht aktiviert“ angesagt.
 - **Formulare:** Jedes Feld hat eine sichtbare Beschriftung; Pflichtfelder werden angesagt;
   Fehlermeldungen sind mit ihrem Feld verknüpft.

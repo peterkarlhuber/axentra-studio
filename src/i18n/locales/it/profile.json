@@ -37,6 +37,11 @@
     "description": "Browser e dispositivi in cui hai effettuato l'accesso.",
     "revoked": "Sessione revocata",
     "revokeOthers": "Disconnetti tutte le altre sessioni",
-    "othersRevoked": "Tutte le altre sessioni sono state disconnesse"
+    "othersRevoked_one": "{{count}} altra sessione disconnessa",
+    "othersRevoked_many": "{{count}} di altre sessioni disconnesse",
+    "othersRevoked_other": "{{count}} altre sessioni disconnesse",
+    "othersPartial_one": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni",
+    "othersPartial_many": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni",
+    "othersPartial_other": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni"
   }
 }

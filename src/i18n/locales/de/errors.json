@@ -7,7 +7,7 @@
   "codes": {
     "validation_failed": {
       "title": "Bitte prüfe deine Eingaben",
-      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
+      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die unten markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
     },
     "bad_request": {
       "title": "Anfrage nicht verstanden",
@@ -47,19 +47,19 @@
     },
     "mode_not_supported": {
       "title": "In diesem Modus nicht verfügbar",
-      "message": "Die aktuelle Serverkonfiguration unterstützt diese Aktion nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb. Dafür müsste der Betrieb die Serverkonfiguration ändern."
+      "message": "Die Serverkonfiguration erlaubt diese Aktion hier nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb, das Ändern eines Abonnements, das Stripe verwaltet (ändere es in Stripe), oder das Öffnen des Test-Postfachs, wenn der Server echte E-Mails versendet. Die Servermeldung nennt den Grund; nur ein Betreiber kann die Konfiguration ändern."
     },
     "module_disabled": {
       "title": "Modul nicht aktiviert",
-      "message": "Das Servermodul, das diese Aktion braucht, ist ausgeschaltet. Der Betrieb kann es in der Konfiguration des Axentra-Servers aktivieren."
+      "message": "Das Servermodul, das diese Aktion braucht, ist ausgeschaltet. Ein Betreiber kann es in der Konfiguration des Axentra-Servers aktivieren."
     },
     "payment_provider_not_configured": {
       "title": "Kein Zahlungsanbieter eingerichtet",
-      "message": "Diese Abrechnungsaktion braucht einen Zahlungsanbieter, aber auf dem Server ist keiner eingerichtet. Der Betrieb muss den Zahlungsanbieter in der Serverkonfiguration einrichten."
+      "message": "Diese Abrechnungsaktion braucht einen Zahlungsanbieter, aber auf dem Server ist keiner eingerichtet. Ein Betreiber muss den Zahlungsanbieter in der Serverkonfiguration einrichten."
     },
     "internal": {
       "title": "Serverfehler",
-      "message": "Der Server oder ein Dienst dahinter ist bei der Anfrage fehlgeschlagen; deine Änderung wurde möglicherweise nicht gespeichert. Versuche es gleich noch einmal; scheitert es weiterhin, melde es dem Betrieb mit der Anfrage-ID."
+      "message": "Der Server oder ein Dienst dahinter ist bei der Anfrage fehlgeschlagen; deine Änderung wurde möglicherweise nicht gespeichert. Versuche es gleich noch einmal; scheitert es weiterhin, melde es deinem Betreiber mit der Anfrage-ID."
     },
     "network_error": {
       "title": "Server nicht erreichbar",
@@ -71,11 +71,31 @@
     },
     "payload_too_large": {
       "title": "Zu groß",
-      "message": "Die Anfrage oder Datei ist größer, als der Server annimmt. Verwende eine kleinere Datei oder weniger Daten oder frage den Betrieb nach der Größengrenze."
+      "message": "Die Anfrage oder Datei ist größer, als der Server annimmt. Verwende eine kleinere Datei oder weniger Daten oder frage einen Betreiber nach der Größengrenze."
     },
     "unsupported_media_type": {
       "title": "Typ nicht zulässig",
       "message": "Der Server akzeptiert diese Art von Inhalt nicht, zum Beispiel einen gesperrten Dateityp wie eine ausführbare Datei, HTML oder SVG. Verwende einen anderen Dateityp."
+    },
+    "method_not_allowed": {
+      "title": "Aktion nicht unterstützt",
+      "message": "Der Server bietet diese Aktion unter dieser Adresse nicht an (HTTP 405). Wahrscheinlich passen die Versionen von Studio und Server nicht zusammen. Lade die Seite neu; passiert es wieder, melde es mit der Anfrage-ID."
+    },
+    "error": {
+      "title": "Anfrage fehlgeschlagen",
+      "message": "Der Server hat die Anfrage mit einem HTTP-Fehler ohne genaueren Code abgelehnt. Prüfe die Servermeldung und den HTTP-Status unter Technische Details und versuche es erneut; passiert es wieder, melde es mit der Anfrage-ID."
+    },
+    "invalid_signature": {
+      "title": "Ungültige Signatur",
+      "message": "Die Signatur eines Webhooks des Zahlungsanbieters stimmte nicht. Das betrifft die Verbindung des Servers zum Zahlungsanbieter, nicht Studio; ein Betreiber sollte das Webhook-Geheimnis prüfen."
+    },
+    "setup_already_completed": {
+      "title": "Die Einrichtung ist bereits abgeschlossen",
+      "message": "Auf diesem Server gibt es bereits eine Plattform-Administration, deshalb kann die Einrichtung nicht noch einmal laufen. Melde dich mit einem bestehenden Konto an."
+    },
+    "email_taken": {
+      "title": "E-Mail-Adresse wird verwendet",
+      "message": "Ein anderes Konto verwendet diese E-Mail-Adresse bereits. Nimm eine andere Adresse oder melde dich mit dem bestehenden Konto an."
     }
   }
 }

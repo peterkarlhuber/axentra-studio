@@ -145,7 +145,7 @@
     "chooseTenantFirst": "Scegli prima un tenant.",
     "chooseMember": "Scegli un membro",
     "email": "Indirizzo email",
-    "emailHelp": "Se l'indirizzo appartiene a un utente, si applicano le sue rinunce.",
+    "emailHelp": "Se l'indirizzo appartiene a un utente, valgono le categorie che ha disattivato.",
     "localeHelp": "Senza una scelta, viene usata la lingua del destinatario, altrimenti l'inglese.",
     "localeAuto": "Lingua del destinatario",
     "variables": "Valori",

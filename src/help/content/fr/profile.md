@@ -53,7 +53,7 @@ Le nouveau mot de passe doit
 
 - être au moins aussi long que le minimum du serveur (par défaut 12 caractères, voir
   `password_min_length` dans [Paramètres](help:settings#settings-tree)) et compter au plus
-  1024 caractères,
+  1 024 caractères,
 - ne pas être ton adresse e-mail,
 - contenir au moins 4 caractères différents.
 
@@ -107,6 +107,10 @@ révocation ; utilise pour elle **Se déconnecter** dans le menu utilisateur.
 Pour mettre fin à toutes les sessions sauf celle que tu utilises, choisis **Déconnecter toutes les
 autres sessions** dans l’en-tête de **Tes sessions**. Le bouton apparaît dès qu’il existe au moins
 une autre session.
+
+Ta session actuelle n’est jamais déconnectée. Chaque autre session est déconnectée séparément ; si
+certaines ne peuvent pas l’être (par exemple à cause de la limite de requêtes), Studio t’indique
+combien, la liste affiche celles qui sont encore actives, et tu peux choisir à nouveau le bouton.
 
 > [!TIP]
 > Tu t’es connecté sur un ordinateur partagé ou perdu ? Révoque cette session ici. Si tu penses que

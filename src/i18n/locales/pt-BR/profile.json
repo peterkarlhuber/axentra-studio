@@ -37,6 +37,11 @@
     "description": "Navegadores e dispositivos em que você está conectado.",
     "revoked": "Sessão revogada",
     "revokeOthers": "Sair de todas as outras sessões",
-    "othersRevoked": "Todas as outras sessões foram encerradas"
+    "othersRevoked_one": "{{count}} outra sessão encerrada",
+    "othersRevoked_many": "{{count}} de outras sessões encerradas",
+    "othersRevoked_other": "{{count}} outras sessões encerradas",
+    "othersPartial_one": "{{count}} de {{total}} outras sessões não pôde ser encerrada",
+    "othersPartial_many": "{{count}} de {{total}} outras sessões não puderam ser encerradas",
+    "othersPartial_other": "{{count}} de {{total}} outras sessões não puderam ser encerradas"
   }
 }

@@ -46,12 +46,16 @@ La tabla ofrece un resumen. Las secciones siguientes explican cada código con c
 | ------------------------------------- | --------------------------------- | -------------- | ---------------------------------------------------------- |
 | **Revisa los datos introducidos**     | `validation_failed`               | 422 (o 400)    | Se rechazaron valores                                      |
 | **Solicitud no comprendida**          | `bad_request`                     | 400            | No se pudo leer la solicitud                               |
+| **Firma no válida**                   | `invalid_signature`               | 400            | Webhook del proveedor de pagos rechazado                   |
 | **Inicia sesión**                     | `unauthenticated`                 | 401            | No hay sesión válida                                       |
 | **No permitido**                      | `forbidden`                       | 403            | Falta un permiso, o el producto o inquilino no está activo |
 | **Vuelve a iniciar sesión**           | `reauthentication_required`       | 403            | Requiere un inicio de sesión reciente                      |
 | **No encontrado**                     | `not_found`                       | 404            | No existe, o no es visible para ti                         |
-| **Módulo no activado**                | `module_disabled`                 | 404            | Módulo del servidor desactivado                            |
+| **Módulo no habilitado**              | `module_disabled`                 | 404            | Módulo del servidor desactivado                            |
+| **Acción no admitida**                | `method_not_allowed`              | 405            | No se ofrece en esta dirección                             |
 | **Conflicto**                         | `conflict`                        | 409            | Choca con datos o estados existentes                       |
+| **La configuración ya está completa** | `setup_already_completed`         | 409            | Ya existe un administrador                                 |
+| **Dirección de correo en uso**        | `email_taken`                     | 409            | Otra cuenta tiene la dirección                             |
 | **No disponible en este modo**        | `mode_not_supported`              | 409            | No es posible en este modo del servidor                    |
 | **Proveedor de pagos no configurado** | `payment_provider_not_configured` | 409            | La facturación necesita un proveedor                       |
 | **Modificado mientras tanto**         | `precondition_failed`             | 412            | Otra persona guardó antes                                  |
@@ -60,6 +64,7 @@ La tabla ofrece un resumen. Las secciones siguientes explican cada código con c
 | **Demasiadas solicitudes**            | `rate_limited`                    | 429            | Reduce el ritmo                                            |
 | **Cuota superada**                    | `quota_exceeded`                  | 429            | Cuota del inquilino o límite del plan agotado              |
 | **Error del servidor**                | `internal`                        | 500 o superior | Fallo en el servidor                                       |
+| **La solicitud falló**                | `error`                           | otro           | Error HTTP sin código específico                           |
 | **Servidor no accesible**             | `network_error`                   | ninguno        | No hay respuesta del servidor                              |
 | **Error inesperado**                  | `unknown`                         | otro           | No reconocido                                              |
 
@@ -84,6 +89,16 @@ campo marcado, abre **Detalles técnicos**: el **Mensaje del servidor** indica l
 
 **Qué hacer:** recarga la página y repite la acción. Si vuelve a ocurrir, comunícalo con el ID de
 solicitud; normalmente Studio solo envía solicitudes bien formadas.
+
+### Firma no válida {#invalid-signature}
+
+**Qué ha pasado:** el servidor rechazó un webhook del proveedor de pagos porque su firma no
+coincidía (`invalid_signature`, HTTP 400). Solo el proveedor de pagos llama a ese endpoint; no ves
+este código en tus propias acciones en Studio.
+
+**Qué hacer:** nada en Studio. Un operador comprueba que el secreto del webhook en la configuración
+del servidor coincide con el del proveedor de pagos. Consulta
+[Planes y suscripciones](help:plans-subscriptions).
 
 ### Inicia sesión {#unauthenticated}
 
@@ -154,13 +169,22 @@ cuenta _que puedas ver_ tiene esta dirección. Envía una invitación en su luga
 **Qué hacer:** comprueba la dirección, vuelve a la lista o pide a alguien con acceso al producto o
 al inquilino que te añada.
 
-### Módulo no activado {#module-disabled}
+### Módulo no habilitado {#module-disabled}
 
 **Qué ha pasado:** la acción necesita un módulo del servidor que está desactivado
 (`module_disabled`).
 
 **Qué hacer:** pide a tu operador que active el módulo en la configuración del servidor. La
 [referencia de módulos](help:modules-reference) indica qué hace posible cada módulo.
+
+### Acción no admitida {#method-not-allowed}
+
+**Qué ha pasado:** el servidor no ofrece esta acción en esta dirección (`method_not_allowed`,
+HTTP 405). Studio solo envía solicitudes que la API del servidor describe, así que probablemente
+Studio y el servidor tienen versiones distintas.
+
+**Qué hacer:** recarga la página. Si vuelve a ocurrir, comunícalo con el ID de solicitud y la
+versión del servidor que aparece al pie de la barra lateral.
 
 ### Conflicto {#conflict}
 
@@ -180,6 +204,24 @@ texto traducido.
 | `only failed or dead jobs can be retried`, `the job is already succeeded`                                     | La tarea ya no está en un estado que permita la acción; recarga.                          |
 | `the delivery is already queued or in progress`                                                               | Espera a que termine la entrega en curso.                                                 |
 
+### La configuración ya está completa {#setup-already-completed}
+
+**Qué ha pasado:** se envió la configuración inicial aunque el servidor ya tiene un administrador
+de la plataforma (`setup_already_completed`, HTTP 409), por ejemplo porque alguien la completó
+mientras tanto en otra pestaña.
+
+**Qué hacer:** inicia sesión con la cuenta de administrador. Consulta
+[Configuración inicial](help:first-run-setup).
+
+### Dirección de correo en uso {#email-taken}
+
+**Qué ha pasado:** otra cuenta ya tiene esta dirección de correo (`email_taken`, HTTP 409). Las
+direcciones de correo son únicas, sin distinguir mayúsculas y minúsculas.
+
+**Qué hacer:** usa otra dirección o inicia sesión con la cuenta existente. En la configuración
+inicial ocurre cuando el inicio de sesión único creó una cuenta con esa dirección antes del primer
+administrador.
+
 ### Ya se usó para otra solicitud {#idempotency-conflict}
 
 Algunas acciones (poner una tarea en cola, publicar un evento, enviar una notificación, registrar
@@ -194,12 +236,16 @@ nueva**. Vuelve a enviar para crear un elemento nuevo. Consulta la entrada del g
 **Qué ha pasado:** el servidor se ejecuta en un modo que no admite la acción
 (`mode_not_supported`).
 
-**Causas habituales:** crear o archivar productos en un servidor en modo de un solo producto, o
-abrir el buzón local de notificaciones cuando el servidor no usa el proveedor de correo local de
-pruebas.
+**Causas habituales:** crear o archivar productos en un servidor en modo de un solo producto;
+cambiar el plan de una suscripción que gestiona Stripe (pertenece a Stripe: cámbiala en Stripe,
+por ejemplo en el portal del cliente, y Stripe actualiza Axentra); o abrir el buzón local de
+notificaciones cuando el servidor no usa el proveedor de correo local de pruebas. El mensaje del
+servidor indica el caso.
 
-**Qué hacer:** nada en Studio; un operador tendría que cambiar la configuración del servidor.
-Consulta [Productos](help:products) y [configuración del servidor](help:server-configuration).
+**Qué hacer:** una suscripción de Stripe se cambia en Stripe. Si no, nada en Studio; un operador
+tendría que cambiar la configuración del servidor. Consulta [Productos](help:products),
+[Planes y suscripciones](help:plans-subscriptions) y
+[configuración del servidor](help:server-configuration).
 
 ### Proveedor de pagos no configurado {#payment-provider-not-configured}
 
@@ -273,6 +319,14 @@ del servidor**.
 **Qué hacer:** vuelve a intentarlo pasado un momento. Puede que tu cambio no se haya guardado, así
 que compruébalo antes de repetir acciones destructivas. Si sigue fallando, comunícalo a tu operador
 con el ID de solicitud y la hora.
+
+### La solicitud falló {#error}
+
+**Qué ha pasado:** el servidor rechazó la solicitud con un error HTTP sin un código más específico
+(`error`).
+
+**Qué hacer:** revisa el **Mensaje del servidor** y el **Estado HTTP** en **Detalles técnicos** y
+vuelve a intentarlo. Si sigue ocurriendo, comunícalo con el ID de solicitud.
 
 ### Servidor no accesible {#network-error}
 
@@ -388,9 +442,10 @@ producto).
 
 ### Una página muestra No permitido aunque puedes abrirla {#page-forbidden}
 
-La barra lateral muestra todas las áreas; si puedes leer sus datos se decide al cargar la página.
-Un área sin el permiso de lectura muestra **No permitido** con el permiso que falta en el mensaje
-del servidor.
+La barra lateral muestra casi todas las áreas (solo **Registro de auditoría** se oculta sin un
+permiso de auditoría); si puedes leer los datos de un área se decide al cargar la página. Un área
+sin el permiso de lectura muestra **No permitido** con el permiso que falta en el mensaje del
+servidor.
 
 ### El inicio de sesión o el guardado falla con No permitido {#csrf-origin}
 

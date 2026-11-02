@@ -225,7 +225,7 @@
     "explain": "Questo piano è a pagamento. Studio crea una sessione di checkout; i dati di pagamento vengono inseriti solo sulla pagina ospitata dal provider.",
     "unavailable": "Questo piano a pagamento richiede un checkout, che qui il server non offre.",
     "liveBlocked": "I pagamenti reali sono attivi. Studio non avvia checkout con denaro reale; usa il checkout del tuo prodotto.",
-    "changeNeedsCheckout": "Il passaggio a questo piano a pagamento richiede un checkout presso il provider. Annulla l'abbonamento attuale e abbonati di nuovo.",
+    "changeNeedsCheckout": "Il passaggio a questo piano a pagamento richiede un checkout presso il provider. Annulla l'abbonamento attuale e abbona di nuovo il tenant.",
     "readyTitle": "Checkout creato",
     "readyBody": "Apri la pagina di checkout ospitata da {{provider}} per completare l'abbonamento. L'abbonamento resta incompleto finché il provider non lo conferma.",
     "open": "Apri pagina di checkout",

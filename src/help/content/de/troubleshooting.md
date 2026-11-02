@@ -44,26 +44,31 @@ Sekunden.
 Die Tabelle gibt einen Überblick. Die Abschnitte darunter erklären jeden Code mit Ursachen und
 Lösungen.
 
-| Titel in Studio                        | Fehlercode                        | HTTP-Status    | Kurz gesagt                                          |
-| -------------------------------------- | --------------------------------- | -------------- | ---------------------------------------------------- |
-| **Bitte prüfe deine Eingaben**         | `validation_failed`               | 422 (oder 400) | Werte wurden abgelehnt                               |
-| **Anfrage nicht verstanden**           | `bad_request`                     | 400            | Die Anfrage konnte nicht gelesen werden              |
-| **Bitte melde dich an**                | `unauthenticated`                 | 401            | Keine gültige Sitzung                                |
-| **Nicht erlaubt**                      | `forbidden`                       | 403            | Berechtigung fehlt oder Produkt bzw. Mandant inaktiv |
-| **Bitte melde dich erneut an**         | `reauthentication_required`       | 403            | Erfordert eine kurz zurückliegende Anmeldung         |
-| **Nicht gefunden**                     | `not_found`                       | 404            | Existiert nicht oder ist für dich nicht sichtbar     |
-| **Modul nicht aktiviert**              | `module_disabled`                 | 404            | Servermodul ausgeschaltet                            |
-| **Konflikt**                           | `conflict`                        | 409            | Kollidiert mit vorhandenen Daten oder dem Zustand    |
-| **In diesem Modus nicht verfügbar**    | `mode_not_supported`              | 409            | In dieser Betriebsart des Servers nicht möglich      |
-| **Kein Zahlungsanbieter eingerichtet** | `payment_provider_not_configured` | 409            | Die Abrechnung braucht einen Anbieter                |
-| **Zwischenzeitlich geändert**          | `precondition_failed`             | 412            | Jemand anderes hat zuerst gespeichert                |
-| **Zu groß**                            | `payload_too_large`               | 413            | Anfrage oder Datei zu groß                           |
-| **Typ nicht zulässig**                 | `unsupported_media_type`          | 415            | Gesperrter oder nicht unterstützter Inhaltstyp       |
-| **Zu viele Anfragen**                  | `rate_limited`                    | 429            | Langsamer werden                                     |
-| **Kontingent überschritten**           | `quota_exceeded`                  | 429            | Mandantenkontingent oder Tariflimit aufgebraucht     |
-| **Serverfehler**                       | `internal`                        | 500 und höher  | Fehler auf dem Server                                |
-| **Server nicht erreichbar**            | `network_error`                   | keiner         | Keine Antwort vom Server                             |
-| **Unerwarteter Fehler**                | `unknown`                         | andere         | Nicht erkannt                                        |
+| Titel in Studio                               | Fehlercode                        | HTTP-Status    | Kurz gesagt                                          |
+| --------------------------------------------- | --------------------------------- | -------------- | ---------------------------------------------------- |
+| **Bitte prüfe deine Eingaben**                | `validation_failed`               | 422 (oder 400) | Werte wurden abgelehnt                               |
+| **Anfrage nicht verstanden**                  | `bad_request`                     | 400            | Die Anfrage konnte nicht gelesen werden              |
+| **Ungültige Signatur**                        | `invalid_signature`               | 400            | Webhook des Zahlungsanbieters abgelehnt              |
+| **Bitte melde dich an**                       | `unauthenticated`                 | 401            | Keine gültige Sitzung                                |
+| **Nicht erlaubt**                             | `forbidden`                       | 403            | Berechtigung fehlt oder Produkt bzw. Mandant inaktiv |
+| **Bitte melde dich erneut an**                | `reauthentication_required`       | 403            | Erfordert eine kurz zurückliegende Anmeldung         |
+| **Nicht gefunden**                            | `not_found`                       | 404            | Existiert nicht oder ist für dich nicht sichtbar     |
+| **Modul nicht aktiviert**                     | `module_disabled`                 | 404            | Servermodul ausgeschaltet                            |
+| **Aktion nicht unterstützt**                  | `method_not_allowed`              | 405            | Unter dieser Adresse nicht angeboten                 |
+| **Konflikt**                                  | `conflict`                        | 409            | Kollidiert mit vorhandenen Daten oder dem Zustand    |
+| **Die Einrichtung ist bereits abgeschlossen** | `setup_already_completed`         | 409            | Eine Administration existiert                        |
+| **E-Mail-Adresse wird verwendet**             | `email_taken`                     | 409            | Ein anderes Konto hat die Adresse                    |
+| **In diesem Modus nicht verfügbar**           | `mode_not_supported`              | 409            | In dieser Betriebsart des Servers nicht möglich      |
+| **Kein Zahlungsanbieter eingerichtet**        | `payment_provider_not_configured` | 409            | Die Abrechnung braucht einen Anbieter                |
+| **Zwischenzeitlich geändert**                 | `precondition_failed`             | 412            | Jemand anderes hat zuerst gespeichert                |
+| **Zu groß**                                   | `payload_too_large`               | 413            | Anfrage oder Datei zu groß                           |
+| **Typ nicht zulässig**                        | `unsupported_media_type`          | 415            | Gesperrter oder nicht unterstützter Inhaltstyp       |
+| **Zu viele Anfragen**                         | `rate_limited`                    | 429            | Langsamer werden                                     |
+| **Kontingent überschritten**                  | `quota_exceeded`                  | 429            | Mandantenkontingent oder Tariflimit aufgebraucht     |
+| **Serverfehler**                              | `internal`                        | 500 und höher  | Fehler auf dem Server                                |
+| **Anfrage fehlgeschlagen**                    | `error`                           | andere         | HTTP-Fehler ohne genaueren Code                      |
+| **Server nicht erreichbar**                   | `network_error`                   | keiner         | Keine Antwort vom Server                             |
+| **Unerwarteter Fehler**                       | `unknown`                         | andere         | Nicht erkannt                                        |
 
 ### Bitte prüfe deine Eingaben {#validation-failed}
 
@@ -87,6 +92,16 @@ HTTP 400), zum Beispiel weil ein Wert ein falsches Format hatte.
 
 **Was du tun kannst:** Lade die Seite neu und wiederhole die Aktion. Passiert es erneut, melde es
 mit der Anfrage-ID; normalerweise sendet Studio nur korrekt aufgebaute Anfragen.
+
+### Ungültige Signatur {#invalid-signature}
+
+**Was passiert ist:** Der Server hat einen Webhook des Zahlungsanbieters abgelehnt, weil dessen
+Signatur nicht stimmte (`invalid_signature`, HTTP 400). Nur der Zahlungsanbieter ruft diesen
+Endpunkt auf; bei deinen eigenen Aktionen in Studio siehst du diesen Code nicht.
+
+**Was du tun kannst:** In Studio nichts. Ein Betreiber prüft, ob das Webhook-Geheimnis in der
+Serverkonfiguration mit dem beim Zahlungsanbieter übereinstimmt. Siehe
+[Tarife und Abonnements](help:plans-subscriptions).
 
 ### Bitte melde dich an {#unauthenticated}
 
@@ -167,6 +182,15 @@ das Produkt oder den Mandanten, dich hinzuzufügen.
 **Was du tun kannst:** Bitte deinen Betreiber, das Modul in der Serverkonfiguration zu aktivieren.
 Die [Modulreferenz](help:modules-reference) listet, wofür jedes Modul zuständig ist.
 
+### Aktion nicht unterstützt {#method-not-allowed}
+
+**Was passiert ist:** Der Server bietet diese Aktion unter dieser Adresse nicht an
+(`method_not_allowed`, HTTP 405). Studio sendet nur Anfragen, die die API des Servers beschreibt,
+deshalb haben Studio und Server wahrscheinlich unterschiedliche Versionen.
+
+**Was du tun kannst:** Lade die Seite neu. Passiert es wieder, melde es mit der Anfrage-ID und der
+Serverversion, die unten in der Seitenleiste steht.
+
 ### Konflikt {#conflict}
 
 **Was passiert ist:** Die Anfrage kollidiert mit vorhandenen Daten oder mit dem aktuellen Zustand
@@ -185,6 +209,24 @@ dem übersetzten Text.
 | `only failed or dead jobs can be retried`, `the job is already succeeded`                                     | Der Job ist nicht mehr in einem Zustand, der die Aktion erlaubt; lade neu.                       |
 | `the delivery is already queued or in progress`                                                               | Warte, bis die laufende Zustellung abgeschlossen ist.                                            |
 
+### Die Einrichtung ist bereits abgeschlossen {#setup-already-completed}
+
+**Was passiert ist:** Die Ersteinrichtung wurde abgeschickt, obwohl der Server schon eine
+Plattform-Administration hat (`setup_already_completed`, HTTP 409), zum Beispiel weil jemand die
+Einrichtung inzwischen in einem anderen Tab abgeschlossen hat.
+
+**Was du tun kannst:** Melde dich mit dem Administrationskonto an. Siehe
+[Ersteinrichtung](help:first-run-setup).
+
+### E-Mail-Adresse wird verwendet {#email-taken}
+
+**Was passiert ist:** Ein anderes Konto hat diese E-Mail-Adresse bereits (`email_taken`, HTTP 409).
+E-Mail-Adressen sind eindeutig, unabhängig von Groß- und Kleinschreibung.
+
+**Was du tun kannst:** Nimm eine andere Adresse oder melde dich mit dem bestehenden Konto an. Bei
+der Einrichtung passiert das, wenn Single Sign-on vor der ersten Administration ein Konto mit der
+Adresse angelegt hat.
+
 ### Bereits für eine andere Anfrage verwendet {#idempotency-conflict}
 
 Manche Aktionen (einen Job einreihen, ein Ereignis veröffentlichen, eine Benachrichtigung senden,
@@ -200,12 +242,16 @@ verwenden** an. Sende erneut, um einen neuen Eintrag anzulegen. Siehe den Glossa
 **Was passiert ist:** Der Server läuft in einer Betriebsart, die die Aktion nicht unterstützt
 (`mode_not_supported`).
 
-**Typische Ursachen:** Produkte auf einem Server im Einzelproduktbetrieb anlegen oder archivieren,
-oder das lokale Postfach der Benachrichtigungen öffnen, wenn der Server nicht den lokalen
-Test-Mailanbieter verwendet.
+**Typische Ursachen:** Produkte auf einem Server im Einzelproduktbetrieb anlegen oder archivieren;
+den Tarif eines Abonnements ändern, das Stripe verwaltet (es gehört Stripe: ändere es in Stripe,
+zum Beispiel im Kundenportal, und Stripe aktualisiert Axentra); oder das lokale Postfach der
+Benachrichtigungen öffnen, wenn der Server nicht den lokalen Test-Mailanbieter verwendet. Die
+Servermeldung nennt den Fall.
 
-**Was du tun kannst:** In Studio nichts; ein Betreiber müsste die Serverkonfiguration ändern.
-Siehe [Produkte](help:products) und [Serverkonfiguration](help:server-configuration).
+**Was du tun kannst:** Ein Stripe-Abonnement änderst du in Stripe. Sonst in Studio nichts; ein
+Betreiber müsste die Serverkonfiguration ändern. Siehe [Produkte](help:products),
+[Tarife und Abonnements](help:plans-subscriptions) und
+[Serverkonfiguration](help:server-configuration).
 
 ### Kein Zahlungsanbieter eingerichtet {#payment-provider-not-configured}
 
@@ -283,6 +329,14 @@ Details; die Anfrage-ID verbindet deine Meldung mit dem Protokolleintrag des Ser
 **Was du tun kannst:** Versuche es nach einem Moment erneut. Deine Änderung wurde möglicherweise
 nicht gespeichert; prüfe das also, bevor du zerstörerische Aktionen wiederholst. Scheitert es
 weiterhin, melde es deinem Betreiber mit Anfrage-ID und Uhrzeit.
+
+### Anfrage fehlgeschlagen {#error}
+
+**Was passiert ist:** Der Server hat die Anfrage mit einem HTTP-Fehler ohne genaueren Code
+abgelehnt (`error`).
+
+**Was du tun kannst:** Prüfe die **Servermeldung** und den **HTTP-Status** unter **Technische
+Details** und versuche es erneut. Passiert es immer wieder, melde es mit der Anfrage-ID.
 
 ### Server nicht erreichbar {#network-error}
 
@@ -400,9 +454,9 @@ Beispiel **Neues Produkt** im Einzelproduktbetrieb).
 
 ### Eine Seite zeigt Nicht erlaubt, obwohl du sie öffnen kannst {#page-forbidden}
 
-Die Seitenleiste zeigt jeden Bereich; ob du seine Daten lesen darfst, entscheidet sich beim Laden
-der Seite. Ein Bereich ohne Leseberechtigung zeigt **Nicht erlaubt** mit der fehlenden
-Berechtigung in der Servermeldung.
+Die Seitenleiste zeigt fast jeden Bereich (nur **Audit-Protokoll** fehlt ohne Audit-Berechtigung);
+ob du die Daten eines Bereichs lesen darfst, entscheidet sich beim Laden der Seite. Ein Bereich ohne
+Leseberechtigung zeigt **Nicht erlaubt** mit der fehlenden Berechtigung in der Servermeldung.
 
 ### Anmelden oder Speichern scheitert mit Nicht erlaubt {#csrf-origin}
 
@@ -423,7 +477,7 @@ zu vielen Versuchen siehst du [Zu viele Anfragen](#rate-limited). Ein deaktivier
 ### Ein Einladungslink funktioniert nicht {#invitation-link}
 
 - **Seite nicht gefunden** oder eine Seite der API: Der Link zeigt auf eine Adresse, unter der
-  Studio nicht läuft. Bitte deinen Betrieb, `notify.invitation_accept_url` zu setzen, siehe
+  Studio nicht läuft. Bitte deinen Betreiber, `notify.invitation_accept_url` zu setzen, siehe
   [Mitglieder und Einladungen](help:members-invitations#delivery).
 - **Diese Einladung kann nicht verwendet werden**: Die Einladung ist abgelaufen, wurde bereits
   verwendet oder widerrufen, oder der Link ist unvollständig. Bitte die Person, die dich eingeladen

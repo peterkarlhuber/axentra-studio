@@ -98,6 +98,10 @@ That browser is signed out with its next request. Your current session has no re
 To end all sessions except the one you are using, choose **Sign out all other sessions** in the header of
 **Your sessions**. The button appears when at least one other session exists.
 
+Your current session is never signed out. Each other session is signed out separately; if some
+cannot be (for example because of the request rate limit), Studio says how many, the list shows the
+ones that are still active, and you can choose the button again.
+
 > [!TIP]
 > Signed in on a shared or lost computer? Revoke that session here. If you think your password is
 > known to someone else, change it: that also signs out every other session.

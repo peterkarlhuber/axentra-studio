@@ -5,7 +5,7 @@
     "pickTitle": "Mandanten auswählen",
     "pickBody": "Dateien gehören immer zu einem Mandanten. Wähle einen Mandanten, um seine Dateien und seinen Speicherverbrauch zu sehen.",
     "noAccessTitle": "Kein Zugriff auf die Dateien dieses Mandanten",
-    "noAccessBody": "Deine Rollen gewähren in diesem Mandanten kein files:read. Bitte einen Produktverantwortlichen um Zugriff.",
+    "noAccessBody": "Deine Rollen gewähren in diesem Mandanten kein files:read. Bitte einen Produktinhaber um Zugriff.",
     "listTitle": "Gespeicherte Dateien",
     "listDescription": "Neueste zuerst. Nur aktive, nicht abgelaufene Dateien werden angezeigt.",
     "tableCaption": "Dateien des ausgewählten Mandanten",
@@ -97,7 +97,7 @@
     "tooLarge": "Diese Datei ist größer als die Server-Grenze von {{size}}.",
     "selected": "{{name}} · {{size}} · {{type}}",
     "typeUnknown": "Typ unbekannt",
-    "policyUnknown": "Der Server prüft Größe, Typ und Kontingent beim Hochladen. Die erlaubten Typen sehen Produktverantwortliche und Plattform-Administratoren.",
+    "policyUnknown": "Der Server prüft Größe, Typ und Kontingent beim Hochladen. Die erlaubten Typen sehen Produktinhaber und -administratoren sowie Plattform-Administratoren.",
     "allowedTypes": "Erlaubte Typen: {{types}}.",
     "allTypes": "Alle Typen außer gesperrten",
     "blockedRefused": "Programme, HTML, SVG und Skripte werden abgelehnt (geprüft anhand des angegebenen Typs, des Inhalts und der Dateiendung).",
@@ -130,7 +130,7 @@
     "inertExtensions": "Als inerte Anhänge angenommen: {{extensions}}.",
     "extraBlocked": "Von diesem Produkt zusätzlich gesperrt: {{items}}.",
     "fileInfo": "Leere Dateien werden abgelehnt. Der Server prüft die ersten Bytes: Eine Datei, die wie ein Programm, HTML, SVG oder Skript aussieht, gilt als gesperrt, egal wie sie heißt oder welchen Typ sie angibt.",
-    "metadataInfo": "Schlüssel: 1–64 Zeichen aus Buchstaben, Ziffern und _ . : - . Textwerte bis 1.024 Zeichen, insgesamt 8 KiB. Labels erscheinen im Audit-Log, trag also keine Geheimnisse ein.",
+    "metadataInfo": "Schlüssel: 1–64 Zeichen aus Buchstaben, Ziffern und _ . : - . Textwerte bis 1.024 Zeichen, insgesamt 8 KiB. Labels erscheinen im Audit-Protokoll, trag also keine Geheimnisse ein.",
     "expiresInfo": "Zu diesem Zeitpunkt verschwindet die Datei aus den Listen und ihre Download-Links funktionieren nicht mehr. Die Bereinigung des Servers entfernt sie später; bis dahin zählt sie noch zum Kontingent. Den Ablauf kannst du nach dem Upload nicht mehr ändern.",
     "rulesLink": "Welche Dateien werden angenommen?"
   },
@@ -152,7 +152,7 @@
   "delete": {
     "title": "Datei löschen?",
     "body": "{{name}} wird für alle entfernt und das Kontingent freigegeben. Das lässt sich nicht rückgängig machen.",
-    "note": "Bestehende Download-Links funktionieren nicht mehr. Datenbank-Backups und das Audit-Log behalten Name, Größe und Prüfsumme der Datei.",
+    "note": "Bestehende Download-Links funktionieren nicht mehr. Datenbank-Backups und das Audit-Protokoll behalten Name, Größe und Prüfsumme der Datei.",
     "done": "{{name}} gelöscht"
   },
   "overview": {
@@ -185,14 +185,14 @@
     "quotaBytes": "Speicherkontingent",
     "quotaFiles": "Dateikontingent",
     "configTitle": "Speicherkonfiguration",
-    "configBody": "Wirksame Servereinstellungen (nur lesend).",
+    "configBody": "Wirksame Servereinstellungen (nur lesbar).",
     "backend": "Backend",
     "maxFile": "Maximale Dateigröße",
     "allowedTypes": "Erlaubte Typen",
     "blocked": "Gesperrte Typen",
     "retentionTitle": "Aufbewahrung",
     "retentionBody": "Aufbewahrungsfristen, die der Server meldet.",
-    "auditRetention": "Audit-Log",
+    "auditRetention": "Audit-Protokoll",
     "jobRetention": "Abgeschlossene Jobs",
     "days_one": "{{formatted}} Tag",
     "days_other": "{{formatted}} Tage",
@@ -227,9 +227,9 @@
     "inertNote": "Inerte Dateien werden als application/octet-stream gespeichert und als Anhang mit nosniff heruntergeladen; ihr ursprünglicher Typ wird nur zur Anzeige aufbewahrt.",
     "saved": "Inhaltstyp-Richtlinie gespeichert",
     "loadError": "Die Inhaltstyp-Richtlinie konnte nicht geladen werden.",
-    "moduleOff": "Das Speichermodul ist auf diesem Server nicht aktiviert.",
+    "moduleOff": "Das Storage-Modul ist auf diesem Server nicht aktiviert.",
     "modeInfo": "„Hochladen ablehnen“: Wer hochlädt, erhält „Dateityp nicht zulässig“. „Als inerten Anhang speichern“: Die Datei wird als application/octet-stream gespeichert und kann nur heruntergeladen, nie angezeigt werden. Gilt für neue Uploads und Umbenennungen; gespeicherte Dateien bleiben unverändert.",
     "inertExtensionsInfo": "Wirkt nur, solange gesperrte Dateien abgelehnt werden. Es entscheidet der Dateiname, auch wenn der Inhalt gesperrt ist: Ein Skript namens run.sh wird inert gespeichert, wenn „sh“ eingetragen ist; dasselbe Skript als run.txt wird abgelehnt.",
-    "blockedInfo": "Die eingebaute Liste (siehe „Immer gesperrt“) lässt sich nicht verkürzen. Einträge hier werden zusätzlich gesperrt und folgen der Einstellung „Gesperrte Dateitypen“. Höchstens 100 Einträge."
+    "blockedInfo": "Die integrierte Liste (siehe „Immer gesperrt“) lässt sich nicht verkürzen. Einträge hier werden zusätzlich gesperrt und folgen der Einstellung „Gesperrte Dateitypen“. Höchstens 100 Einträge."
   }
 }

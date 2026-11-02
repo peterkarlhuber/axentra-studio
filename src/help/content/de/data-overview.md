@@ -159,10 +159,10 @@ die mit `#!` beginnt). Das Umbenennen einer Datei in eine gesperrte Endung folgt
 
 | Einstellung             | Bedeutung                                                                                                                                                                             | Standard |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **Audit-Log**           | Tage, die der Server Audit-Ereignisse aufbewahrt (`observability.audit_retention_days`).                                                                                              | 365 Tage |
+| **Audit-Protokoll**     | Tage, die der Server Audit-Ereignisse aufbewahrt (`observability.audit_retention_days`).                                                                                              | 365 Tage |
 | **Abgeschlossene Jobs** | Tage, die der Server abgeschlossene Jobs (erfolgreich, fehlgeschlagen, tot oder abgebrochen) und abgeschlossene Webhook-Zustellungen aufbewahrt (`observability.job_retention_days`). | 30 Tage  |
 
-Datensätze und Dateien haben keine Aufbewahrungsfrist: sie bleiben, bis jemand sie löscht, die eigene
+Datensätze und Dateien haben keine Aufbewahrungsfrist; sie bleiben, bis jemand sie löscht, die eigene
 Ablaufzeit einer Datei verstreicht oder der Mandant gelöscht wird (wodurch alle seine Daten gelöscht
 werden).
 

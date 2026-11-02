@@ -12,7 +12,7 @@ utenti, i ruoli, le chiavi API e i dati.
 
 ## Che cosa fa Axentra {#what-is-axentra}
 
-Axentra si occupa dell'"impiantistica" di un prodotto SaaS:
+Axentra si occupa dell'“impiantistica” di un prodotto SaaS:
 
 - **Account e accesso**: utenti, password, sessioni del browser e single sign-on (OpenID Connect).
 - **Clienti (tenant)**: ogni organizzazione cliente del tuo prodotto riceve un proprio tenant, con
@@ -97,7 +97,7 @@ del prodotto) accettano input JSON; gli esempi negli articoli bastano per inizia
 - **Un nuovo cliente firma un contratto.** Crei un tenant, inviti l'amministratore del cliente e
   crei una chiave API per la sua integrazione. Vedi
   [Integrare un'organizzazione cliente](help:tutorial-onboard-customer).
-- **Un cliente segnala "accesso negato".** Controlli il ruolo del membro, le autorizzazioni della
+- **Un cliente segnala “accesso negato”.** Controlli il ruolo del membro, le autorizzazioni della
   chiave API e gli eventi negati nel [registro di audit](help:audit).
 - **Un'integrazione ha bisogno di eventi.** Registri un webhook e ne osservi le consegne. Vedi
   [Creare un ricevitore di webhook](help:tutorial-webhook-receiver).

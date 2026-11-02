@@ -25,22 +25,38 @@ nuovo.
    `billing-worker production`.
 3. Facoltativamente scegli un **Ambito tenant** (vedi [chiavi legate a un tenant](#tenant-scope)).
    Lascia **Intero prodotto** per una chiave che funziona in ogni tenant.
-4. Seleziona le **Autorizzazioni** di cui il servizio ha bisogno, e non di più. L'elenco di
+4. Facoltativamente scegli una **Scadenza**: **Mai** (predefinito), **Tra 30 giorni**, **Tra 90
+   giorni**, **Tra 365 giorni**, oppure **In una data…** e poi una **Data di scadenza** (vedi
+   [scadenza](#expiry)).
+5. Seleziona le **Autorizzazioni** di cui il servizio ha bisogno, e non di più. L'elenco di
    controllo funziona come descritto in [ruoli e autorizzazioni](help:roles-permissions#checklist).
-5. Scegli **Crea chiave**.
-6. Copia il segreto da **Segreto della chiave API** nel tuo gestore di segreti.
-7. Seleziona **Ho conservato il segreto in modo sicuro** e scegli **Fatto**.
+6. Scegli **Crea chiave**.
+7. Copia il segreto da **Segreto della chiave API** nel tuo gestore di segreti.
+8. Seleziona **Ho conservato il segreto in modo sicuro** e scegli **Fatto**.
 
 > [!CAUTION]
 > La finestra del segreto non si chiude con Esc né facendo clic all'esterno, e il segreto non può
 > essere mostrato di nuovo. Se va perso, [ruota la chiave](#rotate) per ottenere un nuovo segreto.
 
-| Campo                   | Che cosa fa                                           | Valori consentiti / predefinito                                                                       |
-| ----------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Nome**                | Etichetta nell'elenco e nel registro di audit.        | Da 1 a 200 caratteri. Non univoco.                                                                    |
-| **Ambito tenant**       | Lega la chiave a un tenant.                           | **Intero prodotto** (predefinito) oppure un tenant. Mostrato quando il modulo dei tenant è abilitato. |
-| **Autorizzazioni**      | Che cosa può fare la chiave.                          | Da 1 a 100 autorizzazioni con ambito prodotto o tenant, comprese quelle attive definite dal prodotto. |
-| Scadenza (`expires_at`) | Momento dopo il quale la chiave smette di funzionare. | Non impostabile in Studio: le chiavi create qui non scadono mai. Disponibile tramite l'API.           |
+| Campo              | Che cosa fa                                           | Valori consentiti / predefinito                                                                                                  |
+| ------------------ | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Nome**           | Etichetta nell'elenco e nel registro di audit.        | Da 1 a 200 caratteri. Non univoco.                                                                                               |
+| **Ambito tenant**  | Lega la chiave a un tenant.                           | **Intero prodotto** (predefinito) oppure un tenant. Mostrato quando il modulo dei tenant è abilitato.                            |
+| **Autorizzazioni** | Che cosa può fare la chiave.                          | Da 1 a 100 autorizzazioni con ambito prodotto o tenant, comprese quelle attive definite dal prodotto.                            |
+| **Scadenza**       | Momento dopo il quale la chiave smette di funzionare. | **Mai** (predefinito), 30, 90 o 365 giorni dalla creazione, oppure la fine di un giorno scelto (dopo oggi, nel tuo fuso orario). |
+
+### Scadenza {#expiry}
+
+Una chiave con scadenza smette di funzionare in quel momento: viene rifiutata come una chiave
+revocata ed è elencata come **Scaduto**. Scegli una scadenza per le chiavi che servono solo per un
+periodo, ad esempio per una migrazione o il test di un partner; i servizi permanenti di solito usano
+chiavi senza scadenza e le [ruotano](#rotate) regolarmente.
+
+La scadenza non si può modificare dopo la creazione e la rotazione la mantiene: crea una nuova
+chiave prima che la vecchia scada e passa il servizio alla nuova. Le chiavi che un servizio crea con
+un'altra chiave non sopravvivono mai alla chiave che le crea (vedi [chiavi
+derivate](#derived-keys)); le chiavi create in Studio appartengono al tuo account, quindi questa
+regola non si applica a loro.
 
 ### Chiavi legate a un tenant {#tenant-scope}
 
@@ -153,19 +169,19 @@ continuano a funzionare quando quella persona se ne va o viene disattivata.
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**Non consentito: "you cannot grant permissions you do not hold: …".** Hai selezionato
+**Non consentito: “you cannot grant permissions you do not hold: …”.** Hai selezionato
 un'autorizzazione che non possiedi. Rimuovila oppure chiedi a un proprietario del prodotto di creare
 la chiave. Lo stesso vale per la rotazione: chi ruota la chiave deve possedere tutte le sue
 autorizzazioni.
 
-**Verifica i dati inseriti: "an API key needs at least one permission" / "unknown permissions".**
+**Verifica i dati inseriti: “an API key needs at least one permission” / “unknown permissions”.**
 Seleziona almeno un'autorizzazione; nel frattempo un'autorizzazione di prodotto potrebbe essere stata
 dismessa.
 
-**Verifica i dati inseriti: "only active keys can be rotated".** La chiave è scaduta o revocata.
+**Verifica i dati inseriti: “only active keys can be rotated”.** La chiave è scaduta o revocata.
 Crea invece una nuova chiave.
 
-**Verifica i dati inseriti: "expires_at must not be later than the expiry of the creating key".**
+**Verifica i dati inseriti: “expires_at must not be later than the expiry of the creating key”.**
 Solo tramite l'API: una chiave derivata non può sopravvivere alla chiave madre.
 
 **Accedi (401) quando il servizio chiama l'API.** La chiave è errata, incompleta, revocata o

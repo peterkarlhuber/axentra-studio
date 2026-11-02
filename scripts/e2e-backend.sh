@@ -240,6 +240,12 @@ PY
   if "$py" -c 'import sys; from axentra.config.settings import NotifySettings; sys.exit(0 if "invitation_accept_url" in NotifySettings.model_fields else 1)' 2>/dev/null; then
     notify_extra="invitation_accept_url = \"http://127.0.0.1:$PREVIEW_PORT/accept-invitation\""
   fi
+  # Newer backends retry webhooks on their own schedule (minutes to hours by default); keep the
+  # e2e retries short. Older backends refuse unknown settings, so add them only where they exist.
+  local webhook_backoff=""
+  if grep -q 'webhook_backoff_base_seconds' "$BACKEND/src/axentra/config/settings.py"; then
+    webhook_backoff=$'webhook_backoff_base_seconds = 0.5\nwebhook_backoff_max_seconds = 5'
+  fi
   cat >"$STATE/axentra.toml" <<TOML
 # Written by scripts/e2e-backend.sh for Studio's end-to-end tests. Never use for anything else.
 environment = "test"
@@ -278,6 +284,7 @@ webhook_allow_http = true
 webhook_max_attempts = 3
 backoff_base_seconds = 0.5
 backoff_max_seconds = 5
+${webhook_backoff}
 
 [observability]
 log_format = "text"

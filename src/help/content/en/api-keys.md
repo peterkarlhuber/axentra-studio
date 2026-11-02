@@ -24,22 +24,36 @@ hash of it, so nobody, not even an administrator, can display it again.
 2. Enter a **Name** that says where the key is used, for example `billing-worker production`.
 3. Optionally choose a **Tenant scope** (see [tenant-bound keys](#tenant-scope)). Leave **Whole
    product** for a key that works in every tenant.
-4. Select the **Permissions** the service needs, and no more. The checklist works as described in
+4. Optionally choose an **Expiry**: **Never** (the default), **In 30 days**, **In 90 days**, **In
+   365 days**, or **On a date…** and then an **Expiry date** (see [expiry](#expiry)).
+5. Select the **Permissions** the service needs, and no more. The checklist works as described in
    [roles and permissions](help:roles-permissions#checklist).
-5. Choose **Create key**.
-6. Copy the secret from **API key secret** into your secret manager.
-7. Tick **I have stored the secret securely** and choose **Done**.
+6. Choose **Create key**.
+7. Copy the secret from **API key secret** into your secret manager.
+8. Tick **I have stored the secret securely** and choose **Done**.
 
 > [!CAUTION]
 > The secret dialog cannot be closed with Escape or by clicking outside, and the secret cannot be
 > shown again. If it is lost, [rotate the key](#rotate) to get a new secret.
 
-| Field                 | What it does                            | Allowed values / default                                                             |
-| --------------------- | --------------------------------------- | ------------------------------------------------------------------------------------ |
-| **Name**              | Label in the list and in the audit log. | 1–200 characters. Not unique.                                                        |
-| **Tenant scope**      | Binds the key to one tenant.            | **Whole product** (default) or one tenant. Shown when the tenants module is enabled. |
-| **Permissions**       | What the key may do.                    | 1–100 permissions of scope product or tenant, including active product-defined ones. |
-| Expiry (`expires_at`) | Time after which the key stops working. | Not set in Studio: keys created here never expire. Available through the API.        |
+| Field            | What it does                            | Allowed values / default                                                                                         |
+| ---------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Name**         | Label in the list and in the audit log. | 1–200 characters. Not unique.                                                                                    |
+| **Tenant scope** | Binds the key to one tenant.            | **Whole product** (default) or one tenant. Shown when the tenants module is enabled.                             |
+| **Permissions**  | What the key may do.                    | 1–100 permissions of scope product or tenant, including active product-defined ones.                             |
+| **Expiry**       | Time after which the key stops working. | **Never** (default), 30, 90 or 365 days from creation, or the end of a chosen day (after today, your time zone). |
+
+### Expiry {#expiry}
+
+A key with an expiry stops working at that time: it is refused like a revoked key and listed as
+**Expired**. Choose an expiry for keys that are only needed for a while, for example for a migration
+or a partner's test; long-running services usually use keys without expiry and [rotate](#rotate)
+them on a schedule.
+
+The expiry cannot be changed after creation, and rotation keeps it: create a new key before the old
+one expires and switch the service over. Keys that a service creates with another key never outlive
+the creating key (see [derived keys](#derived-keys)); keys created in Studio belong to your account,
+so that rule does not apply to them.
 
 ### Tenant-bound keys {#tenant-scope}
 

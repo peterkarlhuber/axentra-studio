@@ -25,23 +25,39 @@ erneut anzeigen kann.
    `billing-worker production`.
 3. Wähle optional eine **Mandantenbindung** (siehe [mandantengebundene Schlüssel](#tenant-scope)).
    Belasse **Gesamtes Produkt** für einen Schlüssel, der in jedem Mandanten funktioniert.
-4. Wähle die **Berechtigungen** aus, die der Dienst braucht, und keine weiteren. Die Checkliste
+4. Wähle optional einen **Ablauf**: **Nie** (Standard), **In 30 Tagen**, **In 90 Tagen**, **In 365
+   Tagen** oder **An einem Datum…** und dann ein **Ablaufdatum** (siehe [Ablauf](#expiry)).
+5. Wähle die **Berechtigungen** aus, die der Dienst braucht, und keine weiteren. Die Checkliste
    funktioniert wie unter [Rollen und Berechtigungen](help:roles-permissions#checklist) beschrieben.
-5. Wähle **Schlüssel anlegen**.
-6. Kopiere das Geheimnis aus **Geheimnis des API-Schlüssels** in deinen Secret-Manager.
-7. Hake **Ich habe das Geheimnis sicher gespeichert** an und wähle **Fertig**.
+6. Wähle **Schlüssel anlegen**.
+7. Kopiere das Geheimnis aus **Geheimnis des API-Schlüssels** in deinen Secret-Manager.
+8. Hake **Ich habe das Geheimnis sicher gespeichert** an und wähle **Fertig**.
 
 > [!CAUTION]
 > Der Geheimnisdialog lässt sich nicht mit Escape oder durch Klicken außerhalb schließen, und das
 > Geheimnis kann nicht erneut angezeigt werden. Geht es verloren, [rotiere den Schlüssel](#rotate),
 > um ein neues Geheimnis zu erhalten.
 
-| Feld                  | Was es bewirkt                                           | Erlaubte Werte / Standard                                                                                           |
-| --------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **Name**              | Bezeichnung in der Liste und im Audit-Protokoll.         | 1–200 Zeichen. Nicht eindeutig.                                                                                     |
-| **Mandantenbindung**  | Bindet den Schlüssel an einen Mandanten.                 | **Gesamtes Produkt** (Standard) oder ein Mandant. Wird angezeigt, wenn das Mandantenmodul aktiviert ist.            |
-| **Berechtigungen**    | Was der Schlüssel tun darf.                              | 1–100 Berechtigungen mit dem Geltungsbereich Produkt oder Mandant, einschließlich aktiver vom Produkt festgelegter. |
-| Ablauf (`expires_at`) | Zeitpunkt, ab dem der Schlüssel nicht mehr funktioniert. | In Studio nicht einstellbar: Hier erstellte Schlüssel laufen nie ab. Über die API verfügbar.                        |
+| Feld                 | Was es bewirkt                                           | Erlaubte Werte / Standard                                                                                                   |
+| -------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Name**             | Bezeichnung in der Liste und im Audit-Protokoll.         | 1–200 Zeichen. Nicht eindeutig.                                                                                             |
+| **Mandantenbindung** | Bindet den Schlüssel an einen Mandanten.                 | **Gesamtes Produkt** (Standard) oder ein Mandant. Wird angezeigt, wenn das Mandantenmodul aktiviert ist.                    |
+| **Berechtigungen**   | Was der Schlüssel tun darf.                              | 1–100 Berechtigungen mit dem Geltungsbereich Produkt oder Mandant, einschließlich aktiver vom Produkt festgelegter.         |
+| **Ablauf**           | Zeitpunkt, ab dem der Schlüssel nicht mehr funktioniert. | **Nie** (Standard), 30, 90 oder 365 Tage nach dem Anlegen oder das Ende eines gewählten Tages (nach heute, deine Zeitzone). |
+
+### Ablauf {#expiry}
+
+Ein Schlüssel mit Ablauf funktioniert ab diesem Zeitpunkt nicht mehr: Er wird wie ein widerrufener
+Schlüssel abgelehnt und als **Abgelaufen** angezeigt. Wähle einen Ablauf für Schlüssel, die nur eine
+Zeit lang gebraucht werden, zum Beispiel für eine Migration oder den Test eines Partners; dauerhaft
+laufende Dienste nutzen meist Schlüssel ohne Ablauf und [erneuern](#rotate) ihr Geheimnis
+regelmäßig.
+
+Der Ablauf lässt sich nach dem Anlegen nicht ändern, und das Erneuern behält ihn bei: Lege vor dem
+Ablauf einen neuen Schlüssel an und stelle den Dienst um. Schlüssel, die ein Dienst mit einem
+anderen Schlüssel anlegt, überleben den anlegenden Schlüssel nie (siehe [abgeleitete
+Schlüssel](#derived-keys)); in Studio angelegte Schlüssel gehören zu deinem Konto, deshalb gilt
+diese Regel für sie nicht.
 
 ### Mandantengebundene Schlüssel {#tenant-scope}
 
@@ -142,7 +158,7 @@ Solche **abgeleiteten Schlüssel**:
 
 In Studio erstellte Schlüssel werden von deinem Benutzerkonto erstellt, nicht von einem Schlüssel,
 daher gelten diese Regeln für sie nicht. Schlüssel gehören zum Produkt, nicht zu der Person, die sie
-erstellt hat: sie funktionieren weiter, wenn diese Person ausscheidet oder deaktiviert wird.
+erstellt hat, und funktionieren daher weiter, wenn diese Person ausscheidet oder deaktiviert wird.
 
 ## Gut zu wissen {#good-to-know}
 

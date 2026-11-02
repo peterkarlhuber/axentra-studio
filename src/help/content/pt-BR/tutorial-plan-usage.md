@@ -193,7 +193,7 @@ efetivo](help:usage#limit-source).
 ## O que o seu produto faz com isso {#in-your-product}
 
 - Antes de uma ação que consome um recurso medido, registre o uso. Trate `429 quota_exceeded` como
-  "limite atingido" e mostre ao cliente uma mensagem clara.
+  “limite atingido” e mostre ao cliente uma mensagem clara.
 - Leia os recursos do tenant com
   `GET /v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements` e habilite a exportação
   apenas quando `features.export` for `true`.
@@ -215,7 +215,7 @@ efetivo](help:usage#limit-source).
 | `401`                                              | A chave está errada, revogada ou expirada                           | Verifique `$KEY`; crie uma nova chave                                                     |
 | `403`                                              | A chave não tem `usage:record`, ou está vinculada a outro tenant    | Verifique as permissões e o **Escopo de tenant** da chave                                 |
 | `404`                                              | ID de produto ou de tenant errado, ou a chave do medidor não existe | Compare os IDs com o Studio; verifique a chave do medidor                                 |
-| `409` "the meter is inactive"                      | O medidor foi desativado                                            | **Ative**-o em **Medidores**                                                              |
+| `409` “the meter is inactive”                      | O medidor foi desativado                                            | **Ative**-o em **Medidores**                                                              |
 | `409` para a chave de idempotência                 | A chave já foi usada com outro corpo                                | Use uma nova `Idempotency-Key`                                                            |
 | `422`                                              | Falta a `Idempotency-Key`, ou a quantidade é inválida               | Envie o cabeçalho; use uma quantidade igual ou maior que 0 com no máximo 6 casas decimais |
 | O cartão mostra **Padrão do medidor** e limite 100 | A assinatura não está ativa, ou o plano não tem `limit.api_calls`   | Verifique os passos 2 e 3                                                                 |

@@ -58,8 +58,14 @@ The sidebar groups, in this order:
 9. Settings
 
 Items for modules the server does not report stay visible but lead to the "module not enabled"
-state, so operators can see what exists and what to enable. The sidebar does not filter by
-permission: a screen the user cannot use explains why (no access state) instead of disappearing.
+state, so operators can see what exists and what to enable. The sidebar filters by permission
+only where a screen is useless without it: **Audit log** is listed only for users with
+`platform:audit` or `audit:read` in one of their products (from `GET /v1/me`). **Settings**
+(personal preferences for everyone, server configuration with `platform:settings` or
+`product:manage`), **System health** and **Monitoring** (public readiness and liveness checks)
+stay visible and explain the parts the user cannot read. Product screens stay visible too and show
+a no-access state. A direct visit to a hidden screen still shows the explanatory **Not permitted**
+state; the server stays authoritative.
 **Help** sits in the last group and is always available.
 
 ### Shell

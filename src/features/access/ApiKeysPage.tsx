@@ -33,6 +33,7 @@ import {
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { EXPIRY_PRESET_DAYS, expiryFor, minCustomDate, type ExpiryChoice } from './api-key-expiry';
 import { PermissionChecklist } from './PermissionChecklist';
 import { SecretRevealDialog } from './SecretRevealDialog';
 import { HelpLink } from '@/help/HelpLink';
@@ -317,6 +318,10 @@ function CreateKeyDialog({
   const [name, setName] = useState('');
   const [tenantId, setTenantId] = useState('');
   const [permissions, setPermissions] = useState<string[]>([]);
+  const [expiryChoice, setExpiryChoice] = useState<ExpiryChoice>('never');
+  const [customDate, setCustomDate] = useState('');
+  const [expiryTouched, setExpiryTouched] = useState(false);
+  const expiry = expiryFor(expiryChoice, customDate);
   // Built-in and product-defined permissions of this product (active ones only).
   const catalog = useQuery({
     queryKey: queryKeys.productPermissions(productId),
@@ -325,21 +330,33 @@ function CreateKeyDialog({
   });
 
   const create = useMutation({
-    mutationFn: () =>
-      accessApi.createApiKey(productId, {
+    mutationFn: () => {
+      // Recomputed at submit so a preset counts from the moment the key is created.
+      const result = expiryFor(expiryChoice, customDate);
+      return accessApi.createApiKey(productId, {
         name: name.trim(),
         permissions,
         ...(tenantId ? { tenant_id: tenantId } : {}),
-      }),
+        ...(result.ok && result.expiresAt ? { expires_at: result.expiresAt } : {}),
+      });
+    },
     onSuccess: (created) => onCreated(created.key.name, created.secret),
     onError: showError,
   });
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    setExpiryTouched(true);
+    if (!expiry.ok) return;
     create.mutate();
   };
   const fields = create.error ? fieldErrors(create.error) : {};
+  const expiryError =
+    !expiry.ok && expiryTouched
+      ? expiry.reason === 'past'
+        ? t('keys.expiryPast')
+        : t('keys.expiryMissing')
+      : fields.expires_at;
 
   return (
     <Dialog
@@ -363,7 +380,7 @@ function CreateKeyDialog({
             form="key-form"
             variant="primary"
             loading={create.isPending}
-            disabled={!name.trim() || permissions.length === 0}
+            disabled={!name.trim() || permissions.length === 0 || (!expiry.ok && expiryTouched)}
           >
             {t('keys.createSubmit')}
           </Button>
@@ -390,6 +407,45 @@ function CreateKeyDialog({
             allowNone
             noneLabel={t('keys.productWide')}
           />
+        ) : null}
+        <FormField
+          label={t('keys.expiry')}
+          help={t('keys.expiryHelp')}
+          info={t('keys.expiryInfo')}
+          infoTopic="api-keys#expiry"
+          error={expiryChoice === 'custom' ? undefined : fields.expires_at}
+        >
+          <Select
+            value={expiryChoice}
+            onChange={(event) => {
+              setExpiryChoice(event.target.value as ExpiryChoice);
+              setExpiryTouched(false);
+            }}
+          >
+            <option value="never">{t('keys.expiryNever')}</option>
+            {EXPIRY_PRESET_DAYS.map((days) => (
+              <option key={days} value={String(days)}>
+                {t('keys.expiryDays', { count: days })}
+              </option>
+            ))}
+            <option value="custom">{t('keys.expiryCustom')}</option>
+          </Select>
+        </FormField>
+        {expiryChoice === 'custom' ? (
+          <FormField
+            label={t('keys.expiryDate')}
+            help={t('keys.expiryDateHelp')}
+            error={expiryError}
+            required
+          >
+            <Input
+              type="date"
+              min={minCustomDate()}
+              value={customDate}
+              onChange={(event) => setCustomDate(event.target.value)}
+              onBlur={() => setExpiryTouched(true)}
+            />
+          </FormField>
         ) : null}
         {catalog.isError ? (
           <p role="alert" className={layout.muted}>

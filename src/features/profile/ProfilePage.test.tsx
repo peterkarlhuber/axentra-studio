@@ -6,6 +6,7 @@ import { configureApi } from '@/api/client';
 import type { Me } from '@/api/models';
 import { jsonResponse, renderWithProviders } from '@/test/utils';
 import { ProfilePage } from './ProfilePage';
+import { revokeOtherSessions } from './revoke-other-sessions';
 
 const me = {
   user: {
@@ -80,5 +81,125 @@ describe('ProfilePage', () => {
       expect(calls.some((call) => call.url.endsWith('/v1/auth/logout'))).toBe(true),
     );
     expect(await screen.findByText('login page ?return_to=%2Fprofile')).toBeInTheDocument();
+  });
+});
+
+function session(id: string, current = false) {
+  return {
+    id,
+    current,
+    auth_method: 'password',
+    ip: '203.0.113.7',
+    user_agent: 'Mozilla/5.0 (X11; Linux x86_64) Firefox/140.0',
+    created_at: '2026-11-01T08:00:00Z',
+    last_seen_at: '2026-11-02T08:00:00Z',
+    expires_at: '2026-11-02T20:00:00Z',
+  };
+}
+
+const problem = (code: string, status: number) =>
+  jsonResponse({ code, status, title: code, request_id: 'req-7' }, { status });
+
+describe('revokeOtherSessions', () => {
+  const ok = () => Promise.resolve();
+
+  it('never revokes the current session and counts an already ended one as done', async () => {
+    const revoked: string[] = [];
+    const result = await revokeOtherSessions(
+      async () => [session('ses_me', true), session('ses_a'), session('ses_b')] as never,
+      async (id) => {
+        revoked.push(id);
+        if (id === 'ses_b') {
+          const { ApiError } = await import('@/api/errors');
+          throw new ApiError({ status: 404, code: 'not_found' });
+        }
+      },
+    );
+    expect(revoked.sort()).toEqual(['ses_a', 'ses_b']);
+    expect(result).toEqual({ revoked: 2, failed: 0, errors: [] });
+  });
+
+  it('keeps going after a failure and counts it', async () => {
+    const boom = new Error('rate limited');
+    const result = await revokeOtherSessions(
+      async () => [session('a'), session('me', true), session('b'), session('c')] as never,
+      async (id) => {
+        if (id === 'b') throw boom;
+      },
+    );
+    expect(result).toEqual({ revoked: 2, failed: 1, errors: [boom] });
+  });
+
+  it('revokes nothing when the server marks no session as current', async () => {
+    let calls = 0;
+    await expect(
+      revokeOtherSessions(
+        async () => [session('a'), session('b')] as never,
+        async () => {
+          calls += 1;
+          return ok();
+        },
+      ),
+    ).rejects.toThrow(/current session/);
+    expect(calls).toBe(0);
+  });
+});
+
+describe('ProfilePage: sign out all other sessions', () => {
+  function setup(fail: string[]) {
+    let active = [session('ses_me', true), session('ses_a'), session('ses_b'), session('ses_c')];
+    const deletes: string[] = [];
+    let lists = 0;
+    configureApi({
+      baseUrl: 'http://axentra.test',
+      fetch: async (request: Request) => {
+        const url = new URL(request.url);
+        if (url.pathname === '/v1/auth/session') return jsonResponse({ csrf_token: 'csrf' });
+        if (url.pathname === '/v1/me') return jsonResponse(me);
+        if (url.pathname === '/v1/auth/sessions') {
+          lists += 1;
+          return jsonResponse(active);
+        }
+        const match = /^\/v1\/auth\/sessions\/(.+)$/.exec(url.pathname);
+        if (match && request.method === 'DELETE') {
+          const id = match[1] ?? '';
+          deletes.push(id);
+          if (fail.includes(id)) return problem('rate_limited', 429);
+          active = active.filter((entry) => entry.id !== id);
+          return new Response(null, { status: 204 });
+        }
+        return problem('not_found', 404);
+      },
+    });
+    renderWithProviders(<ProfilePage />, { route: '/profile' });
+    return { deletes, lists: () => lists };
+  }
+
+  it('signs out the others, reports success and reloads the list', async () => {
+    const api = setup([]);
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: 'Sign out all other sessions' }));
+    expect(await screen.findByText('3 other sessions signed out')).toBeInTheDocument();
+    expect(api.deletes.sort()).toEqual(['ses_a', 'ses_b', 'ses_c']);
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('button', { name: 'Sign out all other sessions' }),
+      ).not.toBeInTheDocument(),
+    );
+    expect(api.lists()).toBeGreaterThanOrEqual(3); // page load, fresh read, reload
+  });
+
+  it('reports how many could not be signed out and keeps them listed', async () => {
+    const api = setup(['ses_b']);
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: 'Sign out all other sessions' }));
+    expect(
+      await screen.findByText('1 of 3 other sessions could not be signed out'),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Too many requests/)).toBeInTheDocument();
+    expect(api.deletes).not.toContain('ses_me');
+    // The reloaded list still offers the button for the remaining session.
+    await waitFor(() => expect(api.lists()).toBeGreaterThanOrEqual(3));
+    expect(screen.getByRole('button', { name: 'Sign out all other sessions' })).toBeInTheDocument();
   });
 });

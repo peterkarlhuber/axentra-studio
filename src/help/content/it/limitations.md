@@ -47,7 +47,7 @@ Studio, altre dal server; a volte l'API del server offre più di quanto offra St
 
 ## Dati e file {#data-files}
 
-- **Nessun conteggio totale.** Gli elenchi mostrano "N voci visualizzate" e caricano altre voci su
+- **Nessun conteggio totale.** Gli elenchi mostrano “N voci visualizzate” e caricano altre voci su
   richiesta; per scelta progettuale l'API non ha numeri di pagina né totali.
 - **Record:** filtri solo sui valori JSON di primo livello, ordinamento solo per id, data di
   creazione o di modifica. Il salvataggio di un record sostituisce l'intero oggetto JSON. Un record

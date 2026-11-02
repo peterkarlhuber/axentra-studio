@@ -16,7 +16,7 @@ Gli operatori di un intero prodotto si gestiscono invece nel prodotto, vedi
 [prodotti](help:products#members).
 
 > [!IMPORTANT]
-> Per vedere le tab **Membri** e **Inviti** di un tenant serve `members:read` nel tenant;
+> Per vedere le schede **Membri** e **Inviti** di un tenant serve `members:read` nel tenant;
 > aggiungere, invitare, cambiare ruoli, rimuovere e revocare richiede `members:manage`. I
 > proprietari e gli amministratori del tenant possiedono entrambe; gli operatori **Support**
 > possiedono `members:manage` ma possono assegnare solo ruoli che rientrano nelle proprie
@@ -37,7 +37,7 @@ tra parentesi. Vedi [ruoli e autorizzazioni](help:roles-permissions).
 
 ## Aggiungere un utente esistente {#add}
 
-1. Apri il tenant da [Tenant](app:tenants) e seleziona la tab **Membri**.
+1. Apri il tenant da [Tenant](app:tenants) e seleziona la scheda **Membri**.
 2. Scegli **Aggiungi membro**.
 3. Inserisci l'**Indirizzo email** e scegli un **Ruolo**.
 4. Scegli **Aggiungi membro**.
@@ -49,7 +49,7 @@ membri del tenant stesso. Per qualsiasi altro indirizzo la finestra mostra **Ute
 offre **Invia invece un invito**, che crea un invito con la stessa email e lo stesso ruolo.
 
 > [!NOTE]
-> Axentra risponde "non trovato" allo stesso modo sia quando un account non esiste sia quando
+> Axentra risponde “non trovato” allo stesso modo sia quando un account non esiste sia quando
 > semplicemente non è visibile per te. Questo impedisce di sondare l'elenco degli account sul
 > server.
 
@@ -66,7 +66,7 @@ ricevere un altro ruolo. Prima rendi proprietario qualcun altro.
 
 ## Invitare qualcuno via email {#invite}
 
-1. Apri il tenant e seleziona la tab **Inviti**, oppure apri [Inviti](app:invitations) e scegli il
+1. Apri il tenant e seleziona la scheda **Inviti**, oppure apri [Inviti](app:invitations) e scegli il
    tenant.
 2. Scegli **Invita membro**.
 3. Inserisci l'**Indirizzo email** e scegli un **Ruolo**. Studio preseleziona **Member**, oppure il
@@ -175,23 +175,23 @@ selettore del ruolo né pulsante di rimozione.
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**Utente non trovato.** L'account non esiste, oppure non hai il permesso di vederlo. Usa **Invia
+**Utente non trovato.** L'account non esiste, oppure non sei autorizzato a vederlo. Usa **Invia
 invece un invito**.
 
-**Conflitto: "an open invitation for this email exists".** Nel tenant esiste già un invito in attesa
+**Conflitto: “an open invitation for this email exists”.** Nel tenant esiste già un invito in attesa
 per questo indirizzo. Usalo, oppure revocalo e invita di nuovo.
 
-**Non consentito: "you cannot assign the role …: it has permissions you do not hold".** Il ruolo è
+**Non consentito: “you cannot assign the role …: it has permissions you do not hold”.** Il ruolo è
 superiore al tuo livello. Scegli un ruolo più debole oppure chiedi a un proprietario. Vedi
 [limite dei ruoli](#role-ceiling).
 
-**Non consentito: "only owners can assign the role tenant_owner".** Solo i proprietari, gli
+**Non consentito: “only owners can assign the role tenant_owner”.** Solo i proprietari, gli
 operatori di prodotto e gli amministratori della piattaforma possono gestire i proprietari.
 
-**Conflitto: "the tenant needs at least one owner".** Hai tentato di rimuovere o declassare
+**Conflitto: “the tenant needs at least one owner”.** Hai tentato di rimuovere o declassare
 l'ultimo proprietario.
 
-**Verifica i dati inseriti: "unknown tenant role …".** La chiave del ruolo non esiste in questo
+**Verifica i dati inseriti: “unknown tenant role …”.** La chiave del ruolo non esiste in questo
 prodotto (per esempio un errore di battitura nel campo di testo libero del ruolo), oppure è un ruolo
 di prodotto.
 
@@ -210,7 +210,7 @@ direttamente il tuo account al tenant.
 **All'accettazione: Il server non è raggiungibile.** Non è stato modificato nulla. Controlla la
 connessione e scegli **Riprova**.
 
-**Il link di invito apre "non trovata" o una pagina dell'API.** Il link punta a un indirizzo dove
+**Il link di invito apre “non trovata” o una pagina dell'API.** Il link punta a un indirizzo dove
 Studio non gira. Imposta l'impostazione del server `notify.invitation_accept_url` (o l'impostazione
 di prodotto `invitation_accept_url`) sulla pagina di accettazione di Studio, vedi
 [la consegna](#delivery). Nel frattempo invia il token e fallo incollare in `/invitations/accept`.

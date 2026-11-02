@@ -34,7 +34,7 @@
     },
     "types": {
       "counter": "Contador",
-      "gauge": "Medidor",
+      "gauge": "Indicador",
       "histogram": "Histograma",
       "summary": "Resumo",
       "untyped": "Sem tipo"
@@ -73,8 +73,8 @@
     "tracingTitle": "Rastreamento e logs",
     "tracingHelp": "Configurações de OpenTelemetry e de log informadas por GET /v1/settings.",
     "otel": "Rastreamento OpenTelemetry",
-    "enabled": "Ativado",
-    "disabled": "Desativado",
+    "enabled": "Habilitado",
+    "disabled": "Desabilitado",
     "logLevel": "Nível de log",
     "notifyProvider": "Provedor de notificações",
     "environment": "Ambiente"

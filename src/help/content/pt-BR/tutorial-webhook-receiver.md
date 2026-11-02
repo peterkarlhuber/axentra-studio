@@ -281,9 +281,9 @@ do endpoint, a entrega aparece como **Entregue**, com **Resposta** `200`.
 2. Publique outro evento `tutorial.hello`.
 3. Abra a guia **Entregas** do endpoint e escolha **Atualizar**. A entrega mostra **Falhou, tentando
    novamente**; os detalhes dela mostram o **Último erro** e a **Próxima tentativa**.
-4. Inicie o receptor de novo. Uma tentativa automática posterior tem êxito ou, se todas as tentativas
-   tiverem sido usadas (cerca de dois a cinco minutos com as configurações padrão), a entrega fica
-   como **Falha definitiva**.
+4. Inicie o receptor de novo. Uma tentativa automática posterior tem êxito ou, se todas as
+   tentativas tiverem sido usadas (cerca de 2 a 4¼ horas com as configurações padrão; a segunda
+   tentativa vem 1 a 2 minutos depois da primeira), a entrega fica como **Falha definitiva**.
 5. Para uma entrega com falha definitiva, abra os detalhes dela e escolha **Reenviar**. Ela passa a
    **Pendente** e depois a **Entregue**.
 
@@ -318,7 +318,7 @@ endpoint (por exemplo, de antes de uma rotação), um framework alterou o corpo 
 o corpo bruto, não o JSON interpretado), ou o relógio do receptor está mais de 5 minutos errado:
 sincronize-o com NTP.
 
-**"webhook urls must not point to local hosts" ao criar o endpoint.** Você informou `localhost` ou um
+**“webhook urls must not point to local hosts” ao criar o endpoint.** Você informou `localhost` ou um
 endereço privado. Use o endereço HTTPS público do túnel.
 
 **O ping funciona, mas os eventos publicados não chegam.** Verifique os **Tipos de evento** do

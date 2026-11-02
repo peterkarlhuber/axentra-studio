@@ -26,7 +26,7 @@ audit event, not even a platform administrator.
 | ---------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | `platform:audit`                               | Every event of the installation, including sign-ins, setup and other events without a product | **All products** (default) or one product             |
 | `audit:read` in a product, no `platform:audit` | Only the events of one product; Studio starts with the product you used last                  | One of your products; **All products** is not offered |
-| Neither                                        | An error **Not permitted**                                                                    | –                                                     |
+| Neither                                        | **Audit log** is not in the sidebar; a direct link shows **Not permitted**                    | –                                                     |
 
 The server checks the permission for every request. Selecting a product you are not allowed to
 read returns **Not permitted**, and an event you may not read cannot be opened in detail (see

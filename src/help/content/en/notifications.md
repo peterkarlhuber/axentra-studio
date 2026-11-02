@@ -158,7 +158,7 @@ error has tokens, keys and passwords removed by the server.
 
 > [!NOTE]
 > Delivery is at least once: after a crash a message can be delivered twice. Messages carry a
-> stable Message-ID, so mail servers can recognise duplicates. The order of messages is not
+> stable Message-ID, so mail servers can recognize duplicates. The order of messages is not
 > guaranteed.
 
 ## Mailbox {#mailbox}

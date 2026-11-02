@@ -17,7 +17,7 @@ operador teria de habilitar.
 - A página [Configurações](app:settings) (com `platform:settings` ou `product:manage`) mostra a
   configuração efetiva do servidor, incluindo a lista de módulos.
 - Na barra lateral, a área de um módulo desligado leva o rótulo **Desat.**; leitores de tela anunciam
-  "módulo não habilitado".
+  “módulo não habilitado”.
 
 Por padrão, todos os módulos estão habilitados. Alterar a lista é uma alteração na configuração do
 servidor (`modules`, veja [configuração do servidor](help:server-configuration)); ela vale quando o
@@ -61,17 +61,17 @@ Observações por módulo:
 
 ### data {#data}
 
-**Visão geral dos dados** e **Registros** mostram o estado "não habilitado". Produtos que armazenam
+**Visão geral dos dados** e **Registros** mostram o estado “não habilitado”. Produtos que armazenam
 os próprios dados nas próprias tabelas não são afetados.
 
 ### storage {#storage}
 
-**Arquivos** mostra o estado "não habilitado"; as cotas de armazenamento e a política de
+**Arquivos** mostra o estado “não habilitado”; as cotas de armazenamento e a política de
 armazenamento não podem ser lidas nem alteradas.
 
 ### events {#events}
 
-**Jobs**, **Agendamentos**, **Eventos** e **Webhooks** mostram o estado "não habilitado", e não há
+**Jobs**, **Agendamentos**, **Eventos** e **Webhooks** mostram o estado “não habilitado”, e não há
 visualização de eventos ao vivo. Dentro do servidor, outros módulos continuam usando a fila de jobs;
 só as telas e a API dela deixam de existir.
 
@@ -83,7 +83,7 @@ dois** módulos estão habilitados.
 
 ### notify {#notify}
 
-**Notificações** mostra o estado "não habilitado". Os convites continuam funcionando, mas o servidor
+**Notificações** mostra o estado “não habilitado”. Os convites continuam funcionando, mas o servidor
 não envia e-mails de convite: compartilhe o link ou o token do convite que o Studio exibe uma única
 vez após a criação do convite (veja [Membros e convites](help:members-invitations)).
 

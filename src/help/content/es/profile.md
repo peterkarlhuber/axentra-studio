@@ -104,6 +104,10 @@ revocarla; usa **Cerrar sesión** en el menú de usuario.
 Para terminar todas las sesiones excepto la que estás usando, elige **Cerrar todas las demás
 sesiones** en la cabecera de **Tus sesiones**. El botón aparece cuando existe al menos otra sesión.
 
+Tu sesión actual nunca se cierra. Cada una de las demás sesiones se cierra por separado; si algunas
+no se pueden cerrar (por ejemplo por el límite de solicitudes), Studio te dice cuántas, la lista
+muestra las que siguen activas y puedes volver a elegir el botón.
+
 > [!TIP]
 > ¿Iniciaste sesión en un ordenador compartido o perdido? Revoca esa sesión aquí. Si crees que otra
 > persona conoce tu contraseña, cámbiala: eso también cierra todas las demás sesiones.

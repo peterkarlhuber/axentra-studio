@@ -4,8 +4,8 @@ summary: Verifique se o servidor Axentra está no ar e pronto, leia as métricas
 keywords: integridade, saúde, status, prontidão, atividade, disponibilidade, uptime, 503, monitoramento, métricas, Prometheus, scrape, coleta, OpenTelemetry, rastreamento, nível de log, retenção, limpeza, versão
 ---
 
-Duas páginas mostram como o servidor Axentra está. **Integridade do sistema** responde "o servidor
-está no ar e consegue atender requisições?" e mostra quais versões do servidor e do Studio estão em
+Duas páginas mostram como o servidor Axentra está. **Integridade do sistema** responde “o servidor
+está no ar e consegue atender requisições?” e mostra quais versões do servidor e do Studio estão em
 execução. **Monitoramento** acrescenta as métricas do próprio servidor (contagem de requisições,
 erros, tempos de resposta) e as configurações de manutenção, retenção, rastreamento e logs que ele
 informa. Operadores as usam para uma olhada rápida; para alertas e histórico, conecte um sistema de

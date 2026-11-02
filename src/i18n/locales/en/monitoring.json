@@ -58,7 +58,7 @@
   },
   "ops": {
     "title": "Retention and tracing",
-    "forbidden": "Retention and tracing settings are shown to platform administrators and product managers only (GET /v1/settings).",
+    "forbidden": "Retention and tracing settings are shown to platform administrators and product owners and admins only (GET /v1/settings).",
     "retentionTitle": "Maintenance and retention",
     "retentionHelp": "Retention periods reported by GET /v1/settings. Data is removed when the maintenance task runs.",
     "auditRetention": "Audit events",

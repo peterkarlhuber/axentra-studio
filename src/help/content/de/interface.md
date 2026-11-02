@@ -39,9 +39,13 @@ Einträge, die zu einem Produkt gehören (von **Dashboard** bis **Benachrichtigu
 **Produkte**), werden nur angezeigt, wenn ein Produkt ausgewählt ist. **Produkte**,
 **Audit-Protokoll**, **Systemzustand**, **Monitoring** und **Einstellungen** sind plattformweit.
 
-Die Seitenleiste zeigt allen dieselben Einträge. Öffnest du eine Seite, für die dir die Berechtigung
-fehlt, teilt dir die Seite das mit (**Nicht erlaubt**), und Aktionen, die du nicht ausführen darfst,
-werden nicht angeboten.
+Die Seitenleiste zeigt allen dieselben Einträge, mit einer Ausnahme: **Audit-Protokoll** erscheint
+nur, wenn du Audit-Ereignisse lesen darfst (`audit:read` in einem deiner Produkte oder
+`platform:audit`). **Einstellungen**, **Systemzustand** und **Monitoring** stehen immer da, weil
+sie allen etwas bieten (deine Präferenzen, die öffentlichen Zustandsprüfungen); Teile, die du nicht
+lesen darfst, sagen dir das dort. Öffnest du eine Seite, für die dir die Berechtigung fehlt, zum
+Beispiel über einen gespeicherten Link, teilt dir die Seite das mit (**Nicht erlaubt**), und
+Aktionen, die du nicht ausführen darfst, werden nicht angeboten.
 
 ### Mit „Aus“ gekennzeichnete Einträge {#module-off}
 
@@ -169,7 +173,7 @@ Seitenleiste (**Hilfecenter**), über den Hilfe-Button (?) in der oberen Leiste 
 Dokumentation**) oder über den Link auf der Anmelde- und der Einrichtungsseite; es funktioniert auch
 ohne Anmeldung.
 
-- **Suche**: Tippe in das Suchfeld („Hilfe durchsuchen, zum Beispiel „API-Schlüssel““). Studio
+- **Suche**: Tippe in das Suchfeld (Platzhalter: _Hilfe durchsuchen, zum Beispiel „API-Schlüssel“_). Studio
   durchsucht alle Artikel in deiner Sprache, und jeder Treffer öffnet den passenden Abschnitt.
 - **Hier beginnen**: die Artikel für neue Benutzer.
 - **Artikel** haben ein Inhaltsverzeichnis (**Auf dieser Seite**), **Zurück** und **Weiter**,

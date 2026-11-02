@@ -28,7 +28,7 @@ job.
 
 ### Contatori della panoramica {#overview}
 
-La scheda **Panoramica** conta i job per stato. Seleziona un contatore per mostrare solo quei job.
+Il riquadro **Panoramica** conta i job per stato. Seleziona un contatore per mostrare solo quei job.
 Sotto i contatori vedi quanti job sono riusciti e quanti non sono riusciti nelle ultime 24 ore (il
 numero dei non riusciti include i job **Esaurito**) e quando è stato creato il **Job in coda più
 vecchio**. Se quel momento continua ad allontanarsi nel tempo, nessun worker sta prelevando i job:
@@ -60,7 +60,7 @@ job-lifecycle
 | **In esecuzione** | Un worker ha preso in carico il job e ne detiene un lease a tempo limitato.                                             |
 | **Riuscito**      | L'handler ha terminato. Il suo valore di ritorno viene conservato come **Risultato**.                                   |
 | **Non riuscito**  | L'handler ha segnalato un errore permanente (ha sollevato `PermanentJobError`). Non ci sono altri tentativi automatici. |
-| **Esaurito**      | Tutti i tentativi sono stati usati. Il job viene conservato come "dead letter" per poterlo esaminare e riprovare.       |
+| **Esaurito**      | Tutti i tentativi sono stati usati. Il job viene conservato come “dead letter” per poterlo esaminare e riprovare.       |
 | **Annullato**     | Annullato prima dell'avvio, oppure l'handler si è fermato dopo una richiesta di annullamento.                           |
 
 **Non riuscito** ed **Esaurito** sono entrambi stati finali, ma per motivi diversi: **Non riuscito**
@@ -73,7 +73,7 @@ Ogni volta che un worker prende in carico un job, il suo contatore dei tentativi
 Quando un tentativo termina con un errore ordinario, il job torna **In coda** e attende prima del
 tentativo successivo. L'attesa cresce in modo esponenziale: dopo il tentativo _n_ è compresa tra la
 metà e l'intero di `2 × 2^(n−1)` secondi (2, 4, 8, 16 … secondi con le impostazioni predefinite, mai
-più di un'ora). Questo "backoff" dà a un problema temporaneo, come un servizio esterno sovraccarico,
+più di un'ora). Questo “backoff” dà a un problema temporaneo, come un servizio esterno sovraccarico,
 il tempo di risolversi. La componente casuale evita che molti job non riusciti riprovino nello stesso
 istante.
 
@@ -196,7 +196,7 @@ L'elenco dei job e le statistiche sono disponibili anche tramite l'API:
 
 Chi possiede `jobs:manage` può accodare qualsiasi tipo che non inizi con `axentra.`. Tramite l'API, i
 membri dei tenant che hanno solo `events:publish` possono accodare un tipo solo se il prodotto lo ha
-esplicitamente aperto a loro; altrimenti il server risponde "not permitted". Studio offre **Accoda
+esplicitamente aperto a loro; altrimenti il server risponde “not permitted”. Studio offre **Accoda
 job** solo a chi possiede `jobs:manage`.
 
 ### Tipi di job predefiniti {#system-kinds}
@@ -242,20 +242,20 @@ dettagli, risolvi la causa (per esempio un record mancante o un servizio non rag
 **Un job è Non riuscito dopo un solo tentativo.** L'handler ha segnalato un errore permanente, quindi
 Axentra non ha riprovato. Leggi **Ultimo errore**. Riprova solo dopo aver risolto la causa.
 
-**"Verifica i dati inseriti" durante l'accodamento.** Il server ha rifiutato un valore; il messaggio
+**“Verifica i dati inseriti” durante l'accodamento.** Il server ha rifiutato un valore; il messaggio
 sotto il titolo lo indica, per esempio `kind must be 1-100 characters…`,
 `payload is larger than 64000 bytes`, `priority must be between -100 and 100` o
 `job kinds starting with 'axentra.' are reserved`. Correggi il campo e invia di nuovo.
 
-**"Non consentito" durante l'accodamento.** Ti serve `jobs:manage`. Un messaggio come
+**“Non consentito” durante l'accodamento.** Ti serve `jobs:manage`. Un messaggio come
 `job kind … is not open to tenant callers` significa che il tipo può essere accodato solo dagli
 operatori.
 
-**"Già utilizzata per una richiesta diversa".** La chiave di idempotenza appartiene a un'altra
+**“Già utilizzata per una richiesta diversa”.** La chiave di idempotenza appartiene a un'altra
 richiesta di job. Scegli **Usa una nuova chiave** per creare un nuovo job, oppure ripeti invariata la
 richiesta originale.
 
-**"Conflitto" su Riprova o Annulla job.** Lo stato del job è cambiato nel frattempo (per esempio è
+**“Conflitto” su Riprova o Annulla job.** Lo stato del job è cambiato nel frattempo (per esempio è
 terminato mentre stavi confermando). Ricarica la pagina; **Riprova** funziona solo per i job **Non
 riuscito** ed **Esaurito**, **Annulla job** solo per quelli **In coda** e **In esecuzione**.
 

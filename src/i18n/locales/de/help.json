@@ -41,7 +41,7 @@
     "copyFailed": "Kopieren fehlgeschlagen",
     "copyLink": "Link zu diesem Artikel kopieren",
     "linkCopied": "Link kopiert",
-    "breadcrumb": "Brotkrumen-Navigation des Hilfecenters",
+    "breadcrumb": "Brotkrümelnavigation des Hilfecenters",
     "chapterNav": "Kapitel der Hilfe",
     "diagram": "Diagramm: {{title}}",
     "pager": "Vorheriger und nächster Artikel"
@@ -125,7 +125,7 @@
       "deadDetail": "Alle Versuche aufgebraucht",
       "failedDetail": "Dauerhafter Fehler, keine weiteren Versuche",
       "cancelledDetail": "Abbruch wurde angefordert, während der Job wartete oder lief",
-      "manualRetry": "„Erneut versuchen“ stellt einen fehlgeschlagenen oder endgültig fehlgeschlagenen Job wieder in die Warteschlange und setzt den Versuchszähler auf 0 zurück."
+      "manualRetry": "„Erneut ausführen“ stellt einen fehlgeschlagenen oder endgültig fehlgeschlagenen Job wieder in die Warteschlange und setzt den Versuchszähler auf 0 zurück."
     },
     "webhookDelivery": {
       "title": "Webhook-Zustellungen",

@@ -1,6 +1,6 @@
 ---
 title: Record
-summary: Consulta, filtra, crea, modifica ed elimina i record JSON che i tenant conservano nelle raccolte, e risolvi i conflitti "Modificato nel frattempo".
+summary: Consulta, filtra, crea, modifica ed elimina i record JSON che i tenant conservano nelle raccolte, e risolvi i conflitti “Modificato nel frattempo”.
 keywords: record, dati, JSON, documenti, raccolta, voci, righe, database, filtro, versione, conflitto, 412, If-Match, concorrenza ottimistica
 ---
 
@@ -88,7 +88,7 @@ ID, versione e orari sono impostati dal server; non inserirli nei dati.
 ## Modificare un record {#edit}
 
 1. Apri il record (icona dell'occhio) e scegli **Modifica**.
-2. Modifica il JSON in **Dati** e scegli **Salva**.
+2. Modifica il JSON in **Dati** e scegli **Salva modifiche**.
 
 Il salvataggio **sostituisce l'intero oggetto**: i campi che rimuovi dal JSON vengono rimossi dal
 record. La raccolta non può essere cambiata; per spostare un record, crealo nell'altra raccolta ed
@@ -167,7 +167,7 @@ dimensioni come [file](help:files) e mantieni nel record solo il suo ID.
 caratteri non consentiti. Filtra i valori annidati con un valore oggetto (vedi
 [Filtrare in base al contenuto](#filter)).
 
-**L'elenco Raccolte mostra un errore o "Non consentito".** Per elencare le raccolte serve
+**L'elenco Raccolte mostra un errore o “Non consentito”.** Per elencare le raccolte serve
 `collections:read`, che hanno solo i ruoli di prodotto. Inserisci invece il nome della raccolta in
 **Nome della raccolta**.
 
@@ -177,5 +177,5 @@ questo tenant, oppure non è ancora selezionato alcun tenant.
 **Non trovato.** Il record è stato eliminato, il tenant è sospeso (solo gli amministratori della
 piattaforma possono raggiungere i tenant sospesi) oppure non hai accesso a questo tenant.
 
-**Nessun record corrisponde.** Rimuovi i filtri uno alla volta. Ricorda che `12` e `"12"` sono
+**Nessun record corrispondente.** Rimuovi i filtri uno alla volta. Ricorda che `12` e `"12"` sono
 valori diversi.

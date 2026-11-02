@@ -61,10 +61,11 @@ Produkt oder einen Mandanten. Siehe [Rollen und Berechtigungen](help:roles-permi
 Eine Kette von Versuchen, ein Ereignis an einen Webhook-Endpunkt zu senden, mit Status, Antwort und
 Wiederholungen. Siehe [Webhooks](help:webhooks).
 
-## Berechtigung eines Tarifs (Entitlement) {#entitlement}
+## Leistung eines Tarifs (Entitlement) {#entitlement}
 
 Eine Funktion (ein oder aus) oder ein Limit, das ein Tarif den Mandanten gewährt, die ihn
-abonniert haben. Siehe [Tarife und Abonnements](help:plans-subscriptions).
+abonniert haben. Nicht zu verwechseln mit einer [Berechtigung](#permission), die festlegt, was eine
+Person oder ein Schlüssel tun darf. Siehe [Tarife und Abonnements](help:plans-subscriptions).
 
 ## Ereignis (Event) {#event}
 
@@ -128,7 +129,7 @@ Geltungsbereich Plattform, Produkt oder Mandant. Siehe die
 
 ## Tarif (Plan) {#plan}
 
-Ein Angebot mit Preisen und Berechtigungen, das Mandanten abonnieren. Siehe
+Ein Angebot mit Preisen und Leistungen, das Mandanten abonnieren. Siehe
 [Tarife und Abonnements](help:plans-subscriptions).
 
 ## Plattformrolle (Platform role) {#platform-role}

@@ -123,7 +123,7 @@ opaque `application/octet-stream` that is only ever downloaded, never displayed.
 
 1. Open the product: **Products**, then the product's name.
 2. Choose the **Files** tab. (The tab is hidden when the `storage` module is not enabled.)
-3. Under **File content-type policy**, choose the behaviour and lists (table below).
+3. Under **File content-type policy**, choose the behavior and lists (table below).
 4. Choose **Save changes**.
 
 | Setting                                      | What it does                                                                                                                                                                                                                                                                               | Allowed values / default                                      |

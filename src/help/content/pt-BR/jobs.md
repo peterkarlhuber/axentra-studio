@@ -96,7 +96,7 @@ Selecione o tipo de um job na lista. A página de detalhes mostra:
 
 - **Detalhes**: **ID do job**, **Tipo**, **Status**, **Tenant**, **Tentativas**, **Prioridade**,
   **Chave de idempotência**, o **Agendamento** que criou o job (um link), o **Worker** que o
-  executa ou executou, se **Cancelamento solicitado** está marcado, e **Criado por** (o id de um
+  executa ou executou, se **Cancelamento solicitado** está marcado, e **Criado por** (o ID de um
   usuário ou de uma chave de API, ou `schedule:<id>` para jobs agendados).
 - **Linha do tempo**: **Criado em**, **Executar após** (o horário de início mais cedo possível,
   incluindo atrasos e backoff), **Iniciado em**, **Reservado até**, **Finalizado em** e

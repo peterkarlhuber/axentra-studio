@@ -289,9 +289,9 @@ En quelques secondes, le récepteur affiche `tutorial.hello evt_… tenant=… d
 3. Ouvre l’onglet **Livraisons** du point de terminaison et choisis **Actualiser**. La livraison
    affiche **Échouée, nouvelle tentative prévue** ; ses détails indiquent la **Dernière erreur** et
    la **Prochaine tentative**.
-4. Redémarre le récepteur. Une tentative automatique ultérieure réussit ou, si toutes les
-   tentatives ont été utilisées (environ deux à cinq minutes avec les paramètres par défaut), la
-   livraison passe à **Abandonnée**.
+4. Redémarre le récepteur. Une tentative automatique ultérieure réussit ou, si toutes les tentatives
+   ont été utilisées (environ 2 à 4¼ heures avec les paramètres par défaut ; la deuxième tentative
+   suit 1 à 2 minutes après la première), la livraison passe à **Abandonnée**.
 5. Pour une livraison abandonnée, ouvre ses détails et choisis **Relivrer**. Elle passe à **En
    attente**, puis à **Livrée**.
 

@@ -26,7 +26,7 @@ un evento de auditoría, ni siquiera un administrador de la plataforma.
 | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `platform:audit`                                  | Todos los eventos de la instalación, incluidos inicios de sesión, configuración inicial y otros eventos sin producto | **Todos los productos** (predeterminado) o un producto     |
 | `audit:read` en un producto, sin `platform:audit` | Solo los eventos de un producto; Studio empieza con el último producto que usaste                                    | Uno de tus productos; no se ofrece **Todos los productos** |
-| Ninguno de los dos                                | Un error **No permitido**                                                                                            | –                                                          |
+| Ninguno de los dos                                | **Registro de auditoría** no aparece en la barra lateral; un enlace directo muestra **No permitido**                 | –                                                          |
 
 El servidor comprueba el permiso en cada solicitud. Si seleccionas un producto que no puedes leer,
 obtienes **No permitido**, y un evento que no puedes leer no se puede abrir en detalle (consulta

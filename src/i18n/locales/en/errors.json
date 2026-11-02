@@ -47,7 +47,7 @@
     },
     "mode_not_supported": {
       "title": "Not available in this mode",
-      "message": "The server's current configuration does not support this action, for example creating products in single-product mode. An operator would have to change the server configuration."
+      "message": "The server's configuration does not allow this action here, for example creating products in single-product mode, changing a subscription that Stripe manages (change it in Stripe), or opening the test mailbox when the server sends real email. The server message names the reason; only an operator can change the configuration."
     },
     "module_disabled": {
       "title": "Module not enabled",
@@ -55,7 +55,7 @@
     },
     "payment_provider_not_configured": {
       "title": "Payment provider not configured",
-      "message": "This billing action needs a payment provider, but the server has none configured. An operator has to set up the billing provider in the server configuration."
+      "message": "This billing action needs a payment provider, but the server has none configured. An operator has to set up the payment provider in the server configuration."
     },
     "internal": {
       "title": "Server error",
@@ -76,6 +76,26 @@
     "unsupported_media_type": {
       "title": "Type not accepted",
       "message": "The server does not accept this type of content, for example a blocked file type such as an executable, HTML or SVG file. Use a different file type."
+    },
+    "method_not_allowed": {
+      "title": "Action not supported",
+      "message": "The server does not offer this action at this address (HTTP 405). Studio and the server versions probably do not match. Reload the page; if it keeps happening, report it with the request ID."
+    },
+    "error": {
+      "title": "Request failed",
+      "message": "The server refused the request with an HTTP error that has no more specific code. Check the server message and the HTTP status under Technical details and try again; if it keeps happening, report it with the request ID."
+    },
+    "invalid_signature": {
+      "title": "Invalid signature",
+      "message": "The signature of a payment provider webhook did not match. This concerns the server's connection to the payment provider, not Studio; an operator should check the webhook secret."
+    },
+    "setup_already_completed": {
+      "title": "Setup is already complete",
+      "message": "A platform administrator already exists on this server, so setup cannot run again. Sign in with an existing account."
+    },
+    "email_taken": {
+      "title": "Email address in use",
+      "message": "Another account already uses this email address. Use a different address, or sign in with the existing account."
     }
   }
 }

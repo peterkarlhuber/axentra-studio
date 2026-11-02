@@ -51,11 +51,11 @@ a nova página.
 - **Landmarks:** cada página tem um cabeçalho, a navegação principal e o conteúdo principal, além de
   exatamente um título principal.
 - **Breadcrumbs** e a **Navegação principal** são rotulados. As áreas da barra lateral de módulos
-  desligados são anunciadas como "módulo não habilitado".
+  desligados são anunciadas como “módulo não habilitado”.
 - **Formulários:** todo campo tem um rótulo visível; campos obrigatórios são anunciados; mensagens
   de erro são associadas ao campo correspondente.
 - **Tabelas** têm legendas e cabeçalhos de coluna, e colunas ordenáveis anunciam a direção da
-  ordenação. A contagem "Exibindo N itens" é anunciada quando mais linhas são carregadas.
+  ordenação. A contagem “Exibindo N itens” é anunciada quando mais linhas são carregadas.
 - **Mensagens de status** (copiado para a área de transferência, carregando, notificações) são
   anunciadas por regiões dinâmicas. Notificações de erro são anunciadas imediatamente.
 - **Gráficos** têm um resumo em texto, e **Mostrar tabela de dados** exibe os mesmos valores em uma
@@ -120,6 +120,6 @@ levaram até ela.
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | O anel de foco não está visível       | Use **Tab** (o anel aparece com o foco do teclado, não com cliques do mouse). Verifique se nenhuma extensão do navegador sobrescreve os estilos da página.                     |
 | Um diálogo não fecha com Escape       | Ele mostra um segredo de exibição única. Copie-o e guarde-o; depois, confirme **Guardei o segredo em local seguro**.                                                           |
-| As animações continuam                | Ative "reduzir movimento" nas configurações de acessibilidade do seu sistema operacional e recarregue o Studio.                                                                |
+| As animações continuam                | Ative “reduzir movimento” nas configurações de acessibilidade do seu sistema operacional e recarregue o Studio.                                                                |
 | O tema volta ao anterior              | O armazenamento do navegador pode estar bloqueado (por exemplo, no modo privado), então a escolha não é lembrada localmente; o Studio então volta ao tema salvo no seu perfil. |
 | O conteúdo fica cortado com zoom alto | Tabelas largas rolam dentro da própria área; coloque o foco nela com **Tab** e use as teclas de seta.                                                                          |

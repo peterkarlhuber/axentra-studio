@@ -14,7 +14,7 @@ enable.
 ## Which modules are enabled? {#check-modules}
 
 - The [Dashboard](app:dashboard) lists all modules under **Modules** in the server card; enabled
-  modules are highlighted, switched-off ones are grey.
+  modules are highlighted, switched-off ones are gray.
 - The [Settings](app:settings) page (with `platform:settings` or `product:manage`) shows the
   server's effective configuration, including the module list.
 - In the sidebar, an area of a switched-off module carries the label **Off**; screen readers

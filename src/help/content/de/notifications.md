@@ -26,7 +26,7 @@ erhältst.
 Einstellungen**. Ohne diese Berechtigung siehst du nur **Meine Einstellungen**.
 
 Die **Zustellstatistik** zählt die Nachrichten dieses Produkts nach Status, insgesamt und für den Zeitraum
-**Letzte 24 Stunden**, und zeigt den **Zustellanbieter**, die **Zustellversuche (24 Std.)** und die
+**Letzte 24 Stunden**, und zeigt den **Zustellanbieter**, die **Zustellversuche (24 h)** und die
 **Älteste wartende Nachricht**. Die Karte aktualisiert sich alle 30 Sekunden. Eine alte wartende
 Nachricht bedeutet meist, dass kein Dispatcher läuft (siehe
 [Fehlerbehebung](help:notifications#troubleshooting)).
