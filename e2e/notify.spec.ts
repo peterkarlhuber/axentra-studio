@@ -174,6 +174,9 @@ test('create a template, preview it, send it to a member and find it in the log 
 
   // ---- Preferences: locked categories cannot be turned off ----
   await page.getByRole('tab', { name: 'My preferences' }).click();
+  // Tenant-scoped, so parallel projects sharing one product (single mode) never race on the
+  // same preference record and its If-Match version.
+  await page.getByLabel('Applies to').selectOption(tenant.id);
   await expect(page.getByRole('checkbox', { name: /transactional/ })).toBeDisabled();
   const onboarding = page.getByRole('checkbox', { name: category, exact: true });
   await expect(onboarding).toBeChecked();
