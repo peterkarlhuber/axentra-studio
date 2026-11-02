@@ -203,6 +203,8 @@ function TemplateEditor({
   const [sending, setSending] = useState(false);
   const isNew = !template;
   const builtin = template?.builtin ?? false;
+  // Sent by Axentra only (e.g. `invitation`): `POST .../notify/send` refuses it for everyone.
+  const systemOnly = template?.system_only ?? false;
   const locales = sortLocales(Object.keys(draft.variants));
 
   const update = (patch: Partial<Draft>) => setDraft((current) => ({ ...current, ...patch }));
@@ -338,6 +340,7 @@ function TemplateEditor({
               ) : (
                 <Badge>{t('templates.version', { version: template.version })}</Badge>
               )}
+              {systemOnly ? <Badge tone="info">{t('templates.systemOnly')}</Badge> : null}
               {template.updated_at ? (
                 <span className={layout.muted}>
                   {t('editor.updated')} <Time value={template.updated_at} />
@@ -351,7 +354,7 @@ function TemplateEditor({
             <ButtonLink to="../.." relative="path" variant="ghost" icon={<ArrowLeft />}>
               {t('editor.back')}
             </ButtonLink>
-            {template && canSend ? (
+            {template && canSend && !systemOnly ? (
               <Button icon={<Send />} onClick={() => setSending(true)}>
                 {t('send.open')}
               </Button>
@@ -365,6 +368,7 @@ function TemplateEditor({
         }
       />
       {builtin ? <Alert tone="info">{t('editor.builtinHint')}</Alert> : null}
+      {systemOnly ? <Alert tone="info">{t('templates.systemOnlyHint')}</Alert> : null}
       <div className={styles.editorGrid}>
         <form className={layout.stack} onSubmit={submit} aria-label={t('editor.formLabel')}>
           <Card title={t('editor.general')}>

@@ -17,6 +17,10 @@
       "title": "Not permitted",
       "message": "You do not have permission to perform this action."
     },
+    "reauthentication_required": {
+      "title": "Please sign in again",
+      "message": "For your security this action needs a recent sign-in. Sign in again and then repeat it."
+    },
     "not_found": {
       "title": "Not found",
       "message": "This item does not exist or you do not have access to it."

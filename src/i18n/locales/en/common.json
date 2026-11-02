@@ -93,7 +93,7 @@
     "since": "Member since",
     "email": "Email address",
     "add": "Add member",
-    "addDescription": "The user must already have an Axentra account.",
+    "addDescription": "Adds a user who already has an account you can see. Axentra does not reveal other accounts.",
     "added": "Member added",
     "roleChanged": "Role updated",
     "empty": "No members yet",
@@ -101,11 +101,20 @@
     "removeNamed": "Remove {{name}}",
     "removeTitle": "Remove member?",
     "removeBody": "{{name}} loses all access granted by this membership.",
-    "removed": "Member removed"
+    "removed": "Member removed",
+    "aboveYourLevel": "Above your own role: only someone with this role's permissions can change it",
+    "ceilingHelp": "Roles with permissions you do not hold yourself (and owner roles, unless you are an owner) cannot be assigned.",
+    "notFoundTitle": "User not found",
+    "notFoundInvite": "No account you can see has this address. Send an invitation instead: the person joins with this role after accepting it.",
+    "notFoundOperator": "No account you can see has this address. Product members must already have an account: invite the person to one of the product's tenants first, or ask a platform admin to add them.",
+    "inviteInstead": "Send invitation instead",
+    "invited": "Invitation for {{email}} created",
+    "invitedTitle": "Invitation created"
   },
   "roles": {
     "choose": "Choose a role",
-    "placeholder": "Role name"
+    "placeholder": "Role name",
+    "notGrantable": "{{role}} (above your permissions)"
   },
   "tenantPicker": {
     "label": "Tenant",
@@ -123,5 +132,11 @@
     "revoke": "Revoke session",
     "empty": "No active sessions",
     "method": "Sign-in method"
+  },
+  "idempotency": {
+    "conflictTitle": "Already used for a different request",
+    "conflictRenewed": "An earlier attempt with other values already used this request's idempotency key. A new key has been generated: submit again to create a new one.",
+    "conflictManual": "This idempotency key was already used for a different request (or by another caller). Use a new key to create a new one, or repeat the original request unchanged.",
+    "newKey": "Use a new key"
   }
 }

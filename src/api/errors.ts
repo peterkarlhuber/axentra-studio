@@ -21,6 +21,7 @@ export const KNOWN_ERROR_CODES = [
   'validation_failed',
   'unauthenticated',
   'forbidden',
+  'reauthentication_required',
   'not_found',
   'conflict',
   'precondition_failed',
@@ -82,6 +83,21 @@ export class ApiError extends Error {
   get isNotFound(): boolean {
     return this.status === 404 || this.code === 'not_found';
   }
+}
+
+/**
+ * `409` from an endpoint that takes an `Idempotency-Key` (job enqueue, event publish,
+ * notification send, usage record): the key was already used for a different request or by
+ * another caller (SECURITY_MODEL.md rule 11). Retrying needs a new key. Only use it for
+ * those endpoints, whose only `409` this is.
+ */
+export function isIdempotencyConflict(error: unknown): boolean {
+  return isApiError(error) && error.status === 409;
+}
+
+/** `403 reauthentication_required`: the action needs a recent sign-in (e.g. a first password). */
+export function isReauthenticationRequired(error: unknown): boolean {
+  return isApiError(error) && error.code === 'reauthentication_required';
 }
 
 export function codeForStatus(status: number): KnownErrorCode {

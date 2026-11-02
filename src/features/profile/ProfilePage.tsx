@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { KeyRound, Save } from 'lucide-react';
+import { KeyRound, LogIn, Save } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { asItems, authApi, meApi } from '@/api/endpoints';
 import type { UserSession } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
-import { useErrorToast, useMe } from '@/app/auth';
+import { useErrorToast, useMe, useReauthenticate } from '@/app/auth';
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -20,7 +21,7 @@ import {
   useToast,
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
-import { ApiError } from '@/api/errors';
+import { ApiError, isReauthenticationRequired } from '@/api/errors';
 import { SessionsTable } from '@/features/shared/SessionsTable';
 
 export function ProfilePage() {
@@ -146,8 +147,13 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
       setNext('');
       setConfirm('');
     },
-    onError: showError,
+    onError: (error) => {
+      // A first password needs a recent sign-in (`403 reauthentication_required`): shown inline.
+      if (!isReauthenticationRequired(error)) showError(error);
+    },
   });
+  const reauthenticate = useReauthenticate();
+  const needsReauth = isReauthenticationRequired(change.error);
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (next !== confirm) {
@@ -164,6 +170,20 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
       description={hasPassword ? t('password.description') : t('password.setDescription')}
     >
       <form className={layout.form} onSubmit={submit}>
+        {needsReauth ? (
+          <Alert tone="warning" title={t('errors:codes.reauthentication_required.title')}>
+            <p>{t('password.reauthBody')}</p>
+            <div className={layout.actions}>
+              <Button
+                icon={<LogIn />}
+                loading={reauthenticate.isPending}
+                onClick={() => reauthenticate.mutate('/profile')}
+              >
+                {t('password.reauth')}
+              </Button>
+            </div>
+          </Alert>
+        ) : null}
         {hasPassword ? (
           <FormField label={t('password.current')} error={fields.current_password} required>
             <Input

@@ -93,7 +93,7 @@
     "since": "Mitglied seit",
     "email": "E-Mail-Adresse",
     "add": "Mitglied hinzufügen",
-    "addDescription": "Die Person muss bereits ein Axentra-Konto haben.",
+    "addDescription": "Fügt einen Benutzer hinzu, der bereits ein für Sie sichtbares Konto hat. Andere Konten gibt Axentra nicht preis.",
     "added": "Mitglied hinzugefügt",
     "roleChanged": "Rolle geändert",
     "empty": "Noch keine Mitglieder",
@@ -101,11 +101,20 @@
     "removeNamed": "{{name}} entfernen",
     "removeTitle": "Mitglied entfernen?",
     "removeBody": "{{name}} verliert alle Zugriffe aus dieser Mitgliedschaft.",
-    "removed": "Mitglied entfernt"
+    "removed": "Mitglied entfernt",
+    "aboveYourLevel": "Über Ihrer eigenen Rolle: Nur wer die Berechtigungen dieser Rolle hat, kann sie ändern",
+    "ceilingHelp": "Rollen mit Berechtigungen, die Sie selbst nicht haben (und Inhaberrollen, sofern Sie nicht Inhaber sind), können Sie nicht vergeben.",
+    "notFoundTitle": "Benutzer nicht gefunden",
+    "notFoundInvite": "Kein für Sie sichtbares Konto hat diese Adresse. Senden Sie stattdessen eine Einladung: Die Person tritt nach dem Annehmen mit dieser Rolle bei.",
+    "notFoundOperator": "Kein für Sie sichtbares Konto hat diese Adresse. Mitglieder des Produkts müssen bereits ein Konto haben: Laden Sie die Person zuerst in einen Mandanten des Produkts ein oder bitten Sie einen Plattform-Admin, sie hinzuzufügen.",
+    "inviteInstead": "Stattdessen einladen",
+    "invited": "Einladung für {{email}} erstellt",
+    "invitedTitle": "Einladung erstellt"
   },
   "roles": {
     "choose": "Rolle auswählen",
-    "placeholder": "Rollenname"
+    "placeholder": "Rollenname",
+    "notGrantable": "{{role}} (über Ihren Berechtigungen)"
   },
   "tenantPicker": {
     "label": "Mandant",
@@ -123,5 +132,11 @@
     "revoke": "Sitzung beenden",
     "empty": "Keine aktiven Sitzungen",
     "method": "Anmeldeart"
+  },
+  "idempotency": {
+    "conflictTitle": "Bereits für eine andere Anfrage verwendet",
+    "conflictRenewed": "Ein früherer Versuch mit anderen Werten hat den Idempotenzschlüssel dieser Anfrage bereits verwendet. Es wurde ein neuer Schlüssel erzeugt: Senden Sie erneut, um einen neuen Eintrag zu erstellen.",
+    "conflictManual": "Dieser Idempotenzschlüssel wurde bereits für eine andere Anfrage (oder von einem anderen Aufrufer) verwendet. Verwenden Sie einen neuen Schlüssel, um einen neuen Eintrag zu erstellen, oder wiederholen Sie die ursprüngliche Anfrage unverändert.",
+    "newKey": "Neuen Schlüssel verwenden"
   }
 }

@@ -73,7 +73,10 @@
     "deleteNamed": "Vorlage {{name}} löschen",
     "deleteTitle": "Diese Vorlage löschen?",
     "deleteBody": "Die Vorlage „{{key}}“ wird gelöscht. Bereits gesendete Nachrichten bleiben erhalten. Gibt es eine eingebaute Standardvorlage mit diesem Schlüssel, wird wieder diese verwendet.",
-    "deleted": "Vorlage „{{key}}“ gelöscht."
+    "deleted": "Vorlage „{{key}}“ gelöscht.",
+    "systemOnly": "Nur System",
+    "systemOnlyHint": "Axentra versendet diese Vorlage selbst (zum Beispiel den Annahme-Link einer Mandanten-Einladung), daher kann sie nicht manuell oder als Test gesendet werden. Den Inhalt können Sie weiterhin anpassen.",
+    "systemOnlyListHint": "Als „Nur System“ markierte Vorlagen versendet Axentra selbst; sie können nicht als Test gesendet werden."
   },
   "editor": {
     "titleNew": "Neue Vorlage",
@@ -152,7 +155,8 @@
     "submit": "Senden",
     "queued": "Benachrichtigung angenommen: {{status}}.",
     "sentTitle": "Benachrichtigung angenommen",
-    "dispatchHint": "Sie wird vom Dispatcher zugestellt (axentra notify-dispatch oder ein Worker). Den Status sehen Sie im Nachrichtenprotokoll."
+    "dispatchHint": "Sie wird vom Dispatcher zugestellt (axentra notify-dispatch oder ein Worker). Den Status sehen Sie im Nachrichtenprotokoll.",
+    "membersOnly": "Sie können an Mitglieder des Mandanten senden. Für andere E-Mail-Adressen ist die Produktberechtigung notify:send_external nötig (Produktinhaber und -admins)."
   },
   "messages": {
     "title": "Nachrichtenprotokoll",

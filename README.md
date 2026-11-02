@@ -325,6 +325,33 @@ search, realtime`; the first four are always on.
   `PYTHONPATH=e2e/fixtures axentra worker --load axentra_e2e_jobs`; `--worker` of
   `scripts/e2e-backend.sh` sets all of this up.
 
+### Security rules (Axentra 7511a37)
+
+Studio mirrors the backend's authorization rules (its `docs/architecture/SECURITY_MODEL.md`,
+rules 8-12) to decide what it offers; the server stays authoritative.
+
+- **Role ceiling.** A role is offered in member and invitation forms only if every permission of
+  the role is in the caller's own grant for that scope (`GET /v1/me` vs. the role catalog from
+  `GET .../roles`, which needs `roles:read`); `tenant_owner`/`product_owner` additionally need owner
+  rank (owner of the scope, a product operator for tenants, or a platform admin). Members holding
+  a role above the caller show "Above your own role" without role picker or remove button.
+  Without the role catalog Studio cannot compute this and shows the server's `403` explanation.
+- **No user directory.** Adding a member by email resolves only users the caller can see; the
+  `404` offers "Send invitation instead" (tenants). Axentra has no invitations for product
+  operators, so there Studio explains the limit. Studio never sends `owner_user_id` when creating
+  a tenant: a new tenant starts without members and its owner is invited from the Invitations tab.
+- **Notifications.** The send-test dialog offers a free-form address only with the product
+  permission `notify:send_external`; otherwise tenant members only, with an explanation.
+  `Template.system_only` templates (`invitation`) never get "Send test".
+- **Idempotency.** A `409` for a reused `Idempotency-Key` is explained; event publish and
+  notification send then use a new key automatically, the job dialog offers "Use a new key".
+- **Fresh sign-in.** `POST /v1/me/password` without an existing password may answer
+  `403 reauthentication_required`; the profile page offers "Sign in again" (logout, then
+  `/login?return_to=/profile`).
+- The e2e spec `e2e/security.spec.ts` signs in as a second, non-admin account. Axentra has no API
+  to create one, so the e2e worker's fixture job `studio.e2e.create_user`
+  (`e2e/fixtures/axentra_e2e_jobs.py`) creates it in process.
+
 ## License
 
 MIT, see [LICENSE](LICENSE). The Axentra logo is used with permission of the same owner; see

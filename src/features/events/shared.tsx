@@ -41,9 +41,23 @@ export function FormError({ error }: { error: unknown }) {
       : described.error.code === 'validation_failed' && described.error.detail
         ? described.error.detail
         : described.message;
+  // Other problems (e.g. 403 "job kind ... is not open to tenant callers") keep the translated
+  // message and add the server's explanation.
+  const serverDetail =
+    described.issues.length === 0 &&
+    described.error.code !== 'validation_failed' &&
+    described.error.detail &&
+    described.error.detail !== detail
+      ? described.error.detail
+      : null;
   return (
     <Alert tone="danger" title={described.title}>
       <p>{detail}</p>
+      {serverDetail ? (
+        <p>
+          {t('errors:serverMessage')}: {serverDetail}
+        </p>
+      ) : null}
       {described.requestId ? (
         <p>
           {t('errors:requestId')}: <code>{described.requestId}</code>

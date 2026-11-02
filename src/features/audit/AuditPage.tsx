@@ -4,12 +4,14 @@ import { Fragment, useId, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { auditApi } from '@/api/endpoints';
+import { isApiError } from '@/api/errors';
 import type { AuditEvent } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useCan } from '@/app/auth';
 import { useLastProductId } from '@/app/useLastProduct';
 import { useSwitchableProducts } from '@/app/useProducts';
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -267,7 +269,10 @@ function AuditDetail({ event, onClose }: { event: AuditEvent | null; onClose: ()
     enabled: Boolean(event),
     placeholderData: event ?? undefined,
   });
-  const data = detail.data;
+  // `404` (not `403`) for an event the caller may not read, so the endpoint reveals nothing;
+  // the list row is still shown, with a note that no further details are available.
+  const notFound = isApiError(detail.error) && detail.error.isNotFound;
+  const data = detail.data ?? (notFound ? (event ?? undefined) : undefined);
 
   return (
     <Dialog
@@ -277,7 +282,7 @@ function AuditDetail({ event, onClose }: { event: AuditEvent | null; onClose: ()
       title={event?.action ?? ''}
       description={t('detail.subtitle')}
     >
-      {detail.isError ? (
+      {detail.isError && !notFound ? (
         <ErrorState
           error={detail.error}
           onRetry={() => void detail.refetch()}
@@ -286,6 +291,7 @@ function AuditDetail({ event, onClose }: { event: AuditEvent | null; onClose: ()
         />
       ) : data ? (
         <div className={layout.form}>
+          {notFound ? <Alert tone="info">{t('detail.notFound')}</Alert> : null}
           <DetailList
             items={[
               { label: t('fields.id'), value: data.id, mono: true },

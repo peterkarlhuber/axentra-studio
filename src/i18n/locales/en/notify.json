@@ -73,7 +73,10 @@
     "deleteNamed": "Delete template {{name}}",
     "deleteTitle": "Delete this template?",
     "deleteBody": "The template “{{key}}” is deleted. Messages already sent are kept. If a built-in default with this key exists, it is used again.",
-    "deleted": "Template “{{key}}” deleted."
+    "deleted": "Template “{{key}}” deleted.",
+    "systemOnly": "System only",
+    "systemOnlyHint": "Axentra sends this template itself (for example the accept link of a tenant invitation), so it cannot be sent manually or as a test. You can still customize its content.",
+    "systemOnlyListHint": "Templates marked “System only” are sent by Axentra itself and cannot be sent as a test."
   },
   "editor": {
     "titleNew": "New template",
@@ -152,7 +155,8 @@
     "submit": "Send",
     "queued": "Notification accepted: {{status}}.",
     "sentTitle": "Notification accepted",
-    "dispatchHint": "It is delivered by the dispatcher (axentra notify-dispatch or a worker). Follow its status in the message log."
+    "dispatchHint": "It is delivered by the dispatcher (axentra notify-dispatch or a worker). Follow its status in the message log.",
+    "membersOnly": "You can send to members of the tenant. Sending to other email addresses needs the product permission notify:send_external (product owners and admins)."
   },
   "messages": {
     "title": "Message log",

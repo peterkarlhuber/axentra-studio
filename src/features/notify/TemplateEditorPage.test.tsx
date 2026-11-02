@@ -146,6 +146,26 @@ describe('TemplateEditorPage', () => {
     expect(await screen.findByText(/saved \(version 4\)/)).toBeInTheDocument();
   });
 
+  it('never offers "Send test" for a system-only template', async () => {
+    const me = makeMe(['notify:manage', 'notify:send']);
+    mockApi(me, (_request, url) => {
+      if (url.pathname === `${base}/preview`)
+        return jsonResponse({ locale: 'en', subject: 'x', text: 'y', html: null });
+      if (url.pathname === `${base}/invitation`) return jsonResponse(builtinTemplate);
+      if (url.pathname === `${base}/welcome`) return jsonResponse(template);
+      return undefined;
+    });
+    renderInProduct(
+      <TemplateEditorPage />,
+      me,
+      `/p/${PRODUCT}/notifications/templates/invitation`,
+      EDIT_PATH,
+    );
+    expect(await screen.findByText(/Axentra sends this template itself/)).toBeInTheDocument();
+    expect(screen.getByText('System only')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Send test' })).not.toBeInTheDocument();
+  });
+
   it('saves an edited built-in default as an override (create with the same key)', async () => {
     const me = makeMe(['notify:manage']);
     const calls = mockApi(me, (request, url) => {

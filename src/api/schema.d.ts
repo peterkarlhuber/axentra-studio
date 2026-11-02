@@ -3915,6 +3915,11 @@ export interface components {
             };
             /** Sensitive */
             sensitive: boolean;
+            /**
+             * System Only
+             * @default false
+             */
+            system_only: boolean;
             /** Updated At */
             updated_at?: string | null;
             /** Variables */

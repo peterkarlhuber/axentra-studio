@@ -7,10 +7,8 @@ import type { Invitation, NewInvitation } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useErrorToast } from '@/app/auth';
 import {
-  Alert,
   Button,
   ConfirmDialog,
-  CopyField,
   DataTable,
   Dialog,
   EmptyState,
@@ -24,8 +22,10 @@ import {
   type Column,
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
+import { InvitationSecret } from '@/features/shared/InvitationSecret';
+import { ProblemAlert } from '@/features/shared/ProblemAlert';
 import { RoleSelect } from '@/features/shared/RoleSelect';
-import { useRoleOptions } from '@/features/shared/useRoleOptions';
+import { someRoleBlocked, useRoleCeiling } from '@/features/shared/useRoleOptions';
 
 /** Invitations of one tenant: list, invite (one-time link if returned), revoke. */
 export function InvitationsPanel({
@@ -46,25 +46,30 @@ export function InvitationsPanel({
     queryKey: key,
     queryFn: () => tenantsApi.invitations(productId, tenantId),
   });
-  const { roles, isError: rolesUnavailable } = useRoleOptions(productId, 'tenant');
+  const { roles, rolesUnavailable, blockFor } = useRoleCeiling(productId, 'tenant', tenantId);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('member');
+  // '' = the default: "member", or the first role the caller may grant (role ceiling).
+  const [chosenRole, setRole] = useState('');
+  const defaultRole =
+    blockFor('member') === null
+      ? 'member'
+      : (roles.find((candidate) => blockFor(candidate.key) === null)?.key ?? 'member');
+  const role = chosenRole || defaultRole;
+  const ceilingApplies = !rolesUnavailable && someRoleBlocked(roles, blockFor);
   const [created, setCreated] = useState<NewInvitation | null>(null);
   const [revoking, setRevoking] = useState<Invitation | null>(null);
 
   const invite = useMutation({
-    mutationFn: () =>
-      tenantsApi.invite(productId, tenantId, { email: email.trim(), role: role || 'member' }),
+    mutationFn: () => tenantsApi.invite(productId, tenantId, { email: email.trim(), role }),
     onSuccess: (result) => {
       toast.success(t('invitations.sent', { email: result.invitation.email }));
       void queryClient.invalidateQueries({ queryKey: key });
       setEmail('');
-      setRole('member');
+      setRole('');
       // The token (and accept URL, if the server knows its public URL) is returned once.
       setCreated(result);
     },
-    onError: showError,
   });
 
   const close = (next: boolean) => {
@@ -165,18 +170,7 @@ export function InvitationsPanel({
         }
       >
         {created ? (
-          <div className={layout.form}>
-            <Alert tone="warning" title={t('invitations.oneTimeTitle')}>
-              {t('invitations.oneTimeBody')}
-            </Alert>
-            {created.accept_url ? (
-              <CopyField label={t('invitations.link')} value={created.accept_url} />
-            ) : null}
-            <CopyField label={t('invitations.token')} value={created.token} secret />
-            {!created.accept_url ? (
-              <p className={layout.muted}>{t('invitations.tokenHelp')}</p>
-            ) : null}
-          </div>
+          <InvitationSecret invitation={created} />
         ) : (
           <form id="invite-form" className={layout.form} onSubmit={submit}>
             <FormField label={t('invitations.email')} error={fields.email} required>
@@ -188,16 +182,24 @@ export function InvitationsPanel({
             </FormField>
             <FormField
               label={t('invitations.role')}
-              help={t('invitations.roleHelp')}
+              help={
+                ceilingApplies
+                  ? `${t('invitations.roleHelp')} ${t('common:members.ceilingHelp')}`
+                  : t('invitations.roleHelp')
+              }
               error={fields.role}
             >
               <RoleSelect
                 roles={roles}
                 unavailable={rolesUnavailable}
+                blockFor={blockFor}
                 value={role}
                 onChange={setRole}
               />
             </FormField>
+            {invite.error && Object.keys(fields).length === 0 ? (
+              <ProblemAlert error={invite.error} />
+            ) : null}
           </form>
         )}
       </Dialog>

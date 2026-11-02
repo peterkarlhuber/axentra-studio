@@ -25,7 +25,9 @@
     "submit": "Passwort ändern",
     "changed": "Passwort geändert",
     "setTitle": "Passwort festlegen",
-    "setDescription": "Sie melden sich derzeit nur per Single Sign-on an. Mit einem Passwort ist zusätzlich die Passwort-Anmeldung möglich."
+    "setDescription": "Sie melden sich derzeit nur per Single Sign-on an. Mit einem Passwort ist zusätzlich die Passwort-Anmeldung möglich. Aus Sicherheitsgründen ist dafür eine frische Anmeldung nötig.",
+    "reauth": "Erneut anmelden",
+    "reauthBody": "Ein erstes Passwort lässt sich nur kurz nach der Anmeldung festlegen. Melden Sie sich erneut an (Sie kehren hierher zurück) und legen Sie das Passwort dann innerhalb weniger Minuten fest."
   },
   "sessions": {
     "title": "Ihre Sitzungen",

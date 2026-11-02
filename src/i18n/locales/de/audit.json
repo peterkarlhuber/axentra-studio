@@ -43,6 +43,7 @@
   "detail": {
     "subtitle": "Audit-Ereignis",
     "details": "Details",
-    "noDetails": "Dieses Ereignis enthält keine weiteren Details."
+    "noDetails": "Dieses Ereignis enthält keine weiteren Details.",
+    "notFound": "Das vollständige Ereignis konnte nicht geladen werden: Es existiert nicht mehr oder Sie dürfen es nicht lesen. Angezeigt werden die Werte aus der Liste."
   }
 }

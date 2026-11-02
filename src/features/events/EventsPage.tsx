@@ -4,12 +4,14 @@ import { useCallback, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { eventsApi } from '@/api/endpoints';
+import { isIdempotencyConflict } from '@/api/errors';
 import type { DomainEvent } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useCan } from '@/app/auth';
 import { useProductScope } from '@/app/contexts';
 import { canInAnyTenant } from '@/app/permissions';
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -489,7 +491,8 @@ function PublishEventDialog({
   const [tenantId, setTenantId] = useState('');
   const [type, setType] = useState('');
   const [data, setData] = useState('{}');
-  const [idempotencyKey] = useState(newIdempotencyKey);
+  const [idempotencyKey, setIdempotencyKey] = useState(newIdempotencyKey);
+  const [conflict, setConflict] = useState(false);
   const parsed = parseJsonObject(data);
   const typeIssue = kindProblem(type);
   const publish = useMutation({
@@ -506,6 +509,12 @@ function PublishEventDialog({
     onSuccess: (event) => {
       toast.success(t('events.published', { type: event.type }));
       onPublished(event);
+    },
+    onError: (error) => {
+      // 409: an earlier attempt with other values used this dialog's key; the next submit is new.
+      const renewed = isIdempotencyConflict(error);
+      setConflict(renewed);
+      if (renewed) setIdempotencyKey(newIdempotencyKey());
     },
   });
   const fields = publish.error ? fieldErrors(publish.error) : {};
@@ -542,7 +551,13 @@ function PublishEventDialog({
           if (!invalid) publish.mutate();
         }}
       >
-        <FormError error={publish.error} />
+        {conflict ? (
+          <Alert tone="warning" title={t('common:idempotency.conflictTitle')}>
+            {t('common:idempotency.conflictRenewed')}
+          </Alert>
+        ) : (
+          <FormError error={publish.error} />
+        )}
         <TenantPicker
           productId={productId}
           value={tenantId}
