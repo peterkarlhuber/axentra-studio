@@ -4,6 +4,7 @@ import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { RootLayout } from './RootLayout';
 import { HomeRedirect, ModuleGate, ProductScope, RequireAuth } from './guards';
 import { AppShell } from './shell/AppShell';
+import { HelpLayout } from '@/help/HelpLayout';
 
 /* Feature pages are code-split per route. */
 const lazyPage =
@@ -18,6 +19,20 @@ export const routes: RouteObject[] = [
     children: [
       { path: 'setup', lazy: lazyPage(() => import('@/features/auth/SetupPage'), 'SetupPage') },
       { path: 'login', lazy: lazyPage(() => import('@/features/auth/LoginPage'), 'LoginPage') },
+      {
+        // Public: readable before sign-in (inside the Studio shell when signed in).
+        path: 'help',
+        element: <HelpLayout />,
+        errorElement: <RouteErrorBoundary />,
+        handle: { crumb: 'help' },
+        children: [
+          { index: true, lazy: lazyPage(() => import('@/help/HelpHomePage'), 'HelpHomePage') },
+          {
+            path: ':articleId',
+            lazy: lazyPage(() => import('@/help/HelpArticlePage'), 'HelpArticlePage'),
+          },
+        ],
+      },
       {
         element: <RequireAuth />,
         children: [

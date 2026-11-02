@@ -16,7 +16,8 @@
     "description": "You can invite members after creating the tenant.",
     "slugHelp": "URL-friendly identifier, derived from the name. Must be unique within the product.",
     "submit": "Create tenant",
-    "success": "Tenant “{{name}}” created"
+    "success": "Tenant “{{name}}” created",
+    "slugInfo": "Lowercase letters, digits and dashes (2–63 characters), starting with a letter or digit. The slug cannot be changed later and is typed to confirm deletion."
   },
   "empty": {
     "title": "No tenants yet",
@@ -35,15 +36,15 @@
     "records": "Browse records",
     "delete": "Delete tenant",
     "deleteTitle": "Delete tenant?",
-    "deleteBody": "“{{name}}” and all of its data will be deleted. This cannot be undone.",
+    "deleteBody": "“{{name}}” is deleted together with its records, files, memberships, invitations and tenant-bound API keys. This cannot be undone.",
     "deleted": "Tenant “{{name}}” deleted",
     "suspend": "Suspend tenant",
     "activate": "Reactivate tenant",
     "suspended": "Tenant suspended",
     "activated": "Tenant reactivated",
     "suspendTitle": "Suspend tenant?",
-    "suspendBody": "Members of “{{name}}” lose access until the tenant is reactivated. No data is deleted.",
-    "suspendedNotice": "This tenant is suspended. Its members cannot access it."
+    "suspendBody": "Members of “{{name}}” and its API keys lose access until the tenant is reactivated. Product operators lose access to its data too; only platform administrators can still open it. No data is deleted.",
+    "suspendedNotice": "This tenant is suspended. Its members, product operators and API keys cannot access it."
   },
   "invitations": {
     "title": "Invitations",
@@ -55,12 +56,12 @@
     "expires": "Expires",
     "empty": "No invitations",
     "invite": "Invite member",
-    "inviteDescription": "The person receives an invitation to join this tenant.",
+    "inviteDescription": "The invitation is valid for 7 days. If notifications are enabled, Axentra also emails the link.",
     "send": "Send invitation",
     "sent": "Invitation for {{email}} created",
     "createdTitle": "Invitation created",
     "oneTimeTitle": "Shown only once",
-    "oneTimeBody": "Share this with the invited person now. It cannot be displayed again.",
+    "oneTimeBody": "Share this only with the invited person. It cannot be displayed again; if it is lost, revoke the invitation and create a new one.",
     "link": "Invitation link",
     "token": "Invitation token",
     "revoke": "Revoke invitation",
@@ -68,17 +69,22 @@
     "revokeTitle": "Revoke invitation?",
     "revokeBody": "The invitation for {{email}} will stop working.",
     "revoked": "Invitation revoked",
-    "tokenHelp": "The server has no public URL configured, so share the token. The person accepts it under “Accept invitation” after signing in.",
-    "roleHelp": "Defaults to “member” when empty."
+    "tokenHelp": "No invitation link was generated because notifications are not enabled on this server, so share the token. The person signs in and enters it under “Accept invitation”.",
+    "roleHelp": "The person gets this role in the tenant after accepting.",
+    "emailInfo": "Only a signed-in user whose account has exactly this email address can accept the invitation.",
+    "expiresInfo": "Invitations are valid for 7 days. To extend one, revoke it and invite again.",
+    "expiresAbout": "About invitation expiry"
   },
   "accept": {
     "title": "Accept invitation",
-    "description": "Join a tenant with the invitation token you received.",
+    "description": "Join a tenant with the invitation link or token you received. You must be signed in with the account for the invited email address.",
     "token": "Invitation token",
     "submit": "Accept invitation",
     "successTitle": "Invitation accepted",
     "successBody": "You now have access. It may take a moment until it appears everywhere.",
-    "continue": "Continue"
+    "continue": "Continue",
+    "invalid": "This invitation is invalid, expired, revoked or already used. Ask for a new invitation.",
+    "wrongEmail": "This invitation was sent to a different email address. Sign in with the account for that address, or ask for an invitation to your own address."
   },
   "search": "Search tenants",
   "searchPlaceholder": "Name or slug",

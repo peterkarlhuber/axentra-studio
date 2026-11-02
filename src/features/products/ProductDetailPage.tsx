@@ -32,6 +32,7 @@ import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
 import { StoragePolicyCard } from '@/features/storage/StoragePolicyCard';
 import { isModuleEnabled } from '@/app/modules';
+import { HelpLink } from '@/help/HelpLink';
 
 export function ProductDetailPage() {
   const { t } = useTranslation('products');
@@ -78,6 +79,7 @@ export function ProductDetailPage() {
       <PageHeader
         title={product.name}
         description={product.description || undefined}
+        help="products"
         meta={
           <>
             <StatusPill status={product.status} />
@@ -107,9 +109,17 @@ export function ProductDetailPage() {
           </>
         }
       />
-      {archived ? <Alert tone="warning">{t('lifecycle.archivedNotice')}</Alert> : null}
+      {archived ? (
+        <Alert tone="warning">
+          {t('lifecycle.archivedNotice')}{' '}
+          <HelpLink topic="products#restore">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
+      ) : null}
       {meta.mode === 'single' && can('products:archive') ? (
-        <Alert tone="info">{t('lifecycle.singleMode')}</Alert>
+        <Alert tone="info">
+          {t('lifecycle.singleMode')}{' '}
+          <HelpLink topic="products#single-product-mode">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
       ) : null}
       <Tabs
         label={t('tabs.label')}
@@ -167,7 +177,15 @@ export function ProductDetailPage() {
             label: t('tabs.members'),
             hidden: !can('product_members:read', { productId: product.id }),
             content: (
-              <Card flush>
+              <Card
+                flush
+                description={
+                  <>
+                    {t('membersDescription')}{' '}
+                    <HelpLink topic="products#members">{t('common:help.learnMore')}</HelpLink>
+                  </>
+                }
+              >
                 <MembersPanel
                   productId={product.id}
                   scope="product"
@@ -197,7 +215,11 @@ export function ProductDetailPage() {
         tone={confirming === 'restore' ? 'primary' : 'danger'}
         confirmText={confirming === 'archive' ? product.name : undefined}
         onConfirm={() => lifecycle.mutateAsync(confirming ?? 'archive')}
-      />
+      >
+        <HelpLink topic={confirming === 'restore' ? 'products#restore' : 'products#archive'}>
+          {t('common:help.learnMore')}
+        </HelpLink>
+      </ConfirmDialog>
     </div>
   );
 }
@@ -269,6 +291,8 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
         <FormField
           label={t('fields.settings')}
           help={t('settings.jsonHelp')}
+          info={t('settings.jsonInfo')}
+          infoTopic="products#settings"
           error={jsonError ?? fields.settings}
         >
           <Textarea

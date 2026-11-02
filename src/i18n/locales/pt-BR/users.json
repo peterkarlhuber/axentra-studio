@@ -1,0 +1,66 @@
+{
+  "title": "Usuários",
+  "description": "Pessoas com acesso a este produto: seus operadores e os membros dos seus tenants.",
+  "search": "Pesquisar usuários",
+  "searchPlaceholder": "Nome ou e-mail",
+  "filters": {
+    "allStatuses": "Todos os status"
+  },
+  "fields": {
+    "name": "Nome",
+    "email": "Endereço de e-mail",
+    "status": "Status",
+    "locale": "Idioma",
+    "lastLogin": "Último login",
+    "created": "Criado em",
+    "platformRole": "Função na plataforma",
+    "password": "Login por senha"
+  },
+  "empty": {
+    "title": "Nenhum usuário ainda",
+    "body": "Os usuários aparecem aqui assim que se tornam membros deste produto ou de um de seus tenants.",
+    "filteredTitle": "Nenhum usuário correspondente",
+    "filteredBody": "Tente outra pesquisa ou outro filtro de status."
+  },
+  "detail": {
+    "profile": "Perfil",
+    "sessions": "Sessões ativas",
+    "disable": "Desabilitar usuário",
+    "enable": "Habilitar usuário",
+    "disableTitle": "Desabilitar usuário?",
+    "disableBody": "{{name}} não pode mais entrar, e todas as sessões terminam imediatamente. As associações permanecem, e as chaves de API criadas pelo usuário continuam funcionando.",
+    "disabled": "Usuário desabilitado",
+    "enabled": "Usuário habilitado",
+    "disabledNotice": "Este usuário está desabilitado e não pode entrar.",
+    "revokeSessions": "Sair de todos os lugares",
+    "revokeTitle": "Sair de todos os lugares?",
+    "revokeBody": "Todas as sessões de {{name}} terminam imediatamente. O usuário pode entrar novamente.",
+    "hasPassword": "Senha definida",
+    "noPassword": "Sem senha (somente login único)",
+    "sessionsRevoked_many": "{{count}} de sessões revogadas",
+    "sessionsRevoked_one": "{{count}} sessão revogada",
+    "sessionsRevoked_other": "{{count}} sessões revogadas",
+    "profileDescription": "As associações são gerenciadas na guia Membros de cada tenant.",
+    "noEmail": "Sem endereço de e-mail",
+    "noEmailInfo": "Este usuário entra apenas por login único e não pode aceitar convites, que são vinculados a um endereço de e-mail. Em vez disso, adicione o usuário diretamente aos tenants.",
+    "noEmailAbout": "Sobre usuários sem endereço de e-mail"
+  },
+  "platformRoles": {
+    "none": "Nenhuma função na plataforma",
+    "platform_viewer": "Leitor da plataforma",
+    "platform_admin": "Administrador da plataforma",
+    "help": {
+      "none": "Acesso somente por meio de associações a produtos e tenants.",
+      "platform_viewer": "Acesso somente leitura a todos os produtos, às configurações e ao log de auditoria de toda a instalação.",
+      "platform_admin": "Controle total de toda a instalação, incluindo todos os produtos e usuários."
+    }
+  },
+  "platformRole": {
+    "title": "Função na plataforma",
+    "description": "Permissões válidas para toda a instalação, independentes dos produtos.",
+    "apply": "Alterar função na plataforma",
+    "saved": "Função na plataforma alterada",
+    "confirmTitle": "Alterar função na plataforma?",
+    "confirmBody": "{{name}} recebe a função na plataforma “{{role}}”. Isso altera o acesso a todos os produtos deste servidor."
+  }
+}

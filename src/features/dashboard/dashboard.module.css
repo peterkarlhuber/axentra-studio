@@ -105,3 +105,11 @@
     font-size: var(--ax-text-sm);
   }
 }
+
+/* Info tip in the counter's corner, outside the link (a button must not sit inside a link). */
+.statTip {
+  position: absolute;
+  top: var(--ax-space-3);
+  right: var(--ax-space-3);
+  z-index: 1;
+}

@@ -81,14 +81,14 @@ describe('RecordsPage', () => {
     const user = userEvent.setup();
     await user.click(await screen.findByRole('button', { name: 'New record' }));
     const dialog = await screen.findByRole('dialog', { name: 'New record' });
-    const collection = within(dialog).getByLabelText(/Collection/);
+    const collection = within(dialog).getByLabelText(/^Collection/);
     await user.clear(collection);
     await user.type(collection, 'Bad-Name');
     expect(within(dialog).getByText(/Use lowercase letters/)).toBeInTheDocument();
     expect(within(dialog).getByRole('button', { name: 'Create record' })).toBeDisabled();
     await user.clear(collection);
     await user.type(collection, 'notes');
-    const data = within(dialog).getByLabelText(/Data/);
+    const data = within(dialog).getByLabelText(/^Data/);
     await user.clear(data);
     await user.type(data, '{{"text":"hello"}');
     await user.click(within(dialog).getByRole('button', { name: 'Create record' }));
@@ -122,7 +122,7 @@ describe('RecordsPage', () => {
     const { user, drawer } = await openRecord();
     await user.click(within(drawer).getByRole('button', { name: 'Edit' }));
     const dialog = await screen.findByRole('dialog', { name: 'Edit record' });
-    const data = within(dialog).getByLabelText(/Data/);
+    const data = within(dialog).getByLabelText(/^Data/);
     await user.clear(data);
     await user.type(data, '{{"status":"done"}');
     await user.click(within(dialog).getByRole('button', { name: 'Save changes' }));
@@ -152,5 +152,20 @@ describe('RecordsPage', () => {
     const del = calls.find((call) => call.method === 'DELETE');
     expect(new URL(del?.url ?? 'http://x').pathname).toBe(`${BASE}/orders/rec_1`);
     expect(del?.headers.get('If-Match')).toBe('2');
+  });
+
+  it('lets tenant members open a collection by name without collections:read', async () => {
+    const calls = api();
+    renderPage(<RecordsPage />, {
+      me: meWith([], ['records:read']),
+      route: `/p/prd_1/records?tenant=${TENANT_ID}`,
+    });
+    const user = userEvent.setup();
+    await user.type(await screen.findByLabelText('Collection name'), 'orders');
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    expect(await screen.findByRole('button', { name: 'View record rec_1' })).toBeInTheDocument();
+    expect(
+      calls.some((call) => new URL(call.url).pathname === '/v1/products/prd_1/collections'),
+    ).toBe(false);
   });
 });

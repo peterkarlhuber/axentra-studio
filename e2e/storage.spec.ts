@@ -107,7 +107,7 @@ test('files: upload, list, download, refuse a blocked type and delete', async ({
     mimeType: 'text/plain',
     buffer: Buffer.from('hello from the storage e2e test\n'),
   });
-  await dialog.getByLabel('Labels (metadata)').fill('{"kind": "e2e"}');
+  await dialog.getByRole('textbox', { name: 'Labels (metadata)' }).fill('{"kind": "e2e"}');
   await expectNoA11yViolations(page);
   await dialog.getByRole('button', { name: 'Upload', exact: true }).click();
   await expect(toast(page, 'hello-e2e.txt uploaded')).toBeVisible();
@@ -181,8 +181,8 @@ test('records: create, edit and delete; data overview', async ({ page }, testInf
   await page.goto(`/p/${productId}/records?tenant=${tenantId}`);
   await page.getByRole('button', { name: 'New record' }).click();
   const create = page.getByRole('dialog', { name: 'New record' });
-  await create.getByLabel(/Collection/).fill('e2e_notes');
-  await create.getByLabel(/Data/).fill('{"text": "first"}');
+  await create.getByRole('textbox', { name: /^Collection/ }).fill('e2e_notes');
+  await create.getByLabel(/^Data/).fill('{"text": "first"}');
   await expectNoA11yViolations(page);
   await create.getByRole('button', { name: 'Create record' }).click();
   await expect(toast(page, /Record rec_\w+ created/)).toBeVisible();
@@ -193,7 +193,7 @@ test('records: create, edit and delete; data overview', async ({ page }, testInf
   const drawer = page.getByRole('dialog', { name: 'Record' });
   await drawer.getByRole('button', { name: 'Edit' }).click();
   const edit = page.getByRole('dialog', { name: 'Edit record' });
-  await edit.getByLabel(/Data/).fill('{"text": "second"}');
+  await edit.getByLabel(/^Data/).fill('{"text": "second"}');
   await edit.getByRole('button', { name: 'Save changes' }).click();
   await expect(toast(page, /Record rec_\w+ saved/)).toBeVisible();
   await expect(drawer.getByText('"second"')).toBeVisible();
@@ -207,7 +207,7 @@ test('records: create, edit and delete; data overview', async ({ page }, testInf
 
   // A second record keeps the collection visible in the overview.
   await page.getByRole('button', { name: 'New record' }).click();
-  await create.getByLabel(/Data/).fill('{"text": "kept"}');
+  await create.getByLabel(/^Data/).fill('{"text": "kept"}');
   await create.getByRole('button', { name: 'Create record' }).click();
   await expect(toast(page, /Record rec_\w+ created/)).toBeVisible();
 

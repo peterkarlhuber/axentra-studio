@@ -1,6 +1,6 @@
 {
   "noAccess": "Kein Zugriff auf die Abrechnung",
-  "noAccessBody": "Ihre Rolle enthält die Berechtigung „billing:read“ für dieses Produkt oder diesen Mandanten nicht.",
+  "noAccessBody": "Deine Rolle enthält die Berechtigung „billing:read“ für dieses Produkt oder diesen Mandanten nicht.",
   "yes": "Ja",
   "no": "Nein",
   "status": {
@@ -26,11 +26,11 @@
     "key": "Schlüssel",
     "keyHelp": "Kleinbuchstaben, Ziffern, „_“ und „-“, beginnend mit einem Buchstaben, z. B. pro.",
     "keyImmutable": "Der Schlüssel kann nicht geändert werden.",
-    "keyInvalid": "Verwenden Sie Kleinbuchstaben, Ziffern, „_“ oder „-“, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
+    "keyInvalid": "Verwende Kleinbuchstaben, Ziffern, „_“ oder „-“, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
     "descriptionLabel": "Beschreibung",
     "trialDays": "Testtage",
     "trialDaysHelp": "0 bis 365. Neue Abonnements beginnen mit der Testphase.",
-    "trialInvalid": "Geben Sie eine ganze Zahl von 0 bis 365 ein.",
+    "trialInvalid": "Gib eine ganze Zahl von 0 bis 365 ein.",
     "activeLabel": "Aktiv",
     "activeHelp": "Nur aktive Tarife können für neue Abonnements gewählt werden.",
     "prices": "Preise",
@@ -55,7 +55,7 @@
     "saved": "Tarif {{name}} gespeichert",
     "actionsFor": "Aktionen für Tarif {{name}}",
     "empty": "Noch keine Tarife",
-    "emptyBody": "Legen Sie einen Tarif mit Preisen und Berechtigungen an und abonnieren Sie ihn dann für Mandanten."
+    "emptyBody": "Lege einen Tarif mit Preisen und Berechtigungen an und melde dann Mandanten dafür an."
   },
   "prices": {
     "title": "Preise",
@@ -63,9 +63,9 @@
     "free": "Keine Preise: Dieser Tarif ist kostenlos.",
     "amount": "Betrag",
     "stored": "Gespeichert als {{minor}} kleinste Einheiten ({{formatted}})",
-    "amountInvalid": "Geben Sie einen Betrag mit höchstens so vielen Nachkommastellen ein, wie die Währung hat.",
+    "amountInvalid": "Gib einen Betrag mit höchstens so vielen Nachkommastellen ein, wie die Währung hat.",
     "currency": "Währung",
-    "currencyInvalid": "Verwenden Sie einen dreistelligen ISO-4217-Code, z. B. EUR.",
+    "currencyInvalid": "Verwende einen dreistelligen ISO-4217-Code, z. B. EUR.",
     "interval": "Intervall",
     "providerPriceId": "Preis-ID beim Anbieter",
     "providerPriceIdHelp": "Optional, z. B. die Stripe-Preis-ID.",
@@ -88,7 +88,7 @@
     "enabled": "Eingeschaltet",
     "limitValue": "Limit",
     "limitHelp": "Leer = unbegrenzt",
-    "limitInvalid": "Geben Sie eine Zahl ab 0 ein.",
+    "limitInvalid": "Gib eine Zahl ab 0 ein.",
     "add": "Berechtigung hinzufügen",
     "remove": "{{name}} entfernen",
     "unlimited": "unbegrenzt",
@@ -111,7 +111,7 @@
   "provider": {
     "title": "Zahlungsanbieter",
     "noCardData": "Studio fragt nie nach Karten- oder Bankdaten. Bezahlt wird ausschließlich auf der gehosteten Seite des Anbieters.",
-    "unknown": "Die Konfiguration des Anbieters ist für Sie nicht sichtbar (dafür ist „platform:settings“ oder „product:manage“ nötig).",
+    "unknown": "Die Konfiguration des Anbieters ist für dich nicht sichtbar (dafür ist „platform:settings“ oder „product:manage“ nötig).",
     "provider": "Anbieter",
     "names": {
       "manual": "Manuell",
@@ -130,7 +130,7 @@
     },
     "checkout": "Checkout aus Studio",
     "checkoutHosted": "Für kostenpflichtige Tarife verfügbar: Studio öffnet die gehostete Seite des Anbieters.",
-    "checkoutLive": "Nicht angeboten: Echtzahlungen sind eingeschaltet. Verwenden Sie den Checkout Ihres Produkts.",
+    "checkoutLive": "Nicht angeboten: Echtzahlungen sind eingeschaltet. Verwende den Checkout deines Produkts.",
     "checkoutNone": "Nicht nötig: Abonnements werden direkt angelegt."
   },
   "subscriptions": {
@@ -138,7 +138,7 @@
     "description": "Abonnements aller Mandanten, neueste zuerst.",
     "listTitle": "Alle Abonnements",
     "openTitle": "Abrechnung eines Mandanten",
-    "openDescription": "Öffnen Sie Abonnement und Berechtigungen eines Mandanten, auch wenn er noch kein Abonnement hat.",
+    "openDescription": "Öffne Abonnement und Berechtigungen eines Mandanten, auch wenn er noch kein Abonnement hat.",
     "open": "Öffnen",
     "tenant": "Mandant",
     "plan": "Tarif",
@@ -153,7 +153,7 @@
     "filterPlan": "Tarif",
     "allPlans": "Alle Tarife",
     "empty": "Keine Abonnements",
-    "emptyBody": "Öffnen Sie oben einen Mandanten, um ihn für einen Tarif anzumelden."
+    "emptyBody": "Öffne oben einen Mandanten, um ihn für einen Tarif anzumelden."
   },
   "tenant": {
     "title": "Abrechnung des Mandanten",
@@ -164,10 +164,10 @@
     "title": "Abonnement",
     "id": "Abonnement-ID",
     "none": "Kein Abonnement",
-    "noneBody": "Melden Sie den Mandanten für einen Tarif an.",
+    "noneBody": "Melde den Mandanten für einen Tarif an.",
     "subscribe": "Tarif abonnieren",
     "subscribeSubmit": "Abonnieren",
-    "subscribeDescription": "Kostenlose Tarife und mit dem manuellen Anbieter jeder Tarif starten sofort.",
+    "subscribeDescription": "Kostenlose Tarife starten sofort, mit dem manuellen Anbieter auch alle anderen.",
     "subscribed": "Abonnement gestartet",
     "choosePlan": "Tarif wählen",
     "price": "Preis",
@@ -176,7 +176,7 @@
     "changeDescription": "Aktueller Tarif: {{plan}}. Es gibt keine anteilige Verrechnung.",
     "planChanged": "Tarif gewechselt",
     "setStatus": "Status setzen",
-    "statusDescription": "Manueller Anbieter: Halten Sie fest, was außerhalb von Axentra geschehen ist. Aktueller Status: {{status}}.",
+    "statusDescription": "Manueller Anbieter: Halte fest, was außerhalb von Axentra geschehen ist. Aktueller Status: {{status}}.",
     "newStatus": "Neuer Status",
     "statusSubmit": "Status setzen",
     "statusSet": "Status aktualisiert",
@@ -192,14 +192,14 @@
     "canceledAt": "Gekündigt",
     "providerCustomer": "Kunde beim Anbieter",
     "providerSubscription": "Abonnement beim Anbieter",
-    "canceledNotice": "Das letzte Abonnement ist gekündigt. Melden Sie den Mandanten erneut an, um ein neues zu beginnen.",
+    "canceledNotice": "Das letzte Abonnement ist gekündigt. Melde den Mandanten erneut an, um ein neues zu beginnen.",
     "trialNotice_one": "Die Testphase endet in {{count}} Tag ({{date}}).",
     "trialNotice_other": "Die Testphase endet in {{count}} Tagen ({{date}}).",
     "endsNotice": "Endet zum Periodenende am {{date}}.",
     "pastDueNotice": "Die Zahlung ist überfällig. Die Berechtigungen bleiben als Kulanzzeit wirksam.",
     "incompleteNotice": "Wartet auf den Abschluss des Checkouts beim Anbieter.",
     "stripeManaged": "Tarifwechsel von Stripe-Abonnements erfolgen in Stripe; der Webhook aktualisiert Axentra.",
-    "manualPaid": "Manueller Anbieter: Ziehen Sie die Zahlung außerhalb von Axentra ein.",
+    "manualPaid": "Manueller Anbieter: Zieh die Zahlung außerhalb von Axentra ein.",
     "confirm": {
       "cancelAtEnd": {
         "title": "Zum Periodenende kündigen?",
@@ -222,10 +222,10 @@
     "start": "Checkout starten",
     "explain": "Dieser Tarif ist kostenpflichtig. Studio legt eine Checkout-Sitzung an; Zahlungsdaten werden nur auf der gehosteten Seite des Anbieters eingegeben.",
     "unavailable": "Dieser kostenpflichtige Tarif braucht einen Checkout, den der Server hier nicht anbietet.",
-    "liveBlocked": "Echtzahlungen sind eingeschaltet. Studio startet keine Checkouts mit echtem Geld; verwenden Sie den Checkout Ihres Produkts.",
-    "changeNeedsCheckout": "Der Wechsel zu diesem kostenpflichtigen Tarif braucht einen Checkout beim Anbieter. Kündigen Sie das aktuelle Abonnement und abonnieren Sie neu.",
+    "liveBlocked": "Echtzahlungen sind eingeschaltet. Studio startet keine Checkouts mit echtem Geld; verwende den Checkout deines Produkts.",
+    "changeNeedsCheckout": "Der Wechsel zu diesem kostenpflichtigen Tarif braucht einen Checkout beim Anbieter. Kündige das aktuelle Abonnement und schließ ein neues ab.",
     "readyTitle": "Checkout angelegt",
-    "readyBody": "Öffnen Sie die gehostete Checkout-Seite von {{provider}}, um das Abonnement abzuschließen. Bis der Anbieter es bestätigt, bleibt es unvollständig.",
+    "readyBody": "Öffne die gehostete Checkout-Seite von {{provider}}, um das Abonnement abzuschließen. Bis der Anbieter es bestätigt, bleibt es unvollständig.",
     "open": "Checkout-Seite öffnen",
     "newTab": "öffnet in einem neuen Tab"
   },
@@ -237,5 +237,13 @@
     "byStatus": "Abonnements nach Status",
     "sampled": "Gezählt aus den neuesten {{count}} Abonnements.",
     "allCounted": "Alle Abonnements gezählt."
+  },
+  "info": {
+    "trialDays": "Neue Abonnements beginnen in der „Testphase“ und erhalten die Berechtigungen des Tarifs. Mit dem manuellen Anbieter endet eine Testphase erst, wenn der geplante Abrechnungsjob des Betreibers läuft.",
+    "providerPriceId": "Bei Stripe gibst du die ID des Preises ein, den du in Stripe angelegt hast. Axentra ordnet damit Abonnement-Änderungen aus Stripe diesem Tarif zu.",
+    "statusLabel": "Über Abonnement-Status",
+    "status": "Testphase, Aktiv und Überfällig gewähren die Berechtigungen des Tarifs; Überfällig ist eine Kulanzzeit. Unvollständig wartet auf den Checkout beim Anbieter. Gekündigt ist endgültig.",
+    "entitlementsLabel": "Über wirksame Berechtigungen",
+    "entitlements": "Ohne Abonnement in Testphase, Aktiv oder Überfällig erhält der Mandant nur seine Überschreibungen. Überschreibungen bleiben bestehen, wenn sich der Tarif ändert oder das Abonnement endet."
   }
 }

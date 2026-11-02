@@ -58,6 +58,8 @@ export function EventTypesField({
       <FormField
         label={t('webhooks.eventTypes')}
         help={t('webhooks.eventTypesHelp')}
+        info={t('webhooks.eventTypesInfo')}
+        infoTopic="webhooks#event-types"
         error={invalid.length > 0 ? t('validation.patterns') : error}
         required
       >

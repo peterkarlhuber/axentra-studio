@@ -23,6 +23,8 @@ import {
   useToast,
 } from '@/components/ui';
 import { SessionsTable } from '@/features/shared/SessionsTable';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 
 export function UserDetailPage() {
   const { t } = useTranslation('users');
@@ -71,6 +73,7 @@ export function UserDetailPage() {
     <div className={layout.stack}>
       <PageHeader
         title={data.name || data.email || data.id}
+        help="users"
         meta={
           <>
             <StatusPill status={data.status} />
@@ -103,11 +106,29 @@ export function UserDetailPage() {
       />
       {disabled ? <Alert tone="warning">{t('detail.disabledNotice')}</Alert> : null}
       <div className={layout.grid2}>
-        <Card title={t('detail.profile')}>
+        <Card
+          title={t('detail.profile')}
+          description={
+            <>
+              {t('detail.profileDescription')}{' '}
+              <HelpLink topic="members-invitations">{t('common:help.learnMore')}</HelpLink>
+            </>
+          }
+        >
           <DetailList
             items={[
               { label: t('fields.name'), value: data.name },
-              { label: t('fields.email'), value: data.email },
+              {
+                label: t('fields.email'),
+                value: data.email ?? (
+                  <span>
+                    {t('detail.noEmail')}{' '}
+                    <InfoTip label={t('detail.noEmailAbout')} topic="users#no-email">
+                      {t('detail.noEmailInfo')}
+                    </InfoTip>
+                  </span>
+                ),
+              },
               { label: t('fields.status'), value: <StatusPill status={data.status} /> },
               { label: t('fields.locale'), value: data.locale },
               {
@@ -169,7 +190,11 @@ export function UserDetailPage() {
             throw error;
           }
         }}
-      />
+      >
+        <HelpLink topic={confirm === 'disable' ? 'users#disable' : 'users#sign-out'}>
+          {t('common:help.learnMore')}
+        </HelpLink>
+      </ConfirmDialog>
     </div>
   );
 }

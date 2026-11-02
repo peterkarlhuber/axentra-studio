@@ -7,6 +7,7 @@ import { STUDIO_VERSION } from '@/api/client';
 import { REQUIRED_API, formatApiVersion } from '@/api/compat';
 import { useMeta } from '@/app/contexts';
 import { Button, Card, DetailList, PageHeader, StatusPill, layout } from '@/components/ui';
+import { InfoTip } from '@/help/InfoTip';
 import { HealthSummary } from './HealthSummary';
 
 export function HealthPage() {
@@ -26,6 +27,7 @@ export function HealthPage() {
       <PageHeader
         title={t('health.title')}
         description={t('health.description')}
+        help="health-monitoring"
         actions={
           <Button
             icon={<RefreshCw />}
@@ -66,7 +68,17 @@ export function HealthPage() {
                 { label: t('environment'), value: meta.environment, mono: true },
                 { label: t('bootstrap.studioVersion'), value: STUDIO_VERSION, mono: true },
                 {
-                  label: t('bootstrap.requiredApi'),
+                  label: (
+                    <>
+                      {t('bootstrap.requiredApi')}{' '}
+                      <InfoTip
+                        label={t('health.compatLabel')}
+                        topic="server-configuration#compatibility"
+                      >
+                        {t('health.compatInfo')}
+                      </InfoTip>
+                    </>
+                  ),
                   value: formatApiVersion(REQUIRED_API),
                   mono: true,
                 },

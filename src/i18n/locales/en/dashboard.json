@@ -9,7 +9,16 @@
     "apiKeys": "API keys",
     "audit24h": "Audit events (24 h)",
     "records": "Records",
-    "denied24h": "Denied requests (24 h)"
+    "denied24h": "Denied requests (24 h)",
+    "about": "About “{{label}}”",
+    "hints": {
+      "tenants": "All tenants of this product, active and suspended.",
+      "users": "People with access to this product: members of its tenants and product operators, each counted once.",
+      "apiKeys": "Keys of this product that are not revoked. Expired keys are included.",
+      "records": "Records in all collections and tenants of this product.",
+      "audit24h": "Audit events of this product in the last 24 hours, allowed and denied.",
+      "denied24h": "Requests of the last 24 hours that were refused, for example because a permission was missing. A sudden rise often points to a misconfigured API key or role."
+    }
   },
   "actions": {
     "newTenant": "New tenant",
@@ -32,6 +41,10 @@
     "modules": "Modules",
     "enabled": "enabled",
     "disabled": "not enabled",
-    "environment": "Environment"
+    "environment": "Environment",
+    "modeAbout": "About the mode",
+    "modeInfo": "Single product: the server serves exactly one product, created from its configuration; products cannot be created or archived. Multi product: platform administrators create and archive products. The operator sets the mode in the server configuration.",
+    "modulesAbout": "About modules",
+    "modulesInfo": "Functional blocks of the server. Green modules are enabled; grey ones are not, and their sidebar entries show “Off”. Only the server operator can enable a module."
   }
 }

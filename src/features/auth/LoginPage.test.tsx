@@ -83,4 +83,12 @@ describe('LoginPage', () => {
       `http://axentra.test/v1/auth/oidc/corp/start?return_to=${encodeURIComponent(`${window.location.origin}/`)}`,
     );
   });
+
+  it('explains a failed single sign-on from ?login_error', async () => {
+    configureApi({ baseUrl: 'http://axentra.test', fetch: async () => unauthenticated() });
+    renderWithProviders(<LoginPage />, { route: '/login?login_error=signup_disabled' });
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/no account for you/i);
+    expect(screen.queryByText(/continue where you left off/i)).not.toBeInTheDocument();
+  });
 });

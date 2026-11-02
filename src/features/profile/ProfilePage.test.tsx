@@ -67,7 +67,7 @@ describe('ProfilePage', () => {
     await screen.findByRole('heading', { name: 'Set a password' });
     await user.type(screen.getByLabelText(/^New password/), 'a-long-new-password-1');
     await user.type(screen.getByLabelText(/^Repeat new password/), 'a-long-new-password-1');
-    await user.click(screen.getByRole('button', { name: 'Change password' }));
+    await user.click(screen.getByRole('button', { name: 'Set password' }));
 
     const alert = await screen.findByText('Please sign in again');
     expect(

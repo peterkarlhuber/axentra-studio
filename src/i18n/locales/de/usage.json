@@ -2,7 +2,7 @@
   "title": "Nutzung",
   "description": "Zähler, Nutzung pro Mandant und Zeitraum, Kontingente und Reservierungen.",
   "noAccess": "Kein Zugriff auf die Nutzung",
-  "noAccessBody": "Ihre Rolle enthält die Berechtigung „usage:read“ für dieses Produkt oder diesen Mandanten nicht.",
+  "noAccessBody": "Deine Rolle enthält die Berechtigung „usage:read“ für dieses Produkt oder diesen Mandanten nicht.",
   "tabs": {
     "label": "Bereiche der Nutzung",
     "overview": "Übersicht",
@@ -63,11 +63,11 @@
     "events": "Ereignisse",
     "noUsage": "Keine Nutzung in diesem Zeitraum",
     "noMeters": "Noch keine Zähler",
-    "noMetersBody": "Legen Sie im Bereich „Zähler“ einen Zähler an. Ihr Produkt erfasst die Nutzung über die API."
+    "noMetersBody": "Lege im Bereich „Zähler“ einen Zähler an. Dein Produkt erfasst die Nutzung über die API."
   },
   "meters": {
     "title": "Zähler",
-    "description": "Was Ihr Produkt misst. Schlüssel, Aggregation und Rücksetzzeitraum sind nach dem Anlegen unveränderlich.",
+    "description": "Was dein Produkt misst. Schlüssel, Aggregation und Rücksetzzeitraum sind nach dem Anlegen unveränderlich.",
     "create": "Neuer Zähler",
     "createSubmit": "Zähler anlegen",
     "createDescription": "Die Nutzung wird über die API unter dem Schlüssel des Zählers erfasst.",
@@ -76,7 +76,7 @@
     "editDescription": "Name, Einheit, Beschreibung und das Standardlimit können geändert werden.",
     "key": "Schlüssel",
     "keyHelp": "Kleinbuchstaben, Ziffern, „_“ und „.“, beginnend mit einem Buchstaben, z. B. api_calls.",
-    "keyInvalid": "Verwenden Sie Kleinbuchstaben, Ziffern, „_“ oder „.“, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
+    "keyInvalid": "Verwende Kleinbuchstaben, Ziffern, „_“ oder „.“, beginnend mit einem Buchstaben (höchstens 63 Zeichen).",
     "immutable": "Kann nach dem Anlegen nicht geändert werden.",
     "name": "Name",
     "unit": "Einheit",
@@ -87,7 +87,7 @@
     "resetPeriodHelp": "Wann der Zähler neu beginnt. „Abrechnungszeitraum“ folgt dem Abonnement des Mandanten.",
     "defaultLimit": "Standardlimit",
     "defaultLimitHelp": "Leer lassen für unbegrenzt. Tarife und Mandanten-Überschreibungen haben Vorrang.",
-    "limitInvalid": "Geben Sie eine Zahl ab 0 ein.",
+    "limitInvalid": "Gib eine Zahl ab 0 ein.",
     "enforcement": "Durchsetzung",
     "enforcementHelp": "Harte Limits lehnen Nutzung über dem Limit ab; weiche Limits erfassen sie und melden die Überschreitung.",
     "descriptionLabel": "Beschreibung",
@@ -106,11 +106,11 @@
     "saved": "Zähler {{key}} gespeichert",
     "actionsFor": "Aktionen für Zähler {{key}}",
     "empty": "Noch keine Zähler",
-    "emptyBody": "Legen Sie einen Zähler an und erfassen Sie dann die Nutzung aus Ihrem Produkt."
+    "emptyBody": "Lege einen Zähler an und erfasse dann die Nutzung aus deinem Produkt."
   },
   "tenant": {
     "chooseTitle": "Mandanten wählen",
-    "chooseBody": "Wählen Sie einen Mandanten, um seine Nutzung, Limits und Ereignisse zu sehen.",
+    "chooseBody": "Wähle einen Mandanten, um seine Nutzung, Limits und Ereignisse zu sehen.",
     "periodTitle": "Nutzung im Zeitraum",
     "periodDescription": "Pro Zähler, mit dem wirksamen Limit und seiner Herkunft.",
     "periodAt": "Zeitraum mit dem Datum",
@@ -132,7 +132,7 @@
     "title": "Kontingent-Überschreibung für {{meter}}",
     "description": "Ersetzt für diesen Mandanten das Limit aus Tarif und Zähler.",
     "limit": "Limit",
-    "limitHelp": "Leer lassen für unbegrenzt.",
+    "limitHelp": "Leer lassen für kein Limit, auch wenn der Tarif eines festlegt.",
     "save": "Überschreibung speichern",
     "saved": "Kontingent-Überschreibung gespeichert",
     "remove": "Überschreibung entfernen",
@@ -155,7 +155,7 @@
   },
   "reservations": {
     "title": "Reservierungen",
-    "description": "Die API bietet keine Liste der Reservierungen. Suchen Sie eine über ihre ID, um sie anzuzeigen, zu verbuchen oder freizugeben.",
+    "description": "Die API bietet keine Liste der Reservierungen. Suche eine über ihre ID, um sie anzuzeigen, zu verbuchen oder freizugeben.",
     "id": "Reservierungs-ID",
     "lookup": "Suchen",
     "status": "Status",
@@ -188,5 +188,17 @@
     "detail": "Mandanten: {{tenants}} · Ereignisse: {{events}}",
     "thisMonthNote": "Summen seit dem Monatsersten (UTC) über alle Mandanten.",
     "sampled": "Basierend auf den ersten {{count}} Mandantensummen."
+  },
+  "info": {
+    "key": "Dein Produkt erfasst Nutzung mit diesem Schlüssel, und Tarif-Berechtigungen verweisen darauf als „limit.“ gefolgt vom Schlüssel.",
+    "aggregation": "Nutze Summe für Dinge, die sich addieren, etwa Aufrufe oder Nachrichten. Nutze Maximum oder Letzter Wert für einen gemessenen Stand, etwa gespeicherte Bytes oder Plätze.",
+    "resetPeriod": "Zeiträume haben feste Grenzen in UTC: Ein Tageslimit steht um Mitternacht UTC wieder zur Verfügung, nicht 24 Stunden nach der ersten Nutzung. „Abrechnungszeitraum“ verwendet Kalendermonate, solange der Mandant kein aktives Abonnement hat.",
+    "defaultLimit": "Gilt nur für Mandanten ohne Kontingent-Überschreibung und ohne Tariflimit für diesen Zähler. Eine Änderung gilt ab der nächsten erfassten Nutzung.",
+    "enforcement": "Bei einem harten Limit antwortet die API mit 429 „quota_exceeded“ und erfasst nichts. Bei einem weichen Limit wird die Nutzung immer erfasst und als Überschreitung markiert. Tariflimits verwenden die Durchsetzung des Zählers.",
+    "periodAt": "Tage sind UTC-Tage. Wähle ein beliebiges Datum, um den Zeitraum zu sehen, der es enthält.",
+    "limitSourceLabel": "Über die Herkunft des Limits",
+    "limitSource": "Der erste Treffer gilt: Mandanten-Überschreibung, dann das Limit des Tarifs, dann der Standard des Zählers. Ohne diese ist der Zähler unbegrenzt.",
+    "quotaLimit": "Die Überschreibung ersetzt das Limit aus Tarif und Zähler für diesen Mandanten, bis du sie entfernst. Bereits erfasste Nutzung bleibt unverändert.",
+    "commit": "Das Verbuchen wird nie wegen des Limits abgelehnt, weil die Arbeit schon erledigt ist. Abgelaufene Reservierungen lassen sich nicht mehr verbuchen."
   }
 }

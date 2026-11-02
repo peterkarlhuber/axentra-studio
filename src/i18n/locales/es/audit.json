@@ -1,0 +1,60 @@
+{
+  "title": "Registro de auditoría",
+  "description": "Quién hizo qué y cuándo: inicios de sesión, cambios de acceso y otras acciones administrativas en el servidor.",
+  "openDetails": "Mostrar detalles de {{action}}",
+  "fields": {
+    "id": "ID del evento",
+    "time": "Hora",
+    "action": "Acción",
+    "actor": "Actor",
+    "actorType": "Tipo de actor",
+    "target": "Objetivo",
+    "outcome": "Resultado",
+    "product": "Producto",
+    "tenant": "Inquilino",
+    "requestId": "ID de solicitud",
+    "ip": "Dirección IP",
+    "userAgent": "Agente de usuario",
+    "actorId": "ID del actor"
+  },
+  "filters": {
+    "label": "Filtrar eventos de auditoría",
+    "search": "Buscar",
+    "searchPlaceholder": "Texto libre",
+    "product": "Producto",
+    "allProducts": "Todos los productos",
+    "tenant": "ID del inquilino",
+    "action": "Acción",
+    "actor": "ID del actor",
+    "since": "Desde",
+    "until": "Hasta",
+    "apply": "Aplicar filtros",
+    "reset": "Restablecer filtros",
+    "allOutcomes": "Todos los resultados",
+    "more": "Más filtros",
+    "fewer": "Menos filtros"
+  },
+  "empty": {
+    "title": "Aún no hay eventos de auditoría",
+    "body": "Los eventos aparecen aquí en cuanto algo cambia.",
+    "filteredTitle": "No hay eventos coincidentes",
+    "filteredBody": "Ajusta o restablece los filtros."
+  },
+  "detail": {
+    "subtitle": "Evento de auditoría",
+    "details": "Detalles",
+    "noDetails": "Este evento no tiene detalles adicionales.",
+    "notFound": "No se pudo cargar el evento completo: ya no existe o no tienes permiso para leerlo. Se muestran los valores de la lista."
+  },
+  "info": {
+    "search": "Busca coincidencias en parte de la acción, el ID del objetivo, el nombre del actor o el ID del actor, sin distinguir mayúsculas y minúsculas. Los ID de solicitud no se buscan.",
+    "productAdmin": "“Todos los productos” también incluye eventos de toda la instalación que no pertenecen a ningún producto, como los inicios de sesión.",
+    "productScoped": "Ves los eventos de los productos en los que puedes leer el registro de auditoría (audit:read). Los eventos de toda la instalación, como los inicios de sesión, requieren el permiso de plataforma platform:audit.",
+    "action": "El nombre exacto de la acción, como tenancy.tenant.create. Termínalo con * para encontrar todas las acciones que empiezan así, como tenancy.*.",
+    "range": "En tu hora local. “Desde” incluye ese momento; “Hasta”, no.",
+    "outcomeLabel": "Acerca de los resultados",
+    "outcome": "Éxito: se llevó a cabo. Denegado: el servidor lo rechazó, por ejemplo por una contraseña incorrecta. Fallo: se intentó, pero no salió bien.",
+    "requestIdLabel": "Acerca del ID de solicitud",
+    "requestId": "Identifica la solicitud HTTP que causó este evento. Los mensajes de error y los registros del servidor muestran el mismo ID."
+  }
+}

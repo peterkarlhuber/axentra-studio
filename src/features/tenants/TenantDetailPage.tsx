@@ -30,6 +30,7 @@ import {
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
+import { HelpLink } from '@/help/HelpLink';
 import { InvitationsPanel } from './InvitationsPanel';
 
 export function TenantDetailPage() {
@@ -78,6 +79,7 @@ export function TenantDetailPage() {
     <div className={layout.stack}>
       <PageHeader
         title={tenant.name}
+        help="tenants"
         meta={
           <>
             <StatusPill status={tenant.status} />
@@ -117,7 +119,12 @@ export function TenantDetailPage() {
           </>
         }
       />
-      {suspended ? <Alert tone="warning">{t('detail.suspendedNotice')}</Alert> : null}
+      {suspended ? (
+        <Alert tone="warning">
+          {t('detail.suspendedNotice')}{' '}
+          <HelpLink topic="tenants#reactivate">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
+      ) : null}
       <Tabs
         label={t('detail.tabs')}
         items={[
@@ -186,7 +193,9 @@ export function TenantDetailPage() {
         description={t('detail.suspendBody', { name: tenant.name })}
         confirmLabel={t('detail.suspend')}
         onConfirm={() => setStatus.mutateAsync('suspended')}
-      />
+      >
+        <HelpLink topic="tenants#suspend">{t('common:help.learnMore')}</HelpLink>
+      </ConfirmDialog>
       <ConfirmDialog
         open={deleting}
         onOpenChange={setDeleting}
@@ -206,7 +215,9 @@ export function TenantDetailPage() {
             throw error;
           }
         }}
-      />
+      >
+        <HelpLink topic="tenants#delete">{t('common:help.learnMore')}</HelpLink>
+      </ConfirmDialog>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { CreditCard } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Badge, Card, DetailList, Skeleton } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import type { BillingProviderState } from './useBillingProvider';
 
 /** What the API reports about the payment provider; Studio itself never handles card data. */
@@ -13,7 +14,14 @@ export function ProviderStatusCard({ state }: { state: BillingProviderState }) {
           <CreditCard aria-hidden width={18} height={18} /> {t('provider.title')}
         </span>
       }
-      description={t('provider.noCardData')}
+      description={
+        <>
+          {t('provider.noCardData')}{' '}
+          <HelpLink topic="plans-subscriptions#payment-provider">
+            {t('common:help.learnMore')}
+          </HelpLink>
+        </>
+      }
     >
       {state.status === 'loading' ? (
         <Skeleton height={60} />

@@ -1,0 +1,42 @@
+{
+  "title": "Profil",
+  "description": "Ton compte, ton mot de passe et tes sessions.",
+  "account": {
+    "title": "Compte",
+    "email": "Adresse e-mail",
+    "id": "ID utilisateur",
+    "platformRole": "Rôle sur la plateforme",
+    "noPlatformRole": "Aucun",
+    "products": "Produits",
+    "noProducts": "Aucune adhésion à un produit"
+  },
+  "name": {
+    "title": "Nom d’affichage",
+    "label": "Nom",
+    "saved": "Nom enregistré",
+    "info": "Affiché dans le menu utilisateur, dans les listes de membres et comme auteur de tes actions dans le journal d’audit. Les événements d’audit antérieurs conservent l’ancien nom."
+  },
+  "password": {
+    "title": "Changer le mot de passe",
+    "description": "Toutes tes autres sessions sont déconnectées quand le mot de passe change. Ce navigateur reste connecté.",
+    "current": "Mot de passe actuel",
+    "new": "Nouveau mot de passe",
+    "confirm": "Confirmer le nouveau mot de passe",
+    "mismatch": "Les nouveaux mots de passe ne correspondent pas.",
+    "submit": "Changer le mot de passe",
+    "changed": "Mot de passe modifié",
+    "setTitle": "Définir un mot de passe",
+    "setDescription": "Tu te connectes actuellement uniquement par authentification unique (SSO). Un mot de passe permet également la connexion par mot de passe. Pour ta sécurité, cela nécessite une connexion récente.",
+    "reauth": "Se reconnecter",
+    "reauthBody": "La définition d’un premier mot de passe n’est autorisée que peu après la connexion. Reconnecte-toi (tu seras ramené ici), puis définis le mot de passe dans les minutes qui suivent.",
+    "rules": "Au moins la longueur minimale du serveur (12 caractères, sauf si l’opérateur l’a modifiée), pas ton adresse e-mail, et au moins 4 caractères différents.",
+    "setSubmit": "Définir le mot de passe"
+  },
+  "sessions": {
+    "title": "Tes sessions",
+    "description": "Navigateurs et appareils sur lesquels tu es connecté.",
+    "revoked": "Session révoquée",
+    "revokeOthers": "Déconnecter toutes les autres sessions",
+    "othersRevoked": "Toutes les autres sessions ont été déconnectées"
+  }
+}

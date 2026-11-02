@@ -25,6 +25,7 @@ import {
   type Column,
 } from '@/components/ui';
 import menuStyles from '@/components/ui/IconButton.module.css';
+import { HelpLink } from '@/help/HelpLink';
 import { useFormatters } from '@/lib/format';
 import { formatQuantity } from '@/features/usage/usage-utils';
 import { formatMoney } from './billing-utils';
@@ -83,7 +84,11 @@ export function PlansPage() {
   if (!canRead) {
     return (
       <div className={layout.stack}>
-        <PageHeader title={t('plans.title')} description={t('plans.description')} />
+        <PageHeader
+          title={t('plans.title')}
+          description={t('plans.description')}
+          help="plans-subscriptions"
+        />
         <EmptyState icon={<ShieldOff />} title={t('noAccess')} description={t('noAccessBody')} />
       </div>
     );
@@ -199,6 +204,7 @@ export function PlansPage() {
       <PageHeader
         title={t('plans.title')}
         description={t('plans.description')}
+        help="plans-subscriptions"
         actions={
           canManage ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
@@ -222,7 +228,16 @@ export function PlansPage() {
               headingLevel={3}
               icon={<Receipt />}
               title={t('plans.empty')}
-              description={canManage ? t('plans.emptyBody') : undefined}
+              description={
+                canManage ? (
+                  <>
+                    {t('plans.emptyBody')}{' '}
+                    <HelpLink topic="plans-subscriptions#create-plan">
+                      {t('common:help.learnMore')}
+                    </HelpLink>
+                  </>
+                ) : undefined
+              }
             />
           }
         />

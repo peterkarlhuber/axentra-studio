@@ -25,7 +25,7 @@
     "builtIn": "Built-in roles",
     "builtInDescription": "Provided by Axentra. Read-only.",
     "builtInReadOnly": "Built-in roles cannot be changed.",
-    "editorDescription": "Choose the permissions this role grants.",
+    "editorDescription": "Choose the permissions this role grants. Changes apply immediately to everyone who holds the role.",
     "name": "Name",
     "descriptionField": "Description",
     "scope": "Scope",
@@ -39,7 +39,7 @@
     "updated": "Role “{{name}}” saved",
     "delete": "Delete role",
     "deleteTitle": "Delete role?",
-    "deleteBody": "Members with the role “{{name}}” lose the permissions it grants.",
+    "deleteBody": "The role “{{name}}” is deleted permanently. A role that is still assigned to members or operators cannot be deleted: give them another role first.",
     "deleted": "Role “{{name}}” deleted",
     "key": "Key",
     "keyHelp": "Stable identifier used in memberships, e.g. “support_agent”. Cannot be changed later.",
@@ -50,13 +50,17 @@
     "scopeHelp": {
       "product": "Assigned to product operators; may hold product and tenant permissions.",
       "tenant": "Assigned to tenant members; holds tenant permissions only."
-    }
+    },
+    "keyInfo": "2–41 lowercase letters, digits or underscores. Built-in keys such as “member” cannot be used.",
+    "scopeInfo": "The scope cannot be changed after the role is created.",
+    "permissionsInfo": "Platform permissions cannot be part of a role. Only people who hold all of a role's permissions can assign it to others (role ceiling).",
+    "permissionsAbout": "About role permissions"
   },
   "keys": {
     "title": "API keys",
-    "description": "Keys let machines call the Axentra API for this product with an explicit permission list. A key that a service creates with another key expires no later than that key and is revoked together with it.",
+    "description": "Keys let machines call the Axentra API for this product with an explicit permission list.",
     "create": "New API key",
-    "createDescription": "The secret is shown exactly once after creation.",
+    "createDescription": "The secret is shown exactly once after creation. Keys created here do not expire.",
     "createSubmit": "Create key",
     "name": "Name",
     "nameHelp": "Describe where the key is used, e.g. “billing-worker production”.",
@@ -76,7 +80,7 @@
     "actionsFor": "Actions for {{name}}",
     "rotate": "Rotate secret",
     "rotateTitle": "Rotate secret?",
-    "rotateBody": "A new secret is generated for “{{name}}”. The old secret stops working; update all services that use it. Keys created with this key keep working.",
+    "rotateBody": "A replacement key with a new secret is created for “{{name}}”, with the same permissions, tenant scope and expiry. The old secret stops working when the grace period ends; update all services that use it. Keys created with the old key are not revoked.",
     "revoke": "Revoke key",
     "revokeTitle": "Revoke API key?",
     "revokeBody": "“{{name}}” stops working immediately, and so does every key that was created with it (and the keys created with those). This cannot be undone.",
@@ -92,7 +96,16 @@
     "graceNone": "None – old secret stops immediately",
     "grace1h": "1 hour",
     "grace24h": "24 hours",
-    "grace7d": "7 days"
+    "grace7d": "7 days",
+    "tenantScopeInfo": "A tenant-bound key works only inside that tenant; its product permissions have no effect. It is refused while the tenant is suspended and deleted with the tenant.",
+    "permissionsInfo": "You can grant only permissions you hold yourself. Platform permissions are never available to API keys.",
+    "permissionsAbout": "About key permissions",
+    "graceInfo": "During the grace period the old and the new key both work and both are listed as Active. Revoke the old key to end the grace period early.",
+    "statusInfo": "Active: works. Expired: past its expiry date. Revoked: revoked, or replaced by rotation after its grace period.",
+    "statusAbout": "About key status",
+    "lastUsedInfo": "Time of the last successful request with this key. Updated at most once a minute.",
+    "lastUsedAbout": "About last used",
+    "secretUsage": "Send the secret with every request in the header “Authorization: Bearer <secret>” or “X-API-Key: <secret>”."
   },
   "catalog": {
     "title": "Permissions",
@@ -116,6 +129,10 @@
     "status": "Status",
     "active": "Active",
     "retired": "Retired",
-    "showRetired": "Show retired"
+    "showRetired": "Show retired",
+    "defaultRolesInfo": "Product owners and admins always hold every active product permission, tenant owners and admins every tenant-scoped one. This column lists the other built-in roles that hold it.",
+    "defaultRolesAbout": "About default grants",
+    "declaredByInfo": "Product code: registered by the product's code at start; change it there. API: declared over the HTTP API by someone with permissions:manage.",
+    "declaredByAbout": "About declared by"
   }
 }

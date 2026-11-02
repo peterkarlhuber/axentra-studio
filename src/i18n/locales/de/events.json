@@ -27,7 +27,9 @@
     "closed": "Getrennt",
     "retryIn": "nächster Versuch in {{seconds}} s",
     "accessLost": "Der Zugriff auf den Stream ist nicht mehr gegeben (Sitzung oder Berechtigung geändert).",
-    "reconnect": "Neu verbinden"
+    "reconnect": "Neu verbinden",
+    "infoLabel": "Über den Verbindungszustand",
+    "info": "Live heißt: Aktualisierungen kommen an. Nach einem Verbindungsabbruch verbindet Studio sich selbst neu und setzt dort fort, wo es aufgehört hat. Getrennt heißt: Studio versucht es nicht mehr. Wähle dann Neu verbinden."
   },
   "jobs": {
     "title": "Jobs",
@@ -52,9 +54,9 @@
     "maxAttempts": "Max. Versuche",
     "maxAttemptsHelp": "1 bis 100; leer verwendet den Standard des Servers.",
     "payload": "Nutzdaten",
-    "payloadHelp": "Ein JSON-Objekt mit höchstens 64 KB. Legen Sie hier keine Geheimnisse ab: Übergeben Sie IDs und lesen Sie Geheimnisse im Handler.",
+    "payloadHelp": "Ein JSON-Objekt mit höchstens 64 KB. Leg hier keine Geheimnisse ab: Übergib IDs und lies Geheimnisse im Handler.",
     "idempotencyKey": "Idempotenzschlüssel",
-    "idempotencyKeyHelp": "Wird derselbe Schlüssel erneut eingereiht (gleiche Art und gleicher Mandant), liefert der Server den vorhandenen Job statt eines neuen.",
+    "idempotencyKeyHelp": "Wird dieselbe Anfrage mit diesem Schlüssel erneut gesendet (gleiche Art und gleicher Mandant), liefert der Server den vorhandenen Job statt eines neuen.",
     "enqueue": "Job einreihen",
     "enqueueDescription": "Fügt der Warteschlange einen Job hinzu. Er läuft, sobald ein Worker mit einem Handler für seine Art ihn übernimmt.",
     "enqueueSubmit": "Einreihen",
@@ -62,7 +64,7 @@
     "live": "Live-Aktualisierung",
     "liveHelp": "Folgt dem Job-Stream und aktualisiert Liste und Zähler, wenn sich Jobs ändern.",
     "empty": "Noch keine Jobs",
-    "emptyBody": "Jobs erscheinen hier, wenn Ihr Produkt, ein Zeitplan oder ein Webhook sie einreiht.",
+    "emptyBody": "Jobs erscheinen hier, wenn dein Produkt, ein Zeitplan oder ein Webhook sie einreiht.",
     "emptyFiltered": "Keine Jobs entsprechen diesen Filtern",
     "actionsFor": "Aktionen für Job {{id}}",
     "retry": "Erneut ausführen",
@@ -79,7 +81,7 @@
     "cancelRequestedNotice": "Der Abbruch wurde angefordert. Der Job endet als abgebrochen, sobald sein Handler es bemerkt, oder als erfolgreich, wenn er seine Arbeit vorher abschließt.",
     "stats": {
       "title": "Überblick",
-      "last24h": "Letzte 24 Stunden: {{succeeded}} erfolgreich, {{failed}} fehlgeschlagen.",
+      "last24h": "Letzte 24 Stunden: {{succeeded}} erfolgreich, {{failed}} fehlgeschlagen oder endgültig fehlgeschlagen.",
       "oldestQueued": "Ältester wartender Job:",
       "noneQueued": "In der Warteschlange wartet nichts.",
       "filterHint": ", nur diese Jobs anzeigen"
@@ -101,7 +103,16 @@
       "redactedHelp": "Vertrauliche Werte werden vom Server unkenntlich gemacht.",
       "result": "Ergebnis",
       "noResult": "(Noch) kein Ergebnis."
-    }
+    },
+    "statusInfoLabel": "Über Job-Status",
+    "statusInfo": "Fehlgeschlagen: Der Handler hat einen dauerhaften Fehler gemeldet, deshalb gibt es keine weiteren automatischen Versuche. Endgültig fehlgeschlagen: Alle Versuche endeten mit einem Fehler. Beide kannst du erneut ausführen.",
+    "attemptsInfoLabel": "Über Versuche",
+    "attemptsInfo": "Jeder Lauf zählt als Versuch. Nach einem Fehler wartet der Job (mit Standardeinstellungen 2, 4, 8 … Sekunden) und läuft erneut, bis das Maximum erreicht ist und er endgültig fehlschlägt.",
+    "kindInfo": "Worker übernehmen nur Arten, für die sie einen Handler haben. Ein Job, dessen Art kein laufender Worker bearbeitet, bleibt wartend und schlägt nie fehl. Prüfe also die Schreibweise.",
+    "payloadInfo": "Die Nutzdaten werden so gespeichert, wie du sie eingibst, und sind für alle lesbar, die Jobs ansehen dürfen. Felder mit Namen wie password, secret oder token werden nur in der Anzeige verborgen.",
+    "priorityInfo": "Die Priorität entscheidet nur, welchen fälligen Job ein freier Worker zuerst übernimmt; laufende Jobs unterbricht sie nicht, und eine Reihenfolge ist nicht garantiert.",
+    "maxAttemptsInfo": "Nach einem Fehler wird der Job mit wachsender Wartezeit wiederholt. Scheitert der letzte Versuch, ist er endgültig fehlgeschlagen und bleibt in der Liste, damit du den Fehler lesen und ihn erneut ausführen kannst.",
+    "idempotencyKeyInfo": "Studio setzt bei jedem Öffnen dieses Dialogs einen neuen zufälligen Schlüssel ein, damit ein Doppelklick nur einmal einreiht. Derselbe Schlüssel mit anderen Nutzdaten oder anderer Priorität wird abgelehnt."
   },
   "schedules": {
     "title": "Zeitpläne",
@@ -158,7 +169,7 @@
     "currentNextRun": "Nächster Lauf derzeit:",
     "nextRunHint": "Der Server berechnet den nächsten Lauf beim Speichern.",
     "enabled": "Aktiviert",
-    "enabledHelp": "Deaktivierte Zeitpläne behalten ihre Einstellungen, lösen aber nicht aus.",
+    "enabledHelp": "Deaktivierte Zeitpläne behalten ihre Einstellungen, lösen aber nicht aus. Nach dem Aktivieren geht es mit dem nächsten Zeitpunkt weiter; verpasste Zeitpunkte werden nicht nachgeholt.",
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
     "enabledToast": "Zeitplan „{{name}}“ aktiviert",
@@ -169,7 +180,12 @@
     "deleted": "Zeitplan „{{name}}“ gelöscht",
     "actionsFor": "Aktionen für Zeitplan {{name}}",
     "empty": "Noch keine Zeitpläne",
-    "emptyBody": "Legen Sie einen Zeitplan an, um einen Job regelmäßig auszuführen."
+    "emptyBody": "Lege einen Zeitplan an, um einen Job regelmäßig auszuführen.",
+    "timingInfoLabel": "Über die Zeiten von Zeitplänen",
+    "timingInfo": "Zeitpläne laufen in UTC, ohne Sommerzeit. Nächster und letzter Lauf werden in deiner eigenen Zeitzone angezeigt.",
+    "intervalInfo": "Abstände zählen ab dem 1. Januar 1970, 00:00 UTC, nicht ab dem Speichern. Alle 15 Minuten löst um :00, :15, :30 und :45 aus, jeden Tag um 00:00 UTC.",
+    "cronInfo": "UTC, ohne Umstellung auf Sommerzeit: 09:00 Uhr in Berlin ist im Winter 0 8 * * * und im Sommer 0 7 * * *. Sind Tag des Monats und Wochentag beide gesetzt, passt ein Tag, wenn einer von beiden passt.",
+    "maxAttemptsHelp": "1 bis 100 je eingereihtem Job. Standard 5."
   },
   "cronField": {
     "minute": "Minute",
@@ -179,20 +195,20 @@
     "dayOfWeek": "Wochentag"
   },
   "validation": {
-    "jsonObject": "Geben Sie ein JSON-Objekt ein, zum Beispiel {\"report\": \"monthly\"}.",
+    "jsonObject": "Gib ein JSON-Objekt ein, zum Beispiel {\"report\": \"monthly\"}.",
     "kind": {
-      "invalid": "Verwenden Sie Kleinbuchstaben, Ziffern und _ . : -, beginnend mit einem Buchstaben (höchstens 100 Zeichen).",
+      "invalid": "Verwende Kleinbuchstaben, Ziffern und _ . : -, beginnend mit einem Buchstaben (höchstens 100 Zeichen).",
       "reserved": "Arten, die mit „axentra.“ beginnen, sind für Axentra reserviert."
     },
     "type": {
-      "invalid": "Verwenden Sie Kleinbuchstaben, Ziffern und _ . : -, beginnend mit einem Buchstaben.",
+      "invalid": "Verwende Kleinbuchstaben, Ziffern und _ . : -, beginnend mit einem Buchstaben (höchstens 150 Zeichen).",
       "reserved": "Typen, die mit „axentra.“ beginnen, sind für Axentra reserviert."
     },
-    "typeFilter": "Geben Sie einen genauen Typ oder ein Präfix mit * am Ende ein (zum Beispiel invoice.*).",
+    "typeFilter": "Gib einen genauen Typ oder ein Präfix mit * am Ende ein (zum Beispiel invoice.*).",
     "patterns": "Muster bestehen aus Kleinbuchstaben, Ziffern, _ . : - und * als Platzhalter.",
     "interval": "Der Abstand muss zwischen {{min}} Sekunden und {{max}} Sekunden (366 Tage) liegen.",
     "url": {
-      "invalid": "Geben Sie eine vollständige URL ein, etwa https://example.com/hooks.",
+      "invalid": "Gib eine vollständige URL ein, etwa https://example.com/hooks.",
       "scheme": "Nur https:// (oder http:// auf Entwicklungsservern) ist erlaubt.",
       "credentials": "Die URL darf keinen Benutzernamen und kein Passwort enthalten.",
       "fragment": "Die URL darf kein Fragment (#…) enthalten."
@@ -205,7 +221,7 @@
   },
   "events": {
     "title": "Ereignisse",
-    "description": "Von Ihrem Produkt veröffentlichte Ereignisse, im Protokoll oder live, sobald sie eintreten.",
+    "description": "Von deinem Produkt veröffentlichte Ereignisse, im Protokoll oder live, sobald sie eintreten.",
     "views": "Ereignisansichten",
     "log": "Ereignisprotokoll",
     "live": "Live",
@@ -221,12 +237,15 @@
     "openDetails": "Details zu {{type}} anzeigen",
     "detailSubtitle": "Ereignisdetails",
     "empty": "Noch keine Ereignisse",
-    "emptyBody": "Ereignisse erscheinen hier, sobald Ihr Produkt sie veröffentlicht.",
+    "emptyBody": "Ereignisse erscheinen hier, sobald dein Produkt sie veröffentlicht.",
     "emptyFiltered": "Keine Ereignisse entsprechen diesen Filtern",
     "publish": "Ereignis veröffentlichen",
     "publishDescription": "Veröffentlicht ein Ereignis in einem Mandanten. Abonnenten und passende Webhooks erhalten es.",
     "publishSubmit": "Veröffentlichen",
-    "published": "Ereignis „{{type}}“ veröffentlicht"
+    "published": "Ereignis „{{type}}“ veröffentlicht",
+    "actorInfoLabel": "Über den Auslöser",
+    "actorInfo": "Wer das Ereignis veröffentlicht hat: user, api_key oder system (Axentra oder der eigene Code deines Produkts), gefolgt von der ID.",
+    "publishInfo": "Ein veröffentlichtes Ereignis ist echt: Passende Webhook-Endpunkte und die Abonnenten deines Produkts erhalten es. Verwende Testdaten und einen Mandanten zum Testen."
   },
   "live": {
     "filters": "Filter für den Live-Stream",
@@ -268,15 +287,15 @@
     "tenantFilterHelp": "Optional: nur Ereignisse dieses Mandanten zustellen. Lässt sich später nicht ändern.",
     "allTenants": "Alle Mandanten",
     "enabled": "Aktiviert",
-    "enabledHelp": "Deaktivierte Endpunkte erhalten keine neuen Zustellungen.",
+    "enabledHelp": "Deaktivierte Endpunkte erhalten keine neuen Zustellungen. Zustellungen, die noch auf eine Wiederholung warten, schlagen endgültig fehl.",
     "create": "Neuer Endpunkt",
     "createDescription": "Axentra erzeugt für den Endpunkt ein Signaturgeheimnis und zeigt es einmalig an.",
     "createSubmit": "Endpunkt anlegen",
     "empty": "Noch keine Webhook-Endpunkte",
-    "emptyBody": "Legen Sie einen Endpunkt an, um Ereignisse an ein anderes System zu senden.",
+    "emptyBody": "Lege einen Endpunkt an, um Ereignisse an ein anderes System zu senden.",
     "secretTitle": "Signaturgeheimnis",
     "secret": "Signaturgeheimnis",
-    "secretUsage": "Prüfen Sie den Header Axentra-Signature mit diesem Geheimnis: HMAC-SHA256 über „<t>.<Rohdaten>“, in konstanter Zeit verglichen; Zeitstempel älter als etwa 5 Minuten ablehnen.",
+    "secretUsage": "Prüfe den Header Axentra-Signature mit diesem Geheimnis (dem vollständigen Wert einschließlich whsec_): HMAC-SHA256 über „<t>.<Rohdaten>“, in konstanter Zeit mit jedem v1-Wert verglichen; lehne Zeitstempel ab, die mehr als etwa 5 Minuten abweichen.",
     "tabs": "Bereiche des Endpunkts",
     "deliveries": "Zustellungen",
     "settings": "Einstellungen",
@@ -301,8 +320,13 @@
     "disabledNotice": "Dieser Endpunkt ist deaktiviert und erhält keine neuen Zustellungen.",
     "delete": "Endpunkt löschen",
     "deleteTitle": "Webhook-Endpunkt löschen",
-    "deleteBody": "{{url}} erhält keine Zustellungen mehr, und sein Zustellprotokoll wird entfernt.",
-    "deleted": "Endpunkt gelöscht"
+    "deleteBody": "{{url}} erhält keine Zustellungen mehr, und sein Zustellprotokoll wird gelöscht. Wenn du den Endpunkt nur pausieren willst, deaktiviere ihn stattdessen.",
+    "deleted": "Endpunkt gelöscht",
+    "urlInfo": "Der Host darf nur auf öffentliche Adressen auflösen; localhost und private Netze werden abgelehnt. Weiterleitungen werden nicht verfolgt, und der Empfänger muss innerhalb von 10 Sekunden mit einem 2xx-Status antworten.",
+    "eventTypesInfo": "Ein Ereignis wird zugestellt, wenn es zu einem der Muster passt. * steht für beliebigen Text, invoice.* umfasst also invoice.created und invoice.paid. Bis zu 50 Muster.",
+    "secretHowTo": "So prüfst du Signaturen",
+    "emptyTutorial": "Tutorial: Empfänger bauen",
+    "graceInfo": "Während der Übergangsfrist trägt jede Anfrage zwei Signaturen, eine mit dem neuen und eine mit dem bisherigen Geheimnis. Ein Empfänger mit dem alten Geheimnis funktioniert also weiter, bis du ihn umstellst."
   },
   "deliveries": {
     "event": "Ereignis",
@@ -325,7 +349,9 @@
     "redeliver": "Erneut zustellen",
     "redelivered": "Zustellung erneut eingereiht",
     "empty": "Noch keine Zustellungen",
-    "emptyBody": "Zustellungen erscheinen, sobald passende Ereignisse veröffentlicht werden oder Sie einen Test-Ping senden.",
-    "emptyFiltered": "Keine Zustellungen mit diesem Status"
+    "emptyBody": "Zustellungen erscheinen, sobald passende Ereignisse veröffentlicht werden oder du einen Test-Ping sendest.",
+    "emptyFiltered": "Keine Zustellungen mit diesem Status",
+    "statusInfoLabel": "Über Zustellungsstatus",
+    "statusInfo": "Fehlgeschlagen, wird wiederholt: Ein weiterer Versuch ist geplant. Endgültig fehlgeschlagen: keine automatischen Versuche mehr (alle verbraucht, URL abgelehnt oder Endpunkt deaktiviert). Behebe die Ursache und stelle dann erneut zu."
   }
 }

@@ -47,6 +47,8 @@ import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { fieldErrors } from '@/lib/errors';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import menuStyles from '@/components/ui/IconButton.module.css';
 import {
   JOB_STATUSES,
@@ -157,10 +159,28 @@ export function JobsPage() {
         </span>
       ),
     },
-    { id: 'status', header: t('jobs.status'), cell: (job) => <JobStatusCell job={job} /> },
+    {
+      id: 'status',
+      header: (
+        <>
+          {t('jobs.status')}{' '}
+          <InfoTip label={t('jobs.statusInfoLabel')} topic="jobs#statuses">
+            {t('jobs.statusInfo')}
+          </InfoTip>
+        </>
+      ),
+      cell: (job) => <JobStatusCell job={job} />,
+    },
     {
       id: 'attempts',
-      header: t('jobs.attempts'),
+      header: (
+        <>
+          {t('jobs.attempts')}{' '}
+          <InfoTip label={t('jobs.attemptsInfoLabel')} topic="jobs#retries">
+            {t('jobs.attemptsInfo')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (job) => t('jobs.attemptsValue', { attempts: job.attempts, max: job.max_attempts }),
     },
@@ -226,6 +246,7 @@ export function JobsPage() {
       <PageHeader
         title={t('jobs.title')}
         description={t('jobs.description')}
+        help="jobs"
         actions={
           <>
             <ButtonLink to="../schedules" relative="path" icon={<CalendarClock />}>
@@ -306,6 +327,11 @@ export function JobsPage() {
               icon={<ListChecks />}
               title={activeFilters ? t('jobs.emptyFiltered') : t('jobs.empty')}
               description={activeFilters ? undefined : t('jobs.emptyBody')}
+              action={
+                activeFilters ? undefined : (
+                  <HelpLink topic="jobs">{t('common:help.learnMore')}</HelpLink>
+                )
+              }
             />
           }
           {...tableProps}
@@ -435,7 +461,9 @@ export function JobActionDialog({
           throw error;
         }
       }}
-    />
+    >
+      <HelpLink topic={retry ? 'jobs#retry' : 'jobs#cancel'}>{t('common:help.learnMore')}</HelpLink>
+    </ConfirmDialog>
   );
 }
 
@@ -533,6 +561,8 @@ function EnqueueJobDialog({
         <FormField
           label={t('jobs.kind')}
           help={t('jobs.kindHelp')}
+          info={t('jobs.kindInfo')}
+          infoTopic="jobs#workers"
           error={kindIssue ? t(`validation.kind.${kindIssue}`) : fields.kind}
           required
         >
@@ -547,6 +577,8 @@ function EnqueueJobDialog({
         <FormField
           label={t('jobs.payload')}
           help={t('jobs.payloadHelp')}
+          info={t('jobs.payloadInfo')}
+          infoTopic="jobs#enqueue"
           error={parsed.ok ? fields.payload : t('validation.jsonObject')}
         >
           <Textarea
@@ -569,6 +601,7 @@ function EnqueueJobDialog({
           <FormField
             label={t('jobs.priority')}
             help={t('jobs.priorityHelp')}
+            info={t('jobs.priorityInfo')}
             error={fields.priority}
           >
             <Input
@@ -594,6 +627,8 @@ function EnqueueJobDialog({
           <FormField
             label={t('jobs.maxAttempts')}
             help={t('jobs.maxAttemptsHelp')}
+            info={t('jobs.maxAttemptsInfo')}
+            infoTopic="jobs#retries"
             error={fields.max_attempts}
           >
             <Input
@@ -605,7 +640,12 @@ function EnqueueJobDialog({
             />
           </FormField>
         </div>
-        <FormField label={t('jobs.idempotencyKey')} help={t('jobs.idempotencyKeyHelp')}>
+        <FormField
+          label={t('jobs.idempotencyKey')}
+          help={t('jobs.idempotencyKeyHelp')}
+          info={t('jobs.idempotencyKeyInfo')}
+          infoTopic="jobs#idempotency-key"
+        >
           <Input
             value={idempotencyKey}
             onChange={(event) => setIdempotencyKey(event.target.value)}

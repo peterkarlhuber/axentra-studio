@@ -29,6 +29,7 @@ import { fieldErrors } from '@/lib/errors';
 import { slugify } from '@/lib/slug';
 import { PermissionChecklist } from './PermissionChecklist';
 import { grantableFor } from './permission-groups';
+import { HelpLink } from '@/help/HelpLink';
 import styles from './access.module.css';
 
 type EditorState =
@@ -152,6 +153,7 @@ export function RolesPage() {
       <PageHeader
         title={t('roles.title')}
         description={t('roles.description')}
+        help="roles-permissions"
         actions={
           canManage ? (
             <Button variant="primary" icon={<Plus />} onClick={() => setEditor({ mode: 'create' })}>
@@ -172,7 +174,16 @@ export function RolesPage() {
               headingLevel={3}
               icon={<ShieldCheck />}
               title={t('roles.customEmpty')}
-              description={canManage ? t('roles.customEmptyBody') : undefined}
+              description={
+                canManage ? (
+                  <>
+                    {t('roles.customEmptyBody')}{' '}
+                    <HelpLink topic="roles-permissions#create">
+                      {t('common:help.learnMore')}
+                    </HelpLink>
+                  </>
+                ) : undefined
+              }
             />
           }
           {...tableState}
@@ -221,7 +232,9 @@ export function RolesPage() {
             throw error;
           }
         }}
-      />
+      >
+        <HelpLink topic="roles-permissions#delete">{t('common:help.learnMore')}</HelpLink>
+      </ConfirmDialog>
     </div>
   );
 }
@@ -347,6 +360,8 @@ function RoleEditor({
               <FormField
                 label={t('roles.key')}
                 help={t('roles.keyHelp')}
+                info={t('roles.keyInfo')}
+                infoTopic="roles-permissions#create"
                 error={fields.key}
                 required
               >
@@ -363,6 +378,8 @@ function RoleEditor({
               <FormField
                 label={t('roles.scope')}
                 help={t(`roles.scopeHelp.${scope}`)}
+                info={t('roles.scopeInfo')}
+                infoTopic="roles-permissions#create"
                 error={fields.scope}
                 required
               >
@@ -390,6 +407,9 @@ function RoleEditor({
           ) : (
             <PermissionChecklist
               legend={t('roles.permissions')}
+              info={t('roles.permissionsInfo')}
+              infoLabel={t('roles.permissionsAbout')}
+              infoTopic="members-invitations#role-ceiling"
               permissions={allowed}
               value={selectedAllowed}
               onChange={setPermissions}

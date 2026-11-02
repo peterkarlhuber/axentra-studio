@@ -36,6 +36,8 @@ export function WebhookFields({
       <FormField
         label={t('webhooks.url')}
         help={t('webhooks.urlHelp')}
+        info={t('webhooks.urlInfo')}
+        infoTopic="webhooks#url-rules"
         error={urlIssue ? t(`validation.url.${urlIssue}`) : fields.url}
         required
       >

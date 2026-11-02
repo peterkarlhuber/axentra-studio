@@ -32,6 +32,7 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
 import { useDebouncedValue } from '@/lib/useDebouncedValue';
 import {
@@ -149,7 +150,7 @@ export function TemplateEditorPage() {
   if (!can('notify:manage')) {
     return (
       <div className={layout.stack}>
-        <PageHeader title={t('editor.titleNew')} />
+        <PageHeader title={t('editor.titleNew')} help="notifications#templates" />
         <EmptyState icon={<Lock />} title={t('editor.forbidden')} />
       </div>
     );
@@ -165,7 +166,7 @@ export function TemplateEditorPage() {
   if (!isNew && template.isError) {
     return (
       <div className={layout.stack}>
-        <PageHeader title={templateKey ?? ''} />
+        <PageHeader title={templateKey ?? ''} help="notifications#templates" />
         <ErrorState error={template.error} onRetry={() => void template.refetch()} />
       </div>
     );
@@ -337,6 +338,7 @@ function TemplateEditor({
       <PageHeader
         title={title}
         description={isNew ? t('editor.descriptionNew') : t('editor.description')}
+        help="notifications#create-template"
         meta={
           template ? (
             <span className={layout.tags}>
@@ -374,7 +376,12 @@ function TemplateEditor({
         }
       />
       {builtin ? <Alert tone="info">{t('editor.builtinHint')}</Alert> : null}
-      {systemOnly ? <Alert tone="info">{t('templates.systemOnlyHint')}</Alert> : null}
+      {systemOnly ? (
+        <Alert tone="info">
+          {t('templates.systemOnlyHint')}{' '}
+          <HelpLink topic="notifications#templates">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
+      ) : null}
       <div className={styles.editorGrid}>
         <form className={layout.stack} onSubmit={submit} aria-label={t('editor.formLabel')}>
           <Card title={t('editor.general')}>
@@ -408,7 +415,12 @@ function TemplateEditor({
                   onChange={(event) => update({ description: event.target.value })}
                 />
               </FormField>
-              <FormField label={t('fields.category')} help={t('editor.categoryHelp')}>
+              <FormField
+                label={t('fields.category')}
+                help={t('editor.categoryHelp')}
+                info={t('info.category')}
+                infoTopic="notifications#categories"
+              >
                 <Input
                   value={draft.category}
                   onChange={(event) => update({ category: event.target.value })}
@@ -438,7 +450,12 @@ function TemplateEditor({
 
           <Card
             title={t('editor.variables')}
-            description={t('editor.variablesHelp', { placeholder: '{{ name }}' })}
+            description={
+              <>
+                {t('editor.variablesHelp', { placeholder: '{{ name }}' })}{' '}
+                <HelpLink topic="notifications#placeholders">{t('common:help.learnMore')}</HelpLink>
+              </>
+            }
           >
             <div className={layout.form}>
               {draft.variables.length === 0 ? (
@@ -514,7 +531,17 @@ function TemplateEditor({
             </div>
           </Card>
 
-          <Card title={t('editor.variants')} description={t('editor.variantsHelp')}>
+          <Card
+            title={t('editor.variants')}
+            description={
+              <>
+                {t('editor.variantsHelp')}{' '}
+                <HelpLink topic="notifications#locale-variants">
+                  {t('common:help.learnMore')}
+                </HelpLink>
+              </>
+            }
+          >
             <div className={layout.form}>
               <Tabs
                 label={t('editor.variants')}
@@ -541,7 +568,12 @@ function TemplateEditor({
                           lang={locale}
                         />
                       </FormField>
-                      <FormField label={t('preview.html')} help={t('editor.htmlHelp')}>
+                      <FormField
+                        label={t('preview.html')}
+                        help={t('editor.htmlHelp')}
+                        info={t('info.html')}
+                        infoTopic="notifications#placeholders"
+                      >
                         <Textarea
                           mono
                           rows={8}

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { settingsApi } from '@/api/endpoints';
+import { isApiError } from '@/api/errors';
 import { queryKeys } from '@/api/queryKeys';
 import { usePreferences } from '@/app/preferences';
 import {
@@ -14,7 +15,8 @@ import {
   Skeleton,
   layout,
 } from '@/components/ui';
-import { isLocale } from '@/i18n';
+import { HelpLink } from '@/help/HelpLink';
+import { LOCALE_NAMES, SUPPORTED_LOCALES, isLocale } from '@/i18n';
 import { THEME_PREFERENCES, isThemePreference } from '@/lib/theme';
 import { SettingsTree } from './SettingsTree';
 import styles from './settings.module.css';
@@ -32,22 +34,26 @@ export function SettingsPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} />
+      <PageHeader title={t('title')} description={t('description')} help="settings" />
       <Card title={t('preferences.title')} description={t('preferences.description')}>
         <div className={layout.form}>
-          <FormField label={t('preferences.language')} help={t('preferences.languageHelp')}>
+          <FormField
+            label={t('preferences.language')}
+            help={t('preferences.languageHelp')}
+            info={t('preferences.languageInfo')}
+            infoTopic="settings#stored"
+          >
             <Select
               value={locale}
               onChange={(event) =>
                 isLocale(event.target.value) ? setLanguage(event.target.value) : undefined
               }
             >
-              <option value="de" lang="de">
-                Deutsch
-              </option>
-              <option value="en" lang="en">
-                English
-              </option>
+              {SUPPORTED_LOCALES.map((lng) => (
+                <option key={lng} value={lng} lang={lng}>
+                  {LOCALE_NAMES[lng]}
+                </option>
+              ))}
             </Select>
           </FormField>
           <fieldset className={styles.themes}>
@@ -92,6 +98,11 @@ export function SettingsPage() {
             <Skeleton width="70%" />
             <Skeleton width="50%" />
           </div>
+        ) : isApiError(settings.error) && settings.error.isForbidden ? (
+          <p className={layout.muted}>
+            {t('server.forbidden')}{' '}
+            <HelpLink topic="settings#server-configuration">{t('common:help.learnMore')}</HelpLink>
+          </p>
         ) : settings.isError ? (
           <ErrorState
             error={settings.error}
@@ -102,7 +113,13 @@ export function SettingsPage() {
         ) : Object.keys(settings.data).length === 0 ? (
           <EmptyState compact headingLevel={3} title={t('server.empty')} />
         ) : (
-          <SettingsTree value={settings.data} label={t('server.title')} />
+          <div className={layout.form}>
+            <SettingsTree value={settings.data} label={t('server.title')} />
+            <p className={layout.muted}>
+              {t('server.changeHint')}{' '}
+              <HelpLink topic="settings#change">{t('server.changeLink')}</HelpLink>
+            </p>
+          </div>
         )}
       </Card>
     </div>

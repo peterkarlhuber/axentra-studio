@@ -1,0 +1,50 @@
+{
+  "title": "Panel",
+  "description": "Resumen de este producto.",
+  "overview": "Resumen",
+  "noStats": "El servidor no informó de contadores para este producto.",
+  "stats": {
+    "tenants": "Inquilinos",
+    "users": "Usuarios",
+    "apiKeys": "Claves de API",
+    "audit24h": "Eventos de auditoría (24 h)",
+    "records": "Registros",
+    "denied24h": "Solicitudes denegadas (24 h)",
+    "about": "Acerca de “{{label}}”",
+    "hints": {
+      "tenants": "Todos los inquilinos de este producto, activos y suspendidos.",
+      "users": "Personas con acceso a este producto: miembros de sus inquilinos y operadores del producto, cada una contada una sola vez.",
+      "apiKeys": "Claves de este producto que no están revocadas. Se incluyen las caducadas.",
+      "records": "Registros de todas las colecciones e inquilinos de este producto.",
+      "audit24h": "Eventos de auditoría de este producto en las últimas 24 horas, permitidos y denegados.",
+      "denied24h": "Solicitudes de las últimas 24 horas que se rechazaron, por ejemplo porque faltaba un permiso. Un aumento repentino suele indicar una clave de API o un rol mal configurados."
+    }
+  },
+  "actions": {
+    "newTenant": "Nuevo inquilino",
+    "newApiKey": "Nueva clave de API"
+  },
+  "health": {
+    "title": "Estado del sistema",
+    "details": "Detalles"
+  },
+  "server": {
+    "title": "Servidor",
+    "name": "Versión del servidor",
+    "api": "Versión de la API",
+    "mode": "Modo",
+    "modes": {
+      "single": "Producto único",
+      "multi": "Multiproducto"
+    },
+    "productId": "ID del producto",
+    "modules": "Módulos",
+    "enabled": "habilitado",
+    "disabled": "no habilitado",
+    "environment": "Entorno",
+    "modeAbout": "Acerca del modo",
+    "modeInfo": "Producto único: el servidor atiende exactamente un producto, creado a partir de su configuración; no se pueden crear ni archivar productos. Multiproducto: los administradores de la plataforma crean y archivan productos. El operador define el modo en la configuración del servidor.",
+    "modulesAbout": "Acerca de los módulos",
+    "modulesInfo": "Bloques funcionales del servidor. Los módulos en verde están activados; los grises no, y sus entradas de la barra lateral muestran “Inactivo”. Solo el operador del servidor puede activar un módulo."
+  }
+}

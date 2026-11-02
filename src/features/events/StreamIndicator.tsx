@@ -1,6 +1,7 @@
 import { RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui';
+import { InfoTip } from '@/help/InfoTip';
 import { describeError } from '@/lib/errors';
 import clsx from '@/lib/clsx';
 import type { EventStreamState } from './useEventStream';
@@ -39,6 +40,9 @@ export function StreamIndicator({
           : null}
         {reason ? ` · ${reason}` : null}
       </span>
+      <InfoTip label={t('stream.infoLabel')} topic="events#connection-status">
+        {t('stream.info')}
+      </InfoTip>
       {status === 'closed' ? (
         <Button size="sm" icon={<RefreshCw />} onClick={stream.reconnect}>
           {t('stream.reconnect')}

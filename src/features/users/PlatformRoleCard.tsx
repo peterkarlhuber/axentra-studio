@@ -7,6 +7,7 @@ import type { User } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useErrorToast } from '@/app/auth';
 import { Button, Card, ConfirmDialog, FormField, Select, layout, useToast } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 
 type PlatformRole = 'platform_admin' | 'platform_viewer' | 'none';
 const ROLES: PlatformRole[] = ['none', 'platform_viewer', 'platform_admin'];
@@ -67,7 +68,9 @@ export function PlatformRoleCard({ user, isSelf }: { user: User; isSelf: boolean
         confirmLabel={t('platformRole.apply')}
         confirmText={role === 'platform_admin' ? (user.email ?? user.id) : undefined}
         onConfirm={() => save.mutateAsync()}
-      />
+      >
+        <HelpLink topic="users#platform-role">{t('common:help.learnMore')}</HelpLink>
+      </ConfirmDialog>
     </Card>
   );
 }

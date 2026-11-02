@@ -1,0 +1,81 @@
+{
+  "details": "Detalhes técnicos",
+  "status": "Status HTTP",
+  "code": "Código de erro",
+  "serverMessage": "Mensagem do servidor",
+  "requestId": "ID da requisição",
+  "codes": {
+    "validation_failed": {
+      "title": "Verifique os dados informados",
+      "message": "O servidor não aceitou alguns dos valores. Corrija os campos marcados abaixo (a mensagem do servidor indica o problema) e tente novamente."
+    },
+    "bad_request": {
+      "title": "Requisição não compreendida",
+      "message": "O servidor não conseguiu ler a requisição, por exemplo porque um valor estava em formato errado. Recarregue a página e tente novamente; se continuar acontecendo, relate o problema com o ID da requisição."
+    },
+    "unauthenticated": {
+      "title": "Faça login",
+      "message": "Você não está conectado ou sua sessão terminou (ela expira após um período de inatividade, ao sair ou quando é revogada). Entre novamente para continuar de onde parou."
+    },
+    "forbidden": {
+      "title": "Não permitido",
+      "message": "Suas funções não permitem esta ação aqui, ou o produto está arquivado ou o tenant está suspenso. Peça acesso a um proprietário ou administrador deste produto ou tenant."
+    },
+    "reauthentication_required": {
+      "title": "Faça login novamente",
+      "message": "Para sua segurança, esta ação só é permitida logo após o login. Entre novamente e repita a ação."
+    },
+    "not_found": {
+      "title": "Não encontrado",
+      "message": "Este item não existe, foi excluído ou você não tem acesso a ele (o Axentra não revela itens que você não pode ver). Verifique o endereço ou peça acesso."
+    },
+    "conflict": {
+      "title": "Conflito",
+      "message": "Isto entra em conflito com dados existentes ou com o estado atual do item, por exemplo um nome ou uma chave que já está em uso. Leia a mensagem do servidor, altere o valor ou o estado do item e tente novamente."
+    },
+    "precondition_failed": {
+      "title": "Alterado nesse meio-tempo",
+      "message": "Outra pessoa salvou uma alteração neste item depois que você o abriu, por isso a sua alteração não foi aplicada. Recarregue o item e faça a alteração de novo."
+    },
+    "rate_limited": {
+      "title": "Muitas requisições",
+      "message": "O servidor recebeu requisições demais (ou tentativas de login malsucedidas) em pouco tempo. Aguarde cerca de um minuto e tente novamente."
+    },
+    "quota_exceeded": {
+      "title": "Cota excedida",
+      "message": "Uma cota ou um limite do plano deste tenant se esgotou, por isso o servidor recusou a ação. Libere espaço ou reduza o uso, ou peça a alguém com acesso que aumente a cota ou mude o plano."
+    },
+    "mode_not_supported": {
+      "title": "Indisponível neste modo",
+      "message": "A configuração atual do servidor não oferece suporte a esta ação, por exemplo criar produtos no modo de produto único. Um operador teria que alterar a configuração do servidor."
+    },
+    "module_disabled": {
+      "title": "Módulo não habilitado",
+      "message": "O módulo do servidor necessário para esta ação está desativado. Um operador pode habilitá-lo na configuração do servidor Axentra."
+    },
+    "payment_provider_not_configured": {
+      "title": "Provedor de pagamento não configurado",
+      "message": "Esta ação de cobrança precisa de um provedor de pagamento, mas o servidor não tem nenhum configurado. Um operador precisa configurar o provedor de cobrança na configuração do servidor."
+    },
+    "internal": {
+      "title": "Erro no servidor",
+      "message": "O servidor ou um serviço do qual ele depende falhou ao processar a requisição; sua alteração pode não ter sido salva. Tente novamente em instantes; se continuar falhando, relate o problema ao seu operador com o ID da requisição."
+    },
+    "network_error": {
+      "title": "Servidor inacessível",
+      "message": "O Studio não recebeu resposta do servidor Axentra. Verifique sua conexão de rede; se ela estiver funcionando, o servidor pode estar fora do ar ou reiniciando. Tente novamente em instantes."
+    },
+    "unknown": {
+      "title": "Erro inesperado",
+      "message": "A requisição falhou por um motivo que o Studio não reconhece. Tente novamente; se continuar acontecendo, relate o problema com o ID da requisição e a mensagem do servidor."
+    },
+    "payload_too_large": {
+      "title": "Grande demais",
+      "message": "A requisição ou o arquivo é maior do que o servidor aceita. Use um arquivo menor ou menos dados, ou pergunte a um operador sobre o limite de tamanho."
+    },
+    "unsupported_media_type": {
+      "title": "Tipo não aceito",
+      "message": "O servidor não aceita este tipo de conteúdo, por exemplo um tipo de arquivo bloqueado, como um executável ou um arquivo HTML ou SVG. Use outro tipo de arquivo."
+    }
+  }
+}

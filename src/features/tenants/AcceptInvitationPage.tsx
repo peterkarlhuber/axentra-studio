@@ -17,6 +17,7 @@ import {
   layout,
 } from '@/components/ui';
 import { describeError } from '@/lib/errors';
+import { HelpLink } from '@/help/HelpLink';
 
 /** `POST /v1/invitations/accept` for the signed-in user (token from the link or pasted). */
 export function AcceptInvitationPage() {
@@ -38,10 +39,22 @@ export function AcceptInvitationPage() {
     accept.mutate();
   };
   const described = accept.error ? describeError(t, accept.error) : null;
+  // The two refusals people actually hit get a specific, actionable message.
+  const errorMessage = !described
+    ? null
+    : described.error.isNotFound
+      ? t('accept.invalid')
+      : described.error.isForbidden
+        ? t('accept.wrongEmail')
+        : described.message;
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('accept.title')} description={t('accept.description')} />
+      <PageHeader
+        title={t('accept.title')}
+        description={t('accept.description')}
+        help="members-invitations#accept"
+      />
       <Card>
         {accept.isSuccess ? (
           <EmptyState
@@ -58,7 +71,15 @@ export function AcceptInvitationPage() {
           <form className={layout.form} onSubmit={submit}>
             {described ? (
               <Alert tone="danger" title={described.title}>
-                {described.message}
+                {errorMessage}{' '}
+                {described.requestId ? (
+                  <>
+                    {t('errors:requestId')}: <code>{described.requestId}</code>{' '}
+                  </>
+                ) : null}
+                <HelpLink topic="members-invitations#troubleshooting">
+                  {t('common:help.learnMore')}
+                </HelpLink>
               </Alert>
             ) : null}
             <FormField label={t('accept.token')} required>

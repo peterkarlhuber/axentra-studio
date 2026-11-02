@@ -24,12 +24,13 @@
     "description": "Ein Produkt erhält eigene Mandanten, Benutzer, Rollen und API-Schlüssel.",
     "submit": "Produkt anlegen",
     "success": "Produkt „{{name}}“ angelegt",
-    "slugHelp": "URL-taugliche Kennung, aus dem Namen abgeleitet. Muss auf diesem Server eindeutig sein."
+    "slugHelp": "URL-taugliche Kennung, aus dem Namen abgeleitet. Muss auf diesem Server eindeutig sein.",
+    "slugInfo": "Kleinbuchstaben, Ziffern und Bindestriche (2–63 Zeichen), beginnend mit einem Buchstaben oder einer Ziffer. Der Kurzname erscheint in URLs und Konfigurationen und lässt sich später nicht ändern."
   },
   "empty": {
     "title": "Noch keine Produkte",
-    "body": "Sie sind in keinem Produkt Mitglied. Bitten Sie eine Plattform-Administration um Zugriff.",
-    "bodyAdmin": "Legen Sie das erste Produkt an, um Mandanten und Benutzer zu verwalten."
+    "body": "Du bist in keinem Produkt Mitglied. Bitte eine Plattform-Administration um Zugriff.",
+    "bodyAdmin": "Lege das erste Produkt an, um Mandanten und Benutzer zu verwalten."
   },
   "tabs": {
     "label": "Produktbereiche",
@@ -41,22 +42,24 @@
   "settings": {
     "title": "Produkteinstellungen",
     "description": "Änderungen gelten sofort für alle Mandanten dieses Produkts.",
-    "readOnly": "Sie können diese Einstellungen ansehen, aber nicht ändern.",
+    "readOnly": "Du kannst diese Einstellungen ansehen, aber nicht ändern.",
     "jsonHelp": "Produktspezifische Konfiguration als JSON-Objekt.",
     "invalidJson": "Das ist kein gültiges JSON.",
     "mustBeObject": "Die Einstellungen müssen ein JSON-Objekt sein, zum Beispiel {\"key\": \"value\"}.",
-    "saved": "Produkt gespeichert"
+    "saved": "Produkt gespeichert",
+    "jsonInfo": "Der Code deines Produkts kann diese Werte lesen. Axentra nutzt einige Schlüssel selbst: invitation_accept_url (Link in Einladungs-E-Mails), default_locale (Ersatzsprache von Benachrichtigungen) und storage (im Reiter „Dateien“ festgelegt). Speichern ersetzt das ganze Objekt; es darf bis zu etwa 32.000 Zeichen lang sein."
   },
   "lifecycle": {
     "archive": "Archivieren",
     "restore": "Wiederherstellen",
     "archiveTitle": "Produkt archivieren?",
-    "archiveBody": "„{{name}}“ wird schreibgeschützt und seine API-Schlüssel funktionieren nicht mehr, bis es wiederhergestellt wird.",
+    "archiveBody": "„{{name}}“ wird für seine Produktverantwortlichen und Mandantenmitglieder ausgeblendet, und seine API-Schlüssel funktionieren nicht mehr, bis es wiederhergestellt wird. Plattform-Administratoren behalten den Zugriff. Es werden keine Daten gelöscht.",
     "restoreTitle": "Produkt wiederherstellen?",
     "restoreBody": "„{{name}}“ wird wieder aktiv.",
     "archiveSuccess": "Produkt archiviert",
     "restoreSuccess": "Produkt wiederhergestellt",
-    "archivedNotice": "Dieses Produkt ist archiviert. Stellen Sie es wieder her, um Änderungen vorzunehmen.",
-    "singleMode": "Der Server läuft im Einzelproduktbetrieb, daher lässt sich dieses Produkt nicht archivieren. Name, Beschreibung, Einstellungen und Mitglieder können Sie ändern."
-  }
+    "archivedNotice": "Dieses Produkt ist archiviert: Seine Produktverantwortlichen, Mandantenmitglieder und API-Schlüssel haben keinen Zugriff. Stelle es wieder her, um Änderungen vorzunehmen.",
+    "singleMode": "Der Server läuft im Einzelproduktbetrieb, daher lässt sich dieses Produkt nicht archivieren. Name, Beschreibung, Einstellungen und Mitglieder kannst du ändern."
+  },
+  "membersDescription": "Produktverantwortliche dieses Produkts. Die Produktrolle gilt in allen Mandanten; Mandantenmitglieder verwaltest du beim jeweiligen Mandanten."
 }

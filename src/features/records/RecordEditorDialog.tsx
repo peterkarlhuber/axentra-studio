@@ -6,6 +6,7 @@ import type { DataRecord } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useErrorToast } from '@/app/auth';
 import { Button, Dialog, FormField, Input, Textarea, layout, useToast } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { parseRecordData, validCollectionName } from './records-utils';
 
 /**
@@ -99,6 +100,8 @@ export function RecordEditorDialog({
           label={t('fields.collection')}
           required
           help={t('write.collectionHelp')}
+          info={t('write.collectionInfo')}
+          infoTopic="records#collections"
           error={name.trim() && !nameOk ? t('write.collectionInvalid') : undefined}
         >
           <Input
@@ -113,6 +116,8 @@ export function RecordEditorDialog({
           label={t('fields.data')}
           required
           help={t('write.dataHelp')}
+          info={t('write.dataInfo')}
+          infoTopic="records#edit"
           error={parsed.ok ? undefined : t(`write.dataError.${parsed.reason}`)}
         >
           <Textarea
@@ -124,7 +129,10 @@ export function RecordEditorDialog({
           />
         </FormField>
         {record ? (
-          <p className={layout.muted}>{t('write.versionNote', { version: record.version })}</p>
+          <p className={layout.muted}>
+            {t('write.versionNote', { version: record.version })}{' '}
+            <HelpLink topic="records#versions">{t('write.conflictLink')}</HelpLink>
+          </p>
         ) : null}
       </form>
     </Dialog>

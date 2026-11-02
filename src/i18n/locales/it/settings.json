@@ -1,0 +1,22 @@
+{
+  "title": "Impostazioni",
+  "description": "Le tue preferenze personali e la configurazione effettiva del server.",
+  "preferences": {
+    "title": "Preferenze",
+    "description": "Salvate in questo browser e nel tuo account.",
+    "language": "Lingua",
+    "languageHelp": "Usata per l'interfaccia di Studio.",
+    "theme": "Tema",
+    "saving": "Salvataggio…",
+    "storedHint": "Le modifiche si applicano immediatamente.",
+    "languageInfo": "Imposta anche i formati di data, ora e numeri. La tua scelta viene salvata in questo browser e nel tuo account; un browser senza una scelta propria usa quella del tuo account quando accedi."
+  },
+  "server": {
+    "title": "Configurazione del server",
+    "description": "Configurazione effettiva e non segreta di questo server Axentra (sola lettura).",
+    "empty": "Il server non ha restituito impostazioni.",
+    "forbidden": "La configurazione del server è visibile solo agli amministratori della piattaforma e ai proprietari e amministratori dei prodotti.",
+    "changeHint": "Questi valori sono impostati dall'operatore nella configurazione del server e non possono essere modificati qui.",
+    "changeLink": "Come modificarli"
+  }
+}

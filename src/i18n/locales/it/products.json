@@ -1,0 +1,65 @@
+{
+  "title": "Prodotti",
+  "description": "I prodotti sono applicazioni isolate su questo server Axentra, ciascuna con i propri tenant, utenti e chiavi.",
+  "descriptionSingle": "Questo server funziona in modalità prodotto singolo con esattamente un prodotto.",
+  "singleMode": {
+    "title": "Modalità prodotto singolo",
+    "body": "Il server crea il suo unico prodotto dalla propria configurazione. In questa modalità i prodotti non possono essere creati, archiviati o ripristinati; per gestire più prodotti, un operatore imposta mode = \"multi\" nella configurazione del server."
+  },
+  "openDashboard": "Apri dashboard",
+  "openDashboardFor": "Apri la dashboard di {{name}}",
+  "fields": {
+    "name": "Nome",
+    "description": "Descrizione",
+    "status": "Stato",
+    "id": "ID",
+    "slug": "Slug",
+    "created": "Creato",
+    "updated": "Aggiornato",
+    "settings": "Impostazioni (JSON)"
+  },
+  "create": {
+    "open": "Nuovo prodotto",
+    "title": "Crea prodotto",
+    "description": "Un prodotto ha propri tenant, utenti, ruoli e chiavi API.",
+    "submit": "Crea prodotto",
+    "success": "Prodotto “{{name}}” creato",
+    "slugHelp": "Identificatore adatto agli URL, derivato dal nome. Deve essere univoco su questo server.",
+    "slugInfo": "Lettere minuscole, cifre e trattini (da 2 a 63 caratteri), iniziando con una lettera o una cifra. Lo slug compare negli URL e nella configurazione e non può essere modificato in seguito."
+  },
+  "empty": {
+    "title": "Ancora nessun prodotto",
+    "body": "Non sei membro di alcun prodotto. Chiedi l'accesso a un amministratore della piattaforma.",
+    "bodyAdmin": "Crea il primo prodotto per iniziare a gestire tenant e utenti."
+  },
+  "tabs": {
+    "label": "Sezioni del prodotto",
+    "details": "Dettagli",
+    "settings": "Impostazioni",
+    "files": "File",
+    "members": "Membri"
+  },
+  "settings": {
+    "title": "Impostazioni del prodotto",
+    "description": "Le modifiche si applicano immediatamente a tutti i tenant di questo prodotto.",
+    "readOnly": "Puoi visualizzare queste impostazioni, ma non modificarle.",
+    "jsonHelp": "Configurazione specifica del prodotto come oggetto JSON.",
+    "invalidJson": "Questo non è un JSON valido.",
+    "mustBeObject": "Le impostazioni devono essere un oggetto JSON, ad esempio {\"key\": \"value\"}.",
+    "saved": "Prodotto salvato",
+    "jsonInfo": "Il codice del tuo prodotto può leggere questi valori. Axentra usa alcune chiavi direttamente: invitation_accept_url (link nelle email di invito), default_locale (lingua di riserva delle notifiche) e storage (impostata nella scheda File). Il salvataggio sostituisce l'intero oggetto, che può avere fino a circa 32.000 caratteri."
+  },
+  "lifecycle": {
+    "archive": "Archivia",
+    "restore": "Ripristina",
+    "archiveTitle": "Archiviare il prodotto?",
+    "archiveBody": "“{{name}}” viene nascosto ai suoi operatori e ai membri dei tenant, e le sue chiavi API smettono di funzionare finché non viene ripristinato. Gli amministratori della piattaforma mantengono l'accesso. Nessun dato viene eliminato.",
+    "restoreTitle": "Ripristinare il prodotto?",
+    "restoreBody": "“{{name}}” tornerà attivo.",
+    "archiveSuccess": "Prodotto archiviato",
+    "restoreSuccess": "Prodotto ripristinato",
+    "archivedNotice": "Questo prodotto è archiviato: i suoi operatori, i membri dei tenant e le chiavi API non hanno accesso. Ripristinalo per apportare modifiche.",
+    "singleMode": "Il server funziona in modalità prodotto singolo, quindi questo prodotto non può essere archiviato. Puoi modificarne nome, descrizione, impostazioni e membri."
+  },
+  "membersDescription": "Operatori di questo prodotto. Il loro ruolo vale in ogni tenant; i membri dei tenant si gestiscono in ciascun tenant."
+}

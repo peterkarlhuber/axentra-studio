@@ -7,63 +7,75 @@
   "codes": {
     "validation_failed": {
       "title": "Please check your input",
-      "message": "Some values were not accepted by the server."
+      "message": "The server did not accept some of the values. Correct the fields marked below (the server message names the problem) and try again."
+    },
+    "bad_request": {
+      "title": "Request not understood",
+      "message": "The server could not read the request, for example because a value had the wrong format. Reload the page and try again; if it keeps happening, report it with the request ID."
     },
     "unauthenticated": {
       "title": "Please sign in",
-      "message": "Your session has ended or you are not signed in."
+      "message": "You are not signed in, or your session has ended (it expires after a period of inactivity, at sign-out, or when it is revoked). Sign in again to continue where you left off."
     },
     "forbidden": {
       "title": "Not permitted",
-      "message": "You do not have permission to perform this action."
+      "message": "Your roles do not allow this action here, or the product is archived or the tenant suspended. Ask an owner or administrator of this product or tenant for access."
     },
     "reauthentication_required": {
       "title": "Please sign in again",
-      "message": "For your security this action needs a recent sign-in. Sign in again and then repeat it."
+      "message": "For your security this action is only allowed shortly after signing in. Sign in again, then repeat the action."
     },
     "not_found": {
       "title": "Not found",
-      "message": "This item does not exist or you do not have access to it."
+      "message": "This item does not exist, was deleted, or you have no access to it (Axentra does not reveal items you cannot see). Check the address or ask for access."
     },
     "conflict": {
       "title": "Conflict",
-      "message": "This conflicts with existing data, for example a name that is already taken."
+      "message": "This clashes with existing data or the item's current state, for example a name or key that is already taken. Read the server message, then change the value or the item's state and try again."
     },
     "precondition_failed": {
       "title": "Changed in the meantime",
-      "message": "Someone else changed this item. Reload it and apply your changes again."
+      "message": "Someone else saved a change to this item after you opened it, so your change was not applied. Reload the item and make your change again."
     },
     "rate_limited": {
       "title": "Too many requests",
-      "message": "Please wait a moment and try again."
+      "message": "The server received too many requests (or failed sign-in attempts) in a short time. Wait about a minute and try again."
     },
     "quota_exceeded": {
       "title": "Quota exceeded",
-      "message": "The quota of this product or plan is used up."
+      "message": "A quota or plan limit of this tenant is used up, so the server refused the action. Free up space or usage, or ask someone with access to raise the quota or change the plan."
     },
     "mode_not_supported": {
       "title": "Not available in this mode",
-      "message": "This action is not supported by the server's current mode (single or multi product)."
+      "message": "The server's current configuration does not support this action, for example creating products in single-product mode. An operator would have to change the server configuration."
+    },
+    "module_disabled": {
+      "title": "Module not enabled",
+      "message": "The server module needed for this action is switched off. An operator can enable it in the Axentra server configuration."
+    },
+    "payment_provider_not_configured": {
+      "title": "Payment provider not configured",
+      "message": "This billing action needs a payment provider, but the server has none configured. An operator has to set up the billing provider in the server configuration."
     },
     "internal": {
       "title": "Server error",
-      "message": "The server could not complete the request. Please try again later."
+      "message": "The server or a service behind it failed while handling the request; your change may not have been saved. Try again in a moment; if it keeps failing, report it to your operator with the request ID."
     },
     "network_error": {
       "title": "Server not reachable",
-      "message": "The Axentra server could not be reached. Check your connection or the server status."
+      "message": "Studio got no answer from the Axentra server. Check your network connection; if it works, the server may be down or restarting. Try again in a moment."
     },
     "unknown": {
       "title": "Unexpected error",
-      "message": "The request failed for an unknown reason."
+      "message": "The request failed for a reason Studio does not recognize. Try again; if it keeps happening, report it with the request ID and the server message."
     },
     "payload_too_large": {
       "title": "Too large",
-      "message": "The request or file exceeds the server's size limit."
+      "message": "The request or file is larger than the server accepts. Use a smaller file or less data, or ask an operator about the size limit."
     },
     "unsupported_media_type": {
       "title": "Type not accepted",
-      "message": "The server does not accept this content type."
+      "message": "The server does not accept this type of content, for example a blocked file type such as an executable, HTML or SVG file. Use a different file type."
     }
   }
 }

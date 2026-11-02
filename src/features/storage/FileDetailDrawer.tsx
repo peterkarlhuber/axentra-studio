@@ -23,6 +23,8 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { fieldErrors } from '@/lib/errors';
 import { useFormatters } from '@/lib/format';
 import { formatBytes, parseMetadata } from './storage-utils';
@@ -121,6 +123,9 @@ export function FileDetailDrawer({
                 {t('link.expires')}: <Time value={link.expires_at} mode="absolute" />
                 {link.kind === 'presigned' ? ` · ${t('link.presigned')}` : null}
               </p>
+              <p>
+                <HelpLink topic="files#download-links">{t('link.learnMore')}</HelpLink>
+              </p>
             </Alert>
           ) : null}
           {editing ? (
@@ -140,7 +145,14 @@ export function FileDetailDrawer({
               ...(info.stored_inert
                 ? [
                     {
-                      label: t('fields.inert'),
+                      label: (
+                        <>
+                          {t('fields.inert')}{' '}
+                          <InfoTip label={t('fields.inertInfoLabel')} topic="files#inert">
+                            {t('fields.inertHelp')}
+                          </InfoTip>
+                        </>
+                      ),
                       value: (
                         <span className={layout.cellStack}>
                           <span>
@@ -148,7 +160,6 @@ export function FileDetailDrawer({
                               ? t('fields.inertWithType', { type: info.original_content_type })
                               : t('fields.inertNoType')}
                           </span>
-                          <span className={layout.muted}>{t('fields.inertHelp')}</span>
                         </span>
                       ),
                     },
@@ -250,6 +261,8 @@ function EditFileForm({
       <FormField
         label={t('fields.metadata')}
         help={t('upload.metadataHelp')}
+        info={t('upload.metadataInfo')}
+        infoTopic="files#labels"
         error={parsed.ok ? fields.metadata : t(`upload.metadataError.${parsed.reason}`)}
       >
         <Textarea

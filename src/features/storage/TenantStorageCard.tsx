@@ -19,6 +19,7 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
 import { useFormatters } from '@/lib/format';
 import {
   formatBytes,
@@ -101,7 +102,11 @@ export function TenantStorageCard({
   return (
     <Card
       title={t('usage.title')}
-      description={t('usage.description')}
+      description={
+        <>
+          {t('usage.description')} <HelpLink topic="files#quota" />
+        </>
+      }
       headingLevel={2}
       actions={
         canEditQuota && usage.data ? (
@@ -232,6 +237,8 @@ function QuotaDialog({
           <FormField
             label={t('quota.bytes')}
             help={t('quota.inheritHelp')}
+            info={t('quota.bytesInfo')}
+            infoTopic="data-overview#quotas"
             error={quotaBytes === 'invalid' ? t('quota.invalid') : undefined}
           >
             <Input
@@ -254,6 +261,8 @@ function QuotaDialog({
         <FormField
           label={t('quota.files')}
           help={t('quota.inheritHelp')}
+          info={t('quota.filesInfo')}
+          infoTopic="files#edit-quota"
           error={quotaFiles === 'invalid' ? t('quota.invalid') : undefined}
         >
           <Input
@@ -272,7 +281,9 @@ function QuotaDialog({
         {typeof quotaBytes === 'number' && quotaBytes < usage.bytes_used ? (
           <Alert tone="warning">{t('quota.belowUsage')}</Alert>
         ) : null}
-        <p className={layout.muted}>{t('quota.effectiveNote')}</p>
+        <p className={layout.muted}>
+          {t('quota.effectiveNote')} <HelpLink topic="files#edit-quota" />
+        </p>
       </form>
     </Dialog>
   );

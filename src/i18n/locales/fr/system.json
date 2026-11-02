@@ -1,0 +1,46 @@
+{
+  "bootstrap": {
+    "unreachableTitle": "Impossible de se connecter à Axentra",
+    "unreachableBody": "Axentra Studio n’a pas pu charger les informations du serveur (GET /v1/meta). Vérifie que le serveur Axentra est en cours d’exécution et que le Studio est configuré avec la bonne adresse d’API.",
+    "incompatibleTitle": "Version du serveur incompatible",
+    "incompatible": {
+      "major_mismatch": "Ce Studio utilise une version majeure de l’API Axentra différente de celle du serveur.",
+      "minor_too_low": "Le serveur est plus ancien que ce qu’exige ce Studio. Mets à jour le serveur Axentra ou utilise une version plus ancienne du Studio.",
+      "unparseable": "Le serveur a indiqué une version d’API que ce Studio ne sait pas interpréter."
+    },
+    "incompatibleHelp": "Utilise une version du Studio correspondant à la version d’API du serveur. Consulte le README pour le tableau de compatibilité.",
+    "serverApi": "Version de l’API du serveur",
+    "requiredApi": "Version d’API requise",
+    "serverVersion": "Serveur",
+    "studioVersion": "Version du Studio",
+    "sessionErrorTitle": "Ta session n’a pas pu être vérifiée"
+  },
+  "module": {
+    "disabledTitle": "Module non activé sur ce serveur",
+    "disabledBody": "Le serveur ne signale pas le module « {{module}} ». Active-le dans la configuration du serveur Axentra pour utiliser cette section.",
+    "notInStudioTitle": "Pas encore disponible dans le Studio",
+    "notInStudioBody": "Le module « {{module}} » est activé sur le serveur, mais cette version du Studio ne propose pas encore d’écrans pour celui-ci. Utilise l’API ou une version plus récente du Studio."
+  },
+  "health": {
+    "title": "État du système",
+    "description": "Disponibilité et vivacité du serveur Axentra et de ses dépendances.",
+    "readiness": "Disponibilité",
+    "readinessHelp": "Indique si le serveur peut traiter des requêtes : chaque dépendance est vérifiée (GET /v1/health/ready).",
+    "liveness": "Vivacité",
+    "livenessHelp": "Indique si le processus du serveur répond tout court (GET /v1/health/live).",
+    "versions": "Versions",
+    "notReady": "Le serveur indique qu’il n’est pas prêt à traiter des requêtes.",
+    "noChecks": "Le serveur n’a signalé aucune vérification individuelle.",
+    "updated": "Mis à jour le {{time}}",
+    "notReadyLink": "Que faire",
+    "compatLabel": "À propos de la vérification de version",
+    "compatInfo": "Studio ne démarre que si le serveur a la même version majeure d’API et au moins cette version mineure. Une version mineure plus récente sur le serveur ne pose pas de problème."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "heading": "Nous n’avons pas trouvé cette page",
+    "body": "L’adresse est peut-être mal saisie, ou l’élément a été déplacé ou supprimé.",
+    "home": "Aller à la page d’accueil"
+  },
+  "environment": "Environnement"
+}

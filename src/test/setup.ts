@@ -30,6 +30,9 @@ class ResizeObserverStub {
 beforeEach(async () => {
   installMatchMedia(false);
   globalThis.ResizeObserver ??= ResizeObserverStub as unknown as typeof ResizeObserver;
+  // jsdom has no layout: the help center scrolls to sections.
+  Element.prototype.scrollIntoView ??= vi.fn();
+  window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
   window.localStorage.clear();
   await i18n.changeLanguage('en');
 });

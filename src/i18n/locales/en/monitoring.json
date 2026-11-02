@@ -3,9 +3,9 @@
   "description": "Health checks, metrics of the API process, retention and tracing as reported by the Axentra server.",
   "health": {
     "readiness": "Readiness",
-    "readinessHelp": "GET /v1/health/ready – each dependency check. A failing check makes the server answer 503.",
+    "readinessHelp": "Whether the server can serve requests (GET /v1/health/ready). A failing check makes the server answer 503.",
     "liveness": "Liveness",
-    "livenessHelp": "GET /v1/health/live – the server process responds."
+    "livenessHelp": "Whether the server process answers at all (GET /v1/health/live)."
   },
   "metrics": {
     "title": "Metrics",
@@ -53,7 +53,8 @@
     "tokenTitle": "Metrics token",
     "token": "Bearer token",
     "tokenHelp": "Kept only in this page while it is open; never stored.",
-    "useToken": "Load metrics"
+    "useToken": "Load metrics",
+    "tokenInfo": "The token is the secret the operator configured in observability.metrics_token_ref. It is sent only to /metrics, as a bearer token."
   },
   "ops": {
     "title": "Retention and tracing",
@@ -67,7 +68,7 @@
     "days_one": "{{count}} day",
     "days_other": "{{count}} days",
     "notReported": "not reported by the server",
-    "purgeHint": "Retention is applied by running",
+    "purgeHint": "Nothing is deleted automatically: older data is removed when the operator runs",
     "tracingTitle": "Tracing and logging",
     "tracingHelp": "OpenTelemetry and log settings reported by GET /v1/settings.",
     "otel": "OpenTelemetry tracing",

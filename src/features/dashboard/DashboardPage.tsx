@@ -18,6 +18,7 @@ import {
   Skeleton,
   layout,
 } from '@/components/ui';
+import { InfoTip } from '@/help/InfoTip';
 import { useFormatters } from '@/lib/format';
 import { HealthSummary } from '@/features/system/HealthSummary';
 import { UsageBillingWidgets } from '@/features/billing/DashboardWidgets'; // Usage & Billing
@@ -41,6 +42,7 @@ export function DashboardPage() {
       <PageHeader
         title={product?.name ?? t('title')}
         documentTitle={t('title')}
+        help="interface#dashboard"
         description={product?.description || t('description')}
         actions={
           <>
@@ -100,6 +102,13 @@ export function DashboardPage() {
                   );
                   return (
                     <li key={key} className={styles.stat}>
+                      {known ? (
+                        <span className={styles.statTip}>
+                          <InfoTip label={t('stats.about', { label })} topic="interface#dashboard">
+                            {t(known.hintKey)}
+                          </InfoTip>
+                        </span>
+                      ) : null}
                       {known?.to ? (
                         <Link to={known.to(productId)} className={styles.statLink}>
                           {content}
@@ -144,10 +153,27 @@ export function DashboardPage() {
               { label: t('server.name'), value: `${meta.name} ${meta.version}` },
               { label: t('server.api'), value: formatApiVersion(meta.api_version), mono: true },
               { label: t('server.environment'), value: meta.environment, mono: true },
-              { label: t('server.mode'), value: t(`server.modes.${meta.mode}`) },
+              {
+                label: (
+                  <>
+                    {t('server.mode')}{' '}
+                    <InfoTip label={t('server.modeAbout')} topic="concepts#single-multi-product">
+                      {t('server.modeInfo')}
+                    </InfoTip>
+                  </>
+                ),
+                value: t(`server.modes.${meta.mode}`),
+              },
               { label: t('server.productId'), value: productId, mono: true },
               {
-                label: t('server.modules'),
+                label: (
+                  <>
+                    {t('server.modules')}{' '}
+                    <InfoTip label={t('server.modulesAbout')} topic="concepts#modules">
+                      {t('server.modulesInfo')}
+                    </InfoTip>
+                  </>
+                ),
                 value: (
                   <span className={layout.tags}>
                     {BACKEND_MODULES.map((module) => {

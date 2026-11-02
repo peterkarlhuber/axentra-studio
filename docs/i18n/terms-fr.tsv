@@ -1,0 +1,97 @@
+en	fr	note
+product	produit	
+tenant	locataire	same as Microsoft FR usage (Azure 'locataire')
+user	utilisateur	
+member	membre	
+membership	adhésion	
+invitation	invitation	
+role	rôle	
+built-in role	rôle intégré	
+custom role	rôle personnalisé	
+permission	autorisation	not 'permission'
+scope	portée	
+API key	clé d’API	
+secret	secret	
+grace period	délai de grâce	
+rotate (secret)	renouveler	
+revoke	révoquer	
+owner	propriétaire	
+admin / administrator	administrateur	
+viewer	lecteur	
+platform admin	administrateur de la plateforme	
+platform role	rôle sur la plateforme	
+operator	opérateur	
+suspend	suspendre	
+reactivate	réactiver	
+archive	archiver	
+restore	restaurer	
+record	enregistrement	
+collection	collection	
+file	fichier	
+upload	téléverser	noun: téléversement
+download	télécharger	
+label (file metadata)	étiquette	
+quota	quota	
+override	dérogation	quota/entitlement override
+retention	conservation	
+purge	purge	
+inert (file)	inerte	
+content type	type de contenu	
+job	tâche	
+kind (job)	type	
+queue / enqueue	file d’attente / mettre en file d’attente	
+worker	worker	kept in English (technical process name)
+handler	gestionnaire	
+payload	charge utile	
+idempotency key	clé d’idempotence	
+schedule	planification	
+event	événement	
+stream (live)	flux (en direct)	
+webhook	webhook	kept in English, standard in FR
+endpoint	point de terminaison	
+delivery	livraison	webhooks; notification delivery = remise
+redeliver	relivrer	
+signing secret	secret de signature	
+usage	utilisation	
+meter	compteur	
+reservation	réservation	
+commit (reservation)	valider	
+release (reservation)	libérer	
+hard / soft limit	limite stricte / souple	
+plan	offre	
+subscription	abonnement	
+entitlement	droit	
+trial	essai	
+past due	en retard de paiement	
+cancel (subscription)	résilier	
+checkout	paiement / session de paiement	
+payment provider	prestataire de paiement	
+notification	notification	
+template	modèle	
+mailbox	boîte de réception	
+outbox	boîte d’envoi	
+message log	journal des messages	
+dispatcher	répartiteur	
+suppressed (notification)	bloqué	
+preferences	préférences	
+audit log	journal d’audit	
+actor	auteur	
+health	état du système	
+readiness	disponibilité	
+liveness	vivacité	
+monitoring	supervision	
+metrics	métriques	
+tracing	traçage	
+settings	paramètres	
+module	module	
+dashboard	tableau de bord	
+slug	slug	kept in English (URL identifier)
+sign in / sign out	se connecter / se déconnecter	
+single sign-on	authentification unique (SSO)	
+identity provider	fournisseur d’identité	
+session	session	
+token	jeton	
+setup	installation	
+help center	centre d’aide	
+address form	tu	informal 'tu' per product owner (changed from 'vous' mid-task)
+typography	espace insécable avant : ; ? ! et dans « »	U+00A0

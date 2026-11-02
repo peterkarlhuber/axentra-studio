@@ -1,0 +1,81 @@
+{
+  "details": "Dettagli tecnici",
+  "status": "Stato HTTP",
+  "code": "Codice di errore",
+  "serverMessage": "Messaggio del server",
+  "requestId": "ID richiesta",
+  "codes": {
+    "validation_failed": {
+      "title": "Verifica i dati inseriti",
+      "message": "Il server non ha accettato alcuni valori. Correggi i campi evidenziati qui sotto (il messaggio del server indica il problema) e riprova."
+    },
+    "bad_request": {
+      "title": "Richiesta non compresa",
+      "message": "Il server non è riuscito a leggere la richiesta, ad esempio perché un valore aveva un formato errato. Ricarica la pagina e riprova; se il problema persiste, segnalalo indicando l'ID richiesta."
+    },
+    "unauthenticated": {
+      "title": "Accedi",
+      "message": "Non hai effettuato l'accesso oppure la tua sessione è terminata (scade dopo un periodo di inattività, alla disconnessione o quando viene revocata). Accedi di nuovo per riprendere da dove avevi lasciato."
+    },
+    "forbidden": {
+      "title": "Non consentito",
+      "message": "I tuoi ruoli non consentono questa azione qui, oppure il prodotto è archiviato o il tenant è sospeso. Chiedi l'accesso a un proprietario o amministratore di questo prodotto o tenant."
+    },
+    "reauthentication_required": {
+      "title": "Accedi di nuovo",
+      "message": "Per la tua sicurezza questa azione è consentita solo poco dopo l'accesso. Accedi di nuovo, poi ripeti l'azione."
+    },
+    "not_found": {
+      "title": "Non trovato",
+      "message": "Questo elemento non esiste, è stato eliminato oppure non hai accesso (Axentra non rivela gli elementi che non puoi vedere). Controlla l'indirizzo o chiedi l'accesso."
+    },
+    "conflict": {
+      "title": "Conflitto",
+      "message": "Questo è in conflitto con dati esistenti o con lo stato attuale dell'elemento, ad esempio un nome o una chiave già in uso. Leggi il messaggio del server, poi modifica il valore o lo stato dell'elemento e riprova."
+    },
+    "precondition_failed": {
+      "title": "Modificato nel frattempo",
+      "message": "Qualcun altro ha salvato una modifica a questo elemento dopo che l'hai aperto, quindi la tua modifica non è stata applicata. Ricarica l'elemento e ripeti la modifica."
+    },
+    "rate_limited": {
+      "title": "Troppe richieste",
+      "message": "Il server ha ricevuto troppe richieste (o tentativi di accesso non riusciti) in poco tempo. Attendi circa un minuto e riprova."
+    },
+    "quota_exceeded": {
+      "title": "Quota superata",
+      "message": "Una quota o un limite del piano di questo tenant è esaurito, quindi il server ha rifiutato l'azione. Libera spazio o riduci l'utilizzo, oppure chiedi a qualcuno con accesso di aumentare la quota o cambiare il piano."
+    },
+    "mode_not_supported": {
+      "title": "Non disponibile in questa modalità",
+      "message": "La configurazione attuale del server non supporta questa azione, ad esempio la creazione di prodotti in modalità a prodotto singolo. Un operatore dovrebbe modificare la configurazione del server."
+    },
+    "module_disabled": {
+      "title": "Modulo non abilitato",
+      "message": "Il modulo del server necessario per questa azione è disattivato. Un operatore può abilitarlo nella configurazione del server Axentra."
+    },
+    "payment_provider_not_configured": {
+      "title": "Provider di pagamento non configurato",
+      "message": "Questa azione di fatturazione richiede un provider di pagamento, ma il server non ne ha configurato nessuno. Un operatore deve impostare il provider di fatturazione nella configurazione del server."
+    },
+    "internal": {
+      "title": "Errore del server",
+      "message": "Il server o un servizio a valle ha avuto un errore durante l'elaborazione della richiesta; la tua modifica potrebbe non essere stata salvata. Riprova tra qualche istante; se l'errore persiste, segnalalo al tuo operatore indicando l'ID richiesta."
+    },
+    "network_error": {
+      "title": "Server non raggiungibile",
+      "message": "Studio non ha ricevuto risposta dal server Axentra. Controlla la tua connessione di rete; se funziona, il server potrebbe essere non disponibile o in riavvio. Riprova tra qualche istante."
+    },
+    "unknown": {
+      "title": "Errore imprevisto",
+      "message": "La richiesta non è riuscita per un motivo che Studio non riconosce. Riprova; se il problema persiste, segnalalo indicando l'ID richiesta e il messaggio del server."
+    },
+    "payload_too_large": {
+      "title": "Dimensione eccessiva",
+      "message": "La richiesta o il file supera la dimensione accettata dal server. Usa un file più piccolo o meno dati, oppure chiedi a un operatore il limite di dimensione."
+    },
+    "unsupported_media_type": {
+      "title": "Tipo non accettato",
+      "message": "Il server non accetta questo tipo di contenuto, ad esempio un tipo di file bloccato come un eseguibile o un file HTML o SVG. Usa un altro tipo di file."
+    }
+  }
+}

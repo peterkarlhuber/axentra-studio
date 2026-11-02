@@ -1,0 +1,71 @@
+{
+  "title": "Registros",
+  "description": "Navegue pelos registros JSON que os tenants armazenam em coleções.",
+  "collections": {
+    "title": "Coleções",
+    "empty": "Nenhuma coleção",
+    "emptyBody": "As coleções aparecem assim que registros são gravados pela API.",
+    "stats": "{{records}} registros em {{tenants}} tenants",
+    "noList": "Listar todas as coleções exige uma função de produto. Digite o nome de uma coleção para abri-la.",
+    "openLabel": "Nome da coleção",
+    "open": "Abrir"
+  },
+  "pick": {
+    "title": "Escolha um tenant e uma coleção",
+    "body": "Registros sempre pertencem a um tenant. Escolha ambos para navegar por eles."
+  },
+  "listDescription": "Mais recentes primeiro. Os registros correspondem quando contêm todos os filtros.",
+  "tableCaption": "Registros em {{collection}}",
+  "empty": "Nenhum registro corresponde",
+  "viewRecord": "Ver registro {{id}}",
+  "fields": {
+    "id": "ID",
+    "data": "Dados",
+    "version": "Versão",
+    "created": "Criado em",
+    "updated": "Atualizado em",
+    "collection": "Coleção",
+    "tenant": "Tenant",
+    "createdBy": "Criado por",
+    "updatedBy": "Atualizado por"
+  },
+  "filter": {
+    "label": "Filtrar registros",
+    "field": "Campo",
+    "value": "Igual a",
+    "add": "Adicionar filtro",
+    "active": "Filtros ativos",
+    "remove": "Remover filtro de {{field}}",
+    "valueHelp": "Valores JSON (true, 42, null) correspondem pelo tipo; qualquer outro texto corresponde como string.",
+    "valueInfo": "Um registro corresponde quando contém este valor. Um valor de objeto como {\"city\": \"Graz\"} corresponde aos registros cujo campo contém essas chaves; use-o para filtrar campos aninhados."
+  },
+  "record": {
+    "title": "Registro"
+  },
+  "descriptionWrite": "Navegue, crie, altere e exclua os registros JSON que os tenants armazenam em coleções.",
+  "write": {
+    "create": "Novo registro",
+    "createTitle": "Novo registro",
+    "createDescription": "Armazene um objeto JSON em uma coleção do tenant selecionado. Um novo nome de coleção cria a coleção.",
+    "createSubmit": "Criar registro",
+    "editTitle": "Editar registro",
+    "edit": "Editar",
+    "delete": "Excluir registro",
+    "collectionHelp": "Letras minúsculas, dígitos e sublinhados, começando com uma letra.",
+    "collectionInvalid": "Use letras minúsculas, dígitos e sublinhados, começando com uma letra (no máximo 63 caracteres).",
+    "dataHelp": "Um objeto JSON de no máximo 256 KiB. Salvar substitui o objeto inteiro.",
+    "dataError": {
+      "json": "Este JSON não é válido.",
+      "object": "Os dados do registro devem ser um objeto JSON."
+    },
+    "versionNote": "Editando a versão {{version}}. Se outra pessoa tiver alterado o registro nesse meio-tempo, o salvamento será recusado.",
+    "created": "Registro {{id}} criado",
+    "updated": "Registro {{id}} salvo",
+    "deleted": "Registro {{id}} excluído",
+    "deleteTitle": "Excluir registro?",
+    "deleteBody": "O registro {{id}} será excluído permanentemente. Esta ação não pode ser desfeita.",
+    "collectionInfo": "As coleções não precisam de configuração: o primeiro registro cria uma, e excluir o último registro a remove. Um registro não pode ser movido para outra coleção depois.",
+    "dataInfo": "Salvar substitui o objeto inteiro: os campos que você remover são excluídos. ID, versão e carimbos de data/hora são definidos pelo servidor; não os inclua.",
+    "conflictLink": "E se outra pessoa alterar?"
+  }
+}

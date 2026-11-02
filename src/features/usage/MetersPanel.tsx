@@ -27,6 +27,7 @@ import {
   type Column,
 } from '@/components/ui';
 import menuStyles from '@/components/ui/IconButton.module.css';
+import { HelpLink } from '@/help/HelpLink';
 import { fieldErrors } from '@/lib/errors';
 import { useFormatters } from '@/lib/format';
 import {
@@ -171,7 +172,14 @@ export function MetersPanel({ productId, canManage }: { productId: string; canMa
             headingLevel={3}
             icon={<Gauge />}
             title={t('meters.empty')}
-            description={canManage ? t('meters.emptyBody') : undefined}
+            description={
+              canManage ? (
+                <>
+                  {t('meters.emptyBody')}{' '}
+                  <HelpLink topic="usage#create-meter">{t('common:help.learnMore')}</HelpLink>
+                </>
+              ) : undefined
+            }
           />
         }
       />
@@ -305,6 +313,8 @@ function MeterFormDialog({
         <FormField
           label={t('meters.key')}
           help={meter ? t('meters.immutable') : t('meters.keyHelp')}
+          info={t('info.key')}
+          infoTopic="usage#create-meter"
           error={keyInvalid ? t('meters.keyInvalid') : fields.key}
           required={!meter}
         >
@@ -328,6 +338,8 @@ function MeterFormDialog({
           <FormField
             label={t('meters.aggregation')}
             help={meter ? t('meters.immutable') : t('meters.aggregationHelp')}
+            info={t('info.aggregation')}
+            infoTopic="usage#meter-settings"
           >
             <Select
               value={aggregation}
@@ -344,6 +356,8 @@ function MeterFormDialog({
           <FormField
             label={t('meters.resetPeriod')}
             help={meter ? t('meters.immutable') : t('meters.resetPeriodHelp')}
+            info={t('info.resetPeriod')}
+            infoTopic="usage#fixed-periods"
           >
             <Select
               value={period}
@@ -362,6 +376,8 @@ function MeterFormDialog({
           <FormField
             label={t('meters.defaultLimit')}
             help={t('meters.defaultLimitHelp')}
+            info={t('info.defaultLimit')}
+            infoTopic="usage#limit-source"
             error={limitInvalid ? t('meters.limitInvalid') : fields.default_limit}
           >
             <Input
@@ -371,7 +387,12 @@ function MeterFormDialog({
               autoComplete="off"
             />
           </FormField>
-          <FormField label={t('meters.enforcement')} help={t('meters.enforcementHelp')}>
+          <FormField
+            label={t('meters.enforcement')}
+            help={t('meters.enforcementHelp')}
+            info={t('info.enforcement')}
+            infoTopic="usage#enforcement"
+          >
             <Select value={enforcement} onChange={(event) => setEnforcement(event.target.value)}>
               {ENFORCEMENTS.map((value) => (
                 <option key={value} value={value}>

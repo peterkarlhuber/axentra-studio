@@ -1,6 +1,6 @@
 {
   "title": "Profil",
-  "description": "Ihr Konto, Ihr Passwort und Ihre Sitzungen.",
+  "description": "Dein Konto, dein Passwort und deine Sitzungen.",
   "account": {
     "title": "Konto",
     "email": "E-Mail-Adresse",
@@ -13,11 +13,12 @@
   "name": {
     "title": "Anzeigename",
     "label": "Name",
-    "saved": "Name gespeichert"
+    "saved": "Name gespeichert",
+    "info": "Erscheint im Benutzermenü, in Mitgliederlisten und als Akteur deiner Aktionen im Audit-Protokoll. Frühere Audit-Ereignisse behalten den alten Namen."
   },
   "password": {
     "title": "Passwort ändern",
-    "description": "Andere Sitzungen werden nach der Änderung möglicherweise abgemeldet.",
+    "description": "Alle deine anderen Sitzungen werden bei der Passwortänderung abgemeldet. Dieser Browser bleibt angemeldet.",
     "current": "Aktuelles Passwort",
     "new": "Neues Passwort",
     "confirm": "Neues Passwort wiederholen",
@@ -25,13 +26,17 @@
     "submit": "Passwort ändern",
     "changed": "Passwort geändert",
     "setTitle": "Passwort festlegen",
-    "setDescription": "Sie melden sich derzeit nur per Single Sign-on an. Mit einem Passwort ist zusätzlich die Passwort-Anmeldung möglich. Aus Sicherheitsgründen ist dafür eine frische Anmeldung nötig.",
+    "setDescription": "Du meldest dich derzeit nur per Single Sign-on an. Mit einem Passwort ist zusätzlich die Passwort-Anmeldung möglich. Aus Sicherheitsgründen ist dafür eine frische Anmeldung nötig.",
     "reauth": "Erneut anmelden",
-    "reauthBody": "Ein erstes Passwort lässt sich nur kurz nach der Anmeldung festlegen. Melden Sie sich erneut an (Sie kehren hierher zurück) und legen Sie das Passwort dann innerhalb weniger Minuten fest."
+    "reauthBody": "Ein erstes Passwort lässt sich nur kurz nach der Anmeldung festlegen. Melde dich erneut an (du kehrst hierher zurück) und lege das Passwort dann innerhalb weniger Minuten fest.",
+    "rules": "Mindestens so lang wie vom Server verlangt (12 Zeichen, sofern der Betrieb nichts anderes eingestellt hat), nicht deine E-Mail-Adresse und mindestens 4 verschiedene Zeichen.",
+    "setSubmit": "Passwort festlegen"
   },
   "sessions": {
-    "title": "Ihre Sitzungen",
-    "description": "Browser, in denen Sie angemeldet sind.",
-    "revoked": "Sitzung beendet"
+    "title": "Deine Sitzungen",
+    "description": "Browser und Geräte, in denen du angemeldet bist.",
+    "revoked": "Sitzung beendet",
+    "revokeOthers": "Alle anderen Sitzungen abmelden",
+    "othersRevoked": "Alle anderen Sitzungen abgemeldet"
   }
 }

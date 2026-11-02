@@ -186,7 +186,7 @@ test('jobs: a failed job is retried from Studio and then succeeds', async ({ pag
   const dialog = page.getByRole('dialog', { name: 'Enqueue job' });
   await dialog.getByLabel(/^Kind/).fill('studio.e2e.flaky');
   await dialog
-    .getByLabel('Payload')
+    .getByRole('textbox', { name: 'Payload' })
     .fill(`{"run": "${run}", "project": "${testInfo.project.name}"}`);
   await dialog.getByRole('button', { name: 'Enqueue' }).click();
 

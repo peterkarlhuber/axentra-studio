@@ -7,6 +7,7 @@ import { queryKeys } from '@/api/queryKeys';
 import { requestRouteFocus } from '@/lib/route-focus';
 import { currentReturnPath, loginPath } from './auth';
 import { CrumbContext, type CrumbStore } from './crumbs';
+import { HelpProvider } from '@/help/HelpProvider';
 
 /** Router root: global 401 handling, focus on navigation, breadcrumb label store. */
 export function RootLayout() {
@@ -33,6 +34,8 @@ export function RootLayout() {
       first.current = false;
       return;
     }
+    // A URL fragment names the section to land on; that page focuses it itself.
+    if (window.location.hash) return;
     requestRouteFocus();
   }, [pathname]);
 
@@ -51,7 +54,9 @@ export function RootLayout() {
 
   return (
     <CrumbContext.Provider value={store}>
-      <Outlet />
+      <HelpProvider>
+        <Outlet />
+      </HelpProvider>
     </CrumbContext.Provider>
   );
 }

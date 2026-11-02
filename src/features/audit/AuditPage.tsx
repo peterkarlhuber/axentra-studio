@@ -32,6 +32,8 @@ import {
   layout,
   type Column,
 } from '@/components/ui';
+import { HelpLink } from '@/help/HelpLink';
+import { InfoTip } from '@/help/InfoTip';
 import { useCursorList } from '@/lib/useCursorList';
 import { actorLabel, eventTime, localToRfc3339 } from './audit-utils';
 import styles from './audit.module.css';
@@ -133,7 +135,14 @@ export function AuditPage() {
     },
     {
       id: 'outcome',
-      header: t('fields.outcome'),
+      header: (
+        <>
+          {t('fields.outcome')}{' '}
+          <InfoTip label={t('info.outcomeLabel')} topic="audit#outcomes">
+            {t('info.outcome')}
+          </InfoTip>
+        </>
+      ),
       hideOnMobile: true,
       cell: (event) => <StatusPill status={event.outcome} />,
     },
@@ -154,14 +163,15 @@ export function AuditPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} />
+      <PageHeader title={t('title')} description={t('description')} help="audit" />
       <Card flush>
         <form className={styles.filters} onSubmit={apply} aria-label={t('filters.label')}>
-          <FormField label={t('filters.search')}>
+          <FormField label={t('filters.search')} info={t('info.search')} infoTopic="audit#filter">
             <Input
               type="search"
               value={draft.q}
               onChange={set('q')}
+              maxLength={200}
               placeholder={t('filters.searchPlaceholder')}
             />
           </FormField>
@@ -177,7 +187,11 @@ export function AuditPage() {
             <ChevronDown aria-hidden className={styles.moreIcon} />
           </button>
           <div id={advancedId} className={styles.advanced} data-open={showAllFilters}>
-            <FormField label={t('filters.product')}>
+            <FormField
+              label={t('filters.product')}
+              info={isAdmin ? t('info.productAdmin') : t('info.productScoped')}
+              infoTopic="audit#who-sees-what"
+            >
               <Select value={draft.product_id} onChange={set('product_id')}>
                 {isAdmin ? <option value="">{t('filters.allProducts')}</option> : null}
                 {products.map((product) => (
@@ -195,11 +209,12 @@ export function AuditPage() {
                 spellCheck={false}
               />
             </FormField>
-            <FormField label={t('filters.action')}>
+            <FormField label={t('filters.action')} info={t('info.action')} infoTopic="audit#filter">
               <Input
                 value={draft.action}
                 onChange={set('action')}
-                placeholder="tenant.created"
+                maxLength={100}
+                placeholder="tenancy.tenant.create"
                 spellCheck={false}
               />
             </FormField>
@@ -224,7 +239,7 @@ export function AuditPage() {
             <FormField label={t('filters.since')}>
               <Input type="datetime-local" value={draft.since} onChange={set('since')} />
             </FormField>
-            <FormField label={t('filters.until')}>
+            <FormField label={t('filters.until')} info={t('info.range')}>
               <Input type="datetime-local" value={draft.until} onChange={set('until')} />
             </FormField>
           </div>
@@ -251,6 +266,11 @@ export function AuditPage() {
               icon={<FileClock />}
               title={activeCount ? t('empty.filteredTitle') : t('empty.title')}
               description={activeCount ? t('empty.filteredBody') : t('empty.body')}
+              action={
+                <HelpLink topic={activeCount ? 'audit#filter' : 'audit#what-is-recorded'}>
+                  {t('common:help.learnMore')}
+                </HelpLink>
+              }
             />
           }
           {...tableProps}
@@ -291,7 +311,12 @@ function AuditDetail({ event, onClose }: { event: AuditEvent | null; onClose: ()
         />
       ) : data ? (
         <div className={layout.form}>
-          {notFound ? <Alert tone="info">{t('detail.notFound')}</Alert> : null}
+          {notFound ? (
+            <Alert tone="info">
+              {t('detail.notFound')}{' '}
+              <HelpLink topic="audit#troubleshooting">{t('common:help.learnMore')}</HelpLink>
+            </Alert>
+          ) : null}
           <DetailList
             items={[
               { label: t('fields.id'), value: data.id, mono: true },
@@ -308,7 +333,18 @@ function AuditDetail({ event, onClose }: { event: AuditEvent | null; onClose: ()
                 mono: true,
               },
               { label: t('fields.outcome'), value: <StatusPill status={data.outcome} /> },
-              { label: t('fields.requestId'), value: data.request_id, mono: true },
+              {
+                label: (
+                  <>
+                    {t('fields.requestId')}{' '}
+                    <InfoTip label={t('info.requestIdLabel')} topic="audit#request-id">
+                      {t('info.requestId')}
+                    </InfoTip>
+                  </>
+                ),
+                value: data.request_id,
+                mono: true,
+              },
               { label: t('fields.ip'), value: data.ip, mono: true },
             ]}
           />

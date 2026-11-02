@@ -1,0 +1,60 @@
+{
+  "title": "Journal d’audit",
+  "description": "Qui a fait quoi, et quand : connexions, modifications des accès et autres actions administratives sur le serveur.",
+  "openDetails": "Afficher les détails de {{action}}",
+  "fields": {
+    "id": "ID de l’événement",
+    "time": "Heure",
+    "action": "Action",
+    "actor": "Auteur",
+    "actorType": "Type d’auteur",
+    "target": "Cible",
+    "outcome": "Résultat",
+    "product": "Produit",
+    "tenant": "Locataire",
+    "requestId": "ID de requête",
+    "ip": "Adresse IP",
+    "userAgent": "User-agent",
+    "actorId": "ID de l’auteur"
+  },
+  "filters": {
+    "label": "Filtrer les événements d’audit",
+    "search": "Rechercher",
+    "searchPlaceholder": "Texte libre",
+    "product": "Produit",
+    "allProducts": "Tous les produits",
+    "tenant": "ID du locataire",
+    "action": "Action",
+    "actor": "ID de l’auteur",
+    "since": "Du",
+    "until": "Au",
+    "apply": "Appliquer les filtres",
+    "reset": "Réinitialiser les filtres",
+    "allOutcomes": "Tous les résultats",
+    "more": "Plus de filtres",
+    "fewer": "Moins de filtres"
+  },
+  "empty": {
+    "title": "Aucun événement d’audit pour l’instant",
+    "body": "Les événements apparaissent ici dès qu’une modification a lieu.",
+    "filteredTitle": "Aucun événement correspondant",
+    "filteredBody": "Ajuste ou réinitialise les filtres."
+  },
+  "detail": {
+    "subtitle": "Événement d’audit",
+    "details": "Détails",
+    "noDetails": "Cet événement ne comporte aucun détail supplémentaire.",
+    "notFound": "L’événement complet n’a pas pu être chargé : il n’existe plus ou tu n’es pas autorisé à le lire. Les valeurs de la liste sont affichées."
+  },
+  "info": {
+    "search": "Trouve une partie de l’action, l’ID de la cible, le nom de l’auteur ou son ID, sans tenir compte de la casse. Les ID de requête ne sont pas pris en compte.",
+    "productAdmin": "« Tous les produits » inclut aussi les événements à l’échelle de l’installation qui n’appartiennent à aucun produit, comme les connexions.",
+    "productScoped": "Tu vois les événements des produits dont tu peux lire le journal d’audit (audit:read). Les événements à l’échelle de l’installation, comme les connexions, nécessitent l’autorisation de plateforme platform:audit.",
+    "action": "Le nom exact de l’action, par exemple tenancy.tenant.create. Termine-le par * pour trouver toutes les actions qui commencent ainsi, par exemple tenancy.*.",
+    "range": "Dans ton heure locale. « Du » inclut cet instant, « Au » ne l’inclut pas.",
+    "outcomeLabel": "À propos des résultats",
+    "outcome": "Succès : l’action a été effectuée. Refusé : le serveur l’a refusée, par exemple à cause d’un mauvais mot de passe. Échec : l’action a été tentée mais n’a pas abouti.",
+    "requestIdLabel": "À propos de l’ID de requête",
+    "requestId": "Identifie la requête HTTP qui a déclenché cet événement. Les messages d’erreur et les journaux du serveur affichent le même ID."
+  }
+}

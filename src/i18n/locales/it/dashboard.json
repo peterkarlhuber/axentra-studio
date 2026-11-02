@@ -1,0 +1,50 @@
+{
+  "title": "Dashboard",
+  "description": "Panoramica di questo prodotto.",
+  "overview": "Panoramica",
+  "noStats": "Il server non ha restituito contatori per questo prodotto.",
+  "stats": {
+    "tenants": "Tenant",
+    "users": "Utenti",
+    "apiKeys": "Chiavi API",
+    "audit24h": "Eventi di audit (24 h)",
+    "records": "Record",
+    "denied24h": "Richieste negate (24 h)",
+    "about": "Informazioni su “{{label}}”",
+    "hints": {
+      "tenants": "Tutti i tenant di questo prodotto, attivi e sospesi.",
+      "users": "Persone con accesso a questo prodotto: membri dei suoi tenant e operatori del prodotto, ognuno contato una sola volta.",
+      "apiKeys": "Chiavi di questo prodotto non revocate. Sono incluse le chiavi scadute.",
+      "records": "Record in tutte le raccolte e in tutti i tenant di questo prodotto.",
+      "audit24h": "Eventi di audit di questo prodotto nelle ultime 24 ore, consentiti e negati.",
+      "denied24h": "Richieste delle ultime 24 ore che sono state rifiutate, ad esempio perché mancava un'autorizzazione. Un aumento improvviso indica spesso una chiave API o un ruolo configurati male."
+    }
+  },
+  "actions": {
+    "newTenant": "Nuovo tenant",
+    "newApiKey": "Nuova chiave API"
+  },
+  "health": {
+    "title": "Stato del sistema",
+    "details": "Dettagli"
+  },
+  "server": {
+    "title": "Server",
+    "name": "Versione del server",
+    "api": "Versione API",
+    "mode": "Modalità",
+    "modes": {
+      "single": "Prodotto singolo",
+      "multi": "Multiprodotto"
+    },
+    "productId": "ID prodotto",
+    "modules": "Moduli",
+    "enabled": "abilitato",
+    "disabled": "non abilitato",
+    "environment": "Ambiente",
+    "modeAbout": "Informazioni sulla modalità",
+    "modeInfo": "Prodotto singolo: il server gestisce esattamente un prodotto, creato dalla propria configurazione; non è possibile creare o archiviare prodotti. Multiprodotto: gli amministratori della piattaforma creano e archiviano i prodotti. L'operatore imposta la modalità nella configurazione del server.",
+    "modulesAbout": "Informazioni sui moduli",
+    "modulesInfo": "Blocchi funzionali del server. I moduli verdi sono abilitati; quelli grigi no, e le relative voci nella barra laterale mostrano “Off”. Solo l'operatore del server può abilitare un modulo."
+  }
+}
