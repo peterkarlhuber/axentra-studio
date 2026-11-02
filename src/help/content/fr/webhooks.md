@@ -134,10 +134,10 @@ la [tâche](help:jobs#job-detail)), **Créée le**, **Livrée le** et **Prochain
 
 Les livraisons échouées sont relancées automatiquement via la file d’attente des tâches, jusqu’à **8
 tentatives** avec les paramètres par défaut (`events.webhook_max_attempts`). Les webhooks ont leur
-propre calendrier, plus lent que celui des autres tâches : l’attente avant la tentative _n + 1_ est
+propre calendrier, plus lent que celui des autres tâches : l’attente avant la tentative _n + 1_ est
 comprise entre la moitié et la totalité de `120 × 2^(n−1)` secondes, 6 heures au plus
 (`events.webhook_backoff_base_seconds`, `events.webhook_backoff_max_seconds`). Avec les paramètres
-par défaut, les attentes sont d’environ 2, 4, 8, 16, 32, 64 et 128 minutes : la dernière tentative a
+par défaut, les attentes sont d’environ 2, 4, 8, 16, 32, 64 et 128 minutes : la dernière tentative a
 donc lieu environ **2 à 4¼ heures** après la première, et une panne du récepteur d’environ deux
 heures au plus est toujours couverte. Chaque tentative attend au plus 10 secondes pour la connexion
 et pour chaque lecture de la réponse. (Les versions d’Axentra antérieures à ce calendrier
