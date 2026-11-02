@@ -43,6 +43,20 @@ rm public/icon-192.png public/icon-512.png public/icon-maskable-512.png
 | `../favicon-16.png`, `../favicon-32.png` | 16, 32 | PNG tab icons (linked in `index.html`). |
 | `../apple-touch-icon.png` | 180 × 180 | Home-screen icon on an opaque white tile. |
 
+## GitHub social preview
+
+[`branding-src/social-preview.png`](../../branding-src/social-preview.png) (1280 × 640, not served) is
+the repository's GitHub social preview, uploaded by hand in the repository settings. It is rendered
+by [`scripts/social_preview.py`](../../scripts/social_preview.py), the template shared with the
+Nodestro and Orkexa repositories (vendored unchanged next to `derive_branding.py`): a dark
+background with a soft violet glow, the white-wordmark lockup with a "Studio" tag, a short accent
+rule and a one-line caption.
+
+```bash
+python3 scripts/social_preview.py --product axentra --masters branding-src \
+  --out branding-src/social-preview.png --tag Studio --caption "The admin UI for Axentra"
+```
+
 `src/components/layout/Logo.tsx` is the only place that picks one of these files. It follows the
 `data-theme` attribute on `<html>` for the lockup; the collapsed sidebar and the loading screen use
 the symbol.
