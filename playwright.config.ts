@@ -5,9 +5,16 @@ import { defineConfig, devices } from '@playwright/test';
  *
  * Set `AXENTRA_E2E_API` to the API origin (e.g. http://127.0.0.1:8080). Playwright then
  * builds the Studio and serves it with `vite preview`, which proxies `/v1` to that API.
- * Without the variable the tests are skipped with an explanatory message.
+ * Without the variable the tests are skipped with an explanatory message (in CI it is an error).
+ * `scripts/e2e-backend.sh run` starts a complete backend and sets all AXENTRA_E2E_* variables.
  */
 const api = process.env.AXENTRA_E2E_API;
+if (!api && process.env.CI) {
+  // In CI the e2e job starts a backend (scripts/e2e-backend.sh); skipping there would hide a failure.
+  throw new Error(
+    '[e2e] AXENTRA_E2E_API is not set in CI. Run Playwright via scripts/e2e-backend.sh run.',
+  );
+}
 if (!api) {
   console.warn(
     '[e2e] AXENTRA_E2E_API is not set; the smoke tests will be skipped. Example: AXENTRA_E2E_API=http://127.0.0.1:8080 npm run e2e',
@@ -23,7 +30,9 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? [['github'], ['list']] : 'list',
+  reporter: process.env.CI
+    ? [['github'], ['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]]
+    : 'list',
   use: {
     baseURL,
     trace: 'retain-on-failure',

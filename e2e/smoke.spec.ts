@@ -1,14 +1,11 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { e2e, expectNoA11yViolations, signIn, SKIP_NO_ADMIN, SKIP_NO_API } from './support';
 
-const api = process.env.AXENTRA_E2E_API;
-const email = process.env.AXENTRA_E2E_EMAIL;
-const password = process.env.AXENTRA_E2E_PASSWORD;
+const api = e2e.api;
+const email = e2e.email;
+const password = e2e.password;
 
-test.skip(
-  !api,
-  'AXENTRA_E2E_API is not set: start an Axentra API and set AXENTRA_E2E_API=http://127.0.0.1:8080 to run the smoke tests.',
-);
+test.skip(!api, SKIP_NO_API);
 
 // Fail on Content-Security-Policy violations (relevant when testing the Docker image).
 test.beforeEach(({ page }) => {
@@ -18,13 +15,6 @@ test.beforeEach(({ page }) => {
     }
   });
 });
-
-async function expectNoA11yViolations(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    .analyze();
-  expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
-}
 
 test('the API is reachable through the Studio origin and reports a compatible version', async ({
   request,
@@ -51,17 +41,10 @@ test('the theme is applied before first paint', async ({ page }) => {
 });
 
 test.describe('signed in', () => {
-  test.skip(
-    !email || !password,
-    'Set AXENTRA_E2E_EMAIL and AXENTRA_E2E_PASSWORD to an existing admin account to run the signed-in checks.',
-  );
+  test.skip(!email || !password, SKIP_NO_ADMIN);
 
   test('login reaches the shell and the main pages are accessible', async ({ page }) => {
-    await page.goto('/login');
-    await page.getByLabel(/email/i).fill(email ?? '');
-    await page.getByLabel(/password/i).fill(password ?? '');
-    await page.getByRole('button', { name: /sign in/i }).click();
-    await expect(page).not.toHaveURL(/\/login/);
+    await signIn(page);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expectNoA11yViolations(page);
 
