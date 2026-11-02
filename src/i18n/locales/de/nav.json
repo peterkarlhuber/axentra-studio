@@ -43,5 +43,7 @@
   "health": "Systemzustand",
   "settings": "Einstellungen",
   "profile": "Profil",
-  "acceptInvitation": "Einladung annehmen"
+  "acceptInvitation": "Einladung annehmen",
+  "monitoring": "Monitoring",
+  "notifyNewTemplate": "Neue Vorlage"
 }

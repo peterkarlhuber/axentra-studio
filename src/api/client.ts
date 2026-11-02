@@ -21,6 +21,8 @@ const EXPECTED_401_PATHS = new Set([
   '/v1/auth/login/password',
   '/v1/auth/setup',
   '/v1/auth/logout',
+  // Metrics use a bearer token, not the session: a 401 there means "token required".
+  '/metrics',
 ]);
 
 type UnauthenticatedListener = () => void;

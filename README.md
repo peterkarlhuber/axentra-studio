@@ -9,8 +9,12 @@ backend. Studio is a separate, static single-page app that talks to the Axentra 
   your own profile and sessions.
 - Usage & Billing: meters, usage charts and totals, tenant quotas, events and reservations;
   plans, subscriptions and entitlements (see "Usage & Billing" below).
-- Sections for modules that Studio has no screens for yet show "module not enabled" or "not
-  yet available in Studio" and never show demo data.
+- Events & Jobs: jobs, schedules, the event log with a live view, and webhooks with their
+  delivery log (see "Events & Jobs" below).
+- Notifications (templates, message log, mailbox, preferences) and Monitoring (health checks,
+  metrics, retention, tracing).
+- A section whose backend module is disabled shows "module not enabled" and never shows demo
+  data.
 - German and English, light and dark theme, usable from 360 px wide, keyboard and screen
   reader accessible (WCAG 2.1 AA as the target).
 
@@ -244,6 +248,11 @@ src/styles/            tokens.css (both themes) and global.css
   `request_id` (or the `X-Request-ID` header) so support can find the log entry.
 - Optimistic concurrency: product, tenant and role edits send `If-Match` with the resource
   `version`; a `412` explains that someone else changed the item in the meantime.
+- Notifications and Monitoring: template edits send `If-Match`, test sends an
+  `Idempotency-Key`. Rendered HTML (previews, messages, mailbox) is shown in an
+  `<iframe sandbox="">` with a `default-src 'none'` policy. The Monitoring page reads
+  `GET /metrics` (outside `/v1`, Prometheus text); the dev/preview server and the Docker image
+  proxy it like `/v1`. A metrics bearer token entered there stays in memory only.
 
 ### Differences from the original API catalog
 

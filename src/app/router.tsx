@@ -4,18 +4,11 @@ import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { RootLayout } from './RootLayout';
 import { HomeRedirect, ModuleGate, ProductScope, RequireAuth } from './guards';
 import { AppShell } from './shell/AppShell';
-import type { StudioModule } from './modules';
 
 /* Feature pages are code-split per route. */
 const lazyPage =
   <K extends string>(loader: () => Promise<Record<K, React.ComponentType>>, name: K) =>
   async () => ({ Component: (await loader())[name] });
-
-const futureModule = (path: string, module: StudioModule, titleKey: string): RouteObject => ({
-  path,
-  element: <ModuleGate module={module} titleKey={titleKey} />,
-  handle: { crumb: titleKey },
-});
 
 export const routes: RouteObject[] = [
   {
@@ -69,6 +62,15 @@ export const routes: RouteObject[] = [
                 path: 'health',
                 handle: { crumb: 'health' },
                 lazy: lazyPage(() => import('@/features/system/HealthPage'), 'HealthPage'),
+              },
+              // ---- monitoring area ----
+              {
+                path: 'monitoring',
+                handle: { crumb: 'monitoring' },
+                lazy: lazyPage(
+                  () => import('@/features/monitoring/MonitoringPage'),
+                  'MonitoringPage',
+                ),
               },
               {
                 path: 'settings',
@@ -336,7 +338,37 @@ export const routes: RouteObject[] = [
                     ],
                   },
                   /* ---- end Usage & Billing ---- */
-                  futureModule('notifications', 'notifications', 'notifications'),
+                  // ---- notify area ----
+                  {
+                    path: 'notifications',
+                    handle: { crumb: 'notifications' },
+                    element: <ModuleGate module="notifications" titleKey="notifications" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/notify/NotificationsPage'),
+                          'NotificationsPage',
+                        ),
+                      },
+                      {
+                        path: 'templates/new',
+                        handle: { crumb: 'notifyNewTemplate' },
+                        lazy: lazyPage(
+                          () => import('@/features/notify/TemplateEditorPage'),
+                          'TemplateEditorPage',
+                        ),
+                      },
+                      {
+                        path: 'templates/:templateKey',
+                        handle: { crumbParam: 'templateKey' },
+                        lazy: lazyPage(
+                          () => import('@/features/notify/TemplateEditorPage'),
+                          'TemplateEditorPage',
+                        ),
+                      },
+                    ],
+                  },
                 ],
               },
               {

@@ -8,6 +8,7 @@ import {
   CreditCard,
   Database,
   FileClock,
+  Gauge,
   FolderOpen,
   HardDrive,
   KeyRound,
@@ -247,6 +248,14 @@ export const NAVIGATION: NavGroup[] = [
         labelKey: 'health',
         icon: Activity,
         to: platform('/health'),
+        scope: 'platform',
+      },
+      // monitoring area
+      {
+        id: 'monitoring',
+        labelKey: 'monitoring',
+        icon: Gauge,
+        to: platform('/monitoring'),
         scope: 'platform',
       },
     ],

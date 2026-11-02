@@ -27,6 +27,8 @@ export const IMPLEMENTED_MODULES: ReadonlySet<StudioModule> = new Set<StudioModu
   'users',
   'access',
   'records',
+  // notify area
+  'notifications',
   'audit',
   // Events & Jobs
   'jobs',
