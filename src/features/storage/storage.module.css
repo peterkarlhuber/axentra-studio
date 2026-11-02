@@ -160,3 +160,17 @@
 .statsPadded {
   padding: 0 var(--ax-space-5) var(--ax-space-4);
 }
+
+.builtIn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+  font-size: var(--ax-text-sm);
+}
+.builtIn summary {
+  cursor: pointer;
+  font-weight: var(--ax-weight-semibold);
+}
+.builtIn[open] summary {
+  margin-bottom: var(--ax-space-2);
+}

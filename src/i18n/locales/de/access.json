@@ -6,7 +6,13 @@
     "filterPlaceholder": "Berechtigungen filtern …",
     "noMatch": "Keine Berechtigung passt zu diesem Filter.",
     "groupCount": "{{selected}} von {{total}} ausgewählt",
-    "loadError": "Der Berechtigungskatalog konnte nicht geladen werden."
+    "loadError": "Der Berechtigungskatalog konnte nicht geladen werden.",
+    "productDefined": "Produkt",
+    "scopes": {
+      "platform": "Plattform",
+      "product": "Produkt",
+      "tenant": "Mandant"
+    }
   },
   "roles": {
     "title": "Rollen",
@@ -87,5 +93,29 @@
     "grace1h": "1 Stunde",
     "grace24h": "24 Stunden",
     "grace7d": "7 Tage"
+  },
+  "catalog": {
+    "title": "Berechtigungen",
+    "description": "Alles, was in diesem Produkt vergeben werden kann: die Berechtigungen, die das Produkt selbst festlegt, und die integrierten Berechtigungen von Axentra. Nur lesbar; Produkte legen ihre Berechtigungen im eigenen Code oder über die API fest.",
+    "own": "Produktberechtigungen",
+    "ownDescription": "Von diesem Produkt festgelegt. Inhaber und Administratoren erhalten sie automatisch; Betrachter und Support erhalten die nur lesenden.",
+    "ownEmpty": "Dieses Produkt legt keine eigenen Berechtigungen fest",
+    "ownEmptyBody": "Der Produktcode registriert sie (zum Beispiel „crm.deals:approve“); eigene Rollen und API-Schlüssel können sie dann gewähren.",
+    "builtIn": "Integrierte Berechtigungen",
+    "builtInDescription": "Von Axentra für jedes Produkt bereitgestellt.",
+    "name": "Berechtigung",
+    "scope": "Geltungsbereich",
+    "defaultRoles": "Zusätzlich gewährt an",
+    "readLike": "Lesende Rollen",
+    "ownersOnly": "Nur Inhaber und Administratoren",
+    "declaredBy": "Festgelegt durch",
+    "declared": {
+      "code": "Produktcode",
+      "api": "API"
+    },
+    "status": "Status",
+    "active": "Aktiv",
+    "retired": "Stillgelegt",
+    "showRetired": "Stillgelegte anzeigen"
   }
 }

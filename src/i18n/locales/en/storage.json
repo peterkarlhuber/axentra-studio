@@ -36,7 +36,11 @@
     "updated": "Updated",
     "expires": "Expires",
     "never": "Never",
-    "metadata": "Labels (metadata)"
+    "metadata": "Labels (metadata)",
+    "inert": "Stored inert",
+    "inertWithType": "Yes, uploaded as {{type}}",
+    "inertNoType": "Yes",
+    "inertHelp": "A blocked file type kept as an opaque attachment by the product’s content-type policy. It is only ever downloaded, never displayed."
   },
   "filter": {
     "label": "Filter files",
@@ -119,7 +123,9 @@
       "unsupported_media_typeBody": "The server refuses this file type. Executables, HTML, SVG and scripts are blocked, and the server may only allow certain types.",
       "quota_exceeded": "Storage quota exhausted",
       "quota_exceededBody": "The tenant has reached its storage or file quota. Delete files or raise the quota."
-    }
+    },
+    "inertExtensions": "Accepted as inert attachments: {{extensions}}.",
+    "extraBlocked": "Also blocked by this product: {{items}}."
   },
   "detail": {
     "title": "File"
@@ -183,6 +189,34 @@
     "days_one": "{{formatted}} day",
     "days_other": "{{formatted}} days",
     "backupTitle": "Backups are not reported",
-    "backupBody": "The API reports neither backup status nor how long deleted file metadata is kept. Both are part of the server operation."
+    "backupBody": "The API reports neither backup status nor how long deleted file metadata is kept. Both are part of the server operation.",
+    "blockedProduct": "{{value}} ({{source}})"
+  },
+  "policy": {
+    "title": "File content-type policy",
+    "description": "What happens to uploads of executables, HTML, SVG and scripts in this product. Blocked files are never displayed; at most they are kept as downloads.",
+    "readOnly": "You can view this policy; changing it needs product:manage.",
+    "mode": "Blocked file types",
+    "modeHelp": "Checked by declared type, file extension and content (including scripts that start with #!).",
+    "inherit": "Installation default ({{mode}})",
+    "refuse": "Refuse the upload",
+    "store_inert": "Store as inert attachment",
+    "source": {
+      "product": "Set for this product",
+      "installation": "Inherited from the installation"
+    },
+    "blockedExtensions": "Additionally blocked extensions",
+    "blockedExtensionsHelp": "Comma-separated, without dot, e.g. “py, rb”. Can only add to the built-in list.",
+    "blockedContentTypes": "Additionally blocked content types",
+    "blockedContentTypesHelp": "Comma-separated, e.g. “text/x-python”.",
+    "inertExtensions": "Extensions accepted as inert attachments",
+    "inertExtensionsHelp": "Blocked extensions that are kept as inert attachments even when uploads are refused, e.g. “html, sh”.",
+    "builtIn": "Always blocked",
+    "builtInExtensions": "Extensions",
+    "builtInTypes": "Content types",
+    "inertNote": "Inert files are stored as application/octet-stream and downloaded as attachments with nosniff; their original type is kept for display only.",
+    "saved": "Content-type policy saved",
+    "loadError": "The content-type policy could not be loaded.",
+    "moduleOff": "The storage module is not enabled on this server."
   }
 }

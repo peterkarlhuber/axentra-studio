@@ -179,6 +179,58 @@ describe('FilesPage', () => {
     expect(sent).toHaveLength(0);
   });
 
+  it('shows the product content-type policy in the upload dialog', async () => {
+    api((_request, url) =>
+      url.pathname === '/v1/products/prd_1/storage/policy'
+        ? jsonResponse({
+            product_id: 'prd_1',
+            blocked_types: 'refuse',
+            blocked_types_source: 'product',
+            installation_blocked_types: 'store_inert',
+            blocked_extensions: ['py'],
+            blocked_content_types: [],
+            inert_extensions: ['html', 'sh'],
+            builtin_blocked_extensions: ['html'],
+            builtin_blocked_content_types: ['text/html'],
+            allowed_content_types: [],
+            product_version: 2,
+          })
+        : undefined,
+    );
+    renderPage(<FilesPage />, { me: meWith([], ['files:read', 'files:write']), route });
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: 'Upload file' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Upload file' });
+    expect(
+      await within(dialog).findByText('Accepted as inert attachments: .html, .sh.'),
+    ).toBeInTheDocument();
+    expect(within(dialog).getByText('Also blocked by this product: .py.')).toBeInTheDocument();
+    expect(within(dialog).getByText(/are refused \(checked by declared type/)).toBeInTheDocument();
+  });
+
+  it('marks files stored inert with their original type', async () => {
+    const inert = fileInfo({
+      name: 'page.html',
+      content_type: 'application/octet-stream',
+      stored_inert: true,
+      original_content_type: 'text/html',
+    });
+    api(
+      (request, url) =>
+        url.pathname === `${FILES}/fil_1` && request.method === 'GET'
+          ? jsonResponse(inert)
+          : undefined,
+      [inert],
+    );
+    renderPage(<FilesPage />, {
+      me: meWith([], ['files:read']),
+      route: `${route}&file=fil_1`,
+    });
+    const drawer = await screen.findByRole('dialog', { name: 'page.html' });
+    expect(await within(drawer).findByText('Yes, uploaded as text/html')).toBeInTheDocument();
+    expect(within(drawer).getByText('application/octet-stream')).toBeInTheDocument();
+  });
+
   it('downloads through a signed URL on the configured API origin', async () => {
     const calls = api((_request, url) =>
       url.pathname === `${FILES}/fil_1/download-url`

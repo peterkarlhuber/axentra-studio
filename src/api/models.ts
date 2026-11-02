@@ -72,7 +72,8 @@ export type UserPatch = Schemas['UserUpdate'];
 /** Shape shared by product and tenant members, used by the generic members table. */
 export interface MemberLike {
   user_id: string;
-  email: string;
+  /** `null` for users without an email address (external identity only). */
+  email: string | null;
   name: string;
   role: string;
   created_at: string;
@@ -121,6 +122,8 @@ export type DownloadUrl = Schemas['DownloadUrl'];
 export type TenantStorageUsage = Schemas['TenantStorageUsage'];
 export type ProductStorageUsage = Schemas['ProductStorageUsage'];
 export type QuotaInput = Schemas['axentra__api__routes__storage__QuotaSet'];
+export type StoragePolicy = Schemas['StoragePolicy'];
+export type StoragePolicyInput = Schemas['StoragePolicySet'];
 
 // ---- Usage & Billing (studio-billing) ----------------------------------------------------
 export type Meter = Schemas['Meter'];

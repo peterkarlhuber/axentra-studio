@@ -61,11 +61,11 @@ export function PlatformRoleCard({ user, isSelf }: { user: User; isSelf: boolean
         tone={role === 'platform_admin' || isSelf ? 'danger' : 'primary'}
         title={t('platformRole.confirmTitle')}
         description={t('platformRole.confirmBody', {
-          name: user.name || user.email,
+          name: user.name || user.email || user.id,
           role: t(`platformRoles.${role}`),
         })}
         confirmLabel={t('platformRole.apply')}
-        confirmText={role === 'platform_admin' ? user.email : undefined}
+        confirmText={role === 'platform_admin' ? (user.email ?? user.id) : undefined}
         onConfirm={() => save.mutateAsync()}
       />
     </Card>

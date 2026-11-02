@@ -6,7 +6,13 @@
     "filterPlaceholder": "Filter permissions…",
     "noMatch": "No permissions match this filter.",
     "groupCount": "{{selected}} of {{total}} selected",
-    "loadError": "The permission catalog could not be loaded."
+    "loadError": "The permission catalog could not be loaded.",
+    "productDefined": "Product",
+    "scopes": {
+      "platform": "platform",
+      "product": "product",
+      "tenant": "tenant"
+    }
   },
   "roles": {
     "title": "Roles",
@@ -87,5 +93,29 @@
     "grace1h": "1 hour",
     "grace24h": "24 hours",
     "grace7d": "7 days"
+  },
+  "catalog": {
+    "title": "Permissions",
+    "description": "Everything that can be granted in this product: the permissions the product declares itself and Axentra’s built-in permissions. Read-only; products declare their permissions in their code or through the API.",
+    "own": "Product permissions",
+    "ownDescription": "Declared by this product. Owners and admins hold them automatically; viewers and support hold the read-only ones.",
+    "ownEmpty": "This product declares no permissions of its own",
+    "ownEmptyBody": "Product code registers them (for example “crm.deals:approve”); custom roles and API keys can then grant them.",
+    "builtIn": "Built-in permissions",
+    "builtInDescription": "Provided by Axentra for every product.",
+    "name": "Permission",
+    "scope": "Scope",
+    "defaultRoles": "Also granted to",
+    "readLike": "Read-only roles",
+    "ownersOnly": "Owners and admins only",
+    "declaredBy": "Declared by",
+    "declared": {
+      "code": "Product code",
+      "api": "API"
+    },
+    "status": "Status",
+    "active": "Active",
+    "retired": "Retired",
+    "showRetired": "Show retired"
   }
 }

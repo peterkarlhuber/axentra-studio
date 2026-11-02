@@ -27,6 +27,7 @@
   "users": "Benutzer",
   "invitations": "Einladungen",
   "roles": "Rollen",
+  "permissions": "Berechtigungen",
   "apiKeys": "API-Schlüssel",
   "dataOverview": "Datenübersicht",
   "records": "Datensätze",

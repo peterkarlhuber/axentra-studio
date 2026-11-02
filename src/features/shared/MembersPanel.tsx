@@ -131,8 +131,8 @@ export function MembersPanel({
       rowHeader: true,
       cell: (member) => (
         <span className={layout.cellStack}>
-          <span>{member.name || member.email}</span>
-          <span className={layout.muted}>{member.email}</span>
+          <span>{member.name || member.email || member.user_id}</span>
+          <span className={layout.muted}>{member.email ?? member.user_id}</span>
         </span>
       ),
     },
@@ -146,7 +146,9 @@ export function MembersPanel({
             unavailable={rolesUnavailable}
             blockFor={blockFor}
             value={member.role}
-            aria-label={t('members.roleFor', { name: member.name || member.email })}
+            aria-label={t('members.roleFor', {
+              name: member.name || member.email || member.user_id,
+            })}
             disabled={roleMutation.isPending}
             onChange={(next) =>
               next && next !== member.role
@@ -180,7 +182,9 @@ export function MembersPanel({
           <IconButton
             variant="danger"
             size="sm"
-            label={t('members.removeNamed', { name: member.name || member.email })}
+            label={t('members.removeNamed', {
+              name: member.name || member.email || member.user_id,
+            })}
             icon={<Trash2 />}
             onClick={() => setRemoving(member)}
           />
@@ -302,7 +306,7 @@ export function MembersPanel({
         onOpenChange={(open) => (open ? undefined : setRemoving(null))}
         title={t('members.removeTitle')}
         description={t('members.removeBody', {
-          name: removing?.name || removing?.email,
+          name: removing?.name || removing?.email || removing?.user_id,
         })}
         confirmLabel={t('members.remove')}
         onConfirm={async () => {

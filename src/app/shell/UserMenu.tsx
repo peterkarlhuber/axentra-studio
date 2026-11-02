@@ -34,7 +34,7 @@ export function UserMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger className={styles.userButton}>
         <span className={styles.avatar} aria-hidden="true">
-          {initials(user?.name, user?.email)}
+          {initials(user?.name, user?.email ?? undefined)}
         </span>
         {/* Visible name first, so the accessible name contains the visible label (WCAG 2.5.3). */}
         <span className={styles.userName}>{user?.name || user?.email}</span>

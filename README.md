@@ -4,8 +4,9 @@ The admin UI for [Axentra](https://github.com/peterkarlhuber/axentra), the multi
 backend. Studio is a separate, static single-page app that talks to the Axentra HTTP API
 (`/v1`) like any other client. It has no backend of its own and no privileged access.
 
-- Products, tenants, users, invitations, members, roles, API keys, records, files and storage
-  quotas (see "Data & Storage" below), audit log, system health, effective server settings, and
+- Products, tenants, users, invitations, members, roles, the product's permission catalog
+  (built-in and product-defined permissions), API keys, records, files, storage quotas and the
+  per-product file content-type policy (see "Data & Storage" below), audit log, system health, effective server settings, and
   your own profile and sessions.
 - Usage & Billing: meters, usage charts and totals, tenant quotas, events and reservations;
   plans, subscriptions and entitlements (see "Usage & Billing" below).
@@ -317,7 +318,8 @@ search, realtime`; the first four are always on.
 - `POST /v1/auth/setup` returns a session: the new admin is signed in immediately.
 - Products and tenants need a `slug` (Studio derives one from the name; you can edit it).
 - Roles have `key`, `scope` and `builtin`; built-in roles have no `id`. Members reference roles
-  by key.
+  by key. Role and key editors read `GET /v1/products/{id}/permissions` (built-in plus the
+  product's own permissions, `source: builtin|product`), not the global `GET /v1/permissions`.
 - Creating an API key returns `{key, secret}`; rotation takes `grace_seconds`.
 - Creating an invitation returns `{invitation, token, accept_url?}`; the token is always shown
   once so it can be delivered without email.

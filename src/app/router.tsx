@@ -170,6 +170,20 @@ export const routes: RouteObject[] = [
                     ],
                   },
                   {
+                    path: 'permissions',
+                    handle: { crumb: 'permissions' },
+                    element: <ModuleGate module="access" titleKey="permissions" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/access/PermissionsPage'),
+                          'PermissionsPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
                     path: 'api-keys',
                     handle: { crumb: 'apiKeys' },
                     element: <ModuleGate module="access" titleKey="apiKeys" />,

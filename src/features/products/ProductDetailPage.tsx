@@ -30,6 +30,8 @@ import {
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
+import { StoragePolicyCard } from '@/features/storage/StoragePolicyCard';
+import { isModuleEnabled } from '@/app/modules';
 
 export function ProductDetailPage() {
   const { t } = useTranslation('products');
@@ -145,6 +147,17 @@ export function ProductDetailPage() {
               <ProductSettingsForm
                 key={`${product.id}:${product.version}`}
                 product={product}
+                canEdit={!archived && can('product:manage', { productId: product.id })}
+              />
+            ),
+          },
+          {
+            value: 'files',
+            label: t('tabs.files'),
+            hidden: !isModuleEnabled(meta.modules, 'files'),
+            content: (
+              <StoragePolicyCard
+                productId={product.id}
                 canEdit={!archived && can('product:manage', { productId: product.id })}
               />
             ),

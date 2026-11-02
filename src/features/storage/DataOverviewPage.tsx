@@ -65,7 +65,9 @@ export function DataOverviewPage() {
           )}
         </>
       )}
-      {canSettings ? <ConfigurationCards storageEnabled={storageEnabled} /> : null}
+      {canSettings ? (
+        <ConfigurationCards productId={productId} storageEnabled={storageEnabled} />
+      ) : null}
     </div>
   );
 }
@@ -300,9 +302,22 @@ function ProductStorageCard({ productId }: { productId: string }) {
   );
 }
 
-function ConfigurationCards({ storageEnabled }: { storageEnabled: boolean }) {
+function ConfigurationCards({
+  productId,
+  storageEnabled,
+}: {
+  productId: string;
+  storageEnabled: boolean;
+}) {
   const { t } = useTranslation('storage');
   const format = useFormatters();
+  // The product's own content-type policy (product:read); shown instead of the installation flag.
+  const policy = useQuery({
+    queryKey: queryKeys.storagePolicy(productId),
+    queryFn: () => storageApi.policy(productId),
+    enabled: storageEnabled,
+    retry: false,
+  });
   const settings = useQuery({
     queryKey: queryKeys.settings,
     queryFn: settingsApi.get,
@@ -358,8 +373,15 @@ function ConfigurationCards({ storageEnabled }: { storageEnabled: boolean }) {
               },
               {
                 label: t('overview.blocked'),
-                value:
-                  limits.storeBlockedAsInert === undefined
+                value: policy.data
+                  ? t('overview.blockedProduct', {
+                      value:
+                        policy.data.blocked_types === 'store_inert'
+                          ? t('upload.blockedInert')
+                          : t('upload.blockedRefused'),
+                      source: t(`policy.source.${policy.data.blocked_types_source}`),
+                    })
+                  : limits.storeBlockedAsInert === undefined
                     ? undefined
                     : limits.storeBlockedAsInert
                       ? t('upload.blockedInert')

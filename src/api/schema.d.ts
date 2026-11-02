@@ -342,7 +342,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** The permission catalog */
+        /** The built-in permission catalog */
         get: operations["permissions_v1_permissions_get"];
         put?: never;
         post?: never;
@@ -932,6 +932,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/products/{product_id}/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Permissions that can be granted in the product (built-in and product-defined) */
+        get: operations["product_permissions_v1_products__product_id__permissions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/products/{product_id}/permissions/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Declare (create, change or re-activate) a product permission */
+        put: operations["declare_permission_v1_products__product_id__permissions__name__put"];
+        post?: never;
+        /** Retire a product permission declared over the API */
+        delete: operations["retire_permission_v1_products__product_id__permissions__name__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/products/{product_id}/restore": {
         parameters: {
             query?: never;
@@ -1020,6 +1055,24 @@ export interface paths {
         head?: never;
         /** Update Schedule */
         patch: operations["update_schedule_v1_products__product_id__schedules__schedule_id__patch"];
+        trace?: never;
+    };
+    "/v1/products/{product_id}/storage/policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The product's effective content-type policy for blocked file types */
+        get: operations["get_policy_v1_products__product_id__storage_policy_get"];
+        /** Set the product's content-type policy (stored in the product's settings.storage) */
+        put: operations["set_policy_v1_products__product_id__storage_policy_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/products/{product_id}/storage/usage": {
@@ -1438,6 +1491,42 @@ export interface paths {
         post?: never;
         /** Delete Record */
         delete: operations["delete_record_v1_products__product_id__tenants__tenant_id__records__collection___record_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/products/{product_id}/tenants/{tenant_id}/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Full-text search in the tenant's index (ranked, highlighted) */
+        get: operations["search_v1_products__product_id__tenants__tenant_id__search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/products/{product_id}/tenants/{tenant_id}/search/documents/{kind}/{ref_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** An indexed document */
+        get: operations["get_document_v1_products__product_id__tenants__tenant_id__search_documents__kind___ref_id__get"];
+        /** Index a document (create or replace by kind and ref_id) */
+        put: operations["upsert_document_v1_products__product_id__tenants__tenant_id__search_documents__kind___ref_id__put"];
+        post?: never;
+        /** Remove a document from the index */
+        delete: operations["delete_document_v1_products__product_id__tenants__tenant_id__search_documents__kind___ref_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2120,6 +2209,27 @@ export interface components {
             tenant_id: string | null;
             total: components["schemas"]["StatusCounts"];
         };
+        /** DocumentUpsert */
+        DocumentUpsert: {
+            /**
+             * Body
+             * @description Plain text; the limit is search.max_body_chars
+             * @default
+             */
+            body: string;
+            /**
+             * Metadata
+             * @description Returned with hits (at most 16 KB); not searched
+             */
+            metadata?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Title
+             * @default
+             */
+            title: string;
+        };
         /** DownloadUrl */
         DownloadUrl: {
             /**
@@ -2328,6 +2438,8 @@ export interface components {
             };
             /** Name */
             name: string;
+            /** Original Content Type */
+            original_content_type?: string | null;
             /** Product Id */
             product_id: string;
             /** Sha256 */
@@ -2339,6 +2451,11 @@ export interface components {
              * @enum {string}
              */
             status: "pending" | "active" | "deleted";
+            /**
+             * Stored Inert
+             * @default false
+             */
+            stored_inert: boolean;
             /** Tenant Id */
             tenant_id: string;
             /**
@@ -2647,7 +2764,7 @@ export interface components {
              */
             created_at: string;
             /** Email */
-            email: string;
+            email: string | null;
             /** Id */
             id: string;
             /** Name */
@@ -3020,6 +3137,13 @@ export interface components {
             /** Next Cursor */
             next_cursor?: string | null;
         };
+        /** Page[SearchHit] */
+        Page_SearchHit_: {
+            /** Items */
+            items: components["schemas"]["SearchHit"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
         /** Page[Subscription] */
         Page_Subscription_: {
             /** Items */
@@ -3081,15 +3205,32 @@ export interface components {
         };
         /** PermissionInfo */
         PermissionInfo: {
+            /** Declared By */
+            declared_by?: ("code" | "api") | null;
+            /** Default Roles */
+            default_roles?: string[];
             /** Description */
             description: string;
             /** Name */
             name: string;
             /**
+             * Read Like
+             * @default false
+             */
+            read_like: boolean;
+            /** Retired At */
+            retired_at?: string | null;
+            /**
              * Scope
              * @enum {string}
              */
             scope: "platform" | "product" | "tenant";
+            /**
+             * Source
+             * @default builtin
+             * @enum {string}
+             */
+            source: "builtin" | "product";
         };
         /** Plan */
         Plan: {
@@ -3320,7 +3461,7 @@ export interface components {
              */
             created_at: string;
             /** Email */
-            email: string;
+            email: string | null;
             /** Name */
             name: string;
             /** Product Id */
@@ -3345,6 +3486,29 @@ export interface components {
             tenants: number;
             /** Users */
             users: number;
+        };
+        /** ProductPermissionDeclare */
+        ProductPermissionDeclare: {
+            /**
+             * Default Roles
+             * @description Built-in roles that hold it beyond the automatic grants (e.g. member, viewer)
+             */
+            default_roles?: string[];
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Read Like
+             * @description Only reads data (viewer/support roles hold it); default: name ends in :read
+             */
+            read_like?: boolean | null;
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "product" | "tenant";
         };
         /** ProductStorageUsage */
         ProductStorageUsage: {
@@ -3689,6 +3853,77 @@ export interface components {
             /** Priority */
             priority?: number | null;
         };
+        /**
+         * SearchDocument
+         * @description One indexed document. ``kind`` + ``ref_id`` identify the source object in the product.
+         */
+        SearchDocument: {
+            /** Body */
+            body: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Created By */
+            created_by: string | null;
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Language */
+            language: string;
+            /** Metadata */
+            metadata: {
+                [key: string]: unknown;
+            };
+            /** Product Id */
+            product_id: string;
+            /** Ref Id */
+            ref_id: string;
+            /** Tenant Id */
+            tenant_id: string;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Updated By */
+            updated_by: string | null;
+            /** Version */
+            version: number;
+        };
+        /**
+         * SearchHit
+         * @description A query result. Highlights are HTML-escaped text in which matches are wrapped in ``<mark>``.
+         */
+        SearchHit: {
+            /** Body Highlight */
+            body_highlight: string;
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Metadata */
+            metadata: {
+                [key: string]: unknown;
+            };
+            /** Rank */
+            rank: number;
+            /** Ref Id */
+            ref_id: string;
+            /** Title */
+            title: string;
+            /** Title Highlight */
+            title_highlight: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
         /** SecretRotate */
         SecretRotate: {
             /**
@@ -3803,6 +4038,57 @@ export interface components {
              * @default 0
              */
             suppressed: number;
+        };
+        /**
+         * StoragePolicy
+         * @description The effective content-type policy of a product (``settings.storage`` of the product).
+         */
+        StoragePolicy: {
+            /** Allowed Content Types */
+            allowed_content_types: string[];
+            /** Blocked Content Types */
+            blocked_content_types: string[];
+            /** Blocked Extensions */
+            blocked_extensions: string[];
+            /**
+             * Blocked Types
+             * @enum {string}
+             */
+            blocked_types: "refuse" | "store_inert";
+            /**
+             * Blocked Types Source
+             * @enum {string}
+             */
+            blocked_types_source: "product" | "installation";
+            /** Builtin Blocked Content Types */
+            builtin_blocked_content_types: string[];
+            /** Builtin Blocked Extensions */
+            builtin_blocked_extensions: string[];
+            /** Inert Extensions */
+            inert_extensions: string[];
+            /**
+             * Installation Blocked Types
+             * @enum {string}
+             */
+            installation_blocked_types: "refuse" | "store_inert";
+            /** Product Id */
+            product_id: string;
+            /** Product Version */
+            product_version: number;
+        };
+        /** StoragePolicySet */
+        StoragePolicySet: {
+            /** Blocked Content Types */
+            blocked_content_types?: string[];
+            /** Blocked Extensions */
+            blocked_extensions?: string[];
+            /**
+             * Blocked Types
+             * @description null: inherit the installation setting (storage.store_blocked_as_inert)
+             */
+            blocked_types?: ("refuse" | "store_inert") | null;
+            /** Inert Extensions */
+            inert_extensions?: string[];
         };
         /** Subscription */
         Subscription: {
@@ -4203,7 +4489,7 @@ export interface components {
              */
             created_at: string;
             /** Email */
-            email: string;
+            email: string | null;
             /**
              * Has Password
              * @default false
@@ -6522,6 +6808,106 @@ export interface operations {
             };
         };
     };
+    product_permissions_v1_products__product_id__permissions_get: {
+        parameters: {
+            query?: {
+                /** @description Also list retired product permissions */
+                include_retired?: boolean;
+            };
+            header?: never;
+            path: {
+                product_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PermissionInfo"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    declare_permission_v1_products__product_id__permissions__name__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProductPermissionDeclare"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PermissionInfo"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    retire_permission_v1_products__product_id__permissions__name__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     restore_product_v1_products__product_id__restore_post: {
         parameters: {
             query?: never;
@@ -6851,6 +7237,75 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Schedule"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_policy_v1_products__product_id__storage_policy_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StoragePolicy"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_policy_v1_products__product_id__storage_policy_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Expected resource version */
+                "If-Match"?: string | null;
+            };
+            path: {
+                product_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoragePolicySet"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StoragePolicy"];
                 };
             };
             /** @description Validation Error */
@@ -8182,6 +8637,166 @@ export interface operations {
                 tenant_id: string;
                 collection: string;
                 record_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_v1_products__product_id__tenants__tenant_id__search_get: {
+        parameters: {
+            query: {
+                /** @description Web search syntax: words (all must match), "quoted phrase", or, -excluded */
+                q: string;
+                /** @description Only these kinds (repeat the parameter for several) */
+                kind?: string[] | null;
+                /** @description Page size (1-200, default 50) */
+                limit?: number | null;
+                /** @description Opaque cursor from a previous page's next_cursor */
+                cursor?: string | null;
+            };
+            header?: never;
+            path: {
+                product_id: string;
+                tenant_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_SearchHit_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_document_v1_products__product_id__tenants__tenant_id__search_documents__kind___ref_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+                tenant_id: string;
+                /** @description Document kind, e.g. `invoice` */
+                kind: string;
+                /** @description Id of the source object in the product */
+                ref_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchDocument"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upsert_document_v1_products__product_id__tenants__tenant_id__search_documents__kind___ref_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+                tenant_id: string;
+                /** @description Document kind, e.g. `invoice` */
+                kind: string;
+                /** @description Id of the source object in the product */
+                ref_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentUpsert"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchDocument"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchDocument"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_document_v1_products__product_id__tenants__tenant_id__search_documents__kind___ref_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+                tenant_id: string;
+                /** @description Document kind, e.g. `invoice` */
+                kind: string;
+                /** @description Id of the source object in the product */
+                ref_id: string;
             };
             cookie?: never;
         };

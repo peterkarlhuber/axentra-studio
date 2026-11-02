@@ -18,6 +18,15 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P1
 
+- **Re-pin `api/BACKEND_REF` to the merged product-permissions/storage-policy backend.** The
+  vendored contract (`api/openapi.json`, `src/api/schema.d.ts`, `api/SOURCE`) is synced from the
+  unmerged Axentra commit `67cd0ac` (product-defined permissions, per-product content-type
+  policy), while `api/BACKEND_REF` still pins `7511a37`, so the `contract` CI job and the unit
+  check "pins the same backend commit" fail, and the CI e2e job (which runs the pinned backend)
+  cannot pass `e2e/permissions-policy.spec.ts` or load the new Permissions page and Files tab.
+  After the backend merge: `npm run api:sync -- --sha <merge sha>`, full e2e in both modes, a row
+  in [COMPATIBILITY.md](COMPATIBILITY.md). This also covers the search re-pin below.
+
 - **Re-pin `api/BACKEND_REF` to include search.** Axentra `master` is at `f80429f` (PR #11,
   search module, API still 1.0, two new paths under `/v1/products/{id}/tenants/{tid}/search`).
   Studio pins `7511a37`; `npm run api:check` against `f80429f` fails with exactly those two
@@ -97,6 +106,14 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   per-run names and read product-wide counts from the API; the live event view only asserts "at
   least one new event" there (`e2e/events.spec.ts`). A new spec must follow `specProduct()` in
   `e2e/support.ts` or it will collide in single mode.
+
+- **Product permissions cannot be declared in Studio.** The Permissions page is read-only; the
+  backend's `PUT`/`DELETE /v1/products/{id}/permissions/{name}` (`permissions:manage`, product
+  owners) has no form yet. Products that embed Axentra declare them in code anyway.
+- **Retired permissions in custom roles are dropped on save.** The role editor offers only active
+  permissions; saving a role that still lists a retired product permission removes that name
+  (it had no effect while retired, but would have come back if the product re-declared it). The
+  read-only role view still lists it.
 
 ## P3
 
