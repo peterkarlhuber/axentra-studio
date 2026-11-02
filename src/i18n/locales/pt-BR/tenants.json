@@ -43,8 +43,7 @@
     "suspended": "Tenant suspenso",
     "activated": "Tenant reativado",
     "suspendTitle": "Suspender tenant?",
-    "suspendBody": "Os membros de “{{name}}” e as chaves de API dele perdem o acesso até que o tenant seja reativado. Os operadores do produto também perdem o acesso aos dados dele; só os administradores da plataforma ainda podem abri-lo. Nenhum dado é excluído.",
-    "suspendedNotice": "Este tenant está suspenso. Seus membros, os operadores do produto e as chaves de API não podem acessá-lo."
+    "suspendBody": "Os membros de “{{name}}” e as chaves de API dele perdem o acesso até que o tenant seja reativado. Os operadores do produto ainda podem abrir o tenant e reativá-lo, mas não acessar os dados dele; só os administradores da plataforma podem. Nenhum dado é excluído."
   },
   "invitations": {
     "title": "Convites",
@@ -90,5 +89,22 @@
   "searchPlaceholder": "Nome ou slug",
   "filters": {
     "allStatuses": "Todos os status"
+  },
+  "actionsFor": "Ações para {{name}}",
+  "reactivate": {
+    "title": "Reativar tenant?",
+    "body": "Os membros de “{{name}}” e as chaves de API dele recuperam o acesso imediatamente, com os mesmos papéis e permissões de antes. Os dados dele voltam a ficar disponíveis."
+  },
+  "suspendedBanner": {
+    "title": "Este tenant está suspenso",
+    "body": "Os membros e as chaves de API dele estão bloqueados, e os membros, convites, registros, arquivos, uso e cobrança dele não podem ser abertos. Nenhum dado foi excluído.",
+    "bodyPlatform": "Os membros, os operadores do produto e as chaves de API não podem acessar os dados dele; o seu papel de plataforma pode. Nenhum dado foi excluído.",
+    "canReactivate": "Reative o tenant para restaurar o acesso.",
+    "askOperator": "Um proprietário ou administrador do produto pode reativá-lo."
+  },
+  "suspendedData": {
+    "title": "Indisponível enquanto o tenant estiver suspenso",
+    "body": "Os membros e os convites de um tenant suspenso não podem ser vistos nem alterados. Um proprietário ou administrador do produto pode reativar o tenant.",
+    "bodyCanReactivate": "Os membros e os convites de um tenant suspenso não podem ser vistos nem alterados. Reative o tenant para gerenciá-los novamente."
   }
 }

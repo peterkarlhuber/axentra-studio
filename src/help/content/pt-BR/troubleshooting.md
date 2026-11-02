@@ -106,7 +106,8 @@ em que você estava. Dados de formulário não salvos são perdidos. Veja [Sess�
   para saber o que cada permissão permite e quais funções integradas a têm.
 - **O produto está arquivado ou o tenant está suspenso.** Nesse caso, apenas administradores da
   plataforma (acesso total) e leitores da plataforma (acesso de leitura) ainda podem trabalhar nele;
-  todos os outros, incluindo chaves de API, recebem `the product or tenant is not active`.
+  todos os outros, incluindo chaves de API, recebem `the product or tenant is not active`. Proprietários e administradores do
+  produto ainda podem abrir a página de um tenant suspenso e [reativá-lo](help:tenants#reactivate).
 - **O teto de funções.** Você tentou atribuir uma função com permissões que você mesmo não tem, ou
   uma função de proprietário sem ser proprietário. Veja [teto de funções](help:security#role-ceiling).
 - **Permissões de chaves de API.** Você tentou dar a uma nova chave uma permissão que você não tem

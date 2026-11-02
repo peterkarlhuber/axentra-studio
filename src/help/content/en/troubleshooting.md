@@ -107,7 +107,8 @@ HTTP 403).
   for what each permission allows and which built-in roles hold it.
 - **The product is archived or the tenant is suspended.** Then only platform administrators
   (full access) and platform viewers (read access) can still work in it; everyone else, including
-  API keys, gets `the product or tenant is not active`.
+  API keys, gets `the product or tenant is not active`. Product owners and admins can still open a
+  suspended tenant's page and [reactivate](help:tenants#reactivate) it.
 - **The role ceiling.** You tried to assign a role that has permissions you do not hold yourself,
   or an owner role without being an owner. See [role ceiling](help:security#role-ceiling).
 - **API key permissions.** You tried to give a new key a permission you do not hold

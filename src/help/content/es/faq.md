@@ -49,7 +49,8 @@ mientras actualizas tus servicios. Consulta [Claves de API](help:api-keys).
 ## ¿Qué pasa con los datos cuando suspendo un inquilino? {#suspend-data}
 
 No se elimina nada. Los miembros y las claves de API pierden el acceso hasta que se reactiva el
-inquilino; los administradores de la plataforma pueden seguir consultándolo. Eliminar un inquilino,
+inquilino; los administradores de la plataforma pueden seguir consultándolo. Los propietarios y administradores del producto pueden
+reactivarlo desde la página del inquilino en Studio. Eliminar un inquilino,
 en cambio, borra el inquilino y todos sus datos y no se puede deshacer. Consulta
 [Inquilinos](help:tenants).
 

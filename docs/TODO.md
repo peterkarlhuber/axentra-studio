@@ -41,11 +41,12 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   (backend reference: `docs/modules/SEARCH.md` in the Axentra repository).
 - **Phase 1 pages have no component tests.** `ApiKeysPage`, `RolesPage`, `SetupPage`,
   `DashboardPage`, `ProductsPage`, `ProductDetailPage`, `HealthPage`, `NotFoundPage`,
-  `SettingsPage`, `AcceptInvitationPage`, `InvitationsPage`, `TenantsPage`, `TenantDetailPage`,
+  `SettingsPage`, `AcceptInvitationPage`, `InvitationsPage`,
   `UsersPage` and `UserDetailPage` have no Vitest test (shared parts such as `MembersPanel`, the
   data table, dialogs, guards and the API client do). They are rendered by the e2e a11y sweep, but
   their actions are not asserted anywhere.
-- **Write flows without an e2e spec.** Creating products and tenants, suspending a tenant, creating
+- **Write flows without an e2e spec.** Creating products and tenants, suspending a tenant in the UI
+  (reactivating is covered by `e2e/tenant-suspension.spec.ts`), creating
   and editing custom roles, creating, rotating and revoking API keys (one-time secret), revoking
   sessions, changing the password and signing out are not driven by any Playwright spec (only the
   initial render of their pages is checked). Area specs cover files, records, usage, billing,
@@ -67,13 +68,14 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   `notify.invitation_accept_url` the server links to `<public_url>/accept-invitation`, a path Studio
   does not serve (Studio's page is `/invitations/accept`). The help tells administrators to set the
   URL; the default should point to a working page.
-- **Product owners cannot reactivate a suspended tenant in Studio.** The suspended tenant's page
-  answers `403` for everyone except platform administrators, so **Reactivate tenant** is out of
-  reach although the API `PATCH` with `tenants:update` works. The help documents the API
-  workaround. Needs either a backend read exception for `tenants:update` holders or a reactivate
-  action in the tenant list.
 
 ## P2
+
+- **Tenant-scoped pages of a suspended tenant answer `403` for product operators.** The tenant page
+  explains the suspension and closes its Members and Invitations tabs, but other screens that load
+  the tenant's data (for example its subscription page `/p/:productId/subscriptions/:tenantId`)
+  show the generic **Not permitted** state. They could show the same "suspended, reactivate to
+  manage" explanation (the tenant record is readable).
 
 - **Sidebar shows screens the user cannot use.** Audit, Settings and Monitoring are listed for
   everyone and answer with a `403` state. Hiding or marking them by permission (from `/v1/me`)

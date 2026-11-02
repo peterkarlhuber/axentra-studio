@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Ban, CircleCheck, Database, Save, Trash2 } from 'lucide-react';
+import { Ban, CircleCheck, Database, Lock, Save, Trash2 } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
@@ -17,6 +17,7 @@ import {
   Card,
   ConfirmDialog,
   DetailList,
+  EmptyState,
   ErrorState,
   FormField,
   Input,
@@ -32,6 +33,8 @@ import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
 import { HelpLink } from '@/help/HelpLink';
 import { InvitationsPanel } from './InvitationsPanel';
+import { ReactivateTenantDialog } from './ReactivateTenantDialog';
+import { useSetTenantStatus, useSuspendedDataAccess } from './tenantStatus';
 
 export function TenantDetailPage() {
   const { t } = useTranslation('tenants');
@@ -45,22 +48,15 @@ export function TenantDetailPage() {
   const queryClient = useQueryClient();
   const [deleting, setDeleting] = useState(false);
   const [suspending, setSuspending] = useState(false);
+  const [reactivating, setReactivating] = useState(false);
+  const suspendedDataAccess = useSuspendedDataAccess();
   const query = useQuery({
     queryKey: queryKeys.tenant(productId, tenantId),
     queryFn: () => tenantsApi.get(productId, tenantId),
   });
   useCrumbLabel(query.data?.name);
 
-  const setStatus = useMutation({
-    mutationFn: (status: 'active' | 'suspended') =>
-      tenantsApi.update(productId, tenantId, { status }, query.data?.version),
-    onSuccess: (updated) => {
-      queryClient.setQueryData(queryKeys.tenant(productId, tenantId), updated);
-      void queryClient.invalidateQueries({ queryKey: ['products', productId, 'tenants', 'list'] });
-      toast.success(updated.status === 'suspended' ? t('detail.suspended') : t('detail.activated'));
-    },
-    onError: showError,
-  });
+  const setStatus = useSetTenantStatus(productId);
 
   if (query.isPending) {
     return (
@@ -74,6 +70,30 @@ export function TenantDetailPage() {
   const tenant = query.data;
   const scope = { tenantId: tenant.id };
   const suspended = tenant.status === 'suspended';
+  const canUpdate = can('tenants:update');
+  // A suspended tenant's data is closed to everyone but platform roles (the server answers 403);
+  // its record stays readable for product operators so they can reactivate it.
+  const canData = (permission: string) =>
+    suspended ? suspendedDataAccess(permission) : can(permission, scope);
+  const dataClosed = suspended && !suspendedDataAccess('members:read');
+  const closedPanel = (
+    <Card>
+      <EmptyState
+        compact
+        headingLevel={3}
+        icon={<Lock />}
+        title={t('suspendedData.title')}
+        description={canUpdate ? t('suspendedData.bodyCanReactivate') : t('suspendedData.body')}
+        action={
+          canUpdate ? (
+            <Button icon={<CircleCheck />} onClick={() => setReactivating(true)}>
+              {t('detail.activate')}
+            </Button>
+          ) : null
+        }
+      />
+    </Card>
+  );
 
   return (
     <div className={layout.stack}>
@@ -88,7 +108,7 @@ export function TenantDetailPage() {
         }
         actions={
           <>
-            {isModuleEnabled(meta.modules, 'records') && can('records:read', scope) ? (
+            {isModuleEnabled(meta.modules, 'records') && canData('records:read') ? (
               <ButtonLink
                 to={`/p/${productId}/records?tenant=${encodeURIComponent(tenant.id)}`}
                 icon={<Database />}
@@ -96,12 +116,13 @@ export function TenantDetailPage() {
                 {t('detail.records')}
               </ButtonLink>
             ) : null}
-            {can('tenants:update') ? (
+            {canUpdate ? (
               suspended ? (
                 <Button
+                  variant="primary"
                   icon={<CircleCheck />}
                   loading={setStatus.isPending}
-                  onClick={() => setStatus.mutate('active')}
+                  onClick={() => setReactivating(true)}
                 >
                   {t('detail.activate')}
                 </Button>
@@ -120,8 +141,9 @@ export function TenantDetailPage() {
         }
       />
       {suspended ? (
-        <Alert tone="warning">
-          {t('detail.suspendedNotice')}{' '}
+        <Alert tone="warning" title={t('suspendedBanner.title')}>
+          {dataClosed ? t('suspendedBanner.body') : t('suspendedBanner.bodyPlatform')}{' '}
+          {canUpdate ? t('suspendedBanner.canReactivate') : t('suspendedBanner.askOperator')}{' '}
           <HelpLink topic="tenants#reactivate">{t('common:help.learnMore')}</HelpLink>
         </Alert>
       ) : null}
@@ -136,7 +158,7 @@ export function TenantDetailPage() {
                 key={`${tenant.id}:${tenant.version}`}
                 tenant={tenant}
                 productId={productId}
-                canEdit={can('tenants:update')}
+                canEdit={canUpdate}
               />
             ),
           },
@@ -144,7 +166,9 @@ export function TenantDetailPage() {
             value: 'members',
             label: t('detail.members'),
             hidden: !can('members:read', scope),
-            content: (
+            content: dataClosed ? (
+              closedPanel
+            ) : (
               <Card flush>
                 <MembersPanel
                   productId={productId}
@@ -165,7 +189,7 @@ export function TenantDetailPage() {
                     });
                     return created;
                   }}
-                  canManage={can('members:manage', scope)}
+                  canManage={canData('members:manage')}
                 />
               </Card>
             ),
@@ -174,12 +198,14 @@ export function TenantDetailPage() {
             value: 'invitations',
             label: t('detail.invitations'),
             hidden: !can('members:read', scope),
-            content: (
+            content: dataClosed ? (
+              closedPanel
+            ) : (
               <Card flush>
                 <InvitationsPanel
                   productId={productId}
                   tenantId={tenant.id}
-                  canManage={can('members:manage', scope)}
+                  canManage={canData('members:manage')}
                 />
               </Card>
             ),
@@ -192,10 +218,16 @@ export function TenantDetailPage() {
         title={t('detail.suspendTitle')}
         description={t('detail.suspendBody', { name: tenant.name })}
         confirmLabel={t('detail.suspend')}
-        onConfirm={() => setStatus.mutateAsync('suspended')}
+        onConfirm={() => setStatus.mutateAsync({ tenant, status: 'suspended' })}
       >
         <HelpLink topic="tenants#suspend">{t('common:help.learnMore')}</HelpLink>
       </ConfirmDialog>
+      <ReactivateTenantDialog
+        tenant={tenant}
+        open={reactivating}
+        onOpenChange={setReactivating}
+        onConfirm={() => setStatus.mutateAsync({ tenant, status: 'active' })}
+      />
       <ConfirmDialog
         open={deleting}
         onOpenChange={setDeleting}

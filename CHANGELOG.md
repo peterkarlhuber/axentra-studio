@@ -6,6 +6,19 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- Product owners and admins who are not platform administrators can reactivate a suspended tenant
+  (needs axentra with the suspended-tenant read fix). The tenant page loads, shows a **This tenant
+  is suspended** banner that says what suspension means and who can lift it, and offers
+  **Reactivate tenant** with a confirmation only to users with `tenants:update`. The Members and
+  Invitations tabs show one explanation instead of failing with `403` (platform roles still see the
+  data). The tenant list offers **Reactivate tenant** in the row menu of suspended tenants, and its
+  status filter is kept in the address (`?status=suspended`). Help (tenants, troubleshooting, FAQ)
+  describes the flow in all six languages instead of the API workaround. Vitest and a Playwright
+  spec (`e2e/tenant-suspension.spec.ts`, real backend, product owner without a platform role and a
+  member of the tenant) cover it; `scripts/e2e-backend.sh` creates two plain users for such specs.
+
 ### Changed
 
 - All languages address the user informally (German now uses "du" throughout).

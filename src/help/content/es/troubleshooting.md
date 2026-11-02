@@ -112,7 +112,8 @@ devuelve a la página en la que estabas. Los datos de formulario sin guardar se 
 - **El producto está archivado o el inquilino está suspendido.** En ese caso solo los
   administradores de la plataforma (acceso completo) y los observadores de la plataforma (acceso de
   lectura) pueden seguir trabajando en él; todos los demás, incluidas las claves de API, reciben
-  `the product or tenant is not active`.
+  `the product or tenant is not active`. Los propietarios y administradores del producto
+  pueden seguir abriendo la página de un inquilino suspendido y [reactivarlo](help:tenants#reactivate).
 - **El techo de roles.** Intentaste asignar un rol con permisos que tú no tienes, o un rol de
   propietario sin ser propietario. Consulta [techo de roles](help:security#role-ceiling).
 - **Permisos de claves de API.** Intentaste dar a una clave nueva un permiso que tú no tienes

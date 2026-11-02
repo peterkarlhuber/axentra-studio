@@ -50,7 +50,8 @@ mentre aggiorni i tuoi servizi. Vedi [Chiavi API](help:api-keys).
 ## Cosa succede ai dati quando sospendo un tenant? {#suspend-data}
 
 Non viene eliminato nulla. Membri e chiavi API perdono l'accesso finché il tenant non viene
-riattivato; gli amministratori della piattaforma possono comunque esaminarlo. Eliminare un tenant,
+riattivato; gli amministratori della piattaforma possono comunque esaminarlo. I proprietari e gli amministratori del prodotto
+possono riattivarlo dalla pagina del tenant in Studio. Eliminare un tenant,
 invece, rimuove il tenant e tutti i suoi dati e non si può annullare. Vedi [Tenant](help:tenants).
 
 ## Perché vedo "Non trovato" per qualcosa che esiste? {#not-found-exists}

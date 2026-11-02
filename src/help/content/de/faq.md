@@ -49,7 +49,8 @@ Geheimnis funktionsfähig, während du deine Dienste umstellst. Siehe [API-Schl�
 ## Was passiert mit den Daten, wenn ich einen Mandanten sperre? {#suspend-data}
 
 Es wird nichts gelöscht. Mitglieder und API-Schlüssel verlieren den Zugriff, bis der Mandant wieder
-aktiviert wird; Plattform-Administratoren können ihn weiterhin ansehen. Das Löschen eines
+aktiviert wird; Plattform-Administratoren können ihn weiterhin ansehen. Product owner und Product admins können ihn
+auf der Mandantenseite in Studio reaktivieren. Das Löschen eines
 Mandanten dagegen entfernt den Mandanten mit all seinen Daten und lässt sich nicht rückgängig
 machen. Siehe [Mandanten](help:tenants).
 

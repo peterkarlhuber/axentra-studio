@@ -109,7 +109,9 @@ in cui eri. I dati non salvati nei moduli vanno persi. Vedi [Sessione terminata]
   per sapere cosa consente ogni autorizzazione e quali ruoli predefiniti la possiedono.
 - **Il prodotto è archiviato o il tenant è sospeso.** In tal caso possono ancora lavorarci solo gli
   amministratori della piattaforma (accesso completo) e i visualizzatori della piattaforma (accesso
-  in lettura); tutti gli altri, chiavi API comprese, ricevono `the product or tenant is not active`.
+  in lettura); tutti gli altri, chiavi API comprese, ricevono `the product or tenant is not active`. I proprietari e gli amministratori del
+  prodotto possono comunque aprire la pagina di un tenant sospeso e
+  [riattivarlo](help:tenants#reactivate).
 - **Il tetto dei ruoli.** Hai cercato di assegnare un ruolo con autorizzazioni che non possiedi,
   oppure un ruolo di proprietario senza essere proprietario. Vedi
   [tetto dei ruoli](help:security#role-ceiling).

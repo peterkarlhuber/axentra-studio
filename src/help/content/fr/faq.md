@@ -51,7 +51,8 @@ secret valide pendant que tu mets à jour tes services. Voir [Clés d’API](hel
 ## Qu’advient-il des données lorsque je suspends un locataire ? {#suspend-data}
 
 Rien n’est supprimé. Les membres et les clés d’API perdent l’accès jusqu’à la réactivation du
-locataire ; les administrateurs de la plateforme peuvent toujours le consulter. Supprimer un
+locataire ; les administrateurs de la plateforme peuvent toujours le consulter. Les propriétaires et les administrateurs du produit
+peuvent le réactiver depuis la page du locataire dans Studio. Supprimer un
 locataire, en revanche, efface le locataire et toutes ses données, de façon irréversible. Voir
 [Locataires](help:tenants).
 

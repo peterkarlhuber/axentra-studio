@@ -43,8 +43,7 @@
     "suspended": "Inquilino suspendido",
     "activated": "Inquilino reactivado",
     "suspendTitle": "¿Suspender inquilino?",
-    "suspendBody": "Los miembros de “{{name}}” y sus claves de API pierden el acceso hasta que se reactive el inquilino. Los operadores del producto también pierden el acceso a sus datos; solo los administradores de la plataforma pueden seguir abriéndolo. No se elimina ningún dato.",
-    "suspendedNotice": "Este inquilino está suspendido. Sus miembros, los operadores del producto y las claves de API no pueden acceder a él."
+    "suspendBody": "Los miembros de “{{name}}” y sus claves de API pierden el acceso hasta que se reactive el inquilino. Los operadores del producto aún pueden abrir el inquilino y reactivarlo, pero no acceder a sus datos; solo los administradores de la plataforma pueden. No se elimina ningún dato."
   },
   "invitations": {
     "title": "Invitaciones",
@@ -90,5 +89,22 @@
   "searchPlaceholder": "Nombre o slug",
   "filters": {
     "allStatuses": "Todos los estados"
+  },
+  "actionsFor": "Acciones para {{name}}",
+  "reactivate": {
+    "title": "¿Reactivar inquilino?",
+    "body": "Los miembros de “{{name}}” y sus claves de API recuperan el acceso de inmediato, con los mismos roles y permisos que antes. Sus datos vuelven a estar disponibles."
+  },
+  "suspendedBanner": {
+    "title": "Este inquilino está suspendido",
+    "body": "Sus miembros y claves de API no tienen acceso, y no se pueden abrir sus miembros, invitaciones, registros, archivos, uso ni facturación. No se ha eliminado ningún dato.",
+    "bodyPlatform": "Sus miembros, los operadores del producto y las claves de API no pueden acceder a sus datos; tu rol de plataforma sí. No se ha eliminado ningún dato.",
+    "canReactivate": "Reactiva el inquilino para restablecer el acceso.",
+    "askOperator": "Un propietario o administrador del producto puede reactivarlo."
+  },
+  "suspendedData": {
+    "title": "No disponible mientras el inquilino esté suspendido",
+    "body": "Los miembros y las invitaciones de un inquilino suspendido no se pueden ver ni cambiar. Un propietario o administrador del producto puede reactivar el inquilino.",
+    "bodyCanReactivate": "Los miembros y las invitaciones de un inquilino suspendido no se pueden ver ni cambiar. Reactiva el inquilino para volver a gestionarlos."
   }
 }

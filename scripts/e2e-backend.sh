@@ -33,8 +33,12 @@
 #      POST /v1/products is refused with 409 mode_not_supported) with a tenant, a free plan the tenant subscribes to, a
 #      job, a webhook endpoint (no matching events) and a notification template, so every route
 #      of the a11y sweep (e2e/a11y.spec.ts) has its parameters,
-#   5. writes the exports for Playwright (AXENTRA_E2E_API, _EMAIL, _PASSWORD, _PRODUCT_ID,
-#      _TENANT_ID, _JOB_ID, _WEBHOOK_ID, _TEMPLATE_KEY, _MODE, _WORKER, _NOTIFY_DISPATCH, ...).
+#   5. creates two plain users without any role (Axentra has no API to create password users, so
+#      through the installed library): specs make them product operators or tenant members of
+#      what they create, to check Studio for non-admins (e2e/tenant-suspension.spec.ts),
+#   6. writes the exports for Playwright (AXENTRA_E2E_API, _EMAIL, _PASSWORD, _PRODUCT_ID,
+#      _TENANT_ID, _JOB_ID, _WEBHOOK_ID, _TEMPLATE_KEY, _OPERATOR_EMAIL, _MEMBER_EMAIL,
+#      _USER_PASSWORD, _MODE, _WORKER, _NOTIFY_DISPATCH, ...).
 #
 # Env (all optional except the PostgreSQL URL):
 #   AXENTRA_E2E_PG_URL     superuser URL (fallback AXENTRA_TEST_DATABASE_URL)
@@ -353,7 +357,27 @@ TOML
     "{\"key\": \"$template_key\", \"name\": \"E2E fixture\", \"category\": \"onboarding\", \"variables\": [\"name\"], \"sample_data\": {\"name\": \"Ada\"}, \"variants\": {\"en\": {\"subject\": \"Hello {{ name }}\", \"text\": \"Hi {{ name }}.\", \"html\": \"<p>Hi {{ name }}.</p>\"}}}" >/dev/null
   rm -f "$jar"
 
-  # 5. exports for Playwright
+  # 5. plain users (no platform role) for the specs
+  local operator_email="studio-e2e-operator@example.com" member_email="studio-e2e-member@example.com" user_password
+  user_password="$("$py" -c 'import secrets; print("pw-" + secrets.token_urlsafe(18))')"
+  log "creating plain users $operator_email and $member_email"
+  "$py" - "$STATE/axentra.toml" "$user_password" "$operator_email" "$member_email" <<'PY'
+import sys
+from axentra.config.settings import load_settings
+from axentra.data.database import DbScope
+from axentra.platform import Axentra
+
+ax = Axentra.from_settings(load_settings(sys.argv[1]))
+ax.db.open()
+try:
+    with ax.db.transaction(DbScope.platform()) as tx:
+        for email in sys.argv[3:]:
+            ax.identity.create_user(tx, email=email, name=email.split("@")[0], password=sys.argv[2])
+finally:
+    ax.db.close()
+PY
+
+  # 6. exports for Playwright
   local modules
   modules="$(curl -fsS "$base/v1/meta" | "$py" -c 'import json,sys; print(",".join(json.load(sys.stdin)["modules"]))')"
   umask 077
@@ -367,6 +391,9 @@ export AXENTRA_E2E_TENANT_ID=$tenant_id
 export AXENTRA_E2E_JOB_ID=$job_id
 export AXENTRA_E2E_WEBHOOK_ID=$webhook_id
 export AXENTRA_E2E_TEMPLATE_KEY=$template_key
+export AXENTRA_E2E_OPERATOR_EMAIL=$operator_email
+export AXENTRA_E2E_MEMBER_EMAIL=$member_email
+export AXENTRA_E2E_USER_PASSWORD=$user_password
 export AXENTRA_E2E_BACKEND_SHA=$sha
 export AXENTRA_E2E_MODULES=$modules
 export AXENTRA_E2E_WORKER=$WORKER

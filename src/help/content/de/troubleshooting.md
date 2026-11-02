@@ -114,7 +114,8 @@ Seite, auf der du warst. Nicht gespeicherte Formulareingaben gehen verloren. Sie
   steht, was jede Berechtigung erlaubt und welche integrierten Rollen sie haben.
 - **Das Produkt ist archiviert oder der Mandant gesperrt.** Dann können nur noch
   Plattform-Administratoren (voller Zugriff) und Plattform-Betrachter (Lesezugriff) darin
-  arbeiten; alle anderen, auch API-Schlüssel, erhalten `the product or tenant is not active`.
+  arbeiten; alle anderen, auch API-Schlüssel, erhalten `the product or tenant is not active`. Product owner und Product admins können die
+  Seite eines gesperrten Mandanten trotzdem öffnen und ihn [reaktivieren](help:tenants#reactivate).
 - **Die Rollenobergrenze.** Du wolltest eine Rolle vergeben, die Berechtigungen enthält, die du
   selbst nicht hast, oder eine Owner-Rolle, ohne selbst Owner zu sein. Siehe
   [Rollenobergrenze](help:security#role-ceiling).

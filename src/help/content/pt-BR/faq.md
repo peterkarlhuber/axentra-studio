@@ -48,7 +48,8 @@ funcionando enquanto você atualiza os seus serviços. Veja [Chaves de API](help
 ## O que acontece com os dados quando suspendo um tenant? {#suspend-data}
 
 Nada é excluído. Os membros e as chaves de API perdem o acesso até o tenant ser reativado;
-administradores da plataforma ainda podem inspecioná-lo. Já excluir um tenant remove o tenant e
+administradores da plataforma ainda podem inspecioná-lo. Proprietários e administradores do produto podem
+reativá-lo na página do tenant no Studio. Já excluir um tenant remove o tenant e
 todos os dados dele e não pode ser desfeito. Veja [Tenants](help:tenants).
 
 ## Por que vejo "Não encontrado" para algo que existe? {#not-found-exists}

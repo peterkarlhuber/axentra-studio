@@ -29,6 +29,9 @@ Apri [Tenant](app:tenants). Usa **Cerca tenant** per filtrare per nome o slug e 
 per mostrare solo i tenant **Attivo** o **Sospeso**. La colonna **Membri** conta le appartenenze del
 tenant.
 
+Per trovare in fretta i tenant sospesi, scegli **Sospeso** nel filtro **Stato**; il filtro resta
+nell'indirizzo della pagina, quindi puoi salvare o condividere l'elenco filtrato.
+
 ## Creare un tenant {#create}
 
 1. Apri [Tenant](app:tenants) e scegli **Nuovo tenant**.
@@ -72,32 +75,33 @@ Finché un tenant è sospeso:
 - i suoi membri non possono accedervi; le loro richieste vengono rifiutate con **Non consentito**;
 - vengono rifiutate anche le chiavi API legate al tenant e le chiavi valide per l'intero prodotto
   che operano al suo interno;
-- anche gli operatori di prodotto perdono l'accesso ai dati del tenant e alla sua pagina; il tenant
-  resta nell'elenco [Tenant](app:tenants) con lo stato **Sospeso**;
+- gli operatori di prodotto perdono l'accesso ai dati del tenant (membri, inviti, record, file,
+  utilizzo, fatturazione); possono comunque aprire la sua pagina, che mostra **Questo tenant è
+  sospeso**, e riattivarlo. Il tenant resta nell'elenco [Tenant](app:tenants) con lo stato
+  **Sospeso**;
 - gli amministratori della piattaforma mantengono l'accesso completo e i visualizzatori della
   piattaforma l'accesso in lettura;
 - nessun dato viene eliminato.
 
 ## Riattivare un tenant {#reactivate}
 
-1. Apri il tenant sospeso.
-2. Scegli **Riattiva tenant**.
+Per riattivare serve `tenants:update`, che hanno i proprietari e gli amministratori del prodotto;
+non devi essere amministratore della piattaforma.
 
-Membri e chiavi tornano subito a funzionare.
+1. Apri il tenant sospeso, per esempio da [Tenant](app:tenants) con il filtro **Stato** su
+   **Sospeso**. La pagina mostra l'avviso **Questo tenant è sospeso**.
+2. Scegli **Riattiva tenant**. Nell'elenco la stessa azione si trova nel menu delle azioni (**⋯**)
+   della riga di un tenant sospeso.
+3. Leggi la conferma e scegli **Riattiva tenant**.
 
-> [!WARNING]
-> Solo gli amministratori della piattaforma (e i visualizzatori della piattaforma, in sola lettura)
-> possono aprire la pagina di un tenant sospeso. Un proprietario o amministratore del prodotto che
-> non è amministratore della piattaforma riceve lì **Non consentito** e non può raggiungere
-> **Riattiva tenant** in Studio. Chiedi a un amministratore della piattaforma, oppure riattiva il
-> tenant tramite l'API con `tenants:update`:
->
-> ```http
-> PATCH /v1/products/prd_01EXAMPLE/tenants/ten_01EXAMPLE
-> Content-Type: application/json
->
-> {"status": "active"}
-> ```
+Membri e chiavi tornano subito a funzionare, con gli stessi ruoli e permessi di prima, e lo stato
+diventa **Attivo** nella pagina del tenant e nell'elenco. Il registro di audit annota la modifica
+come `tenancy.tenant.update` con lo stato precedente e quello nuovo.
+
+Finché il tenant è sospeso, le schede **Membri** e **Inviti** mostrano **Non disponibile finché il
+tenant è sospeso** al posto dei loro elenchi, perché il server tiene chiusi i dati del tenant. Chi
+non ha `tenants:update` (per esempio i visualizzatori o il supporto del prodotto) vede l'avviso, ma
+non l'azione **Riattiva tenant**.
 
 ## Eliminare un tenant {#delete}
 
@@ -137,8 +141,10 @@ dei tenant eliminati possono essere riutilizzati.
 **Verifica i dati inseriti: "slug must be 2-63 lowercase letters, digits or dashes".** Rimuovi
 dallo slug maiuscole, spazi e caratteri speciali.
 
-**Non consentito all'apertura di un tenant.** Il tenant è sospeso (vedi [riattivare](#reactivate)),
-oppure il prodotto è archiviato, oppure non possiedi `tenant:read` al suo interno.
+**Non consentito all'apertura di un tenant.** Il tenant è sospeso e tu sei uno dei suoi membri
+(solo gli operatori di prodotto e gli amministratori della piattaforma possono aprire un tenant
+sospeso; vedi [riattivare](#reactivate)), oppure il prodotto è archiviato, oppure non possiedi
+`tenant:read` al suo interno.
 
 **Non trovato all'apertura di un tenant.** Il tenant è stato eliminato, oppure non hai alcun legame
 con esso (Axentra risponde allo stesso modo affinché non sia possibile sondare gli ID dei tenant).
@@ -151,3 +157,10 @@ finestra, per esempio `acme`, non il nome visualizzato.
 
 **Manca il pulsante Nuovo tenant.** Non possiedi `tenants:create`. Chiedi a un proprietario o a un
 amministratore del prodotto.
+
+**Manca l'azione Riattiva tenant.** Non possiedi `tenants:update`. Chiedi a un proprietario o a un
+amministratore del prodotto.
+
+**Modificato nel frattempo durante la riattivazione.** Un'altra persona ha modificato il tenant
+prima di te. Studio lo ricarica; controlla lo stato e scegli di nuovo **Riattiva tenant** se è
+ancora sospeso.

@@ -43,8 +43,7 @@
     "suspended": "Tenant suspended",
     "activated": "Tenant reactivated",
     "suspendTitle": "Suspend tenant?",
-    "suspendBody": "Members of “{{name}}” and its API keys lose access until the tenant is reactivated. Product operators lose access to its data too; only platform administrators can still open it. No data is deleted.",
-    "suspendedNotice": "This tenant is suspended. Its members, product operators and API keys cannot access it."
+    "suspendBody": "Members of “{{name}}” and its API keys lose access until the tenant is reactivated. Product operators can still open the tenant and reactivate it, but not its data; only platform administrators can. No data is deleted."
   },
   "invitations": {
     "title": "Invitations",
@@ -90,5 +89,22 @@
   "searchPlaceholder": "Name or slug",
   "filters": {
     "allStatuses": "All statuses"
+  },
+  "actionsFor": "Actions for {{name}}",
+  "reactivate": {
+    "title": "Reactivate tenant?",
+    "body": "Members of “{{name}}” and its API keys regain access immediately, with the same roles and permissions as before. Its data becomes available again."
+  },
+  "suspendedBanner": {
+    "title": "This tenant is suspended",
+    "body": "Its members and API keys are locked out, and its members, invitations, records, files, usage and billing cannot be opened. No data has been deleted.",
+    "bodyPlatform": "Its members, product operators and API keys cannot access its data; your platform role still can. No data has been deleted.",
+    "canReactivate": "Reactivate the tenant to restore access.",
+    "askOperator": "A product owner or admin can reactivate it."
+  },
+  "suspendedData": {
+    "title": "Not available while the tenant is suspended",
+    "body": "Members and invitations of a suspended tenant cannot be viewed or changed. A product owner or admin can reactivate the tenant.",
+    "bodyCanReactivate": "Members and invitations of a suspended tenant cannot be viewed or changed. Reactivate the tenant to manage them again."
   }
 }

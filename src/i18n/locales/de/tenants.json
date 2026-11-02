@@ -43,8 +43,7 @@
     "suspended": "Mandant gesperrt",
     "activated": "Mandant reaktiviert",
     "suspendTitle": "Mandant sperren?",
-    "suspendBody": "Mitglieder von „{{name}}“ und seine API-Schlüssel verlieren den Zugriff, bis der Mandant reaktiviert wird. Auch Produktverantwortliche haben keinen Zugriff mehr auf seine Daten; nur Plattform-Administratoren können ihn noch öffnen. Es werden keine Daten gelöscht.",
-    "suspendedNotice": "Dieser Mandant ist gesperrt. Seine Mitglieder, Produktverantwortlichen und API-Schlüssel haben keinen Zugriff."
+    "suspendBody": "Mitglieder von „{{name}}“ und seine API-Schlüssel verlieren den Zugriff, bis der Mandant reaktiviert wird. Produktverantwortliche können den Mandanten weiterhin öffnen und reaktivieren, aber nicht auf seine Daten zugreifen; das können nur Plattform-Administratoren. Es werden keine Daten gelöscht."
   },
   "invitations": {
     "title": "Einladungen",
@@ -90,5 +89,22 @@
   "searchPlaceholder": "Name oder Kurzname",
   "filters": {
     "allStatuses": "Alle Status"
+  },
+  "actionsFor": "Aktionen für {{name}}",
+  "reactivate": {
+    "title": "Mandant reaktivieren?",
+    "body": "Mitglieder von „{{name}}“ und seine API-Schlüssel erhalten sofort wieder Zugriff, mit denselben Rollen und Berechtigungen wie vorher. Seine Daten sind wieder verfügbar."
+  },
+  "suspendedBanner": {
+    "title": "Dieser Mandant ist gesperrt",
+    "body": "Seine Mitglieder und API-Schlüssel sind ausgesperrt, und seine Mitglieder, Einladungen, Datensätze, Dateien, Nutzung und Abrechnung lassen sich nicht öffnen. Es wurden keine Daten gelöscht.",
+    "bodyPlatform": "Seine Mitglieder, Produktverantwortlichen und API-Schlüssel haben keinen Zugriff auf seine Daten; deine Plattformrolle schon. Es wurden keine Daten gelöscht.",
+    "canReactivate": "Reaktiviere den Mandanten, um den Zugriff wiederherzustellen.",
+    "askOperator": "Ein Produktinhaber oder Produktadministrator kann ihn reaktivieren."
+  },
+  "suspendedData": {
+    "title": "Nicht verfügbar, solange der Mandant gesperrt ist",
+    "body": "Mitglieder und Einladungen eines gesperrten Mandanten lassen sich weder ansehen noch ändern. Ein Produktinhaber oder Produktadministrator kann den Mandanten reaktivieren.",
+    "bodyCanReactivate": "Mitglieder und Einladungen eines gesperrten Mandanten lassen sich weder ansehen noch ändern. Reaktiviere den Mandanten, um sie wieder zu verwalten."
   }
 }

@@ -43,8 +43,7 @@
     "suspended": "Locataire suspendu",
     "activated": "Locataire réactivé",
     "suspendTitle": "Suspendre le locataire ?",
-    "suspendBody": "Les membres de « {{name}} » et ses clés d’API perdent l’accès jusqu’à la réactivation du locataire. Les opérateurs du produit perdent eux aussi l’accès à ses données ; seuls les administrateurs de la plateforme peuvent encore l’ouvrir. Aucune donnée n’est supprimée.",
-    "suspendedNotice": "Ce locataire est suspendu. Ses membres, les opérateurs du produit et les clés d’API n’y ont pas accès."
+    "suspendBody": "Les membres de « {{name}} » et ses clés d’API perdent l’accès jusqu’à la réactivation du locataire. Les opérateurs du produit peuvent toujours ouvrir le locataire et le réactiver, mais pas accéder à ses données ; seuls les administrateurs de la plateforme le peuvent. Aucune donnée n’est supprimée."
   },
   "invitations": {
     "title": "Invitations",
@@ -90,5 +89,22 @@
   "searchPlaceholder": "Nom ou slug",
   "filters": {
     "allStatuses": "Tous les statuts"
+  },
+  "actionsFor": "Actions pour {{name}}",
+  "reactivate": {
+    "title": "Réactiver le locataire ?",
+    "body": "Les membres de « {{name}} » et ses clés d’API retrouvent l’accès immédiatement, avec les mêmes rôles et permissions qu’avant. Ses données sont de nouveau disponibles."
+  },
+  "suspendedBanner": {
+    "title": "Ce locataire est suspendu",
+    "body": "Ses membres et ses clés d’API n’ont plus accès, et ses membres, invitations, enregistrements, fichiers, consommation et facturation ne peuvent pas être ouverts. Aucune donnée n’a été supprimée.",
+    "bodyPlatform": "Ses membres, les opérateurs du produit et les clés d’API n’ont pas accès à ses données ; ton rôle de plateforme, si. Aucune donnée n’a été supprimée.",
+    "canReactivate": "Réactive le locataire pour rétablir l’accès.",
+    "askOperator": "Un propriétaire ou un administrateur du produit peut le réactiver."
+  },
+  "suspendedData": {
+    "title": "Indisponible tant que le locataire est suspendu",
+    "body": "Les membres et les invitations d’un locataire suspendu ne peuvent être ni consultés ni modifiés. Un propriétaire ou un administrateur du produit peut réactiver le locataire.",
+    "bodyCanReactivate": "Les membres et les invitations d’un locataire suspendu ne peuvent être ni consultés ni modifiés. Réactive le locataire pour les gérer de nouveau."
   }
 }

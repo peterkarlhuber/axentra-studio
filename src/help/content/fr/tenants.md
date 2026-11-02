@@ -28,6 +28,9 @@ Ouvre [Locataires](app:tenants). Utilise **Rechercher des locataires** pour filt
 pour n’afficher que les locataires **Actif** ou **Suspendu**. La colonne **Membres** compte les
 adhésions du locataire.
 
+Pour retrouver vite les locataires suspendus, choisis **Suspendu** dans le filtre **Statut** ; le
+filtre reste dans l’adresse de la page, tu peux donc enregistrer ou partager la liste filtrée.
+
 ## Créer un locataire {#create}
 
 1. Ouvre [Locataires](app:tenants) et choisis **Nouveau locataire**.
@@ -71,30 +74,32 @@ Tant qu’un locataire est suspendu :
 
 - ses membres ne peuvent pas y accéder ; leurs requêtes sont refusées avec **Non autorisé** ;
 - les clés d’API liées au locataire, et les clés valables pour tout le produit qui y travaillent, sont refusées elles aussi ;
-- les opérateurs du produit perdent eux aussi l’accès aux données du locataire et à sa page ; le locataire reste dans la
-  liste [Locataires](app:tenants) avec le statut **Suspendu** ;
+- les opérateurs du produit perdent l’accès aux données du locataire (membres, invitations,
+  enregistrements, fichiers, consommation, facturation) ; ils peuvent toujours ouvrir sa page, qui
+  affiche **Ce locataire est suspendu**, et le réactiver. Le locataire reste dans la liste
+  [Locataires](app:tenants) avec le statut **Suspendu** ;
 - les administrateurs de la plateforme conservent un accès complet et les lecteurs de la plateforme un accès en lecture ;
 - aucune donnée n’est supprimée.
 
 ## Réactiver un locataire {#reactivate}
 
-1. Ouvre le locataire suspendu.
-2. Choisis **Réactiver le locataire**.
+La réactivation demande `tenants:update`, que détiennent les propriétaires et les administrateurs
+du produit ; inutile d’être administrateur de la plateforme.
 
-Les membres et les clés fonctionnent de nouveau immédiatement.
+1. Ouvre le locataire suspendu, par exemple depuis [Locataires](app:tenants) avec le filtre
+   **Statut** sur **Suspendu**. La page affiche le bandeau **Ce locataire est suspendu**.
+2. Choisis **Réactiver le locataire**. Dans la liste, la même action se trouve dans le menu
+   d’actions (**⋯**) de la ligne d’un locataire suspendu.
+3. Lis la confirmation et choisis **Réactiver le locataire**.
 
-> [!WARNING]
-> Seuls les administrateurs de la plateforme (et les lecteurs de la plateforme, en lecture seule) peuvent ouvrir la page
-> d’un locataire suspendu. Un propriétaire ou un administrateur du produit qui n’est pas administrateur de la plateforme y obtient **Non autorisé**
-> et ne peut pas atteindre **Réactiver le locataire** dans Studio. Adresse-toi à un administrateur de la plateforme, ou réactive le locataire
-> via l’API avec `tenants:update` :
->
-> ```http
-> PATCH /v1/products/prd_01EXAMPLE/tenants/ten_01EXAMPLE
-> Content-Type: application/json
->
-> {"status": "active"}
-> ```
+Les membres et les clés fonctionnent de nouveau immédiatement, avec les mêmes rôles et permissions
+qu’avant, et le statut passe à **Actif** sur la page du locataire et dans la liste. Le journal
+d’audit enregistre la modification sous `tenancy.tenant.update` avec l’ancien et le nouveau statut.
+
+Tant que le locataire est suspendu, ses onglets **Membres** et **Invitations** affichent
+**Indisponible tant que le locataire est suspendu** au lieu de leurs listes, car le serveur garde les
+données du locataire fermées. Les personnes sans `tenants:update` (par exemple les lecteurs ou le
+support du produit) voient le bandeau, mais pas l’action **Réactiver le locataire**.
 
 ## Supprimer un locataire {#delete}
 
@@ -132,8 +137,10 @@ locataires supprimés peuvent être réutilisés.
 **Vérifie ta saisie : « slug must be 2-63 lowercase letters, digits or dashes ».** Retire du slug les
 majuscules, les espaces et les caractères spéciaux.
 
-**Non autorisé à l’ouverture d’un locataire.** Le locataire est suspendu (voir [réactiver](#reactivate)),
-ou le produit est archivé, ou il te manque `tenant:read` dans ce locataire.
+**Non autorisé à l’ouverture d’un locataire.** Le locataire est suspendu et tu en es membre (seuls
+les opérateurs du produit et les administrateurs de la plateforme peuvent ouvrir un locataire
+suspendu ; voir [réactiver](#reactivate)), ou le produit est archivé, ou il te manque `tenant:read`
+dans ce locataire.
 
 **Introuvable à l’ouverture d’un locataire.** Le locataire a été supprimé, ou tu n’as aucun lien avec lui
 (Axentra répond de la même façon pour que les ID de locataire ne puissent pas être sondés).
@@ -145,3 +152,10 @@ page et répète ta modification.
 `acme`, et non le nom affiché.
 
 **Pas de bouton Nouveau locataire.** Il te manque `tenants:create`. Adresse-toi à un propriétaire ou à un administrateur du produit.
+
+**Pas d’action Réactiver le locataire.** Il te manque `tenants:update`. Adresse-toi à un propriétaire
+ou à un administrateur du produit.
+
+**Modifié entre-temps lors de la réactivation.** Une autre personne a modifié le locataire avant
+toi. Studio le recharge ; vérifie le statut et choisis de nouveau **Réactiver le locataire** s’il
+est toujours suspendu.

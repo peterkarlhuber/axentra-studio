@@ -115,7 +115,8 @@ sessions) lorsque tu changes ton mot de passe. Les durées exactes sont fixées 
 - **Le produit est archivé ou le locataire est suspendu.** Seuls les administrateurs de la
   plateforme (accès complet) et les lecteurs de la plateforme (accès en lecture) peuvent alors
   encore y travailler ; tous les autres, clés d’API comprises, obtiennent
-  `the product or tenant is not active`.
+  `the product or tenant is not active`. Les propriétaires et les administrateurs du produit
+  peuvent toujours ouvrir la page d’un locataire suspendu et le [réactiver](help:tenants#reactivate).
 - **Le plafond de rôle.** Tu as tenté d’attribuer un rôle comportant des autorisations que tu ne
   possèdes pas toi-même, ou un rôle de propriétaire sans être propriétaire. Voir
   [Plafond de rôle](help:security#role-ceiling).
