@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Vendors the Axentra OpenAPI document into api/openapi.json, records its source in
- * api/SOURCE and regenerates src/api/schema.d.ts with openapi-typescript.
+ * api/SOURCE, pins the backend commit in api/BACKEND_REF (used by CI's e2e and contract jobs)
+ * and regenerates src/api/schema.d.ts with openapi-typescript.
  *
  *   npm run api:sync                          # copy ../axentra/openapi/axentra-v1.json
  *   npm run api:sync -- --from <file>         # copy another local file
@@ -18,6 +19,8 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const target = path.join(root, 'api/openapi.json');
 const sourceFile = path.join(root, 'api/SOURCE');
+// The backend commit CI checks out for the e2e and contract jobs (see docs/COMPATIBILITY.md).
+const backendRefFile = path.join(root, 'api/BACKEND_REF');
 const schemaFile = path.join(root, 'src/api/schema.d.ts');
 const CONTRACT_PATH = 'openapi/axentra-v1.json';
 
@@ -95,6 +98,9 @@ async function main() {
       '',
     ].join('\n'),
   );
+
+  if (/^[0-9a-f]{40}$/.test(sha)) fs.writeFileSync(backendRefFile, `${sha}\n`);
+  else console.warn(`Backend commit unknown: api/BACKEND_REF left unchanged (${sha}).`);
 
   const bin = path.join(root, 'node_modules/.bin/openapi-typescript');
   execFileSync(bin, [target, '--output', schemaFile], { stdio: 'inherit' });

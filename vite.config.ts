@@ -15,6 +15,8 @@ export default defineConfig(({ mode }) => {
   const apiTarget = env.AXENTRA_API_URL || process.env.AXENTRA_API_URL || 'http://127.0.0.1:8080';
   const proxy: Record<string, ProxyOptions> = {
     '/v1': { target: apiTarget, changeOrigin: false, xfwd: true },
+    // Prometheus metrics live outside /v1 (Monitoring page).
+    '/metrics': { target: apiTarget, changeOrigin: false, xfwd: true },
   };
 
   return {

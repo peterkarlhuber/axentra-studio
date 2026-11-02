@@ -5,7 +5,7 @@ import { renderWithProviders, testMeta } from '@/test/utils';
 import { ModuleGate } from './guards';
 import { isModuleEnabled } from './modules';
 
-function renderGate(module: 'records' | 'files', modules: string[]) {
+function renderGate(module: 'records' | 'files' | 'jobs', modules: string[]) {
   renderWithProviders(
     <Routes>
       <Route element={<ModuleGate module={module} titleKey={`items.${module}`} />}>
@@ -29,10 +29,14 @@ describe('ModuleGate', () => {
     expect(screen.getAllByText('data').length).toBeGreaterThan(0);
   });
 
-  it('explains that an enabled module has no Studio screen yet', () => {
-    renderGate('files', ['storage']);
-    expect(screen.queryByText('module screen')).not.toBeInTheDocument();
-    expect(screen.getAllByText('storage').length).toBeGreaterThan(0);
+  it('renders the jobs section when the events module is enabled', () => {
+    renderGate('jobs', ['identity', 'events']);
+    expect(screen.getByText('module screen')).toBeInTheDocument();
+  });
+
+  it('renders the files section when the storage module is enabled', () => {
+    renderGate('files', ['identity', 'storage']);
+    expect(screen.getByText('module screen')).toBeInTheDocument();
   });
 
   it('matches module ids case-insensitively', () => {

@@ -4,18 +4,11 @@ import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { RootLayout } from './RootLayout';
 import { HomeRedirect, ModuleGate, ProductScope, RequireAuth } from './guards';
 import { AppShell } from './shell/AppShell';
-import type { StudioModule } from './modules';
 
 /* Feature pages are code-split per route. */
 const lazyPage =
   <K extends string>(loader: () => Promise<Record<K, React.ComponentType>>, name: K) =>
   async () => ({ Component: (await loader())[name] });
-
-const futureModule = (path: string, module: StudioModule, titleKey: string): RouteObject => ({
-  path,
-  element: <ModuleGate module={module} titleKey={titleKey} />,
-  handle: { crumb: titleKey },
-});
 
 export const routes: RouteObject[] = [
   {
@@ -69,6 +62,15 @@ export const routes: RouteObject[] = [
                 path: 'health',
                 handle: { crumb: 'health' },
                 lazy: lazyPage(() => import('@/features/system/HealthPage'), 'HealthPage'),
+              },
+              // ---- monitoring area ----
+              {
+                path: 'monitoring',
+                handle: { crumb: 'monitoring' },
+                lazy: lazyPage(
+                  () => import('@/features/monitoring/MonitoringPage'),
+                  'MonitoringPage',
+                ),
               },
               {
                 path: 'settings',
@@ -195,14 +197,178 @@ export const routes: RouteObject[] = [
                       },
                     ],
                   },
-                  futureModule('files', 'files', 'files'),
-                  futureModule('jobs', 'jobs', 'jobs'),
-                  futureModule('events', 'events', 'events'),
-                  futureModule('webhooks', 'webhooks', 'webhooks'),
-                  futureModule('usage', 'usage', 'usage'),
-                  futureModule('plans', 'billing', 'plans'),
-                  futureModule('subscriptions', 'billing', 'subscriptions'),
-                  futureModule('notifications', 'notifications', 'notifications'),
+                  // ---- Data & Storage ----
+                  {
+                    path: 'data',
+                    handle: { crumb: 'dataOverview' },
+                    element: <ModuleGate module="records" titleKey="dataOverview" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/storage/DataOverviewPage'),
+                          'DataOverviewPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'files',
+                    handle: { crumb: 'files' },
+                    element: <ModuleGate module="files" titleKey="files" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/storage/FilesPage'), 'FilesPage'),
+                      },
+                    ],
+                  },
+                  // ---- end Data & Storage ----
+                  // ---- Events & Jobs (module `events`) ----
+                  {
+                    path: 'jobs',
+                    handle: { crumb: 'jobs' },
+                    element: <ModuleGate module="jobs" titleKey="jobs" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/events/JobsPage'), 'JobsPage'),
+                      },
+                      {
+                        path: ':jobId',
+                        handle: { crumbParam: 'jobId' },
+                        lazy: lazyPage(
+                          () => import('@/features/events/JobDetailPage'),
+                          'JobDetailPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'schedules',
+                    handle: { crumb: 'schedules' },
+                    element: <ModuleGate module="schedules" titleKey="schedules" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/events/SchedulesPage'),
+                          'SchedulesPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'events',
+                    handle: { crumb: 'events' },
+                    element: <ModuleGate module="events" titleKey="events" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/events/EventsPage'), 'EventsPage'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'webhooks',
+                    handle: { crumb: 'webhooks' },
+                    element: <ModuleGate module="webhooks" titleKey="webhooks" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/events/WebhooksPage'),
+                          'WebhooksPage',
+                        ),
+                      },
+                      {
+                        path: ':webhookId',
+                        handle: { crumbParam: 'webhookId' },
+                        lazy: lazyPage(
+                          () => import('@/features/events/WebhookDetailPage'),
+                          'WebhookDetailPage',
+                        ),
+                      },
+                    ],
+                  },
+                  // ---- end Events & Jobs ----
+                  /* ---- Usage & Billing (studio-billing) ---- */
+                  {
+                    path: 'usage',
+                    handle: { crumb: 'usage' },
+                    element: <ModuleGate module="usage" titleKey="usage" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/usage/UsagePage'), 'UsagePage'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'plans',
+                    handle: { crumb: 'plans' },
+                    element: <ModuleGate module="billing" titleKey="plans" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/billing/PlansPage'), 'PlansPage'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'subscriptions',
+                    handle: { crumb: 'subscriptions' },
+                    element: <ModuleGate module="billing" titleKey="subscriptions" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/billing/SubscriptionsPage'),
+                          'SubscriptionsPage',
+                        ),
+                      },
+                      {
+                        path: ':tenantId',
+                        handle: { crumbParam: 'tenantId' },
+                        lazy: lazyPage(
+                          () => import('@/features/billing/TenantBillingPage'),
+                          'TenantBillingPage',
+                        ),
+                      },
+                    ],
+                  },
+                  /* ---- end Usage & Billing ---- */
+                  // ---- notify area ----
+                  {
+                    path: 'notifications',
+                    handle: { crumb: 'notifications' },
+                    element: <ModuleGate module="notifications" titleKey="notifications" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/notify/NotificationsPage'),
+                          'NotificationsPage',
+                        ),
+                      },
+                      {
+                        path: 'templates/new',
+                        handle: { crumb: 'notifyNewTemplate' },
+                        lazy: lazyPage(
+                          () => import('@/features/notify/TemplateEditorPage'),
+                          'TemplateEditorPage',
+                        ),
+                      },
+                      {
+                        path: 'templates/:templateKey',
+                        handle: { crumbParam: 'templateKey' },
+                        lazy: lazyPage(
+                          () => import('@/features/notify/TemplateEditorPage'),
+                          'TemplateEditorPage',
+                        ),
+                      },
+                    ],
+                  },
                 ],
               },
               {

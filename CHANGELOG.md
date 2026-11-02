@@ -8,6 +8,13 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Notifications (notify module) and Monitoring: templates with versions (`If-Match`), locale
+  variants, variables and sample data, a live server preview in a sandboxed frame (no scripts, no
+  network), test sends with an `Idempotency-Key`, the message log with attempts, redacted last
+  error and retry, delivery statistics, the local mailbox, own preferences with locked
+  categories; a Monitoring page with per-check readiness (503 bodies), liveness, parsed
+  `GET /metrics` values (optional bearer token, kept in memory only) and retention/tracing from
+  `GET /v1/settings`. `/metrics` is proxied by `vite dev/preview` and the Docker image.
 - Project setup: Vite, React 19, strict TypeScript, React Router 7, TanStack Query, ESLint,
   Prettier, Vitest, Playwright with axe-core (see `docs/adr/0001-frontend-stack.md`).
 - Typed API client from the vendored Axentra OpenAPI contract (`api/openapi.json`, synced with
@@ -28,9 +35,41 @@ All notable changes to Axentra Studio are documented here. The format follows
   effective settings, profile with password and sessions.
 - "Module not enabled" and "not yet available in Studio" states for files, jobs, events,
   webhooks, usage, plans, subscriptions and notifications.
+- Data & Storage: Files (per-tenant list with filters and server sort, upload with progress and
+  the server's size/type limits, honest 413/415/429 errors, metadata detail and label editing,
+  downloads and shareable links through signed download URLs, delete with `If-Match`), tenant
+  storage usage and quota editing, a Data overview (collections, storage per tenant, storage
+  configuration and reported retention), and record create/edit/delete with `If-Match`.
+- Usage & Billing: meters (create, edit, (de)activate, delete), product usage chart (inline SVG
+  with data table) and totals per tenant, tenant usage per period with limits, quota overrides,
+  events and reservation lookup (commit/release); plans with Intl-formatted prices and
+  entitlements, subscriptions per tenant (subscribe, change plan, cancel at period end or now,
+  resume, manual status, hosted checkout only for a reported test provider), entitlement
+  overrides, payment provider state, and usage/billing widgets on the dashboard.
+- Events & Jobs (module `events`): jobs with counters, status/kind/tenant filters, live updates,
+  detail (attempts, redacted error, payload, result), retry, cancel and enqueue with an
+  idempotency key; schedules (interval or validated UTC cron) with enable/disable, edit
+  (`If-Match`) and delete; event log with filters, publish and a live SSE view (resume with
+  `Last-Event-ID`, pause/resume, connection state); webhook endpoints with event type patterns,
+  one-time signing secret, rotation with grace period, test ping, delivery log and redelivery.
 - German and English translations with a parity check (`npm run i18n:check`).
 - Brand assets derived from the original logo with a reproducible script
   (`scripts/derive-branding.py`, provenance in `public/branding/README.md`).
 - Docker image on nginx-unprivileged with an optional `/v1` reverse proxy, runtime
   `config.json`, and security headers including a CSP without inline scripts.
 - CI workflow for typecheck, lint, formatting, i18n parity, tests and build.
+- End-to-end against a real backend: `scripts/e2e-backend.sh` (PostgreSQL role without
+  superuser, all modules, first admin via setup token, optional worker), CI jobs `contract`
+  (drift check against `api/BACKEND_REF`) and `e2e` (all Playwright specs, report artifact), an
+  a11y/responsive harness over every registered route (`e2e/a11y.spec.ts`), and
+  `docs/COMPATIBILITY.md` and `docs/TODO.md`.
+
+### Fixed
+
+- The full Playwright suite passes against one `scripts/e2e-backend.sh run --worker` backend: the
+  worker loads the e2e job handlers, billing uses the `manual` provider, webhook retries are short,
+  the a11y route sweep gets job, webhook, template and subscription fixtures (no skipped routes),
+  and specs no longer assume a stopped notification dispatcher. The new-template page no longer
+  sends an incomplete draft to the preview endpoint (which answered 422).
+- Switching between light and dark theme changes colours instantly; button colour transitions
+  no longer fade through intermediate colours that briefly failed WCAG contrast.

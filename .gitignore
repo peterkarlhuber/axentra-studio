@@ -24,3 +24,9 @@ public/config.local.json
 .vscode/*
 !.vscode/extensions.json
 *.log
+
+# e2e backend state (scripts/e2e-backend.sh)
+.e2e-backend/
+
+# Python bytecode (e2e/fixtures is imported by the e2e worker)
+__pycache__/

@@ -28,10 +28,12 @@
   "invitations": "Einladungen",
   "roles": "Rollen",
   "apiKeys": "API-Schlüssel",
+  "dataOverview": "Datenübersicht",
   "records": "Datensätze",
   "files": "Dateien",
   "jobs": "Jobs",
   "events": "Ereignisse",
+  "schedules": "Zeitpläne",
   "webhooks": "Webhooks",
   "usage": "Nutzung",
   "plans": "Tarife",
@@ -41,5 +43,7 @@
   "health": "Systemzustand",
   "settings": "Einstellungen",
   "profile": "Profil",
-  "acceptInvitation": "Einladung annehmen"
+  "acceptInvitation": "Einladung annehmen",
+  "monitoring": "Monitoring",
+  "notifyNewTemplate": "Neue Vorlage"
 }

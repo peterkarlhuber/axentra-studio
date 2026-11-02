@@ -28,10 +28,12 @@
   "invitations": "Invitations",
   "roles": "Roles",
   "apiKeys": "API keys",
+  "dataOverview": "Data overview",
   "records": "Records",
   "files": "Files",
   "jobs": "Jobs",
   "events": "Events",
+  "schedules": "Schedules",
   "webhooks": "Webhooks",
   "usage": "Usage",
   "plans": "Plans",
@@ -41,5 +43,7 @@
   "health": "System health",
   "settings": "Settings",
   "profile": "Profile",
-  "acceptInvitation": "Accept invitation"
+  "acceptInvitation": "Accept invitation",
+  "monitoring": "Monitoring",
+  "notifyNewTemplate": "New template"
 }

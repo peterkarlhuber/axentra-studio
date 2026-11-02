@@ -52,6 +52,14 @@
     "unknown": {
       "title": "Unexpected error",
       "message": "The request failed for an unknown reason."
+    },
+    "payload_too_large": {
+      "title": "Too large",
+      "message": "The request or file exceeds the server's size limit."
+    },
+    "unsupported_media_type": {
+      "title": "Type not accepted",
+      "message": "The server does not accept this content type."
     }
   }
 }

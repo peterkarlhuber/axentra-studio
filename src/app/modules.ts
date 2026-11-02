@@ -12,6 +12,7 @@ export const MODULE_IDS = {
   jobs: 'events',
   events: 'events',
   webhooks: 'events',
+  schedules: 'events',
   usage: 'usage',
   billing: 'billing',
   notifications: 'notify',
@@ -26,7 +27,19 @@ export const IMPLEMENTED_MODULES: ReadonlySet<StudioModule> = new Set<StudioModu
   'users',
   'access',
   'records',
+  // notify area
+  'notifications',
   'audit',
+  // Events & Jobs
+  'jobs',
+  'schedules',
+  'events',
+  'webhooks',
+  // Data & Storage
+  'files',
+  // Usage & Billing (studio-billing)
+  'usage',
+  'billing',
 ]);
 
 export function isModuleEnabled(modules: readonly string[] | undefined, module: StudioModule) {

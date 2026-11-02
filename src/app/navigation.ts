@@ -1,13 +1,16 @@
 import {
   Activity,
   BarChart3,
+  CalendarClock,
   Bell,
   Boxes,
   Building2,
   CreditCard,
   Database,
   FileClock,
+  Gauge,
   FolderOpen,
+  HardDrive,
   KeyRound,
   LayoutDashboard,
   ListChecks,
@@ -120,6 +123,15 @@ export const NAVIGATION: NavGroup[] = [
     id: 'data',
     labelKey: 'groups.data',
     items: [
+      // Data & Storage: overview of collections, storage usage and retention
+      {
+        id: 'dataOverview',
+        labelKey: 'dataOverview',
+        icon: HardDrive,
+        to: p('data'),
+        scope: 'product',
+        module: 'records',
+      },
       {
         id: 'records',
         labelKey: 'records',
@@ -149,6 +161,14 @@ export const NAVIGATION: NavGroup[] = [
         to: p('jobs'),
         scope: 'product',
         module: 'jobs',
+      },
+      {
+        id: 'schedules',
+        labelKey: 'schedules',
+        icon: CalendarClock,
+        to: p('schedules'),
+        scope: 'product',
+        module: 'schedules',
       },
       {
         id: 'events',
@@ -228,6 +248,14 @@ export const NAVIGATION: NavGroup[] = [
         labelKey: 'health',
         icon: Activity,
         to: platform('/health'),
+        scope: 'platform',
+      },
+      // monitoring area
+      {
+        id: 'monitoring',
+        labelKey: 'monitoring',
+        icon: Gauge,
+        to: platform('/monitoring'),
         scope: 'platform',
       },
     ],

@@ -4,14 +4,24 @@
  * Every function maps 1:1 to one operation of `api/openapi.json`; the generated `paths`
  * type checks the path, parameters and request bodies here, in one place.
  */
-import { api, unwrap } from './client';
+import { api, apiUrl, unwrap } from './client';
 import type {
   ApiKey,
   ApiKeyInput,
   AuditEvent,
   AuthSession,
+  CheckoutInput,
+  CheckoutSession,
   CollectionStats,
+  EffectiveLimit,
+  Entitlements,
   DataRecord,
+  DownloadUrl,
+  FileInfo,
+  FilePatch,
+  ProductStorageUsage,
+  QuotaInput,
+  TenantStorageUsage,
   Health,
   Invitation,
   InvitationInput,
@@ -19,30 +29,76 @@ import type {
   MemberInput,
   MePatch,
   Meta,
+  Meter,
+  MeterInput,
+  MeterPatch,
+  MeterUsage,
   NewApiKey,
   NewInvitation,
   Page,
   PasswordChangeInput,
   PasswordLoginInput,
   Permission,
+  Plan,
+  PlanInput,
+  PlanPatch,
   Product,
+  // notify / observability areas
+  NotifyDraftPreviewInput,
+  NotifyMailboxEntry,
+  NotifyMessage,
+  NotifyMessageStatus,
+  NotifyPreferences,
+  NotifyPreviewInput,
+  NotifyRendered,
+  NotifySendInput,
+  NotifyStats,
+  NotifyTemplate,
+  NotifyTemplateInput,
+  NotifyTemplatePatch,
   ProductInput,
   ProductMember,
   ProductOverview,
   ProductPatch,
+  UsageQuotaInput,
+  Reservation,
+  ReservationCommitInput,
   RevokeResult,
   Role,
   RoleInput,
   RolePatch,
   ServerSettings,
   SetupInput,
+  Subscription,
+  SubscriptionStatus,
   Tenant,
+  TenantMeterTotal,
   TenantInput,
   TenantMember,
   TenantPatch,
+  TimeSeries,
+  UsageEvent,
+  UsageRecordInput,
+  UsageRecordResult,
   User,
   UserPatch,
   UserSession,
+  // Events & Jobs
+  DomainEvent,
+  EventInput,
+  Job,
+  JobInput,
+  JobStats,
+  JobStatus,
+  NewWebhookSecret,
+  Schedule,
+  ScheduleInput,
+  SchedulePatch,
+  WebhookDelivery,
+  WebhookDeliveryStatus,
+  WebhookEndpoint,
+  WebhookInput,
+  WebhookPatch,
 } from './models';
 
 export interface ListParams {
@@ -453,4 +509,835 @@ export const auditApi = {
 
 export const settingsApi = {
   get: () => unwrap<ServerSettings>(api().GET('/v1/settings')),
+};
+
+// ---- Data & Storage: record writes, files, storage usage and quotas ---------------------
+
+const recordPath = (productId: string, tenantId: string, collection: string, recordId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, collection, record_id: recordId },
+});
+
+/** Record writes (`records:write`); replace and delete send `If-Match` with the version. */
+export const recordsWriteApi = {
+  create: (
+    productId: string,
+    tenantId: string,
+    collection: string,
+    data: Record<string, unknown>,
+  ) =>
+    unwrap<DataRecord>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/records/{collection}', {
+        params: { path: { product_id: productId, tenant_id: tenantId, collection } },
+        body: data,
+      }),
+    ),
+  replace: (
+    productId: string,
+    tenantId: string,
+    collection: string,
+    recordId: string,
+    data: Record<string, unknown>,
+    version?: number,
+  ) =>
+    unwrap<DataRecord>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/records/{collection}/{record_id}', {
+        params: {
+          ...recordPath(productId, tenantId, collection, recordId),
+          header: ifMatch(version),
+        },
+        body: data,
+      }),
+    ),
+  remove: (
+    productId: string,
+    tenantId: string,
+    collection: string,
+    recordId: string,
+    version?: number,
+  ) =>
+    unwrap<unknown>(
+      api().DELETE(
+        '/v1/products/{product_id}/tenants/{tenant_id}/records/{collection}/{record_id}',
+        {
+          params: {
+            ...recordPath(productId, tenantId, collection, recordId),
+            header: ifMatch(version),
+          },
+        },
+      ),
+    ),
+};
+
+export type FileSort = 'created_at' | '-created_at' | 'name' | '-name' | 'size' | '-size';
+
+export interface FileListParams extends ListParams {
+  q?: string;
+  /** Exact type or `type/*`. */
+  content_type?: string;
+  /** Containment filter on the metadata labels, serialized as JSON. */
+  metadata?: Record<string, unknown>;
+  created_by?: string;
+  sort?: FileSort;
+}
+
+const filePath = (productId: string, tenantId: string, fileId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, file_id: fileId },
+});
+
+/** Files of one tenant. Uploads go through `uploadFile` (`./upload.ts`) for progress events. */
+export const filesApi = {
+  list: (productId: string, tenantId: string, params: FileListParams = {}) => {
+    const { metadata, ...rest } = params;
+    const query = cleanQuery({
+      ...rest,
+      metadata: metadata && Object.keys(metadata).length > 0 ? JSON.stringify(metadata) : undefined,
+    });
+    return unwrap<Page<FileInfo>>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/files', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          query: query as {
+            q?: string;
+            content_type?: string;
+            metadata?: string;
+            created_by?: string;
+            sort?: FileSort;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    );
+  },
+  get: (productId: string, tenantId: string, fileId: string) =>
+    unwrap<FileInfo>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}', {
+        params: filePath(productId, tenantId, fileId),
+      }),
+    ),
+  update: (
+    productId: string,
+    tenantId: string,
+    fileId: string,
+    body: FilePatch,
+    version?: number,
+  ) =>
+    unwrap<FileInfo>(
+      api().PATCH('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}', {
+        params: { ...filePath(productId, tenantId, fileId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  remove: (productId: string, tenantId: string, fileId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}', {
+        params: { ...filePath(productId, tenantId, fileId), header: ifMatch(version) },
+      }),
+    ),
+  /** Short-lived download URL; without `ttl_seconds` the server uses its maximum. */
+  downloadUrl: (productId: string, tenantId: string, fileId: string, ttlSeconds?: number) =>
+    unwrap<DownloadUrl>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/files/{file_id}/download-url', {
+        params: filePath(productId, tenantId, fileId),
+        body: ttlSeconds === undefined ? {} : { ttl_seconds: ttlSeconds },
+      }),
+    ),
+};
+
+export const storageApi = {
+  /** All tenants' usage (`collections:read`), tenants paginated by id. */
+  productUsage: (productId: string, params?: ListParams) =>
+    unwrap<ProductStorageUsage>(
+      api().GET('/v1/products/{product_id}/storage/usage', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  tenantUsage: (productId: string, tenantId: string) =>
+    unwrap<TenantStorageUsage>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/storage/usage', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  /** `null` inherits the product/installation default; `If-Match` is the `quota_version`. */
+  setQuota: (productId: string, tenantId: string, body: QuotaInput, version?: number) =>
+    unwrap<TenantStorageUsage>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/storage/quota', {
+        params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+};
+
+// ---- Usage & Billing (studio-billing) --------------------------------------------------
+
+export type UsageRangeParams = {
+  /** ISO dates (YYYY-MM-DD), inclusive; the API defaults to the last 30 days. */
+  since?: string;
+  until?: string;
+};
+
+export interface ProductUsageSummaryParams extends ListParams, UsageRangeParams {
+  meter?: string;
+}
+
+export interface UsageEventListParams extends ListParams {
+  meter?: string;
+  since?: string;
+  until?: string;
+}
+
+export interface SubscriptionListParams extends ListParams {
+  status?: SubscriptionStatus | '';
+  plan?: string;
+}
+
+const meterPath = (productId: string, meterId: string) => ({
+  path: { product_id: productId, meter_id: meterId },
+});
+const planPath = (productId: string, planId: string) => ({
+  path: { product_id: productId, plan_id: planId },
+});
+const reservationPath = (productId: string, tenantId: string, reservationId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, reservation_id: reservationId },
+});
+
+export const usageApi = {
+  meters: (productId: string) =>
+    unwrap<Meter[]>(
+      api().GET('/v1/products/{product_id}/usage/meters', { params: productPath(productId) }),
+    ),
+  createMeter: (productId: string, body: MeterInput) =>
+    unwrap<Meter>(
+      api().POST('/v1/products/{product_id}/usage/meters', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  updateMeter: (productId: string, meterId: string, body: MeterPatch, version?: number) =>
+    unwrap<Meter>(
+      api().PATCH('/v1/products/{product_id}/usage/meters/{meter_id}', {
+        params: { ...meterPath(productId, meterId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  deleteMeter: (productId: string, meterId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/usage/meters/{meter_id}', {
+        params: { ...meterPath(productId, meterId), header: ifMatch(version) },
+      }),
+    ),
+  productSummary: (productId: string, params?: ProductUsageSummaryParams) =>
+    unwrap<Page<TenantMeterTotal>>(
+      api().GET('/v1/products/{product_id}/usage/summary', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            since?: string;
+            until?: string;
+            meter?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  productTimeseries: (productId: string, meter: string, range?: UsageRangeParams) =>
+    unwrap<TimeSeries>(
+      api().GET('/v1/products/{product_id}/usage/timeseries', {
+        params: { ...productPath(productId), query: { meter, ...cleanQuery(range) } },
+      }),
+    ),
+  record: (productId: string, tenantId: string, body: UsageRecordInput, idempotencyKey: string) =>
+    unwrap<UsageRecordResult>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/usage/events', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          header: { 'Idempotency-Key': idempotencyKey },
+        },
+        body,
+      }),
+    ),
+  events: (productId: string, tenantId: string, params?: UsageEventListParams) =>
+    unwrap<Page<UsageEvent>>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/events', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          query: cleanQuery(params) as {
+            meter?: string;
+            since?: string;
+            until?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  /** `at`: any time inside the wanted period (ISO date-time with zone); default now. */
+  tenantSummary: (productId: string, tenantId: string, at?: string) =>
+    unwrap<MeterUsage[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/summary', {
+        params: { ...tenantPath(productId, tenantId), query: cleanQuery({ at }) },
+      }),
+    ),
+  tenantTimeseries: (
+    productId: string,
+    tenantId: string,
+    meter: string,
+    range?: UsageRangeParams,
+  ) =>
+    unwrap<TimeSeries>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/timeseries', {
+        params: { ...tenantPath(productId, tenantId), query: { meter, ...cleanQuery(range) } },
+      }),
+    ),
+  quotas: (productId: string, tenantId: string) =>
+    unwrap<EffectiveLimit[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/usage/quotas', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  setQuota: (productId: string, tenantId: string, meter: string, body: UsageQuotaInput) =>
+    unwrap<EffectiveLimit>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/usage/quotas/{meter}', {
+        params: { path: { product_id: productId, tenant_id: tenantId, meter } },
+        body,
+      }),
+    ),
+  deleteQuota: (productId: string, tenantId: string, meter: string) =>
+    unwrap<EffectiveLimit>(
+      api().DELETE('/v1/products/{product_id}/tenants/{tenant_id}/usage/quotas/{meter}', {
+        params: { path: { product_id: productId, tenant_id: tenantId, meter } },
+      }),
+    ),
+  reservation: (productId: string, tenantId: string, reservationId: string) =>
+    unwrap<Reservation>(
+      api().GET(
+        '/v1/products/{product_id}/tenants/{tenant_id}/usage/reservations/{reservation_id}',
+        { params: reservationPath(productId, tenantId, reservationId) },
+      ),
+    ),
+  commitReservation: (
+    productId: string,
+    tenantId: string,
+    reservationId: string,
+    body: ReservationCommitInput,
+  ) =>
+    unwrap<UsageRecordResult>(
+      api().POST(
+        '/v1/products/{product_id}/tenants/{tenant_id}/usage/reservations/{reservation_id}/commit',
+        { params: reservationPath(productId, tenantId, reservationId), body },
+      ),
+    ),
+  releaseReservation: (productId: string, tenantId: string, reservationId: string) =>
+    unwrap<Reservation>(
+      api().POST(
+        '/v1/products/{product_id}/tenants/{tenant_id}/usage/reservations/{reservation_id}/release',
+        { params: reservationPath(productId, tenantId, reservationId) },
+      ),
+    ),
+};
+
+export const billingApi = {
+  plans: (productId: string) =>
+    unwrap<Plan[]>(
+      api().GET('/v1/products/{product_id}/billing/plans', { params: productPath(productId) }),
+    ),
+  createPlan: (productId: string, body: PlanInput) =>
+    unwrap<Plan>(
+      api().POST('/v1/products/{product_id}/billing/plans', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  updatePlan: (productId: string, planId: string, body: PlanPatch, version?: number) =>
+    unwrap<Plan>(
+      api().PATCH('/v1/products/{product_id}/billing/plans/{plan_id}', {
+        params: { ...planPath(productId, planId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  deletePlan: (productId: string, planId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/billing/plans/{plan_id}', {
+        params: { ...planPath(productId, planId), header: ifMatch(version) },
+      }),
+    ),
+  subscriptions: (productId: string, params?: SubscriptionListParams) =>
+    unwrap<Page<Subscription>>(
+      api().GET('/v1/products/{product_id}/billing/subscriptions', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            status?: SubscriptionStatus;
+            plan?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  tenantPlans: (productId: string, tenantId: string) =>
+    unwrap<Plan[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/billing/plans', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  subscription: (productId: string, tenantId: string) =>
+    unwrap<Subscription>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  subscribe: (productId: string, tenantId: string, plan: string, priceId?: string | null) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription', {
+        params: tenantPath(productId, tenantId),
+        body: { plan, price_id: priceId ?? null },
+      }),
+    ),
+  changePlan: (
+    productId: string,
+    tenantId: string,
+    plan: string,
+    priceId: string | null | undefined,
+    version?: number,
+  ) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/change-plan', {
+        params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
+        body: { plan, price_id: priceId ?? null },
+      }),
+    ),
+  cancel: (productId: string, tenantId: string, atPeriodEnd: boolean) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/cancel', {
+        params: tenantPath(productId, tenantId),
+        body: { at_period_end: atPeriodEnd },
+      }),
+    ),
+  resume: (productId: string, tenantId: string) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/resume', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  setStatus: (productId: string, tenantId: string, status: SubscriptionStatus, version?: number) =>
+    unwrap<Subscription>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/subscription/status', {
+        params: { ...tenantPath(productId, tenantId), header: ifMatch(version) },
+        body: { status },
+      }),
+    ),
+  checkout: (productId: string, tenantId: string, body: CheckoutInput) =>
+    unwrap<CheckoutSession>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/billing/checkout', {
+        params: tenantPath(productId, tenantId),
+        body,
+      }),
+    ),
+  entitlements: (productId: string, tenantId: string) =>
+    unwrap<Entitlements>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements', {
+        params: tenantPath(productId, tenantId),
+      }),
+    ),
+  setOverrides: (
+    productId: string,
+    tenantId: string,
+    entitlements: Record<string, boolean | number | null>,
+  ) =>
+    unwrap<Entitlements>(
+      api().PUT('/v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements/overrides', {
+        params: tenantPath(productId, tenantId),
+        body: { entitlements },
+      }),
+    ),
+};
+
+// ---- Events & Jobs (module `events`) ---------------------------------------------------
+
+export interface JobListParams extends ListParams {
+  status?: JobStatus | '';
+  kind?: string;
+  tenant_id?: string;
+}
+
+export interface EventListParams extends ListParams {
+  /** Exact type, or a prefix ending in `*`. */
+  type?: string;
+  tenant_id?: string;
+}
+
+export interface DeliveryListParams extends ListParams {
+  status?: WebhookDeliveryStatus | '';
+}
+
+const jobPath = (productId: string, jobId: string) => ({
+  path: { product_id: productId, job_id: jobId },
+});
+const schedulePath = (productId: string, scheduleId: string) => ({
+  path: { product_id: productId, schedule_id: scheduleId },
+});
+const webhookPath = (productId: string, webhookId: string) => ({
+  path: { product_id: productId, webhook_id: webhookId },
+});
+const deliveryPath = (productId: string, webhookId: string, deliveryId: string) => ({
+  path: { product_id: productId, webhook_id: webhookId, delivery_id: deliveryId },
+});
+
+export const jobsApi = {
+  list: (productId: string, params?: JobListParams) =>
+    unwrap<Page<Job>>(
+      api().GET('/v1/products/{product_id}/jobs', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            status?: JobStatus;
+            kind?: string;
+            tenant_id?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  stats: (productId: string) =>
+    unwrap<JobStats>(
+      api().GET('/v1/products/{product_id}/jobs/stats', { params: productPath(productId) }),
+    ),
+  get: (productId: string, jobId: string) =>
+    unwrap<Job>(
+      api().GET('/v1/products/{product_id}/jobs/{job_id}', { params: jobPath(productId, jobId) }),
+    ),
+  enqueue: (productId: string, body: JobInput, idempotencyKey?: string) =>
+    unwrap<Job>(
+      api().POST('/v1/products/{product_id}/jobs', {
+        params: {
+          ...productPath(productId),
+          header: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {},
+        },
+        body,
+      }),
+    ),
+  retry: (productId: string, jobId: string) =>
+    unwrap<Job>(
+      api().POST('/v1/products/{product_id}/jobs/{job_id}/retry', {
+        params: jobPath(productId, jobId),
+      }),
+    ),
+  cancel: (productId: string, jobId: string) =>
+    unwrap<Job>(
+      api().POST('/v1/products/{product_id}/jobs/{job_id}/cancel', {
+        params: jobPath(productId, jobId),
+      }),
+    ),
+};
+
+export const schedulesApi = {
+  list: (productId: string, params?: ListParams) =>
+    unwrap<Page<Schedule>>(
+      api().GET('/v1/products/{product_id}/schedules', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { tenant_id?: string; limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  get: (productId: string, scheduleId: string) =>
+    unwrap<Schedule>(
+      api().GET('/v1/products/{product_id}/schedules/{schedule_id}', {
+        params: schedulePath(productId, scheduleId),
+      }),
+    ),
+  create: (productId: string, body: ScheduleInput) =>
+    unwrap<Schedule>(
+      api().POST('/v1/products/{product_id}/schedules', { params: productPath(productId), body }),
+    ),
+  update: (productId: string, scheduleId: string, body: SchedulePatch, version?: number) =>
+    unwrap<Schedule>(
+      api().PATCH('/v1/products/{product_id}/schedules/{schedule_id}', {
+        params: { ...schedulePath(productId, scheduleId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  remove: (productId: string, scheduleId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/schedules/{schedule_id}', {
+        params: { ...schedulePath(productId, scheduleId), header: ifMatch(version) },
+      }),
+    ),
+};
+
+export const eventsApi = {
+  list: (productId: string, params?: EventListParams) =>
+    unwrap<Page<DomainEvent>>(
+      api().GET('/v1/products/{product_id}/events', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            type?: string;
+            tenant_id?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  get: (productId: string, eventId: string) =>
+    unwrap<DomainEvent>(
+      api().GET('/v1/products/{product_id}/events/{event_id}', {
+        params: { path: { product_id: productId, event_id: eventId } },
+      }),
+    ),
+  publish: (productId: string, tenantId: string, body: EventInput, idempotencyKey?: string) =>
+    unwrap<DomainEvent>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/events', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          header: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {},
+        },
+        body,
+      }),
+    ),
+  /** URL of the SSE stream (read with `fetch`, see features/events/event-stream.ts). */
+  streamUrl: (productId: string, params: { types?: string; tenant_id?: string } = {}) => {
+    const query = new URLSearchParams(cleanQuery(params) as Record<string, string>).toString();
+    return apiUrl(
+      `/v1/products/${encodeURIComponent(productId)}/events/stream${query ? `?${query}` : ''}`,
+    );
+  },
+  jobsStreamUrl: (productId: string) =>
+    apiUrl(`/v1/products/${encodeURIComponent(productId)}/jobs/stream`),
+};
+
+export const webhooksApi = {
+  list: (productId: string, params?: ListParams) =>
+    unwrap<Page<WebhookEndpoint>>(
+      api().GET('/v1/products/{product_id}/webhooks', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  get: (productId: string, webhookId: string) =>
+    unwrap<WebhookEndpoint>(
+      api().GET('/v1/products/{product_id}/webhooks/{webhook_id}', {
+        params: webhookPath(productId, webhookId),
+      }),
+    ),
+  create: (productId: string, body: WebhookInput) =>
+    unwrap<NewWebhookSecret>(
+      api().POST('/v1/products/{product_id}/webhooks', { params: productPath(productId), body }),
+    ),
+  update: (productId: string, webhookId: string, body: WebhookPatch, version?: number) =>
+    unwrap<WebhookEndpoint>(
+      api().PATCH('/v1/products/{product_id}/webhooks/{webhook_id}', {
+        params: { ...webhookPath(productId, webhookId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  remove: (productId: string, webhookId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/webhooks/{webhook_id}', {
+        params: { ...webhookPath(productId, webhookId), header: ifMatch(version) },
+      }),
+    ),
+  rotateSecret: (productId: string, webhookId: string, graceSeconds = 0) =>
+    unwrap<NewWebhookSecret>(
+      api().POST('/v1/products/{product_id}/webhooks/{webhook_id}/rotate-secret', {
+        params: webhookPath(productId, webhookId),
+        body: { grace_seconds: graceSeconds },
+      }),
+    ),
+  test: (productId: string, webhookId: string) =>
+    unwrap<WebhookDelivery>(
+      api().POST('/v1/products/{product_id}/webhooks/{webhook_id}/test', {
+        params: webhookPath(productId, webhookId),
+      }),
+    ),
+  deliveries: (productId: string, webhookId: string, params?: DeliveryListParams) =>
+    unwrap<Page<WebhookDelivery>>(
+      api().GET('/v1/products/{product_id}/webhooks/{webhook_id}/deliveries', {
+        params: {
+          ...webhookPath(productId, webhookId),
+          query: cleanQuery(params) as {
+            status?: WebhookDeliveryStatus;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  delivery: (productId: string, webhookId: string, deliveryId: string) =>
+    unwrap<WebhookDelivery>(
+      api().GET('/v1/products/{product_id}/webhooks/{webhook_id}/deliveries/{delivery_id}', {
+        params: deliveryPath(productId, webhookId, deliveryId),
+      }),
+    ),
+  redeliver: (productId: string, webhookId: string, deliveryId: string) =>
+    unwrap<WebhookDelivery>(
+      api().POST(
+        '/v1/products/{product_id}/webhooks/{webhook_id}/deliveries/{delivery_id}/redeliver',
+        { params: deliveryPath(productId, webhookId, deliveryId) },
+      ),
+    ),
+};
+
+// ---- Notifications (notify module) -----------------------------------------------------
+
+const templatePath = (productId: string, key: string) => ({
+  path: { product_id: productId, key },
+});
+
+export interface NotifyMessageListParams extends ListParams {
+  tenant_id?: string;
+  status?: NotifyMessageStatus | '';
+  template_key?: string;
+  recipient?: string;
+  since?: string;
+}
+
+export interface NotifyMailboxParams extends ListParams {
+  recipient?: string;
+}
+
+export const notifyApi = {
+  templates: (productId: string) =>
+    unwrap<NotifyTemplate[]>(
+      api().GET('/v1/products/{product_id}/notify/templates', { params: productPath(productId) }),
+    ),
+  template: (productId: string, key: string) =>
+    unwrap<NotifyTemplate>(
+      api().GET('/v1/products/{product_id}/notify/templates/{key}', {
+        params: templatePath(productId, key),
+      }),
+    ),
+  createTemplate: (productId: string, body: NotifyTemplateInput) =>
+    unwrap<NotifyTemplate>(
+      api().POST('/v1/products/{product_id}/notify/templates', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  updateTemplate: (productId: string, key: string, body: NotifyTemplatePatch, version?: number) =>
+    unwrap<NotifyTemplate>(
+      api().PATCH('/v1/products/{product_id}/notify/templates/{key}', {
+        params: { ...templatePath(productId, key), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  deleteTemplate: (productId: string, key: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/notify/templates/{key}', {
+        params: { ...templatePath(productId, key), header: ifMatch(version) },
+      }),
+    ),
+  previewTemplate: (productId: string, key: string, body: NotifyPreviewInput) =>
+    unwrap<NotifyRendered>(
+      api().POST('/v1/products/{product_id}/notify/templates/{key}/preview', {
+        params: templatePath(productId, key),
+        body,
+      }),
+    ),
+  previewDraft: (productId: string, body: NotifyDraftPreviewInput) =>
+    unwrap<NotifyRendered>(
+      api().POST('/v1/products/{product_id}/notify/templates/preview', {
+        params: productPath(productId),
+        body,
+      }),
+    ),
+  send: (productId: string, tenantId: string, body: NotifySendInput, idempotencyKey: string) =>
+    unwrap<NotifyMessage>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/notify/send', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          header: { 'Idempotency-Key': idempotencyKey },
+        },
+        body,
+      }),
+    ),
+  messages: (productId: string, params?: NotifyMessageListParams) =>
+    unwrap<Page<NotifyMessage>>(
+      api().GET('/v1/products/{product_id}/notify/messages', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            tenant_id?: string;
+            status?: NotifyMessageStatus;
+            template_key?: string;
+            recipient?: string;
+            since?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  message: (productId: string, messageId: string) =>
+    unwrap<NotifyMessage>(
+      api().GET('/v1/products/{product_id}/notify/messages/{message_id}', {
+        params: { path: { product_id: productId, message_id: messageId } },
+      }),
+    ),
+  retry: (productId: string, messageId: string) =>
+    unwrap<NotifyMessage>(
+      api().POST('/v1/products/{product_id}/notify/messages/{message_id}/retry', {
+        params: { path: { product_id: productId, message_id: messageId } },
+      }),
+    ),
+  mailbox: (productId: string, params?: NotifyMailboxParams) =>
+    unwrap<Page<NotifyMailboxEntry>>(
+      api().GET('/v1/products/{product_id}/notify/mailbox', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { recipient?: string; limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  stats: (productId: string, tenantId?: string) =>
+    unwrap<NotifyStats>(
+      api().GET('/v1/products/{product_id}/notify/stats', {
+        params: { ...productPath(productId), query: cleanQuery({ tenant_id: tenantId }) },
+      }),
+    ),
+  preferences: (productId: string, tenantId?: string) =>
+    unwrap<NotifyPreferences>(
+      api().GET('/v1/products/{product_id}/notify/preferences/me', {
+        params: { ...productPath(productId), query: cleanQuery({ tenant_id: tenantId }) },
+      }),
+    ),
+  setPreferences: (productId: string, optedOut: string[], version?: number, tenantId?: string) =>
+    unwrap<NotifyPreferences>(
+      api().PUT('/v1/products/{product_id}/notify/preferences/me', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery({ tenant_id: tenantId }),
+          header: ifMatch(version),
+        },
+        body: { opted_out: optedOut },
+      }),
+    ),
+};
+
+// ---- Observability (GET /metrics, outside /v1) ----------------------------------------
+
+export const observabilityApi = {
+  /**
+   * Prometheus text exposition. The token is the operator's `observability.metrics_token_ref`
+   * value; it is only kept in memory by the caller and sent as a bearer token.
+   */
+  metrics: (token?: string) =>
+    unwrap<string>(
+      api().GET('/metrics', {
+        parseAs: 'text',
+        headers: {
+          Accept: 'text/plain',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      }),
+    ),
 };

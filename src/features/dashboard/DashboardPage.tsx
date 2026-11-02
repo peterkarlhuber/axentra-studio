@@ -20,6 +20,7 @@ import {
 } from '@/components/ui';
 import { useFormatters } from '@/lib/format';
 import { HealthSummary } from '@/features/system/HealthSummary';
+import { UsageBillingWidgets } from '@/features/billing/DashboardWidgets'; // Usage & Billing
 import { KNOWN_STATS, overviewStats } from './overview';
 import styles from './dashboard.module.css';
 
@@ -117,6 +118,9 @@ export function DashboardPage() {
           </ul>
         )}
       </section>
+
+      {/* Usage & Billing (studio-billing): renders nothing when both modules are off. */}
+      <UsageBillingWidgets productId={productId} />
 
       <div className={layout.grid2}>
         <Card

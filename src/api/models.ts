@@ -79,3 +79,72 @@ export interface MemberLike {
 }
 
 export type UserPreferences = { theme?: 'light' | 'dark' | 'system'; [key: string]: unknown };
+
+// ---- Notifications (notify module) ----------------------------------------------------
+export type NotifyTemplate = Schemas['Template'];
+export type NotifyTemplateVariant = Schemas['TemplateVariant'];
+export type NotifyTemplateInput = Schemas['TemplateCreate'];
+export type NotifyTemplatePatch = Schemas['TemplateUpdate'];
+export type NotifyDraftPreviewInput = Schemas['DraftPreviewRequest'];
+export type NotifyPreviewInput = Schemas['PreviewRequest'];
+export type NotifyRendered = Schemas['RenderedContent'];
+export type NotifySendInput = Schemas['SendRequest'];
+export type NotifyMessage = Schemas['Message'];
+export type NotifyMessageStatus = NotifyMessage['status'];
+export type NotifyMailboxEntry = Schemas['MailboxEntry'];
+export type NotifyStats = Schemas['DeliveryStats'];
+export type NotifyStatusCounts = Schemas['StatusCounts'];
+export type NotifyPreferences = Schemas['Preferences'];
+
+// ---- Events & Jobs (module `events`) ---------------------------------------------------
+export type Job = Schemas['Job'];
+export type JobStatus = Job['status'];
+export type JobStats = Schemas['JobStats'];
+export type JobKindStats = Schemas['KindStats'];
+export type JobInput = Schemas['JobCreate'];
+export type Schedule = Schemas['Schedule'];
+export type ScheduleInput = Schemas['ScheduleCreate'];
+export type SchedulePatch = Schemas['ScheduleUpdate'];
+export type DomainEvent = Schemas['Event'];
+export type EventInput = Schemas['EventCreate'];
+export type WebhookEndpoint = Schemas['WebhookEndpoint'];
+export type WebhookInput = Schemas['WebhookCreate'];
+export type WebhookPatch = Schemas['WebhookUpdate'];
+export type NewWebhookSecret = Schemas['NewWebhookSecret'];
+export type WebhookDelivery = Schemas['Delivery'];
+export type WebhookDeliveryStatus = WebhookDelivery['status'];
+
+// ---- Data & Storage (storage module, record writes) ------------------------------------
+export type FileInfo = Schemas['FileInfo'];
+export type FilePatch = Schemas['FileUpdate'];
+export type DownloadUrl = Schemas['DownloadUrl'];
+export type TenantStorageUsage = Schemas['TenantStorageUsage'];
+export type ProductStorageUsage = Schemas['ProductStorageUsage'];
+export type QuotaInput = Schemas['axentra__api__routes__storage__QuotaSet'];
+
+// ---- Usage & Billing (studio-billing) ----------------------------------------------------
+export type Meter = Schemas['Meter'];
+export type MeterInput = Schemas['MeterCreate'];
+export type MeterPatch = Schemas['MeterUpdate'];
+export type MeterUsage = Schemas['MeterUsage'];
+export type TenantMeterTotal = Schemas['TenantMeterTotal'];
+export type TimeSeries = Schemas['TimeSeries'];
+export type TimePoint = Schemas['TimePoint'];
+export type UsageEvent = Schemas['UsageEvent'];
+export type UsageRecordInput = Schemas['UsageRecord'];
+export type UsageRecordResult = Schemas['RecordResult'];
+export type QuotaStatus = Schemas['QuotaStatus'];
+export type EffectiveLimit = Schemas['EffectiveLimit'];
+export type UsageQuotaInput = Schemas['axentra__api__routes__usage__QuotaSet'];
+export type Reservation = Schemas['Reservation'];
+export type ReservationCommitInput = Schemas['ReservationCommit'];
+export type Plan = Schemas['Plan'];
+export type PlanInput = Schemas['PlanCreate'];
+export type PlanPatch = Schemas['PlanUpdate'];
+export type Price = Schemas['Price'];
+export type PriceInput = Schemas['PriceIn'];
+export type Subscription = Schemas['Subscription'];
+export type SubscriptionStatus = NonNullable<Schemas['Entitlements']['subscription_status']>;
+export type Entitlements = Schemas['Entitlements'];
+export type CheckoutInput = Schemas['CheckoutCreate'];
+export type CheckoutSession = Schemas['CheckoutSession'];

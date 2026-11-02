@@ -1,15 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-import { Braces, Database, Eye, FolderTree, X } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Braces, Database, Eye, FolderTree, Pencil, Plus, Trash2, X } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { asItems, recordsApi, type RecordSort } from '@/api/endpoints';
+import { asItems, recordsApi, recordsWriteApi, type RecordSort } from '@/api/endpoints';
+import { useCan, useErrorToast } from '@/app/auth';
 import type { DataRecord } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useProductScope } from '@/app/contexts';
 import {
   Button,
   Card,
+  ConfirmDialog,
   DataTable,
   DetailList,
   Dialog,
@@ -24,6 +26,7 @@ import {
   Time,
   layout,
   toSortParam,
+  useToast,
   type Column,
   type SortState,
 } from '@/components/ui';
@@ -31,6 +34,7 @@ import clsx from '@/lib/clsx';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { RecordEditorDialog } from './RecordEditorDialog';
 import { parseFilterValue, previewData } from './records-utils';
 import styles from './records.module.css';
 
@@ -41,6 +45,9 @@ export function RecordsPage() {
   const [params, setParams] = useSearchParams();
   const tenantId = params.get('tenant') ?? '';
   const collection = params.get('collection') ?? '';
+  const can = useCan();
+  const canWrite = tenantId ? can('records:write', { tenantId }) : false;
+  const [creating, setCreating] = useState(false);
   const collections = useQuery({
     queryKey: queryKeys.collections(productId),
     queryFn: () => recordsApi.collections(productId),
@@ -62,7 +69,29 @@ export function RecordsPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} />
+      <PageHeader
+        title={t('title')}
+        description={canWrite ? t('descriptionWrite') : t('description')}
+        actions={
+          canWrite ? (
+            <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
+              {t('write.create')}
+            </Button>
+          ) : null
+        }
+      />
+      {creating && tenantId ? (
+        <RecordEditorDialog
+          productId={productId}
+          tenantId={tenantId}
+          collection={collection}
+          onClose={() => setCreating(false)}
+          onSaved={(saved) => {
+            setCreating(false);
+            update({ collection: saved.collection });
+          }}
+        />
+      ) : null}
       <div className={styles.layout}>
         <Card title={t('collections.title')} className={styles.sidebar}>
           {collections.isPending ? (
@@ -131,6 +160,7 @@ export function RecordsPage() {
               productId={productId}
               tenantId={tenantId}
               collection={collection}
+              canWrite={canWrite}
             />
           ) : (
             <Card>
@@ -152,12 +182,19 @@ function RecordList({
   productId,
   tenantId,
   collection,
+  canWrite,
 }: {
   productId: string;
   tenantId: string;
   collection: string;
+  canWrite: boolean;
 }) {
   const { t } = useTranslation('records');
+  const toast = useToast();
+  const showError = useErrorToast();
+  const queryClient = useQueryClient();
+  const [editing, setEditing] = useState<DataRecord | null>(null);
+  const [deleting, setDeleting] = useState<DataRecord | null>(null);
   const [sort, setSort] = useState<SortState | null>({ key: 'created_at', direction: 'desc' });
   const [field, setField] = useState('');
   const [value, setValue] = useState('');
@@ -289,6 +326,16 @@ function RecordList({
       >
         {selected ? (
           <div className={layout.form}>
+            {canWrite ? (
+              <div className={layout.actions}>
+                <Button icon={<Pencil />} onClick={() => setEditing(selected)}>
+                  {t('write.edit')}
+                </Button>
+                <Button variant="danger" icon={<Trash2 />} onClick={() => setDeleting(selected)}>
+                  {t('write.delete')}
+                </Button>
+              </div>
+            ) : null}
             <DetailList
               items={[
                 { label: t('fields.id'), value: selected.id, mono: true },
@@ -311,6 +358,45 @@ function RecordList({
           </div>
         ) : null}
       </Dialog>
+      {editing ? (
+        <RecordEditorDialog
+          productId={productId}
+          tenantId={tenantId}
+          collection={collection}
+          record={editing}
+          onClose={() => setEditing(null)}
+          onSaved={(saved) => {
+            setEditing(null);
+            setSelected(saved);
+          }}
+        />
+      ) : null}
+      <ConfirmDialog
+        open={deleting !== null}
+        onOpenChange={(open) => (open ? undefined : setDeleting(null))}
+        title={t('write.deleteTitle')}
+        description={t('write.deleteBody', { id: deleting?.id })}
+        confirmLabel={t('write.delete')}
+        onConfirm={async () => {
+          if (!deleting) return;
+          try {
+            await recordsWriteApi.remove(
+              productId,
+              tenantId,
+              deleting.collection,
+              deleting.id,
+              deleting.version,
+            );
+            toast.success(t('write.deleted', { id: deleting.id }));
+            setSelected(null);
+            void queryClient.invalidateQueries({ queryKey: ['products', productId, 'records'] });
+            void queryClient.invalidateQueries({ queryKey: queryKeys.collections(productId) });
+          } catch (error) {
+            showError(error);
+            throw error;
+          }
+        }}
+      />
     </Card>
   );
 }

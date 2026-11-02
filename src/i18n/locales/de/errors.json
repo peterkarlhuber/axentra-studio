@@ -52,6 +52,14 @@
     "unknown": {
       "title": "Unerwarteter Fehler",
       "message": "Die Anfrage ist aus unbekanntem Grund fehlgeschlagen."
+    },
+    "payload_too_large": {
+      "title": "Zu groß",
+      "message": "Die Anfrage oder Datei überschreitet die Größengrenze des Servers."
+    },
+    "unsupported_media_type": {
+      "title": "Typ nicht zulässig",
+      "message": "Der Server akzeptiert diesen Inhaltstyp nicht."
     }
   }
 }

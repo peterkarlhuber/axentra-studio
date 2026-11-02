@@ -21,6 +21,8 @@ const EXPECTED_401_PATHS = new Set([
   '/v1/auth/login/password',
   '/v1/auth/setup',
   '/v1/auth/logout',
+  // Metrics use a bearer token, not the session: a 401 there means "token required".
+  '/metrics',
 ]);
 
 type UnauthenticatedListener = () => void;
@@ -30,6 +32,11 @@ const unauthenticatedListeners = new Set<UnauthenticatedListener>();
 export function onUnauthenticated(listener: UnauthenticatedListener): () => void {
   unauthenticatedListeners.add(listener);
   return () => unauthenticatedListeners.delete(listener);
+}
+
+/** For requests outside openapi-fetch (XHR file uploads): report a 401 the same way. */
+export function reportUnauthenticated(): void {
+  unauthenticatedListeners.forEach((listener) => listener());
 }
 
 const axentraMiddleware: Middleware = {
