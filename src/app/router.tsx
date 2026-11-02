@@ -195,7 +195,33 @@ export const routes: RouteObject[] = [
                       },
                     ],
                   },
-                  futureModule('files', 'files', 'files'),
+                  // ---- Data & Storage ----
+                  {
+                    path: 'data',
+                    handle: { crumb: 'dataOverview' },
+                    element: <ModuleGate module="records" titleKey="dataOverview" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(
+                          () => import('@/features/storage/DataOverviewPage'),
+                          'DataOverviewPage',
+                        ),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'files',
+                    handle: { crumb: 'files' },
+                    element: <ModuleGate module="files" titleKey="files" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/storage/FilesPage'), 'FilesPage'),
+                      },
+                    ],
+                  },
+                  // ---- end Data & Storage ----
                   futureModule('jobs', 'jobs', 'jobs'),
                   futureModule('events', 'events', 'events'),
                   futureModule('webhooks', 'webhooks', 'webhooks'),

@@ -79,3 +79,11 @@ export interface MemberLike {
 }
 
 export type UserPreferences = { theme?: 'light' | 'dark' | 'system'; [key: string]: unknown };
+
+// ---- Data & Storage (storage module, record writes) ------------------------------------
+export type FileInfo = Schemas['FileInfo'];
+export type FilePatch = Schemas['FileUpdate'];
+export type DownloadUrl = Schemas['DownloadUrl'];
+export type TenantStorageUsage = Schemas['TenantStorageUsage'];
+export type ProductStorageUsage = Schemas['ProductStorageUsage'];
+export type QuotaInput = Schemas['axentra__api__routes__storage__QuotaSet'];
