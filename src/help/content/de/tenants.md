@@ -131,7 +131,7 @@ Mandanten. Der Button erscheint, wenn das Datensatzmodul aktiviert ist und du im
 
 - Ein Benutzer kann Mitglied mehrerer Mandanten sein, im selben oder in verschiedenen Produkten, mit
   jeweils einer anderen Rolle.
-- Produktverantwortliche brauchen keine Mitgliedschaft: ihre Produktrolle deckt bereits jeden
+- Produktverantwortliche brauchen keine Mitgliedschaft, denn ihre Produktrolle deckt bereits jeden
   Mandanten ab.
 - Auswahllisten auf anderen Seiten (zum Beispiel **Mandantenbindung** bei API-Schlüsseln oder die
   Seite **Einladungen**) listen die ersten 200 Mandanten nach Namen.

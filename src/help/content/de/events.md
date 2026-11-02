@@ -175,7 +175,7 @@ deine Rolle hat sich geändert. Melde dich bei Bedarf erneut an und wähle dann 
 Product owner oder Product admin um eine Rolle, die diese Berechtigung enthält, siehe
 [Rollen und Berechtigungen](help:roles-permissions).
 
-**„Typen, die mit „axentra.“ beginnen, sind für Axentra reserviert.“** Wähle einen Typ mit eigenem
+**„Typen, die mit ‚axentra.‘ beginnen, sind für Axentra reserviert.“** Wähle einen Typ mit eigenem
 Präfix, zum Beispiel `invoice.created`.
 
 **„Bereits für eine andere Anfrage verwendet“ beim Veröffentlichen.** Ein früherer Versuch aus

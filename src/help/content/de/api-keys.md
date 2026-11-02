@@ -158,7 +158,7 @@ Solche **abgeleiteten Schlüssel**:
 
 In Studio erstellte Schlüssel werden von deinem Benutzerkonto erstellt, nicht von einem Schlüssel,
 daher gelten diese Regeln für sie nicht. Schlüssel gehören zum Produkt, nicht zu der Person, die sie
-erstellt hat: sie funktionieren weiter, wenn diese Person ausscheidet oder deaktiviert wird.
+erstellt hat, und funktionieren daher weiter, wenn diese Person ausscheidet oder deaktiviert wird.
 
 ## Gut zu wissen {#good-to-know}
 

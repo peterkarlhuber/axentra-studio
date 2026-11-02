@@ -59,7 +59,7 @@ Mandantenrolle anlegen. Siehe [Rollen und Berechtigungen](help:roles-permissions
    werden, solange der Mandant existiert.
 3. Wähle **Mandant anlegen**.
 
-**Erwartetes Ergebnis:** „Mandant „Acme Ltd“ angelegt“; die Seite des Mandanten öffnet sich mit dem
+**Erwartetes Ergebnis:** „Mandant ‚Acme Ltd‘ angelegt“; die Seite des Mandanten öffnet sich mit dem
 Status **Aktiv** und ohne Mitglieder. Notiere die **ID** des Mandanten (`ten_…`) aus dem Tab
 **Details**.
 

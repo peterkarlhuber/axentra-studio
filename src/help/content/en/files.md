@@ -101,7 +101,7 @@ Rules: a flat JSON object, at most 64 keys; keys of 1-64 characters from letters
 ## Storage quota {#quota}
 
 The **Storage usage** card compares the tenant's bytes and number of files with its effective
-quota. The meter turns to a warning colour at 80 % and to a critical one at 95 %. The line below
+quota. The meter turns to a warning color at 80 % and to a critical one at 95 %. The line below
 says where the quota comes from: **Quota set for this tenant**, **Quota inherited from the product
 or server default**, or **No quota: unlimited**. How defaults are resolved is explained in
 [Data overview](help:data-overview#quotas).
@@ -226,7 +226,7 @@ timeout (default one hour) and was discarded. Upload again over a faster connect
 **Please check your input.** The labels are not a flat JSON object or break the [label
 rules](#labels), or **Expires at** is in the past.
 
-**Changed in the meantime.** Someone renamed, relabelled or deleted the file, or changed the quota,
+**Changed in the meantime.** Someone renamed, relabeled or deleted the file, or changed the quota,
 after you opened it. Reload and repeat.
 
 **A download link returns "Not found".** It expired, the file was deleted or expired, or the tenant

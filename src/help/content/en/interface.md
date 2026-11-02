@@ -130,7 +130,7 @@ The **Dashboard** is the start page of a product. It shows:
 - **Usage and billing** cards, when those modules are enabled and you may read them.
 - **System health**: the result of the server's readiness check, with **Details**.
 - **Server**: **Server version**, **API version**, **Environment**, **Mode**, **Product ID** and the
-  **Modules** with their state (green: enabled, grey: not enabled).
+  **Modules** with their state (green: enabled, gray: not enabled).
 
 Quick actions at the top right: **New tenant** (with `tenants:create`, module `tenancy`) and **New
 API key** (with `api_keys:manage`).

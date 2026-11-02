@@ -89,7 +89,7 @@ du die neuen Werte. Was Betreiber für Studio typischerweise ändern, steht unte
 
 ## Fehlerbehebung {#troubleshooting}
 
-- **Die Serverkonfiguration sehen nur Plattform-Administratoren sowie Produktverantwortliche und
+- **Die Serverkonfiguration sehen nur Plattform-Administratoren sowie Produktinhaber und
   -administratoren.**: Du hast weder `platform:settings` noch `product:manage`. Deine persönlichen
   Einstellungen funktionieren trotzdem.
 - **Der Server hat keine Einstellungen geliefert.**: Der Server hat mit einer leeren Konfiguration

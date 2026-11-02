@@ -121,7 +121,7 @@
     "livePayments": "Live payments",
     "liveOn": "On",
     "liveOff": "Off",
-    "behaviour": "Behaviour",
+    "behaviour": "Behavior",
     "explain": {
       "manual": "Payment is collected outside Axentra. Subscriptions are created directly and their status is set by an operator.",
       "fake": "Deterministic test provider without network access. Paid plans go through a simulated checkout.",

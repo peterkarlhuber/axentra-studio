@@ -55,7 +55,7 @@
     },
     "payment_provider_not_configured": {
       "title": "Payment provider not configured",
-      "message": "This billing action needs a payment provider, but the server has none configured. An operator has to set up the billing provider in the server configuration."
+      "message": "This billing action needs a payment provider, but the server has none configured. An operator has to set up the payment provider in the server configuration."
     },
     "internal": {
       "title": "Server error",

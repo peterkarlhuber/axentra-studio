@@ -168,8 +168,8 @@ The backend repository documents all of this in `docs/operations/OBSERVABILITY.m
   a metrics token. Ask the operator to set `observability.metrics_token_ref`.
 - **The server did not accept this token.**: the token is wrong or has been rotated. Ask the
   operator for the current one.
-- **Retention and tracing settings are shown to platform administrators and product managers
-  only**: you have neither `platform:settings` nor `product:manage`. The rest of the page still
+- **Retention and tracing settings are shown to platform administrators and product owners
+  and admins only**: you have neither `platform:settings` nor `product:manage`. The rest of the page still
   works.
 - **Metrics look too low or jump back to zero**: another API process answered, or the process was
   restarted (see the warning in [Metrics](#metrics)).

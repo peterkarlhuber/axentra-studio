@@ -39,7 +39,7 @@
     "noPassword": "Kein Passwort (nur Single Sign-on)",
     "sessionsRevoked_one": "{{count}} Sitzung beendet",
     "sessionsRevoked_other": "{{count}} Sitzungen beendet",
-    "profileDescription": "Mitgliedschaften verwaltest du im Reiter „Mitglieder“ des jeweiligen Mandanten.",
+    "profileDescription": "Mitgliedschaften verwaltest du im Tab „Mitglieder“ des jeweiligen Mandanten.",
     "noEmail": "Keine E-Mail-Adresse",
     "noEmailInfo": "Dieser Benutzer meldet sich nur über Single Sign-on an und kann keine Einladungen annehmen, da diese an eine E-Mail-Adresse gebunden sind. Füge ihn stattdessen direkt zu Mandanten hinzu.",
     "noEmailAbout": "Über Benutzer ohne E-Mail-Adresse"

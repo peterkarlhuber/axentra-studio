@@ -51,7 +51,7 @@
       "product": "Wird Produktverantwortlichen zugewiesen; kann Produkt- und Mandantenberechtigungen enthalten.",
       "tenant": "Wird Mandantenmitgliedern zugewiesen; enthält nur Mandantenberechtigungen."
     },
-    "keyInfo": "2–41 Kleinbuchstaben, Ziffern oder Unterstriche. Schlüssel eingebauter Rollen wie „member“ sind nicht erlaubt.",
+    "keyInfo": "2–41 Kleinbuchstaben, Ziffern oder Unterstriche. Schlüssel integrierter Rollen wie „member“ sind nicht erlaubt.",
     "scopeInfo": "Der Geltungsbereich lässt sich nach dem Anlegen nicht mehr ändern.",
     "permissionsInfo": "Plattform-Berechtigungen können nicht Teil einer Rolle sein. Eine Rolle vergeben kann nur, wer alle ihre Berechtigungen selbst besitzt (Rollen-Obergrenze).",
     "permissionsAbout": "Über Rollenberechtigungen"
@@ -141,9 +141,9 @@
     "active": "Aktiv",
     "retired": "Stillgelegt",
     "showRetired": "Stillgelegte anzeigen",
-    "defaultRolesInfo": "Produktinhaber und -admins haben immer jede aktive Produktberechtigung, Mandanteninhaber und -admins jede mandantenbezogene. Diese Spalte nennt die weiteren eingebauten Rollen, die sie haben.",
+    "defaultRolesInfo": "Produktinhaber und -administratoren haben immer jede aktive Produktberechtigung, Mandanteninhaber und -administratoren jede mandantenbezogene. Diese Spalte nennt die weiteren integrierten Rollen, die sie haben.",
     "defaultRolesAbout": "Über Standardzuweisungen",
-    "declaredByInfo": "Produktcode: vom Code des Produkts beim Start registriert; dort zu ändern. API: über die HTTP-API von jemandem mit permissions:manage deklariert.",
+    "declaredByInfo": "Produktcode: vom Code des Produkts beim Start registriert; dort zu ändern. API: über die HTTP-API von jemandem mit permissions:manage festgelegt.",
     "declaredByAbout": "Über „Festgelegt durch“"
   }
 }
