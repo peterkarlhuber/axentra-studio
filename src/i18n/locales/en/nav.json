@@ -33,6 +33,7 @@
   "files": "Files",
   "jobs": "Jobs",
   "events": "Events",
+  "schedules": "Schedules",
   "webhooks": "Webhooks",
   "usage": "Usage",
   "plans": "Plans",

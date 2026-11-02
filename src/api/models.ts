@@ -80,6 +80,24 @@ export interface MemberLike {
 
 export type UserPreferences = { theme?: 'light' | 'dark' | 'system'; [key: string]: unknown };
 
+// ---- Events & Jobs (module `events`) ---------------------------------------------------
+export type Job = Schemas['Job'];
+export type JobStatus = Job['status'];
+export type JobStats = Schemas['JobStats'];
+export type JobKindStats = Schemas['KindStats'];
+export type JobInput = Schemas['JobCreate'];
+export type Schedule = Schemas['Schedule'];
+export type ScheduleInput = Schemas['ScheduleCreate'];
+export type SchedulePatch = Schemas['ScheduleUpdate'];
+export type DomainEvent = Schemas['Event'];
+export type EventInput = Schemas['EventCreate'];
+export type WebhookEndpoint = Schemas['WebhookEndpoint'];
+export type WebhookInput = Schemas['WebhookCreate'];
+export type WebhookPatch = Schemas['WebhookUpdate'];
+export type NewWebhookSecret = Schemas['NewWebhookSecret'];
+export type WebhookDelivery = Schemas['Delivery'];
+export type WebhookDeliveryStatus = WebhookDelivery['status'];
+
 // ---- Data & Storage (storage module, record writes) ------------------------------------
 export type FileInfo = Schemas['FileInfo'];
 export type FilePatch = Schemas['FileUpdate'];

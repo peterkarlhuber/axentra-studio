@@ -4,7 +4,7 @@
  * Every function maps 1:1 to one operation of `api/openapi.json`; the generated `paths`
  * type checks the path, parameters and request bodies here, in one place.
  */
-import { api, unwrap } from './client';
+import { api, apiUrl, unwrap } from './client';
 import type {
   ApiKey,
   ApiKeyInput,
@@ -70,6 +70,22 @@ import type {
   User,
   UserPatch,
   UserSession,
+  // Events & Jobs
+  DomainEvent,
+  EventInput,
+  Job,
+  JobInput,
+  JobStats,
+  JobStatus,
+  NewWebhookSecret,
+  Schedule,
+  ScheduleInput,
+  SchedulePatch,
+  WebhookDelivery,
+  WebhookDeliveryStatus,
+  WebhookEndpoint,
+  WebhookInput,
+  WebhookPatch,
 } from './models';
 
 export interface ListParams {
@@ -925,5 +941,235 @@ export const billingApi = {
         params: tenantPath(productId, tenantId),
         body: { entitlements },
       }),
+    ),
+};
+
+// ---- Events & Jobs (module `events`) ---------------------------------------------------
+
+export interface JobListParams extends ListParams {
+  status?: JobStatus | '';
+  kind?: string;
+  tenant_id?: string;
+}
+
+export interface EventListParams extends ListParams {
+  /** Exact type, or a prefix ending in `*`. */
+  type?: string;
+  tenant_id?: string;
+}
+
+export interface DeliveryListParams extends ListParams {
+  status?: WebhookDeliveryStatus | '';
+}
+
+const jobPath = (productId: string, jobId: string) => ({
+  path: { product_id: productId, job_id: jobId },
+});
+const schedulePath = (productId: string, scheduleId: string) => ({
+  path: { product_id: productId, schedule_id: scheduleId },
+});
+const webhookPath = (productId: string, webhookId: string) => ({
+  path: { product_id: productId, webhook_id: webhookId },
+});
+const deliveryPath = (productId: string, webhookId: string, deliveryId: string) => ({
+  path: { product_id: productId, webhook_id: webhookId, delivery_id: deliveryId },
+});
+
+export const jobsApi = {
+  list: (productId: string, params?: JobListParams) =>
+    unwrap<Page<Job>>(
+      api().GET('/v1/products/{product_id}/jobs', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            status?: JobStatus;
+            kind?: string;
+            tenant_id?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  stats: (productId: string) =>
+    unwrap<JobStats>(
+      api().GET('/v1/products/{product_id}/jobs/stats', { params: productPath(productId) }),
+    ),
+  get: (productId: string, jobId: string) =>
+    unwrap<Job>(
+      api().GET('/v1/products/{product_id}/jobs/{job_id}', { params: jobPath(productId, jobId) }),
+    ),
+  enqueue: (productId: string, body: JobInput, idempotencyKey?: string) =>
+    unwrap<Job>(
+      api().POST('/v1/products/{product_id}/jobs', {
+        params: {
+          ...productPath(productId),
+          header: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {},
+        },
+        body,
+      }),
+    ),
+  retry: (productId: string, jobId: string) =>
+    unwrap<Job>(
+      api().POST('/v1/products/{product_id}/jobs/{job_id}/retry', {
+        params: jobPath(productId, jobId),
+      }),
+    ),
+  cancel: (productId: string, jobId: string) =>
+    unwrap<Job>(
+      api().POST('/v1/products/{product_id}/jobs/{job_id}/cancel', {
+        params: jobPath(productId, jobId),
+      }),
+    ),
+};
+
+export const schedulesApi = {
+  list: (productId: string, params?: ListParams) =>
+    unwrap<Page<Schedule>>(
+      api().GET('/v1/products/{product_id}/schedules', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { tenant_id?: string; limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  get: (productId: string, scheduleId: string) =>
+    unwrap<Schedule>(
+      api().GET('/v1/products/{product_id}/schedules/{schedule_id}', {
+        params: schedulePath(productId, scheduleId),
+      }),
+    ),
+  create: (productId: string, body: ScheduleInput) =>
+    unwrap<Schedule>(
+      api().POST('/v1/products/{product_id}/schedules', { params: productPath(productId), body }),
+    ),
+  update: (productId: string, scheduleId: string, body: SchedulePatch, version?: number) =>
+    unwrap<Schedule>(
+      api().PATCH('/v1/products/{product_id}/schedules/{schedule_id}', {
+        params: { ...schedulePath(productId, scheduleId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  remove: (productId: string, scheduleId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/schedules/{schedule_id}', {
+        params: { ...schedulePath(productId, scheduleId), header: ifMatch(version) },
+      }),
+    ),
+};
+
+export const eventsApi = {
+  list: (productId: string, params?: EventListParams) =>
+    unwrap<Page<DomainEvent>>(
+      api().GET('/v1/products/{product_id}/events', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as {
+            type?: string;
+            tenant_id?: string;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  get: (productId: string, eventId: string) =>
+    unwrap<DomainEvent>(
+      api().GET('/v1/products/{product_id}/events/{event_id}', {
+        params: { path: { product_id: productId, event_id: eventId } },
+      }),
+    ),
+  publish: (productId: string, tenantId: string, body: EventInput, idempotencyKey?: string) =>
+    unwrap<DomainEvent>(
+      api().POST('/v1/products/{product_id}/tenants/{tenant_id}/events', {
+        params: {
+          ...tenantPath(productId, tenantId),
+          header: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {},
+        },
+        body,
+      }),
+    ),
+  /** URL of the SSE stream (read with `fetch`, see features/events/event-stream.ts). */
+  streamUrl: (productId: string, params: { types?: string; tenant_id?: string } = {}) => {
+    const query = new URLSearchParams(cleanQuery(params) as Record<string, string>).toString();
+    return apiUrl(
+      `/v1/products/${encodeURIComponent(productId)}/events/stream${query ? `?${query}` : ''}`,
+    );
+  },
+  jobsStreamUrl: (productId: string) =>
+    apiUrl(`/v1/products/${encodeURIComponent(productId)}/jobs/stream`),
+};
+
+export const webhooksApi = {
+  list: (productId: string, params?: ListParams) =>
+    unwrap<Page<WebhookEndpoint>>(
+      api().GET('/v1/products/{product_id}/webhooks', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery(params) as { limit?: number; cursor?: string },
+        },
+      }),
+    ),
+  get: (productId: string, webhookId: string) =>
+    unwrap<WebhookEndpoint>(
+      api().GET('/v1/products/{product_id}/webhooks/{webhook_id}', {
+        params: webhookPath(productId, webhookId),
+      }),
+    ),
+  create: (productId: string, body: WebhookInput) =>
+    unwrap<NewWebhookSecret>(
+      api().POST('/v1/products/{product_id}/webhooks', { params: productPath(productId), body }),
+    ),
+  update: (productId: string, webhookId: string, body: WebhookPatch, version?: number) =>
+    unwrap<WebhookEndpoint>(
+      api().PATCH('/v1/products/{product_id}/webhooks/{webhook_id}', {
+        params: { ...webhookPath(productId, webhookId), header: ifMatch(version) },
+        body,
+      }),
+    ),
+  remove: (productId: string, webhookId: string, version?: number) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/webhooks/{webhook_id}', {
+        params: { ...webhookPath(productId, webhookId), header: ifMatch(version) },
+      }),
+    ),
+  rotateSecret: (productId: string, webhookId: string, graceSeconds = 0) =>
+    unwrap<NewWebhookSecret>(
+      api().POST('/v1/products/{product_id}/webhooks/{webhook_id}/rotate-secret', {
+        params: webhookPath(productId, webhookId),
+        body: { grace_seconds: graceSeconds },
+      }),
+    ),
+  test: (productId: string, webhookId: string) =>
+    unwrap<WebhookDelivery>(
+      api().POST('/v1/products/{product_id}/webhooks/{webhook_id}/test', {
+        params: webhookPath(productId, webhookId),
+      }),
+    ),
+  deliveries: (productId: string, webhookId: string, params?: DeliveryListParams) =>
+    unwrap<Page<WebhookDelivery>>(
+      api().GET('/v1/products/{product_id}/webhooks/{webhook_id}/deliveries', {
+        params: {
+          ...webhookPath(productId, webhookId),
+          query: cleanQuery(params) as {
+            status?: WebhookDeliveryStatus;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  delivery: (productId: string, webhookId: string, deliveryId: string) =>
+    unwrap<WebhookDelivery>(
+      api().GET('/v1/products/{product_id}/webhooks/{webhook_id}/deliveries/{delivery_id}', {
+        params: deliveryPath(productId, webhookId, deliveryId),
+      }),
+    ),
+  redeliver: (productId: string, webhookId: string, deliveryId: string) =>
+    unwrap<WebhookDelivery>(
+      api().POST(
+        '/v1/products/{product_id}/webhooks/{webhook_id}/deliveries/{delivery_id}/redeliver',
+        { params: deliveryPath(productId, webhookId, deliveryId) },
+      ),
     ),
 };
