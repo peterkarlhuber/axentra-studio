@@ -14,9 +14,9 @@
   },
   "deliveryStatus": {
     "pending": "In attesa",
-    "succeeded": "Consegnato",
-    "failed": "Non riuscito, nuovo tentativo",
-    "dead": "Esaurito"
+    "succeeded": "Consegnata",
+    "failed": "Non riuscita, nuovo tentativo",
+    "dead": "Esaurita"
   },
   "stream": {
     "idle": "Non connesso",
@@ -173,7 +173,7 @@
     "currentNextRun": "Prossima esecuzione attuale:",
     "nextRunHint": "Il server calcola la prossima esecuzione al salvataggio.",
     "enabled": "Attivata",
-    "enabledHelp": "Le pianificazioni disattivate mantengono le impostazioni ma non si attivano. Quando vengono riattivate, proseguono con lo slot successivo; gli slot persi non vengono eseguiti.",
+    "enabledHelp": "Le pianificazioni disattivate mantengono le impostazioni ma non scattano. Quando vengono riattivate, proseguono con lo slot successivo; gli slot persi non vengono eseguiti.",
     "enable": "Attiva",
     "disable": "Disattiva",
     "enabledToast": "Pianificazione “{{name}}” attivata",
@@ -187,7 +187,7 @@
     "emptyBody": "Crea una pianificazione per eseguire un job regolarmente.",
     "timingInfoLabel": "Informazioni sugli orari delle pianificazioni",
     "timingInfo": "Le pianificazioni vengono eseguite in UTC, senza ora legale. L'esecuzione successiva e l'ultima esecuzione sono mostrate nel tuo fuso orario.",
-    "intervalInfo": "Gli intervalli sono calcolati a partire dal 1° gennaio 1970, 00:00 UTC, non dal momento del salvataggio. Ogni 15 minuti si attiva a :00, :15, :30 e :45; ogni giorno si attiva alle 00:00 UTC.",
+    "intervalInfo": "Gli intervalli sono calcolati a partire dal 1° gennaio 1970, 00:00 UTC, non dal momento del salvataggio. Ogni 15 minuti scatta a :00, :15, :30 e :45; ogni giorno scatta alle 00:00 UTC.",
     "cronInfo": "UTC, senza adeguamento all'ora legale: le 09:00 a Berlino sono 0 8 * * * in inverno e 0 7 * * * in estate. Se sono impostati sia il giorno del mese sia il giorno della settimana, un giorno corrisponde quando corrisponde uno dei due.",
     "maxAttemptsHelp": "Da 1 a 100 per job accodato. Predefinito: 5."
   },

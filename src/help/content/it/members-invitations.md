@@ -49,7 +49,7 @@ membri del tenant stesso. Per qualsiasi altro indirizzo la finestra mostra **Ute
 offre **Invia invece un invito**, che crea un invito con la stessa email e lo stesso ruolo.
 
 > [!NOTE]
-> Axentra risponde "non trovato" allo stesso modo sia quando un account non esiste sia quando
+> Axentra risponde “non trovato” allo stesso modo sia quando un account non esiste sia quando
 > semplicemente non è visibile per te. Questo impedisce di sondare l'elenco degli account sul
 > server.
 
@@ -165,30 +165,30 @@ selettore del ruolo né pulsante di rimozione.
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**Utente non trovato.** L'account non esiste, oppure non hai il permesso di vederlo. Usa **Invia
+**Utente non trovato.** L'account non esiste, oppure non sei autorizzato a vederlo. Usa **Invia
 invece un invito**.
 
-**Conflitto: "an open invitation for this email exists".** Nel tenant esiste già un invito in attesa
+**Conflitto: “an open invitation for this email exists”.** Nel tenant esiste già un invito in attesa
 per questo indirizzo. Usalo, oppure revocalo e invita di nuovo.
 
-**Non consentito: "you cannot assign the role …: it has permissions you do not hold".** Il ruolo è
+**Non consentito: “you cannot assign the role …: it has permissions you do not hold”.** Il ruolo è
 superiore al tuo livello. Scegli un ruolo più debole oppure chiedi a un proprietario. Vedi
 [limite dei ruoli](#role-ceiling).
 
-**Non consentito: "only owners can assign the role tenant_owner".** Solo i proprietari, gli
+**Non consentito: “only owners can assign the role tenant_owner”.** Solo i proprietari, gli
 operatori di prodotto e gli amministratori della piattaforma possono gestire i proprietari.
 
-**Conflitto: "the tenant needs at least one owner".** Hai tentato di rimuovere o declassare
+**Conflitto: “the tenant needs at least one owner”.** Hai tentato di rimuovere o declassare
 l'ultimo proprietario.
 
-**Verifica i dati inseriti: "unknown tenant role …".** La chiave del ruolo non esiste in questo
+**Verifica i dati inseriti: “unknown tenant role …”.** La chiave del ruolo non esiste in questo
 prodotto (per esempio un errore di battitura nel campo di testo libero del ruolo), oppure è un ruolo
 di prodotto.
 
-**All'accettazione: Non trovato, "the invitation is invalid or expired".** Il token è errato,
+**All'accettazione: Non trovato, “the invitation is invalid or expired”.** Il token è errato,
 oppure l'invito è già stato accettato, revocato o ha più di 7 giorni. Chiedi un nuovo invito.
 
-**All'accettazione: Non consentito, "this invitation was sent to another email address".** Hai
+**All'accettazione: Non consentito, “this invitation was sent to another email address”.** Hai
 eseguito l'accesso con un account di un altro indirizzo, oppure con uno senza indirizzo email.
 Accedi con l'indirizzo invitato oppure chiedi un invito per il tuo indirizzo.
 

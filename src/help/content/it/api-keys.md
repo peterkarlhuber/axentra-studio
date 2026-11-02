@@ -153,19 +153,19 @@ continuano a funzionare quando quella persona se ne va o viene disattivata.
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**Non consentito: "you cannot grant permissions you do not hold: …".** Hai selezionato
+**Non consentito: “you cannot grant permissions you do not hold: …”.** Hai selezionato
 un'autorizzazione che non possiedi. Rimuovila oppure chiedi a un proprietario del prodotto di creare
 la chiave. Lo stesso vale per la rotazione: chi ruota la chiave deve possedere tutte le sue
 autorizzazioni.
 
-**Verifica i dati inseriti: "an API key needs at least one permission" / "unknown permissions".**
+**Verifica i dati inseriti: “an API key needs at least one permission” / “unknown permissions”.**
 Seleziona almeno un'autorizzazione; nel frattempo un'autorizzazione di prodotto potrebbe essere stata
 dismessa.
 
-**Verifica i dati inseriti: "only active keys can be rotated".** La chiave è scaduta o revocata.
+**Verifica i dati inseriti: “only active keys can be rotated”.** La chiave è scaduta o revocata.
 Crea invece una nuova chiave.
 
-**Verifica i dati inseriti: "expires_at must not be later than the expiry of the creating key".**
+**Verifica i dati inseriti: “expires_at must not be later than the expiry of the creating key”.**
 Solo tramite l'API: una chiave derivata non può sopravvivere alla chiave madre.
 
 **Accedi (401) quando il servizio chiama l'API.** La chiave è errata, incompleta, revocata o

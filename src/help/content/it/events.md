@@ -4,7 +4,7 @@ summary: Consulta il registro eventi, osserva gli eventi in diretta mentre accad
 keywords: evento, registro eventi, evento di dominio, in diretta, live, flusso, stream, SSE, server-sent events, tempo reale, pubblicare, tipo di evento, sottoscrittore, outbox, Last-Event-ID
 ---
 
-Un **evento** è un breve messaggio che dice "è successo qualcosa" nel tuo prodotto, per esempio
+Un **evento** è un breve messaggio che dice “è successo qualcosa” nel tuo prodotto, per esempio
 `invoice.created` o `user.invited`. Ogni evento ha un **tipo**, il momento in cui si è
 **verificato**, il tenant a cui appartiene, chi lo ha causato (l'**autore**) e un oggetto JSON con i
 dettagli (i **dati**). Altre parti del sistema reagiscono agli eventi: i sottoscrittori interni al
@@ -29,7 +29,7 @@ Un tipo di evento è un nome in minuscolo, di solito _oggetto.azione_: `invoice.
 minuscole, cifre e `_ . : -`, fino a 150 caratteri. I tipi che iniziano con `axentra.` sono riservati
 ad Axentra stesso (per esempio `axentra.ping`, il test dei webhook).
 
-Axentra non tiene un elenco di tipi "consentiti": è il tuo prodotto a definirli pubblicandoli.
+Axentra non tiene un elenco di tipi “consentiti”: è il tuo prodotto a definirli pubblicandoli.
 Diverse schermate accettano **pattern** in cui `*` sta per un testo qualsiasi: `invoice.*`
 corrisponde a `invoice.created` e `invoice.paid`, e `*` da solo corrisponde a ogni tipo.
 
@@ -158,7 +158,7 @@ pubblica una sola volta.
 escludono. Scegli **Reimposta filtri**. Pubblica un evento di prova per verificare la
 configurazione.
 
-**"Inserisci un tipo esatto o un prefisso che termina con \* (ad esempio invoice.\*)".** Il filtro
+**“Inserisci un tipo esatto o un prefisso che termina con \* (ad esempio invoice.\*)”.** Il filtro
 del registro accetta `invoice.created` o `invoice.*`, non un `*` nel mezzo. Per la vista in diretta e
 per i webhook sono consentiti pattern come `*.created`.
 
@@ -166,17 +166,17 @@ per i webhook sono consentiti pattern come `*.created`.
 Controlla la tua rete e lo stato del server. Anche i proxy che bufferizzano le risposte possono
 interrompere i flussi; informa i tuoi operatori.
 
-**Disconnesso con "L'accesso al flusso è stato perso".** La tua sessione è terminata o il tuo ruolo è
+**Disconnesso con “L'accesso al flusso è stato perso”.** La tua sessione è terminata o il tuo ruolo è
 cambiato. Se necessario accedi di nuovo, poi scegli **Riconnetti**.
 
-**"Non consentito" all'apertura di Eventi.** Ti serve `jobs:read` in questo prodotto. Chiedi a un
+**“Non consentito” all'apertura di Eventi.** Ti serve `jobs:read` in questo prodotto. Chiedi a un
 proprietario o a un amministratore del prodotto un ruolo che la includa, vedi
 [Ruoli e autorizzazioni](help:roles-permissions).
 
-**"I tipi che iniziano con “axentra.” sono riservati ad Axentra".** Scegli un tipo con un tuo
+**«I tipi che iniziano con “axentra.” sono riservati ad Axentra».** Scegli un tipo con un tuo
 prefisso, per esempio `invoice.created`.
 
-**"Già utilizzata per una richiesta diversa" durante la pubblicazione.** Un tentativo precedente
+**“Già utilizzata per una richiesta diversa” durante la pubblicazione.** Un tentativo precedente
 dalla stessa finestra ha usato altri valori. Studio ha già creato una nuova chiave: scegli di nuovo
 **Pubblica**.
 

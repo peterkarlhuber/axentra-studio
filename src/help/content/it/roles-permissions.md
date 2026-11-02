@@ -57,7 +57,7 @@ al supporto che può leggere i record ma non i file.
    i ruoli da assegnare agli operatori di prodotto.
 5. Facoltativamente inserisci una **Descrizione**.
 6. Seleziona le **Autorizzazioni** (vedi [l'elenco di controllo delle autorizzazioni](#checklist)).
-7. Scegli **Salva**.
+7. Scegli **Salva modifiche**.
 
 Il ruolo viene ora offerto ovunque si aggiungano o invitino membri del suo ambito.
 
@@ -72,7 +72,7 @@ Il ruolo viene ora offerto ovunque si aggiungano o invitino membri del suo ambit
 ## Modificare un ruolo personalizzato {#edit}
 
 Scegli l'icona della matita di un ruolo personalizzato, modifica nome, descrizione o autorizzazioni
-e scegli **Salva**. Chiave e ambito restano fissi.
+e scegli **Salva modifiche**. Chiave e ambito restano fissi.
 
 > [!WARNING]
 > Le modifiche si applicano immediatamente a chiunque abbia il ruolo, in ogni tenant del prodotto.
@@ -139,16 +139,16 @@ chiave API li rimuove dalla chiave sostitutiva.
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**Conflitto: "a role with this key exists" / "this key belongs to a built-in role".** Scegli una
+**Conflitto: “a role with this key exists” / “this key belongs to a built-in role”.** Scegli una
 chiave diversa.
 
-**Verifica i dati inseriti: "key must be 2-41 lowercase letters, digits or underscores".** Rimuovi
+**Verifica i dati inseriti: “key must be 2-41 lowercase letters, digits or underscores”.** Rimuovi
 dalla chiave maiuscole, trattini e spazi.
 
-**Conflitto: "the role is assigned N times; reassign those members first".** Cambia il ruolo di quei
+**Conflitto: “the role is assigned N times; reassign those members first”.** Cambia il ruolo di quei
 membri (nelle tab **Membri** dei tenant e del prodotto) prima di eliminarlo.
 
-**Verifica i dati inseriti: "permissions not allowed for a tenant role".** Un ruolo di tenant può
+**Verifica i dati inseriti: “permissions not allowed for a tenant role”.** Un ruolo di tenant può
 contenere solo autorizzazioni di tenant.
 
 **Impossibile caricare il catalogo delle autorizzazioni.** Non possiedi `roles:read` (o

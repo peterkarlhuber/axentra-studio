@@ -11,9 +11,9 @@ riportati dal server. È una pagina di sola lettura: non modifica nulla. Le quot
 schermata [File](help:files#quota) e la policy sui tipi di contenuto nella tab **File** del prodotto
 (vedi [Impostare la policy sui tipi di contenuto](#content-type-policy)).
 
-Gli operatori di prodotto la usano per rispondere a domande come "quale tenant è vicino alla sua
-quota di spazio?", "quali raccolte esistono?" e "per quanto tempo il server conserva gli eventi di
-audit?".
+Gli operatori di prodotto la usano per rispondere a domande come “quale tenant è vicino alla sua
+quota di spazio?”, “quali raccolte esistono?” e “per quanto tempo il server conserva gli eventi di
+audit?”.
 
 > [!IMPORTANT]
 > La pagina richiede il modulo del server `data` (record). La scheda **Archiviazione file** richiede
@@ -130,7 +130,7 @@ visualizzato.
 2. Scegli la tab **File**. (La tab è nascosta quando il modulo `storage` non è abilitato.)
 3. In **Policy sui tipi di contenuto dei file**, scegli il comportamento e gli elenchi (tabella
    sotto).
-4. Scegli **Salva**.
+4. Scegli **Salva modifiche**.
 
 | Impostazione                                  | Che cosa fa                                                                                                                                                                                                                                                                                                                                                       | Valori consentiti / predefinito                                   |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
@@ -194,11 +194,11 @@ le vedono.
 conteggiati fino alla pulizia successiva. Chiedi a un operatore se `axentra storage purge` viene
 eseguito regolarmente.
 
-**Il salvataggio della policy sui tipi di contenuto non riesce con "Modificato nel frattempo".**
+**Il salvataggio della policy sui tipi di contenuto non riesce con “Modificato nel frattempo”.**
 Qualcuno ha modificato il prodotto (impostazioni, nome o policy) dopo che hai aperto la pagina.
 Ricarica la pagina e applica di nuovo la modifica.
 
-**Il salvataggio della policy non riesce con "Verifica i dati inseriti".** Una voce non è
+**Il salvataggio della policy non riesce con “Verifica i dati inseriti”.** Una voce non è
 un'estensione valida (lettere minuscole, cifre, `_`, `+` o `-`, al massimo 16 caratteri, senza
 punto) né un tipo di contenuto valido (`type/subtype`), oppure un elenco ha più di 100 voci. Il
 messaggio sotto il campo indica il problema.

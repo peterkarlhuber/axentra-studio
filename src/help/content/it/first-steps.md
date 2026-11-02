@@ -23,7 +23,7 @@ Strada facendo impari i termini più importanti. Se uno è nuovo per te, consult
 > - Per il [passaggio 4](help:first-steps#create-api-key) e la relativa verifica ti serve una riga
 >   di comando con `curl`.
 
-Usa nomi di esempio. Questo tutorial usa il prodotto "Example CRM" e il tenant "Acme Ltd".
+Usa nomi di esempio. Questo tutorial usa il prodotto “Example CRM” e il tenant “Acme Ltd”.
 
 ## Passaggio 1: creare un prodotto {#create-product}
 
@@ -36,13 +36,13 @@ al suo interno.
 4. Facoltativamente aggiungi una **Descrizione**.
 5. Scegli **Crea prodotto**.
 
-**Risultato atteso:** Studio segnala "Prodotto “Example CRM” creato" e apre la pagina del prodotto.
+**Risultato atteso:** Studio segnala «Prodotto “Example CRM” creato» e apre la pagina del prodotto.
 
 **Verifica:** apri la tab **Membri**. Il tuo account è elencato con il ruolo **Product owner**
 (proprietario del prodotto): chi crea un prodotto ne diventa il proprietario. Il prodotto compare anche nel selettore
 di prodotto in alto.
 
-Ora scegli **Apri dashboard**. Si apre la dashboard di "Example CRM"; tutti i contatori mostrano `0`
+Ora scegli **Apri dashboard**. Si apre la dashboard di “Example CRM”; tutti i contatori mostrano `0`
 tranne **Utenti** (tu, come operatore del prodotto) ed **Eventi di audit (24 h)**.
 
 ## Passaggio 2: creare un tenant {#create-tenant}
@@ -55,7 +55,7 @@ da quelli di tutti gli altri tenant.
 3. Inserisci il **Nome** `Acme Ltd`. Studio ricava lo **Slug** `acme-ltd`.
 4. Scegli **Crea tenant**.
 
-**Risultato atteso:** Studio segnala "Tenant “Acme Ltd” creato" e apre la pagina del tenant con le
+**Risultato atteso:** Studio segnala «Tenant “Acme Ltd” creato» e apre la pagina del tenant con le
 tab **Dettagli**, **Membri** e **Inviti**. Lo stato è **Attivo**.
 
 **Verifica:** tornando alla dashboard, **Tenant** mostra ora `1`. Annota l'**ID** del tenant nella
@@ -144,7 +144,7 @@ imparare a usare l'API, vedi le [nozioni di base sull'API](help:api-basics).
 Tutto ciò che hai appena fatto è stato registrato.
 
 1. Apri [Registro di audit](app:audit).
-2. In **Prodotto**, scegli "Example CRM" e applica il filtro.
+2. In **Prodotto**, scegli “Example CRM” e applica il filtro.
 
 **Risultato atteso:** vedi, dal più recente, `access.api_key.create`, `tenancy.invitation.create`,
 `tenancy.tenant.create` e (in modalità multiprodotto) `tenancy.product.create`, ciascuno con te come

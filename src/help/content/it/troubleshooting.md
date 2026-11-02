@@ -399,7 +399,7 @@ trovano su indirizzi diversi, entrambi devono appartenere allo stesso sito (per 
 
 ### L'accesso non riesce {#sign-in-fails}
 
-**Accesso non riuscito** con "L'indirizzo email o la password non sono corretti." compare sia per
+**Accesso non riuscito** con “L'indirizzo email o la password non sono corretti.” compare sia per
 una password errata _sia_ per un indirizzo sconosciuto; il server non rivela quale dei due. Dopo
 troppi tentativi vedi [Troppe richieste](#rate-limited). Un account disattivato non può accedere in
 alcun modo. Vedi [Accesso](help:signing-in).

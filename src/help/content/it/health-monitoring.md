@@ -4,8 +4,8 @@ summary: Verifica se il server Axentra è attivo e pronto, leggi le sue metriche
 keywords: stato del sistema, salute, stato, readiness, liveness, disponibilità, uptime, 503, monitoraggio, metriche, Prometheus, scrape, OpenTelemetry, tracing, livello di log, conservazione, purge, versione
 ---
 
-Due pagine mostrano come sta il server Axentra. **Stato del sistema** risponde alla domanda "il
-server è attivo e in grado di servire le richieste?" e mostra quali versioni del server e di Studio
+Due pagine mostrano come sta il server Axentra. **Stato del sistema** risponde alla domanda “il
+server è attivo e in grado di servire le richieste?” e mostra quali versioni del server e di Studio
 sono in esecuzione. **Monitoraggio** aggiunge le metriche del server (numero di richieste, errori,
 tempi di risposta) e le impostazioni di manutenzione, conservazione, tracing e logging che il server
 riporta. Gli operatori le usano per un rapido controllo; per avvisi e storico, collega un vero

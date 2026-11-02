@@ -54,7 +54,7 @@ alcuni moduli di Axentra ne usano delle chiavi.
 
 1. Apri il prodotto da [Prodotti](app:products) e seleziona la tab **Impostazioni**.
 2. Modifica **Nome**, **Descrizione** o **Impostazioni (JSON)**.
-3. Scegli **Salva**.
+3. Scegli **Salva modifiche**.
 
 Le modifiche si applicano immediatamente a tutti i tenant del prodotto.
 
@@ -72,7 +72,7 @@ Le modifiche si applicano immediatamente a tutti i tenant del prodotto.
 ```
 
 > [!WARNING]
-> **Salva** sostituisce l'intero oggetto delle impostazioni. Se elimini una chiave dal testo, viene
+> **Salva modifiche** sostituisce l'intero oggetto delle impostazioni. Se elimini una chiave dal testo, viene
 > rimossa dal prodotto. L'oggetto può essere lungo fino a circa 32.000 caratteri.
 
 > [!IMPORTANT]
@@ -180,14 +180,14 @@ membri del prodotto nella sua pagina. Per gestire più prodotti, l'operatore del
 **Conflitto durante la creazione di un prodotto.** Un altro prodotto usa già lo slug. Scegli uno
 slug diverso.
 
-**Verifica i dati inseriti: "slug must be 2-63 lowercase letters, digits or dashes".** Rimuovi
+**Verifica i dati inseriti: “slug must be 2-63 lowercase letters, digits or dashes”.** Rimuovi
 dallo slug maiuscole, spazi e caratteri speciali.
 
 **Questo non è un JSON valido. / Le impostazioni devono essere un oggetto JSON.** **Impostazioni
 (JSON)** deve essere un unico oggetto tra parentesi graffe, per esempio `{"key": "value"}`. Array,
 semplici stringhe e virgole finali vengono rifiutati.
 
-**Verifica i dati inseriti: "settings are too large"** oppure un messaggio riguardante `storage`.
+**Verifica i dati inseriti: “settings are too large”** oppure un messaggio riguardante `storage`.
 L'oggetto supera circa 32.000 caratteri, oppure la parte `storage` non è valida. Accorcialo, oppure
 modifica la policy di archiviazione nella tab **File**.
 
@@ -200,7 +200,7 @@ prodotti non possono essere creati, archiviati o ripristinati.
 **Utente non trovato durante l'aggiunta di un operatore.** La persona non ha un account, oppure non
 ne ha uno che puoi vedere. Vedi [aggiungere un operatore](#add-operator).
 
-**Conflitto: "the product needs at least one owner".** Hai tentato di rimuovere o declassare
+**Conflitto: “the product needs at least one owner”.** Hai tentato di rimuovere o declassare
 l'ultimo **Product owner**. Prima rendi proprietario qualcun altro.
 
 **Un prodotto manca dall'elenco.** È archiviato (solo gli amministratori e i visualizzatori della

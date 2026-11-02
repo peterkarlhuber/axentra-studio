@@ -111,7 +111,7 @@ ruoli_:
 - L'ultimo proprietario di un prodotto o di un tenant non può essere rimosso né declassato, e
   l'ultimo amministratore della piattaforma non può essere disattivato né declassato.
 
-In Studio, i ruoli che non puoi assegnare compaiono come **"… (oltre le tue autorizzazioni)"** e
+In Studio, i ruoli che non puoi assegnare compaiono come **“… (oltre le tue autorizzazioni)”** e
 non sono selezionabili; i membri al di sopra del tuo livello mostrano **Superiore al tuo ruolo:
 solo chi possiede le autorizzazioni di questo ruolo può modificarlo**. Lo stesso principio vale per
 le chiavi API: una nuova chiave può avere solo autorizzazioni che il suo creatore possiede. Le
@@ -146,7 +146,7 @@ Le [chiavi API](help:api-keys) permettono ad altri sistemi di chiamare l'API di 
 pratiche:
 
 - **Una chiave per servizio e ambiente**, con un nome che indichi dove viene usata (per esempio
-  "billing-worker production"), così puoi revocarne una senza compromettere le altre.
+  “billing-worker production”), così puoi revocarne una senza compromettere le altre.
 - **Privilegio minimo:** concedi solo le autorizzazioni di cui il servizio ha bisogno, e limita la
   chiave a un tenant quando il servizio lavora per un solo tenant.
 - **Conserva i segreti in un secret manager**, mai nel codice sorgente, nei ticket o in chat.

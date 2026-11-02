@@ -122,7 +122,7 @@ restano.
 2. Inserisci un **Limite di spazio** con la sua **Unità** (MiB, GiB, TiB) e/o un **Limite di file**.
    Lascia vuoto un campo per ereditare il valore predefinito del prodotto o del server; `0` blocca
    tutti i caricamenti.
-3. Seleziona **Salva**.
+3. Seleziona **Salva modifiche**.
 
 Un limite inferiore all'utilizzo attuale è consentito: i file esistenti restano, i nuovi caricamenti
 vengono rifiutati. Se qualcuno ha modificato la quota dopo che hai aperto la finestra, il
@@ -174,7 +174,7 @@ Esistono due tipi di link, a seconda della configurazione del server:
 1. Apri i dettagli e seleziona **Modifica nome ed etichette**.
 2. Modifica il **Nome** e/o il JSON delle **Etichette (metadati)**. Le etichette che salvi
    sostituiscono tutte quelle precedenti.
-3. Seleziona **Salva**.
+3. Seleziona **Salva modifiche**.
 
 Il contenuto non può essere modificato. Se nel frattempo qualcun altro ha modificato il file, il
 salvataggio viene rifiutato con **Modificato nel frattempo**.
@@ -246,7 +246,7 @@ connessione più veloce.
 **Modificato nel frattempo.** Qualcuno ha rinominato, rietichettato o eliminato il file, oppure ha
 modificato la quota, dopo che lo hai aperto. Ricarica e ripeti.
 
-**Un link di download restituisce "Non trovato".** È scaduto, il file è stato eliminato o è
+**Un link di download restituisce “Non trovato”.** È scaduto, il file è stato eliminato o è
 scaduto, oppure il tenant o il prodotto è stato sospeso o archiviato. Crea un nuovo link. Il server
 risponde di proposito allo stesso modo in tutti questi casi.
 

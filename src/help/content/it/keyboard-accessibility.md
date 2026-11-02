@@ -52,12 +52,12 @@ nuova pagina.
 - **Punti di riferimento (landmark):** ogni pagina ha un'intestazione, la navigazione principale e
   il contenuto principale, e un solo titolo principale.
 - **Il percorso di navigazione (breadcrumb)** e la **Navigazione principale** hanno un'etichetta.
-  Le aree della barra laterale dei moduli disattivati vengono annunciate come "modulo non
-  abilitato".
+  Le aree della barra laterale dei moduli disattivati vengono annunciate come “modulo non
+  abilitato”.
 - **Moduli:** ogni campo ha un'etichetta visibile; i campi obbligatori vengono annunciati; i
   messaggi di errore sono collegati al rispettivo campo.
 - **Le tabelle** hanno didascalie e intestazioni di colonna, e le colonne ordinabili annunciano la
-  direzione di ordinamento. Il conteggio "N voci visualizzate" viene annunciato quando si caricano
+  direzione di ordinamento. Il conteggio “N voci visualizzate” viene annunciato quando si caricano
   altre righe.
 - **I messaggi di stato** (copiato negli appunti, caricamento, notifiche) vengono annunciati tramite
   aree live. Le notifiche di errore vengono annunciate immediatamente.
@@ -124,6 +124,6 @@ che ti hanno portato al problema.
 | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | L'anello del focus non è visibile                | Usa **Tab** (l'anello compare con il focus da tastiera, non con i clic del mouse). Controlla che nessuna estensione del browser sovrascriva gli stili della pagina.                          |
 | Una finestra di dialogo non si chiude con Esc    | Mostra un segreto visibile una sola volta. Copialo e conservalo, poi conferma **Ho conservato il segreto in modo sicuro**.                                                                   |
-| Le animazioni continuano a essere riprodotte     | Attiva "riduci movimento" nelle impostazioni di accessibilità del tuo sistema operativo e ricarica Studio.                                                                                   |
+| Le animazioni continuano a essere riprodotte     | Attiva “riduci movimento” nelle impostazioni di accessibilità del tuo sistema operativo e ricarica Studio.                                                                                   |
 | Il tema torna indietro                           | Lo storage del browser potrebbe essere bloccato (per esempio in modalità privata), quindi la scelta non viene memorizzata localmente; Studio ricorre allora al tema salvato nel tuo profilo. |
 | Il contenuto viene tagliato con uno zoom elevato | Le tabelle larghe scorrono all'interno della propria area; porta il focus su di essa con **Tab** e usa i tasti freccia.                                                                      |

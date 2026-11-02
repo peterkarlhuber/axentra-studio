@@ -17,7 +17,7 @@ cosa dovrebbe abilitare un operatore.
 - La pagina [Impostazioni](app:settings) (con `platform:settings` o `product:manage`) mostra la
   configurazione effettiva del server, compreso l'elenco dei moduli.
 - Nella barra laterale, un'area di un modulo disattivato ha l'etichetta **Off**; gli screen reader
-  annunciano "modulo non abilitato".
+  annunciano “modulo non abilitato”.
 
 Per impostazione predefinita tutti i moduli sono abilitati. Cambiare l'elenco è una modifica della
 configurazione del server (`modules`, vedi [configurazione del server](help:server-configuration));
@@ -60,17 +60,17 @@ Note per ciascun modulo:
 
 ### data {#data}
 
-**Panoramica dati** e **Record** mostrano lo stato "non abilitato". I prodotti che salvano i propri
+**Panoramica dati** e **Record** mostrano lo stato “non abilitato”. I prodotti che salvano i propri
 dati in tabelle proprie non sono interessati.
 
 ### storage {#storage}
 
-**File** mostra lo stato "non abilitato"; le quote di archiviazione e la policy di archiviazione non
+**File** mostra lo stato “non abilitato”; le quote di archiviazione e la policy di archiviazione non
 si possono leggere né modificare.
 
 ### events {#events}
 
-**Job**, **Pianificazioni**, **Eventi** e **Webhook** mostrano lo stato "non abilitato", e non c'è
+**Job**, **Pianificazioni**, **Eventi** e **Webhook** mostrano lo stato “non abilitato”, e non c'è
 la vista in diretta degli eventi. All'interno del server, gli altri moduli continuano a usare la
 coda dei job; mancano solo le schermate e la relativa API.
 
@@ -82,7 +82,7 @@ utilizzo solo quando sono abilitati **entrambi** i moduli.
 
 ### notify {#notify}
 
-**Notifiche** mostra lo stato "non abilitato". Gli inviti funzionano comunque, ma il server non
+**Notifiche** mostra lo stato “non abilitato”. Gli inviti funzionano comunque, ma il server non
 invia email di invito: condividi il link o il token di invito che Studio mostra una sola volta dopo
 la creazione dell'invito (vedi [Membri e inviti](help:members-invitations)).
 

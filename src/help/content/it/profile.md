@@ -114,7 +114,7 @@ Gli amministratori possono terminare le sessioni di altri utenti nella pagina [U
   il tentativo come **Negato** nel registro di audit.
 - **Verifica i dati inseriti**: la nuova password viola una delle regole indicate sopra (troppo
   corta, uguale al tuo indirizzo email, troppo semplice). I **Dettagli tecnici** del messaggio
-  riportano il motivo indicato dal server, per esempio "la password deve avere almeno 12 caratteri".
+  riportano il motivo indicato dal server, per esempio “the password must have at least 12 characters”.
 - **Le nuove password non coincidono.**: **Nuova password** e **Ripeti nuova password** sono diverse.
 - **Accedi di nuovo** durante l'impostazione di una prima password: il tuo accesso è troppo vecchio.
   Segui i passaggi in [Impostare una prima password](#set-password).

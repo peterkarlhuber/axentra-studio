@@ -45,7 +45,7 @@ La barra laterale mostra le stesse voci a tutti. Se apri una pagina per cui non 
 l'autorizzazione, la pagina te lo segnala (**Non consentito**) e le azioni che non puoi eseguire
 non vengono offerte.
 
-### Voci contrassegnate con "Off" {#module-off}
+### Voci contrassegnate con “Off” {#module-off}
 
 Una voce il cui modulo del server non è abilitato resta visibile e mostra **Off**. Aprendola compare
 **Modulo non abilitato su questo server** con l'id del modulo (per esempio `storage`) che
@@ -113,7 +113,7 @@ scelta.
 
 > [!NOTE]
 > Alcuni testi provengono dal server e sono sempre in inglese: i nomi e le descrizioni dei ruoli
-> predefiniti (per esempio "Product admin", "Owner"), le descrizioni nel catalogo delle
+> predefiniti (per esempio “Product admin”, “Owner”), le descrizioni nel catalogo delle
 > autorizzazioni e il messaggio del server nei dettagli tecnici di un errore.
 
 ### Tema {#theme}
@@ -128,7 +128,7 @@ La **Dashboard** è la pagina iniziale di un prodotto. Mostra:
 - **Contatori**: **Tenant**, **Utenti**, **Chiavi API**, **Eventi di audit (24 h)**, **Record** e
   **Richieste negate (24 h)**. Ogni contatore rimanda alla pagina corrispondente; il suo
   suggerimento (i) spiega esattamente che cosa viene contato. Se il server non restituisce
-  contatori, vedi "Il server non ha restituito contatori per questo prodotto."
+  contatori, vedi “Il server non ha restituito contatori per questo prodotto.”
 - Schede di **Utilizzo e fatturazione**, quando questi moduli sono abilitati e puoi leggerli.
 - **Stato del sistema**: il risultato del controllo di readiness del server, con **Dettagli**.
 - **Server**: **Versione del server**, **Versione API**, **Ambiente**, **Modalità**, **ID prodotto**
@@ -147,8 +147,8 @@ chiave API** (con `api_keys:manage`).
 | **Richieste negate (24 h)** | Tentativi rifiutati nelle ultime 24 ore; apre il registro di audit filtrato sugli eventi negati. |
 
 > [!TIP]
-> La scheda **Server** risponde alla domanda più frequente del supporto: "Quale versione è in
-> esecuzione, e il modulo è almeno abilitato?"
+> La scheda **Server** risponde alla domanda più frequente del supporto: “Quale versione è in
+> esecuzione, e il modulo è almeno abilitato?”
 
 ## Elenchi e moduli {#lists-forms}
 
@@ -171,7 +171,7 @@ dalla barra laterale (**Centro assistenza**), con il pulsante della guida (?) ne
 (**Guida e documentazione**) oppure dal link nelle pagine di accesso e di configurazione; funziona
 anche senza aver eseguito l'accesso.
 
-- **Cerca**: digita nella casella di ricerca ("Cerca nella guida, ad esempio “chiave API”"). Studio
+- **Cerca**: digita nella casella di ricerca («Cerca nella guida, ad esempio “chiave API”»). Studio
   cerca in tutti gli articoli nella tua lingua e ogni risultato apre la sezione corrispondente.
 - **Inizia da qui**: gli articoli per i nuovi utenti.
 - Gli **articoli** hanno un sommario (**In questa pagina**), **Precedente** e **Successivo**,
@@ -184,7 +184,7 @@ anche senza aver eseguito l'accesso.
   pagina**) apre l'articolo di quella pagina in un pannello laterale. Mantieni la tua posizione e un
   modulo che stai compilando resta com'è. I link all'interno del pannello aprono altri articoli
   (**Indietro** torna indietro), **Apri nel centro assistenza** mostra l'articolo completo e
-  **Chiudi guida** chiude il pannello.
+  **Chiudi la guida** chiude il pannello.
 - **Suggerimenti informativi**: il pulsante (i) accanto a un campo, a una colonna o a uno stato
   spiega effetti, valori predefiniti e limiti. Si apre con un clic, un tocco, Invio o Spazio e si
   chiude con Esc. **Scopri di più** nel suggerimento apre l'articolo correlato nel pannello

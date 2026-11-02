@@ -4,7 +4,7 @@ summary: Configura un nuovo cliente dall'inizio alla fine - tenant, amministrato
 keywords: onboarding, attivazione cliente, nuovo cliente, configurazione cliente, configurazione tenant, invitare, invito, accettare invito, proprietario, amministratore, membro, visualizzatore, integrazione, chiave API, audit, checklist, offboarding, dismissione cliente
 ---
 
-Un nuovo cliente, "Acme Ltd", si è registrato al tuo prodotto. In questo tutorial prepari tutto ciò
+Un nuovo cliente, “Acme Ltd”, si è registrato al tuo prodotto. In questo tutorial prepari tutto ciò
 di cui ha bisogno: un tenant tutto suo, il suo amministratore e il personale con ruoli adeguati, una
 chiave API per la sua integrazione e una verifica nel registro di audit che tutto sia avvenuto come
 previsto. Scopri anche cosa deve fare il cliente dal suo lato per accettare un invito.
@@ -59,7 +59,7 @@ tenant personalizzato. Vedi [ruoli e autorizzazioni](help:roles-permissions).
    tenant esiste.
 3. Scegli **Crea tenant**.
 
-**Risultato atteso:** "Tenant “Acme Ltd” creato"; si apre la pagina del tenant con stato **Attivo**
+**Risultato atteso:** «Tenant “Acme Ltd” creato»; si apre la pagina del tenant con stato **Attivo**
 e nessun membro. Annota l'**ID** del tenant (`ten_…`) dalla scheda **Dettagli**.
 
 ## Passo 3: invitare l'amministratore del cliente {#invite-admin}
@@ -119,7 +119,7 @@ Ecco cosa fa la persona invitata. Inviale queste istruzioni.
    apre **Accetta invito** (indirizzo `/invitations/accept`) e incolla il **Token di invito**.
 3. Scegliere **Accetta invito**.
 
-**Risultato atteso:** "Invito accettato. Ora hai accesso." La persona ora vede il prodotto e il
+**Risultato atteso:** “Invito accettato. Ora hai accesso.” La persona ora vede il prodotto e il
 tenant in base al suo ruolo. Può volerci qualche istante prima che l'accesso sia visibile ovunque.
 
 **Verifica (tu):** nella scheda **Membri** del tenant, la persona è elencata con il ruolo
@@ -133,8 +133,8 @@ tenant in base al suo ruolo. Può volerci qualche istante prima che l'accesso si
 ## Passo 6: modificare i ruoli se necessario {#change-role}
 
 Nella scheda **Membri**, scegli un nuovo ruolo nell'elenco **Ruolo** del membro; Studio conferma
-"Ruolo aggiornato". Per revocare l'accesso, scegli **Rimuovi membro**. Non puoi modificare né
-rimuovere membri il cui ruolo è superiore al tuo (contrassegnati con "Superiore al tuo ruolo").
+“Ruolo aggiornato”. Per revocare l'accesso, scegli **Rimuovi membro**. Non puoi modificare né
+rimuovere membri il cui ruolo è superiore al tuo (contrassegnati con “Superiore al tuo ruolo”).
 
 ## Passo 7: creare la chiave API per l'integrazione {#integration-key}
 
@@ -205,9 +205,9 @@ Tutti con l'esito **Riuscito**. Un tentativo di accettazione con l'account sbagl
 | **Conflitto** durante l'invito                  | Esiste già un invito aperto per questo indirizzo in questo tenant. Usalo o revocalo.                                                                                                       |
 | **Utente non trovato** in **Aggiungi membro**   | Nessun account visibile per te ha questo indirizzo. Usa **Invia invece un invito**.                                                                                                        |
 | Il cliente non riceve nessuna email             | Il modulo `notify` è disattivato, oppure la consegna della posta non è riuscita. Invia tu il link o il token; controlla le [notifiche](help:notifications).                                |
-| Il link apre una pagina "non trovata"           | L'impostazione di prodotto `invitation_accept_url` manca o è errata (vedi [consegna](help:tutorial-onboard-customer#delivery)). Invia il token e fallo incollare in `/invitations/accept`. |
+| Il link apre una pagina “non trovata”           | L'impostazione di prodotto `invitation_accept_url` manca o è errata (vedi [consegna](help:tutorial-onboard-customer#delivery)). Invia il token e fallo incollare in `/invitations/accept`. |
 | L'accettazione fallisce con **Non consentito**  | La persona ha effettuato l'accesso con un account la cui email è diversa dall'indirizzo invitato. Accedi con l'account giusto, oppure invita l'indirizzo effettivo.                        |
 | L'accettazione fallisce con **Non trovato**     | L'invito è già stato accettato, è stato revocato o ha più di 7 giorni. Crea un nuovo invito.                                                                                               |
-| Il single sign-on fallisce con "nessun account" | Non c'è un invito aperto per l'indirizzo verificato e la registrazione è disattivata. Controlla l'indirizzo invitato; vedi [accesso](help:signing-in#sso-errors).                          |
+| Il single sign-on fallisce con “nessun account” | Non c'è un invito aperto per l'indirizzo verificato e la registrazione è disattivata. Controlla l'indirizzo invitato; vedi [accesso](help:signing-in#sso-errors).                          |
 | L'integrazione riceve `403`                     | Alla chiave manca un'autorizzazione, oppure il tenant è sospeso.                                                                                                                           |
 | Nessun evento nel registro di audit             | Controlla il filtro **Prodotto** e di avere `audit:read`.                                                                                                                                  |

@@ -35,7 +35,7 @@ non può essere disattivato né perdere il ruolo.
 
 ## Prodotto {#product}
 
-Un **prodotto** è un'applicazione che gira sulla piattaforma, per esempio "Example CRM". Ogni
+Un **prodotto** è un'applicazione che gira sulla piattaforma, per esempio “Example CRM”. Ogni
 prodotto ha i propri tenant, ruoli, chiavi API, dati, piani e modelli, isolati da tutti gli altri
 prodotti. La maggior parte delle pagine di Studio appartiene a un prodotto; l'indirizzo inizia
 allora con `/p/<product id>/` e il [selettore di prodotto](help:interface#product-switcher) mostra
@@ -55,7 +55,7 @@ prodotto. Vedi [prodotti](help:products).
 
 ## Tenant {#tenant}
 
-Un **tenant** è un cliente o un'organizzazione all'interno di un prodotto, per esempio "Acme Srl".
+Un **tenant** è un cliente o un'organizzazione all'interno di un prodotto, per esempio “Acme Srl”.
 I dati dei diversi tenant sono rigorosamente separati, anche all'interno del database (sicurezza a
 livello di riga). Un tenant è **attivo** o **sospeso**; la sospensione blocca i suoi membri e le
 chiavi API legate al tenant senza eliminare dati. Vedi [tenant](help:tenants).
@@ -167,7 +167,7 @@ Con il modulo `events`, Axentra esegue lavoro in background e informa gli altri 
   [job](help:jobs).
 - **Pianificazioni**: job eseguiti secondo una pianificazione cron. Vedi
   [pianificazioni](help:schedules).
-- **Eventi**: registrazioni di fatti accaduti, per esempio "è stato creato un contatto". Vedi
+- **Eventi**: registrazioni di fatti accaduti, per esempio “è stato creato un contatto”. Vedi
   [eventi](help:events).
 - **Webhook**: chiamate HTTP che consegnano gli eventi ai tuoi endpoint, firmate con un segreto.
   Vedi [webhook](help:webhooks).
@@ -212,6 +212,6 @@ eventi di audit.
 | Vedi                                                         | Significato e soluzione                                                                                                                                         |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Non consentito**                                           | Ai tuoi ruoli manca l'autorizzazione. Chiedi a qualcuno con un ruolo superiore oppure consulta [ruoli e autorizzazioni](help:roles-permissions).                |
-| Un ruolo viene mostrato come "(oltre le tue autorizzazioni)" | Lo blocca il [limite dei ruoli](help:concepts#role-ceiling). Deve assegnarlo qualcuno che possiede tutte le autorizzazioni di quel ruolo.                       |
-| **Non trovato** per qualcosa che esiste                      | Axentra risponde "non trovato" quando non hai alcun accesso, per non rivelare che cosa esiste. Verifica di trovarti nel prodotto giusto e di avere un ruolo lì. |
+| Un ruolo viene mostrato come “(oltre le tue autorizzazioni)” | Lo blocca il [limite dei ruoli](help:concepts#role-ceiling). Deve assegnarlo qualcuno che possiede tutte le autorizzazioni di quel ruolo.                       |
+| **Non trovato** per qualcosa che esiste                      | Axentra risponde “non trovato” quando non hai alcun accesso, per non rivelare che cosa esiste. Verifica di trovarti nel prodotto giusto e di avere un ruolo lì. |
 | **Non disponibile in questa modalità**                       | Il server funziona in modalità a prodotto singolo; i prodotti non possono essere creati né archiviati.                                                          |

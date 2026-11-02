@@ -55,7 +55,7 @@ Studio apre il nuovo tenant. Non ha ancora membri: aggiungi la prima persona del
 
 1. Apri il tenant e resta nella tab **Dettagli**.
 2. Modifica il **Nome** in **Modifica tenant**.
-3. Scegli **Salva**.
+3. Scegli **Salva modifiche**.
 
 Lo slug e l'ID non cambiano mai.
 
@@ -131,10 +131,10 @@ Viene mostrato quando il modulo dei record è abilitato e possiedi `records:read
 
 ## Risoluzione dei problemi {#troubleshooting}
 
-**Conflitto: "a tenant with this slug exists in the product".** Scegli uno slug diverso. Gli slug
+**Conflitto: “a tenant with this slug exists in the product”.** Scegli uno slug diverso. Gli slug
 dei tenant eliminati possono essere riutilizzati.
 
-**Verifica i dati inseriti: "slug must be 2-63 lowercase letters, digits or dashes".** Rimuovi
+**Verifica i dati inseriti: “slug must be 2-63 lowercase letters, digits or dashes”.** Rimuovi
 dallo slug maiuscole, spazi e caratteri speciali.
 
 **Non consentito all'apertura di un tenant.** Il tenant è sospeso (vedi [riattivare](#reactivate)),

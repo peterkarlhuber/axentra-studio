@@ -197,7 +197,7 @@ tenant del piano, modifica invece il diritto d'uso del piano. Dettagli:
 ## Cosa ne fa il tuo prodotto {#in-your-product}
 
 - Prima di un'azione che consuma una risorsa misurata, registra l'utilizzo. Interpreta
-  `429 quota_exceeded` come "limite raggiunto" e mostra al cliente un messaggio chiaro.
+  `429 quota_exceeded` come “limite raggiunto” e mostra al cliente un messaggio chiaro.
 - Leggi le funzionalità del tenant con
   `GET /v1/products/{product_id}/tenants/{tenant_id}/billing/entitlements` e attiva l'esportazione
   solo quando `features.export` è `true`.
@@ -219,7 +219,7 @@ tenant del piano, modifica invece il diritto d'uso del piano. Dettagli:
 | `401`                                                       | La chiave è errata, revocata o scaduta                                         | Controlla `$KEY`; crea una nuova chiave                                          |
 | `403`                                                       | Alla chiave manca `usage:record`, oppure è legata a un altro tenant            | Controlla le autorizzazioni della chiave e l'**Ambito tenant**                   |
 | `404`                                                       | Id del prodotto o del tenant errato, oppure la chiave del contatore non esiste | Confronta gli id con Studio; controlla la chiave del contatore                   |
-| `409` "il contatore è inattivo"                             | Il contatore è stato disattivato                                               | **Attiva** il contatore in **Contatori**                                         |
+| `409` “the meter is inactive”                               | Il contatore è stato disattivato                                               | **Attiva** il contatore in **Contatori**                                         |
 | `409` per la chiave di idempotenza                          | La chiave è stata già usata con un altro corpo                                 | Usa una nuova `Idempotency-Key`                                                  |
 | `422`                                                       | Manca `Idempotency-Key`, oppure la quantità non è valida                       | Invia l'header; usa una quantità maggiore o uguale a 0 con al massimo 6 decimali |
 | La scheda mostra **Predefinito del contatore** e limite 100 | L'abbonamento non è attivo, oppure il piano non ha `limit.api_calls`           | Controlla il passo 2 e il passo 3                                                |

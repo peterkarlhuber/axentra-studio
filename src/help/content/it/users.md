@@ -124,12 +124,12 @@ proprietari e i membri dei tenant non hanno questa autorizzazione; vedono i loro
 **Mancano i pulsanti Disattiva utente e Disconnetti ovunque.** Richiedono `users:manage`, posseduta
 solo dagli amministratori della piattaforma.
 
-**Conflitto: "you cannot disable yourself".** Chiedi a un altro amministratore della piattaforma.
+**Conflitto: “you cannot disable yourself”.** Chiedi a un altro amministratore della piattaforma.
 
-**Conflitto: "the last platform admin cannot be disabled" / "the last platform admin cannot lose
-the role".** Prima rendi amministratore della piattaforma un altro utente.
+**Conflitto: “the last platform admin cannot be disabled” / “the last platform admin cannot lose
+the role”.** Prima rendi amministratore della piattaforma un altro utente.
 
-**Non consentito: "only platform admins can change platform roles".** Chiedi a un amministratore
+**Non consentito: “only platform admins can change platform roles”.** Chiedi a un amministratore
 della piattaforma.
 
 **Un utente manca dall'elenco.** L'utente non è né operatore di questo prodotto né membro di uno dei
