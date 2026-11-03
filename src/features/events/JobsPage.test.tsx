@@ -184,4 +184,24 @@ describe('JobsPage', { timeout: 20_000 }, () => {
     render();
     expect(await screen.findByRole('heading', { name: /not permitted/i })).toBeInTheDocument();
   });
+  it('marks a failed job that was skipped because its tenant was not active', async () => {
+    mockApi(({ method, path }) => {
+      if (method === 'GET' && path === `/v1/products/${PID}/jobs/stats`) return jsonResponse(stats);
+      if (method === 'GET' && path === `/v1/products/${PID}/jobs`) {
+        return page(
+          [
+            {
+              ...baseJob,
+              status: 'failed',
+              last_error: 'skipped: the product or tenant is not active',
+            },
+          ],
+          null,
+        );
+      }
+      return undefined;
+    });
+    render();
+    expect(await screen.findByText('Not run: product or tenant inactive')).toBeInTheDocument();
+  });
 });

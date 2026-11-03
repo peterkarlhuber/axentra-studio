@@ -75,7 +75,7 @@ describe('API client', () => {
       () =>
         new Response(
           JSON.stringify({
-            type: 'https://axentra.dev/problems/conflict',
+            type: 'urn:axentra:problem:conflict',
             title: 'Conflict',
             status: 409,
             code: 'conflict',

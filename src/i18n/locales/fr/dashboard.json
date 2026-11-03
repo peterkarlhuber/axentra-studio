@@ -18,6 +18,11 @@
       "records": "Les enregistrements de toutes les collections et de tous les locataires de ce produit.",
       "audit24h": "Les événements d’audit de ce produit des dernières 24 heures, autorisés et refusés.",
       "denied24h": "Les requêtes des dernières 24 heures qui ont été refusées, par exemple parce qu’il manquait une autorisation. Une hausse soudaine indique souvent une clé d’API ou un rôle mal configuré."
+    },
+    "tenantHints": {
+      "tenants": "Locataires de ce produit dont tu es membre.",
+      "users": "Membres de tes locataires, chaque personne comptée une fois (seulement les locataires où tu peux voir les membres).",
+      "records": "Enregistrements de tes locataires (seulement les locataires où tu peux lire les enregistrements)."
     }
   },
   "actions": {
@@ -46,5 +51,6 @@
     "modeInfo": "Produit unique : le serveur sert exactement un produit, créé à partir de sa configuration ; impossible de créer ou d’archiver des produits. Multiproduit : les administrateurs de la plateforme créent et archivent les produits. L’opérateur définit le mode dans la configuration du serveur.",
     "modulesAbout": "À propos des modules",
     "modulesInfo": "Les blocs fonctionnels du serveur. Les modules verts sont activés ; les gris ne le sont pas, et leurs entrées dans la barre latérale affichent « Désactivé ». Seul l’opérateur du serveur peut activer un module."
-  }
+  },
+  "tenantScope": "Ces chiffres ne couvrent que les locataires dont tu es membre. Les chiffres de tout le produit, comme les clés d’API et les événements d’audit, nécessitent un rôle de produit."
 }

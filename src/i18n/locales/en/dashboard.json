@@ -18,6 +18,11 @@
       "records": "Records in all collections and tenants of this product.",
       "audit24h": "Audit events of this product in the last 24 hours, allowed and denied.",
       "denied24h": "Requests of the last 24 hours that were refused, for example because a permission was missing. A sudden rise often points to a misconfigured API key or role."
+    },
+    "tenantHints": {
+      "tenants": "Tenants of this product in which you are a member.",
+      "users": "Members of your tenants, each counted once (only tenants in which you may see members).",
+      "records": "Records in your tenants (only tenants in which you may read records)."
     }
   },
   "actions": {
@@ -46,5 +51,6 @@
     "modeInfo": "Single product: the server serves exactly one product, created from its configuration; products cannot be created or archived. Multi product: platform administrators create and archive products. The operator sets the mode in the server configuration.",
     "modulesAbout": "About modules",
     "modulesInfo": "Functional blocks of the server. Green modules are enabled; gray ones are not, and their sidebar entries show “Off”. Only the server operator can enable a module."
-  }
+  },
+  "tenantScope": "These figures cover only the tenants you belong to. Product-wide figures such as API keys and audit events need a product role."
 }

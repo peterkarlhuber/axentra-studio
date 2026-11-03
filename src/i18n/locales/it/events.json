@@ -102,7 +102,9 @@
       "noError": "Nessun errore registrato.",
       "redactedHelp": "I valori sensibili vengono oscurati dal server.",
       "result": "Risultato",
-      "noResult": "Nessun risultato (per ora)."
+      "noResult": "Nessun risultato (per ora).",
+      "skippedTitle": "Saltato, non eseguito",
+      "skippedBody": "Il worker non ha eseguito questo job perché il suo prodotto è archiviato o il suo tenant è sospeso (oppure uno dei due non esiste più). Anche i job avviati da una pianificazione finiscono così. Il job viene conservato: quando prodotto e tenant sono di nuovo attivi, riprovalo se serve ancora."
     },
     "statusInfoLabel": "Informazioni sugli stati dei job",
     "statusInfo": "Non riuscito: l'handler ha segnalato un errore permanente, quindi non ci sono altri tentativi automatici. Esaurito: ogni tentativo è terminato con un errore. Puoi riprovare entrambi.",
@@ -112,7 +114,8 @@
     "payloadInfo": "Il payload viene memorizzato così come inserito ed è leggibile da chiunque possa visualizzare i job. I campi con nomi come password, secret o token sono nascosti solo nella visualizzazione.",
     "priorityInfo": "La priorità decide solo quale job pronto viene preso per primo da un worker libero. Non interrompe i job in esecuzione e non garantisce un ordine.",
     "maxAttemptsInfo": "Dopo un errore il job viene riprovato con un'attesa crescente. Quando l'ultimo tentativo fallisce diventa esaurito e resta nell'elenco, così puoi leggere l'errore e riprovarlo.",
-    "idempotencyKeyInfo": "Studio inserisce una nuova chiave casuale ogni volta che apri questa finestra di dialogo, quindi un doppio clic accoda il job una sola volta. La stessa chiave con un payload o una priorità diversi viene rifiutata."
+    "idempotencyKeyInfo": "Studio inserisce una nuova chiave casuale ogni volta che apri questa finestra di dialogo, quindi un doppio clic accoda il job una sola volta. La stessa chiave con un payload o una priorità diversi viene rifiutata.",
+    "skipped": "Non eseguito: prodotto o tenant non attivo"
   },
   "schedules": {
     "title": "Pianificazioni",

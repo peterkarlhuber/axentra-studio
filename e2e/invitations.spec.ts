@@ -290,3 +290,48 @@ test('unknown tokens and invitations for another address are explained', async (
   await expectAccessibleInBothThemes(other.page);
   await other.context.close();
 });
+
+test('an invitation to a suspended tenant is refused with an explanation and stays usable', async ({
+  page,
+  browser,
+  baseURL,
+}, testInfo) => {
+  test.setTimeout(180_000);
+  const fixture = await createFixture(page, testInfo.project.name);
+  const created = await invite(page, fixture);
+  const setStatus = async (status: 'active' | 'suspended') => {
+    const session = (await (await page.request.get('/v1/auth/session')).json()) as {
+      csrf_token: string;
+    };
+    const response = await page.request.patch(
+      `/v1/products/${fixture.productId}/tenants/${fixture.tenantId}`,
+      {
+        headers: { 'X-Axentra-CSRF': session.csrf_token, Origin: new URL(page.url()).origin },
+        data: { status },
+      },
+    );
+    expect(response.status(), await response.text()).toBe(200);
+  };
+  await setStatus('suspended');
+
+  // Axentra refuses with 403 (since PR #31); Studio must not call it "another email address".
+  const invitee = await signedOutPage(browser, baseURL);
+  await invitee.page.goto(`/accept-invitation?token=${encodeURIComponent(created.token)}`);
+  await signInOnLoginPage(invitee.page, fixture.invitee);
+  await expect(invitee.page).toHaveURL(/\/invitations\/accept$/);
+  await invitee.page.getByRole('button', { name: 'Accept invitation' }).click();
+  const refused = invitee.page.getByRole('alert').filter({ hasText: 'The tenant is not active' });
+  await expect(refused).toContainText('Your invitation was not used');
+  await expect(refused).not.toContainText('different address');
+  await expect(
+    invitee.page.getByRole('button', { name: 'Sign out and use the invited address' }),
+  ).toHaveCount(0);
+  await expectNoHorizontalScroll(invitee.page);
+  await expectAccessibleInBothThemes(invitee.page);
+
+  // Once the tenant is active again, the same invitation works.
+  await setStatus('active');
+  await invitee.page.getByRole('button', { name: 'Accept invitation' }).click();
+  await expect(invitee.page.getByRole('heading', { name: 'Invitation accepted' })).toBeVisible();
+  await invitee.context.close();
+});

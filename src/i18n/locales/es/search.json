@@ -1,0 +1,67 @@
+{
+  "title": "Búsqueda",
+  "description": "Búsqueda de texto completo en el índice que tu producto mantiene para cada inquilino.",
+  "pick": {
+    "title": "Elige un inquilino",
+    "body": "Cada inquilino tiene su propio índice de búsqueda. Elige uno para buscar en él."
+  },
+  "start": {
+    "title": "Escribe una búsqueda",
+    "body": "Deben aparecer todas las palabras, en el título o en el texto. La búsqueda encuentra palabras completas, no partes de palabras."
+  },
+  "syntax": {
+    "all": "encuentra documentos que contienen ambas palabras",
+    "phrase": "encuentra la frase exacta",
+    "or": "encuentra documentos con cualquiera de las dos palabras",
+    "exclude": "omite los documentos que contienen «draft»"
+  },
+  "noAccess": {
+    "title": "No puedes buscar en este inquilino",
+    "body": "Buscar requiere el permiso search:query en este inquilino. Pide a un owner o admin del inquilino un rol que lo incluya."
+  },
+  "form": {
+    "label": "Buscar en el índice del inquilino",
+    "query": "Texto de búsqueda",
+    "queryHelp": "Palabras, «frases entre comillas», or y -palabra para excluir. Como máximo 500 caracteres.",
+    "queryMissing": "Escribe al menos una palabra.",
+    "kinds": "Tipos",
+    "kindsHelp": "Opcional. Solo documentos de estos tipos, separados por comas.",
+    "kindsPlaceholder": "por ejemplo invoice, note",
+    "kindInvalid": "«{{kind}}» no es un tipo válido: usa minúsculas, dígitos, puntos, guiones y guiones bajos, empezando por una letra.",
+    "kindTooMany": "Escribe como máximo 20 tipos.",
+    "submit": "Buscar"
+  },
+  "results": {
+    "heading": "Resultados para {{query}}",
+    "updated": "Actualizado",
+    "showing_one": "Se muestra {{count}} resultado, hay más disponibles",
+    "showing_many": "Se muestran {{count}} de resultados, hay más disponibles",
+    "showing_other": "Se muestran {{count}} resultados, hay más disponibles",
+    "all_one": "{{count}} resultado",
+    "all_many": "{{count}} de resultados",
+    "all_other": "{{count}} resultados",
+    "empty": "Sin coincidencias",
+    "emptyBody": "Revisa la ortografía, usa menos palabras o palabras completas (la búsqueda no encuentra partes de palabras). El índice solo contiene lo que tu producto ha indexado para este inquilino.",
+    "emptyKinds": "Nada de estos tipos coincide. Quita el filtro de tipos, revisa la ortografía o usa menos palabras."
+  },
+  "document": {
+    "title": "Documento indexado",
+    "kind": "Tipo",
+    "refId": "ID de referencia",
+    "id": "ID del documento",
+    "version": "Versión",
+    "language": "Idioma",
+    "createdBy": "Indexado por",
+    "updatedBy": "Indexado por última vez por",
+    "created": "Indexado",
+    "updated": "Actualizado",
+    "body": "Texto",
+    "noBody": "Este documento no tiene texto, solo un título.",
+    "metadata": "Metadatos",
+    "derived": "El índice es una copia que escribe tu producto. Los cambios en el objeto original llegan al índice solo cuando el producto lo vuelve a indexar.",
+    "remove": "Quitar del índice",
+    "removeTitle": "¿Quitar del índice de búsqueda?",
+    "removeBody": "El documento {{kind}} {{ref}} deja de aparecer en los resultados. El objeto original en tu producto no cambia; el producto lo vuelve a añadir la próxima vez que indexe el objeto.",
+    "removed": "{{ref}} quitado del índice de búsqueda"
+  }
+}

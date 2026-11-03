@@ -108,6 +108,14 @@
       "noEmail": {
         "title": "Ton compte n’a pas d’adresse e-mail"
       },
+      "inactive": {
+        "title": "Le locataire n’est pas actif",
+        "body": "Le locataire (ou son produit) auquel tu as été invité est suspendu ou fermé : personne ne peut le rejoindre pour l’instant. Ton invitation n’a pas été utilisée. Demande à la personne qui t’a invité de réactiver le locataire, puis réessaie."
+      },
+      "inviterLost": {
+        "title": "L’invitation n’est plus valable",
+        "body": "La personne qui t’a invité ne peut plus t’attribuer ce rôle, par exemple parce que son propre rôle ou son appartenance a changé. Demande-lui, ou à une autre personne qui administre le locataire, une nouvelle invitation."
+      },
       "unreachable": {
         "title": "Le serveur est injoignable",
         "body": "Ton invitation n’a pas été modifiée. Vérifie ta connexion et réessaie dans un instant."

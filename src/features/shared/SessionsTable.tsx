@@ -74,7 +74,10 @@ export function SessionsTable({
             size="sm"
             variant="danger"
             icon={<Trash2 />}
-            label={t('sessions.revoke')}
+            // Names the device, so every row's button is distinguishable for screen readers.
+            label={t('sessions.revokeNamed', {
+              device: describeUserAgent(session.user_agent) || t('sessions.unknownDevice'),
+            })}
             loading={revokingId === session.id}
             onClick={() => onRevoke(session)}
           />

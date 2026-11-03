@@ -51,8 +51,8 @@ do servidor; às vezes a API do servidor oferece mais do que o Studio.
 - **Registros:** filtros apenas em valores JSON de primeiro nível, ordenação apenas por ID, data de
   criação ou de atualização. Salvar um registro substitui o objeto JSON inteiro. Um registro tem no
   máximo 256 KiB.
-- **A pesquisa de texto completo** existe no servidor (módulo `search`), mas ainda não tem tela no
-  Studio; ela está disponível pela API.
+- **A pesquisa de texto completo** ([Pesquisa](help:search)) abrange um tenant por vez e só encontra
+  palavras inteiras (sem prefixo nem busca aproximada). O Studio não adiciona documentos ao índice; quem faz isso é o seu produto.
 - **Backups e armazenamento de arquivos:** o Studio não mostra o status dos backups, e o
   procedimento de backup do servidor cobre o banco de dados; o armazenamento de arquivos precisa de
   backup separado.

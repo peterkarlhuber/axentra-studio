@@ -67,6 +67,13 @@ job-lifecycle
 significa che l'handler ha deciso che riprovare non può servire; **Esaurito** significa che ogni
 tentativo si è concluso con un errore.
 
+**Job saltati.** Un job il cui prodotto è archiviato o il cui tenant è sospeso (o non esiste più)
+non viene eseguito. Il worker lo chiude come **Non riuscito** con un ultimo errore che inizia con
+`skipped:`, per esempio `skipped: the product or tenant is not active`. Studio lo segnala con **Non
+eseguito: prodotto o tenant non attivo**. I job avviati da una pianificazione finiscono così finché
+il tenant è sospeso. Il job viene conservato: quando prodotto e tenant sono di nuovo attivi,
+riprovalo se serve ancora.
+
 ## Tentativi, nuovi tentativi e backoff {#retries}
 
 Ogni volta che un worker prende in carico un job, il suo contatore dei tentativi aumenta di uno.

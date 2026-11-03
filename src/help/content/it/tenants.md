@@ -131,7 +131,7 @@ Viene mostrato quando il modulo dei record è abilitato e possiedi `records:read
 - Gli operatori di prodotto non hanno bisogno di un'appartenenza: il loro ruolo di prodotto copre
   già ogni tenant.
 - I selettori in altre schermate (per esempio **Ambito tenant** nelle chiavi API o la schermata
-  **Inviti**) elencano i primi 200 tenant in ordine di nome.
+  **Inviti**) elencano i 200 tenant più vecchi, ordinati per nome.
 
 ## Risoluzione dei problemi {#troubleshooting}
 

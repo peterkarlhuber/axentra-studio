@@ -100,8 +100,8 @@ prodotto.
 | `billing:read`       | Visualizzare abbonamento e diritti d'uso                                       | [Piani](app:plans), [Abbonamenti](app:subscriptions) e la fatturazione di un tenant                                                     |
 | `notify:send`        | Inviare notifiche                                                              | Inviare notifiche di test ai membri del tenant; vedere i messaggi del tenant                                                            |
 | `notify:preferences` | Gestire le preferenze di notifica                                              | Le tue preferenze di notifica per un tenant                                                                                             |
-| `search:query`       | Cercare nell'indice di ricerca del tenant                                      | Ancora nulla in Studio; disponibile tramite l'API                                                                                       |
-| `search:index`       | Aggiungere, sostituire e rimuovere documenti nell'indice di ricerca del tenant | Ancora nulla in Studio; disponibile tramite l'API                                                                                       |
+| `search:query`       | Cercare nell'indice di ricerca del tenant                                      | [Ricerca](app:search) nel tenant                                                                                                        |
+| `search:index`       | Aggiungere, sostituire e rimuovere documenti nell'indice di ricerca del tenant | **Rimuovi dall'indice** nella schermata [Ricerca](app:search)                                                                           |
 
 ## Ruoli predefiniti {#built-in-roles}
 

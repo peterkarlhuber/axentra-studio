@@ -26,7 +26,7 @@ export const HELP_CHAPTERS = [
   },
   {
     id: 'data',
-    articles: ['data-overview', 'records', 'files'],
+    articles: ['data-overview', 'records', 'files', 'search'],
   },
   {
     id: 'events',

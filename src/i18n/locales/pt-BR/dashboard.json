@@ -18,6 +18,11 @@
       "records": "Registros em todas as coleções e todos os tenants deste produto.",
       "audit24h": "Eventos de auditoria deste produto nas últimas 24 horas, permitidos e negados.",
       "denied24h": "Requisições das últimas 24 horas que foram recusadas, por exemplo por falta de uma permissão. Um aumento repentino costuma indicar uma chave de API ou uma função mal configurada."
+    },
+    "tenantHints": {
+      "tenants": "Tenants deste produto dos quais você é membro.",
+      "users": "Membros dos seus tenants, cada pessoa contada uma vez (só tenants em que você pode ver membros).",
+      "records": "Registros dos seus tenants (só tenants em que você pode ler registros)."
     }
   },
   "actions": {
@@ -46,5 +51,6 @@
     "modeInfo": "Produto único: o servidor atende exatamente um produto, criado a partir da configuração dele; não é possível criar nem arquivar produtos. Multiproduto: administradores da plataforma criam e arquivam produtos. O operador define o modo na configuração do servidor.",
     "modulesAbout": "Sobre os módulos",
     "modulesInfo": "Blocos funcionais do servidor. Módulos verdes estão habilitados; os cinza não estão, e as entradas deles na barra lateral mostram “Desat.”. Só o operador do servidor pode habilitar um módulo."
-  }
+  },
+  "tenantScope": "Estes números incluem só os tenants dos quais você é membro. Números de todo o produto, como chaves de API e eventos de auditoria, exigem um papel de produto."
 }

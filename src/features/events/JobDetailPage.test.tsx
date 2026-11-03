@@ -61,6 +61,26 @@ describe('JobDetailPage', { timeout: 20_000 }, () => {
     );
   });
 
+  it('explains a job the worker skipped because its tenant was not active', async () => {
+    mockApi(({ path }) =>
+      path === `/v1/products/${PID}/jobs/job_1`
+        ? jsonResponse({
+            ...baseJob,
+            status: 'failed',
+            attempts: 0,
+            created_by: 'schedule:sch_1',
+            last_error: 'skipped: the product or tenant is not active',
+          })
+        : undefined,
+    );
+    render();
+    const note = (await screen.findByText('Skipped, not run')).closest('[role="status"]');
+    expect(note).toHaveTextContent(/archived or its tenant is suspended/);
+    // The server's reason stays visible, and the job can be retried later.
+    expect(screen.getByText('skipped: the product or tenant is not active')).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Retry' })).toBeInTheDocument();
+  });
+
   it('shows not found for an unknown job', async () => {
     mockApi(() => undefined);
     render();

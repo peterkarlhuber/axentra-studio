@@ -148,6 +148,14 @@ A **Próxima execução** é recalculada a partir do momento atual sempre que vo
 ou habilita o agendamento. Alterar apenas o nome, o payload, a prioridade ou as tentativas mantém a
 próxima execução.
 
+**Tenant suspenso ou produto arquivado.** Enquanto o tenant de um agendamento estiver suspenso ou o
+produto dele arquivado, os horários que vencem são ignorados: nenhum job é enfileirado, **Última
+execução** não muda e o agendamento passa para o próximo horário. O log de auditoria registra
+`events.schedule.skip` uma vez, para o primeiro horário ignorado. Um job que já estava na fila
+também não é executado; ele termina como **Falhou** com `skipped: …` (veja
+[status dos jobs](help:jobs#statuses)). O agendamento é mantido e dispara de novo no próximo horário
+depois que o tenant for reativado.
+
 ## Editar um agendamento {#edit}
 
 1. Abra o menu de ações da linha e escolha **Editar**.

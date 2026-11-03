@@ -38,7 +38,7 @@ server restarts. Studio reads the list once per page load, so reload Studio afte
 | `usage`    | Yes                 | [Usage](help:usage): meters, tenant usage, quotas, reservations                                                     |
 | `billing`  | Yes                 | [Plans and subscriptions](help:plans-subscriptions), tenant billing                                                 |
 | `notify`   | Yes                 | [Notifications](help:notifications): templates, message log, mailbox, preferences                                   |
-| `search`   | Yes                 | No Studio screens yet; tenant full-text search is available through the API                                         |
+| `search`   | Yes                 | [Search](help:search): a tenant's full-text index                                                                   |
 | `realtime` | Yes                 | Accepted in the configuration, but has no effect in this version                                                    |
 
 [System health](help:health-monitoring), Monitoring and [Settings](help:settings) do not belong
@@ -88,7 +88,8 @@ the invitation (see [Members and invitations](help:members-invitations)).
 
 ### search and realtime {#search-realtime}
 
-Studio has no screens for these modules. Switching them on or off changes nothing in Studio.
+Without `search`, **Search** shows "module not enabled". Studio has no screens for `realtime`;
+switching it on or off changes nothing in Studio.
 
 ## Not yet available in Studio {#not-in-studio}
 

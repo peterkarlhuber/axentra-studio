@@ -14,6 +14,8 @@ export interface ProblemDetails {
   detail?: string;
   request_id?: string;
   errors?: ValidationIssue[];
+  /** `backdating_not_permitted`: the earliest allowed `occurred_at` (start of the billing period). */
+  period_start?: string;
 }
 
 /**
@@ -41,6 +43,7 @@ export const KNOWN_ERROR_CODES = [
   'unsupported_media_type',
   'rate_limited',
   'quota_exceeded',
+  'backdating_not_permitted',
   'internal',
   // A framework-level HTTP error without a more specific code.
   'error',
@@ -71,6 +74,8 @@ export class ApiError extends Error {
   readonly detail: string | undefined;
   readonly requestId: string | undefined;
   readonly errors: ValidationIssue[];
+  /** Start of the tenant's current billing period (`backdating_not_permitted` only). */
+  readonly periodStart: string | undefined;
 
   constructor(init: {
     status: number;
@@ -79,6 +84,7 @@ export class ApiError extends Error {
     detail?: string;
     requestId?: string;
     errors?: ValidationIssue[];
+    periodStart?: string;
   }) {
     super(init.detail || init.title || init.code);
     this.name = 'ApiError';
@@ -88,6 +94,7 @@ export class ApiError extends Error {
     this.detail = init.detail;
     this.requestId = init.requestId;
     this.errors = init.errors ?? [];
+    this.periodStart = init.periodStart;
   }
 
   get isUnauthenticated(): boolean {
@@ -136,6 +143,7 @@ export function problemToError(body: unknown, response: Response | undefined): A
     detail: typeof body === 'string' && body ? body : problem.detail,
     requestId,
     errors: Array.isArray(problem.errors) ? problem.errors : [],
+    periodStart: typeof problem.period_start === 'string' ? problem.period_start : undefined,
   });
 }
 

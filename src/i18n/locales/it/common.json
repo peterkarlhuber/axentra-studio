@@ -131,6 +131,7 @@
     "lastSeen": "Ultima attività",
     "expires": "Scadenza",
     "revoke": "Revoca sessione",
+    "revokeNamed": "Revoca la sessione su {{device}}",
     "empty": "Nessuna sessione attiva",
     "method": "Metodo di accesso"
   },
@@ -142,5 +143,15 @@
   },
   "help": {
     "learnMore": "Scopri di più"
+  },
+  "builtinRoles": {
+    "product_owner": "Controllo completo del prodotto",
+    "product_admin": "Gestisce tenant, ruoli, chiavi e dati; non può gestire gli operatori del prodotto né dichiarare permessi del prodotto",
+    "product_support": "Legge tutto nel prodotto e gestisce i membri dei tenant entro i propri permessi (in pratica: lettori)",
+    "product_viewer": "Accesso in sola lettura al prodotto",
+    "tenant_owner": "Controllo completo del tenant",
+    "tenant_admin": "Gestisce membri e dati del tenant",
+    "member": "Lavora con i dati del tenant",
+    "viewer": "Accesso in sola lettura al tenant"
   }
 }

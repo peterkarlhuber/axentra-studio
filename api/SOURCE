@@ -1,5 +1,5 @@
 # Provenance of api/openapi.json (written by `npm run api:sync`).
 source: github:peterkarlhuber/axentra/openapi/axentra-v1.json
-sha: 2767a2eb3705161db674fb7ba887dd15d422e12e
+sha: a87224291b561981ed8afab6131e18d8c9eecc01
 api_version: 1.0
-synced_at: 2026-11-02T23:34:30.556Z
+synced_at: 2026-11-03T10:00:02.450Z

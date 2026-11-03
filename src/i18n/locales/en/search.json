@@ -1,0 +1,65 @@
+{
+  "title": "Search",
+  "description": "Full-text search in the index your product keeps for each tenant.",
+  "pick": {
+    "title": "Choose a tenant",
+    "body": "Every tenant has its own search index. Pick one to search it."
+  },
+  "start": {
+    "title": "Enter a search",
+    "body": "All words must match, in the title or the text. Search finds whole words, not parts of words."
+  },
+  "syntax": {
+    "all": "finds documents that contain both words",
+    "phrase": "finds the exact phrase",
+    "or": "finds documents with either word",
+    "exclude": "leaves out documents that contain “draft”"
+  },
+  "noAccess": {
+    "title": "You cannot search this tenant",
+    "body": "Searching needs the permission search:query in this tenant. Ask an owner or admin of the tenant for a role that includes it."
+  },
+  "form": {
+    "label": "Search the tenant’s index",
+    "query": "Search for",
+    "queryHelp": "Words, “quoted phrases”, or, and -word to exclude. At most 500 characters.",
+    "queryMissing": "Enter at least one word.",
+    "kinds": "Kinds",
+    "kindsHelp": "Optional. Only documents of these kinds, separated by commas.",
+    "kindsPlaceholder": "for example invoice, note",
+    "kindInvalid": "“{{kind}}” is not a valid kind: use lowercase letters, digits, dots, hyphens and underscores, starting with a letter.",
+    "kindTooMany": "Enter at most 20 kinds.",
+    "submit": "Search"
+  },
+  "results": {
+    "heading": "Results for {{query}}",
+    "updated": "Updated",
+    "showing_one": "Showing {{count}} result, more are available",
+    "showing_other": "Showing {{count}} results, more are available",
+    "all_one": "{{count}} result",
+    "all_other": "{{count}} results",
+    "empty": "No matches",
+    "emptyBody": "Check the spelling, use fewer words or whole words (search does not match parts of words). The index contains only what your product has indexed for this tenant.",
+    "emptyKinds": "Nothing of these kinds matches. Remove the kind filter, check the spelling or use fewer words."
+  },
+  "document": {
+    "title": "Indexed document",
+    "kind": "Kind",
+    "refId": "Reference ID",
+    "id": "Document ID",
+    "version": "Version",
+    "language": "Language",
+    "createdBy": "Indexed by",
+    "updatedBy": "Last indexed by",
+    "created": "Indexed",
+    "updated": "Updated",
+    "body": "Text",
+    "noBody": "This document has no text, only a title.",
+    "metadata": "Metadata",
+    "derived": "The index is a copy that your product writes. Changes to the original object reach the index only when the product indexes it again.",
+    "remove": "Remove from index",
+    "removeTitle": "Remove from the search index?",
+    "removeBody": "The document {{kind}} {{ref}} no longer appears in search results. The original object in your product is not changed; the product adds it again the next time it indexes the object.",
+    "removed": "{{ref}} removed from the search index"
+  }
+}

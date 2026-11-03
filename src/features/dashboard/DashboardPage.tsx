@@ -36,6 +36,8 @@ export function DashboardPage() {
     queryFn: () => productsApi.overview(productId),
   });
   const stats = overviewStats(overview.data as Record<string, unknown> | undefined);
+  // Callers without tenants:read get the counts of their own tenants only (Axentra AX2-05).
+  const tenantScope = overview.data?.scope === 'tenant';
 
   return (
     <div className={layout.stack}>
@@ -105,7 +107,11 @@ export function DashboardPage() {
                       {known ? (
                         <span className={styles.statTip}>
                           <InfoTip label={t('stats.about', { label })} topic="interface#dashboard">
-                            {t(known.hintKey)}
+                            {t(
+                              tenantScope && known.tenantHintKey
+                                ? known.tenantHintKey
+                                : known.hintKey,
+                            )}
                           </InfoTip>
                         </span>
                       ) : null}
@@ -126,6 +132,11 @@ export function DashboardPage() {
             ) : null}
           </ul>
         )}
+        {tenantScope ? (
+          <p className={layout.muted} data-testid="overview-scope">
+            {t('tenantScope')}
+          </p>
+        ) : null}
       </section>
 
       {/* Usage & Billing (studio-billing): renders nothing when both modules are off. */}

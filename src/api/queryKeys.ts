@@ -70,6 +70,11 @@ export const queryKeys = {
   tenantStorage: (productId: string, tenantId: string) =>
     ['products', productId, 'storage', tenantId] as const,
   productStorage: (productId: string) => ['products', productId, 'storage', 'product'] as const,
+  // ---- Search ----
+  search: (productId: string, tenantId: string, params?: unknown) =>
+    ['products', productId, 'search', tenantId, 'hits', params ?? {}] as const,
+  searchDocument: (productId: string, tenantId: string, kind: string, refId: string) =>
+    ['products', productId, 'search', tenantId, 'document', kind, refId] as const,
 };
 
 /* ---- Usage & Billing (studio-billing) ---- */

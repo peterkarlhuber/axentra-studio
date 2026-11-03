@@ -5,7 +5,7 @@ backend. Studio is a separate, static single-page app that talks to the Axentra 
 (`/v1`) like any other client. It has no backend of its own and no privileged access.
 
 - Products, tenants, users, invitations, members, roles, the product's permission catalog
-  (built-in and product-defined permissions), API keys, records, files, storage quotas and the
+  (built-in and product-defined permissions), API keys, records, files, full-text search, storage quotas and the
   per-product file content-type policy (see "Data & Storage" below), audit log, system health, effective server settings, and
   your own profile and sessions.
 - Usage & Billing: meters, usage charts and totals, tenant quotas, events and reservations;
@@ -16,7 +16,7 @@ backend. Studio is a separate, static single-page app that talks to the Axentra 
   metrics, retention, tracing).
 - A section whose backend module is disabled shows "module not enabled" and never shows demo
   data.
-- Built-in help: a help center at `/help` (39 articles in 13 chapters: getting started, every
+- Built-in help: a help center at `/help` (40 articles in 13 chapters: getting started, every
   screen, tutorials, troubleshooting, reference) with search, deep links and diagrams, page help
   in a side panel and info tips on fields. It works signed out and without a reachable API. See
   [docs/HELP_AUTHORING.md](docs/HELP_AUTHORING.md).

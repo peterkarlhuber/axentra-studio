@@ -12,15 +12,17 @@ A row is added only when both checks below ran for that pair: the contract job (
 contract is byte-for-byte the backend's `openapi/axentra-v1.json` at that commit) and the e2e job
 (Playwright against a running server of that commit).
 
-| Studio version | Studio commit              | `REQUIRED_API` | Axentra version | Axentra commit (`api/BACKEND_REF`) | API version | Tested on  | Result                                                                                                                                                  |
-| -------------- | -------------------------- | -------------- | --------------- | ---------------------------------- | ----------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0.1.0 (unrel.) | PR #2, merge `0aed4fc`[^1] | 1.0            | 0.1.0.dev0      | `a2ca72a7270d`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 126 passed locally[^2]; CI: 180 passed, 0 failed                                                             |
-| 0.1.0 (unrel.) | PR #3, merge `ee7d9f2`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 186 passed, 0 failed, 0 skipped, twice locally[^3]; CI: 186 passed, 0 failed                                 |
-| 0.1.0 (unrel.) | PR #4, merge `4d2df1a`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Both deployment modes[^4]: locally twice each, multi 188 passed / 10 skipped, single 196 passed / 2 skipped; CI: the same counts, 0 failed              |
-| 0.1.0 (unrel.) | PR #10, merge `605b69f`    | 1.0            | 0.1.0.dev0      | `06d33055b2bc`                     | 1.0         | 2026-11-02 | Contract identical. Playwright multi-product locally 248 passed / 10 skipped, 0 failed; CI run 41476956861: contract and both e2e jobs green            |
-| 0.1.0 (unrel.) | PR #11 (P2/P3)             | 1.0            | 0.1.0.dev0      | `a8ea5d535feb`                     | 1.0         | 2026-11-02 | Contract identical (no new paths). Playwright multi-product locally 252 passed / 10 skipped, 0 failed; CI: contract and both e2e jobs on the PR         |
-| 0.1.0 (unrel.) | PR #13 (NF-2/NF-3)         | 1.0            | 0.1.0.dev0      | `f3ed8d22a8bd`                     | 1.0         | 2026-11-02 | Contract identical (POST OIDC start added). Playwright invitations/security/smoke locally 22 passed, 0 failed; CI: contract and both e2e jobs on the PR |
-| 0.1.0 (unrel.) | PR #14 (R4-1/R4-2)         | 1.0            | 0.1.0.dev0      | `2767a2eb3705`                     | 1.0         | 2026-11-02 | Contract identical (descriptions only). CI: contract and both e2e jobs on the PR                                                                        |
+| Studio version | Studio commit              | `REQUIRED_API` | Axentra version | Axentra commit (`api/BACKEND_REF`) | API version | Tested on  | Result                                                                                                                                                                            |
+| -------------- | -------------------------- | -------------- | --------------- | ---------------------------------- | ----------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0.1.0 (unrel.) | PR #2, merge `0aed4fc`[^1] | 1.0            | 0.1.0.dev0      | `a2ca72a7270d`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 126 passed locally[^2]; CI: 180 passed, 0 failed                                                                                       |
+| 0.1.0 (unrel.) | PR #3, merge `ee7d9f2`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Contract identical (109 paths). Playwright 186 passed, 0 failed, 0 skipped, twice locally[^3]; CI: 186 passed, 0 failed                                                           |
+| 0.1.0 (unrel.) | PR #4, merge `4d2df1a`[^1] | 1.0            | 0.1.0.dev0      | `7511a37ce087`                     | 1.0         | 2026-11-02 | Both deployment modes[^4]: locally twice each, multi 188 passed / 10 skipped, single 196 passed / 2 skipped; CI: the same counts, 0 failed                                        |
+| 0.1.0 (unrel.) | PR #10, merge `605b69f`    | 1.0            | 0.1.0.dev0      | `06d33055b2bc`                     | 1.0         | 2026-11-02 | Contract identical. Playwright multi-product locally 248 passed / 10 skipped, 0 failed; CI run 41476956861: contract and both e2e jobs green                                      |
+| 0.1.0 (unrel.) | PR #11 (P2/P3)             | 1.0            | 0.1.0.dev0      | `a8ea5d535feb`                     | 1.0         | 2026-11-02 | Contract identical (no new paths). Playwright multi-product locally 252 passed / 10 skipped, 0 failed; CI: contract and both e2e jobs on the PR                                   |
+| 0.1.0 (unrel.) | PR #13 (NF-2/NF-3)         | 1.0            | 0.1.0.dev0      | `f3ed8d22a8bd`                     | 1.0         | 2026-11-02 | Contract identical (POST OIDC start added). Playwright invitations/security/smoke locally 22 passed, 0 failed; CI: contract and both e2e jobs on the PR                           |
+| 0.1.0 (unrel.) | PR #14 (R4-1/R4-2)         | 1.0            | 0.1.0.dev0      | `2767a2eb3705`                     | 1.0         | 2026-11-02 | Contract identical (descriptions only). CI: contract and both e2e jobs on the PR                                                                                                  |
+| 0.1.0 (unrel.) | wip/ux-axs (UX round 2)    | 1.0            | 0.1.0.dev0      | `36f493e47950`                     | 1.0         | 2026-11-03 | Contract identical (114 paths). Playwright locally: multi 302 passed / 10 skipped; single 311 passed / 6 skipped after two spec fixes for the shared product (first run 3 failed) |
+| 0.1.0 (unrel.) | wip/ux-axs (UX round 2)    | 1.0            | 0.1.0.dev0      | `a87224291b56`                     | 1.0         | 2026-11-03 | Overview `scope`, nullable product counters (PR #38). Playwright multi-product locally 304 passed / 10 skipped, 0 failed                                                          |
 
 [^1]:
     GitHub Actions ran the `contract` and `e2e` jobs on the pull request (the merge of its head into
@@ -101,10 +103,11 @@ CI (`.github/workflows/ci.yml`):
   created product, single-product with `mode = "single"` and a `[product]` section, the fixtures in
   the product the backend creates on start. The HTML report, traces and backend logs are uploaded
   per mode as `playwright-report-multi` and `playwright-report-single`.
-- The backend repository is public, so the jobs use the workflow token. If it becomes private,
-  add a repository secret `AXENTRA_REPO_TOKEN` with read access to `peterkarlhuber/axentra`
-  (fine-grained token: Contents read-only). Without it the checkout fails and the job stops with an
-  explicit error; it never skips.
+- The backend repository is public; the jobs check it out with the workflow's default token and
+  without persisted credentials. A failed checkout (usually an unpushed `api/BACKEND_REF`) stops
+  the job with an explicit error; it never skips. Every action is pinned by commit SHA (with the
+  version as a comment); Dependabot (`.github/dependabot.yml`) proposes updates weekly. The `check`
+  job also runs `npm audit --omit=dev --audit-level=high`.
 
 ## Moving Studio to a newer backend
 

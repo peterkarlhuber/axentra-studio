@@ -102,7 +102,9 @@
       "noError": "No error recorded.",
       "redactedHelp": "Sensitive values are redacted by the server.",
       "result": "Result",
-      "noResult": "No result (yet)."
+      "noResult": "No result (yet).",
+      "skippedTitle": "Skipped, not run",
+      "skippedBody": "The worker did not run this job because its product is archived or its tenant is suspended (or one of them no longer exists). Jobs fired by a schedule end this way too. The job is kept: once the product and tenant are active again, retry it if it is still needed."
     },
     "statusInfoLabel": "About job statuses",
     "statusInfo": "Failed: the handler reported a permanent error, so there are no more automatic attempts. Dead: every attempt ended with an error. You can retry both.",
@@ -112,7 +114,8 @@
     "payloadInfo": "The payload is stored as entered and is readable for everyone who can view jobs. Fields named like password, secret or token are only hidden in the display.",
     "priorityInfo": "Priority only decides which due job a free worker takes first. It does not interrupt running jobs and does not guarantee an order.",
     "maxAttemptsInfo": "After an error the job is retried with a growing wait. When the last attempt fails it becomes dead and stays in the list, so you can read the error and retry it.",
-    "idempotencyKeyInfo": "Studio fills in a new random key each time you open this dialog, so a double click enqueues only once. The same key with a different payload or priority is refused."
+    "idempotencyKeyInfo": "Studio fills in a new random key each time you open this dialog, so a double click enqueues only once. The same key with a different payload or priority is refused.",
+    "skipped": "Not run: product or tenant inactive"
   },
   "schedules": {
     "title": "Schedules",

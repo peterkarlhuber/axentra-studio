@@ -163,3 +163,168 @@ describe('ApiKeysPage create dialog: expiry', () => {
     expect(row.querySelector(`time[datetime="${expiresAt}"]`)).not.toBeNull();
   });
 });
+
+describe('ApiKeysPage rotate and revoke', () => {
+  function keysApi() {
+    let rotated = false;
+    let revoked = false;
+    const calls = mockApi(
+      (request, url) => {
+        const base = `/v1/products/${PRODUCT_ID}/api-keys`;
+        if (url.pathname === base && request.method === 'GET') {
+          if (rotated)
+            return jsonResponse([
+              keyRow({ id: 'key_2', replaces: 'key_1' }),
+              keyRow({ expires_at: '2099-01-01T00:00:00Z' }),
+            ]);
+          return jsonResponse([keyRow({ status: revoked ? 'revoked' : 'active' })]);
+        }
+        if (url.pathname === `${base}/key_1/rotate`) {
+          rotated = true;
+          return jsonResponse(
+            { key: keyRow({ id: 'key_2', replaces: 'key_1' }), secret: 'axk_new_secret' },
+            { status: 201 },
+          );
+        }
+        if (url.pathname === `${base}/key_1/revoke`) {
+          revoked = true;
+          return jsonResponse({ revoked: 1 });
+        }
+        return undefined;
+      },
+      makeMe(['api_keys:read', 'api_keys:manage', 'records:read']),
+    );
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    return calls;
+  }
+
+  async function openAction(user: ReturnType<typeof userEvent.setup>, name: string) {
+    await user.click(await screen.findByRole('button', { name: 'Actions for nightly-export' }));
+    await user.click(await screen.findByRole('menuitem', { name }));
+  }
+
+  it('rotates with the chosen grace period and shows the new secret once', async () => {
+    const calls = keysApi();
+    const user = userEvent.setup();
+    await openAction(user, 'Rotate secret');
+    const dialog = await screen.findByRole('dialog', { name: 'Rotate secret?' });
+    await user.selectOptions(
+      within(dialog).getByRole('combobox', { name: /Grace period/ }),
+      '86400',
+    );
+    await user.click(within(dialog).getByRole('button', { name: 'Rotate secret' }));
+    const secret = await screen.findByRole('dialog', { name: 'Secret for “nightly-export”' });
+    const rotate = calls.find((call) => call.path.endsWith('/key_1/rotate'));
+    expect(rotate?.body).toEqual({ grace_seconds: 86400 });
+    expect(rotate?.headers.get('X-Axentra-CSRF')).toBe('csrf-1');
+    // The secret dialog cannot be closed before confirming the secret was stored.
+    const done = within(secret).getByRole('button', { name: 'Done' });
+    expect(done).toBeDisabled();
+    await user.keyboard('{Escape}');
+    expect(secret).toBeInTheDocument();
+    await user.click(within(secret).getByRole('checkbox', { name: /I have stored the secret/ }));
+    await user.click(done);
+    await waitFor(() => expect(secret).not.toBeInTheDocument());
+  });
+
+  it('revokes only after typing the key name and then offers no more actions', async () => {
+    const calls = keysApi();
+    const user = userEvent.setup();
+    await openAction(user, 'Revoke key');
+    const dialog = await screen.findByRole('dialog', { name: 'Revoke API key?' });
+    const confirm = within(dialog).getByRole('button', { name: 'Revoke key' });
+    expect(confirm).toBeDisabled();
+    await user.type(
+      within(dialog).getByRole('textbox', { name: /Type nightly-export/ }),
+      'nightly-export',
+    );
+    await user.click(confirm);
+    expect(await screen.findByText('API key “nightly-export” revoked')).toBeInTheDocument();
+    expect(calls.some((call) => call.path.endsWith('/key_1/revoke'))).toBe(true);
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('button', { name: 'Actions for nightly-export' }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
+  it('keeps the confirmation open and explains a refused revocation', async () => {
+    mockApi(
+      (request, url) => {
+        if (url.pathname.endsWith('/api-keys') && request.method === 'GET')
+          return jsonResponse([keyRow()]);
+        if (url.pathname.endsWith('/revoke'))
+          return jsonResponse(
+            {
+              code: 'forbidden',
+              status: 403,
+              detail: 'missing api_keys:manage',
+              request_id: 'r-1',
+            },
+            { status: 403 },
+          );
+        return undefined;
+      },
+      makeMe(['api_keys:read', 'api_keys:manage']),
+    );
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    const user = userEvent.setup();
+    await openAction(user, 'Revoke key');
+    const dialog = await screen.findByRole('dialog', { name: 'Revoke API key?' });
+    await user.type(
+      within(dialog).getByRole('textbox', { name: /Type nightly-export/ }),
+      'nightly-export',
+    );
+    await user.click(within(dialog).getByRole('button', { name: 'Revoke key' }));
+    expect(await screen.findByText(/missing api_keys:manage/)).toBeInTheDocument();
+    expect(dialog).toBeInTheDocument();
+  });
+
+  it('offers no create, rotate or revoke without api_keys:manage', async () => {
+    mockApi(
+      (_request, url) =>
+        url.pathname.endsWith('/api-keys') ? jsonResponse([keyRow()]) : undefined,
+      makeMe(['api_keys:read']),
+    );
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    expect(await screen.findByText('nightly-export')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'New API key' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Actions for nightly-export' }),
+    ).not.toBeInTheDocument();
+  });
+});
+
+describe('ApiKeysPage grace period', () => {
+  it('says when a rotated key stops working', async () => {
+    const inOneHour = new Date(Date.now() + 3_600_000).toISOString();
+    mockApi(
+      (_request, url) =>
+        url.pathname.endsWith('/api-keys')
+          ? jsonResponse([
+              keyRow({ revoked_at: inOneHour }),
+              keyRow({ id: 'key_2', name: 'other' }),
+            ])
+          : undefined,
+      makeMe(['api_keys:read']),
+    );
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    const row = (await screen.findByText('nightly-export')).closest('tr') as HTMLElement;
+    expect(within(row).getByText(/Replaced, stops working/)).toBeInTheDocument();
+    expect(within(row).getByText(/in 1 hour|in 60 minutes/)).toBeInTheDocument();
+    const other = screen.getByText('other').closest('tr') as HTMLElement;
+    expect(within(other).queryByText(/Replaced/)).not.toBeInTheDocument();
+  });
+});

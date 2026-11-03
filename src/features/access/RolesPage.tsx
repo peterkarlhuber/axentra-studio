@@ -30,6 +30,7 @@ import { slugify } from '@/lib/slug';
 import { PermissionChecklist } from './PermissionChecklist';
 import { grantableFor } from './permission-groups';
 import { HelpLink } from '@/help/HelpLink';
+import { localizeRole } from '@/features/shared/builtin-roles';
 import styles from './access.module.css';
 
 type EditorState =
@@ -49,7 +50,7 @@ export function RolesPage() {
     queryKey: queryKeys.roles(productId),
     queryFn: () => accessApi.roles(productId),
   });
-  const roles = asItems(rolesQuery.data);
+  const roles = asItems(rolesQuery.data).map((role) => localizeRole(t, role));
   const builtIn = roles.filter((role) => role.builtin);
   const custom = roles.filter((role) => !role.builtin);
 

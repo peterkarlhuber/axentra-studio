@@ -150,6 +150,12 @@ chiave API** (con `api_keys:manage`).
 | **Eventi di audit (24 h)**  | Eventi di audit di questo prodotto nelle ultime 24 ore.                                          |
 | **Richieste negate (24 h)** | Tentativi rifiutati nelle ultime 24 ore; apre il registro di audit filtrato sugli eventi negati. |
 
+**I membri dei tenant vedono solo i propri tenant.** Senza `tenants:read` sul prodotto (semplici
+membri e amministratori dei tenant), i contatori riguardano solo i tenant di cui sei membro:
+**Tenant** li conta, **Utenti** i loro membri e **Record** i loro record. **Chiavi API**, **Eventi
+di audit (24 h)** e **Richieste negate (24 h)** sono numeri dell'intero prodotto e non vengono
+mostrati; una nota sotto i contatori lo segnala.
+
 > [!TIP]
 > Il riquadro **Server** risponde alla domanda più frequente del supporto: “Quale versione è in
 > esecuzione, e il modulo è almeno abilitato?”

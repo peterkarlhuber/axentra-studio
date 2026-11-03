@@ -1,10 +1,17 @@
 import * as Menu from '@radix-ui/react-dropdown-menu';
 import { Check } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import clsx from '@/lib/clsx';
 import styles from './DropdownMenu.module.css';
 
-export const DropdownMenu = Menu.Root;
+/**
+ * Non-modal by default: a modal Radix menu hides the rest of the page with `aria-hidden` while
+ * it stays focusable (axe `aria-hidden-focus`, WCAG 4.1.2). The menu still closes on Escape, on
+ * an outside click and when focus leaves it, and returns focus to its trigger.
+ */
+export function DropdownMenu({ modal = false, ...props }: ComponentProps<typeof Menu.Root>) {
+  return <Menu.Root modal={modal} {...props} />;
+}
 export const DropdownMenuTrigger = Menu.Trigger;
 export const DropdownMenuGroup = Menu.Group;
 export const DropdownMenuSub = Menu.Sub;

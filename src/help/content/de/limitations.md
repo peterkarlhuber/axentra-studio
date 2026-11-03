@@ -53,8 +53,8 @@ stammen von Studio, andere vom Server; die API des Servers bietet manchmal mehr 
 - **Datensätze:** Filter nur auf JSON-Werte der obersten Ebene, Sortierung nur nach ID,
   Erstellungs- oder Änderungszeit. Speichern ersetzt das gesamte JSON-Objekt eines Datensatzes.
   Ein Datensatz umfasst höchstens 256 KiB.
-- **Die Volltextsuche** gibt es im Server (Modul `search`), aber noch ohne Seite in Studio; sie ist
-  über die API verfügbar.
+- **Die Volltextsuche** ([Suche](help:search)) durchsucht immer einen Mandanten und findet nur ganze
+  Wörter (keine Präfix- oder unscharfe Suche). Studio legt keine Dokumente im Index an; das macht dein Produkt.
 - **Sicherungen und Dateispeicher:** Studio zeigt keinen Sicherungsstatus, und das
   Sicherungsverfahren des Servers umfasst die Datenbank; der Dateispeicher muss separat gesichert
   werden.

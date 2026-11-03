@@ -117,6 +117,7 @@
     "permissionsAbout": "Acerca de los permisos de la clave",
     "graceInfo": "Durante el período de gracia funcionan tanto la clave antigua como la nueva, y ambas aparecen como Activo. Revoca la clave antigua para terminar antes el período de gracia.",
     "statusInfo": "Activo: funciona. Caducado: ha pasado su fecha de caducidad. Revocado: se revocó, o se reemplazó por rotación y terminó su período de gracia.",
+    "graceUntil": "Reemplazada, deja de funcionar",
     "statusAbout": "Acerca del estado de la clave",
     "lastUsedInfo": "Hora de la última solicitud correcta con esta clave. Se actualiza como máximo una vez por minuto.",
     "lastUsedAbout": "Acerca del último uso",

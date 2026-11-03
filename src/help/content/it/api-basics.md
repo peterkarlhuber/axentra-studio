@@ -79,7 +79,7 @@ Ogni errore è un documento problem secondo RFC 9457 con `Content-Type: applicat
 
 ```json
 {
-  "type": "https://axentra.dev/problems/validation_failed",
+  "type": "urn:axentra:problem:validation_failed",
   "title": "Validation failed",
   "status": 422,
   "code": "validation_failed",
@@ -89,6 +89,7 @@ Ogni errore è un documento problem secondo RFC 9457 con `Content-Type: applicat
 }
 ```
 
+`type` è un URN (`urn:axentra:problem:<code>`), non un indirizzo web.
 Nel tuo programma usa `code`; è stabile. `title` e `detail` sono pensati per le persone e possono
 cambiare.
 

@@ -108,6 +108,14 @@
       "noEmail": {
         "title": "Tu cuenta no tiene dirección de correo electrónico"
       },
+      "inactive": {
+        "title": "El inquilino no está activo",
+        "body": "El inquilino (o su producto) al que te invitaron está suspendido o cerrado, así que ahora nadie puede unirse. Tu invitación no se ha usado. Pide a la persona que te invitó que reactive el inquilino y vuelve a intentarlo."
+      },
+      "inviterLost": {
+        "title": "La invitación ya no es válida",
+        "body": "La persona que te invitó ya no puede darte este rol, por ejemplo porque cambió su propio rol o su membresía. Pídele a ella o a otra persona que administre el inquilino una invitación nueva."
+      },
       "unreachable": {
         "title": "No se pudo contactar con el servidor",
         "body": "Tu invitación no ha cambiado. Comprueba tu conexión y vuelve a intentarlo en un momento."

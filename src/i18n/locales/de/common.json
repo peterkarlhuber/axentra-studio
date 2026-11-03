@@ -130,6 +130,7 @@
     "lastSeen": "Zuletzt aktiv",
     "expires": "Läuft ab",
     "revoke": "Sitzung beenden",
+    "revokeNamed": "Sitzung auf {{device}} beenden",
     "empty": "Keine aktiven Sitzungen",
     "method": "Anmeldeart"
   },
@@ -141,5 +142,15 @@
   },
   "help": {
     "learnMore": "Mehr erfahren"
+  },
+  "builtinRoles": {
+    "product_owner": "Volle Kontrolle über das Produkt",
+    "product_admin": "Verwaltet Mandanten, Rollen, Schlüssel und Daten; kann keine Produktbetreiber verwalten und keine Produktberechtigungen deklarieren",
+    "product_support": "Liest alles im Produkt und verwaltet Mandantenmitglieder bis zu den eigenen Berechtigungen (in der Praxis: Betrachter)",
+    "product_viewer": "Nur-Lese-Zugriff auf das Produkt",
+    "tenant_owner": "Volle Kontrolle über den Mandanten",
+    "tenant_admin": "Verwaltet Mitglieder und Daten des Mandanten",
+    "member": "Arbeitet mit den Daten des Mandanten",
+    "viewer": "Nur-Lese-Zugriff auf den Mandanten"
   }
 }

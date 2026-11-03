@@ -207,6 +207,17 @@ adresse.
 d’invitation. Connecte-toi avec l’adresse invitée ou demande à la personne qui t’a invité d’ajouter
 directement ton compte au locataire.
 
+**À l’acceptation : Le locataire n’est pas actif.** Le locataire auquel tu as été invité, ou son
+produit, est suspendu ou fermé : personne ne peut le rejoindre pour l’instant. L’invitation reste
+inutilisée. Quand le locataire est de nouveau actif, rouvre le lien. Le serveur refuse avec
+« the invitation cannot be accepted: the tenant is not active ».
+
+**À l’acceptation : L’invitation n’est plus valable.** La personne qui t’a invité ne peut plus
+attribuer ce rôle, par exemple parce que son propre rôle ou son appartenance a changé après l’envoi.
+Demande-lui, ou à une autre personne qui administre le locataire, une nouvelle invitation. Le
+serveur refuse avec « the invitation is no longer valid: its sender can no longer grant this
+role ».
+
 **À l’acceptation : Le serveur est injoignable.** Rien n’a été modifié. Vérifie ta connexion et
 choisis **Réessayer**.
 

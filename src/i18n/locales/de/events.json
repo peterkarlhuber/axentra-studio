@@ -102,7 +102,9 @@
       "noError": "Kein Fehler aufgezeichnet.",
       "redactedHelp": "Vertrauliche Werte werden vom Server unkenntlich gemacht.",
       "result": "Ergebnis",
-      "noResult": "(Noch) kein Ergebnis."
+      "noResult": "(Noch) kein Ergebnis.",
+      "skippedTitle": "Übersprungen, nicht ausgeführt",
+      "skippedBody": "Der Worker hat diesen Job nicht ausgeführt, weil sein Produkt archiviert oder sein Mandant gesperrt ist (oder eines davon nicht mehr existiert). Von einem Zeitplan ausgelöste Jobs enden ebenso. Der Job bleibt erhalten: Sobald Produkt und Mandant wieder aktiv sind, kannst du ihn erneut ausführen, falls er noch gebraucht wird."
     },
     "statusInfoLabel": "Über Job-Status",
     "statusInfo": "Fehlgeschlagen: Der Handler hat einen dauerhaften Fehler gemeldet, deshalb gibt es keine weiteren automatischen Versuche. Endgültig fehlgeschlagen: Alle Versuche endeten mit einem Fehler. Beide kannst du erneut ausführen.",
@@ -112,7 +114,8 @@
     "payloadInfo": "Die Nutzdaten werden so gespeichert, wie du sie eingibst, und sind für alle lesbar, die Jobs ansehen dürfen. Felder mit Namen wie password, secret oder token werden nur in der Anzeige verborgen.",
     "priorityInfo": "Die Priorität entscheidet nur, welchen fälligen Job ein freier Worker zuerst übernimmt; laufende Jobs unterbricht sie nicht, und eine Reihenfolge ist nicht garantiert.",
     "maxAttemptsInfo": "Nach einem Fehler wird der Job mit wachsender Wartezeit wiederholt. Scheitert der letzte Versuch, ist er endgültig fehlgeschlagen und bleibt in der Liste, damit du den Fehler lesen und ihn erneut ausführen kannst.",
-    "idempotencyKeyInfo": "Studio setzt bei jedem Öffnen dieses Dialogs einen neuen zufälligen Schlüssel ein, damit ein Doppelklick nur einmal einreiht. Derselbe Schlüssel mit anderen Nutzdaten oder anderer Priorität wird abgelehnt."
+    "idempotencyKeyInfo": "Studio setzt bei jedem Öffnen dieses Dialogs einen neuen zufälligen Schlüssel ein, damit ein Doppelklick nur einmal einreiht. Derselbe Schlüssel mit anderen Nutzdaten oder anderer Priorität wird abgelehnt.",
+    "skipped": "Nicht ausgeführt: Produkt oder Mandant inaktiv"
   },
   "schedules": {
     "title": "Zeitpläne",

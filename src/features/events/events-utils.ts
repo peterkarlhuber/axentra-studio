@@ -32,6 +32,15 @@ export const DELIVERY_TONES: Record<WebhookDeliveryStatus, Tone> = {
   dead: 'danger',
 };
 
+/**
+ * `last_error` prefix of a job the worker ended as `failed` without running it, because its
+ * product was archived or its tenant suspended (or either no longer exists). Such a job is kept
+ * and can be retried once the scope is active again.
+ */
+export const SKIPPED_PREFIX = 'skipped: ';
+export const isSkippedJob = (job: { status: JobStatus; last_error?: string | null }) =>
+  job.status === 'failed' && (job.last_error ?? '').startsWith(SKIPPED_PREFIX);
+
 /** Retry exists for failed and dead jobs only (`409` otherwise). */
 export const canRetryJob = (status: JobStatus) => status === 'failed' || status === 'dead';
 /** Cancel exists for queued and running jobs only (`409` when finished). */

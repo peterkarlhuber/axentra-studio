@@ -151,6 +151,14 @@ La **Prossima esecuzione** viene ricalcolata a partire dall'ora attuale ogni vol
 tempistica o attivi la pianificazione. Modificare solo il nome, il payload, la priorità o i
 tentativi mantiene la prossima esecuzione.
 
+**Tenant sospeso o prodotto archiviato.** Finché il tenant di una pianificazione è sospeso o il suo
+prodotto è archiviato, gli orari in scadenza vengono saltati: nessun job viene messo in coda,
+**Ultima esecuzione** non cambia e la pianificazione passa all'orario successivo. Il registro di
+audit annota `events.schedule.skip` una volta, per il primo orario saltato. Anche un job già in coda
+non viene eseguito; finisce come **Non riuscito** con `skipped: …` (vedi
+[stati dei job](help:jobs#statuses)). La pianificazione viene conservata e scatta di nuovo all'orario
+successivo dopo la riattivazione del tenant.
+
 ## Modificare una pianificazione {#edit}
 
 1. Apri il menu delle azioni della riga e scegli **Modifica**.

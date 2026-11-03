@@ -144,6 +144,13 @@ clé d’API** (avec `api_keys:manage`).
 | **Événements d’audit (24 h)** | Les événements d’audit de ce produit au cours des dernières 24 heures.                                                 |
 | **Requêtes refusées (24 h)**  | Les tentatives refusées au cours des dernières 24 heures ; ouvre le journal d’audit filtré sur les événements refusés. |
 
+**Les membres de locataires ne voient que leurs propres locataires.** Sans `tenants:read` sur le
+produit (simples membres et administrateurs de locataires), les compteurs ne couvrent que les
+locataires dont tu es membre : **Locataires** les compte, **Utilisateurs** leurs membres et
+**Enregistrements** leurs enregistrements. **Clés d’API**, **Événements d’audit (24 h)** et
+**Requêtes refusées (24 h)** sont des chiffres de tout le produit et ne sont pas affichés ; une note
+sous les compteurs l’indique.
+
 > [!TIP]
 > La carte **Serveur** répond à la question la plus fréquente du support : « Quelle version tourne, et le
 > module est-il seulement activé ? »

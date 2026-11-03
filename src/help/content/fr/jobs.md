@@ -62,6 +62,13 @@ job-lifecycle
 **Échouée** et **Abandonnée** sont tous deux des états finaux, mais pour des raisons différentes : **Échouée** signifie que le gestionnaire
 a jugé qu’une nouvelle tentative ne servirait à rien ; **Abandonnée** signifie que chaque tentative s’est terminée par une erreur.
 
+**Tâches ignorées.** Une tâche dont le produit est archivé ou dont le locataire est suspendu (ou
+n’existe plus) n’est pas exécutée. Le worker la termine comme **Échouée** avec une dernière erreur
+qui commence par `skipped:`, par exemple `skipped: the product or tenant is not active`. Studio la
+signale par **Non exécuté : produit ou locataire inactif**. Les tâches déclenchées par une
+planification se terminent ainsi tant que le locataire est suspendu. La tâche est conservée : quand
+le produit et le locataire sont de nouveau actifs, relance-la si elle est encore utile.
+
 ## Tentatives, nouvelles tentatives et backoff {#retries}
 
 Chaque fois qu’un worker prend une tâche, son compteur de tentatives augmente d’une unité. Quand une tentative se termine par une

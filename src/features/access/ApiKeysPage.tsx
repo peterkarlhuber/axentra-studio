@@ -99,7 +99,19 @@ export function ApiKeysPage() {
           </InfoTip>
         </>
       ),
-      cell: (apiKey) => <StatusPill status={apiKey.status} />,
+      cell: (apiKey) =>
+        // A rotated key keeps working until the end of its grace period (`revoked_at` in the
+        // future); say so, otherwise it looks like an ordinary active key.
+        apiKey.status === 'active' && apiKey.revoked_at ? (
+          <span className={layout.cellStack}>
+            <StatusPill status={apiKey.status} />
+            <span className={layout.muted}>
+              {t('keys.graceUntil')} <Time value={apiKey.revoked_at} />
+            </span>
+          </span>
+        ) : (
+          <StatusPill status={apiKey.status} />
+        ),
     },
     {
       id: 'scope',

@@ -20,28 +20,33 @@ How Studio is organized and how its screens behave. Visual rules are in
 
 ### Routes
 
-| Route                                                                            | Screen                                                                         |
-| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `/setup`                                                                         | First-run setup (only while the server reports `setup_required`)               |
-| `/login`                                                                         | Password and/or OIDC sign-in; `?return_to=` restores the previous page         |
-| `/`                                                                              | Redirects to the last used product's dashboard, or `/products`                 |
-| `/products`, `/products/:id`                                                     | Product list (create, archive, restore) and detail (settings, members)         |
-| `/p/:productId/dashboard`                                                        | Product overview: counters, health, server facts, module status                |
-| `/p/:productId/tenants[/:tenantId]`                                              | Tenants; detail with details, members and invitations tabs                     |
-| `/p/:productId/users[/:userId]`                                                  | Users of the product; detail with status, platform role, memberships, sessions |
-| `/p/:productId/invitations`                                                      | Open invitations across tenants                                                |
-| `/p/:productId/roles`                                                            | Built-in roles (read-only) and custom roles                                    |
-| `/p/:productId/api-keys`                                                         | API keys: create, rotate with grace period, revoke                             |
-| `/p/:productId/data`                                                             | Data overview: collections, storage per tenant, storage settings, retention    |
-| `/p/:productId/jobs[/:jobId]`, `/schedules`, `/events`, `/webhooks[/:webhookId]` | Events & Jobs: jobs, schedules, event log and live stream, webhook endpoints   |
-| `/p/:productId/records`                                                          | Records per tenant and collection; create, edit, delete with records:write     |
-| `/p/:productId/files`                                                            | Files per tenant: upload, detail, download link, delete; usage and quota       |
-| `/p/:productId/{jobs,events,webhooks,usage,plans,subscriptions,notifications}`   | Phase 2/3 sections: module state only                                          |
-| `/audit`                                                                         | Audit log with filters and event detail                                        |
-| `/health`                                                                        | Readiness and liveness checks                                                  |
-| `/settings`                                                                      | Effective server settings (read-only)                                          |
-| `/profile`                                                                       | Name, language, theme, password, own sessions                                  |
-| `/invitations/accept`                                                            | Accept an invitation token                                                     |
+| Route                                                                            | Screen                                                                       |
+| -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `/setup`                                                                         | First-run setup (only while the server reports `setup_required`)             |
+| `/login`                                                                         | Password and/or OIDC sign-in; `?return_to=` restores the previous page       |
+| `/`                                                                              | Redirects to the last used product's dashboard, or `/products`               |
+| `/products`, `/products/:id`                                                     | Product list (create, archive, restore) and detail (settings, members)       |
+| `/p/:productId/dashboard`                                                        | Product overview: counters, health, server facts, module status              |
+| `/p/:productId/tenants[/:tenantId]`                                              | Tenants; detail with details, members and invitations tabs                   |
+| `/p/:productId/users[/:userId]`                                                  | Users of the product; detail with status, platform role, sessions            |
+| `/p/:productId/invitations`                                                      | Open invitations across tenants                                              |
+| `/p/:productId/roles`                                                            | Built-in roles (read-only) and custom roles                                  |
+| `/p/:productId/permissions`                                                      | Permission catalog: built-in and product-defined permissions (read-only)     |
+| `/p/:productId/api-keys`                                                         | API keys: create, rotate with grace period, revoke                           |
+| `/p/:productId/data`                                                             | Data overview: collections, storage per tenant, storage settings, retention  |
+| `/p/:productId/jobs[/:jobId]`, `/schedules`, `/events`, `/webhooks[/:webhookId]` | Events & Jobs: jobs, schedules, event log and live stream, webhook endpoints |
+| `/p/:productId/records`                                                          | Records per tenant and collection; create, edit, delete with records:write   |
+| `/p/:productId/files`                                                            | Files per tenant: upload, detail, download link, delete; usage and quota     |
+| `/p/:productId/search`                                                           | Full-text search per tenant: query, kind filter, document, remove from index |
+| `/p/:productId/{usage,plans,subscriptions[/:tenantId]}`                          | Usage & Billing: meters, usage, quotas; plans, subscriptions, entitlements   |
+| `/p/:productId/notifications`                                                    | Notifications: templates, message log, mailbox, preferences                  |
+| `/audit`                                                                         | Audit log with filters and event detail                                      |
+| `/health`                                                                        | Readiness and liveness checks                                                |
+| `/monitoring`                                                                    | Health checks, metrics, retention and tracing                                |
+| `/settings`                                                                      | Effective server settings (read-only)                                        |
+| `/profile`                                                                       | Name, language, theme, password, own sessions                                |
+| `/invitations/accept`, `/accept-invitation`                                      | Accept an invitation token (the second path is the default link alias)       |
+| `/help[/:article]`                                                               | Help center; works signed out and without a reachable API                    |
 
 ### Navigation
 

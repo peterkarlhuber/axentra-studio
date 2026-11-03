@@ -180,7 +180,7 @@ type UsagePage = Page<TenantStorageUsage> & {
 function ProductStorageCard({ productId }: { productId: string }) {
   const { t } = useTranslation('storage');
   const format = useFormatters();
-  const tenantParams = { limit: 200, sort: 'name' };
+  const tenantParams = { limit: 200 };
   const tenants = useQuery({
     queryKey: queryKeys.tenants(productId, tenantParams),
     queryFn: () => tenantsApi.list(productId, tenantParams),

@@ -144,6 +144,12 @@ API key** (with `api_keys:manage`).
 | **Audit events (24 h)**    | Audit events of this product in the last 24 hours.                                    |
 | **Denied requests (24 h)** | Refused attempts in the last 24 hours; opens the audit log filtered on denied events. |
 
+**Tenant members see their own tenants only.** Without `tenants:read` on the product (plain
+tenant members and admins), the counters cover only the tenants you belong to: **Tenants** counts
+them, **Users** their members, **Records** their records. **API keys**, **Audit events (24 h)** and
+**Denied requests (24 h)** are product-wide figures and are not shown; a note under the counters
+says so.
+
 > [!TIP]
 > The **Server** card answers the most common support question: "Which version runs, and is the
 > module even enabled?"

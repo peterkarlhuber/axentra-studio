@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { KeyRound, LogIn } from 'lucide-react';
-import { useEffect, useState, type FormEvent, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { apiUrl, isSameOriginApi } from '@/api/client';
@@ -71,6 +71,9 @@ export function LoginPage() {
   const prefill = (location.state as { email?: string } | null)?.email ?? '';
   const [email, setEmail] = useState(prefill);
   const [password, setPassword] = useState('');
+  // After a failed sign-in the (cleared) password field takes the focus: the busy submit button
+  // was disabled, which would otherwise leave keyboard users on <body>.
+  const passwordRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [ssoStarting, setSsoStarting] = useState<string | null>(null);
@@ -122,6 +125,7 @@ export function LoginPage() {
     } catch (caught) {
       setError(caught);
       setPassword('');
+      passwordRef.current?.focus();
     } finally {
       setSubmitting(false);
     }
@@ -240,6 +244,7 @@ export function LoginPage() {
           </FormField>
           <FormField label={t('fields.password')} required>
             <Input
+              ref={passwordRef}
               type="password"
               autoComplete="current-password"
               value={password}

@@ -66,6 +66,13 @@ job-lifecycle
 Gründen: **Fehlgeschlagen** heißt, der Handler hat entschieden, dass eine Wiederholung nicht helfen
 kann; **Endgültig fehlgeschlagen** heißt, jeder Versuch endete mit einem Fehler.
 
+**Übersprungene Jobs.** Ein Job, dessen Produkt archiviert oder dessen Mandant gesperrt ist (oder
+nicht mehr existiert), wird nicht ausgeführt. Der Worker beendet ihn als **Fehlgeschlagen** mit
+einem letzten Fehler, der mit `skipped:` beginnt, zum Beispiel `skipped: the product or tenant is
+not active`. Studio kennzeichnet ihn mit **Nicht ausgeführt: Produkt oder Mandant inaktiv**. Von
+einem Zeitplan ausgelöste Jobs enden so, solange der Mandant gesperrt ist. Der Job bleibt erhalten:
+Sobald Produkt und Mandant wieder aktiv sind, führe ihn erneut aus, falls er noch gebraucht wird.
+
 ## Versuche, Wiederholungen und Backoff {#retries}
 
 Jedes Mal, wenn ein Worker einen Job übernimmt, steigt dessen Versuchszähler um eins. Endet ein

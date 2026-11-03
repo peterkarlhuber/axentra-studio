@@ -100,8 +100,8 @@ Hat eine Produktrolle eine Mandantenberechtigung, gilt sie in jedem Mandanten de
 | `billing:read`       | Abonnement und Leistungen ansehen                                       | [Tarife](app:plans), [Abonnements](app:subscriptions) und die Abrechnung eines Mandanten                                                                    |
 | `notify:send`        | Benachrichtigungen senden                                               | Testbenachrichtigungen an Mandantenmitglieder senden; die Nachrichten des Mandanten sehen                                                                   |
 | `notify:preferences` | Benachrichtigungseinstellungen verwalten                                | Deine eigenen Benachrichtigungseinstellungen für einen Mandanten                                                                                            |
-| `search:query`       | Den Suchindex des Mandanten durchsuchen                                 | In Studio noch nichts; über die API verfügbar                                                                                                               |
-| `search:index`       | Dokumente im Suchindex des Mandanten hinzufügen, ersetzen und entfernen | In Studio noch nichts; über die API verfügbar                                                                                                               |
+| `search:query`       | Den Suchindex des Mandanten durchsuchen                                 | [Suche](app:search) im Mandanten                                                                                                                            |
+| `search:index`       | Dokumente im Suchindex des Mandanten hinzufügen, ersetzen und entfernen | **Aus dem Index entfernen** auf der Seite [Suche](app:search)                                                                                               |
 
 ## Integrierte Rollen {#built-in-roles}
 

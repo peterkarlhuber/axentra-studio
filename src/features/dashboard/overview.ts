@@ -13,6 +13,8 @@ interface StatDefinition {
   labelKey: string;
   /** i18n key of the info tip that says what exactly is counted. */
   hintKey: string;
+  /** The info tip when the overview covers only the caller's own tenants (`scope: "tenant"`). */
+  tenantHintKey?: string;
   to?: (productId: string) => string;
 }
 
@@ -22,12 +24,14 @@ export const KNOWN_STATS: Record<string, StatDefinition> = {
     icon: Building2,
     labelKey: 'stats.tenants',
     hintKey: 'stats.hints.tenants',
+    tenantHintKey: 'stats.tenantHints.tenants',
     to: (p) => `/p/${p}/tenants`,
   },
   users: {
     icon: Users,
     labelKey: 'stats.users',
     hintKey: 'stats.hints.users',
+    tenantHintKey: 'stats.tenantHints.users',
     to: (p) => `/p/${p}/users`,
   },
   api_keys: {
@@ -40,6 +44,7 @@ export const KNOWN_STATS: Record<string, StatDefinition> = {
     icon: Database,
     labelKey: 'stats.records',
     hintKey: 'stats.hints.records',
+    tenantHintKey: 'stats.tenantHints.records',
     to: (p) => `/p/${p}/records`,
   },
   audit_events_24h: {
@@ -56,7 +61,11 @@ export const KNOWN_STATS: Record<string, StatDefinition> = {
   },
 };
 
-/** Numeric counters of `GET /v1/products/{id}/overview`, known ones first. */
+/**
+ * Numeric counters of `GET /v1/products/{id}/overview`, known ones first. Counters the server
+ * leaves `null` (product-wide ones for a caller with `scope: "tenant"`) are left out, not shown
+ * as 0.
+ */
 export function overviewStats(overview: Record<string, unknown> | undefined) {
   if (!overview) return [];
   const order = Object.keys(KNOWN_STATS);

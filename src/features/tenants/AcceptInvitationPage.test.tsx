@@ -256,6 +256,46 @@ describe('invitation links', () => {
     expect(readPendingInvitation()).toBe(TOKEN);
   });
 
+  it.each([
+    [
+      'the tenant is not active',
+      'the invitation cannot be accepted: the tenant is not active',
+      'The tenant is not active',
+      /suspended or closed.*Your invitation was not used/,
+    ],
+    [
+      'the inviter lost the right to grant the role',
+      'the invitation is no longer valid: its sender can no longer grant this role',
+      'The invitation is no longer valid',
+      /can no longer give you this role/,
+    ],
+  ])('explains a refusal because %s', async (_case, detail, title, body) => {
+    setup(`/invitations/accept?token=${encodeURIComponent(TOKEN)}`, () =>
+      problem(403, 'forbidden', detail),
+    );
+    const userEvt = userEvent.setup();
+    await userEvt.click(await screen.findByRole('button', { name: 'Accept invitation' }));
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(title);
+    expect(alert).toHaveTextContent(body);
+    // Not mistaken for an invitation to another address: no account switch is offered.
+    expect(alert).not.toHaveTextContent(/different address/);
+    expect(
+      screen.queryByRole('button', { name: 'Sign out and use the invited address' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('shows the server message for a refusal it does not recognize', async () => {
+    setup(`/invitations/accept?token=${encodeURIComponent(TOKEN)}`, () =>
+      problem(403, 'forbidden', 'some new reason'),
+    );
+    const userEvt = userEvent.setup();
+    await userEvt.click(await screen.findByRole('button', { name: 'Accept invitation' }));
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('The invitation was not accepted');
+    expect(alert).toHaveTextContent('some new reason');
+  });
+
   it('explains that an account without an email address cannot accept', async () => {
     setup(`/invitations/accept?token=${encodeURIComponent(TOKEN)}`, () => jsonResponse({}), null);
     expect(await screen.findByText('Your account has no email address')).toBeInTheDocument();

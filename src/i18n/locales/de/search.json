@@ -1,0 +1,65 @@
+{
+  "title": "Suche",
+  "description": "Volltextsuche im Index, den dein Produkt für jeden Mandanten führt.",
+  "pick": {
+    "title": "Wähle einen Mandanten",
+    "body": "Jeder Mandant hat einen eigenen Suchindex. Wähle einen aus, um ihn zu durchsuchen."
+  },
+  "start": {
+    "title": "Gib eine Suche ein",
+    "body": "Alle Wörter müssen vorkommen, im Titel oder im Text. Die Suche findet ganze Wörter, keine Wortteile."
+  },
+  "syntax": {
+    "all": "findet Dokumente, die beide Wörter enthalten",
+    "phrase": "findet genau diese Wortfolge",
+    "or": "findet Dokumente mit einem der beiden Wörter",
+    "exclude": "lässt Dokumente weg, die „draft“ enthalten"
+  },
+  "noAccess": {
+    "title": "Du kannst diesen Mandanten nicht durchsuchen",
+    "body": "Die Suche erfordert die Berechtigung search:query in diesem Mandanten. Bitte einen Owner oder Admin des Mandanten um eine Rolle, die sie enthält."
+  },
+  "form": {
+    "label": "Suchindex des Mandanten durchsuchen",
+    "query": "Suchen nach",
+    "queryHelp": "Wörter, „Wortfolgen in Anführungszeichen“, or und -wort zum Ausschließen. Höchstens 500 Zeichen.",
+    "queryMissing": "Gib mindestens ein Wort ein.",
+    "kinds": "Arten",
+    "kindsHelp": "Optional. Nur Dokumente dieser Arten, durch Kommas getrennt.",
+    "kindsPlaceholder": "zum Beispiel invoice, note",
+    "kindInvalid": "„{{kind}}“ ist keine gültige Art: Verwende Kleinbuchstaben, Ziffern, Punkte, Bindestriche und Unterstriche, beginnend mit einem Buchstaben.",
+    "kindTooMany": "Gib höchstens 20 Arten ein.",
+    "submit": "Suchen"
+  },
+  "results": {
+    "heading": "Ergebnisse für {{query}}",
+    "updated": "Aktualisiert",
+    "showing_one": "{{count}} Ergebnis angezeigt, weitere sind vorhanden",
+    "showing_other": "{{count}} Ergebnisse angezeigt, weitere sind vorhanden",
+    "all_one": "{{count}} Ergebnis",
+    "all_other": "{{count}} Ergebnisse",
+    "empty": "Keine Treffer",
+    "emptyBody": "Prüfe die Schreibweise, verwende weniger Wörter oder ganze Wörter (die Suche findet keine Wortteile). Der Index enthält nur, was dein Produkt für diesen Mandanten indiziert hat.",
+    "emptyKinds": "Nichts von diesen Arten passt. Entferne den Artfilter, prüfe die Schreibweise oder verwende weniger Wörter."
+  },
+  "document": {
+    "title": "Indiziertes Dokument",
+    "kind": "Art",
+    "refId": "Referenz-ID",
+    "id": "Dokument-ID",
+    "version": "Version",
+    "language": "Sprache",
+    "createdBy": "Indiziert von",
+    "updatedBy": "Zuletzt indiziert von",
+    "created": "Indiziert",
+    "updated": "Aktualisiert",
+    "body": "Text",
+    "noBody": "Dieses Dokument hat keinen Text, nur einen Titel.",
+    "metadata": "Metadaten",
+    "derived": "Der Index ist eine Kopie, die dein Produkt schreibt. Änderungen am Originalobjekt erreichen den Index erst, wenn das Produkt es erneut indiziert.",
+    "remove": "Aus dem Index entfernen",
+    "removeTitle": "Aus dem Suchindex entfernen?",
+    "removeBody": "Das Dokument {{kind}} {{ref}} erscheint nicht mehr in Suchergebnissen. Das Originalobjekt in deinem Produkt bleibt unverändert; das Produkt fügt es wieder hinzu, sobald es das Objekt das nächste Mal indiziert.",
+    "removed": "{{ref}} aus dem Suchindex entfernt"
+  }
+}

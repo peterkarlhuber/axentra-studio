@@ -1,6 +1,12 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import i18n from '@/i18n';
-import { ApiError, KNOWN_ERROR_CODES, codeForStatus, formatIssueLocation } from '@/api/errors';
+import {
+  ApiError,
+  KNOWN_ERROR_CODES,
+  codeForStatus,
+  formatIssueLocation,
+  problemToError,
+} from '@/api/errors';
 import enErrors from '@/i18n/locales/en/errors.json';
 import { describeError, fieldErrors } from './errors';
 
@@ -91,5 +97,32 @@ describe('error helpers', () => {
   it('formats issue locations', () => {
     expect(formatIssueLocation(['query', 'limit'])).toBe('limit');
     expect(formatIssueLocation(['items', 0, 'name'])).toBe('items.0.name');
+  });
+
+  it('names the start of the billing period when backdating is refused, in each language', () => {
+    const error = problemToError(
+      {
+        type: 'urn:axentra:problem:backdating_not_permitted',
+        status: 403,
+        code: 'backdating_not_permitted',
+        detail: 'occurred_at is before the current billing period',
+        period_start: '2026-11-01T00:00:00Z',
+      },
+      new Response(null, { status: 403 }),
+    );
+    expect(error.periodStart).toBe('2026-11-01T00:00:00Z');
+    const when = (locale: string) =>
+      new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(
+        new Date('2026-11-01T00:00:00Z'),
+      );
+    const en = describeError(t, error);
+    expect(en.title).toBe('Before the billing period');
+    expect(en.message).toContain(when('en'));
+    expect(en.message).toContain('usage:manage');
+    for (const locale of LOCALES) {
+      const message = describeError(i18n.getFixedT(locale), error).message;
+      expect(message).toContain(when(locale));
+      expect(message).not.toContain('{{');
+    }
   });
 });

@@ -131,6 +131,7 @@
     "lastSeen": "Dernière activité",
     "expires": "Expire le",
     "revoke": "Révoquer la session",
+    "revokeNamed": "Révoquer la session sur {{device}}",
     "empty": "Aucune session active",
     "method": "Méthode de connexion"
   },
@@ -142,5 +143,15 @@
   },
   "help": {
     "learnMore": "En savoir plus"
+  },
+  "builtinRoles": {
+    "product_owner": "Contrôle total du produit",
+    "product_admin": "Gère les locataires, rôles, clés et données ; ne peut pas gérer les opérateurs du produit ni déclarer des permissions du produit",
+    "product_support": "Lit tout dans le produit et gère les membres des locataires dans la limite de ses propres permissions (en pratique : lecteurs)",
+    "product_viewer": "Accès en lecture seule au produit",
+    "tenant_owner": "Contrôle total du locataire",
+    "tenant_admin": "Gère les membres et les données du locataire",
+    "member": "Travaille avec les données du locataire",
+    "viewer": "Accès en lecture seule au locataire"
   }
 }

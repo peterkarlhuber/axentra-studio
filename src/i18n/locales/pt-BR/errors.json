@@ -45,6 +45,10 @@
       "title": "Cota excedida",
       "message": "Uma cota ou um limite do plano deste tenant se esgotou, por isso o servidor recusou a ação. Libere espaço ou reduza o uso, ou peça a alguém com acesso que aumente a cota ou mude o plano."
     },
+    "backdating_not_permitted": {
+      "title": "Antes do período de cobrança",
+      "message": "O período de cobrança atual deste tenant começou em {{periodStart, datetime(dateStyle: medium; timeStyle: short)}}. Uso anterior só pode ser registrado com usage:manage para o produto inteiro. Registre com um horário posterior ou peça a uma pessoa que administra o produto."
+    },
     "mode_not_supported": {
       "title": "Indisponível neste modo",
       "message": "A configuração do servidor não permite esta ação aqui, por exemplo criar produtos no modo de produto único, alterar uma assinatura gerenciada pelo Stripe (altere-a no Stripe) ou abrir a caixa de teste quando o servidor envia e-mails reais. A mensagem do servidor informa o motivo; só um operador pode alterar a configuração."

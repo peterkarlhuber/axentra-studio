@@ -212,6 +212,16 @@ invitato, Studio ti riporta all'invito. Oppure chiedi un invito per il tuo indir
 accettare inviti. Accedi con l'indirizzo invitato oppure chiedi a chi ti ha invitato di aggiungere
 direttamente il tuo account al tenant.
 
+**All'accettazione: Il tenant non è attivo.** Il tenant a cui sei stato invitato, o il suo
+prodotto, è sospeso o chiuso, quindi al momento nessuno può entrarvi. L'invito resta inutilizzato.
+Quando il tenant torna attivo, apri di nuovo il link. Il server rifiuta con “the invitation cannot
+be accepted: the tenant is not active”.
+
+**All'accettazione: L'invito non è più valido.** La persona che ti ha invitato non può più
+assegnare il ruolo, per esempio perché il suo ruolo o la sua appartenenza sono cambiati dopo
+l'invio. Chiedi a lei o a un'altra persona che amministra il tenant un nuovo invito. Il server
+rifiuta con “the invitation is no longer valid: its sender can no longer grant this role”.
+
 **All'accettazione: Il server non è raggiungibile.** Non è stato modificato nulla. Controlla la
 connessione e scegli **Riprova**.
 

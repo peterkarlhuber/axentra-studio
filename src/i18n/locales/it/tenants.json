@@ -108,6 +108,14 @@
       "noEmail": {
         "title": "Il tuo account non ha un indirizzo email"
       },
+      "inactive": {
+        "title": "Il tenant non è attivo",
+        "body": "Il tenant (o il suo prodotto) a cui sei stato invitato è sospeso o chiuso, quindi al momento nessuno può entrarvi. Il tuo invito non è stato usato. Chiedi alla persona che ti ha invitato di riattivare il tenant, poi riprova."
+      },
+      "inviterLost": {
+        "title": "L’invito non è più valido",
+        "body": "La persona che ti ha invitato non può più assegnarti questo ruolo, per esempio perché il suo ruolo o la sua appartenenza sono cambiati. Chiedi a lei o a un’altra persona che amministra il tenant un nuovo invito."
+      },
       "unreachable": {
         "title": "Il server non è raggiungibile",
         "body": "Il tuo invito non è stato modificato. Controlla la connessione e riprova tra un momento."

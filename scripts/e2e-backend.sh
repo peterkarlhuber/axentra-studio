@@ -250,7 +250,7 @@ PY
 # Written by scripts/e2e-backend.sh for Studio's end-to-end tests. Never use for anything else.
 environment = "test"
 mode = "$MODE"
-modules = ["identity", "tenancy", "access", "data", "audit", "storage", "events", "usage", "billing", "notify"]
+modules = ["identity", "tenancy", "access", "data", "audit", "storage", "events", "usage", "billing", "notify", "search"]
 $product_section
 [database]
 url_ref = "file:$STATE/secrets/database_url"

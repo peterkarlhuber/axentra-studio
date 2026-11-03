@@ -67,6 +67,13 @@ job-lifecycle
 significa que o handler decidiu que tentar de novo não adianta; **Falha definitiva** significa que
 todas as tentativas terminaram com erro.
 
+**Jobs ignorados.** Um job cujo produto está arquivado ou cujo tenant está suspenso (ou não existe
+mais) não é executado. O worker o encerra como **Falhou** com um último erro que começa com
+`skipped:`, por exemplo `skipped: the product or tenant is not active`. O Studio o marca com **Não
+executado: produto ou tenant inativo**. Jobs disparados por um agendamento terminam assim enquanto o
+tenant está suspenso. O job é mantido: quando o produto e o tenant estiverem ativos de novo, tente
+outra vez se ainda for necessário.
+
 ## Tentativas, novas tentativas e backoff {#retries}
 
 Toda vez que um worker pega um job, o contador de tentativas dele aumenta em um. Quando uma

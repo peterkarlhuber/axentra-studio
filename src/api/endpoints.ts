@@ -20,6 +20,8 @@ import type {
   FileInfo,
   FilePatch,
   ProductStorageUsage,
+  SearchDocument,
+  SearchHit,
   QuotaInput,
   StoragePolicy,
   StoragePolicyInput,
@@ -586,6 +588,47 @@ export const recordsWriteApi = {
             header: ifMatch(version),
           },
         },
+      ),
+    ),
+};
+
+// ---- Search (module `search`) -----------------------------------------------------------
+
+export interface SearchParams extends ListParams {
+  q: string;
+  /** Restrict to these document kinds (repeatable `kind`, at most 20). */
+  kind?: string[];
+}
+
+const searchDocumentPath = (productId: string, tenantId: string, kind: string, refId: string) => ({
+  path: { product_id: productId, tenant_id: tenantId, kind, ref_id: refId },
+});
+
+/** The tenant's full-text index (`docs/modules/SEARCH.md` in the Axentra repository). */
+export const searchApi = {
+  query: (productId: string, tenantId: string, params: SearchParams) => {
+    const { kind, ...rest } = params;
+    const query = cleanQuery({ ...rest, kind: kind && kind.length > 0 ? kind : undefined });
+    return unwrap<Page<SearchHit>>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/search', {
+        params: {
+          path: { product_id: productId, tenant_id: tenantId },
+          query: query as SearchParams,
+        },
+      }),
+    );
+  },
+  document: (productId: string, tenantId: string, kind: string, refId: string) =>
+    unwrap<SearchDocument>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/search/documents/{kind}/{ref_id}', {
+        params: searchDocumentPath(productId, tenantId, kind, refId),
+      }),
+    ),
+  removeDocument: (productId: string, tenantId: string, kind: string, refId: string) =>
+    unwrap<unknown>(
+      api().DELETE(
+        '/v1/products/{product_id}/tenants/{tenant_id}/search/documents/{kind}/{ref_id}',
+        { params: searchDocumentPath(productId, tenantId, kind, refId) },
       ),
     ),
 };

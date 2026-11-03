@@ -130,6 +130,7 @@
     "lastSeen": "Last active",
     "expires": "Expires",
     "revoke": "Revoke session",
+    "revokeNamed": "Revoke the session on {{device}}",
     "empty": "No active sessions",
     "method": "Sign-in method"
   },
@@ -141,5 +142,15 @@
   },
   "help": {
     "learnMore": "Learn more"
+  },
+  "builtinRoles": {
+    "product_owner": "Full control of the product",
+    "product_admin": "Manages tenants, roles, keys and data; cannot manage product operators or declare product permissions",
+    "product_support": "Reads everything in the product and manages tenant members up to its own permissions (in practice: viewers)",
+    "product_viewer": "Read-only access to the product",
+    "tenant_owner": "Full control of the tenant",
+    "tenant_admin": "Manages members and data of the tenant",
+    "member": "Works with the tenant's data",
+    "viewer": "Read-only access to the tenant"
   }
 }

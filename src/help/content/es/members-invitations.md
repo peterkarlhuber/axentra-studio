@@ -214,6 +214,16 @@ dirección.
 invitaciones. Inicia sesión con la dirección invitada o pide a quien te invitó que añada tu cuenta
 al inquilino directamente.
 
+**Al aceptar: El inquilino no está activo.** El inquilino al que te invitaron, o su producto,
+está suspendido o cerrado, así que ahora nadie puede unirse. La invitación sigue sin usarse.
+Cuando el inquilino vuelva a estar activo, abre el enlace otra vez. El servidor la rechaza con
+«the invitation cannot be accepted: the tenant is not active».
+
+**Al aceptar: La invitación ya no es válida.** La persona que te invitó ya no puede otorgar el
+rol, por ejemplo porque su propio rol o su membresía cambió después de enviar la invitación. Pídele
+a ella o a otra persona que administre el inquilino una invitación nueva. El servidor la rechaza
+con «the invitation is no longer valid: its sender can no longer grant this role».
+
 **Al aceptar: No se pudo contactar con el servidor.** No se cambió nada. Comprueba tu conexión y
 elige **Reintentar**.
 

@@ -127,6 +127,10 @@ export type QuotaInput = Schemas['axentra__api__routes__storage__QuotaSet'];
 export type StoragePolicy = Schemas['StoragePolicy'];
 export type StoragePolicyInput = Schemas['StoragePolicySet'];
 
+// ---- Search (module `search`) -----------------------------------------------------------
+export type SearchHit = Schemas['SearchHit'];
+export type SearchDocument = Schemas['SearchDocument'];
+
 // ---- Usage & Billing (studio-billing) ----------------------------------------------------
 export type Meter = Schemas['Meter'];
 export type MeterInput = Schemas['MeterCreate'];
