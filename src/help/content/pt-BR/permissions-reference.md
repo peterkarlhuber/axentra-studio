@@ -98,8 +98,8 @@ Quando uma função de produto tem uma permissão de tenant, ela vale em todos o
 | `billing:read`       | Ver assinatura e direitos                                                  | [Planos](app:plans), [Assinaturas](app:subscriptions) e a cobrança de um tenant                                                           |
 | `notify:send`        | Enviar notificações                                                        | Enviar notificações de teste para membros do tenant; ver as mensagens do tenant                                                           |
 | `notify:preferences` | Gerenciar preferências de notificação                                      | As suas próprias preferências de notificação para um tenant                                                                               |
-| `search:query`       | Pesquisar no índice de pesquisa do tenant                                  | Ainda nada no Studio; disponível pela API                                                                                                 |
-| `search:index`       | Adicionar, substituir e remover documentos no índice de pesquisa do tenant | Ainda nada no Studio; disponível pela API                                                                                                 |
+| `search:query`       | Pesquisar no índice de pesquisa do tenant                                  | [Pesquisa](app:search) no tenant                                                                                                          |
+| `search:index`       | Adicionar, substituir e remover documentos no índice de pesquisa do tenant | **Remover do índice** na tela [Pesquisa](app:search)                                                                                      |
 
 ## Funções integradas {#built-in-roles}
 

@@ -255,6 +255,17 @@ export const routes: RouteObject[] = [
                       },
                     ],
                   },
+                  {
+                    path: 'search',
+                    handle: { crumb: 'search' },
+                    element: <ModuleGate module="search" titleKey="search" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/search/SearchPage'), 'SearchPage'),
+                      },
+                    ],
+                  },
                   // ---- end Data & Storage ----
                   // ---- Events & Jobs (module `events`) ----
                   {

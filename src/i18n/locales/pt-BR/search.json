@@ -1,0 +1,67 @@
+{
+  "title": "Pesquisa",
+  "description": "Pesquisa de texto completo no índice que o seu produto mantém para cada tenant.",
+  "pick": {
+    "title": "Escolha um tenant",
+    "body": "Cada tenant tem o seu próprio índice de pesquisa. Escolha um para pesquisar nele."
+  },
+  "start": {
+    "title": "Digite uma pesquisa",
+    "body": "Todas as palavras precisam aparecer, no título ou no texto. A pesquisa encontra palavras inteiras, não partes de palavras."
+  },
+  "syntax": {
+    "all": "encontra documentos que contêm as duas palavras",
+    "phrase": "encontra a frase exata",
+    "or": "encontra documentos com qualquer uma das palavras",
+    "exclude": "deixa de fora documentos que contêm \"draft\""
+  },
+  "noAccess": {
+    "title": "Você não pode pesquisar neste tenant",
+    "body": "Pesquisar exige a permissão search:query neste tenant. Peça a um owner ou admin do tenant uma função que a inclua."
+  },
+  "form": {
+    "label": "Pesquisar no índice do tenant",
+    "query": "Pesquisar por",
+    "queryHelp": "Palavras, \"frases entre aspas\", or e -palavra para excluir. No máximo 500 caracteres.",
+    "queryMissing": "Digite pelo menos uma palavra.",
+    "kinds": "Tipos",
+    "kindsHelp": "Opcional. Somente documentos destes tipos, separados por vírgulas.",
+    "kindsPlaceholder": "por exemplo invoice, note",
+    "kindInvalid": "\"{{kind}}\" não é um tipo válido: use letras minúsculas, dígitos, pontos, hífens e sublinhados, começando com uma letra.",
+    "kindTooMany": "Digite no máximo 20 tipos.",
+    "submit": "Pesquisar"
+  },
+  "results": {
+    "heading": "Resultados para {{query}}",
+    "updated": "Atualizado",
+    "showing_one": "Exibindo {{count}} resultado, há mais disponíveis",
+    "showing_many": "Exibindo {{count}} de resultados, há mais disponíveis",
+    "showing_other": "Exibindo {{count}} resultados, há mais disponíveis",
+    "all_one": "{{count}} resultado",
+    "all_many": "{{count}} de resultados",
+    "all_other": "{{count}} resultados",
+    "empty": "Nenhum resultado",
+    "emptyBody": "Confira a ortografia, use menos palavras ou palavras inteiras (a pesquisa não encontra partes de palavras). O índice contém apenas o que o seu produto indexou para este tenant.",
+    "emptyKinds": "Nada destes tipos corresponde. Remova o filtro de tipos, confira a ortografia ou use menos palavras."
+  },
+  "document": {
+    "title": "Documento indexado",
+    "kind": "Tipo",
+    "refId": "ID de referência",
+    "id": "ID do documento",
+    "version": "Versão",
+    "language": "Idioma",
+    "createdBy": "Indexado por",
+    "updatedBy": "Indexado por último por",
+    "created": "Indexado",
+    "updated": "Atualizado",
+    "body": "Texto",
+    "noBody": "Este documento não tem texto, apenas um título.",
+    "metadata": "Metadados",
+    "derived": "O índice é uma cópia que o seu produto grava. Alterações no objeto original só chegam ao índice quando o produto o indexa de novo.",
+    "remove": "Remover do índice",
+    "removeTitle": "Remover do índice de pesquisa?",
+    "removeBody": "O documento {{kind}} {{ref}} deixa de aparecer nos resultados. O objeto original no seu produto não muda; o produto o adiciona de novo na próxima vez que indexar o objeto.",
+    "removed": "{{ref}} removido do índice de pesquisa"
+  }
+}

@@ -17,6 +17,7 @@ export const MODULE_IDS = {
   billing: 'billing',
   notifications: 'notify',
   audit: 'audit',
+  search: 'search',
 } as const satisfies Record<string, string>;
 
 export type StudioModule = keyof typeof MODULE_IDS;
@@ -37,6 +38,7 @@ export const IMPLEMENTED_MODULES: ReadonlySet<StudioModule> = new Set<StudioModu
   'webhooks',
   // Data & Storage
   'files',
+  'search',
   // Usage & Billing (studio-billing)
   'usage',
   'billing',

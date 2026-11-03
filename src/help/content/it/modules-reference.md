@@ -38,7 +38,7 @@ quindi ricarica Studio dopo la modifica.
 | `usage`       | Sì            | [Utilizzo](help:usage): contatori, utilizzo per tenant, quote, prenotazioni                                                 |
 | `billing`     | Sì            | [Piani e abbonamenti](help:plans-subscriptions), fatturazione dei tenant                                                    |
 | `notify`      | Sì            | [Notifiche](help:notifications): modelli, registro messaggi, casella di posta, preferenze                                   |
-| `search`      | Sì            | Ancora nessuna schermata in Studio; la ricerca full-text nei tenant è disponibile tramite API                               |
+| `search`      | Sì            | [Ricerca](help:search): l'indice full-text di un tenant                                                                     |
 | `realtime`    | Sì            | Accettato nella configurazione, ma senza effetto in questa versione                                                         |
 
 [Stato del sistema](help:health-monitoring), Monitoraggio e [Impostazioni](help:settings) non
@@ -88,7 +88,8 @@ la creazione dell'invito (vedi [Membri e inviti](help:members-invitations)).
 
 ### search e realtime {#search-realtime}
 
-Studio non ha schermate per questi moduli. Attivarli o disattivarli non cambia nulla in Studio.
+Senza `search`, **Ricerca** mostra "modulo non abilitato". Studio non ha schermate per `realtime`;
+attivarlo o disattivarlo non cambia nulla in Studio.
 
 ## Non ancora disponibile in Studio {#not-in-studio}
 

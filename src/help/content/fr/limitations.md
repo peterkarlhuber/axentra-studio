@@ -56,8 +56,8 @@ Studio.
 - **Enregistrements :** filtres uniquement sur les valeurs JSON de premier niveau, tri uniquement
   par ID, date de création ou date de mise à jour. Enregistrer un enregistrement remplace son
   objet JSON complet. Un enregistrement contient au maximum 256 Kio.
-- **La recherche plein texte** existe dans le serveur (module `search`) mais n’a pas encore d’écran
-  dans le Studio ; elle est disponible via l’API.
+- **La recherche plein texte** ([Recherche](help:search)) porte sur un locataire à la fois et ne
+  trouve que des mots entiers (pas de préfixe ni de recherche approximative). Le Studio n’ajoute pas de documents à l’index ; c’est ton produit qui le fait.
 - **Sauvegardes et stockage des fichiers :** le Studio n’affiche pas l’état des sauvegardes, et la
   procédure de sauvegarde du serveur couvre la base de données ; le stockage des fichiers doit être
   sauvegardé séparément.

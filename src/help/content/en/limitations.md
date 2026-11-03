@@ -49,8 +49,8 @@ server; the server's API sometimes offers more than Studio does.
   page numbers or totals, by design.
 - **Records:** filters only on top-level JSON values, sorting only by id, created or updated time.
   Saving a record replaces its whole JSON object. A record holds at most 256 KiB.
-- **Full-text search** exists in the server (module `search`) but has no Studio screen yet; it is
-  available through the API.
+- **Full-text search** ([Search](help:search)) covers one tenant at a time and matches whole words
+  only (no prefix or fuzzy matching). Studio does not add documents to the index; your product does.
 - **Backups and file storage:** Studio does not show backup status, and the server's backup
   procedure covers the database; file storage has to be backed up separately.
 

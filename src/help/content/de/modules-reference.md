@@ -38,7 +38,7 @@ danach also neu.
 | `usage`    | Ja          | [Nutzung](help:usage): Zähler, Nutzung pro Mandant, Kontingente, Reservierungen                                           |
 | `billing`  | Ja          | [Tarife und Abonnements](help:plans-subscriptions), Abrechnung der Mandanten                                              |
 | `notify`   | Ja          | [Benachrichtigungen](help:notifications): Vorlagen, Nachrichtenprotokoll, Postfach, Einstellungen                         |
-| `search`   | Ja          | Noch keine Seiten in Studio; die Volltextsuche pro Mandant ist über die API verfügbar                                     |
+| `search`   | Ja          | [Suche](help:search): der Volltextindex eines Mandanten                                                                   |
 | `realtime` | Ja          | Wird in der Konfiguration akzeptiert, hat in dieser Version aber keine Wirkung                                            |
 
 [Systemzustand](help:health-monitoring), Monitoring und [Einstellungen](help:settings) gehören zu
@@ -91,7 +91,8 @@ das Studio nach dem Anlegen der Einladung einmal anzeigt (siehe
 
 ### search und realtime {#search-realtime}
 
-Studio hat für diese Module keine Seiten. Ob sie ein- oder ausgeschaltet sind, ändert in Studio nichts.
+Ohne `search` zeigt **Suche** „Modul nicht aktiviert“. Für `realtime` hat Studio keine Seiten;
+ob es ein- oder ausgeschaltet ist, ändert in Studio nichts.
 
 ## Im Studio noch nicht verfügbar {#not-in-studio}
 

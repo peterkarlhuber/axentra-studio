@@ -97,8 +97,8 @@ When a product role holds a tenant permission, it applies in every tenant of the
 | `billing:read`       | View subscription and entitlements                             | [Plans](app:plans), [Subscriptions](app:subscriptions) and a tenant's billing                                                 |
 | `notify:send`        | Send notifications                                             | Send test notifications to tenant members; see the tenant's messages                                                          |
 | `notify:preferences` | Manage notification preferences                                | Your own notification preferences for a tenant                                                                                |
-| `search:query`       | Search the tenant's search index                               | Nothing in Studio yet; available through the API                                                                              |
-| `search:index`       | Add, replace and remove documents in the tenant's search index | Nothing in Studio yet; available through the API                                                                              |
+| `search:query`       | Search the tenant's search index                               | [Search](app:search) in the tenant                                                                                            |
+| `search:index`       | Add, replace and remove documents in the tenant's search index | **Remove from index** on the [Search](app:search) screen                                                                      |
 
 ## Built-in roles {#built-in-roles}
 

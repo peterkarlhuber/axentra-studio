@@ -38,7 +38,7 @@ recarga Studio después.
 | `usage`       | Sí                  | [Uso](help:usage): medidores, uso por inquilino, cuotas, reservas                                                                |
 | `billing`     | Sí                  | [Planes y suscripciones](help:plans-subscriptions), facturación de los inquilinos                                                |
 | `notify`      | Sí                  | [Notificaciones](help:notifications): plantillas, historial de mensajes, buzón, preferencias                                     |
-| `search`      | Sí                  | Aún sin pantallas en Studio; la búsqueda de texto completo por inquilino está disponible a través de la API                      |
+| `search`      | Sí                  | [Búsqueda](help:search): el índice de texto completo de un inquilino                                                             |
 | `realtime`    | Sí                  | Se acepta en la configuración, pero no tiene efecto en esta versión                                                              |
 
 [Estado del sistema](help:health-monitoring), Monitorización y [Configuración](help:settings) no
@@ -89,7 +89,8 @@ muestra una sola vez tras crear la invitación (consulta
 
 ### search y realtime {#search-realtime}
 
-Studio no tiene pantallas para estos módulos. Activarlos o desactivarlos no cambia nada en Studio.
+Sin `search`, **Búsqueda** muestra «módulo no habilitado». Studio no tiene pantallas para `realtime`;
+activarlo o desactivarlo no cambia nada en Studio.
 
 ## Aún no disponible en Studio {#not-in-studio}
 

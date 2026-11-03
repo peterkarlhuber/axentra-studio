@@ -1,0 +1,93 @@
+.syntax {
+  margin: var(--ax-space-2) 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-1);
+  text-align: start;
+}
+.syntax code {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-text-sm);
+  background: var(--ax-color-surface-2);
+  border-radius: var(--ax-radius-xs);
+  padding: 0 var(--ax-space-1);
+}
+.results {
+  min-width: 0;
+}
+.hitList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hit {
+  padding: var(--ax-space-4) var(--ax-space-5);
+  border-bottom: 1px solid var(--ax-color-border);
+  min-width: 0;
+}
+.hitTitle {
+  margin: 0;
+  font-size: var(--ax-text-md);
+  font-weight: var(--ax-weight-semibold);
+  overflow-wrap: anywhere;
+}
+.hitButton {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ax-color-link);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  border-radius: var(--ax-radius-xs);
+}
+.hitButton:hover {
+  text-decoration: underline;
+}
+.hitMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ax-space-2);
+  margin: var(--ax-space-1) 0 0;
+  min-width: 0;
+}
+.snippet {
+  margin: var(--ax-space-2) 0 0;
+  color: var(--ax-color-text);
+  overflow-wrap: anywhere;
+}
+.mark {
+  background: var(--ax-color-warning-bg);
+  color: var(--ax-color-text);
+  font-weight: var(--ax-weight-semibold);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ax-space-3);
+  padding: var(--ax-space-3) var(--ax-space-5);
+}
+.sectionTitle {
+  margin: 0 0 var(--ax-space-2);
+  font-size: var(--ax-text-sm);
+  font-weight: var(--ax-weight-semibold);
+  color: var(--ax-color-text-muted);
+}
+.body {
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: var(--ax-space-3);
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-md);
+  background: var(--ax-color-surface-2);
+  font-size: var(--ax-text-sm);
+}

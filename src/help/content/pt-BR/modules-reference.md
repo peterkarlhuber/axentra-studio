@@ -38,7 +38,7 @@ Studio depois.
 | `usage`      | Sim                | [Uso](help:usage): medidores, uso dos tenants, cotas, reservas                                                                  |
 | `billing`    | Sim                | [Planos e assinaturas](help:plans-subscriptions), cobrança dos tenants                                                          |
 | `notify`     | Sim                | [Notificações](help:notifications): modelos, log de mensagens, caixa de correio, preferências                                   |
-| `search`     | Sim                | Ainda sem telas no Studio; a pesquisa de texto completo por tenant está disponível pela API                                     |
+| `search`     | Sim                | [Pesquisa](help:search): o índice de texto completo de um tenant                                                                |
 | `realtime`   | Sim                | Aceito na configuração, mas sem efeito nesta versão                                                                             |
 
 [Integridade do sistema](help:health-monitoring), Monitoramento e [Configurações](help:settings) não
@@ -89,7 +89,8 @@ vez após a criação do convite (veja [Membros e convites](help:members-invitat
 
 ### search e realtime {#search-realtime}
 
-O Studio não tem telas para esses módulos. Ligá-los ou desligá-los não muda nada no Studio.
+Sem `search`, **Pesquisa** mostra "módulo não habilitado". O Studio não tem telas para `realtime`;
+ligá-lo ou desligá-lo não muda nada no Studio.
 
 ## Ainda não disponível no Studio {#not-in-studio}
 

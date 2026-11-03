@@ -99,8 +99,8 @@ producto.
 | `billing:read`       | View subscription and entitlements                             | [Planes](app:plans), [Suscripciones](app:subscriptions) y la facturación de un inquilino                                                 |
 | `notify:send`        | Send notifications                                             | Enviar notificaciones de prueba a miembros del inquilino; ver los mensajes del inquilino                                                 |
 | `notify:preferences` | Manage notification preferences                                | Tus propias preferencias de notificación para un inquilino                                                                               |
-| `search:query`       | Search the tenant's search index                               | Aún nada en Studio; disponible a través de la API                                                                                        |
-| `search:index`       | Add, replace and remove documents in the tenant's search index | Aún nada en Studio; disponible a través de la API                                                                                        |
+| `search:query`       | Search the tenant's search index                               | [Búsqueda](app:search) en el inquilino                                                                                                   |
+| `search:index`       | Add, replace and remove documents in the tenant's search index | **Quitar del índice** en la pantalla [Búsqueda](app:search)                                                                              |
 
 ## Roles integrados {#built-in-roles}
 

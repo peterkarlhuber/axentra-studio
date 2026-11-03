@@ -38,7 +38,7 @@ Studio ensuite.
 | `usage`      | Oui                 | [Utilisation](help:usage) : compteurs, utilisation par locataire, quotas, réservations                                            |
 | `billing`    | Oui                 | [Offres et abonnements](help:plans-subscriptions), facturation des locataires                                                     |
 | `notify`     | Oui                 | [Notifications](help:notifications) : modèles, journal des messages, boîte de réception, préférences                              |
-| `search`     | Oui                 | Pas encore d’écrans dans le Studio ; la recherche plein texte par locataire est disponible via l’API                              |
+| `search`     | Oui                 | [Recherche](help:search) : l’index plein texte d’un locataire                                                                     |
 | `realtime`   | Oui                 | Accepté dans la configuration, mais sans effet dans cette version                                                                 |
 
 [État du système](help:health-monitoring), Supervision et [Paramètres](help:settings)
@@ -92,8 +92,8 @@ Studio affiche une seule fois après la création de l’invitation (voir
 
 ### search et realtime {#search-realtime}
 
-Le Studio n’a pas d’écrans pour ces modules. Les activer ou les désactiver ne change rien dans le
-Studio.
+Sans `search`, **Recherche** affiche « module non activé ». Le Studio n’a pas d’écrans pour
+`realtime` ; l’activer ou le désactiver ne change rien dans le Studio.
 
 ## Pas encore disponible dans le Studio {#not-in-studio}
 

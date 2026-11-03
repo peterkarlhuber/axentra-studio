@@ -54,8 +54,8 @@ otras del servidor; a veces la API del servidor ofrece más que Studio.
 - **Registros:** solo se filtra por valores JSON de primer nivel y solo se ordena por ID o por fecha
   de creación o de actualización. Guardar un registro sustituye todo su objeto JSON. Un registro
   ocupa como máximo 256 KiB.
-- **La búsqueda de texto completo** existe en el servidor (módulo `search`), pero aún no tiene
-  pantalla en Studio; está disponible a través de la API.
+- **La búsqueda de texto completo** ([Búsqueda](help:search)) abarca un inquilino a la vez y solo
+  encuentra palabras completas (sin prefijos ni búsqueda aproximada). Studio no añade documentos al índice; lo hace tu producto.
 - **Copias de seguridad y almacenamiento de archivos:** Studio no muestra el estado de las copias de
   seguridad, y el procedimiento de copia de seguridad del servidor cubre la base de datos; el
   almacenamiento de archivos debe copiarse por separado.

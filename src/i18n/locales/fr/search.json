@@ -1,0 +1,67 @@
+{
+  "title": "Recherche",
+  "description": "Recherche plein texte dans l’index que ton produit tient pour chaque locataire.",
+  "pick": {
+    "title": "Choisis un locataire",
+    "body": "Chaque locataire a son propre index de recherche. Choisis-en un pour y chercher."
+  },
+  "start": {
+    "title": "Saisis une recherche",
+    "body": "Tous les mots doivent apparaître, dans le titre ou dans le texte. La recherche trouve des mots entiers, pas des parties de mots."
+  },
+  "syntax": {
+    "all": "trouve les documents qui contiennent les deux mots",
+    "phrase": "trouve l’expression exacte",
+    "or": "trouve les documents qui contiennent l’un des deux mots",
+    "exclude": "exclut les documents qui contiennent « draft »"
+  },
+  "noAccess": {
+    "title": "Tu ne peux pas chercher dans ce locataire",
+    "body": "La recherche exige l’autorisation search:query dans ce locataire. Demande à un owner ou admin du locataire un rôle qui l’inclut."
+  },
+  "form": {
+    "label": "Chercher dans l’index du locataire",
+    "query": "Termes de recherche",
+    "queryHelp": "Des mots, des « expressions entre guillemets », or et -mot pour exclure. 500 caractères au maximum.",
+    "queryMissing": "Saisis au moins un mot.",
+    "kinds": "Types",
+    "kindsHelp": "Facultatif. Seulement les documents de ces types, séparés par des virgules.",
+    "kindsPlaceholder": "par exemple invoice, note",
+    "kindInvalid": "« {{kind}} » n’est pas un type valide : utilise des minuscules, des chiffres, des points, des tirets et des tirets bas, en commençant par une lettre.",
+    "kindTooMany": "Saisis 20 types au maximum.",
+    "submit": "Chercher"
+  },
+  "results": {
+    "heading": "Résultats pour {{query}}",
+    "updated": "Mis à jour",
+    "showing_one": "{{count}} résultat affiché, d’autres sont disponibles",
+    "showing_many": "{{count}} de résultats affichés, d’autres sont disponibles",
+    "showing_other": "{{count}} résultats affichés, d’autres sont disponibles",
+    "all_one": "{{count}} résultat",
+    "all_many": "{{count}} de résultats",
+    "all_other": "{{count}} résultats",
+    "empty": "Aucun résultat",
+    "emptyBody": "Vérifie l’orthographe, utilise moins de mots ou des mots entiers (la recherche ne trouve pas les parties de mots). L’index ne contient que ce que ton produit a indexé pour ce locataire.",
+    "emptyKinds": "Rien de ces types ne correspond. Retire le filtre de types, vérifie l’orthographe ou utilise moins de mots."
+  },
+  "document": {
+    "title": "Document indexé",
+    "kind": "Type",
+    "refId": "ID de référence",
+    "id": "ID du document",
+    "version": "Version",
+    "language": "Langue",
+    "createdBy": "Indexé par",
+    "updatedBy": "Dernière indexation par",
+    "created": "Indexé",
+    "updated": "Mis à jour",
+    "body": "Texte",
+    "noBody": "Ce document n’a pas de texte, seulement un titre.",
+    "metadata": "Métadonnées",
+    "derived": "L’index est une copie que ton produit écrit. Les modifications de l’objet d’origine n’arrivent dans l’index que lorsque le produit l’indexe à nouveau.",
+    "remove": "Retirer de l’index",
+    "removeTitle": "Retirer de l’index de recherche ?",
+    "removeBody": "Le document {{kind}} {{ref}} n’apparaît plus dans les résultats. L’objet d’origine dans ton produit ne change pas ; le produit l’ajoute à nouveau la prochaine fois qu’il indexe l’objet.",
+    "removed": "{{ref}} retiré de l’index de recherche"
+  }
+}

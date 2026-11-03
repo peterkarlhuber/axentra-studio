@@ -104,8 +104,8 @@ locataire du produit.
 | `billing:read`       | Voir l’abonnement et les droits                                                      | [Offres](app:plans), [Abonnements](app:subscriptions) et la facturation d’un locataire                                                                            |
 | `notify:send`        | Envoyer des notifications                                                            | Envoyer des notifications de test aux membres du locataire ; voir les messages du locataire                                                                       |
 | `notify:preferences` | Gérer les préférences de notification                                                | Tes propres préférences de notification pour un locataire                                                                                                         |
-| `search:query`       | Interroger l’index de recherche du locataire                                         | Rien dans le Studio pour l’instant ; disponible via l’API                                                                                                         |
-| `search:index`       | Ajouter, remplacer et supprimer des documents dans l’index de recherche du locataire | Rien dans le Studio pour l’instant ; disponible via l’API                                                                                                         |
+| `search:query`       | Interroger l’index de recherche du locataire                                         | [Recherche](app:search) dans le locataire                                                                                                                         |
+| `search:index`       | Ajouter, remplacer et supprimer des documents dans l’index de recherche du locataire | **Retirer de l’index** sur l’écran [Recherche](app:search)                                                                                                        |
 
 ## Rôles intégrés {#built-in-roles}
 

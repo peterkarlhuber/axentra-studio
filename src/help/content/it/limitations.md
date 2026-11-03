@@ -52,8 +52,8 @@ Studio, altre dal server; a volte l'API del server offre più di quanto offra St
 - **Record:** filtri solo sui valori JSON di primo livello, ordinamento solo per id, data di
   creazione o di modifica. Il salvataggio di un record sostituisce l'intero oggetto JSON. Un record
   contiene al massimo 256 KiB.
-- **La ricerca full-text** esiste nel server (modulo `search`) ma non ha ancora una schermata in
-  Studio; è disponibile tramite l'API.
+- **La ricerca full-text** ([Ricerca](help:search)) riguarda un tenant alla volta e trova solo parole
+  intere (niente prefissi né ricerca approssimata). Studio non aggiunge documenti all'indice; lo fa il tuo prodotto.
 - **Backup e archiviazione dei file:** Studio non mostra lo stato dei backup, e la procedura di
   backup del server copre il database; l'archiviazione dei file deve essere sottoposta a backup
   separatamente.
