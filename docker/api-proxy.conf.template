@@ -1,5 +1,10 @@
 # Generated from api-proxy.conf.template because AXENTRA_API_URL is set.
 location /v1/ {
+    # nginx's error log quotes the full request line, query string included, whenever the
+    # upstream fails (for example "connect() failed" while the API is down). For the OIDC
+    # callback that is `?code=...&state=...`. Only critical messages are logged here; a failed
+    # upstream still shows as 502/504 in the access log, which records the path only (R4-2).
+    error_log /dev/stderr crit;
     proxy_pass ${AXENTRA_API_URL};
     proxy_http_version 1.1;
     proxy_set_header Host $host;
