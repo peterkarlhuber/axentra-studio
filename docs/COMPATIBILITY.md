@@ -22,6 +22,7 @@ contract is byte-for-byte the backend's `openapi/axentra-v1.json` at that commit
 | 0.1.0 (unrel.) | PR #13 (NF-2/NF-3)         | 1.0            | 0.1.0.dev0      | `f3ed8d22a8bd`                     | 1.0         | 2026-11-02 | Contract identical (POST OIDC start added). Playwright invitations/security/smoke locally 22 passed, 0 failed; CI: contract and both e2e jobs on the PR                           |
 | 0.1.0 (unrel.) | PR #14 (R4-1/R4-2)         | 1.0            | 0.1.0.dev0      | `2767a2eb3705`                     | 1.0         | 2026-11-02 | Contract identical (descriptions only). CI: contract and both e2e jobs on the PR                                                                                                  |
 | 0.1.0 (unrel.) | wip/ux-axs (UX round 2)    | 1.0            | 0.1.0.dev0      | `36f493e47950`                     | 1.0         | 2026-11-03 | Contract identical (114 paths). Playwright locally: multi 302 passed / 10 skipped; single 311 passed / 6 skipped after two spec fixes for the shared product (first run 3 failed) |
+| 0.1.0 (unrel.) | wip/ux-axs (UX round 2)    | 1.0            | 0.1.0.dev0      | `a87224291b56`                     | 1.0         | 2026-11-03 | Overview `scope`, nullable product counters (PR #38). Playwright multi-product locally 304 passed / 10 skipped, 0 failed                                                          |
 
 [^1]:
     GitHub Actions ran the `contract` and `e2e` jobs on the pull request (the merge of its head into
