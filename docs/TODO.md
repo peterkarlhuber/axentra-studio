@@ -11,6 +11,9 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
+Last full review: 2026-11-03 against `master` at `c2f27da` (backend `a872242`; Axentra master
+`e7c06d0` differs from it only in its `docs/TODO.md`), at the close of UX round 2.
+
 ## P0
 
 None open. (The first GitHub Actions runs of the `contract` and `e2e` jobs passed on PR #2 and
@@ -120,6 +123,11 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   need. Lazy-load them.
 
 ## P3
+
+- **Dependabot updates are not reviewed yet.** Dependabot (enabled in PR #15) opened #16 to #27.
+  Several are major versions with breaking changes (TypeScript 7, React Router 8, ESLint 10,
+  Node 26, actions/checkout 7, setup-node 7, setup-python 7, upload-artifact 7). Review and merge
+  them one at a time with the full CI (contract, e2e multi and single), majors separately.
 
 - **A failed single sign-on drops `return_to` (backend).** Axentra sends a failed OIDC login to
   `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
