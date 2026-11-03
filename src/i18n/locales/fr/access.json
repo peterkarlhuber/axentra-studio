@@ -117,6 +117,7 @@
     "permissionsAbout": "À propos des autorisations des clés",
     "graceInfo": "Pendant le délai de grâce, l’ancienne et la nouvelle clé fonctionnent toutes les deux et apparaissent toutes les deux comme « Actif ». Révoque l’ancienne clé pour mettre fin au délai de grâce plus tôt.",
     "statusInfo": "Actif : fonctionne. Expiré : date d’expiration dépassée. Révoqué : révoquée, ou remplacée par un renouvellement après son délai de grâce.",
+    "graceUntil": "Remplacée, cesse de fonctionner",
     "statusAbout": "À propos du statut des clés",
     "lastUsedInfo": "Heure de la dernière requête réussie avec cette clé. Mise à jour au plus une fois par minute.",
     "lastUsedAbout": "À propos de la dernière utilisation",

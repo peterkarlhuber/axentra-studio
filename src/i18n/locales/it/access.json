@@ -117,6 +117,7 @@
     "permissionsAbout": "Informazioni sulle autorizzazioni delle chiavi",
     "graceInfo": "Durante il periodo di tolleranza funzionano sia la vecchia sia la nuova chiave, ed entrambe sono elencate come Attivo. Revoca la vecchia chiave per terminare prima il periodo di tolleranza.",
     "statusInfo": "Attivo: funziona. Scaduto: la data di scadenza è passata. Revocato: è stato revocato, oppure sostituito tramite rotazione e il periodo di tolleranza è terminato.",
+    "graceUntil": "Sostituita, smette di funzionare",
     "statusAbout": "Informazioni sullo stato della chiave",
     "lastUsedInfo": "Ora dell'ultima richiesta riuscita con questa chiave. Viene aggiornata al massimo una volta al minuto.",
     "lastUsedAbout": "Informazioni sull'ultimo utilizzo",

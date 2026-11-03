@@ -113,6 +113,7 @@
     "permissionsAbout": "Über Schlüsselberechtigungen",
     "graceInfo": "Während der Übergangsfrist funktionieren der alte und der neue Schlüssel, beide werden als „Aktiv“ angezeigt. Widerrufe den alten Schlüssel, um die Frist vorzeitig zu beenden.",
     "statusInfo": "Aktiv: funktioniert. Abgelaufen: Ablaufdatum überschritten. Widerrufen: widerrufen oder durch Erneuern ersetzt (nach der Übergangsfrist).",
+    "graceUntil": "Ersetzt, funktioniert nicht mehr",
     "statusAbout": "Über den Schlüsselstatus",
     "lastUsedInfo": "Zeitpunkt der letzten erfolgreichen Anfrage mit diesem Schlüssel. Wird höchstens einmal pro Minute aktualisiert.",
     "lastUsedAbout": "Über „Zuletzt verwendet“",

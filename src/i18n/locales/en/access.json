@@ -113,6 +113,7 @@
     "permissionsAbout": "About key permissions",
     "graceInfo": "During the grace period the old and the new key both work and both are listed as Active. Revoke the old key to end the grace period early.",
     "statusInfo": "Active: works. Expired: past its expiry date. Revoked: revoked, or replaced by rotation after its grace period.",
+    "graceUntil": "Replaced, stops working",
     "statusAbout": "About key status",
     "lastUsedInfo": "Time of the last successful request with this key. Updated at most once a minute.",
     "lastUsedAbout": "About last used",

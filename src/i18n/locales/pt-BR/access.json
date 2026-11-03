@@ -117,6 +117,7 @@
     "permissionsAbout": "Sobre as permissões de chaves",
     "graceInfo": "Durante o período de carência, a chave antiga e a nova funcionam e ambas aparecem como Ativo. Revogue a chave antiga para encerrar o período de carência antes.",
     "statusInfo": "Ativo: funciona. Expirado: a data de expiração já passou. Revogado: revogada ou substituída por rotação após o período de carência.",
+    "graceUntil": "Substituída, para de funcionar",
     "statusAbout": "Sobre o status das chaves",
     "lastUsedInfo": "Horário da última requisição bem-sucedida com esta chave. Atualizado no máximo uma vez por minuto.",
     "lastUsedAbout": "Sobre o último uso",
