@@ -58,6 +58,14 @@ function api(permissions: string[], extra?: (request: Request, url: URL) => Resp
 }
 
 describe('RolesPage', () => {
+  it('shows built-in role descriptions in the interface language, custom ones as entered', async () => {
+    api(['roles:read']);
+    // The server's English text ("Uses the tenant") is replaced by Studio's translation by key.
+    expect(await screen.findByText("Works with the tenant's data")).toBeInTheDocument();
+    expect(screen.queryByText('Uses the tenant')).not.toBeInTheDocument();
+    expect(screen.getByText('Member')).toBeInTheDocument();
+  });
+
   it('creates a tenant role with a key derived from the name', async () => {
     const calls = api(['roles:read', 'roles:manage'], (request, url) =>
       request.method === 'POST' && url.pathname.endsWith('/roles')

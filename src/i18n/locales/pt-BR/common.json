@@ -143,5 +143,15 @@
   },
   "help": {
     "learnMore": "Saiba mais"
+  },
+  "builtinRoles": {
+    "product_owner": "Controle total do produto",
+    "product_admin": "Gerencia tenants, papéis, chaves e dados; não pode gerenciar operadores do produto nem declarar permissões do produto",
+    "product_support": "Lê tudo no produto e gerencia membros de tenants até as próprias permissões (na prática: leitores)",
+    "product_viewer": "Acesso somente leitura ao produto",
+    "tenant_owner": "Controle total do tenant",
+    "tenant_admin": "Gerencia membros e dados do tenant",
+    "member": "Trabalha com os dados do tenant",
+    "viewer": "Acesso somente leitura ao tenant"
   }
 }

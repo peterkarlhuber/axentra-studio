@@ -143,5 +143,15 @@
   },
   "help": {
     "learnMore": "Más información"
+  },
+  "builtinRoles": {
+    "product_owner": "Control total del producto",
+    "product_admin": "Gestiona inquilinos, roles, claves y datos; no puede gestionar operadores del producto ni declarar permisos del producto",
+    "product_support": "Lee todo en el producto y gestiona miembros de inquilinos hasta sus propios permisos (en la práctica: lectores)",
+    "product_viewer": "Acceso de solo lectura al producto",
+    "tenant_owner": "Control total del inquilino",
+    "tenant_admin": "Gestiona los miembros y los datos del inquilino",
+    "member": "Trabaja con los datos del inquilino",
+    "viewer": "Acceso de solo lectura al inquilino"
   }
 }
