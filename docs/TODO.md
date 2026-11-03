@@ -18,27 +18,15 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P1
 
-- **Search UI for the new backend search module.** Axentra's `search` module (tenant-scoped
-  PostgreSQL full-text index; `GET .../search` with `search:query`, `PUT`/`DELETE
-.../search/documents/{kind}/{ref_id}` with `search:index`) has no Studio page (the vendored
-  contract includes it). Needed: a per-tenant search page (query, kind filter, highlighted results, cursor
-  paging), module gating on `search`, permissions, i18n, component tests and an e2e spec
-  (backend reference: `docs/modules/SEARCH.md` in the Axentra repository).
-- **Phase 1 pages have no component tests.** `ApiKeysPage`, `RolesPage`, `SetupPage`,
-  `DashboardPage`, `ProductsPage`, `ProductDetailPage`, `HealthPage`, `NotFoundPage`,
-  `SettingsPage`, `InvitationsPage`,
-  `UsersPage` and `UserDetailPage` have no Vitest test (shared parts such as `MembersPanel`, the
-  data table, dialogs, guards and the API client do). They are rendered by the e2e a11y sweep, but
-  their actions are not asserted anywhere.
-- **Write flows without an e2e spec.** Creating products and tenants, suspending a tenant in the UI
-  (reactivating is covered by `e2e/tenant-suspension.spec.ts`), creating
-  and editing custom roles, creating, rotating and revoking API keys (one-time secret), revoking
-  sessions, changing the password and signing out are not driven by any Playwright spec (only the
-  initial render of their pages is checked). Area specs cover files, records, usage, billing,
-  events, jobs, schedules, webhooks, notifications, monitoring and the member/invitation rules.
-- **Interactive states are not covered by the a11y harness.** `e2e/a11y.spec.ts` checks the
-  initial render of every route. Open dialogs, menus, drawers, toasts and form error states are
-  checked only where an area spec does so explicitly.
+- **Some Phase 1 pages have no component tests.** `DashboardPage`, `ProductDetailPage`,
+  `HealthPage`, `NotFoundPage`, `SettingsPage`, `InvitationsPage`, `UsersPage` and
+  `UserDetailPage` have no Vitest test (`ApiKeysPage`, `RolesPage`, `ProductsPage` and
+  `SetupPage` have). They are rendered by the e2e a11y sweep and partly driven by area specs, but
+  their actions are not asserted in isolation.
+- **Drawers and toasts are not in the interactive a11y harness.** `e2e/a11y-interactive.spec.ts`
+  checks open dialogs, menus, the info tip, the page help panel and form error states in both
+  themes on desktop and 360 px. Drawers (search document, job and file details) and toasts are
+  checked only where an area spec does so (for example `e2e/search.spec.ts`).
 - **Route parameters need fixtures.** The harness fills `:productId`, `:tenantId`, `:userId`,
   `:jobId`, `:webhookId` and `:templateKey` from the e2e backend. A new detail route with another parameter (for example `:fileId`) is
   skipped with "no fixture for :fileId" until `scripts/e2e-backend.sh` creates such an object and
@@ -92,7 +80,11 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   which sends no security headers. The production CSP of `docker/40-axentra-studio.sh` was
   exercised once locally without Docker (headers emulated, see the implementation report); a CI job
   that builds the image and runs the smoke and a11y specs against it (`AXENTRA_E2E_BASE_URL`) is
-  missing.
+  missing. The base images are pinned by digest (`node:22.23.4-alpine`,
+  `nginxinc/nginx-unprivileged:1.30.6-alpine`) and Dependabot proposes updates weekly; the pinned
+  image was not built in the review environment (no Docker daemon), and its nginx config
+  (`error_log ... crit` in `location /v1/`) was checked by `scripts/error-log.test.mjs` only, not
+  by `nginx -t`.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 
@@ -109,6 +101,23 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   permissions; saving a role that still lists a retired product permission removes that name
   (it had no effect while retired, but would have come back if the product re-declared it). The
   read-only role view still lists it.
+
+- **No guard against losing unsaved input.** No page asks before a reload, a navigation or
+  sign-out while a form has unsaved changes (no `beforeunload`, no router blocker); the profile
+  name field, role editor and record editors lose edits silently. Dialogs close on Escape without
+  asking (their state is kept until the page unmounts, so reopening restores it, which in turn
+  shows stale input after **Cancel**). The role editor's **Save changes** is enabled without
+  changes. Needs one shared "dirty form" pattern.
+- **Revoking a session has no confirmation.** **Revoke** on a single session and **Sign out all
+  other sessions** act at once (profile and user detail). The buttons now name the device;
+  a confirmation that names the device, as for API keys, is still missing.
+- **Invitation refusals are told apart by their English detail text (backend).** Accepting answers
+  `403 forbidden` for three reasons (other email address, tenant or product not active, inviter
+  can no longer grant the role). Studio matches the `detail` text to explain each; distinct codes
+  (or a `reason` field) would make this robust. Unknown 403s show the server message.
+- **The initial bundle carries the help library.** About 956 kB raw / 296 kB gzip load before the
+  first page, including the help index and article renderer that only `/help` and the help panel
+  need. Lazy-load them.
 
 ## P3
 
@@ -150,7 +159,37 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   `$AXENTRA_E2E_DB`/`$AXENTRA_E2E_DB_ROLE`; parallel runs on one PostgreSQL need distinct names
   and ports (all configurable through environment variables).
 
+- **Product creation does not use `?new=1`.** Other create dialogs open from the address (UX.md);
+  the product dialog does not, so it cannot be linked or restored on reload.
+- **Native and Studio validation mix.** Some inputs (for example the custom API key expiry date)
+  use the browser's `required` bubble, others Studio's inline errors; the bubble is not translated
+  by Studio and looks different.
+- **Search kinds are typed by hand (backend).** There is no endpoint that lists the kinds indexed
+  in a tenant, so the kind filter is free text with format validation.
+- **Vitest keeps a stale `import.meta.glob` result.** After adding a new i18n namespace, Vitest's
+  cache (`node_modules/.vitest-cache`, `node_modules/.vite/vitest`) served the old locale map
+  until it was deleted. Document it or disable the cache for `src/i18n`.
+
 ## Recently fixed
+
+- **Search UI.** `/p/:productId/search` searches a tenant's full-text index (phrases, exclusions,
+  kind filter, highlighted matches as text, cursor paging), opens a document and removes it from
+  the index with `search:index`. Covered by `src/features/search/*.test.ts(x)` and
+  `e2e/search.spec.ts`.
+- **Write flows in e2e.** `e2e/write-flows.spec.ts` drives product and tenant creation, tenant
+  suspension, custom roles, API key create/rotate/revoke (the old key's grace period is now shown
+  as "Replaced, stops working"), revoking another session, changing the password and signing out.
+- **Interactive a11y.** `e2e/a11y-interactive.spec.ts`; it found that an open menu hid the page
+  from assistive technology while it stayed focusable (Radix modal menu, axe
+  `aria-hidden-focus`); menus are non-modal now.
+- **Accepting an invitation explained every 403 as "another email address".** Since Axentra PR
+  #31 the refusal can also mean "tenant not active" or "inviter lost the right"; each has its own
+  explanation now (`AcceptInvitationPage.test.tsx`, `e2e/invitations.spec.ts`).
+- Jobs the worker skipped for an inactive tenant ("skipped: ...") are marked in the jobs list
+  and explained on the job page; built-in role descriptions are translated; a failed sign-in
+  moves the focus to the password field; session revoke buttons name the device; tenant pickers
+  sorted by name client-side (they sent a `sort=name` the API does not have, so the order was the
+  server's, oldest first) and help says which 200 tenants they list.
 
 - The default invitation link (`<public_url>/accept-invitation?token=…`) ended on "page not
   found": Studio served its accept page only at `/invitations/accept`. `/accept-invitation` is now a

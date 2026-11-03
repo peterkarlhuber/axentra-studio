@@ -8,7 +8,10 @@ import type { HelpTopic } from '@/help/manifest';
 
 const PICKER_LIMIT = 200;
 
-/** Select a tenant of the product (first 200 by name). */
+/**
+ * Select a tenant of the product: the first 200 the server lists (oldest first; the list endpoint
+ * has no sort parameter), sorted by name in the interface language.
+ */
 export function TenantPicker({
   productId,
   value,
@@ -31,13 +34,15 @@ export function TenantPicker({
   info?: ReactNode;
   infoTopic?: HelpTopic;
 }) {
-  const { t } = useTranslation('common');
-  const params = { limit: PICKER_LIMIT, sort: 'name' };
+  const { t, i18n } = useTranslation('common');
+  const params = { limit: PICKER_LIMIT };
   const query = useQuery({
     queryKey: queryKeys.tenants(productId, params),
     queryFn: () => tenantsApi.list(productId, params),
   });
-  const tenants = query.data?.items ?? [];
+  const tenants = [...(query.data?.items ?? [])].sort((a, b) =>
+    a.name.localeCompare(b.name, i18n.language),
+  );
   const truncated = Boolean(query.data?.next_cursor);
   const helpText = [help, truncated ? t('tenantPicker.truncated', { count: PICKER_LIMIT }) : null]
     .filter(Boolean)

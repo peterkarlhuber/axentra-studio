@@ -9,7 +9,7 @@ const LIMIT = 200;
  * can show names. Unknown ids fall back to the id itself.
  */
 export function useTenantNames(productId: string, enabled = true) {
-  const params = { limit: LIMIT, sort: 'name' };
+  const params = { limit: LIMIT };
   const query = useQuery({
     queryKey: queryKeys.tenants(productId, params),
     queryFn: () => tenantsApi.list(productId, params),
