@@ -150,4 +150,4 @@ All in `src/components/ui/`, exported from `index.ts`.
 
 - Sentence case for headings and buttons ("New tenant", "Rotate secret").
 - Buttons say what happens; destructive confirmations repeat the object ("Delete tenant").
-- German uses the formal "Sie" and typographic quotes („…“); English uses curly quotes (“…”).
+- All six languages use informal address (German "du", not "Sie"). German uses typographic quotes („…“); English uses curly quotes (“…”).
