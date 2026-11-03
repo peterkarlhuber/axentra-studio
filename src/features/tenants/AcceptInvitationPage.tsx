@@ -72,13 +72,30 @@ function membershipOf(me: Me, tenantId: string): Accepted | null {
   return null;
 }
 
-type Outcome = 'invalid' | 'wrongEmail' | 'noEmail' | 'unreachable' | 'other';
+type Outcome =
+  'invalid' | 'wrongEmail' | 'noEmail' | 'inactive' | 'inviterLost' | 'unreachable' | 'other';
+
+/**
+ * The server refuses an acceptance with one generic `forbidden` code for three reasons; only the
+ * detail tells them apart (see the proposed backend entry for distinct codes):
+ * "this invitation was sent to another email address", "the invitation cannot be accepted: the
+ * tenant is not active" and "the invitation is no longer valid: its sender can no longer grant
+ * this role". A 403 Studio does not recognize shows the server's own message.
+ */
+function forbiddenOutcome(detail: string, hasEmail: boolean): Outcome {
+  const text = detail.toLowerCase();
+  if (text.includes('not active')) return 'inactive';
+  if (text.includes('no longer')) return 'inviterLost';
+  if (!hasEmail) return 'noEmail';
+  if (!text || text.includes('email')) return 'wrongEmail';
+  return 'other';
+}
 
 function outcomeOf(error: unknown, hasEmail: boolean): Outcome {
   const apiError = toApiError(error);
   // The server answers one 404 for unknown, expired, revoked and used tokens (no oracle).
   if (apiError.isNotFound) return 'invalid';
-  if (apiError.isForbidden) return hasEmail ? 'wrongEmail' : 'noEmail';
+  if (apiError.isForbidden) return forbiddenOutcome(apiError.detail ?? '', hasEmail);
   if (apiError.status === 0 || apiError.status >= 500 || apiError.status === 429) {
     return 'unreachable';
   }
@@ -279,10 +296,21 @@ export function AcceptInvitationPage() {
                 <p>{t('accept.outcomes.wrongEmail.body', { account })}</p>
               ) : outcome === 'noEmail' ? (
                 <p>{t('accept.noEmail')}</p>
+              ) : outcome === 'inactive' ? (
+                <p>{t('accept.outcomes.inactive.body')}</p>
+              ) : outcome === 'inviterLost' ? (
+                <p>{t('accept.outcomes.inviterLost.body')}</p>
               ) : outcome === 'unreachable' ? (
                 <p>{t('accept.outcomes.unreachable.body')}</p>
               ) : (
-                <p>{described.message}</p>
+                <>
+                  <p>{described.message}</p>
+                  {described.error.detail ? (
+                    <p>
+                      {t('errors:serverMessage')}: {described.error.detail}
+                    </p>
+                  ) : null}
+                </>
               )}
               {described.requestId ? (
                 <p>

@@ -108,6 +108,14 @@
       "noEmail": {
         "title": "Your account has no email address"
       },
+      "inactive": {
+        "title": "The tenant is not active",
+        "body": "The tenant (or its product) you were invited to is suspended or closed, so nobody can join it right now. Your invitation was not used. Ask the person who invited you to reactivate the tenant, then try again."
+      },
+      "inviterLost": {
+        "title": "The invitation is no longer valid",
+        "body": "The person who invited you can no longer give you this role, for example because their own role or membership changed. Ask them or another administrator of the tenant for a new invitation."
+      },
       "unreachable": {
         "title": "The server could not be reached",
         "body": "Your invitation was not changed. Check your connection and try again in a moment."

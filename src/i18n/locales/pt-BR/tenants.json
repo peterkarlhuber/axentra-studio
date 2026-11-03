@@ -108,6 +108,14 @@
       "noEmail": {
         "title": "Sua conta não tem endereço de e-mail"
       },
+      "inactive": {
+        "title": "O tenant não está ativo",
+        "body": "O tenant (ou o produto dele) para o qual você foi convidado está suspenso ou encerrado, então ninguém pode entrar agora. Seu convite não foi usado. Peça à pessoa que te convidou para reativar o tenant e tente de novo."
+      },
+      "inviterLost": {
+        "title": "O convite não é mais válido",
+        "body": "A pessoa que te convidou não pode mais te dar este papel, por exemplo porque o papel ou a participação dela mudou. Peça a ela ou a outra pessoa que administra o tenant um novo convite."
+      },
       "unreachable": {
         "title": "Não foi possível acessar o servidor",
         "body": "Seu convite não foi alterado. Verifique sua conexão e tente de novo em instantes."

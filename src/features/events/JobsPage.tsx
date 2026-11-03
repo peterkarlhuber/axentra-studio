@@ -54,6 +54,7 @@ import {
   JOB_STATUSES,
   canCancelJob,
   canRetryJob,
+  isSkippedJob,
   kindProblem,
   newIdempotencyKey,
   parseJsonObject,
@@ -367,6 +368,7 @@ function JobStatusCell({ job }: { job: Job }) {
       {job.cancel_requested && job.status === 'running' ? (
         <span className={layout.muted}>{t('jobs.cancelRequested')}</span>
       ) : null}
+      {isSkippedJob(job) ? <span className={layout.muted}>{t('jobs.skipped')}</span> : null}
     </span>
   );
 }

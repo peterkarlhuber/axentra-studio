@@ -63,6 +63,12 @@ job-lifecycle
 **Failed** and **Dead** are both final, but for different reasons: **Failed** means the handler
 decided that retrying cannot help; **Dead** means every attempt ended with an error.
 
+**Skipped jobs.** A job whose product is archived or whose tenant is suspended (or no longer
+exists) is not run. The worker ends it as **Failed** with a last error that starts with
+`skipped:`, for example `skipped: the product or tenant is not active`. Studio marks it **Not run:
+product or tenant inactive**. Jobs fired by a schedule end this way while the tenant is suspended.
+The job is kept: once the product and tenant are active again, retry it if it is still needed.
+
 ## Attempts, retries and backoff {#retries}
 
 Every time a worker claims a job, its attempt counter goes up by one. When an attempt ends with an

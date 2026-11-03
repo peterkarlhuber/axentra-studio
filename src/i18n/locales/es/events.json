@@ -102,7 +102,9 @@
       "noError": "No se ha registrado ningún error.",
       "redactedHelp": "El servidor oculta los valores confidenciales.",
       "result": "Resultado",
-      "noResult": "Sin resultado (por ahora)."
+      "noResult": "Sin resultado (por ahora).",
+      "skippedTitle": "Omitida, no ejecutada",
+      "skippedBody": "El worker no ejecutó esta tarea porque su producto está archivado o su inquilino está suspendido (o uno de ellos ya no existe). Las tareas que lanza una programación terminan igual. La tarea se conserva: cuando el producto y el inquilino vuelvan a estar activos, reinténtala si todavía hace falta."
     },
     "statusInfoLabel": "Acerca de los estados de las tareas",
     "statusInfo": "Fallida: el handler informó de un error permanente, así que no hay más intentos automáticos. Fallida definitivamente: todos los intentos terminaron con un error. Puedes reintentar ambas.",
@@ -112,7 +114,8 @@
     "payloadInfo": "El payload se guarda tal como se introduce y lo puede leer cualquiera que pueda ver las tareas. Los campos con nombres como password, secret o token solo se ocultan en la vista.",
     "priorityInfo": "La prioridad solo decide qué tarea pendiente toma primero un worker libre. No interrumpe las tareas en ejecución ni garantiza un orden.",
     "maxAttemptsInfo": "Tras un error, la tarea se reintenta con una espera cada vez mayor. Cuando falla el último intento, pasa a fallida definitivamente y permanece en la lista, para que puedas leer el error y reintentarla.",
-    "idempotencyKeyInfo": "Studio rellena una clave aleatoria nueva cada vez que abres este diálogo, así que un doble clic solo pone la tarea en cola una vez. La misma clave con otro payload u otra prioridad se rechaza."
+    "idempotencyKeyInfo": "Studio rellena una clave aleatoria nueva cada vez que abres este diálogo, así que un doble clic solo pone la tarea en cola una vez. La misma clave con otro payload u otra prioridad se rechaza.",
+    "skipped": "No ejecutado: producto o inquilino inactivo"
   },
   "schedules": {
     "title": "Programaciones",

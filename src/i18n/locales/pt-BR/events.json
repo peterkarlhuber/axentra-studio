@@ -102,7 +102,9 @@
       "noError": "Nenhum erro registrado.",
       "redactedHelp": "Valores sensíveis são censurados pelo servidor.",
       "result": "Resultado",
-      "noResult": "Nenhum resultado (ainda)."
+      "noResult": "Nenhum resultado (ainda).",
+      "skippedTitle": "Ignorado, não executado",
+      "skippedBody": "O worker não executou este job porque o produto dele está arquivado ou o tenant está suspenso (ou um deles não existe mais). Jobs disparados por um agendamento terminam do mesmo jeito. O job é mantido: quando o produto e o tenant estiverem ativos de novo, tente outra vez se ainda for necessário."
     },
     "statusInfoLabel": "Sobre os status de jobs",
     "statusInfo": "Falhou: o handler informou um erro permanente, então não há mais tentativas automáticas. Falha definitiva: todas as tentativas terminaram com erro. Você pode tentar novamente nos dois casos.",
@@ -112,7 +114,8 @@
     "payloadInfo": "O payload é armazenado como foi digitado e pode ser lido por todos que podem ver jobs. Campos com nomes como password, secret ou token são apenas ocultados na exibição.",
     "priorityInfo": "A prioridade decide apenas qual job pendente um worker livre pega primeiro. Ela não interrompe jobs em execução e não garante uma ordem.",
     "maxAttemptsInfo": "Depois de um erro, o job é tentado novamente com uma espera crescente. Quando a última tentativa falha, ele passa para falha definitiva e permanece na lista, para que você possa ler o erro e tentar de novo.",
-    "idempotencyKeyInfo": "O Studio preenche uma nova chave aleatória sempre que você abre esta caixa de diálogo, assim um clique duplo enfileira apenas uma vez. A mesma chave com outro payload ou outra prioridade é recusada."
+    "idempotencyKeyInfo": "O Studio preenche uma nova chave aleatória sempre que você abre esta caixa de diálogo, assim um clique duplo enfileira apenas uma vez. A mesma chave com outro payload ou outra prioridade é recusada.",
+    "skipped": "Não executado: produto ou tenant inativo"
   },
   "schedules": {
     "title": "Agendamentos",

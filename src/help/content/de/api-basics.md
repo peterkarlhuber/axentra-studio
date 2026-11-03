@@ -81,7 +81,7 @@ Jeder Fehler ist ein Problem-Dokument nach RFC 9457 mit
 
 ```json
 {
-  "type": "https://axentra.dev/problems/validation_failed",
+  "type": "urn:axentra:problem:validation_failed",
   "title": "Validation failed",
   "status": 422,
   "code": "validation_failed",
@@ -91,6 +91,7 @@ Jeder Fehler ist ein Problem-Dokument nach RFC 9457 mit
 }
 ```
 
+`type` ist eine URN (`urn:axentra:problem:<code>`), keine Webadresse.
 Verwende in deinem Programm `code`; der Wert ist stabil. `title` und `detail` sind für Menschen
 gedacht und können sich ändern.
 

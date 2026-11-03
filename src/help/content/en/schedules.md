@@ -137,6 +137,13 @@ after the current time. It does not catch up every missed run.
 **Next run** is recalculated from the current time whenever you change the timing or enable the
 schedule. Changing only the name, payload, priority or attempts keeps the next run.
 
+**Suspended tenant or archived product.** While the tenant of a schedule is suspended or its
+product archived, due slots are skipped: no job is enqueued, **Last run** does not change and the
+schedule moves on to its next slot. The audit log records `events.schedule.skip` once for the
+first skipped slot. A job that was already queued is not run either; it ends as **Failed** with
+`skipped: …` (see [job statuses](help:jobs#statuses)). The schedule itself is kept and fires again
+with the next slot after the tenant is reactivated.
+
 ## Edit a schedule {#edit}
 
 1. Open the row's actions menu and choose **Edit**.

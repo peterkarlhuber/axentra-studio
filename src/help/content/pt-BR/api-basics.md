@@ -80,7 +80,7 @@ Todo erro é um documento de problema da RFC 9457 com `Content-Type: application
 
 ```json
 {
-  "type": "https://axentra.dev/problems/validation_failed",
+  "type": "urn:axentra:problem:validation_failed",
   "title": "Validation failed",
   "status": 422,
   "code": "validation_failed",
@@ -90,6 +90,7 @@ Todo erro é um documento de problema da RFC 9457 com `Content-Type: application
 }
 ```
 
+`type` é uma URN (`urn:axentra:problem:<code>`), não um endereço web.
 Use `code` no seu programa; ele é estável. `title` e `detail` são para pessoas e podem mudar.
 
 | Status | `code`                                   | Significado                                                                       |

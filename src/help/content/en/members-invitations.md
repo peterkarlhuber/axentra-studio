@@ -204,6 +204,16 @@ address.
 Sign in with the invited address, or ask the person who invited you to add your account to the
 tenant directly.
 
+**When accepting: The tenant is not active.** The tenant you were invited to, or its product, is
+suspended or closed, so nobody can join it now. The invitation stays unused. Once the tenant is
+active again, open the link again. The server refuses with "the invitation cannot be accepted: the
+tenant is not active".
+
+**When accepting: The invitation is no longer valid.** The person who invited you can no longer
+grant the role, for example because their own role or membership changed after they sent the
+invitation. Ask them or another administrator of the tenant for a new invitation. The server
+refuses with "the invitation is no longer valid: its sender can no longer grant this role".
+
 **When accepting: The server could not be reached.** Nothing was changed. Check your connection and
 choose **Try again**.
 

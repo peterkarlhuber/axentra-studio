@@ -146,6 +146,14 @@ Der **Nächste Lauf** wird ab der aktuellen Zeit neu berechnet, sobald du die Ze
 oder den Zeitplan aktivierst. Änderst du nur Name, Nutzdaten, Priorität oder Versuche, bleibt der
 nächste Lauf erhalten.
 
+**Gesperrter Mandant oder archiviertes Produkt.** Solange der Mandant eines Zeitplans gesperrt
+oder sein Produkt archiviert ist, werden fällige Termine übersprungen: Es wird kein Job eingereiht,
+**Letzter Lauf** ändert sich nicht, und der Zeitplan geht zum nächsten Termin weiter. Das
+Audit-Protokoll verzeichnet einmal `events.schedule.skip` für den ersten übersprungenen Termin. Ein
+bereits eingereihter Job wird ebenfalls nicht ausgeführt; er endet als **Fehlgeschlagen** mit
+`skipped: …` (siehe [Job-Status](help:jobs#statuses)). Der Zeitplan selbst bleibt erhalten und löst nach
+der Reaktivierung des Mandanten mit dem nächsten Termin wieder aus.
+
 ## Einen Zeitplan bearbeiten {#edit}
 
 1. Öffne das Aktionsmenü der Zeile und wähle **Bearbeiten**.

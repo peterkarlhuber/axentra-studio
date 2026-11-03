@@ -214,6 +214,17 @@ Einladung an deine eigene Adresse.
 annehmen. Melde dich mit der eingeladenen Adresse an oder bitte die Person, die dich eingeladen hat,
 dein Konto direkt zum Mandanten hinzuzufügen.
 
+**Beim Annehmen: Der Mandant ist nicht aktiv.** Der Mandant, zu dem du eingeladen wurdest, oder
+sein Produkt ist gesperrt oder geschlossen, deshalb kann gerade niemand beitreten. Die Einladung
+bleibt unbenutzt. Sobald der Mandant wieder aktiv ist, öffne den Link erneut. Der Server lehnt mit
+„the invitation cannot be accepted: the tenant is not active“ ab.
+
+**Beim Annehmen: Die Einladung ist nicht mehr gültig.** Die Person, die dich eingeladen hat, darf
+die Rolle nicht mehr vergeben, zum Beispiel weil sich ihre eigene Rolle oder Mitgliedschaft nach
+dem Versand geändert hat. Bitte sie oder eine andere Administratorin bzw. einen anderen
+Administrator des Mandanten um eine neue Einladung. Der Server lehnt mit „the invitation is no
+longer valid: its sender can no longer grant this role“ ab.
+
 **Beim Annehmen: Der Server ist nicht erreichbar.** Es wurde nichts verändert. Prüfe deine
 Verbindung und wähle **Erneut versuchen**.
 

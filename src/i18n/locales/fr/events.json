@@ -102,7 +102,9 @@
       "noError": "Aucune erreur enregistrée.",
       "redactedHelp": "Les valeurs sensibles sont expurgées par le serveur.",
       "result": "Résultat",
-      "noResult": "Aucun résultat (pour l’instant)."
+      "noResult": "Aucun résultat (pour l’instant).",
+      "skippedTitle": "Ignorée, non exécutée",
+      "skippedBody": "Le worker n’a pas exécuté cette tâche parce que son produit est archivé ou son locataire suspendu (ou que l’un d’eux n’existe plus). Les tâches déclenchées par une planification se terminent de la même façon. La tâche est conservée : quand le produit et le locataire sont de nouveau actifs, relance-la si elle est encore utile."
     },
     "statusInfoLabel": "À propos des statuts des tâches",
     "statusInfo": "Échouée : le gestionnaire a signalé une erreur permanente, il n’y a donc plus de tentatives automatiques. Abandonnée : toutes les tentatives se sont terminées par une erreur. Tu peux relancer les deux.",
@@ -112,7 +114,8 @@
     "payloadInfo": "La charge utile est stockée telle que saisie et peut être lue par toute personne autorisée à voir les tâches. Les champs nommés par exemple password, secret ou token sont seulement masqués à l’affichage.",
     "priorityInfo": "La priorité décide seulement quelle tâche due un worker libre prend en premier. Elle n’interrompt pas les tâches en cours et ne garantit aucun ordre.",
     "maxAttemptsInfo": "Après une erreur, la tâche est relancée avec une attente croissante. Si la dernière tentative échoue, elle est abandonnée et reste dans la liste : tu peux lire l’erreur et la relancer.",
-    "idempotencyKeyInfo": "Studio remplit une nouvelle clé aléatoire à chaque ouverture de cette boîte de dialogue, ainsi un double clic ne met la tâche en file d’attente qu’une seule fois. La même clé avec une autre charge utile ou une autre priorité est refusée."
+    "idempotencyKeyInfo": "Studio remplit une nouvelle clé aléatoire à chaque ouverture de cette boîte de dialogue, ainsi un double clic ne met la tâche en file d’attente qu’une seule fois. La même clé avec une autre charge utile ou une autre priorité est refusée.",
+    "skipped": "Non exécuté : produit ou locataire inactif"
   },
   "schedules": {
     "title": "Planifications",

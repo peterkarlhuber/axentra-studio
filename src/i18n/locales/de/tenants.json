@@ -108,6 +108,14 @@
       "noEmail": {
         "title": "Dein Konto hat keine E-Mail-Adresse"
       },
+      "inactive": {
+        "title": "Der Mandant ist nicht aktiv",
+        "body": "Der Mandant (oder sein Produkt), zu dem du eingeladen wurdest, ist gesperrt oder geschlossen, deshalb kann gerade niemand beitreten. Deine Einladung wurde nicht verbraucht. Bitte die Person, die dich eingeladen hat, den Mandanten wieder zu aktivieren, und versuche es dann erneut."
+      },
+      "inviterLost": {
+        "title": "Die Einladung ist nicht mehr gültig",
+        "body": "Die Person, die dich eingeladen hat, darf dir diese Rolle nicht mehr geben, zum Beispiel weil sich ihre eigene Rolle oder Mitgliedschaft geändert hat. Bitte sie oder eine andere Administratorin bzw. einen anderen Administrator des Mandanten um eine neue Einladung."
+      },
       "unreachable": {
         "title": "Der Server ist nicht erreichbar",
         "body": "Deine Einladung wurde nicht verändert. Prüfe deine Verbindung und versuche es gleich noch einmal."

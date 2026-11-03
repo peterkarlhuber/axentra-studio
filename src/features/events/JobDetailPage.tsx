@@ -23,7 +23,7 @@ import {
   layout,
 } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
-import { canCancelJob, canRetryJob } from './events-utils';
+import { canCancelJob, canRetryJob, isSkippedJob } from './events-utils';
 import { JobActionDialog } from './JobsPage';
 import { JobStatusPill } from './shared';
 import styles from './events.module.css';
@@ -160,6 +160,12 @@ export function JobDetailPage() {
           />
         </Card>
       </div>
+      {isSkippedJob(job) ? (
+        <Alert tone="warning" title={t('jobs.detail.skippedTitle')}>
+          <p>{t('jobs.detail.skippedBody')}</p>
+          <HelpLink topic="jobs#statuses">{t('common:help.learnMore')}</HelpLink>
+        </Alert>
+      ) : null}
       <Card title={t('jobs.detail.lastError')} description={t('jobs.detail.lastErrorHelp')}>
         {job.last_error ? (
           <pre

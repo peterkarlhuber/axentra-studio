@@ -210,6 +210,16 @@ convidado, o Studio traz você de volta ao convite. Ou peça um convite para o s
 **Ao aceitar: Sua conta não tem endereço de e-mail.** Essas contas não podem aceitar convites. Entre
 com o endereço convidado ou peça a quem convidou você que adicione sua conta diretamente ao tenant.
 
+**Ao aceitar: O tenant não está ativo.** O tenant para o qual você foi convidado, ou o produto
+dele, está suspenso ou encerrado, então ninguém pode entrar agora. O convite continua sem uso.
+Quando o tenant estiver ativo de novo, abra o link outra vez. O servidor recusa com “the invitation
+cannot be accepted: the tenant is not active”.
+
+**Ao aceitar: O convite não é mais válido.** A pessoa que te convidou não pode mais conceder o
+papel, por exemplo porque o papel ou a participação dela mudou depois do envio. Peça a ela ou a
+outra pessoa que administra o tenant um novo convite. O servidor recusa com “the invitation is no
+longer valid: its sender can no longer grant this role”.
+
 **Ao aceitar: Não foi possível acessar o servidor.** Nada foi alterado. Verifique sua conexão e
 escolha **Tentar novamente**.
 

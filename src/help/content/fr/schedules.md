@@ -136,6 +136,14 @@ après l’heure actuelle. Elle ne rattrape pas chaque exécution manquée.
 La **Prochaine exécution** est recalculée à partir de l’heure actuelle chaque fois que tu modifies la fréquence ou que tu actives la
 planification. Modifier uniquement le nom, la charge utile, la priorité ou les tentatives conserve la prochaine exécution.
 
+**Locataire suspendu ou produit archivé.** Tant que le locataire d’une planification est suspendu
+ou son produit archivé, les créneaux échus sont ignorés : aucune tâche n’est mise en file, **Dernière
+exécution** ne change pas et la planification passe au créneau suivant. Le journal d’audit
+enregistre une fois `events.schedule.skip` pour le premier créneau ignoré. Une tâche déjà en file
+n’est pas exécutée non plus ; elle se termine comme **Échouée** avec `skipped: …` (voir
+[statuts des tâches](help:jobs#statuses)). La planification est conservée et se déclenche de nouveau au
+créneau suivant après la réactivation du locataire.
+
 ## Modifier une planification {#edit}
 
 1. Ouvre le menu d’actions de la ligne et choisis **Modifier**.

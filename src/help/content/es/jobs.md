@@ -67,6 +67,13 @@ job-lifecycle
 **Fallida** significa que el handler decidió que reintentar no puede ayudar; **Fallida
 definitivamente** significa que todos los intentos terminaron con un error.
 
+**Tareas omitidas.** Una tarea cuyo producto está archivado o cuyo inquilino está suspendido (o ya
+no existe) no se ejecuta. El worker la termina como **Fallida** con un último error que empieza por
+`skipped:`, por ejemplo `skipped: the product or tenant is not active`. Studio la marca con **No
+ejecutado: producto o inquilino inactivo**. Las tareas que lanza una programación terminan así
+mientras el inquilino está suspendido. La tarea se conserva: cuando el producto y el inquilino
+vuelvan a estar activos, reinténtala si todavía hace falta.
+
 ## Intentos, reintentos y espera exponencial {#retries}
 
 Cada vez que un worker reclama una tarea, su contador de intentos aumenta en uno. Cuando un intento

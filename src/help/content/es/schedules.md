@@ -150,6 +150,14 @@ La **Próxima ejecución** se recalcula a partir de la hora actual cada vez que 
 periodicidad o activas la programación. Si solo cambias el nombre, el payload, la prioridad o los
 intentos, la próxima ejecución se mantiene.
 
+**Inquilino suspendido o producto archivado.** Mientras el inquilino de una programación está
+suspendido o su producto archivado, los momentos que vencen se omiten: no se pone ninguna tarea en
+cola, **Última ejecución** no cambia y la programación pasa al siguiente momento. El registro de
+auditoría anota `events.schedule.skip` una vez, para el primer momento omitido. Una tarea que ya
+estaba en cola tampoco se ejecuta; termina como **Fallida** con `skipped: …` (consulta
+[estados de las tareas](help:jobs#statuses)). La programación se conserva y vuelve a lanzarse en el
+siguiente momento después de reactivar el inquilino.
+
 ## Editar una programación {#edit}
 
 1. Abre el menú de acciones de la fila y elige **Editar**.
