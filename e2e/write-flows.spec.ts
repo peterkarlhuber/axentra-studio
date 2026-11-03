@@ -198,7 +198,13 @@ test('API keys: create with a one-time secret, rotate with a grace period, revok
   // The old key stays active until the end of the grace period, and the list says so.
   expect(old?.status).toBe('active');
   expect(Date.parse(old?.revoked_at ?? '')).toBeGreaterThan(Date.now() + 50 * 60_000);
-  await expect(page.getByText(/Replaced, stops working/)).toBeVisible();
+  // Scoped to this key's rows: in single-product mode the other project's keys share the list.
+  await expect(
+    page
+      .getByRole('row')
+      .filter({ hasText: keyName })
+      .getByText(/Replaced, stops working/),
+  ).toBeVisible();
 
   // ---- Revoke the replacement (typed confirmation) ----
   await page
@@ -266,7 +272,12 @@ test('own account: change the password, sign out another session, sign out', asy
   await page.context().clearCookies();
   await signIn(page, account);
   // Signed out at the end, the login page's session probe answers 401.
-  const console = trackConsoleErrors(page, SIGNED_OUT_CONSOLE_ALLOW);
+  // In single-product mode the account (no roles) opens the one product, whose endpoints answer
+  // 404 to callers without access (Axentra hides what you cannot see).
+  const console = trackConsoleErrors(page, [
+    ...SIGNED_OUT_CONSOLE_ALLOW,
+    ...(process.env.AXENTRA_E2E_MODE === 'single' ? [/status of 404/] : []),
+  ]);
   const other = await secondSession(browser, account);
 
   await page.goto('/profile');
