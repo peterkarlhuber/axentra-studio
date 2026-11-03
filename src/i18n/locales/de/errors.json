@@ -45,6 +45,10 @@
       "title": "Kontingent überschritten",
       "message": "Ein Kontingent oder Tariflimit dieses Mandanten ist aufgebraucht, daher hat der Server die Aktion abgelehnt. Gib Speicher oder Nutzung frei oder bitte jemanden mit Zugriff, das Kontingent zu erhöhen oder den Tarif zu ändern."
     },
+    "backdating_not_permitted": {
+      "title": "Vor dem Abrechnungszeitraum",
+      "message": "Der aktuelle Abrechnungszeitraum dieses Mandanten hat am {{periodStart, datetime(dateStyle: medium; timeStyle: short)}} begonnen. Nutzung, die früher stattfand, kann nur mit usage:manage für das ganze Produkt erfasst werden. Erfasse sie mit einem späteren Zeitpunkt oder bitte eine Produktadministration darum."
+    },
     "mode_not_supported": {
       "title": "In diesem Modus nicht verfügbar",
       "message": "Die Serverkonfiguration erlaubt diese Aktion hier nicht, zum Beispiel das Anlegen von Produkten im Einzelproduktbetrieb, das Ändern eines Abonnements, das Stripe verwaltet (ändere es in Stripe), oder das Öffnen des Test-Postfachs, wenn der Server echte E-Mails versendet. Die Servermeldung nennt den Grund; nur ein Betreiber kann die Konfiguration ändern."

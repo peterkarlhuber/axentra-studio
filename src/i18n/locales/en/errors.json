@@ -45,6 +45,10 @@
       "title": "Quota exceeded",
       "message": "A quota or plan limit of this tenant is used up, so the server refused the action. Free up space or usage, or ask someone with access to raise the quota or change the plan."
     },
+    "backdating_not_permitted": {
+      "title": "Before the billing period",
+      "message": "This tenant's current billing period started on {{periodStart, datetime(dateStyle: medium; timeStyle: short)}}. Usage that happened earlier can only be recorded with usage:manage for the whole product. Record it with a later time, or ask a product administrator."
+    },
     "mode_not_supported": {
       "title": "Not available in this mode",
       "message": "The server's configuration does not allow this action here, for example creating products in single-product mode, changing a subscription that Stripe manages (change it in Stripe), or opening the test mailbox when the server sends real email. The server message names the reason; only an operator can change the configuration."

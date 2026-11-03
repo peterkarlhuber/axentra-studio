@@ -18,6 +18,11 @@
       "records": "Record in tutte le raccolte e in tutti i tenant di questo prodotto.",
       "audit24h": "Eventi di audit di questo prodotto nelle ultime 24 ore, consentiti e negati.",
       "denied24h": "Richieste delle ultime 24 ore che sono state rifiutate, ad esempio perché mancava un'autorizzazione. Un aumento improvviso indica spesso una chiave API o un ruolo configurati male."
+    },
+    "tenantHints": {
+      "tenants": "Tenant di questo prodotto di cui sei membro.",
+      "users": "Membri dei tuoi tenant, ogni persona contata una volta (solo i tenant in cui puoi vedere i membri).",
+      "records": "Record dei tuoi tenant (solo i tenant in cui puoi leggere i record)."
     }
   },
   "actions": {
@@ -46,5 +51,6 @@
     "modeInfo": "Prodotto singolo: il server gestisce esattamente un prodotto, creato dalla propria configurazione; non è possibile creare o archiviare prodotti. Multiprodotto: gli amministratori della piattaforma creano e archiviano i prodotti. L'operatore imposta la modalità nella configurazione del server.",
     "modulesAbout": "Informazioni sui moduli",
     "modulesInfo": "Blocchi funzionali del server. I moduli verdi sono abilitati; quelli grigi no, e le relative voci nella barra laterale mostrano “Off”. Solo l'operatore del server può abilitare un modulo."
-  }
+  },
+  "tenantScope": "Questi numeri riguardano solo i tenant di cui sei membro. I numeri dell’intero prodotto, come chiavi API ed eventi di audit, richiedono un ruolo di prodotto."
 }

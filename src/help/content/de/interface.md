@@ -147,6 +147,12 @@ API-Schlüssel** (mit `api_keys:manage`).
 | **Audit-Ereignisse (24 h)**    | Audit-Ereignisse dieses Produkts in den letzten 24 Stunden.                                                     |
 | **Abgelehnte Anfragen (24 h)** | Abgelehnte Versuche in den letzten 24 Stunden; öffnet das Audit-Protokoll, gefiltert auf abgelehnte Ereignisse. |
 
+**Mandantenmitglieder sehen nur ihre eigenen Mandanten.** Ohne `tenants:read` auf dem Produkt
+(einfache Mitglieder und Admins von Mandanten) umfassen die Zähler nur die Mandanten, in denen du
+Mitglied bist: **Mandanten** zählt sie, **Benutzer** ihre Mitglieder, **Datensätze** ihre
+Datensätze. **API-Schlüssel**, **Audit-Ereignisse (24 h)** und **Abgelehnte Anfragen (24 h)** sind
+produktweite Zahlen und werden nicht angezeigt; ein Hinweis unter den Zählern sagt das.
+
 > [!TIP]
 > Die Karte **Server** beantwortet die häufigste Support-Frage: „Welche Version läuft, und ist das
 > Modul überhaupt aktiviert?“

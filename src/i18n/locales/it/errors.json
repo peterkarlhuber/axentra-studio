@@ -45,6 +45,10 @@
       "title": "Quota superata",
       "message": "Una quota o un limite del piano di questo tenant è esaurito, quindi il server ha rifiutato l'azione. Libera spazio o riduci l'utilizzo, oppure chiedi a qualcuno con accesso di aumentare la quota o cambiare il piano."
     },
+    "backdating_not_permitted": {
+      "title": "Prima del periodo di fatturazione",
+      "message": "L’attuale periodo di fatturazione di questo tenant è iniziato il {{periodStart, datetime(dateStyle: medium; timeStyle: short)}}. L’utilizzo precedente può essere registrato solo con usage:manage sull’intero prodotto. Registralo con un orario successivo oppure chiedi a chi amministra il prodotto."
+    },
     "mode_not_supported": {
       "title": "Non disponibile in questa modalità",
       "message": "La configurazione del server non consente questa azione qui, ad esempio creare prodotti in modalità a prodotto singolo, modificare un abbonamento gestito da Stripe (modificalo in Stripe) o aprire la casella di prova quando il server invia email reali. Il messaggio del server indica il motivo; solo un operatore può modificare la configurazione."

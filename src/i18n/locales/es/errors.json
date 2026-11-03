@@ -45,6 +45,10 @@
       "title": "Cuota superada",
       "message": "Se ha agotado una cuota o un límite del plan de este inquilino, por lo que el servidor rechazó la acción. Libera espacio o uso, o pide a alguien con acceso que aumente la cuota o cambie el plan."
     },
+    "backdating_not_permitted": {
+      "title": "Antes del periodo de facturación",
+      "message": "El periodo de facturación actual de este inquilino empezó el {{periodStart, datetime(dateStyle: medium; timeStyle: short)}}. El uso anterior solo se puede registrar con usage:manage para todo el producto. Regístralo con una hora posterior o pídeselo a una persona que administre el producto."
+    },
     "mode_not_supported": {
       "title": "No disponible en este modo",
       "message": "La configuración del servidor no permite esta acción aquí, por ejemplo crear productos en el modo de producto único, cambiar una suscripción que gestiona Stripe (cámbiala en Stripe) o abrir el buzón de prueba cuando el servidor envía correos reales. El mensaje del servidor indica el motivo; solo un operador puede cambiar la configuración."

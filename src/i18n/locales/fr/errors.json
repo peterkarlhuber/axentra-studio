@@ -45,6 +45,10 @@
       "title": "Quota dépassé",
       "message": "Un quota ou une limite de l’offre de ce locataire est épuisé, le serveur a donc refusé l’action. Libère de l’espace ou réduis l’utilisation, ou demande à une personne disposant de l’accès nécessaire d’augmenter le quota ou de changer d’offre."
     },
+    "backdating_not_permitted": {
+      "title": "Avant la période de facturation",
+      "message": "La période de facturation actuelle de ce locataire a commencé le {{periodStart, datetime(dateStyle: medium; timeStyle: short)}}. Une utilisation antérieure ne peut être enregistrée qu’avec usage:manage sur tout le produit. Enregistre-la avec une heure plus récente, ou demande à une personne qui administre le produit."
+    },
     "mode_not_supported": {
       "title": "Indisponible dans ce mode",
       "message": "La configuration du serveur ne permet pas cette action ici, par exemple créer des produits en mode produit unique, modifier un abonnement géré par Stripe (modifie-le dans Stripe) ou ouvrir la boîte de test quand le serveur envoie de vrais e-mails. Le message du serveur indique la raison ; seul un opérateur peut modifier la configuration."

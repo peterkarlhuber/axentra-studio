@@ -146,6 +146,12 @@ Ações rápidas no canto superior direito: **Novo tenant** (com `tenants:create
 | **Eventos de auditoria (24 h)** | Eventos de auditoria deste produto nas últimas 24 horas.                                         |
 | **Requisições negadas (24 h)**  | Tentativas recusadas nas últimas 24 horas; abre o log de auditoria filtrado por eventos negados. |
 
+**Membros de tenants veem só os próprios tenants.** Sem `tenants:read` no produto (membros e
+administradores de tenants), os contadores incluem só os tenants dos quais você é membro:
+**Tenants** conta esses tenants, **Usuários** os membros deles e **Registros** os registros deles.
+**Chaves de API**, **Eventos de auditoria (24 h)** e **Requisições negadas (24 h)** são números de
+todo o produto e não aparecem; uma nota abaixo dos contadores avisa isso.
+
 > [!TIP]
 > O cartão **Servidor** responde à pergunta de suporte mais comum: “Qual versão está rodando, e o
 > módulo está mesmo habilitado?”

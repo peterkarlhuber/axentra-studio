@@ -151,6 +151,12 @@ Acciones rápidas arriba a la derecha: **Nuevo inquilino** (con `tenants:create`
 | **Eventos de auditoría (24 h)**  | Eventos de auditoría de este producto en las últimas 24 horas.                                             |
 | **Solicitudes denegadas (24 h)** | Intentos rechazados en las últimas 24 horas; abre el registro de auditoría filtrado por eventos denegados. |
 
+**Los miembros de inquilinos solo ven sus propios inquilinos.** Sin `tenants:read` en el producto
+(miembros y administradores de inquilinos), los contadores solo incluyen los inquilinos de los que
+eres miembro: **Inquilinos** los cuenta, **Usuarios** sus miembros y **Registros** sus registros.
+**Claves de API**, **Eventos de auditoría (24 h)** y **Solicitudes denegadas (24 h)** son cifras de
+todo el producto y no se muestran; una nota debajo de los contadores lo indica.
+
 > [!TIP]
 > La tarjeta **Servidor** responde a la pregunta más habitual del soporte: «¿Qué versión se está
 > ejecutando y está siquiera habilitado el módulo?»

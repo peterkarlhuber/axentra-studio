@@ -17,7 +17,11 @@ export function describeError(t: TFunction, raw: unknown): DescribedError {
   const error = toApiError(raw);
   const key = `errors:codes.${error.code}`;
   const title = t(`${key}.title`, { defaultValue: t('errors:codes.unknown.title') });
-  const message = t(`${key}.message`, { defaultValue: t('errors:codes.unknown.message') });
+  const message = t(`${key}.message`, {
+    defaultValue: t('errors:codes.unknown.message'),
+    // Problem-specific values the message names (formatted by i18next in the UI language).
+    periodStart: error.periodStart ? new Date(error.periodStart) : undefined,
+  });
   return {
     error,
     title,
