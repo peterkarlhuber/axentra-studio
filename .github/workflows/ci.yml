@@ -18,12 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Known vulnerabilities in what ships (runtime dependencies); dev tooling is tracked in
+      # docs/TODO.md.
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run format:check
@@ -39,7 +44,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - name: Read api/BACKEND_REF
         id: ref
         run: |
@@ -48,21 +55,18 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
       - name: Check out peterkarlhuber/axentra at BACKEND_REF
         id: backend
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: peterkarlhuber/axentra
           ref: ${{ steps.ref.outputs.sha }}
           path: .backend
-          # The repository is public today; if it becomes private, add a read-only token as the
-          # secret AXENTRA_REPO_TOKEN (see docs/COMPATIBILITY.md).
-          token: ${{ secrets.AXENTRA_REPO_TOKEN || github.token }}
           persist-credentials: false
       - name: Explain a failed backend checkout
         if: failure() && steps.backend.outcome == 'failure'
         run: |
-          echo "::error::Could not check out peterkarlhuber/axentra@${{ steps.ref.outputs.sha }}. Either the commit in api/BACKEND_REF is not pushed, or the repository is private and the secret AXENTRA_REPO_TOKEN (read access to peterkarlhuber/axentra) is missing or invalid."
+          echo "::error::Could not check out peterkarlhuber/axentra@${{ steps.ref.outputs.sha }}. Is the commit in api/BACKEND_REF pushed to peterkarlhuber/axentra?"
           exit 1
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -93,7 +97,9 @@ jobs:
     env:
       AXENTRA_E2E_PG_URL: postgresql://postgres:pg@127.0.0.1:5432/postgres
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - name: Read api/BACKEND_REF
         id: ref
         run: |
@@ -102,19 +108,18 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
       - name: Check out peterkarlhuber/axentra at BACKEND_REF
         id: backend
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: peterkarlhuber/axentra
           ref: ${{ steps.ref.outputs.sha }}
           path: .backend
-          token: ${{ secrets.AXENTRA_REPO_TOKEN || github.token }}
           persist-credentials: false
       - name: Explain a failed backend checkout
         if: failure() && steps.backend.outcome == 'failure'
         run: |
-          echo "::error::Could not check out peterkarlhuber/axentra@${{ steps.ref.outputs.sha }}. Either the commit in api/BACKEND_REF is not pushed, or the repository is private and the secret AXENTRA_REPO_TOKEN (read access to peterkarlhuber/axentra) is missing or invalid."
+          echo "::error::Could not check out peterkarlhuber/axentra@${{ steps.ref.outputs.sha }}. Is the commit in api/BACKEND_REF pushed to peterkarlhuber/axentra?"
           exit 1
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
           cache: pip
@@ -127,7 +132,7 @@ jobs:
       - name: Backend's committed OpenAPI matches its code
         working-directory: .backend
         run: axentra openapi export --check
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -139,7 +144,7 @@ jobs:
         run: scripts/e2e-backend.sh run --backend .backend --worker --mode ${{ matrix.mode }} -- npx playwright test
       - name: Upload the Playwright report and backend logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: playwright-report-${{ matrix.mode }}
           path: |

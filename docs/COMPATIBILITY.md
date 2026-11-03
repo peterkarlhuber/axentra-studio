@@ -101,10 +101,11 @@ CI (`.github/workflows/ci.yml`):
   created product, single-product with `mode = "single"` and a `[product]` section, the fixtures in
   the product the backend creates on start. The HTML report, traces and backend logs are uploaded
   per mode as `playwright-report-multi` and `playwright-report-single`.
-- The backend repository is public, so the jobs use the workflow token. If it becomes private,
-  add a repository secret `AXENTRA_REPO_TOKEN` with read access to `peterkarlhuber/axentra`
-  (fine-grained token: Contents read-only). Without it the checkout fails and the job stops with an
-  explicit error; it never skips.
+- The backend repository is public; the jobs check it out with the workflow's default token and
+  without persisted credentials. A failed checkout (usually an unpushed `api/BACKEND_REF`) stops
+  the job with an explicit error; it never skips. Every action is pinned by commit SHA (with the
+  version as a comment); Dependabot (`.github/dependabot.yml`) proposes updates weekly. The `check`
+  job also runs `npm audit --omit=dev --audit-level=high`.
 
 ## Moving Studio to a newer backend
 
