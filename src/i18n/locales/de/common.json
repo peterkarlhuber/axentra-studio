@@ -130,6 +130,7 @@
     "lastSeen": "Zuletzt aktiv",
     "expires": "Läuft ab",
     "revoke": "Sitzung beenden",
+    "revokeNamed": "Sitzung auf {{device}} beenden",
     "empty": "Keine aktiven Sitzungen",
     "method": "Anmeldeart"
   },

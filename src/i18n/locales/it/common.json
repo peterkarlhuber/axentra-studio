@@ -131,6 +131,7 @@
     "lastSeen": "Ultima attività",
     "expires": "Scadenza",
     "revoke": "Revoca sessione",
+    "revokeNamed": "Revoca la sessione su {{device}}",
     "empty": "Nessuna sessione attiva",
     "method": "Metodo di accesso"
   },

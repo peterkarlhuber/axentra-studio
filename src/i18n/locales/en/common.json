@@ -130,6 +130,7 @@
     "lastSeen": "Last active",
     "expires": "Expires",
     "revoke": "Revoke session",
+    "revokeNamed": "Revoke the session on {{device}}",
     "empty": "No active sessions",
     "method": "Sign-in method"
   },
