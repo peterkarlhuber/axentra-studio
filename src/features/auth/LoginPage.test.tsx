@@ -96,6 +96,8 @@ describe('LoginPage', () => {
     await user.click(screen.getByRole('button', { name: /sign in/i }));
     await waitFor(() => expect(screen.getByLabelText(/Password/)).toHaveValue(''));
     expect(screen.getByRole('alert')).toBeInTheDocument();
+    // Keyboard users land in the cleared password field, not on <body>.
+    expect(screen.getByLabelText(/Password/)).toHaveFocus();
   });
 
   it('offers OIDC providers as links', async () => {
