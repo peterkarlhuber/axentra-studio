@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Vérifie ta saisie",
-      "message": "Le serveur n’a pas accepté certaines valeurs. Corrige les champs signalés ci-dessous (le message du serveur indique le problème) et réessaie."
+      "message": "Le serveur n’a pas accepté certaines valeurs. Corrige les champs signalés ci-dessous (le message du serveur indique le problème) et réessaie.",
+      "messageNoFields": "Le serveur n’a pas accepté les valeurs. Le message du serveur indique le problème : corrige-le et réessaie."
     },
     "bad_request": {
       "title": "Requête incomprise",

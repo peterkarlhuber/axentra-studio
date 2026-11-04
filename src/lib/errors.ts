@@ -17,7 +17,13 @@ export function describeError(t: TFunction, raw: unknown): DescribedError {
   const error = toApiError(raw);
   const key = `errors:codes.${error.code}`;
   const title = t(`${key}.title`, { defaultValue: t('errors:codes.unknown.title') });
-  const message = t(`${key}.message`, {
+  // "Correct the fields marked below" would point at nothing when the server names no field
+  // (for example a password policy refusal): then the message only points to the server text.
+  const messageKey =
+    error.code === 'validation_failed' && error.errors.length === 0
+      ? `${key}.messageNoFields`
+      : `${key}.message`;
+  const message = t(messageKey, {
     defaultValue: t('errors:codes.unknown.message'),
     // Problem-specific values the message names (formatted by i18next in the UI language).
     periodStart: error.periodStart ? new Date(error.periodStart) : undefined,

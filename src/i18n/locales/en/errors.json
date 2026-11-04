@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Please check your input",
-      "message": "The server did not accept some of the values. Correct the fields marked below (the server message names the problem) and try again."
+      "message": "The server did not accept some of the values. Correct the fields marked below (the server message names the problem) and try again.",
+      "messageNoFields": "The server did not accept the values. The server message names the problem: correct it and try again."
     },
     "bad_request": {
       "title": "Request not understood",

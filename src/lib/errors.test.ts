@@ -54,6 +54,27 @@ describe('describeError', () => {
     expect(fieldErrors(error)).toEqual({ email: 'invalid email', name: 'required' });
   });
 
+  it('does not point to marked fields when the server names none', () => {
+    const withFields = new ApiError({
+      status: 422,
+      code: 'validation_failed',
+      errors: [{ loc: ['body', 'email'], msg: 'invalid email' }],
+    });
+    const withoutFields = new ApiError({
+      status: 422,
+      code: 'validation_failed',
+      detail: 'the password must have at least 12 characters',
+    });
+    expect(describeError(t, withFields).message).toBe(t('errors:codes.validation_failed.message'));
+    expect(describeError(t, withoutFields).message).toBe(
+      t('errors:codes.validation_failed.messageNoFields'),
+    );
+    for (const locale of LOCALES) {
+      const tr = i18n.getFixedT(locale);
+      expect(tr('errors:codes.validation_failed.messageNoFields')).not.toContain('codes.');
+    }
+  });
+
   it('has a translation for every known code in all six languages', () => {
     for (const locale of LOCALES) {
       const tr = i18n.getFixedT(locale);

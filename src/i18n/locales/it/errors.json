@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Verifica i dati inseriti",
-      "message": "Il server non ha accettato alcuni valori. Correggi i campi evidenziati qui sotto (il messaggio del server indica il problema) e riprova."
+      "message": "Il server non ha accettato alcuni valori. Correggi i campi evidenziati qui sotto (il messaggio del server indica il problema) e riprova.",
+      "messageNoFields": "Il server non ha accettato i valori. Il messaggio del server indica il problema: correggilo e riprova."
     },
     "bad_request": {
       "title": "Richiesta non compresa",

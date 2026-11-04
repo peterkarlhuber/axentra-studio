@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Revisa los datos introducidos",
-      "message": "El servidor no aceptó algunos de los valores. Corrige los campos marcados abajo (el mensaje del servidor indica el problema) y vuelve a intentarlo."
+      "message": "El servidor no aceptó algunos de los valores. Corrige los campos marcados abajo (el mensaje del servidor indica el problema) y vuelve a intentarlo.",
+      "messageNoFields": "El servidor no aceptó los valores. El mensaje del servidor indica el problema: corrígelo y vuelve a intentarlo."
     },
     "bad_request": {
       "title": "Solicitud no comprendida",

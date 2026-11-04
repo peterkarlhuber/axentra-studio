@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Verifique os dados informados",
-      "message": "O servidor não aceitou alguns dos valores. Corrija os campos marcados abaixo (a mensagem do servidor indica o problema) e tente novamente."
+      "message": "O servidor não aceitou alguns dos valores. Corrija os campos marcados abaixo (a mensagem do servidor indica o problema) e tente novamente.",
+      "messageNoFields": "O servidor não aceitou os valores. A mensagem do servidor indica o problema: corrija-o e tente novamente."
     },
     "bad_request": {
       "title": "Requisição não compreendida",

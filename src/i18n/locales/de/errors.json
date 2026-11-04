@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Bitte prüfe deine Eingaben",
-      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die unten markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
+      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die unten markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut.",
+      "messageNoFields": "Der Server hat die Werte nicht akzeptiert. Die Servermeldung nennt das Problem: Korrigiere es und versuche es erneut."
     },
     "bad_request": {
       "title": "Anfrage nicht verstanden",
