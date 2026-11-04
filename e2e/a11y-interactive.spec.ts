@@ -1,6 +1,7 @@
 /**
  * Accessibility of interactive states, which the route sweep (e2e/a11y.spec.ts) does not reach:
- * open dialogs and drawers, open menus, toggletips, the help side panel and form error states.
+ * open dialogs and drawers (audit entry, phone navigation), open menus, toggletips, the help side
+ * panel, form error states and an error toast.
  * Each state is checked with axe (WCAG 2.1 A/AA) in the light and the dark theme, on the desktop
  * and the 360 px project, plus "no page-level horizontal scroll" and "focus is inside the open
  * layer". It only opens and validates forms, it never submits anything valid, so it does not
@@ -138,6 +139,64 @@ const scenarios: Scenario[] = [
     },
   },
   {
+    name: 'audit entry drawer',
+    run: async (page) => {
+      await page.goto('/audit');
+      // Setup, sign-ins and the fixtures always leave entries in the platform audit log.
+      await page
+        .getByRole('button', { name: /^Show details for / })
+        .first()
+        .click();
+      const drawer = page.getByRole('dialog');
+      await expect(drawer).toBeVisible();
+      await expect(drawer.getByText('Event ID')).toBeVisible();
+      await expectFocusInside(page, 'dialog');
+      await check(page);
+      await page.keyboard.press('Escape');
+      await expect(drawer).toBeHidden();
+    },
+  },
+  {
+    name: 'navigation drawer on a phone',
+    run: async (page) => {
+      await page.goto(`${product()}/tenants`);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      const open = page.getByRole('button', { name: 'Open navigation' });
+      test.skip(!(await open.isVisible()), 'the sidebar is always shown on wide screens');
+      await open.click();
+      const drawer = page.getByRole('dialog');
+      await expect(drawer.getByRole('link', { name: 'Tenants' })).toBeVisible();
+      await expectFocusInside(page, 'dialog');
+      await check(page);
+      await page.keyboard.press('Escape');
+      await expect(drawer).toBeHidden();
+      await expect(open).toBeFocused();
+      // Navigating from the drawer moves the focus to the new page's heading instead.
+      await open.click();
+      await page.getByRole('dialog').getByRole('link', { name: 'Roles' }).click();
+      await expect(page.getByRole('heading', { level: 1, name: 'Roles' })).toBeFocused();
+    },
+  },
+  {
+    name: 'error toast',
+    run: async (page) => {
+      // A wrong current password is refused (403) without changing anything; the refusal is
+      // reported in a toast with the server's explanation.
+      await page.goto('/profile');
+      await page.getByRole('textbox', { name: /^Current password/ }).fill('not-the-password');
+      await page.getByRole('textbox', { name: /^New password/ }).fill('abcdefghijklmnop-a11y');
+      await page
+        .getByRole('textbox', { name: /^Repeat new password/ })
+        .fill('abcdefghijklmnop-a11y');
+      await page.getByRole('button', { name: 'Change password' }).click();
+      const toast = page
+        .getByRole('region', { name: /Notifications/ })
+        .getByText(/the current password is wrong/);
+      await expect(toast).toBeVisible();
+      await check(page);
+    },
+  },
+  {
     name: 'search form error state',
     run: async (page) => {
       test.skip(!(process.env.AXENTRA_E2E_MODULES ?? '').includes('search'), 'module search off');
@@ -155,7 +214,8 @@ for (const theme of ['light', 'dark'] as const) {
     for (const scenario of scenarios) {
       test(scenario.name, async ({ page }) => {
         await signInApi(page.request);
-        const console = trackConsoleErrors(page, [/status of (409|422)/]);
+        // 403: the error toast scenario sends a wrong current password on purpose.
+        const console = trackConsoleErrors(page, [/status of (403|409|422)/]);
         await scenario.run(page);
         console.assertNone();
       });
