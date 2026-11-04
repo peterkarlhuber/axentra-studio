@@ -233,6 +233,9 @@ test('webhooks: endpoint with a one-time secret, test ping, failing deliveries a
   page,
   baseURL,
 }) => {
+  // Waits up to 40 s for a delivery to end as dead (worker retries), longer than the default
+  // 30 s test timeout on its own; on a slow runner the whole test needs more time.
+  test.slow();
   const ok = await startReceiver(200);
   const failing = await startReceiver(500);
   try {
