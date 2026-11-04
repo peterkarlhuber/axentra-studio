@@ -81,9 +81,12 @@ immédiatement. Ses adhésions, son rôle sur la plateforme et son historique d�
 l’accès précédent.
 
 > [!WARNING]
-> Les clés d’API créées par un utilisateur appartiennent au produit, pas à l’utilisateur, et continuent de fonctionner après
-> la désactivation de celui-ci. Quand quelqu’un part, vérifie et révoque aussi les clés qu’il a mises en place. Consulte les
-> [clés d’API](help:api-keys#revoke).
+> Les clés d’API créées par un utilisateur cessent de fonctionner dès qu’il est désactivé ou perd
+> les autorisations que les clés utilisent : les requêtes sont refusées avec
+> `api_key_creator_lost_access` (consulte les [clés d’API](help:api-keys#creator-permissions)). Les
+> clés ne sont pas révoquées et fonctionnent de nouveau si l’accès est rétabli. Quand quelqu’un
+> part, crée des clés de remplacement en tant que quelqu’un qui reste, bascule les services dessus
+> et révoque les anciennes clés.
 
 Tu ne peux pas te désactiver toi-même, et le dernier administrateur actif de la plateforme ne peut pas être désactivé.
 

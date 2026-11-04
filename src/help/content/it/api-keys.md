@@ -161,12 +161,12 @@ autorizzazioni attuali della persona che le ha create (vedi la sezione successiv
 ### Le chiavi dipendono dalle autorizzazioni del loro creatore {#creator-permissions}
 
 Una chiave funziona solo finché la persona che l'ha creata ha ancora le autorizzazioni che la chiave
-usa. Il server lo verifica a ogni richiesta: se il ruolo di quella persona è cambiato o è stata
-rimossa dal prodotto, una richiesta che ha bisogno di un'autorizzazione che non ha più viene
-rifiutata con `403 api_key_creator_lost_access`, e la risposta indica quell'autorizzazione in
-`permission`. L'elenco delle chiavi mostra comunque la chiave come **Attivo**. Restituisci
-l'autorizzazione a quella persona, oppure crea una nuova chiave come qualcuno che la possiede, passa
-i tuoi servizi alla nuova chiave e revoca quella vecchia.
+usa. Il server lo verifica a ogni richiesta: se il ruolo di quella persona è cambiato, se è stata
+rimossa dal prodotto o se il suo account è stato disattivato, una richiesta che ha bisogno di
+un'autorizzazione che non ha più viene rifiutata con `403 api_key_creator_lost_access`, e la
+risposta indica quell'autorizzazione in `permission`. L'elenco delle chiavi mostra comunque la
+chiave come **Attivo**. Restituisci l'autorizzazione a quella persona, oppure crea una nuova chiave
+come qualcuno che la possiede, passa i tuoi servizi alla nuova chiave e revoca quella vecchia.
 
 Studio stesso non viene mai rifiutato in questo modo: usa la tua sessione utente, non una chiave.
 

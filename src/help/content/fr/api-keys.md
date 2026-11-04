@@ -155,12 +155,12 @@ limites des autorisations actuelles de la personne qui les a créées (voir la s
 ### Les clés dépendent des autorisations de leur créateur {#creator-permissions}
 
 Une clé ne fonctionne que tant que la personne qui l’a créée détient encore les autorisations que la
-clé utilise. Le serveur le vérifie à chaque requête : si le rôle de cette personne a changé ou si
-elle a été retirée du produit, une requête qui a besoin d’une autorisation qu’elle ne détient plus
-est refusée avec `403 api_key_creator_lost_access`, et la réponse nomme cette autorisation dans
-`permission`. La liste des clés affiche toujours une telle clé comme **Actif**. Redonne
-l’autorisation à cette personne, ou crée une nouvelle clé en tant que quelqu’un qui la détient,
-bascule tes services dessus et révoque l’ancienne clé.
+clé utilise. Le serveur le vérifie à chaque requête : si le rôle de cette personne a changé, si elle
+a été retirée du produit ou si son compte a été désactivé, une requête qui a besoin d’une
+autorisation qu’elle ne détient plus est refusée avec `403 api_key_creator_lost_access`, et la
+réponse nomme cette autorisation dans `permission`. La liste des clés affiche toujours une telle clé
+comme **Actif**. Redonne l’autorisation à cette personne, ou crée une nouvelle clé en tant que
+quelqu’un qui la détient, bascule tes services dessus et révoque l’ancienne clé.
 
 Studio lui-même n’est jamais refusé ainsi : il utilise ta session utilisateur, pas une clé.
 

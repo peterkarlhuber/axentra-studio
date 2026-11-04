@@ -28,7 +28,7 @@
     "disable": "Disable user",
     "enable": "Enable user",
     "disableTitle": "Disable user?",
-    "disableBody": "{{name}} can no longer sign in and all sessions end immediately. Memberships stay, and API keys the user created keep working.",
+    "disableBody": "{{name}} can no longer sign in and all sessions end immediately. Memberships stay. API keys the user created stop working until the user is enabled again.",
     "disabled": "User disabled",
     "enabled": "User enabled",
     "disabledNotice": "This user is disabled and cannot sign in.",

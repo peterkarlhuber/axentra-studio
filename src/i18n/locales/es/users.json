@@ -28,7 +28,7 @@
     "disable": "Desactivar usuario",
     "enable": "Activar usuario",
     "disableTitle": "¿Desactivar usuario?",
-    "disableBody": "{{name}} ya no podrá iniciar sesión y todas sus sesiones terminan de inmediato. Las membresías se mantienen y las claves de API que creó el usuario siguen funcionando.",
+    "disableBody": "{{name}} ya no podrá iniciar sesión y todas sus sesiones terminan de inmediato. Las membresías se mantienen. Las claves de API que creó el usuario dejan de funcionar hasta que se vuelva a activar.",
     "disabled": "Usuario desactivado",
     "enabled": "Usuario activado",
     "disabledNotice": "Este usuario está desactivado y no puede iniciar sesión.",

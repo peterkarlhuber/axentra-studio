@@ -164,11 +164,12 @@ der aktuellen Berechtigungen der Person, die sie erstellt hat (siehe nächster A
 
 Ein Schlüssel funktioniert nur, solange die Person, die ihn erstellt hat, die Berechtigungen noch
 besitzt, die der Schlüssel verwendet. Der Server prüft das bei jeder Anfrage: Wurde die Rolle der
-Person geändert oder wurde sie aus dem Produkt entfernt, wird eine Anfrage, die eine nicht mehr
-vorhandene Berechtigung braucht, mit `403 api_key_creator_lost_access` abgelehnt; die Antwort nennt
-diese Berechtigung im Feld `permission`. Die Schlüsselliste zeigt einen solchen Schlüssel weiterhin
-als **Aktiv**. Gib der Person die Berechtigung zurück, oder erstelle einen neuen Schlüssel als
-jemand, der sie besitzt, stelle deine Dienste um und widerrufe den alten Schlüssel.
+Person geändert, wurde sie aus dem Produkt entfernt oder ihr Konto deaktiviert, wird eine Anfrage,
+die eine nicht mehr vorhandene Berechtigung braucht, mit `403 api_key_creator_lost_access`
+abgelehnt; die Antwort nennt diese Berechtigung im Feld `permission`. Die Schlüsselliste zeigt einen
+solchen Schlüssel weiterhin als **Aktiv**. Gib der Person die Berechtigung zurück, oder erstelle
+einen neuen Schlüssel als jemand, der sie besitzt, stelle deine Dienste um und widerrufe den alten
+Schlüssel.
 
 Studio selbst wird so nie abgelehnt: Es verwendet deine Benutzersitzung, keinen Schlüssel.
 

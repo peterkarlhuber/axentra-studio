@@ -78,6 +78,10 @@ describe('UserDetailPage', () => {
     renderPage();
     await user.click(await screen.findByRole('button', { name: 'Disable user' }));
     const dialog = await screen.findByRole('dialog', { name: 'Disable user?' });
+    // Axentra AX3-01: a disabled user's API keys are refused until the user is enabled again.
+    expect(
+      within(dialog).getByText(/API keys the user created stop working until the user is enabled/),
+    ).toBeInTheDocument();
     const confirm = within(dialog).getByRole('button', { name: 'Disable user' });
     expect(confirm).toBeDisabled();
     await user.type(

@@ -82,9 +82,11 @@ immediately. Memberships, platform role and audit history stay, so **Enable user
 previous access.
 
 > [!WARNING]
-> API keys a user created belong to the product, not to the user, and keep working after the
-> user is disabled. When someone leaves, also review and revoke the keys they set up. See
-> [API keys](help:api-keys#revoke).
+> API keys a user created stop working as soon as the user is disabled or loses the permissions the
+> keys use: requests are refused with `api_key_creator_lost_access` (see [API
+> keys](help:api-keys#creator-permissions)). The keys are not revoked and work again if the access
+> comes back. When someone leaves, create replacement keys as someone who stays, switch the services
+> over and revoke the old keys.
 
 You cannot disable yourself, and the last active platform administrator cannot be disabled.
 

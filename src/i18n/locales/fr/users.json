@@ -28,7 +28,7 @@
     "disable": "Désactiver l’utilisateur",
     "enable": "Activer l’utilisateur",
     "disableTitle": "Désactiver l’utilisateur ?",
-    "disableBody": "{{name}} ne peut plus se connecter et toutes ses sessions prennent fin immédiatement. Les adhésions restent, et les clés d’API créées par cet utilisateur continuent de fonctionner.",
+    "disableBody": "{{name}} ne peut plus se connecter et toutes ses sessions prennent fin immédiatement. Les adhésions restent. Les clés d’API créées par cet utilisateur cessent de fonctionner jusqu’à ce qu’il soit réactivé.",
     "disabled": "Utilisateur désactivé",
     "enabled": "Utilisateur activé",
     "disabledNotice": "Cet utilisateur est désactivé et ne peut pas se connecter.",

@@ -28,7 +28,7 @@
     "disable": "Desabilitar usuário",
     "enable": "Habilitar usuário",
     "disableTitle": "Desabilitar usuário?",
-    "disableBody": "{{name}} não pode mais entrar, e todas as sessões terminam imediatamente. As associações permanecem, e as chaves de API criadas pelo usuário continuam funcionando.",
+    "disableBody": "{{name}} não pode mais entrar, e todas as sessões terminam imediatamente. As associações permanecem. As chaves de API criadas pelo usuário deixam de funcionar até que ele seja habilitado novamente.",
     "disabled": "Usuário desabilitado",
     "enabled": "Usuário habilitado",
     "disabledNotice": "Este usuário está desabilitado e não pode entrar.",

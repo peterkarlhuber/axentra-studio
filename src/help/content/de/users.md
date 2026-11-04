@@ -84,9 +84,12 @@ seine Sitzungen enden sofort. Mitgliedschaften, Plattformrolle und Audit-Verlauf
 sodass **Benutzer aktivieren** den bisherigen Zugriff wiederherstellt.
 
 > [!WARNING]
-> API-Schlüssel, die ein Benutzer erstellt hat, gehören zum Produkt, nicht zum Benutzer, und
-> funktionieren auch nach der Deaktivierung weiter. Wenn jemand ausscheidet, prüfe und widerrufe auch
-> die Schlüssel, die diese Person eingerichtet hat. Siehe [API-Schlüssel](help:api-keys#revoke).
+> API-Schlüssel, die ein Benutzer erstellt hat, funktionieren nicht mehr, sobald er deaktiviert wird
+> oder die Berechtigungen verliert, die die Schlüssel verwenden: Anfragen werden mit
+> `api_key_creator_lost_access` abgelehnt (siehe
+> [API-Schlüssel](help:api-keys#creator-permissions)). Die Schlüssel werden nicht widerrufen und
+> funktionieren wieder, wenn der Zugriff zurückkommt. Wenn jemand ausscheidet, erstelle
+> Ersatzschlüssel als jemand, der bleibt, stelle die Dienste um und widerrufe die alten Schlüssel.
 
 Du kannst dich nicht selbst deaktivieren, und der letzte aktive Plattform-Administrator kann nicht
 deaktiviert werden.

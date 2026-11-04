@@ -28,7 +28,7 @@
     "disable": "Disattiva utente",
     "enable": "Attiva utente",
     "disableTitle": "Disattivare l'utente?",
-    "disableBody": "{{name}} non potrà più accedere e tutte le sessioni terminano subito. Le appartenenze restano e le chiavi API create dall'utente continuano a funzionare.",
+    "disableBody": "{{name}} non potrà più accedere e tutte le sessioni terminano subito. Le appartenenze restano. Le chiavi API create dall'utente smettono di funzionare finché non viene riattivato.",
     "disabled": "Utente disattivato",
     "enabled": "Utente attivato",
     "disabledNotice": "Questo utente è disattivato e non può accedere.",
