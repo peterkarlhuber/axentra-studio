@@ -97,9 +97,12 @@ qu’avant, et le statut passe à **Actif** sur la page du locataire et dans la 
 d’audit enregistre la modification sous `tenancy.tenant.update` avec l’ancien et le nouveau statut.
 
 Tant que le locataire est suspendu, ses onglets **Membres** et **Invitations** affichent
-**Indisponible tant que le locataire est suspendu** au lieu de leurs listes, car le serveur garde les
-données du locataire fermées. Les personnes sans `tenants:update` (par exemple les lecteurs ou le
-support du produit) voient le bandeau, mais pas l’action **Réactiver le locataire**.
+**Indisponible tant que le locataire est suspendu** au lieu de leurs listes, car le serveur garde
+les données du locataire fermées. Les personnes sans `tenants:update` (par exemple les lecteurs ou
+le support du produit) voient le bandeau, mais pas l’action **Réactiver le locataire**. Les autres
+pages contenant des données du locataire (son abonnement, ses invitations, enregistrements,
+fichiers, la recherche et la consommation) affichent le même message avec le bouton **Ouvrir le
+locataire**, qui mène ici.
 
 ## Supprimer un locataire {#delete}
 

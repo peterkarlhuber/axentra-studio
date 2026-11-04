@@ -195,7 +195,12 @@ export function ApiKeysPage() {
     <div className={layout.stack}>
       <PageHeader
         title={t('keys.title')}
-        description={t('keys.description')}
+        description={
+          <>
+            {t('keys.description')} {t('keys.creatorHint')}{' '}
+            <HelpLink topic="api-keys#creator-permissions">{t('common:help.learnMore')}</HelpLink>
+          </>
+        }
         help="api-keys"
         actions={
           canManage ? (

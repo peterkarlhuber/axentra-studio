@@ -9,7 +9,7 @@ import styles from './RouteErrorBoundary.module.css';
 export function RouteErrorBoundary() {
   const { t } = useTranslation();
   const error = useRouteError();
-  if (isApiError(error)) return <ErrorState error={error} />;
+  if (isApiError(error)) return <ErrorState error={error} headingLevel={1} />;
   const status = isRouteErrorResponse(error) ? error.status : undefined;
   return (
     <div className={styles.wrapper} role="alert">

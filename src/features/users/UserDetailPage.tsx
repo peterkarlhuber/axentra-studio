@@ -63,7 +63,8 @@ export function UserDetailPage() {
       </div>
     );
   }
-  if (user.isError) return <ErrorState error={user.error} onRetry={() => void user.refetch()} />;
+  if (user.isError)
+    return <ErrorState error={user.error} onRetry={() => void user.refetch()} headingLevel={1} />;
 
   const data = user.data;
   const isSelf = session?.user.id === data.id;

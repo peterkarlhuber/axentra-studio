@@ -77,6 +77,26 @@ afterEach(() => {
   setCsrfToken(null);
 });
 
+describe('ApiKeysPage header', () => {
+  it('says that a key depends on its creator and links to the explanation', async () => {
+    api();
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    expect(
+      await screen.findByText(
+        /A key works only as long as the person who created it still holds the permissions it uses\./,
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen
+        .getAllByRole('link', { name: 'Learn more' })
+        .some((link) => link.getAttribute('href')?.includes('creator-permissions')),
+    ).toBe(true);
+  });
+});
+
 describe('expiryFor', () => {
   const now = new Date(2026, 10, 2, 15, 30); // 2 Nov 2026, 15:30 local
 

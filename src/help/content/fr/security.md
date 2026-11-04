@@ -163,8 +163,9 @@ pratiques :
 - **Renouvelle régulièrement** avec **Renouveler le secret**. Un délai de grâce (jusqu’à 7 jours)
   maintient l’ancien secret valide pendant que tu mets à jour les services.
 - **Révoque les clés dont tu n’as plus besoin.** Révoquer une clé révoque aussi toutes les clés
-  créées avec elle. Les clés créées par une personne appartiennent au produit, pas à la personne :
-  lorsque quelqu’un part, vérifie et révoque les clés qu’il a configurées.
+  créées avec elle. Les clés créées par une personne ne fonctionnent que tant que cette personne
+  garde les autorisations qu’elles utilisent ([détails](help:api-keys#creator-permissions)) :
+  lorsque quelqu’un part, remplace les clés qu’il a configurées et révoque les anciennes.
 - Surveille la colonne **Dernière utilisation** : une clé jamais utilisée peut disparaître ; une
   clé utilisée de façon inattendue mérite un coup d’œil dans le [journal d’audit](help:audit).
 

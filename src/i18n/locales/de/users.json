@@ -28,7 +28,7 @@
     "disable": "Benutzer deaktivieren",
     "enable": "Benutzer aktivieren",
     "disableTitle": "Benutzer deaktivieren?",
-    "disableBody": "{{name}} kann sich nicht mehr anmelden und alle Sitzungen enden sofort. Mitgliedschaften bleiben bestehen, und API-Schlüssel, die die Person angelegt hat, funktionieren weiter.",
+    "disableBody": "{{name}} kann sich nicht mehr anmelden und alle Sitzungen enden sofort. Mitgliedschaften bleiben bestehen. API-Schlüssel, die die Person angelegt hat, funktionieren nicht mehr, bis sie wieder aktiviert wird.",
     "disabled": "Benutzer deaktiviert",
     "enabled": "Benutzer aktiviert",
     "disabledNotice": "Dieser Benutzer ist deaktiviert und kann sich nicht anmelden.",

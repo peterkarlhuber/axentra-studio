@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Verifica i dati inseriti",
-      "message": "Il server non ha accettato alcuni valori. Correggi i campi evidenziati qui sotto (il messaggio del server indica il problema) e riprova."
+      "message": "Il server non ha accettato alcuni valori. Correggi i campi evidenziati qui sotto (il messaggio del server indica il problema) e riprova.",
+      "messageNoFields": "Il server non ha accettato i valori. Il messaggio del server indica il problema: correggilo e riprova."
     },
     "bad_request": {
       "title": "Richiesta non compresa",
@@ -100,6 +101,11 @@
     "email_taken": {
       "title": "Indirizzo email già in uso",
       "message": "Un altro account usa già questo indirizzo email. Usa un altro indirizzo oppure accedi con l'account esistente."
+    },
+    "api_key_creator_lost_access": {
+      "title": "Chiave API rifiutata: il suo creatore ha perso un'autorizzazione",
+      "message": "La chiave API è stata rifiutata perché la persona che l'ha creata non ha più l'autorizzazione {{permission}}. Una chiave funziona solo finché il suo creatore ha ancora le autorizzazioni che usa. Restituisci l'autorizzazione a quella persona, oppure crea una nuova chiave come qualcuno che la possiede e revoca quella vecchia.",
+      "messageNoPermission": "La chiave API è stata rifiutata perché la persona che l'ha creata non ha più un'autorizzazione necessaria per questa richiesta. Una chiave funziona solo finché il suo creatore ha ancora le autorizzazioni che usa. Restituisci l'autorizzazione a quella persona, oppure crea una nuova chiave come qualcuno che la possiede e revoca quella vecchia."
     }
   }
 }

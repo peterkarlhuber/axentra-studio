@@ -5,6 +5,7 @@ import { useCan } from '@/app/auth';
 import { useProductScope } from '@/app/contexts';
 import { Card, EmptyState, PageHeader, layout } from '@/components/ui';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { SuspendedTenantGate } from './SuspendedTenantGate';
 import { InvitationsPanel } from './InvitationsPanel';
 
 /** Invitations are tenant-scoped in the API; pick a tenant first. */
@@ -32,11 +33,18 @@ export function InvitationsPage() {
             />
           </div>
           {tenantId ? (
-            <InvitationsPanel
+            <SuspendedTenantGate
               productId={productId}
               tenantId={tenantId}
-              canManage={can('members:manage', { tenantId })}
-            />
+              permission="members:read"
+              bare
+            >
+              <InvitationsPanel
+                productId={productId}
+                tenantId={tenantId}
+                canManage={can('members:manage', { tenantId })}
+              />
+            </SuspendedTenantGate>
           ) : (
             <EmptyState
               compact

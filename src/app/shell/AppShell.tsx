@@ -1,6 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { CircleHelp, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation, useParams } from 'react-router';
 import { IconButton, Tooltip } from '@/components/ui';
@@ -22,6 +22,9 @@ export function AppShell() {
   const productId = params.productId ?? lastProductId;
   const [collapsed, setCollapsed] = useState(() => readPreference('sidebarCollapsed') === '1');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  // The path the drawer was opened on: closing it there returns the focus to the menu button.
+  const drawerOpenedOn = useRef<string | null>(null);
 
   useAdoptServerPreferences();
 
@@ -51,7 +54,18 @@ export function AppShell() {
       <RadixDialog.Root open={drawerOpen} onOpenChange={setDrawerOpen}>
         <RadixDialog.Portal>
           <RadixDialog.Overlay className={styles.drawerOverlay} />
-          <RadixDialog.Content className={styles.drawer} aria-describedby={undefined}>
+          <RadixDialog.Content
+            className={styles.drawer}
+            aria-describedby={undefined}
+            onCloseAutoFocus={(event) => {
+              // The menu button is not a Radix trigger, so Radix would leave the focus on <body>.
+              // After a navigation the route focus moves it to the new page's heading instead.
+              event.preventDefault();
+              const openedOn = drawerOpenedOn.current;
+              drawerOpenedOn.current = null;
+              if (openedOn === window.location.pathname) menuButton.current?.focus();
+            }}
+          >
             <RadixDialog.Title className="ax-sr-only">{t('main')}</RadixDialog.Title>
             <Sidebar
               productId={productId}
@@ -76,9 +90,13 @@ export function AppShell() {
         <header className={topbar.topbar}>
           <IconButton
             className={topbar.menuButton}
+            ref={menuButton}
             label={t('openMenu')}
             icon={<Menu />}
-            onClick={() => setDrawerOpen(true)}
+            onClick={() => {
+              drawerOpenedOn.current = pathname;
+              setDrawerOpen(true);
+            }}
             aria-expanded={drawerOpen}
             showTooltip={false}
           />

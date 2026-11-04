@@ -146,8 +146,9 @@ If a secret is lost, it cannot be recovered: [rotate the API key](help:api-keys)
 - **Rotate regularly** with **Rotate secret**. A grace period (up to 7 days) keeps the old secret
   working while you update the services.
 - **Revoke keys you no longer need.** Revoking a key also revokes every key that was created with
-  it. Keys created by a person belong to the product, not to the person: when someone leaves,
-  check and revoke the keys they set up.
+  it. Keys created by a person work only while that person keeps the permissions they use
+  ([details](help:api-keys#creator-permissions)): when someone leaves, replace the keys they set up
+  and revoke the old ones.
 - Watch the **Last used** column: a key that is never used can go; a key used unexpectedly
   deserves a look in the [audit log](help:audit).
 

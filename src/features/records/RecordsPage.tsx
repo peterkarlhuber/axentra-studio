@@ -34,6 +34,7 @@ import clsx from '@/lib/clsx';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { SuspendedTenantGate } from '@/features/tenants/SuspendedTenantGate';
 import { HelpLink } from '@/help/HelpLink';
 import { RecordEditorDialog } from './RecordEditorDialog';
 import { parseFilterValue, previewData, validCollectionName } from './records-utils';
@@ -166,13 +167,19 @@ export function RecordsPage() {
             </div>
           </Card>
           {tenantId && collection ? (
-            <RecordList
-              key={`${tenantId}:${collection}`}
+            <SuspendedTenantGate
               productId={productId}
               tenantId={tenantId}
-              collection={collection}
-              canWrite={canWrite}
-            />
+              permission="records:read"
+            >
+              <RecordList
+                key={`${tenantId}:${collection}`}
+                productId={productId}
+                tenantId={tenantId}
+                collection={collection}
+                canWrite={canWrite}
+              />
+            </SuspendedTenantGate>
           ) : (
             <Card>
               <EmptyState

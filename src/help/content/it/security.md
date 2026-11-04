@@ -153,8 +153,9 @@ pratiche:
 - **Ruota regolarmente** con **Ruota segreto**. Un periodo di tolleranza (fino a 7 giorni) mantiene
   valido il vecchio segreto mentre aggiorni i servizi.
 - **Revoca le chiavi che non ti servono più.** Revocare una chiave revoca anche tutte le chiavi
-  create con essa. Le chiavi create da una persona appartengono al prodotto, non alla persona:
-  quando qualcuno se ne va, controlla e revoca le chiavi che ha configurato.
+  create con essa. Le chiavi create da una persona funzionano solo finché quella persona mantiene le
+  autorizzazioni che usano ([dettagli](help:api-keys#creator-permissions)): quando qualcuno se ne
+  va, sostituisci le chiavi che ha configurato e revoca quelle vecchie.
 - Tieni d'occhio la colonna **Ultimo utilizzo**: una chiave mai usata si può eliminare; una chiave
   usata in modo inatteso merita un controllo nel [registro di audit](help:audit).
 

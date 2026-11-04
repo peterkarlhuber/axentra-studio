@@ -147,9 +147,10 @@ rotacione o [segredo do webhook](help:webhooks) ou crie um novo convite.
 - **Guarde os segredos em um gerenciador de segredos**, nunca no código-fonte, em tickets ou no chat.
 - **Rotacione regularmente** com **Rotacionar segredo**. Um período de carência (de até 7 dias)
   mantém o segredo antigo funcionando enquanto você atualiza os serviços.
-- **Revogue as chaves de que você não precisa mais.** Revogar uma chave também revoga todas as chaves
-  criadas com ela. Chaves criadas por uma pessoa pertencem ao produto, não à pessoa: quando alguém
-  sai, verifique e revogue as chaves que essa pessoa configurou.
+- **Revogue as chaves de que você não precisa mais.** Revogar uma chave também revoga todas as
+  chaves criadas com ela. Chaves criadas por uma pessoa só funcionam enquanto essa pessoa mantiver
+  as permissões que elas usam ([detalhes](help:api-keys#creator-permissions)): quando alguém sai,
+  substitua as chaves que essa pessoa configurou e revogue as antigas.
 - Fique de olho na coluna **Último uso**: uma chave que nunca é usada pode ser removida; uma chave
   usada de forma inesperada merece uma olhada no [log de auditoria](help:audit).
 

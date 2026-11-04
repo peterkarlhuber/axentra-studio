@@ -7,7 +7,8 @@
   "codes": {
     "validation_failed": {
       "title": "Bitte prüfe deine Eingaben",
-      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die unten markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut."
+      "message": "Der Server hat einige Werte nicht akzeptiert. Korrigiere die unten markierten Felder (die Servermeldung nennt das Problem) und versuche es erneut.",
+      "messageNoFields": "Der Server hat die Werte nicht akzeptiert. Die Servermeldung nennt das Problem: Korrigiere es und versuche es erneut."
     },
     "bad_request": {
       "title": "Anfrage nicht verstanden",
@@ -100,6 +101,11 @@
     "email_taken": {
       "title": "E-Mail-Adresse wird verwendet",
       "message": "Ein anderes Konto verwendet diese E-Mail-Adresse bereits. Nimm eine andere Adresse oder melde dich mit dem bestehenden Konto an."
+    },
+    "api_key_creator_lost_access": {
+      "title": "API-Schlüssel abgelehnt: Dem Ersteller fehlt eine Berechtigung",
+      "message": "Der API-Schlüssel wurde abgelehnt, weil die Person, die ihn erstellt hat, die Berechtigung {{permission}} nicht mehr besitzt. Ein Schlüssel funktioniert nur, solange sein Ersteller die Berechtigungen noch besitzt, die er verwendet. Gib der Person die Berechtigung zurück, oder erstelle einen neuen Schlüssel als jemand, der sie besitzt, und widerrufe den alten.",
+      "messageNoPermission": "Der API-Schlüssel wurde abgelehnt, weil die Person, die ihn erstellt hat, eine für diese Anfrage nötige Berechtigung nicht mehr besitzt. Ein Schlüssel funktioniert nur, solange sein Ersteller die Berechtigungen noch besitzt, die er verwendet. Gib der Person die Berechtigung zurück, oder erstelle einen neuen Schlüssel als jemand, der sie besitzt, und widerrufe den alten."
     }
   }
 }

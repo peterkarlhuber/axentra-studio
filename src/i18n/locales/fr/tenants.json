@@ -146,5 +146,10 @@
     "title": "Indisponible tant que le locataire est suspendu",
     "body": "Les membres et les invitations d’un locataire suspendu ne peuvent être ni consultés ni modifiés. Un propriétaire ou un administrateur du produit peut réactiver le locataire.",
     "bodyCanReactivate": "Les membres et les invitations d’un locataire suspendu ne peuvent être ni consultés ni modifiés. Réactive le locataire pour les gérer de nouveau."
+  },
+  "suspendedPage": {
+    "body": "« {{name}} » est suspendu : ses données ne peuvent donc pas être ouvertes ici. Aucune donnée n’a été supprimée.",
+    "canReactivate": "Réactive le locataire depuis sa page pour rouvrir ses données.",
+    "openTenant": "Ouvrir le locataire"
   }
 }

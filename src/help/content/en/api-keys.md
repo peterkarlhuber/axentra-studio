@@ -147,9 +147,21 @@ A service whose key holds `api_keys:manage` can create further keys through the 
   expiry is refused;
 - are revoked together with it (see [revoke](#revoke)), but not on rotation.
 
-Keys created in Studio are created by your user account, not by a key, so these rules do not
-apply to them. Keys belong to the product, not to the person who created them: they keep working
-when that person leaves or is disabled.
+Keys created in Studio are created by your user account, not by a key, so these rules do not apply
+to them. Keys belong to the product, but they act only within the current permissions of the person
+who created them (see the next section).
+
+### Keys depend on their creator's permissions {#creator-permissions}
+
+A key works only as long as the person who created it still holds the permissions the key uses. The
+server checks this on every request: if the creator's role was changed, they were removed from the
+product or their account was disabled, a request that needs a permission they no longer hold is
+refused with `403 api_key_creator_lost_access`, and the response names that permission in
+`permission`. The key list still shows such a key as **Active**. Give the creator the permission
+again, or create a new key as someone who holds it, switch your services over and revoke the old
+key.
+
+Studio itself is never refused this way: it uses your user session, not a key.
 
 ## Good to know {#good-to-know}
 

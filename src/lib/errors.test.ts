@@ -54,6 +54,58 @@ describe('describeError', () => {
     expect(fieldErrors(error)).toEqual({ email: 'invalid email', name: 'required' });
   });
 
+  it('does not point to marked fields when the server names none', () => {
+    const withFields = new ApiError({
+      status: 422,
+      code: 'validation_failed',
+      errors: [{ loc: ['body', 'email'], msg: 'invalid email' }],
+    });
+    const withoutFields = new ApiError({
+      status: 422,
+      code: 'validation_failed',
+      detail: 'the password must have at least 12 characters',
+    });
+    expect(describeError(t, withFields).message).toBe(t('errors:codes.validation_failed.message'));
+    expect(describeError(t, withoutFields).message).toBe(
+      t('errors:codes.validation_failed.messageNoFields'),
+    );
+    for (const locale of LOCALES) {
+      const tr = i18n.getFixedT(locale);
+      expect(tr('errors:codes.validation_failed.messageNoFields')).not.toContain('codes.');
+    }
+  });
+
+  it('names the permission an API key lost through its creator', () => {
+    const response = new Response(null, { status: 403 });
+    const error = problemToError(
+      {
+        status: 403,
+        code: 'api_key_creator_lost_access',
+        detail: 'the key creator no longer holds records:write',
+        permission: 'records:write',
+      },
+      response,
+    );
+    expect(error.isForbidden).toBe(true);
+    expect(error.permission).toBe('records:write');
+    const described = describeError(t, error);
+    expect(described.title).toBe('API key refused: its creator lost a permission');
+    expect(described.message).toContain('the permission records:write');
+    for (const locale of LOCALES) {
+      const tr = i18n.getFixedT(locale);
+      expect(describeError(tr, error).message).toContain('records:write');
+    }
+    // Without the field (older or unexpected answers) the message does not show a placeholder.
+    const withoutField = describeError(
+      t,
+      new ApiError({ status: 403, code: 'api_key_creator_lost_access' }),
+    );
+    expect(withoutField.message).toBe(
+      t('errors:codes.api_key_creator_lost_access.messageNoPermission'),
+    );
+    expect(withoutField.message).not.toContain('{{');
+  });
+
   it('has a translation for every known code in all six languages', () => {
     for (const locale of LOCALES) {
       const tr = i18n.getFixedT(locale);

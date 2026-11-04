@@ -146,5 +146,10 @@
     "title": "No disponible mientras el inquilino esté suspendido",
     "body": "Los miembros y las invitaciones de un inquilino suspendido no se pueden ver ni cambiar. Un propietario o administrador del producto puede reactivar el inquilino.",
     "bodyCanReactivate": "Los miembros y las invitaciones de un inquilino suspendido no se pueden ver ni cambiar. Reactiva el inquilino para volver a gestionarlos."
+  },
+  "suspendedPage": {
+    "body": "“{{name}}” está suspendido, por lo que sus datos no se pueden abrir aquí. No se ha eliminado ningún dato.",
+    "canReactivate": "Reactiva el inquilino en su página para volver a abrir sus datos.",
+    "openTenant": "Abrir el inquilino"
   }
 }

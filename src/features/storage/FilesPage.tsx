@@ -33,6 +33,7 @@ import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { useDebouncedValue } from '@/lib/useDebouncedValue';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { SuspendedTenantGate } from '@/features/tenants/SuspendedTenantGate';
 import { HelpLink } from '@/help/HelpLink';
 import { parseFilterValue } from '@/features/records/records-utils';
 import { FileDetailDrawer } from './FileDetailDrawer';
@@ -112,18 +113,20 @@ export function FilesPage() {
           />
         </Card>
       ) : (
-        <TenantFiles
-          key={tenantId}
-          productId={productId}
-          tenantId={tenantId}
-          canWrite={canWrite}
-          canEditQuota={can('tenants:update', { tenantId })}
-          canReadSettings={can('platform:settings') || can('product:manage')}
-          uploading={uploading}
-          selectedFileId={params.get('file')}
-          onSelect={(fileId) => update({ file: fileId ?? '' })}
-          onUploadClose={() => update({ upload: '' })}
-        />
+        <SuspendedTenantGate productId={productId} tenantId={tenantId} permission="files:read">
+          <TenantFiles
+            key={tenantId}
+            productId={productId}
+            tenantId={tenantId}
+            canWrite={canWrite}
+            canEditQuota={can('tenants:update', { tenantId })}
+            canReadSettings={can('platform:settings') || can('product:manage')}
+            uploading={uploading}
+            selectedFileId={params.get('file')}
+            onSelect={(fileId) => update({ file: fileId ?? '' })}
+            onUploadClose={() => update({ upload: '' })}
+          />
+        </SuspendedTenantGate>
       )}
     </div>
   );

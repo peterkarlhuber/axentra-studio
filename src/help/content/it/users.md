@@ -86,9 +86,12 @@ sessioni terminano immediatamente. Appartenenze, ruolo nella piattaforma e crono
 restano, quindi **Attiva utente** ripristina l'accesso precedente.
 
 > [!WARNING]
-> Le chiavi API create da un utente appartengono al prodotto, non all'utente, e continuano a
-> funzionare dopo la disattivazione dell'utente. Quando qualcuno se ne va, controlla e revoca anche
-> le chiavi che ha configurato. Vedi [chiavi API](help:api-keys#revoke).
+> Le chiavi API create da un utente smettono di funzionare non appena l'utente viene disattivato o
+> perde le autorizzazioni che le chiavi usano: le richieste vengono rifiutate con
+> `api_key_creator_lost_access` (vedi [chiavi API](help:api-keys#creator-permissions)). Le chiavi
+> non vengono revocate e tornano a funzionare se l'accesso viene ripristinato. Quando qualcuno se ne
+> va, crea chiavi sostitutive come qualcuno che resta, passa i servizi alle nuove chiavi e revoca
+> quelle vecchie.
 
 Non puoi disattivare te stesso, e l'ultimo amministratore della piattaforma attivo non può essere
 disattivato.

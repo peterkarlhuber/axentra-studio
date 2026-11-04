@@ -38,9 +38,11 @@ export function ProfilePage() {
       </div>
     );
   }
-  if (me.isError) return <ErrorState error={me.error} onRetry={() => void me.refetch()} />;
+  if (me.isError)
+    return <ErrorState error={me.error} onRetry={() => void me.refetch()} headingLevel={1} />;
   const { user, platform_role, products } = me.data;
-  if (!user) return <ErrorState error={new ApiError({ status: 403, code: 'forbidden' })} />;
+  if (!user)
+    return <ErrorState error={new ApiError({ status: 403, code: 'forbidden' })} headingLevel={1} />;
 
   return (
     <div className={layout.stack}>

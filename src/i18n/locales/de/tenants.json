@@ -146,5 +146,10 @@
     "title": "Nicht verfügbar, solange der Mandant gesperrt ist",
     "body": "Mitglieder und Einladungen eines gesperrten Mandanten lassen sich weder ansehen noch ändern. Ein Produktinhaber oder Produktadministrator kann den Mandanten reaktivieren.",
     "bodyCanReactivate": "Mitglieder und Einladungen eines gesperrten Mandanten lassen sich weder ansehen noch ändern. Reaktiviere den Mandanten, um sie wieder zu verwalten."
+  },
+  "suspendedPage": {
+    "body": "„{{name}}“ ist gesperrt, daher lassen sich seine Daten hier nicht öffnen. Es wurden keine Daten gelöscht.",
+    "canReactivate": "Reaktiviere den Mandanten auf seiner Seite, um seine Daten wieder zu öffnen.",
+    "openTenant": "Mandant öffnen"
   }
 }

@@ -100,7 +100,9 @@ log as `tenancy.tenant.update` with the previous and the new status.
 While the tenant is suspended, its **Members** and **Invitations** tabs show **Not available while
 the tenant is suspended** instead of their lists, because the server keeps the tenant's data closed.
 People without `tenants:update` (for example product viewers or support) see the banner but no
-**Reactivate tenant** action.
+**Reactivate tenant** action. Other pages with the tenant's data (its subscription, invitations,
+records, files, search and usage) show the same message with an **Open the tenant** button that
+leads here.
 
 ## Delete a tenant {#delete}
 

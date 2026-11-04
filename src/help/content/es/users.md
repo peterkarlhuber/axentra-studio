@@ -86,9 +86,11 @@ todas sus sesiones terminan de inmediato. Las membresías, el rol de plataforma 
 auditoría se conservan, de modo que **Activar usuario** restablece el acceso anterior.
 
 > [!WARNING]
-> Las claves de API que creó un usuario pertenecen al producto, no al usuario, y siguen funcionando
-> después de desactivarlo. Cuando alguien se marcha, revisa y revoca también las claves que
-> configuró. Consulta [claves de API](help:api-keys#revoke).
+> Las claves de API que creó un usuario dejan de funcionar en cuanto se desactiva o pierde los
+> permisos que usan las claves: las solicitudes se rechazan con `api_key_creator_lost_access`
+> (consulta [claves de API](help:api-keys#creator-permissions)). Las claves no se revocan y vuelven
+> a funcionar si el acceso se restablece. Cuando alguien se marcha, crea claves de sustitución como
+> alguien que se queda, cambia los servicios a ellas y revoca las claves antiguas.
 
 No puedes desactivarte a ti mismo, y el último administrador de la plataforma activo no se puede
 desactivar.

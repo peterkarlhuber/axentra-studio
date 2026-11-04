@@ -157,8 +157,9 @@ Mit [API-Schlüsseln](help:api-keys) rufen andere Systeme die Axentra-API auf. B
   alte Geheimnis funktionsfähig, während du die Dienste umstellst.
 - **Widerrufe Schlüssel, die du nicht mehr brauchst.** Das Widerrufen eines Schlüssels widerruft
   auch jeden Schlüssel, der mit ihm angelegt wurde. Schlüssel, die eine Person angelegt hat,
-  gehören dem Produkt, nicht der Person: Wenn jemand geht, prüfe die von ihm eingerichteten
-  Schlüssel und widerrufe sie.
+  funktionieren nur, solange diese Person die verwendeten Berechtigungen behält
+  ([Details](help:api-keys#creator-permissions)): Wenn jemand geht, ersetze die von ihm
+  eingerichteten Schlüssel und widerrufe die alten.
 - Behalte die Spalte **Zuletzt verwendet** im Blick: Ein nie verwendeter Schlüssel kann weg; ein
   unerwartet verwendeter Schlüssel verdient einen Blick ins [Audit-Protokoll](help:audit).
 

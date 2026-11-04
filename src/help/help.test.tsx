@@ -66,6 +66,8 @@ describe('front matter and anchors', () => {
     expect(splitTopic('tenants#suspend')).toEqual({ article: 'tenants', anchor: 'suspend' });
     expect(errorTopic('rate_limited')).toBe('troubleshooting#rate-limited');
     expect(errorTopic('something_new')).toBe('troubleshooting#unknown');
+    // Explained where the feature is described.
+    expect(errorTopic('api_key_creator_lost_access')).toBe('api-keys#creator-permissions');
   });
 });
 

@@ -11,8 +11,7 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
-Last full review: 2026-11-03 against `master` at `c2f27da` (backend `a872242`; Axentra master
-`e7c06d0` differs from it only in its `docs/TODO.md`), at the close of UX round 2.
+Last full review: 2026-11-04 in UX round 3 against backend `0a1d1cc` (Axentra AX3-01).
 
 ## P0
 
@@ -21,15 +20,16 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P1
 
-- **Some Phase 1 pages have no component tests.** `DashboardPage`, `ProductDetailPage`,
-  `HealthPage`, `NotFoundPage`, `SettingsPage`, `InvitationsPage`, `UsersPage` and
-  `UserDetailPage` have no Vitest test (`ApiKeysPage`, `RolesPage`, `ProductsPage` and
-  `SetupPage` have). They are rendered by the e2e a11y sweep and partly driven by area specs, but
-  their actions are not asserted in isolation.
+- **Two Phase 1 pages have no component tests.** `ProductDetailPage` and `SettingsPage` have no
+  Vitest test (UX round 3 added `UsersPage`, `UserDetailPage`, `HealthPage` and `NotFoundPage`;
+  `DashboardPage` and the suspended-tenant gate of `InvitationsPage` are covered). They are
+  rendered by the e2e a11y sweep and partly driven by area specs, but their actions are not
+  asserted in isolation.
 - **Drawers and toasts are not in the interactive a11y harness.** `e2e/a11y-interactive.spec.ts`
   checks open dialogs, menus, the info tip, the page help panel and form error states in both
-  themes on desktop and 360 px. Drawers (search document, job and file details) and toasts are
-  checked only where an area spec does so (for example `e2e/search.spec.ts`).
+  themes on desktop and 360 px, and since UX round 3 the audit drawer, the phone navigation drawer
+  and an error toast. The record, event, webhook delivery and file drawers still need fixtures and
+  are checked only where an area spec does so (for example `e2e/search.spec.ts`).
 - **Route parameters need fixtures.** The harness fills `:productId`, `:tenantId`, `:userId`,
   `:jobId`, `:webhookId` and `:templateKey` from the e2e backend. A new detail route with another parameter (for example `:fileId`) is
   skipped with "no fixture for :fileId" until `scripts/e2e-backend.sh` creates such an object and
@@ -41,12 +41,6 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   see. Studio explains this in the add dialog.
 
 ## P2
-
-- **Tenant-scoped pages of a suspended tenant answer `403` for product operators.** The tenant page
-  explains the suspension and closes its Members and Invitations tabs, but other screens that load
-  the tenant's data (for example its subscription page `/p/:productId/subscriptions/:tenantId`)
-  show the generic **Not permitted** state. They could show the same "suspended, reactivate to
-  manage" explanation (the tenant record is readable).
 
 - **Studio cannot list a user's memberships.** API-only today.
 
@@ -124,10 +118,12 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 ## P3
 
-- **Dependabot updates are not reviewed yet.** Dependabot (enabled in PR #15) opened #16 to #27.
-  Several are major versions with breaking changes (TypeScript 7, React Router 8, ESLint 10,
-  Node 26, actions/checkout 7, setup-node 7, setup-python 7, upload-artifact 7). Review and merge
-  them one at a time with the full CI (contract, e2e multi and single), majors separately.
+- **Dependabot updates are reviewed but not merged.** UX round 3 triage of #16 to #27: #22 is safe
+  once the `playwright-core` override moves to 1.64.1; #18 to #21 (GitHub Actions majors) one at a
+  time; #25 (React Router 8) passes locally, merge alone after raising `engines.node`; #17 (nginx
+  1.31 is a mainline release) with care; #23 (TypeScript 7; typescript-eslint and `routes.ts`) and
+  #24/#26 (ESLint 10; jsx-a11y) are blocked upstream; hold #27 (@types/node 26) and #16 (Node 26
+  image) while the runtime and CI use Node 22.
 
 - **A failed single sign-on drops `return_to` (backend).** Axentra sends a failed OIDC login to
   `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
@@ -169,8 +165,8 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 
 - **Product creation does not use `?new=1`.** Other create dialogs open from the address (UX.md);
   the product dialog does not, so it cannot be linked or restored on reload.
-- **Native and Studio validation mix.** Some inputs (for example the custom API key expiry date)
-  use the browser's `required` bubble, others Studio's inline errors; the bubble is not translated
+- **Native and Studio validation mix.** Some inputs (for example the custom API key expiry date
+  and the setup page's full name) use the browser's `required` bubble, others Studio's inline errors; the bubble is not translated
   by Studio and looks different.
 - **Search kinds are typed by hand (backend).** There is no endpoint that lists the kinds indexed
   in a tenant, so the kind filter is free text with format validation.
@@ -178,7 +174,29 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   cache (`node_modules/.vitest-cache`, `node_modules/.vite/vitest`) served the old locale map
   until it was deleted. Document it or disable the cache for `src/i18n`.
 
+- **Plain user lands on "No products yet".** A signed-in user without roles sees a heading that
+  reads like an empty installation (the body text is right).
+- **Heading order on four screens.** axe best-practice `heading-order` (h1 to h3) on schedules,
+  webhook detail, invitations and the "No products yet" table state.
+- **Tenant page at 360 px.** The breadcrumb starts with an orphan "›" when the parent crumb is
+  hidden, and Delete tenant is a filled danger button next to Suspend.
+- **Vitest timeouts under machine load.** About 37 jsdom + userEvent tests exceed the default 5 s
+  when the machine is busy (they pass alone and in CI); consider `testTimeout` 10 s or pool tuning.
+- **Sign-in audit events lack client context (backend).** `identity.login` and
+  `identity.setup.complete` have no IP, request id or actor name, so the audit drawer shows "—".
+
 ## Recently fixed
+
+- **Suspended tenants on tenant-scoped pages.** Billing, invitations, files, search, usage and
+  records of a suspended tenant showed the generic **Not permitted** state; `SuspendedTenantGate`
+  now explains the suspension and sends no request bound to fail (unit + e2e). Also: validation
+  errors without a field no longer point to "marked fields"; full-page errors have a level-1
+  heading; closing the phone drawer returns focus to the menu button; the disable-user dialog and
+  help said a disabled user's API keys keep working (they stop until the user is enabled again).
+- **API keys bound to their creator (Axentra AX3-01).** The new `403
+api_key_creator_lost_access` is shown with the missing permission in six languages and links to
+  help; the API keys page explains that a key works only while its creator holds the permissions
+  (`e2e/api-key-creator.spec.ts`, multi-product mode).
 
 - **Search UI.** `/p/:productId/search` searches a tenant's full-text index (phrases, exclusions,
   kind filter, highlighted matches as text, cursor paging), opens a document and removes it from

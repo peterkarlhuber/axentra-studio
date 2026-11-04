@@ -154,8 +154,9 @@ prácticas:
 - **Rota con regularidad** con **Rotar secreto**. Un período de gracia (hasta 7 días) mantiene
   operativo el secreto antiguo mientras actualizas los servicios.
 - **Revoca las claves que ya no necesites.** Revocar una clave también revoca todas las claves que
-  se crearon con ella. Las claves creadas por una persona pertenecen al producto, no a la persona:
-  cuando alguien se va, revisa y revoca las claves que configuró.
+  se crearon con ella. Las claves creadas por una persona solo funcionan mientras esa persona
+  conserve los permisos que usan ([detalles](help:api-keys#creator-permissions)): cuando alguien se
+  va, sustituye las claves que configuró y revoca las antiguas.
 - Vigila la columna **Último uso**: una clave que nunca se usa puede eliminarse; una clave usada de
   forma inesperada merece un vistazo en el [registro de auditoría](help:audit).
 

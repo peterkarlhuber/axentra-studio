@@ -94,6 +94,25 @@ test('a product owner (not a platform admin) reactivates a suspended tenant', as
   ).toBeVisible();
   await page.getByRole('tab', { name: 'Details' }).click();
 
+  // Other screens with the tenant's data explain the suspension the same way and link back to
+  // the tenant page, instead of "Not permitted" (and without a refused request).
+  for (const path of [
+    `/p/${productId}/subscriptions/${tenant.id}`,
+    `/p/${productId}/invitations?tenant=${tenant.id}`,
+    `/p/${productId}/usage?tab=tenant&tenant=${tenant.id}`,
+  ]) {
+    await page.goto(path);
+    await expect(
+      page.getByRole('heading', { name: 'Not available while the tenant is suspended' }),
+    ).toBeVisible();
+    await expect(page.getByText(/Reactivate the tenant on its page/)).toBeVisible();
+    await expect(page.getByText('Not permitted')).toHaveCount(0);
+  }
+  await expectNoA11yViolations(page);
+  await page.getByRole('link', { name: 'Open the tenant' }).click();
+  await expect(page).toHaveURL(new RegExp(`/p/${productId}/tenants/${tenant.id}$`));
+  await expect(page.getByRole('heading', { name: tenant.name, level: 1 })).toBeVisible();
+
   await page.getByRole('button', { name: 'Reactivate tenant' }).click();
   const dialog = page.getByRole('dialog', { name: 'Reactivate tenant?' });
   await expect(dialog.getByText(/regain access immediately/)).toBeVisible();

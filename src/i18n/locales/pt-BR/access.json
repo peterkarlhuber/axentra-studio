@@ -121,7 +121,8 @@
     "statusAbout": "Sobre o status das chaves",
     "lastUsedInfo": "Horário da última requisição bem-sucedida com esta chave. Atualizado no máximo uma vez por minuto.",
     "lastUsedAbout": "Sobre o último uso",
-    "secretUsage": "Envie o segredo em toda requisição no cabeçalho “Authorization: Bearer <secret>” ou “X-API-Key: <secret>”."
+    "secretUsage": "Envie o segredo em toda requisição no cabeçalho “Authorization: Bearer <secret>” ou “X-API-Key: <secret>”.",
+    "creatorHint": "Uma chave só funciona enquanto a pessoa que a criou ainda tiver as permissões que ela usa."
   },
   "catalog": {
     "title": "Permissões",

@@ -84,9 +84,11 @@ dele terminam imediatamente. As associações, a função na plataforma e o hist
 permanecem, então **Habilitar usuário** restaura o acesso anterior.
 
 > [!WARNING]
-> As chaves de API que um usuário criou pertencem ao produto, não ao usuário, e continuam
-> funcionando depois que o usuário é desabilitado. Quando alguém sai, revise e revogue também as
-> chaves que essa pessoa configurou. Veja [chaves de API](help:api-keys#revoke).
+> As chaves de API que um usuário criou deixam de funcionar assim que ele é desabilitado ou perde as
+> permissões que as chaves usam: as solicitações são recusadas com `api_key_creator_lost_access`
+> (veja [chaves de API](help:api-keys#creator-permissions)). As chaves não são revogadas e voltam a
+> funcionar se o acesso for restabelecido. Quando alguém sai, crie chaves substitutas como alguém
+> que fica, mude os serviços para elas e revogue as chaves antigas.
 
 Você não pode desabilitar a si mesmo, e o último administrador da plataforma ativo não pode ser
 desabilitado.

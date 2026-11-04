@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Construction, PowerOff, RefreshCw, ServerCrash } from 'lucide-react';
+import { Boxes, Construction, PowerOff, RefreshCw, ServerCrash } from 'lucide-react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, Outlet, useLocation, useParams } from 'react-router';
@@ -7,7 +7,7 @@ import { productsApi } from '@/api/endpoints';
 import { isApiError } from '@/api/errors';
 import { queryKeys } from '@/api/queryKeys';
 import { FullPageMessage, SplashScreen } from '@/components/layout/FullPageMessage';
-import { Button, EmptyState, ErrorState, PageHeader, Skeleton } from '@/components/ui';
+import { Button, ButtonLink, EmptyState, ErrorState, PageHeader, Skeleton } from '@/components/ui';
 import { writePreference } from '@/lib/storage';
 import { loginPath, useMe, useSession } from './auth';
 import { HelpLink } from '@/help/HelpLink';
@@ -58,13 +58,16 @@ export function HomeRedirect() {
   const me = useMe();
   const productId = useLastProductId();
   if (me.isPending) return <Skeleton height={32} width={240} />;
-  if (me.isError) return <ErrorState error={me.error} onRetry={() => void me.refetch()} />;
+  if (me.isError) {
+    return <ErrorState error={me.error} onRetry={() => void me.refetch()} headingLevel={1} />;
+  }
   if (productId) return <Navigate to={`/p/${encodeURIComponent(productId)}/dashboard`} replace />;
   return <Navigate to="/products" replace />;
 }
 
 /** Validates `:productId` and provides product + access to product-scoped pages. */
 export function ProductScope() {
+  const { t } = useTranslation();
   const { productId = '' } = useParams();
   const { pathname } = useLocation();
   const single = singleProductId(useMeta());
@@ -90,7 +93,20 @@ export function ProductScope() {
     ) {
       return <Navigate to={switchProductPath(pathname, single)} replace />;
     }
-    return <ErrorState error={product.error} onRetry={() => void product.refetch()} />;
+    // The product is unknown, archived away from the caller or not readable: the page is this
+    // state, so it carries the page heading and offers the way back to the product list.
+    return (
+      <ErrorState
+        error={product.error}
+        onRetry={() => void product.refetch()}
+        headingLevel={1}
+        action={
+          <ButtonLink to="/products" icon={<Boxes />}>
+            {t('nav:allProducts')}
+          </ButtonLink>
+        }
+      />
+    );
   }
 
   return (

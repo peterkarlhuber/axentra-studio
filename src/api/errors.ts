@@ -16,6 +16,8 @@ export interface ProblemDetails {
   errors?: ValidationIssue[];
   /** `backdating_not_permitted`: the earliest allowed `occurred_at` (start of the billing period). */
   period_start?: string;
+  /** `api_key_creator_lost_access`: the permission the key's creator no longer holds. */
+  permission?: string;
 }
 
 /**
@@ -44,6 +46,9 @@ export const KNOWN_ERROR_CODES = [
   'rate_limited',
   'quota_exceeded',
   'backdating_not_permitted',
+  // 403 for a request made with an API key whose creator no longer holds the needed permission
+  // (Axentra AX3-01). Never answered to Studio's own session requests.
+  'api_key_creator_lost_access',
   'internal',
   // A framework-level HTTP error without a more specific code.
   'error',
@@ -76,6 +81,8 @@ export class ApiError extends Error {
   readonly errors: ValidationIssue[];
   /** Start of the tenant's current billing period (`backdating_not_permitted` only). */
   readonly periodStart: string | undefined;
+  /** The permission the key's creator lost (`api_key_creator_lost_access` only). */
+  readonly permission: string | undefined;
 
   constructor(init: {
     status: number;
@@ -85,6 +92,7 @@ export class ApiError extends Error {
     requestId?: string;
     errors?: ValidationIssue[];
     periodStart?: string;
+    permission?: string;
   }) {
     super(init.detail || init.title || init.code);
     this.name = 'ApiError';
@@ -95,6 +103,7 @@ export class ApiError extends Error {
     this.requestId = init.requestId;
     this.errors = init.errors ?? [];
     this.periodStart = init.periodStart;
+    this.permission = init.permission;
   }
 
   get isUnauthenticated(): boolean {
@@ -144,6 +153,7 @@ export function problemToError(body: unknown, response: Response | undefined): A
     requestId,
     errors: Array.isArray(problem.errors) ? problem.errors : [],
     periodStart: typeof problem.period_start === 'string' ? problem.period_start : undefined,
+    permission: typeof problem.permission === 'string' ? problem.permission : undefined,
   });
 }
 
