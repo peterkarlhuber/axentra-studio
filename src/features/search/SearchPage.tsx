@@ -28,6 +28,7 @@ import {
   useToast,
 } from '@/components/ui';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { SuspendedTenantGate } from '@/features/tenants/SuspendedTenantGate';
 import { HelpLink } from '@/help/HelpLink';
 import { useCursorList } from '@/lib/useCursorList';
 import { kindsProblem, MAX_QUERY_LENGTH, parseHighlight, parseKinds } from './search-utils';
@@ -120,14 +121,16 @@ export function SearchPage() {
           <EmptyState icon={<FileSearch />} title={t('start.title')} description={<SyntaxHelp />} />
         </Card>
       ) : (
-        <SearchResults
-          key={`${tenantId}|${q}|${kinds.join(',')}`}
-          productId={productId}
-          tenantId={tenantId}
-          q={q}
-          kinds={kinds}
-          canIndex={canIndex}
-        />
+        <SuspendedTenantGate productId={productId} tenantId={tenantId} permission="search:query">
+          <SearchResults
+            key={`${tenantId}|${q}|${kinds.join(',')}`}
+            productId={productId}
+            tenantId={tenantId}
+            q={q}
+            kinds={kinds}
+            canIndex={canIndex}
+          />
+        </SuspendedTenantGate>
       )}
     </div>
   );

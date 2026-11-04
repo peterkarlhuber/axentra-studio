@@ -101,7 +101,9 @@ come `tenancy.tenant.update` con lo stato precedente e quello nuovo.
 Finché il tenant è sospeso, le schede **Membri** e **Inviti** mostrano **Non disponibile finché il
 tenant è sospeso** al posto dei loro elenchi, perché il server tiene chiusi i dati del tenant. Chi
 non ha `tenants:update` (per esempio i visualizzatori o il supporto del prodotto) vede l'avviso, ma
-non l'azione **Riattiva tenant**.
+non l'azione **Riattiva tenant**. Le altre pagine con i dati del tenant (abbonamento, inviti,
+record, file, ricerca e utilizzo) mostrano lo stesso messaggio con il pulsante **Apri il tenant**,
+che porta qui.
 
 ## Eliminare un tenant {#delete}
 

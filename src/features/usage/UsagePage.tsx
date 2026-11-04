@@ -25,6 +25,7 @@ import {
 } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 import { TenantPicker } from '@/features/shared/TenantPicker';
+import { SuspendedTenantGate } from '@/features/tenants/SuspendedTenantGate';
 import { useFormatters } from '@/lib/format';
 import { useCursorList } from '@/lib/useCursorList';
 import { MetersPanel } from './MetersPanel';
@@ -113,7 +114,13 @@ export function UsagePage() {
                   </Card>
                 ) : null}
                 {tenantId ? (
-                  <TenantUsagePanel key={tenantId} productId={productId} tenantId={tenantId} />
+                  <SuspendedTenantGate
+                    productId={productId}
+                    tenantId={tenantId}
+                    permission="usage:read"
+                  >
+                    <TenantUsagePanel key={tenantId} productId={productId} tenantId={tenantId} />
+                  </SuspendedTenantGate>
                 ) : (
                   <EmptyState
                     compact

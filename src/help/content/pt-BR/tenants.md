@@ -99,9 +99,10 @@ status muda para **Ativo** na página do tenant e na lista. O log de auditoria r
 como `tenancy.tenant.update` com o status anterior e o novo.
 
 Enquanto o tenant está suspenso, as abas **Membros** e **Convites** mostram **Indisponível enquanto
-o tenant estiver suspenso** em vez das listas, porque o servidor mantém os dados do tenant
-fechados. Quem não tem `tenants:update` (por exemplo, leitores ou suporte do produto) vê o aviso,
-mas não a ação **Reativar tenant**.
+o tenant estiver suspenso** em vez das listas, porque o servidor mantém os dados do tenant fechados.
+Quem não tem `tenants:update` (por exemplo, leitores ou suporte do produto) vê o aviso, mas não a
+ação **Reativar tenant**. As outras páginas com dados do tenant (assinatura, convites, registros,
+arquivos, busca e uso) mostram a mesma mensagem com o botão **Abrir o tenant**, que leva para cá.
 
 ## Excluir um tenant {#delete}
 

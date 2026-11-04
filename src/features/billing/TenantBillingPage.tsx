@@ -45,6 +45,7 @@ import {
   layout,
   useToast,
 } from '@/components/ui';
+import { SuspendedTenantGate } from '@/features/tenants/SuspendedTenantGate';
 import { formatQuantity } from '@/features/usage/usage-utils';
 import { HelpLink } from '@/help/HelpLink';
 import { InfoTip } from '@/help/InfoTip';
@@ -80,18 +81,6 @@ export function TenantBillingPage() {
     queryFn: () => tenantsApi.get(productId, tenantId),
   });
   useCrumbLabel(tenant.data?.name);
-  const subscription = useQuery({
-    queryKey: usageBillingKeys.subscription(productId, tenantId),
-    queryFn: async () => {
-      try {
-        return await billingApi.subscription(productId, tenantId);
-      } catch (error) {
-        if (isApiError(error) && error.isNotFound) return null;
-        throw error;
-      }
-    },
-    enabled: canRead,
-  });
   const title = tenant.data?.name ?? tenantId;
 
   if (!canRead) {
@@ -122,21 +111,54 @@ export function TenantBillingPage() {
           ) : null
         }
       />
-      {subscription.isPending ? (
-        <Skeleton height={200} radius={12} />
-      ) : subscription.isError ? (
-        <ErrorState error={subscription.error} onRetry={() => void subscription.refetch()} />
-      ) : (
-        <SubscriptionCard
+      <SuspendedTenantGate productId={productId} tenantId={tenantId} permission="billing:read">
+        <TenantSubscription
           productId={productId}
           tenantId={tenantId}
-          subscription={subscription.data}
           canManage={canManage}
           provider={provider}
         />
-      )}
-      <EntitlementsCard productId={productId} tenantId={tenantId} canManage={canManage} />
+        <EntitlementsCard productId={productId} tenantId={tenantId} canManage={canManage} />
+      </SuspendedTenantGate>
     </div>
+  );
+}
+
+/** The subscription card; mounted only while the tenant's data is open (see SuspendedTenantGate). */
+function TenantSubscription({
+  productId,
+  tenantId,
+  canManage,
+  provider,
+}: {
+  productId: string;
+  tenantId: string;
+  canManage: boolean;
+  provider: BillingProviderState;
+}) {
+  const subscription = useQuery({
+    queryKey: usageBillingKeys.subscription(productId, tenantId),
+    queryFn: async () => {
+      try {
+        return await billingApi.subscription(productId, tenantId);
+      } catch (error) {
+        if (isApiError(error) && error.isNotFound) return null;
+        throw error;
+      }
+    },
+  });
+  if (subscription.isPending) return <Skeleton height={200} radius={12} />;
+  if (subscription.isError) {
+    return <ErrorState error={subscription.error} onRetry={() => void subscription.refetch()} />;
+  }
+  return (
+    <SubscriptionCard
+      productId={productId}
+      tenantId={tenantId}
+      subscription={subscription.data}
+      canManage={canManage}
+      provider={provider}
+    />
   );
 }
 

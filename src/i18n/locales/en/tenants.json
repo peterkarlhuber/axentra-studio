@@ -146,5 +146,10 @@
     "title": "Not available while the tenant is suspended",
     "body": "Members and invitations of a suspended tenant cannot be viewed or changed. A product owner or admin can reactivate the tenant.",
     "bodyCanReactivate": "Members and invitations of a suspended tenant cannot be viewed or changed. Reactivate the tenant to manage them again."
+  },
+  "suspendedPage": {
+    "body": "“{{name}}” is suspended, so its data cannot be opened here. No data has been deleted.",
+    "canReactivate": "Reactivate the tenant on its page to open its data again.",
+    "openTenant": "Open the tenant"
   }
 }

@@ -101,7 +101,9 @@ auditoría guarda el cambio como `tenancy.tenant.update` con el estado anterior 
 Mientras el inquilino está suspendido, sus pestañas **Miembros** e **Invitaciones** muestran **No
 disponible mientras el inquilino esté suspendido** en lugar de sus listas, porque el servidor
 mantiene cerrados los datos del inquilino. Quien no tiene `tenants:update` (por ejemplo, los
-observadores o el soporte del producto) ve el aviso, pero no la acción **Reactivar inquilino**.
+observadores o el soporte del producto) ve el aviso, pero no la acción **Reactivar inquilino**. Las
+demás páginas con datos del inquilino (su suscripción, invitaciones, registros, archivos, búsqueda y
+uso) muestran el mismo mensaje con el botón **Abrir el inquilino**, que lleva aquí.
 
 ## Eliminar un inquilino {#delete}
 

@@ -146,5 +146,10 @@
     "title": "Indisponível enquanto o tenant estiver suspenso",
     "body": "Os membros e os convites de um tenant suspenso não podem ser vistos nem alterados. Um proprietário ou administrador do produto pode reativar o tenant.",
     "bodyCanReactivate": "Os membros e os convites de um tenant suspenso não podem ser vistos nem alterados. Reative o tenant para gerenciá-los novamente."
+  },
+  "suspendedPage": {
+    "body": "“{{name}}” está suspenso, por isso os dados dele não podem ser abertos aqui. Nenhum dado foi excluído.",
+    "canReactivate": "Reative o tenant na página dele para abrir os dados novamente.",
+    "openTenant": "Abrir o tenant"
   }
 }

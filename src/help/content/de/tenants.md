@@ -100,9 +100,11 @@ Audit-Protokoll hält die Änderung als `tenancy.tenant.update` mit dem vorherig
 fest.
 
 Solange der Mandant gesperrt ist, zeigen seine Tabs **Mitglieder** und **Einladungen** statt ihrer
-Listen **Nicht verfügbar, solange der Mandant gesperrt ist**, weil der Server die Daten des Mandanten
-gesperrt hält. Wer `tenants:update` nicht hat (zum Beispiel Product viewer oder Support), sieht den
-Hinweis, aber keine Aktion **Mandant reaktivieren**.
+Listen **Nicht verfügbar, solange der Mandant gesperrt ist**, weil der Server die Daten des
+Mandanten gesperrt hält. Wer `tenants:update` nicht hat (zum Beispiel Product viewer oder Support),
+sieht den Hinweis, aber keine Aktion **Mandant reaktivieren**. Andere Seiten mit den Daten des
+Mandanten (Abonnement, Einladungen, Datensätze, Dateien, Suche und Nutzung) zeigen dieselbe Meldung
+mit der Schaltfläche **Mandant öffnen**, die hierher führt.
 
 ## Einen Mandanten löschen {#delete}
 
