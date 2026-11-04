@@ -101,6 +101,11 @@
     "email_taken": {
       "title": "Endereço de e-mail em uso",
       "message": "Outra conta já usa este endereço de e-mail. Use outro endereço ou entre com a conta existente."
+    },
+    "api_key_creator_lost_access": {
+      "title": "Chave de API recusada: o criador perdeu uma permissão",
+      "message": "A chave de API foi recusada porque a pessoa que a criou não tem mais a permissão {{permission}}. Uma chave só funciona enquanto o criador ainda tiver as permissões que ela usa. Devolva a permissão a essa pessoa, ou crie uma nova chave como alguém que a tenha e revogue a antiga.",
+      "messageNoPermission": "A chave de API foi recusada porque a pessoa que a criou não tem mais uma permissão de que esta solicitação precisa. Uma chave só funciona enquanto o criador ainda tiver as permissões que ela usa. Devolva a permissão a essa pessoa, ou crie uma nova chave como alguém que a tenha e revogue a antiga."
     }
   }
 }

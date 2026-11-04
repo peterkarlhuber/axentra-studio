@@ -22,11 +22,14 @@ export function describeError(t: TFunction, raw: unknown): DescribedError {
   const messageKey =
     error.code === 'validation_failed' && error.errors.length === 0
       ? `${key}.messageNoFields`
-      : `${key}.message`;
+      : error.code === 'api_key_creator_lost_access' && !error.permission
+        ? `${key}.messageNoPermission`
+        : `${key}.message`;
   const message = t(messageKey, {
     defaultValue: t('errors:codes.unknown.message'),
     // Problem-specific values the message names (formatted by i18next in the UI language).
     periodStart: error.periodStart ? new Date(error.periodStart) : undefined,
+    permission: error.permission,
   });
   return {
     error,

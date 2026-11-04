@@ -101,6 +101,11 @@
     "email_taken": {
       "title": "Adresse e-mail déjà utilisée",
       "message": "Un autre compte utilise déjà cette adresse e-mail. Utilise une autre adresse ou connecte-toi avec le compte existant."
+    },
+    "api_key_creator_lost_access": {
+      "title": "Clé d’API refusée : son créateur a perdu une autorisation",
+      "message": "La clé d’API a été refusée, car la personne qui l’a créée ne détient plus l’autorisation {{permission}}. Une clé ne fonctionne que tant que son créateur détient encore les autorisations qu’elle utilise. Redonne l’autorisation à cette personne, ou crée une nouvelle clé en tant que quelqu’un qui la détient et révoque l’ancienne.",
+      "messageNoPermission": "La clé d’API a été refusée, car la personne qui l’a créée ne détient plus une autorisation dont cette requête a besoin. Une clé ne fonctionne que tant que son créateur détient encore les autorisations qu’elle utilise. Redonne l’autorisation à cette personne, ou crée une nouvelle clé en tant que quelqu’un qui la détient et révoque l’ancienne."
     }
   }
 }

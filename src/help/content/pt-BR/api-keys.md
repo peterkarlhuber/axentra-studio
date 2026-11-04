@@ -151,8 +151,19 @@ derivadas**:
 - são revogadas junto com ela (veja [revogar](#revoke)), mas não na rotação.
 
 As chaves criadas no Studio são criadas pela sua conta de usuário, não por uma chave, então essas
-regras não se aplicam a elas. As chaves pertencem ao produto, não à pessoa que as criou: continuam
-funcionando quando essa pessoa sai ou é desabilitada.
+regras não se aplicam a elas. As chaves pertencem ao produto, mas só agem dentro das permissões
+atuais da pessoa que as criou (veja a próxima seção).
+
+### As chaves dependem das permissões de quem as criou {#creator-permissions}
+
+Uma chave só funciona enquanto a pessoa que a criou ainda tiver as permissões que a chave usa. O
+servidor verifica isso a cada solicitação: se o papel dessa pessoa mudou ou ela foi removida do
+produto, uma solicitação que precisa de uma permissão que ela não tem mais é recusada com `403
+api_key_creator_lost_access`, e a resposta indica essa permissão em `permission`. A lista de chaves
+continua mostrando essa chave como **Ativo**. Devolva a permissão a essa pessoa, ou crie uma nova
+chave como alguém que a tenha, mude seus serviços para ela e revogue a chave antiga.
+
+O próprio Studio nunca é recusado assim: ele usa a sua sessão de usuário, não uma chave.
 
 ## Bom saber {#good-to-know}
 

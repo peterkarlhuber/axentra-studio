@@ -75,6 +75,37 @@ describe('describeError', () => {
     }
   });
 
+  it('names the permission an API key lost through its creator', () => {
+    const response = new Response(null, { status: 403 });
+    const error = problemToError(
+      {
+        status: 403,
+        code: 'api_key_creator_lost_access',
+        detail: 'the key creator no longer holds records:write',
+        permission: 'records:write',
+      },
+      response,
+    );
+    expect(error.isForbidden).toBe(true);
+    expect(error.permission).toBe('records:write');
+    const described = describeError(t, error);
+    expect(described.title).toBe('API key refused: its creator lost a permission');
+    expect(described.message).toContain('the permission records:write');
+    for (const locale of LOCALES) {
+      const tr = i18n.getFixedT(locale);
+      expect(describeError(tr, error).message).toContain('records:write');
+    }
+    // Without the field (older or unexpected answers) the message does not show a placeholder.
+    const withoutField = describeError(
+      t,
+      new ApiError({ status: 403, code: 'api_key_creator_lost_access' }),
+    );
+    expect(withoutField.message).toBe(
+      t('errors:codes.api_key_creator_lost_access.messageNoPermission'),
+    );
+    expect(withoutField.message).not.toContain('{{');
+  });
+
   it('has a translation for every known code in all six languages', () => {
     for (const locale of LOCALES) {
       const tr = i18n.getFixedT(locale);

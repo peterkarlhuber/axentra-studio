@@ -154,8 +154,19 @@ Un servicio cuya clave tiene `api_keys:manage` puede crear más claves a través
 - se revocan junto con ella (consulta [revocar](#revoke)), pero no al rotarla.
 
 Las claves creadas en Studio las crea tu cuenta de usuario, no una clave, así que estas reglas no se
-les aplican. Las claves pertenecen al producto, no a la persona que las creó: siguen funcionando
-cuando esa persona se marcha o se desactiva su cuenta.
+les aplican. Las claves pertenecen al producto, pero solo actúan dentro de los permisos actuales de
+la persona que las creó (consulta la sección siguiente).
+
+### Las claves dependen de los permisos de su creador {#creator-permissions}
+
+Una clave solo funciona mientras la persona que la creó siga teniendo los permisos que usa la clave.
+El servidor lo comprueba en cada solicitud: si se cambió el rol de esa persona o se la quitó del
+producto, una solicitud que necesita un permiso que ya no tiene se rechaza con `403
+api_key_creator_lost_access`, y la respuesta indica ese permiso en `permission`. La lista de claves
+sigue mostrando esa clave como **Activo**. Devuélvele el permiso a esa persona, o crea una clave
+nueva como alguien que lo tenga, cambia tus servicios a ella y revoca la clave antigua.
+
+Studio nunca recibe este rechazo: usa tu sesión de usuario, no una clave.
 
 ## Conviene saber {#good-to-know}
 

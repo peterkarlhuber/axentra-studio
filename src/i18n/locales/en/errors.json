@@ -101,6 +101,11 @@
     "email_taken": {
       "title": "Email address in use",
       "message": "Another account already uses this email address. Use a different address, or sign in with the existing account."
+    },
+    "api_key_creator_lost_access": {
+      "title": "API key refused: its creator lost a permission",
+      "message": "The API key was refused because the person who created it no longer holds the permission {{permission}}. A key works only as long as its creator still holds the permissions it uses. Give the permission back to that person, or create a new key as someone who holds it and revoke the old one.",
+      "messageNoPermission": "The API key was refused because the person who created it no longer holds a permission this request needs. A key works only as long as its creator still holds the permissions it uses. Give the permission back to that person, or create a new key as someone who holds it and revoke the old one."
     }
   }
 }

@@ -101,6 +101,11 @@
     "email_taken": {
       "title": "Dirección de correo en uso",
       "message": "Otra cuenta ya usa esta dirección de correo. Usa otra dirección o inicia sesión con la cuenta existente."
+    },
+    "api_key_creator_lost_access": {
+      "title": "Clave de API rechazada: su creador perdió un permiso",
+      "message": "La clave de API se rechazó porque la persona que la creó ya no tiene el permiso {{permission}}. Una clave solo funciona mientras su creador siga teniendo los permisos que usa. Devuélvele el permiso a esa persona, o crea una clave nueva como alguien que lo tenga y revoca la antigua.",
+      "messageNoPermission": "La clave de API se rechazó porque la persona que la creó ya no tiene un permiso que necesita esta solicitud. Una clave solo funciona mientras su creador siga teniendo los permisos que usa. Devuélvele el permiso a esa persona, o crea una clave nueva como alguien que lo tenga y revoca la antigua."
     }
   }
 }

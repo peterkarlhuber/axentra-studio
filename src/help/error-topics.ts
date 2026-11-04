@@ -22,8 +22,14 @@ const CODES_WITH_SECTION = new Set([
   'network_error',
 ]);
 
-/** The troubleshooting section for an error code (unknown codes get the general section). */
+/** Codes explained in the article of their feature rather than in troubleshooting. */
+const FEATURE_TOPICS: Record<string, HelpTopic> = {
+  api_key_creator_lost_access: 'api-keys#creator-permissions' as HelpTopic,
+};
+
+/** The help section for an error code (unknown codes get the general troubleshooting section). */
 export function errorTopic(code: string | undefined): HelpTopic {
+  if (code && FEATURE_TOPICS[code]) return FEATURE_TOPICS[code];
   if (code && CODES_WITH_SECTION.has(code)) {
     return `troubleshooting#${code.replace(/_/g, '-')}` as HelpTopic;
   }
