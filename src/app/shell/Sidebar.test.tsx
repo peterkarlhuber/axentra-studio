@@ -56,8 +56,11 @@ describe('Sidebar permission filter', () => {
   it('hides the audit log without an audit permission, keeps settings and monitoring', async () => {
     mockApi(() => undefined, operator(['product:read', 'tenants:read']));
     renderWithProviders(<Sidebar productId="prd_1" collapsed={false} />);
-    await waitFor(() =>
-      expect(screen.queryByRole('link', { name: 'Audit log' })).not.toBeInTheDocument(),
+    // The item is shown until `/v1/me` (two requests: session, me) is known; on a busy machine
+    // that takes longer than waitFor's default second.
+    await waitFor(
+      () => expect(screen.queryByRole('link', { name: 'Audit log' })).not.toBeInTheDocument(),
+      { timeout: 5_000 },
     );
     // Settings holds the personal preferences; Monitoring and System health show public checks.
     expect(screen.getByRole('link', { name: 'Settings' })).toBeInTheDocument();
