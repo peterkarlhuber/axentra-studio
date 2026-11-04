@@ -1,4 +1,5 @@
 import { AlertTriangle, Lock, RefreshCw, SearchX, WifiOff } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { errorTopic } from '@/help/error-topics';
 import { HelpLink } from '@/help/HelpLink';
@@ -11,11 +12,14 @@ export interface ErrorStateProps {
   error: unknown;
   onRetry?: () => void;
   compact?: boolean;
-  headingLevel?: 2 | 3;
+  /** `1` when the error replaces the whole page (see EmptyState). */
+  headingLevel?: 1 | 2 | 3;
+  /** A way on, next to the retry button (for example a link back to the list). */
+  action?: ReactNode;
 }
 
 /** Translated error with the request id for support, plus an optional retry. */
-export function ErrorState({ error, onRetry, compact, headingLevel }: ErrorStateProps) {
+export function ErrorState({ error, onRetry, compact, headingLevel, action }: ErrorStateProps) {
   const { t } = useTranslation();
   const described = describeError(t, error);
   const { error: apiError } = described;
@@ -86,10 +90,15 @@ export function ErrorState({ error, onRetry, compact, headingLevel }: ErrorState
         }
         action={
           onRetry && !apiError.isForbidden && !apiError.isNotFound ? (
-            <Button icon={<RefreshCw />} onClick={onRetry}>
-              {t('actions.retry')}
-            </Button>
-          ) : undefined
+            <>
+              <Button icon={<RefreshCw />} onClick={onRetry}>
+                {t('actions.retry')}
+              </Button>
+              {action}
+            </>
+          ) : (
+            action
+          )
         }
       />
     </div>

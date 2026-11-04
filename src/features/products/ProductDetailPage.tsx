@@ -68,7 +68,8 @@ export function ProductDetailPage() {
       </div>
     );
   }
-  if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
+  if (query.isError)
+    return <ErrorState error={query.error} onRetry={() => void query.refetch()} headingLevel={1} />;
 
   const product = query.data;
   const archived = product.status === 'archived';

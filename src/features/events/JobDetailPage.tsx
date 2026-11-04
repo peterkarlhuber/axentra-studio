@@ -57,7 +57,8 @@ export function JobDetailPage() {
       </div>
     );
   }
-  if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
+  if (query.isError)
+    return <ErrorState error={query.error} onRetry={() => void query.refetch()} headingLevel={1} />;
   const job = query.data;
   const canManage = can('jobs:manage');
 

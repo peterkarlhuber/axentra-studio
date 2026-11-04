@@ -99,7 +99,9 @@ describe('single-product mode', { timeout: 20_000 }, () => {
       </Routes>,
       { meta: multiMeta, route: '/p/prd_gone/tenants' },
     );
-    expect(await screen.findByText(/Not found|not found/)).toBeInTheDocument();
+    // The error replaces the page: it carries the page heading and leads back to the list.
+    expect(await screen.findByRole('heading', { level: 1, name: 'Not found' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'All products' })).toHaveAttribute('href', '/products');
     expect(screen.queryByText(/tenants of/)).not.toBeInTheDocument();
   });
 

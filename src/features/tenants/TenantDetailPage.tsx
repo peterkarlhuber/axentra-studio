@@ -66,7 +66,8 @@ export function TenantDetailPage() {
       </div>
     );
   }
-  if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
+  if (query.isError)
+    return <ErrorState error={query.error} onRetry={() => void query.refetch()} headingLevel={1} />;
   const tenant = query.data;
   const scope = { tenantId: tenant.id };
   const suspended = tenant.status === 'suspended';

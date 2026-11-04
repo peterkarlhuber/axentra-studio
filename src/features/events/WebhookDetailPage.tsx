@@ -100,7 +100,8 @@ export function WebhookDetailPage() {
       </div>
     );
   }
-  if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
+  if (query.isError)
+    return <ErrorState error={query.error} onRetry={() => void query.refetch()} headingLevel={1} />;
   const endpoint = query.data;
 
   return (
