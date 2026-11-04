@@ -196,7 +196,9 @@ describe('ProfilePage: sign out all other sessions', () => {
     expect(
       await screen.findByText('1 of 3 other sessions could not be signed out'),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Too many requests/)).toBeInTheDocument();
+    // Anchored: Radix also copies the toast text into its aria-live announcer ("Notification …")
+    // once the toast has been shown for a moment, which a slow run reaches before this line.
+    expect(screen.getByText(/^Too many requests/)).toBeInTheDocument();
     expect(api.deletes).not.toContain('ses_me');
     // The reloaded list still offers the button for the remaining session.
     await waitFor(() => expect(api.lists()).toBeGreaterThanOrEqual(3));
