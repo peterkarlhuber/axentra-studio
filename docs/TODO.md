@@ -11,12 +11,17 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
-Last full review: 2026-11-04 in UX round 3 against backend `0a1d1cc` (Axentra AX3-01).
+Last full review: 2026-11-05 against `master` at `d124ae4` (quality round 3 close-out; TODO consolidated). Backend
+pin `api/BACKEND_REF`: `0a1d1cc` (Axentra AX3-01); a separate change moves it to `cfa80dc` (Axentra #42, sign-in
+audit context; contract unchanged). Before that: 2026-11-04 in UX round 3 against backend `0a1d1cc`.
 
 ## P0
 
 None open. (The first GitHub Actions runs of the `contract` and `e2e` jobs passed on PR #2 and
 PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
+
+Release blockers: none. No Studio release is scheduled, and nothing here blocks the next planned preview (the
+Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed before a Studio release is planned.
 
 ## P1
 
@@ -111,7 +116,7 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
 - **Invitation refusals are told apart by their English detail text (backend).** Accepting answers
   `403 forbidden` for three reasons (other email address, tenant or product not active, inviter
   can no longer grant the role). Studio matches the `detail` text to explain each; distinct codes
-  (or a `reason` field) would make this robust. Unknown 403s show the server message.
+  (or a `reason` field) would make this robust. Unknown 403s show the server message. Backend: Axentra AXS-B1.
 - **The initial bundle carries the help library.** About 956 kB raw / 296 kB gzip load before the
   first page, including the help index and article renderer that only `/help` and the help panel
   need. Lazy-load them.
@@ -169,7 +174,14 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   and the setup page's full name) use the browser's `required` bubble, others Studio's inline errors; the bubble is not translated
   by Studio and looks different.
 - **Search kinds are typed by hand (backend).** There is no endpoint that lists the kinds indexed
-  in a tenant, so the kind filter is free text with format validation.
+  in a tenant, so the kind filter is free text with format validation. Backend: Axentra AXS-B2.
+- **Password policy refusals do not mark the field (backend).** A refused password (setup, password
+  change) answers `422` with only `detail`, so Studio cannot point to the password field or state the
+  exact minimum length. Backend: Axentra AXS-B6 (UX round 3 handover axs B-2).
+- **API keys of a creator who lost access still show as Active (backend).** Since AX3-01 such a key is
+  refused with `api_key_creator_lost_access`, but the key list has no effective state; the help says the
+  list still shows such keys as Active. Show it in the status column of `ApiKeysPage` once the backend
+  offers it. Backend: Axentra AX3-01 effective-state item (UX round 3 handover axs B-3).
 - **Vitest keeps a stale `import.meta.glob` result.** After adding a new i18n namespace, Vitest's
   cache (`node_modules/.vitest-cache`, `node_modules/.vite/vitest`) served the old locale map
   until it was deleted. Document it or disable the cache for `src/i18n`.
@@ -182,10 +194,14 @@ PR #3, see [COMPATIBILITY.md](COMPATIBILITY.md).)
   hidden, and Delete tenant is a filled danger button next to Suspend.
 - **Vitest timeouts under machine load.** About 37 jsdom + userEvent tests exceed the default 5 s
   when the machine is busy (they pass alone and in CI); consider `testTimeout` 10 s or pool tuning.
-- **Sign-in audit events lack client context (backend).** `identity.login` and
-  `identity.setup.complete` have no IP, request id or actor name, so the audit drawer shows "—".
 
 ## Recently fixed
+
+- **Sign-in audit events carry client context (Axentra #42, `cfa80dc`).** `identity.login` (success and
+  denied), `identity.setup.complete` and `identity.external.link` record IP and request id, and a successful
+  login records the actor (UX A3-14, handover axs B-1); the audit drawer shows them without a Studio change,
+  and both e2e modes passed against `cfa80dc` in UX round 3.
+  The pin moves from `0a1d1cc` to `cfa80dc` in a separate change (contract unchanged).
 
 - **Suspended tenants on tenant-scoped pages.** Billing, invitations, files, search, usage and
   records of a suspended tenant showed the generic **Not permitted** state; `SuspendedTenantGate`
