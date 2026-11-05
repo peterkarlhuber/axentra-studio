@@ -133,16 +133,20 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
     nodestro-sdk SDK-009).
   - **Node.js 26 build image (#16 closed) and `@types/node` 26 (#27 closed)**: CI, `engines` and
     the Dockerfile build stage use Node.js 22, which is supported until 2027-04-30. Move all three
-    together in one PR (Node.js 24 or 26, both LTS) well before that date; the build stage only
-    produces static files, so the served image (nginx) is not affected.
+    together in one PR well before that date; the build stage only produces static files, so the
+    served image (nginx) is not affected. Owner decision 2026-11-05: the target is Node.js 24 LTS,
+    coordinated with the other repositories in Q1 2027 after a compatibility check (nodestro-studio
+    ST-054); `engines` then becomes `>=24`, React Router 8's `>=22.22.0` is covered.
   - **nginx mainline 1.31 (#17 closed)**: the image stays on nginx's stable branch (1.30.6 is its
     newest release; Dependabot still proposes 1.30.x and the next stable, 1.32).
   - **ESLint 10 override**: eslint-plugin-jsx-a11y 6.10.2 still declares `eslint ^9`; the npm
     override in `package.json` gives it the project's ESLint. With every jsx-a11y rule on, ESLint
     9 and 10 report the same findings. Drop the override when jsx-a11y supports ESLint 10.
-  - **No auto-merge**: `master` has no branch protection with required checks, so GitHub
-    auto-merge would not wait for CI. Merge Dependabot pull requests by hand after CI (axentra
-    has the same entry).
+  - **No auto-merge**: merge Dependabot pull requests by hand after CI (axentra has the same
+    entry). Owner decision 2026-11-05: protect `master` with required CI checks (the jobs of
+    `ci.yml` that run on every pull request, including both end-to-end modes) and block force
+    pushes and deletion, without required approvals, so agent pull requests keep working;
+    auto-merge stays off. Implementation is a separate work order (nodestro-studio ST-052).
 
 - **A failed single sign-on drops `return_to` (backend).** Axentra sends a failed OIDC login to
   `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
