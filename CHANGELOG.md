@@ -74,6 +74,12 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- Dependencies (dependency round 2026-11-05): ESLint 10 (eslint 10.14.0, @eslint/js 10.0.1; an npm
+  override lets eslint-plugin-jsx-a11y use it, same lint findings as ESLint 9), Playwright 1.64.1 without
+  the `playwright-core` override, marked 18.1.2, and the GitHub Actions of CI at v7 (checkout, setup-node,
+  setup-python, upload-artifact). Dependabot groups GitHub Actions, waits a few days before proposing a
+  new release, and ignores TypeScript, `@types/node` and Node.js image majors and nginx mainline releases
+  (reasons in `docs/TODO.md`).
 - The pinned backend (`api/BACKEND_REF`) moves from Axentra `0a1d1cc` to `cfa80dc` (axentra #42: sign-in and
   first-run setup audit events now carry the client IP and request id, so the Audit page shows them like every other
   event). The API contract is unchanged (114 paths); `npm run api:check` passes against the new commit.
