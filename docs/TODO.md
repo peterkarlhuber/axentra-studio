@@ -12,8 +12,8 @@ Backend gaps (something the Axentra API does not offer) are marked **backend** a
 the backend's `docs/TODO.md`.
 
 Last full review: 2026-11-05 against `master` at `d124ae4` (quality round 3 close-out; TODO consolidated). Backend
-pin `api/BACKEND_REF`: `0a1d1cc` (Axentra AX3-01); a separate change moves it to `cfa80dc` (Axentra #42, sign-in
-audit context; contract unchanged). Before that: 2026-11-04 in UX round 3 against backend `0a1d1cc`.
+pin `api/BACKEND_REF`: `cfa80dc` (Axentra #42, sign-in audit context; moved from `0a1d1cc` in the same PR; contract
+unchanged). Before that: 2026-11-04 in UX round 3 against backend `0a1d1cc`.
 
 ## P0
 
@@ -201,7 +201,7 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   denied), `identity.setup.complete` and `identity.external.link` record IP and request id, and a successful
   login records the actor (UX A3-14, handover axs B-1); the audit drawer shows them without a Studio change,
   and both e2e modes passed against `cfa80dc` in UX round 3.
-  The pin moves from `0a1d1cc` to `cfa80dc` in a separate change (contract unchanged).
+  `api/BACKEND_REF` now pins `cfa80dc` (contract unchanged).
 
 - **Suspended tenants on tenant-scoped pages.** Billing, invitations, files, search, usage and
   records of a suspended tenant showed the generic **Not permitted** state; `SuspendedTenantGate`
