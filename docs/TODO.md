@@ -84,9 +84,8 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   that builds the image and runs the smoke and a11y specs against it (`AXENTRA_E2E_BASE_URL`) is
   missing. The base images are pinned by digest (`node:22.23.4-alpine`,
   `nginxinc/nginx-unprivileged:1.30.6-alpine`) and Dependabot proposes updates weekly; the pinned
-  image was not built in the review environment (no Docker daemon), and its nginx config
-  (`error_log ... crit` in `location /v1/`) was checked by `scripts/error-log.test.mjs` only, not
-  by `nginx -t`.
+  image was built and started locally in the dependency round of 2026-11-05 (`nginx -t` passes,
+  `/` serves Studio), but CI still does not build it.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 
