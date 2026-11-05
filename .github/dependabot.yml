@@ -1,20 +1,58 @@
-# Weekly update proposals for the Docker base images (Dockerfile, pinned by tag and digest),
-# npm dependencies and the GitHub Actions used by CI (pinned by commit SHA).
+# Weekly, grouped update pull requests with a small limit, like the Nodestro and Axentra repositories.
+# - GitHub Actions are pinned by commit SHA (the version is the trailing comment); one grouped pull request.
+# - npm: minor and patch updates come as one grouped pull request; each major comes alone and is reviewed by hand.
+# - Docker base images (Dockerfile) are pinned by tag and digest.
+# - cooldown: a new release is proposed only after a few days, so a broken or compromised release is usually
+#   pulled before it reaches a pull request. Security updates are not delayed.
+# Majors that are known not to work yet are ignored below; docs/TODO.md says when to lift each rule.
+# Merging stays manual (no auto-merge): see docs/TODO.md, "Dependency updates".
 version: 2
 updates:
-  - package-ecosystem: docker
-    directory: /
-    schedule:
-      interval: weekly
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 10
-    groups:
-      minor-and-patch:
-        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # TypeScript 6 and 7 wait for openapi-typescript (peer typescript ^5.x) and typescript-eslint
+      # (typescript < 6.1); TypeScript 7 also needs tsconfig changes (baseUrl). Same rule as nodestro-sdk
+      # and axentra's TypeScript SDK.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      # @types/node follows the Node.js major that CI and the Dockerfile build stage use (22), not the newest.
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    open-pull-requests-limit: 2
+    ignore:
+      # The build stage follows the Node.js major of CI and engines (22); a Node major moves all three together.
+      - dependency-name: node
+        update-types: [version-update:semver-major]
+      # Stay on nginx's stable branch (even minor: 1.30, then 1.32); odd minors are mainline releases.
+      - dependency-name: nginxinc/nginx-unprivileged
+        versions: ['1.31.x', '1.33.x']

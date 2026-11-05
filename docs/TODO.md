@@ -123,12 +123,27 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## P3
 
-- **Dependabot updates are reviewed but not merged.** UX round 3 triage of #16 to #27: #22 is safe
-  once the `playwright-core` override moves to 1.64.1; #18 to #21 (GitHub Actions majors) one at a
-  time; #25 (React Router 8) passes locally, merge alone after raising `engines.node`; #17 (nginx
-  1.31 is a mainline release) with care; #23 (TypeScript 7; typescript-eslint and `routes.ts`) and
-  #24/#26 (ESLint 10; jsx-a11y) are blocked upstream; hold #27 (@types/node 26) and #16 (Node 26
-  image) while the runtime and CI use Node 22.
+- **Dependency updates: what is held back and why** (dependency round 2026-11-05). Done in the PR
+  that updates this entry: GitHub Actions v7 (replaced #18 to #21), marked 18.1.2 and Playwright
+  1.64.1 without the `playwright-core` override (replaced #22), ESLint 10 (replaced #24 and #26).
+  React Router 8 (#25) follows in its own PR. Held back, each with an `ignore` rule in
+  `.github/dependabot.yml`:
+  - **TypeScript 6/7** (#23 closed): openapi-typescript 7.13.0 (newest) declares `typescript ^5.x`
+    and typescript-eslint 8.72 `typescript < 6.1`; `npm ci` refuses TypeScript 7, and TypeScript 7
+    also rejects `baseUrl` in `tsconfig.app.json`. Lift the rule when both support it (same as
+    nodestro-sdk SDK-009).
+  - **Node.js 26 build image (#16 closed) and `@types/node` 26 (#27 closed)**: CI, `engines` and
+    the Dockerfile build stage use Node.js 22, which is supported until 2027-04-30. Move all three
+    together in one PR (Node.js 24 or 26, both LTS) well before that date; the build stage only
+    produces static files, so the served image (nginx) is not affected.
+  - **nginx mainline 1.31 (#17 closed)**: the image stays on nginx's stable branch (1.30.6 is its
+    newest release; Dependabot still proposes 1.30.x and the next stable, 1.32).
+  - **ESLint 10 override**: eslint-plugin-jsx-a11y 6.10.2 still declares `eslint ^9`; the npm
+    override in `package.json` gives it the project's ESLint. With every jsx-a11y rule on, ESLint
+    9 and 10 report the same findings. Drop the override when jsx-a11y supports ESLint 10.
+  - **No auto-merge**: `master` has no branch protection with required checks, so GitHub
+    auto-merge would not wait for CI. Merge Dependabot pull requests by hand after CI (axentra
+    has the same entry).
 
 - **A failed single sign-on drops `return_to` (backend).** Axentra sends a failed OIDC login to
   `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
@@ -146,13 +161,12 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   switcher; a platform admin reaches the other products only through the Products page (and they
   cannot be archived there, the backend refuses it in single mode). Not covered by e2e.
 
-- **Dev-only `npm audit` findings.** `npm audit` reports 16 moderate findings, all in development
-  tooling: `minimatch` (GHSA-g3hv-75wg-m249, ReDoS-style "globparts amplification") pulled in by
-  ESLint 9, `typescript-eslint`, `eslint-plugin-jsx-a11y`, `eslint-config-prettier`,
-  `eslint-plugin-react-refresh` and by `openapi-typescript` (via `@redocly/openapi-core`).
+- **Dev-only `npm audit` findings.** `npm audit` reports 11 moderate findings (16 before ESLint
+  10), all in development tooling: `minimatch` (GHSA-g3hv-75wg-m249, ReDoS-style "globparts
+  amplification") pulled in by `@eslint/config-array`, `typescript-eslint`,
+  `eslint-plugin-jsx-a11y` and by `openapi-typescript` (via `@redocly/openapi-core`).
   `npm audit --omit=dev` reports 0. None of it ships in the built app; they only process our own
-  files. Upgrade when the tools release fixed ranges (ESLint 9 is also out of support: plan the move
-  to ESLint 10).
+  files. Upgrade when the tools release fixed ranges.
 - **Help: no screenshots.** Articles use localized HTML/CSS diagrams and exact UI labels instead
   of screenshots, which would need six languages × two themes and go stale with every UI change.
   If screenshots are wanted later, generate them from the e2e suite per locale.
