@@ -124,8 +124,8 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 - **Dependency updates: what is held back and why** (dependency round 2026-11-05). Done in the PR
   that updates this entry: GitHub Actions v7 (replaced #18 to #21), marked 18.1.2 and Playwright
-  1.64.1 without the `playwright-core` override (replaced #22), ESLint 10 (replaced #24 and #26).
-  React Router 8 (#25) follows in its own PR. Held back, each with an `ignore` rule in
+  1.64.1 without the `playwright-core` override (replaced #22), ESLint 10 (replaced #24 and #26),
+  React Router 8.5.1 with `engines.node >=22.22.0` (replaced #25). Held back, each with an `ignore` rule in
   `.github/dependabot.yml`:
   - **TypeScript 6/7** (#23 closed): openapi-typescript 7.13.0 (newest) declares `typescript ^5.x`
     and typescript-eslint 8.72 `typescript < 6.1`; `npm ci` refuses TypeScript 7, and TypeScript 7
