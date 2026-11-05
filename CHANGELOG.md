@@ -74,6 +74,10 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- The pinned backend (`api/BACKEND_REF`) moves from Axentra `0a1d1cc` to `cfa80dc` (axentra #42: sign-in and
+  first-run setup audit events now carry the client IP and request id, so the Audit page shows them like every other
+  event). The API contract is unchanged (114 paths); `npm run api:check` passes against the new commit.
+
 - GitHub social preview `branding-src/social-preview.png` (1280 × 640, not served): the Axentra
   lockup with a "Studio" tag on a dark violet background, rendered by `scripts/social_preview.py`,
   the template shared with Nodestro and Orkexa. It is uploaded by hand in the repository settings.
