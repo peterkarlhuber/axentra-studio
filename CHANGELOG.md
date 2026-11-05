@@ -80,6 +80,10 @@ All notable changes to Axentra Studio are documented here. The format follows
   setup-python, upload-artifact). Dependabot groups GitHub Actions, waits a few days before proposing a
   new release, and ignores TypeScript, `@types/node` and Node.js image majors and nginx mainline releases
   (reasons in `docs/TODO.md`).
+- React Router 8 (react-router 8.5.1, replaces Dependabot #25). Studio already imported everything from
+  `react-router` (no `react-router-dom`) and used none of the removed future flags, so no code changed.
+  React Router 8 requires Node.js 22.22 or later, so `engines.node` is now `>=22.22.0` (CI and the Docker
+  build stage use the newest Node.js 22).
 - The pinned backend (`api/BACKEND_REF`) moves from Axentra `0a1d1cc` to `cfa80dc` (axentra #42: sign-in and
   first-run setup audit events now carry the client IP and request id, so the Audit page shows them like every other
   event). The API contract is unchanged (114 paths); `npm run api:check` passes against the new commit.
