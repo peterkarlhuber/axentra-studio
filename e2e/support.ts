@@ -11,6 +11,8 @@ export const e2e = {
   /** Fixtures for the a11y route sweep, created by scripts/e2e-backend.sh in that product. */
   jobId: process.env.AXENTRA_E2E_JOB_ID,
   webhookId: process.env.AXENTRA_E2E_WEBHOOK_ID,
+  /** A second endpoint with one (failed) test delivery, for the delivery drawer. */
+  deliveryWebhookId: process.env.AXENTRA_E2E_DELIVERY_WEBHOOK_ID,
   templateKey: process.env.AXENTRA_E2E_TEMPLATE_KEY,
   /** Plain users without any role (scripts/e2e-backend.sh); specs give them product or tenant roles. */
   operatorEmail: process.env.AXENTRA_E2E_OPERATOR_EMAIL,
