@@ -44,8 +44,9 @@ How Studio is organized and how its screens behave. Visual rules are in
 | `/health`                                                                        | Readiness and liveness checks                                                |
 | `/monitoring`                                                                    | Health checks, metrics, retention and tracing                                |
 | `/settings`                                                                      | Effective server settings (read-only)                                        |
-| `/profile`                                                                       | Name, language, theme, password, own sessions                                |
+| `/profile`                                                                       | Name, language, theme, password, email verification, own sessions            |
 | `/invitations/accept`, `/accept-invitation`                                      | Accept an invitation token (the second path is the default link alias)       |
+| `/forgot-password`, `/reset-password`, `/verify-email`                           | Public: request a reset link; the pages of the reset and verification links  |
 | `/help[/:article]`                                                               | Help center; works signed out and without a reachable API                    |
 
 ### Navigation

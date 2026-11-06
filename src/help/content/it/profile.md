@@ -1,7 +1,7 @@
 ---
 title: Il tuo profilo
 summary: Visualizza il tuo account e le tue appartenenze, cambia il nome visualizzato e la password, e disconnetti i browser che non usi più.
-keywords: profilo, account, il mio account, nome visualizzato, nome, password, cambiare password, impostare password, sessioni, dispositivi, esci, disconnetti, disconnetti ovunque, logout, single sign-on, SSO
+keywords: profilo, account, il mio account, nome visualizzato, nome, password, cambiare password, impostare password, sessioni, dispositivi, esci, disconnetti, disconnetti ovunque, logout, single sign-on, SSO, verificare email, verifica, verificato
 ---
 
 Il tuo **Profilo** è il punto in cui gestisci il tuo account: il nome che vedono gli altri, la tua
@@ -25,6 +25,22 @@ Il riquadro **Account** mostra:
 Le appartenenze ai tenant non sono elencate qui; si trovano nelle pagine dei tenant. Per ottenere un
 ruolo diverso, chiedi a un proprietario del prodotto o a un amministratore della piattaforma; vedi
 [Ruoli e autorizzazioni](help:roles-permissions).
+
+## Confermare il tuo indirizzo email {#email-verification}
+
+Accanto al tuo **Indirizzo email**, la scheda **Account** mostra **Verificato** o **Non verificato**.
+Un indirizzo è verificato quando hai aperto un link di verifica o di reimpostazione della password
+inviato a quell'indirizzo, oppure quando il tuo provider di identità lo ha confermato al tuo primo
+single sign-on.
+
+1. Scegli **Invia email di verifica** accanto a **Non verificato**.
+2. Apri il link nell'email (in qualsiasi browser; non serve aver effettuato l'accesso lì) e scegli
+   **Conferma l'indirizzo email**.
+
+**Risultato atteso:** la pagina mostra **Indirizzo email confermato** e il tuo profilo mostra
+**Verificato**. Puoi inviare una nuova email una volta al minuto; funziona solo il link più recente,
+che scade dopo 48 ore per impostazione predefinita. L'email viene inviata da uno dei tuoi prodotti;
+se non appartieni a nessuno, il server risponde che non può inviarla.
 
 ## Cambiare il nome visualizzato {#name}
 

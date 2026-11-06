@@ -1,7 +1,7 @@
 ---
 title: Seu perfil
 summary: Veja sua conta e suas associações, altere seu nome de exibição e sua senha e encerre a sessão em navegadores que você não usa mais.
-keywords: perfil, conta, minha conta, nome de exibição, nome, senha, alterar senha, trocar senha, definir senha, sessões, dispositivos, sair, sair de todos os lugares, login único, SSO
+keywords: perfil, conta, minha conta, nome de exibição, nome, senha, alterar senha, trocar senha, definir senha, sessões, dispositivos, sair, sair de todos os lugares, login único, SSO, verificar e-mail, verificação, verificado
 ---
 
 O seu **Perfil** é onde você gerencia a sua própria conta: o nome que os outros veem, a sua senha e
@@ -25,6 +25,21 @@ O cartão **Conta** mostra:
 As associações a tenants não aparecem aqui; elas estão nas páginas dos tenants. Para obter outra
 função, peça a um proprietário do produto ou a um administrador da plataforma; veja
 [Funções e permissões](help:roles-permissions).
+
+## Confirmar seu endereço de e-mail {#email-verification}
+
+Ao lado do seu **Endereço de e-mail**, o cartão **Conta** mostra **Verificado** ou **Não
+verificado**. Um endereço é verificado quando você abriu um link de verificação ou de redefinição
+de senha enviado a ele, ou quando seu provedor de identidade o confirmou no seu primeiro login único.
+
+1. Escolha **Enviar e-mail de verificação** ao lado de **Não verificado**.
+2. Abra o link do e-mail (em qualquer navegador; não é preciso estar conectado nele) e escolha
+   **Confirmar endereço de e-mail**.
+
+**Resultado esperado:** a página mostra **Endereço de e-mail confirmado** e seu perfil mostra
+**Verificado**. Você pode enviar um novo e-mail uma vez por minuto; só o link mais recente funciona,
+e ele expira após 48 horas por padrão. O e-mail é enviado por um dos seus produtos; se você não
+pertence a nenhum, o servidor responde que não pode enviá-lo.
 
 ## Alterar seu nome de exibição {#name}
 

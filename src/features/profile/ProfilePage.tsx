@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { KeyRound, LogIn, LogOut, Save } from 'lucide-react';
+import { KeyRound, LogIn, LogOut, MailCheck, Save } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { asItems, authApi, meApi } from '@/api/endpoints';
@@ -56,7 +56,14 @@ export function ProfilePage() {
         <Card title={t('account.title')}>
           <DetailList
             items={[
-              { label: t('account.email'), value: user.email },
+              {
+                label: t('account.email'),
+                value: user.email ? (
+                  <EmailWithVerification email={user.email} verified={user.email_verified} />
+                ) : (
+                  t('account.noEmail')
+                ),
+              },
               { label: t('account.id'), value: user.id, mono: true },
               {
                 label: t('account.platformRole'),
@@ -91,6 +98,54 @@ export function ProfilePage() {
         <OwnSessions />
       </div>
     </div>
+  );
+}
+
+/**
+ * The address with its verification state, and a button that emails a verification link
+ * (`POST /v1/me/email-verification`). Servers before 2026-11 send no `email_verified`: then
+ * nothing is shown.
+ */
+function EmailWithVerification({ email, verified }: { email: string; verified?: boolean }) {
+  const { t } = useTranslation('profile');
+  const toast = useToast();
+  const showError = useErrorToast();
+  const queryClient = useQueryClient();
+  const send = useMutation({
+    mutationFn: () => meApi.requestEmailVerification(),
+    onSuccess: () =>
+      toast.success(t('account.verificationSent'), t('account.verificationSentBody')),
+    onError: (error) => {
+      // Verified in the meantime (for example in another tab): show the current state.
+      if (error instanceof ApiError && error.status === 409) {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.me });
+      }
+      showError(error);
+    },
+  });
+  if (verified === undefined) return <>{email}</>;
+  return (
+    <span className={layout.tags}>
+      <span>{email}</span>
+      {verified ? (
+        <Badge tone="success">{t('account.verified')}</Badge>
+      ) : (
+        <>
+          <Badge tone="warning">{t('account.notVerified')}</Badge>
+          <Button
+            size="sm"
+            variant="secondary"
+            icon={<MailCheck />}
+            loading={send.isPending}
+            disabled={send.isSuccess}
+            onClick={() => send.mutate()}
+          >
+            {t('account.sendVerification')}
+          </Button>
+          <HelpLink topic="profile#email-verification" />
+        </>
+      )}
+    </span>
   );
 }
 

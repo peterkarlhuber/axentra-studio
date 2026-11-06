@@ -106,6 +106,10 @@
       "title": "API-Schlüssel abgelehnt: Dem Ersteller fehlt eine Berechtigung",
       "message": "Der API-Schlüssel wurde abgelehnt, weil die Person, die ihn erstellt hat, die Berechtigung {{permission}} nicht mehr besitzt. Ein Schlüssel funktioniert nur, solange sein Ersteller die Berechtigungen noch besitzt, die er verwendet. Gib der Person die Berechtigung zurück, oder erstelle einen neuen Schlüssel als jemand, der sie besitzt, und widerrufe den alten.",
       "messageNoPermission": "Der API-Schlüssel wurde abgelehnt, weil die Person, die ihn erstellt hat, eine für diese Anfrage nötige Berechtigung nicht mehr besitzt. Ein Schlüssel funktioniert nur, solange sein Ersteller die Berechtigungen noch besitzt, die er verwendet. Gib der Person die Berechtigung zurück, oder erstelle einen neuen Schlüssel als jemand, der sie besitzt, und widerrufe den alten."
+    },
+    "invalid_token": {
+      "title": "Ungültiger oder abgelaufener Link",
+      "message": "Der Link ist ungültig, abgelaufen oder wurde schon verwendet. Fordere einen neuen an."
     }
   }
 }

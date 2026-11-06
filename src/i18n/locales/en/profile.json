@@ -8,7 +8,13 @@
     "platformRole": "Platform role",
     "noPlatformRole": "None",
     "products": "Products",
-    "noProducts": "No product memberships"
+    "noProducts": "No product memberships",
+    "noEmail": "No email address",
+    "verified": "Verified",
+    "notVerified": "Not verified",
+    "sendVerification": "Send verification email",
+    "verificationSent": "Verification email sent",
+    "verificationSentBody": "Open the link in the email to confirm your address."
   },
   "name": {
     "title": "Display name",

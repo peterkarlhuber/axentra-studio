@@ -272,3 +272,70 @@ describe('ProfilePage: sign out all other sessions', () => {
     expect(screen.getByRole('button', { name: 'Sign out all other sessions' })).toBeInTheDocument();
   });
 });
+
+describe('ProfilePage email verification', () => {
+  function serve(verified: boolean | undefined, answer: () => Response) {
+    const posts: string[] = [];
+    const user = { ...me.user!, email_verified: verified };
+    configureApi({
+      baseUrl: 'http://axentra.test',
+      fetch: async (request: Request) => {
+        const url = new URL(request.url);
+        if (url.pathname === '/v1/auth/session') return jsonResponse({ csrf_token: 'csrf' });
+        if (url.pathname === '/v1/me') return jsonResponse({ ...me, user });
+        if (url.pathname === '/v1/auth/sessions') return jsonResponse([]);
+        if (url.pathname === '/v1/me/email-verification') {
+          posts.push(request.method);
+          return answer();
+        }
+        return jsonResponse({ code: 'not_found', status: 404 }, { status: 404 });
+      },
+    });
+    renderWithProviders(
+      <Routes>
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>,
+      { route: '/profile' },
+    );
+    return posts;
+  }
+
+  it('sends a verification email for an unverified address', async () => {
+    const posts = serve(
+      false,
+      () => new Response(null, { status: 202, headers: { 'Content-Length': '0' } }),
+    );
+    expect(await screen.findByText('Not verified')).toBeInTheDocument();
+    const button = screen.getByRole('button', { name: 'Send verification email' });
+    await userEvent.setup().click(button);
+    expect(await screen.findByText('Verification email sent')).toBeInTheDocument();
+    expect(posts).toEqual(['POST']);
+    await waitFor(() => expect(button).toBeDisabled());
+  });
+
+  it('reports the cooldown', async () => {
+    serve(false, () =>
+      jsonResponse(
+        { code: 'rate_limited', status: 429 },
+        { status: 429, headers: { 'Retry-After': '60' } },
+      ),
+    );
+    await userEvent
+      .setup()
+      .click(await screen.findByRole('button', { name: 'Send verification email' }));
+    expect(await screen.findByText(/^Too many requests/)).toBeInTheDocument();
+  });
+
+  it('shows a verified address without the button', async () => {
+    serve(true, () => jsonResponse({}));
+    expect(await screen.findByText('Verified')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Send verification email' })).toBeNull();
+  });
+
+  it('shows no state when the server does not report one', async () => {
+    serve(undefined, () => jsonResponse({}));
+    expect(await screen.findByText('sso@example.com')).toBeInTheDocument();
+    expect(screen.queryByText('Not verified')).toBeNull();
+    expect(screen.queryByText('Verified')).toBeNull();
+  });
+});

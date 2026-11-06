@@ -1,7 +1,7 @@
 ---
 title: Dein Profil
 summary: Konto und Mitgliedschaften ansehen, Anzeigenamen und Passwort ändern und Browser abmelden, die du nicht mehr verwendest.
-keywords: Profil, Konto, mein Konto, Anzeigename, Name, Passwort, Passwort ändern, Passwort festlegen, Sitzungen, Geräte, abmelden, überall abmelden, Single Sign-on, SSO
+keywords: Profil, Konto, mein Konto, Anzeigename, Name, Passwort, Passwort ändern, Passwort festlegen, Sitzungen, Geräte, abmelden, überall abmelden, Single Sign-on, SSO, E-Mail bestätigen, Bestätigung, bestätigt
 ---
 
 In deinem **Profil** verwaltest du dein eigenes Konto: den Namen, den andere sehen, dein Passwort
@@ -27,6 +27,22 @@ Die Karte **Konto** zeigt:
 Mandantenmitgliedschaften stehen nicht hier, sondern auf den Seiten der Mandanten. Für eine andere
 Rolle wende dich an einen Product owner oder einen Plattform-Administrator; siehe
 [Rollen und Berechtigungen](help:roles-permissions).
+
+## Deine E-Mail-Adresse bestätigen {#email-verification}
+
+Neben deiner **E-Mail-Adresse** zeigt die Karte **Konto** **Bestätigt** oder **Nicht bestätigt**.
+Eine Adresse ist bestätigt, wenn du einen dorthin gesendeten Bestätigungs- oder
+Zurücksetzungslink geöffnet hast oder dein Identitätsanbieter sie bei deinem ersten Single Sign-on
+bestätigt hat.
+
+1. Wähle neben **Nicht bestätigt** die Schaltfläche **Bestätigungs-E-Mail senden**.
+2. Öffne den Link in der E-Mail (in einem beliebigen Browser; dort musst du nicht angemeldet sein)
+   und wähle **E-Mail-Adresse bestätigen**.
+
+**Erwartetes Ergebnis:** Die Seite zeigt **E-Mail-Adresse bestätigt**, und dein Profil zeigt
+**Bestätigt**. Du kannst einmal pro Minute eine neue E-Mail senden; nur der neueste Link
+funktioniert, und er läuft standardmäßig nach 48 Stunden ab. Die E-Mail verschickt eines deiner
+Produkte; gehörst du zu keinem, antwortet der Server, dass er keine senden kann.
 
 ## Deinen Anzeigenamen ändern {#name}
 

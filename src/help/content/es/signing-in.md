@@ -1,7 +1,7 @@
 ---
 title: Iniciar y cerrar sesión
 summary: Inicia sesión con contraseña o con inicio de sesión único, entiende cuándo termina una sesión y resuelve problemas de acceso.
-keywords: login, iniciar sesión, acceder, entrar, logout, cerrar sesión, salir, contraseña, SSO, inicio de sesión único, OIDC, OpenID Connect, proveedor de identidad, Keycloak, Entra ID, Google, sesión, caducada, tiempo de espera, idioma, volver
+keywords: login, iniciar sesión, acceder, entrar, logout, cerrar sesión, salir, contraseña, SSO, inicio de sesión único, OIDC, OpenID Connect, proveedor de identidad, Keycloak, Entra ID, Google, sesión, caducada, tiempo de espera, idioma, volver, contraseña olvidada, restablecer contraseña
 ---
 
 Studio funciona con tu cuenta personal en el servidor Axentra. Cuando inicias sesión, el servidor
@@ -23,6 +23,24 @@ El formulario solo aparece cuando el servidor permite iniciar sesión con contra
 creadas mediante inicio de sesión único no tienen contraseña y no pueden usar el formulario; puedes
 establecer una contraseña para una cuenta así en tu [perfil](help:profile), si el servidor lo
 permite.
+
+## Contraseña olvidada {#forgotten-password}
+
+1. En la página **Iniciar sesión**, elige **¿Olvidaste tu contraseña?** debajo del campo de contraseña.
+2. Introduce el correo electrónico de tu cuenta y elige **Enviar enlace de restablecimiento**.
+3. Abre el enlace del correo. En la página **Elige una nueva contraseña**, introduce la nueva
+   contraseña dos veces y elige **Guardar la nueva contraseña**.
+
+**Resultado esperado:** se cierran todas tus sesiones, también la de este navegador, e inicias sesión
+con la nueva contraseña. La dirección cuenta ahora como verificada, porque el enlace llegó a ella.
+
+La página siempre indica que el enlace está en camino: ni Studio ni el servidor revelan si existe una
+cuenta para una dirección. No llega ningún correo si no hay cuenta, si la cuenta está desactivada, si
+solo inicia sesión con inicio de sesión único (no tiene contraseña que restablecer) o si pediste un
+enlace hace menos de un minuto. El enlace funciona una vez, caduca al poco tiempo (30 minutos por
+defecto) y solo funciona el enlace más reciente de una cuenta. Un enlace no válido, caducado o ya
+usado muestra **Este enlace no se puede usar**; solicita uno nuevo. Cambiar la contraseña en el
+[perfil](help:profile#password) también invalida los enlaces de restablecimiento abiertos.
 
 ## Iniciar sesión con inicio de sesión único {#sso}
 

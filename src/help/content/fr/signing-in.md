@@ -1,7 +1,7 @@
 ---
 title: Se connecter et se déconnecter
 summary: Connecte-toi avec un mot de passe ou par authentification unique, comprends quand une session prend fin et résous les problèmes de connexion.
-keywords: connexion, se connecter, identifiant, login, déconnexion, se déconnecter, logout, mot de passe, SSO, authentification unique, OIDC, OpenID Connect, fournisseur d’identité, Keycloak, Entra ID, Google, session, expirée, délai d’inactivité, langue, retour
+keywords: connexion, se connecter, identifiant, login, déconnexion, se déconnecter, logout, mot de passe, SSO, authentification unique, OIDC, OpenID Connect, fournisseur d’identité, Keycloak, Entra ID, Google, session, expirée, délai d’inactivité, langue, retour, mot de passe oublié, réinitialiser le mot de passe
 ---
 
 Studio fonctionne avec ton compte personnel sur le serveur Axentra. Quand tu te connectes, le serveur ouvre
@@ -21,6 +21,25 @@ utilisé. Si tu n’as encore aucun produit, tu arrives sur **Produits**.
 Le formulaire ne s’affiche que si le serveur autorise la connexion par mot de passe. Les comptes créés via
 l’authentification unique n’ont pas de mot de passe et ne peuvent pas utiliser le formulaire ; tu peux définir un mot de passe pour un tel
 compte dans ton [profil](help:profile), si le serveur le permet.
+
+## Mot de passe oublié {#forgotten-password}
+
+1. Sur la page **Se connecter**, choisis **Mot de passe oublié ?** sous le champ du mot de passe.
+2. Saisis l’adresse e-mail de ton compte et choisis **Envoyer le lien de réinitialisation**.
+3. Ouvre le lien de l’e-mail. Sur la page **Choisis un nouveau mot de passe**, saisis deux fois le
+   nouveau mot de passe et choisis **Enregistrer le nouveau mot de passe**.
+
+**Résultat attendu :** tu es déconnecté partout, y compris dans ce navigateur, et tu te connectes
+avec le nouveau mot de passe. L’adresse compte désormais comme vérifiée, puisque le lien l’a atteinte.
+
+La page indique toujours qu’un lien est en route : ni Studio ni le serveur ne révèlent si un compte
+existe pour une adresse. Aucun e-mail n’arrive s’il n’y a pas de compte, si le compte est désactivé,
+s’il se connecte uniquement par authentification unique (il n’a pas de mot de passe à réinitialiser)
+ou si tu as demandé un lien il y a moins d’une minute. Le lien fonctionne une seule fois, expire
+rapidement (30 minutes par défaut) et seul le lien le plus récent d’un compte fonctionne. Un lien
+invalide, expiré ou déjà utilisé affiche **Ce lien n’est pas utilisable** ; demandes-en un nouveau.
+Changer ton mot de passe dans le [profil](help:profile#password) invalide aussi les liens de
+réinitialisation ouverts.
 
 ## Se connecter par authentification unique {#sso}
 

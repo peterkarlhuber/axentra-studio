@@ -1,7 +1,7 @@
 ---
 title: An- und Abmelden
 summary: Melde dich mit Passwort oder Single Sign-on an, erfahre, wann eine Sitzung endet, und behebe Anmeldeprobleme.
-keywords: Login, einloggen, anmelden, Logout, ausloggen, abmelden, Passwort, Kennwort, SSO, Single Sign-on, OIDC, OpenID Connect, Identitätsanbieter, Keycloak, Entra ID, Google, Sitzung, abgelaufen, Zeitüberschreitung, Sprache, zurückkehren
+keywords: Login, einloggen, anmelden, Logout, ausloggen, abmelden, Passwort, Kennwort, SSO, Single Sign-on, OIDC, OpenID Connect, Identitätsanbieter, Keycloak, Entra ID, Google, Sitzung, abgelaufen, Zeitüberschreitung, Sprache, zurückkehren, Passwort vergessen, Passwort zurücksetzen
 ---
 
 Studio arbeitet mit deinem persönlichen Konto auf dem Axentra-Server. Wenn du dich anmeldest,
@@ -22,6 +22,25 @@ Das Formular wird nur angezeigt, wenn der Server die Passwortanmeldung erlaubt. 
 Single Sign-on angelegt wurden, haben kein Passwort und können das Formular nicht verwenden; für ein
 solches Konto kannst du in deinem [Profil](help:profile) ein Passwort festlegen, sofern der Server
 das erlaubt.
+
+## Passwort vergessen {#forgotten-password}
+
+1. Wähle auf der Seite **Anmelden** unter dem Passwortfeld **Passwort vergessen?**.
+2. Gib die E-Mail-Adresse deines Kontos ein und wähle **Link zum Zurücksetzen senden**.
+3. Öffne den Link in der E-Mail. Gib auf der Seite **Neues Passwort wählen** das neue Passwort
+   zweimal ein und wähle **Neues Passwort speichern**.
+
+**Erwartetes Ergebnis:** Du wirst überall abgemeldet, auch in diesem Browser, und meldest dich mit
+dem neuen Passwort an. Die Adresse gilt jetzt als bestätigt, weil der Link sie erreicht hat.
+
+Die Seite meldet immer, dass ein Link unterwegs ist: Studio und der Server verraten nie, ob es für
+eine Adresse ein Konto gibt. Keine E-Mail kommt, wenn es kein Konto gibt, das Konto deaktiviert
+ist, es sich nur per Single Sign-on anmeldet (es hat kein Passwort zum Zurücksetzen) oder du vor
+weniger als einer Minute schon einen Link angefordert hast. Der Link funktioniert einmal, läuft nach
+kurzer Zeit ab (standardmäßig 30 Minuten), und nur der neueste Link eines Kontos funktioniert. Ein
+ungültiger, abgelaufener oder schon verwendeter Link zeigt **Dieser Link ist nicht verwendbar**;
+fordere dann einen neuen an. Wenn du dein Passwort im [Profil](help:profile#password) änderst,
+werden offene Links zum Zurücksetzen ebenfalls ungültig.
 
 ## Mit Single Sign-on anmelden {#sso}
 

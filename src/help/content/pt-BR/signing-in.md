@@ -1,7 +1,7 @@
 ---
 title: Entrar e sair
 summary: Entre com senha ou login único, entenda quando uma sessão termina e resolva problemas de login.
-keywords: login, logar, entrar, acessar, logout, deslogar, sair, senha, SSO, login único, OIDC, OpenID Connect, provedor de identidade, Keycloak, Entra ID, Google, sessão, expirada, tempo limite, idioma, voltar
+keywords: login, logar, entrar, acessar, logout, deslogar, sair, senha, SSO, login único, OIDC, OpenID Connect, provedor de identidade, Keycloak, Entra ID, Google, sessão, expirada, tempo limite, idioma, voltar, senha esquecida, redefinir senha
 ---
 
 O Studio trabalha com a sua conta pessoal no servidor Axentra. Quando você entra, o servidor inicia
@@ -21,6 +21,24 @@ usou por último. Se você ainda não tiver nenhum produto, chega em **Produtos*
 O formulário só aparece quando o servidor permite login por senha. Contas criadas pelo login único
 não têm senha e não podem usar o formulário; você pode definir uma senha para uma conta assim no
 seu [perfil](help:profile), se o servidor permitir.
+
+## Senha esquecida {#forgotten-password}
+
+1. Na página **Entrar**, escolha **Esqueceu a senha?** abaixo do campo de senha.
+2. Informe o endereço de e-mail da sua conta e escolha **Enviar link de redefinição**.
+3. Abra o link do e-mail. Na página **Escolha uma nova senha**, digite a nova senha duas vezes e
+   escolha **Salvar a nova senha**.
+
+**Resultado esperado:** você sai de todas as sessões, inclusive deste navegador, e entra com a nova
+senha. O endereço passa a contar como verificado, porque o link chegou até ele.
+
+A página sempre diz que um link está a caminho: nem o Studio nem o servidor revelam se existe uma
+conta para um endereço. Nenhum e-mail chega se não houver conta, se a conta estiver desativada, se
+ela entrar apenas com login único (não tem senha para redefinir) ou se você pediu um link há menos
+de um minuto. O link funciona uma vez, expira em pouco tempo (30 minutos por padrão) e só o link
+mais recente de uma conta funciona. Um link inválido, expirado ou já usado mostra **Este link não
+pode ser usado**; solicite um novo. Alterar a senha no [perfil](help:profile#password) também
+invalida os links de redefinição abertos.
 
 ## Entrar com login único {#sso}
 

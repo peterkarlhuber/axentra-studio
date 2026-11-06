@@ -251,6 +251,11 @@ export function LoginPage() {
               onChange={(event) => setPassword(event.target.value)}
             />
           </FormField>
+          <p className={styles.forgot}>
+            <Link to="/forgot-password" state={email.trim() ? { email: email.trim() } : undefined}>
+              {t('login.forgotPassword')}
+            </Link>
+          </p>
           <Button
             type="submit"
             variant="primary"
