@@ -90,8 +90,9 @@ função de produto. Veja [membros e convites](help:members-invitations).
 
 Um **convite** pede a uma pessoa, pelo endereço de e-mail, que entre em um tenant com uma
 determinada função. Ele contém um token de uso único, vale por 7 dias e pode ser revogado. A pessoa
-convidada o aceita enquanto está conectada com uma conta que tem **o mesmo endereço de e-mail**. Não
-existem convites para operadores de produto. Veja [membros e convites](help:members-invitations).
+convidada o aceita enquanto está conectada com uma conta que tem **o mesmo endereço de e-mail**.
+Operadores de produto podem ser convidados para a equipe de um produto da mesma forma. Veja [membros
+e convites](help:members-invitations).
 
 ## Função {#role}
 

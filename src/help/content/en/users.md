@@ -47,8 +47,18 @@ The **Profile** card shows:
 | **Password sign-in**          | **Password set**, or **No password (single sign-on only)**.              |
 | **Last sign-in**, **Created** | Timestamps.                                                              |
 
-The user page does not list the user's memberships. To see or change what a user can do in a
-tenant, open the tenant's **Members** tab; for operators, the product's **Members** tab.
+### Memberships {#memberships}
+
+The **Memberships** card lists what the user belongs to, as far as you may see it:
+
+- **Product roles**: products where the user is an operator, with the role. Platform
+  administrators and platform viewers see all of them; others see products where they hold
+  `product_members:read`.
+- **Tenant memberships**: tenants where the user is a member, with the product, the role and
+  the tenant's status. Others see tenants where they hold `members:read`.
+
+The card is read-only. To change what a user can do, open the tenant's **Members** tab (from the
+tenant name) or, for operators, the product's **Members** tab.
 
 ### Users without an email address {#no-email}
 

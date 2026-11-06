@@ -13,10 +13,12 @@ ist, und lässt Betreiber Jobs erneut ausführen oder abbrechen.
 
 > [!IMPORTANT]
 > Jobs erfordern das Servermodul `events`; ohne es erscheint **Jobs** nicht in der Seitenleiste. Zum
-> Ansehen brauchst du die Berechtigung `jobs:read` (Product owner, Product admin, Support und Product
-> viewer haben sie). **Job einreihen**, **Erneut ausführen** und **Job abbrechen** erfordern
-> `jobs:manage`; ohne diese Berechtigung sind die Buttons ausgeblendet. Jobs laufen nur, solange
-> mindestens ein Worker-Prozess (`axentra worker`) läuft. Das ist eine Betriebsaufgabe, siehe
+> Ansehen brauchst du die Berechtigung `jobs:read` (Product owner, Product admin, Support und
+> Product viewer haben sie). **Erneut ausführen** und **Job abbrechen** erfordern `jobs:manage`;
+> ohne diese Berechtigung sind die Buttons ausgeblendet. **Job einreihen** erfordert ebenfalls
+> `jobs:manage`, außer für Arten, die für Mandantenmitglieder freigegeben sind (siehe [wer welche
+> Art einreihen darf](#kind-permissions)). Jobs laufen nur, solange mindestens ein Worker-Prozess
+> (`axentra worker`) läuft. Das ist eine Betriebsaufgabe, siehe
 > [Serverkonfiguration](help:server-configuration).
 
 ## Die Jobliste lesen {#jobs-list}
@@ -201,10 +203,12 @@ Jobliste und Statistiken gibt es auch über die API: `GET /v1/products/{product_
 
 ### Wer welche Art einreihen darf {#kind-permissions}
 
-Wer `jobs:manage` hat, darf jede Art einreihen, die nicht mit `axentra.` beginnt. Über die API dürfen
-Mandantenmitglieder, die nur `events:publish` haben, eine Art nur dann einreihen, wenn das Produkt
-diese Art ausdrücklich für sie freigegeben hat; andernfalls antwortet der Server mit „not permitted“.
-Studio bietet **Job einreihen** nur Personen mit `jobs:manage` an.
+Wer `jobs:manage` hat, darf jede Art einreihen, die nicht mit `axentra.` beginnt. Über die API
+dürfen Mandantenmitglieder, die nur `events:publish` haben, eine Art nur dann einreihen, wenn das
+Produkt diese Art ausdrücklich für sie freigegeben hat; andernfalls antwortet der Server mit „not
+permitted“. Studio bietet **Job einreihen** auch Mandantenmitgliedern ohne `jobs:manage` an: Diese
+wählen zuerst einen **Mandanten** und dann eine der Arten, die dort für sie freigegeben sind. Ist
+dort keine Art für sie freigegeben, sagt der Dialog das.
 
 ### Integrierte Job-Arten {#system-kinds}
 

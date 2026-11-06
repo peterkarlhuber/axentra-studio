@@ -95,6 +95,7 @@ contraseña (todas las demás sesiones) o cuando un administrador desactiva tu c
 
 1. Busca el navegador en **Tus sesiones**.
 2. Elige **Revocar sesión** (el icono de la papelera al final de la fila).
+3. Confirma **¿Revocar esta sesión?** con **Revocar sesión**.
 
 Ese navegador cierra la sesión con su siguiente solicitud. Tu sesión actual no tiene botón para
 revocarla; usa **Cerrar sesión** en el menú de usuario.
@@ -103,6 +104,7 @@ revocarla; usa **Cerrar sesión** en el menú de usuario.
 
 Para terminar todas las sesiones excepto la que estás usando, elige **Cerrar todas las demás
 sesiones** en la cabecera de **Tus sesiones**. El botón aparece cuando existe al menos otra sesión.
+Studio pide antes una confirmación que indica cuántas sesiones terminan.
 
 Tu sesión actual nunca se cierra. Cada una de las demás sesiones se cierra por separado; si algunas
 no se pueden cerrar (por ejemplo por el límite de solicitudes), Studio te dice cuántas, la lista

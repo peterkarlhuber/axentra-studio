@@ -94,8 +94,8 @@ producto), que tienen un rol de producto. Consulta
 Una **invitación** pide a una persona, mediante su dirección de correo electrónico, que se una a un
 inquilino con un rol determinado. Contiene un token de un solo uso, es válida durante 7 días y se
 puede revocar. La persona invitada la acepta con la sesión iniciada en una cuenta que tenga **la
-misma dirección de correo electrónico**. No existen invitaciones para operadores de producto.
-Consulta [miembros e invitaciones](help:members-invitations).
+misma dirección de correo electrónico**. Los operadores de producto se pueden invitar al equipo de
+un producto de la misma forma. Consulta [miembros e invitaciones](help:members-invitations).
 
 ## Rol {#role}
 

@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { MailPlus, Trash2 } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { tenantsApi } from '@/api/endpoints';
-import type { Invitation, NewInvitation } from '@/api/models';
+import { productsApi, tenantsApi } from '@/api/endpoints';
+import type { InvitationRow, NewInvitationLike } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useErrorToast } from '@/app/auth';
 import {
@@ -29,41 +29,58 @@ import { ProblemAlert } from '@/features/shared/ProblemAlert';
 import { RoleSelect } from '@/features/shared/RoleSelect';
 import { someRoleBlocked, useRoleCeiling } from '@/features/shared/useRoleOptions';
 
-/** Invitations of one tenant: list, invite (one-time link if returned), revoke. */
+/**
+ * Invitations of one tenant (with `tenantId`) or of the product team (without it): list,
+ * invite (one-time link if returned), revoke.
+ */
 export function InvitationsPanel({
   productId,
   tenantId,
   canManage,
 }: {
   productId: string;
-  tenantId: string;
+  tenantId?: string;
   canManage: boolean;
 }) {
   const { t } = useTranslation('tenants');
   const toast = useToast();
   const showError = useErrorToast();
   const queryClient = useQueryClient();
-  const key = queryKeys.invitations(productId, tenantId);
-  const invitations = useQuery({
+  const scope = tenantId === undefined ? 'product' : 'tenant';
+  const key =
+    tenantId === undefined
+      ? queryKeys.productInvitations(productId)
+      : queryKeys.invitations(productId, tenantId);
+  const invitations = useQuery<InvitationRow[]>({
     queryKey: key,
-    queryFn: () => tenantsApi.invitations(productId, tenantId),
+    queryFn: () =>
+      tenantId === undefined
+        ? productsApi.invitations(productId)
+        : tenantsApi.invitations(productId, tenantId),
   });
-  const { roles, rolesUnavailable, blockFor } = useRoleCeiling(productId, 'tenant', tenantId);
+  const { roles, rolesUnavailable, blockFor } = useRoleCeiling(productId, scope, tenantId);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
-  // '' = the default: "member", or the first role the caller may grant (role ceiling).
+  // '' = the default ("member" / "product_viewer"), or the first role the caller may grant
+  // (role ceiling).
   const [chosenRole, setRole] = useState('');
+  const baseRole = scope === 'product' ? 'product_viewer' : 'member';
   const defaultRole =
-    blockFor('member') === null
-      ? 'member'
-      : (roles.find((candidate) => blockFor(candidate.key) === null)?.key ?? 'member');
+    blockFor(baseRole) === null
+      ? baseRole
+      : (roles.find((candidate) => blockFor(candidate.key) === null)?.key ?? baseRole);
   const role = chosenRole || defaultRole;
   const ceilingApplies = !rolesUnavailable && someRoleBlocked(roles, blockFor);
-  const [created, setCreated] = useState<NewInvitation | null>(null);
-  const [revoking, setRevoking] = useState<Invitation | null>(null);
+  const [created, setCreated] = useState<NewInvitationLike | null>(null);
+  const [revoking, setRevoking] = useState<InvitationRow | null>(null);
 
   const invite = useMutation({
-    mutationFn: () => tenantsApi.invite(productId, tenantId, { email: email.trim(), role }),
+    mutationFn: (): Promise<NewInvitationLike> => {
+      const body = { email: email.trim(), role };
+      return tenantId === undefined
+        ? productsApi.invite(productId, body)
+        : tenantsApi.invite(productId, tenantId, body);
+    },
     onSuccess: (result) => {
       toast.success(t('invitations.sent', { email: result.invitation.email }));
       void queryClient.invalidateQueries({ queryKey: key });
@@ -87,7 +104,7 @@ export function InvitationsPanel({
     invite.mutate();
   };
 
-  const columns: Column<Invitation>[] = [
+  const columns: Column<InvitationRow>[] = [
     { id: 'email', header: t('invitations.email'), rowHeader: true, cell: (inv) => inv.email },
     { id: 'role', header: t('invitations.role'), cell: (inv) => inv.role },
     {
@@ -128,6 +145,8 @@ export function InvitationsPanel({
   }
 
   const fields = invite.error ? fieldErrors(invite.error) : {};
+  const roleHelp =
+    scope === 'product' ? t('invitations.roleHelpProduct') : t('invitations.roleHelp');
 
   return (
     <div className={layout.form}>
@@ -143,7 +162,7 @@ export function InvitationsPanel({
         columns={columns}
         getRowId={(inv) => inv.id}
         empty={
-          <EmptyState compact headingLevel={3} icon={<MailPlus />} title={t('invitations.empty')} />
+          <EmptyState compact headingLevel={2} icon={<MailPlus />} title={t('invitations.empty')} />
         }
         rows={invitations.data}
         status={invitations.status}
@@ -204,11 +223,7 @@ export function InvitationsPanel({
             </FormField>
             <FormField
               label={t('invitations.role')}
-              help={
-                ceilingApplies
-                  ? `${t('invitations.roleHelp')} ${t('common:members.ceilingHelp')}`
-                  : t('invitations.roleHelp')
-              }
+              help={ceilingApplies ? `${roleHelp} ${t('common:members.ceilingHelp')}` : roleHelp}
               error={fields.role}
             >
               <RoleSelect
@@ -234,7 +249,9 @@ export function InvitationsPanel({
         onConfirm={async () => {
           if (!revoking) return;
           try {
-            await tenantsApi.revokeInvitation(productId, tenantId, revoking.id);
+            await (tenantId === undefined
+              ? productsApi.revokeInvitation(productId, revoking.id)
+              : tenantsApi.revokeInvitation(productId, tenantId, revoking.id));
             toast.success(t('invitations.revoked'));
             void queryClient.invalidateQueries({ queryKey: key });
           } catch (error) {

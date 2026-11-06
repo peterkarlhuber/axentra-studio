@@ -1,7 +1,8 @@
 import clsx from '@/lib/clsx';
 import styles from './Button.module.css';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'subtle';
+export type ButtonVariant =
+  'primary' | 'secondary' | 'ghost' | 'danger' | 'dangerOutline' | 'subtle';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export function buttonClassName({

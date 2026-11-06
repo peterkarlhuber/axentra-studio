@@ -275,13 +275,26 @@ function RoleEditor({
   const selectedAllowed = catalog.data
     ? permissions.filter((name) => allowedNames.has(name))
     : permissions;
+  // Names the role stores that are not active in the catalog (retired product permissions):
+  // not offered, but kept on save, so re-declaring the permission restores its effect.
+  const retiredKept = catalog.data
+    ? (role?.permissions ?? []).filter((name) => !allowedNames.has(name))
+    : [];
+  const nextPermissions = [...selectedAllowed, ...retiredKept];
+  const sameSet = (a: readonly string[], b: readonly string[]) =>
+    a.length === b.length && [...a].sort().join('\n') === [...b].sort().join('\n');
+  const unchanged =
+    Boolean(role) &&
+    name.trim() === (role?.name ?? '') &&
+    description.trim() === (role?.description ?? '') &&
+    sameSet(nextPermissions, role?.permissions ?? []);
 
   const save = useMutation({
     mutationFn: () => {
       const common = {
         name: name.trim(),
         description: description.trim(),
-        permissions: selectedAllowed,
+        permissions: nextPermissions,
       };
       return role?.id
         ? accessApi.updateRole(productId, role.id, common, role.version)
@@ -335,7 +348,7 @@ function RoleEditor({
               form="role-form"
               variant="primary"
               loading={save.isPending}
-              disabled={!name.trim() || (!role && !effectiveKey.trim())}
+              disabled={!name.trim() || (!role && !effectiveKey.trim()) || unchanged}
             >
               {t('common:actions.save')}
             </Button>
@@ -417,6 +430,12 @@ function RoleEditor({
               disabled={catalog.isPending}
             />
           )}
+          {retiredKept.length > 0 ? (
+            <p className={layout.muted}>
+              {t('roles.retiredKept', { permissions: retiredKept.join(', ') })}{' '}
+              <HelpLink topic="roles-permissions#retired">{t('common:help.learnMore')}</HelpLink>
+            </p>
+          ) : null}
           {fields.permissions ? <p role="alert">{fields.permissions}</p> : null}
         </form>
       )}

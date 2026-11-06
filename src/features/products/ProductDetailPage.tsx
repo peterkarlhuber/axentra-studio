@@ -27,9 +27,11 @@ import {
   Time,
   layout,
   useToast,
+  UnsavedChangesGuard,
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
+import { InvitationsPanel } from '@/features/tenants/InvitationsPanel';
 import { StoragePolicyCard } from '@/features/storage/StoragePolicyCard';
 import { isModuleEnabled } from '@/app/modules';
 import { HelpLink } from '@/help/HelpLink';
@@ -196,7 +198,31 @@ export function ProductDetailPage() {
                   add={(body) => productsApi.addMember(product.id, body)}
                   updateRole={(userId, role) => productsApi.updateMember(product.id, userId, role)}
                   remove={(userId) => productsApi.removeMember(product.id, userId)}
+                  invite={archived ? undefined : (body) => productsApi.invite(product.id, body)}
                   canManage={can('product_members:manage', { productId: product.id })}
+                />
+              </Card>
+            ),
+          },
+          {
+            value: 'invitations',
+            label: t('tabs.invitations'),
+            hidden: !can('product_members:read', { productId: product.id }),
+            content: (
+              <Card
+                flush
+                description={
+                  <>
+                    {t('invitationsDescription')}{' '}
+                    <HelpLink topic="members-invitations#product-team">
+                      {t('common:help.learnMore')}
+                    </HelpLink>
+                  </>
+                }
+              >
+                <InvitationsPanel
+                  productId={product.id}
+                  canManage={!archived && can('product_members:manage', { productId: product.id })}
                 />
               </Card>
             ),
@@ -268,12 +294,18 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
   };
 
   const fields = save.error ? fieldErrors(save.error) : {};
+  const dirty =
+    canEdit &&
+    (name.trim() !== product.name ||
+      description.trim() !== (product.description ?? '') ||
+      !sameJson(settings, product.settings ?? {}));
 
   return (
     <Card
       title={t('settings.title')}
       description={canEdit ? t('settings.description') : t('settings.readOnly')}
     >
+      <UnsavedChangesGuard when={dirty && !save.isPending} />
       <form className={layout.form} onSubmit={submit}>
         <FormField label={t('fields.name')} error={fields.name} required>
           <Input
@@ -307,7 +339,13 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
         </FormField>
         {canEdit ? (
           <div className={layout.actions}>
-            <Button type="submit" variant="primary" icon={<Save />} loading={save.isPending}>
+            <Button
+              type="submit"
+              variant="primary"
+              icon={<Save />}
+              loading={save.isPending}
+              disabled={!dirty}
+            >
               {t('common:actions.save')}
             </Button>
           </div>
@@ -315,4 +353,13 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
       </form>
     </Card>
   );
+}
+
+/** Whether the edited JSON text holds the same value as `saved` (text that does not parse differs). */
+function sameJson(text: string, saved: unknown): boolean {
+  try {
+    return JSON.stringify(JSON.parse(text || '{}')) === JSON.stringify(saved);
+  } catch {
+    return false;
+  }
 }

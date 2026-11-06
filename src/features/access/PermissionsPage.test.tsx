@@ -76,3 +76,99 @@ describe('PermissionsPage', () => {
     ).toBeInTheDocument();
   });
 });
+
+describe('PermissionsPage with permissions:manage', () => {
+  const API_DECLARED = {
+    name: 'crm.reports:export',
+    scope: 'product',
+    description: 'Export reports',
+    source: 'product',
+    read_like: false,
+    default_roles: [],
+    declared_by: 'api',
+    retired_at: null,
+  };
+
+  function api() {
+    return mockApi((request, url) => {
+      if (url.pathname === '/v1/products/prd_1/permissions')
+        return jsonResponse([...ACTIVE, API_DECLARED]);
+      const match = /^\/v1\/products\/prd_1\/permissions\/(.+)$/.exec(url.pathname);
+      if (match && request.method === 'PUT')
+        return request.json().then((body: Record<string, unknown>) =>
+          jsonResponse({
+            ...body,
+            name: decodeURIComponent(match[1] ?? ''),
+            source: 'product',
+            declared_by: 'api',
+          }),
+        );
+      if (match && request.method === 'DELETE') return new Response(null, { status: 204 });
+      return undefined;
+    });
+  }
+
+  it('declares a permission over the API after checking the name', async () => {
+    const calls = api();
+    renderPage(<PermissionsPage />, {
+      me: meWith(['roles:read', 'permissions:manage']),
+      route: '/p/prd_1/permissions',
+    });
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: 'Declare permission' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Declare permission' });
+    const name = within(dialog).getByRole('textbox', { name: /^Permission/ });
+    await user.type(name, 'Deals approve');
+    await user.click(within(dialog).getByRole('button', { name: 'Declare permission' }));
+    expect(within(dialog).getByText(/Use <namespace>\.<resource>:<action>/)).toBeInTheDocument();
+    expect(calls.some((call) => call.method === 'PUT')).toBe(false);
+
+    await user.clear(name);
+    await user.type(name, 'crm.deals:close');
+    await user.click(within(dialog).getByRole('checkbox', { name: 'member' }));
+    await user.selectOptions(
+      within(dialog).getByRole('combobox', { name: /Only reads data/ }),
+      'no',
+    );
+    await user.click(within(dialog).getByRole('button', { name: 'Declare permission' }));
+    expect(await screen.findByText('Permission crm.deals:close declared')).toBeInTheDocument();
+    const put = calls.find((call) => call.method === 'PUT');
+    expect(decodeURIComponent(new URL(put?.url ?? 'http://x').pathname)).toBe(
+      '/v1/products/prd_1/permissions/crm.deals:close',
+    );
+    expect(await put?.json()).toEqual({
+      scope: 'tenant',
+      description: '',
+      default_roles: ['member'],
+      read_like: false,
+    });
+  });
+
+  it('offers changes only for API-declared permissions and retires after typing the name', async () => {
+    const calls = api();
+    renderPage(<PermissionsPage />, {
+      me: meWith(['roles:read', 'permissions:manage']),
+      route: '/p/prd_1/permissions',
+    });
+    const user = userEvent.setup();
+    const own = await screen.findByRole('table', { name: 'Product permissions' });
+    await within(own).findByText('crm.reports:export');
+    expect(within(own).queryByRole('button', { name: 'Retire crm.deals:approve' })).toBeNull();
+    await user.click(within(own).getByRole('button', { name: 'Retire crm.reports:export' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Retire permission?' });
+    const confirm = within(dialog).getByRole('button', { name: 'Retire permission' });
+    expect(confirm).toBeDisabled();
+    await user.type(within(dialog).getByRole('textbox'), 'crm.reports:export');
+    await user.click(confirm);
+    expect(await screen.findByText('Permission crm.reports:export retired')).toBeInTheDocument();
+    await waitFor(() => expect(calls.some((call) => call.method === 'DELETE')).toBe(true));
+  });
+
+  it('shows no actions without permissions:manage', async () => {
+    api();
+    renderPage(<PermissionsPage />, { me: meWith(['roles:read']), route: '/p/prd_1/permissions' });
+    await screen.findByText('crm.reports:export');
+    expect(screen.queryByRole('button', { name: 'Declare permission' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^Retire / })).not.toBeInTheDocument();
+  });
+});

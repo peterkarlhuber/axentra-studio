@@ -130,7 +130,7 @@ shown when the records module is enabled and you hold `records:read` in the tena
   role in each.
 - Product operators do not need a membership: their product role already covers every tenant.
 - Pickers in other screens (for example **Tenant scope** on API keys or the **Invitations**
-  screen) list the 200 oldest tenants, sorted by name.
+  screen) list the first 200 tenants by name.
 
 ## Troubleshooting {#troubleshooting}
 

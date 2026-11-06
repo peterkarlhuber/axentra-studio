@@ -115,7 +115,12 @@
     "priorityInfo": "Priority only decides which due job a free worker takes first. It does not interrupt running jobs and does not guarantee an order.",
     "maxAttemptsInfo": "After an error the job is retried with a growing wait. When the last attempt fails it becomes dead and stays in the list, so you can read the error and retry it.",
     "idempotencyKeyInfo": "Studio fills in a new random key each time you open this dialog, so a double click enqueues only once. The same key with a different payload or priority is refused.",
-    "skipped": "Not run: product or tenant inactive"
+    "skipped": "Not run: product or tenant inactive",
+    "tenantRequired": "Jobs you may enqueue run in one of your tenants.",
+    "noOpenKindsTitle": "No job kinds are open to you here",
+    "noOpenKinds": "In this tenant, no job kind is opened to your role. Ask a product operator to enqueue the job or to open the kind.",
+    "kindOpenHelp": "The kinds the product opened to your role in this tenant.",
+    "chooseKind": "Choose a kind"
   },
   "schedules": {
     "title": "Schedules",

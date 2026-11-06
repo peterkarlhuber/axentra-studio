@@ -29,7 +29,9 @@
     "kindsPlaceholder": "zum Beispiel invoice, note",
     "kindInvalid": "„{{kind}}“ ist keine gültige Art: Verwende Kleinbuchstaben, Ziffern, Punkte, Bindestriche und Unterstriche, beginnend mit einem Buchstaben.",
     "kindTooMany": "Gib höchstens 20 Arten ein.",
-    "submit": "Suchen"
+    "submit": "Suchen",
+    "indexedKinds": "Indizierte Arten",
+    "kindCount": "{{kind}} ({{count}})"
   },
   "results": {
     "heading": "Ergebnisse für {{query}}",

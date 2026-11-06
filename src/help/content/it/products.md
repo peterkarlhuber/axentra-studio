@@ -110,11 +110,11 @@ Nell'elenco compaiono anche i ruoli di prodotto personalizzati. Vedi
 > richiede `product_members:manage` (proprietari del prodotto e amministratori della piattaforma).
 
 > [!NOTE]
-> Non esistono inviti per gli operatori. La persona deve avere già un account che puoi vedere: gli
-> amministratori della piattaforma vedono tutti gli account, gli utenti con `product_users:read`
-> vedono gli utenti di questo prodotto (membri dei suoi tenant e suoi operatori). Per chiunque altro
-> il server risponde **Utente non trovato**. Invita prima la persona in uno dei tenant del prodotto,
-> oppure chiedi a un amministratore della piattaforma di aggiungerla.
+> Puoi aggiungere solo account che puoi vedere: gli amministratori della piattaforma vedono tutti
+> gli account, gli utenti con `product_users:read` vedono gli utenti di questo prodotto (membri dei
+> suoi tenant e suoi operatori). Per chiunque altro il server risponde **Utente non trovato** e la
+> finestra di dialogo offre **Invia invece un invito**, che invita l'indirizzo nel team del
+> prodotto. Vedi [inviti nel team del prodotto](help:members-invitations#product-team).
 
 Per cambiare il ruolo di un operatore, scegline uno nuovo nella colonna **Ruolo**. Per rimuovere un
 operatore, scegli l'icona del cestino nella sua riga e conferma. I ruoli superiori al tuo livello

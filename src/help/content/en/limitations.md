@@ -13,9 +13,6 @@ server; the server's API sometimes offers more than Studio does.
 
 - **No accounts are created in Studio.** Accounts come from the first-run setup, from accepting an
   invitation, or from the first single sign-on login. Invite people to a tenant instead.
-- **No invitations for product operators.** You can add a product member only if they already
-  have an account you can see. Workaround: invite the person to one of the product's tenants
-  first, or ask a platform administrator to add them.
 - **No password reset, email verification or two-factor authentication** in Axentra itself. If
   you use single sign-on, your identity provider can enforce two-factor authentication.
 - **Single sign-on providers are set up only in the server configuration.** Studio cannot list,

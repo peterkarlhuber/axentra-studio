@@ -30,14 +30,16 @@
   "empty": {
     "title": "Aún no hay productos",
     "body": "No eres miembro de ningún producto. Solicita acceso a un administrador de la plataforma.",
-    "bodyAdmin": "Crea el primer producto para empezar a administrar inquilinos y usuarios."
+    "bodyAdmin": "Crea el primer producto para empezar a administrar inquilinos y usuarios.",
+    "titleNoAccess": "Todavía no tienes productos"
   },
   "tabs": {
     "label": "Secciones del producto",
     "details": "Detalles",
     "settings": "Configuración",
     "files": "Archivos",
-    "members": "Miembros"
+    "members": "Miembros",
+    "invitations": "Invitaciones"
   },
   "settings": {
     "title": "Configuración del producto",
@@ -61,5 +63,6 @@
     "archivedNotice": "Este producto está archivado: sus operadores, los miembros de sus inquilinos y sus claves de API no tienen acceso. Restáuralo para hacer cambios.",
     "singleMode": "El servidor funciona en modo de producto único, por lo que este producto no se puede archivar. Puedes cambiar su nombre, descripción, configuración y miembros."
   },
-  "membersDescription": "Operadores de este producto. Su rol se aplica en todos los inquilinos; los miembros de cada inquilino se gestionan en ese inquilino."
+  "membersDescription": "Operadores de este producto. Su rol se aplica en todos los inquilinos; los miembros de cada inquilino se gestionan en ese inquilino.",
+  "invitationsDescription": "Invita por correo electrónico a operadores al equipo de este producto. Después de aceptar, tienen el rol del producto en todos los inquilinos."
 }

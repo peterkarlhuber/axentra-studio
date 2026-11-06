@@ -62,6 +62,9 @@ sehen. Arten bestehen aus Kleinbuchstaben, Ziffern, Punkten, Bindestrichen und U
 beginnen mit einem Buchstaben; höchstens 20 auf einmal. Lass das Feld leer, um alle Arten zu
 durchsuchen.
 
+Unter dem Feld listet **Indizierte Arten** die Arten im Index des Mandanten mit der Anzahl ihrer
+Dokumente. Wähle eine aus, um sie ins Feld zu übernehmen, oder wähle sie erneut, um sie zu entfernen.
+
 ## Die Ergebnisse lesen {#results}
 
 Die Ergebnisse sind nach Relevanz sortiert: Treffer im Titel zählen mehr als Treffer im Text, mehr

@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import type { NewInvitation } from '@/api/models';
+import type { NewInvitationLike } from '@/api/models';
 import { Alert, CopyField, layout } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 
 /** The one-time accept link / token of a new invitation (returned only once). */
-export function InvitationSecret({ invitation }: { invitation: NewInvitation }) {
+export function InvitationSecret({ invitation }: { invitation: NewInvitationLike }) {
   const { t } = useTranslation('tenants');
   return (
     <div className={layout.form}>

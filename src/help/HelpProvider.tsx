@@ -1,18 +1,14 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
-import { ArrowLeft, BookOpen, X } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Suspense, lazy, useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router';
-import { ErrorState, IconButton, Skeleton } from '@/components/ui';
-import { ArticleBody } from './ArticleBody';
-import { HelpContext, helpHref, type HelpContextValue } from './help-context';
-import { splitTopic, type HelpTopic } from './manifest';
-import { useHelpLibrary, useHelpProductId } from './useHelpLibrary';
+import { useLocation } from 'react-router';
+import { Skeleton } from '@/components/ui';
+import { HelpContext, type HelpContextValue } from './help-context';
+import type { HelpTopic } from './manifest';
 import styles from './help.module.css';
 
-const HIGHLIGHT = styles.highlight ?? 'highlight';
-
-const PANEL_PREFIX = 'help-panel-';
+// The panel content pulls in the help library and the Markdown renderer; load it on first use.
+const HelpPanelContent = lazy(() => import('./HelpPanelContent'));
 
 /**
  * Provides `useHelp()` and renders the help side panel. Contextual help opens articles here,
@@ -60,12 +56,14 @@ export function HelpProvider({ children }: { children: ReactNode }) {
             }}
           >
             {topic ? (
-              <HelpPanelContent
-                topic={topic}
-                canGoBack={stack.length > 1}
-                onBack={() => setStack((current) => current.slice(0, -1))}
-                onTopic={(next) => setStack((current) => [...current, next])}
-              />
+              <Suspense fallback={<PanelFallback />}>
+                <HelpPanelContent
+                  topic={topic}
+                  canGoBack={stack.length > 1}
+                  onBack={() => setStack((current) => current.slice(0, -1))}
+                  onTopic={(next) => setStack((current) => [...current, next])}
+                />
+              </Suspense>
             ) : null}
           </RadixDialog.Content>
         </RadixDialog.Portal>
@@ -74,95 +72,22 @@ export function HelpProvider({ children }: { children: ReactNode }) {
   );
 }
 
-function HelpPanelContent({
-  topic,
-  canGoBack,
-  onBack,
-  onTopic,
-}: {
-  topic: HelpTopic;
-  canGoBack: boolean;
-  onBack: () => void;
-  onTopic: (topic: HelpTopic) => void;
-}) {
+/** Shown while the panel content loads; it keeps the dialog titled for assistive technology. */
+function PanelFallback() {
   const { t } = useTranslation('help');
-  const library = useHelpLibrary();
-  const productId = useHelpProductId();
-  const { article: articleId, anchor } = splitTopic(topic);
-  const article = library.data?.get(articleId);
-  const bodyRef = useRef<HTMLDivElement>(null);
-
-  // Scroll to the requested section once the article is rendered.
-  useEffect(() => {
-    const body = bodyRef.current;
-    if (!body || !article) return;
-    const target = anchor
-      ? body.querySelector<HTMLElement>(`#${CSS.escape(PANEL_PREFIX + anchor)}`)
-      : null;
-    if (target) {
-      target.scrollIntoView({ block: 'start' });
-      target.classList.add(HIGHLIGHT);
-      const timer = window.setTimeout(() => target.classList.remove(HIGHLIGHT), 2400);
-      return () => window.clearTimeout(timer);
-    }
-    body.scrollTop = 0;
-    return undefined;
-  }, [article, anchor]);
-
   return (
     <>
       <div className={styles.panelHeader}>
-        {canGoBack ? (
-          <IconButton label={t('panel.back')} icon={<ArrowLeft />} onClick={onBack} />
-        ) : (
-          <span className={styles.panelIcon} aria-hidden="true">
-            <BookOpen />
-          </span>
-        )}
         <div className={styles.panelHeadings}>
-          <p className={styles.panelEyebrow}>{t('panel.title')}</p>
-          <RadixDialog.Title className={styles.panelTitle}>
-            {article?.title ?? t('panel.title')}
-          </RadixDialog.Title>
+          <RadixDialog.Title className={styles.panelTitle}>{t('panel.title')}</RadixDialog.Title>
         </div>
-        <RadixDialog.Close asChild>
-          <IconButton label={t('panel.close')} icon={<X />} showTooltip={false} />
-        </RadixDialog.Close>
       </div>
-      <div ref={bodyRef} className={styles.panelBody}>
-        {library.isPending ? (
-          <div className={styles.skeletons}>
-            {[0, 1, 2, 3, 4].map((index) => (
-              <Skeleton key={index} height={16} />
-            ))}
-          </div>
-        ) : library.isError ? (
-          <ErrorState error={library.error} onRetry={() => void library.refetch()} compact />
-        ) : article ? (
-          <>
-            {article.summary ? <p className={styles.lead}>{article.summary}</p> : null}
-            <ArticleBody
-              article={article}
-              library={library.data}
-              headingLevel={2}
-              context={{
-                topicHref: helpHref,
-                onTopic,
-                productId,
-                idPrefix: PANEL_PREFIX,
-                headingShift: 1,
-              }}
-            />
-          </>
-        ) : (
-          <p>{t('center.notFoundDescription', { id: articleId })}</p>
-        )}
-      </div>
-      <div className={styles.panelFooter}>
-        <Link className={styles.panelFullLink} to={helpHref(topic)}>
-          <BookOpen aria-hidden="true" />
-          {t('panel.openFull')}
-        </Link>
+      <div className={styles.panelBody}>
+        <div className={styles.skeletons}>
+          {[0, 1, 2, 3, 4].map((index) => (
+            <Skeleton key={index} height={16} />
+          ))}
+        </div>
       </div>
     </>
   );

@@ -70,13 +70,14 @@
     "revoked": "Einladung widerrufen",
     "tokenHelp": "Es wurde kein Einladungslink erzeugt, weil Benachrichtigungen auf diesem Server nicht aktiviert sind. Gib daher das Token weiter. Die Person meldet sich an und gibt es unter „Einladung annehmen“ ein.",
     "roleHelp": "Die Person erhält diese Rolle im Mandanten, sobald sie die Einladung annimmt.",
+    "roleHelpProduct": "Die Person erhält diese Rolle im Produktteam, sobald sie die Einladung annimmt.",
     "emailInfo": "Annehmen kann die Einladung nur ein angemeldeter Benutzer, dessen Konto genau diese E-Mail-Adresse hat.",
     "expiresInfo": "Einladungen gelten 7 Tage. Um eine zu verlängern, widerrufe sie und lade erneut ein.",
     "expiresAbout": "Über den Ablauf von Einladungen"
   },
   "accept": {
     "title": "Einladung annehmen",
-    "description": "Tritt mit dem erhaltenen Einladungslink oder -Token einem Mandanten bei. Melde dich mit dem Konto der E-Mail-Adresse an, an die die Einladung ging, prüfe die Angaben und bestätige.",
+    "description": "Tritt mit dem erhaltenen Einladungslink oder -Token einem Mandanten oder einem Produktteam bei. Melde dich mit dem Konto der E-Mail-Adresse an, an die die Einladung ging, prüfe die Angaben und bestätige.",
     "token": "Einladungs-Token",
     "tokenHelp": "Füge den Token aus der Einladung ein, falls du den Link nicht geöffnet hast.",
     "tokenFromLink": "Aus deinem Einladungslink übernommen. Er steht nicht mehr in der Adresszeile.",
@@ -85,7 +86,9 @@
     "successBody": "Du bist jetzt Mitglied mit der Rolle {{role}}. Es kann einen Moment dauern, bis der Zugriff überall sichtbar ist.",
     "continue": "Zur Startseite",
     "successBodyNamed": "Du bist jetzt Mitglied von {{tenant}} in {{product}} mit der Rolle {{role}}.",
+    "successBodyProduct": "Du bist jetzt im Team von {{product}} mit der Rolle {{role}}.",
     "openTenant": "Mandant öffnen",
+    "openProduct": "Produkt öffnen",
     "signedInAs": "Angemeldet als <strong>{{account}}</strong>.",
     "switchAccount": "Anderes Konto verwenden",
     "switchAccountAction": "Abmelden und eingeladene Adresse verwenden",
@@ -110,11 +113,14 @@
       },
       "inactive": {
         "title": "Der Mandant ist nicht aktiv",
-        "body": "Der Mandant (oder sein Produkt), zu dem du eingeladen wurdest, ist gesperrt oder geschlossen, deshalb kann gerade niemand beitreten. Deine Einladung wurde nicht verbraucht. Bitte die Person, die dich eingeladen hat, den Mandanten wieder zu aktivieren, und versuche es dann erneut."
+        "body": "Der Mandant (oder sein Produkt), zu dem du eingeladen wurdest, ist gesperrt oder geschlossen, deshalb kann gerade niemand beitreten. Deine Einladung wurde nicht verbraucht. Bitte die Person, die dich eingeladen hat, den Mandanten wieder zu aktivieren, und versuche es dann erneut.",
+        "titleProduct": "Das Produkt ist nicht aktiv",
+        "bodyProduct": "Das Produkt, zu dem du eingeladen wurdest, ist archiviert, deshalb kann gerade niemand seinem Team beitreten. Deine Einladung wurde nicht verbraucht. Bitte die Person, die dich eingeladen hat, das Produkt wiederherzustellen, und versuche es dann erneut."
       },
       "inviterLost": {
         "title": "Die Einladung ist nicht mehr gültig",
-        "body": "Die Person, die dich eingeladen hat, darf dir diese Rolle nicht mehr geben, zum Beispiel weil sich ihre eigene Rolle oder Mitgliedschaft geändert hat. Bitte sie oder eine andere Administratorin bzw. einen anderen Administrator des Mandanten um eine neue Einladung."
+        "body": "Die Person, die dich eingeladen hat, darf dir diese Rolle nicht mehr geben, zum Beispiel weil sich ihre eigene Rolle oder Mitgliedschaft geändert hat. Bitte sie oder eine andere Administratorin bzw. einen anderen Administrator des Mandanten um eine neue Einladung.",
+        "bodyProduct": "Die Person, die dich eingeladen hat, darf dir diese Rolle nicht mehr geben, zum Beispiel weil sich ihre eigene Rolle oder Mitgliedschaft geändert hat. Bitte sie oder eine andere Administratorin bzw. einen anderen Administrator des Produkts um eine neue Einladung."
       },
       "unreachable": {
         "title": "Der Server ist nicht erreichbar",

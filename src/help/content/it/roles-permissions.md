@@ -110,7 +110,7 @@ funzionalità, per esempio `crm.deals:approve`. I loro nomi contengono sempre un
 `<namespace>.<resource>:<action>`. Una volta dichiarate, possono essere concesse tramite ruoli
 personalizzati e chiavi API come quelle predefinite, e il codice del tuo prodotto le verifica.
 
-Apri [Autorizzazioni](app:permissions) per vedere il catalogo del prodotto. È in sola lettura.
+Apri [Autorizzazioni](app:permissions) per vedere il catalogo del prodotto. Con `permissions:manage` (proprietari del prodotto) puoi anche dichiarare autorizzazioni lì.
 
 | Colonna              | Significato                                                                                                                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -125,17 +125,19 @@ sempre tutte le autorizzazioni di prodotto attive; i proprietari e gli amministr
 tutte quelle con ambito tenant.
 
 > [!NOTE]
-> Studio non può dichiarare né dismettere autorizzazioni. Le registra il codice del prodotto, oppure
-> qualcuno con `permissions:manage` (proprietari del prodotto) usa l'API: `PUT` e `DELETE`
-> `/v1/products/{product_id}/permissions/{name}`. Un prodotto può dichiarare fino a 500
+> Scegli **Dichiara autorizzazione** per dichiararne una tramite l'API. Per le autorizzazioni
+> dichiarate così, la matita ne modifica una (o riattiva una dismessa) e il cestino la dismette dopo
+> che hai digitato il suo nome. Le autorizzazioni registrate dal codice del prodotto si modificano
+> nel codice; Studio non offre azioni per loro. Un prodotto può dichiarare fino a 500
 > autorizzazioni.
 
 ### Autorizzazioni dismesse {#retired}
 
 Un'autorizzazione dismessa non concede nulla, anche dove è ancora salvata in un ruolo personalizzato
 o in una chiave API. Dichiararla di nuovo ne ripristina l'effetto per chi la possiede. Salvando un
-ruolo personalizzato in Studio, i nomi dismessi vengono rimossi dal ruolo, e la rotazione di una
-chiave API li rimuove dalla chiave sostitutiva.
+ruolo personalizzato in Studio, i nomi dismessi che contiene restano (l'editor li indica sotto
+l'elenco) e non se ne possono aggiungere di nuovi, e la rotazione di una chiave API li rimuove dalla
+chiave sostitutiva.
 
 ## Risoluzione dei problemi {#troubleshooting}
 

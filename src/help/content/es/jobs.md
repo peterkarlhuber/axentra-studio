@@ -14,10 +14,12 @@ qué ha fallado, y permite a los operadores reintentar o cancelar tareas.
 > [!IMPORTANT]
 > Las tareas requieren el módulo del servidor `events`; sin él, **Tareas** no aparece en la barra
 > lateral. Verlas requiere el permiso `jobs:read` (lo tienen los propietarios, administradores,
-> soporte y observadores del producto). **Poner tarea en cola**, **Reintentar** y **Cancelar
-> tarea** requieren `jobs:manage`; sin ese permiso, estos botones están ocultos. Las tareas solo se
-> ejecutan mientras haya al menos un proceso worker (`axentra worker`) en marcha. Esa es una tarea de
-> operación; consulta la [configuración del servidor](help:server-configuration).
+> soporte y observadores del producto). **Reintentar** y **Cancelar tarea** requieren `jobs:manage`;
+> sin ese permiso, estos botones están ocultos. **Poner tarea en cola** también requiere
+> `jobs:manage`, salvo para los tipos abiertos a los miembros de un inquilino (consulta [quién puede
+> poner en cola cada tipo](#kind-permissions)). Las tareas solo se ejecutan mientras haya al menos
+> un proceso worker (`axentra worker`) en marcha. Esa es una tarea de operación; consulta la
+> [configuración del servidor](help:server-configuration).
 
 ## Leer la lista de tareas {#jobs-list}
 
@@ -208,7 +210,9 @@ La lista de tareas y las estadísticas también están disponibles a través de 
 Quienes tienen `jobs:manage` pueden poner en cola cualquier tipo que no empiece por `axentra.`. A
 través de la API, los miembros de un inquilino que solo tienen `events:publish` pueden poner en cola
 un tipo únicamente cuando el producto les ha abierto ese tipo de forma explícita; si no, el servidor
-responde «no permitido». Studio solo ofrece **Poner tarea en cola** a quienes tienen `jobs:manage`.
+responde «no permitido». Studio también ofrece **Poner tarea en cola** a los miembros de un
+inquilino sin `jobs:manage`: primero eligen un **Inquilino** y después uno de los tipos que tienen
+abiertos en él. Si no tienen ningún tipo abierto en ese inquilino, el diálogo lo indica.
 
 ### Tipos de tarea integrados {#system-kinds}
 

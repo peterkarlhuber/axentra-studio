@@ -91,6 +91,7 @@ inattività (predefinito 120 minuti), quando esci, quando viene revocata, quando
 
 1. Trova il browser in **Le tue sessioni**.
 2. Scegli **Revoca sessione** (l'icona del cestino alla fine della riga).
+3. Conferma **Revocare questa sessione?** con **Revoca sessione**.
 
 Quel browser viene disconnesso alla sua richiesta successiva. La sessione corrente non ha un
 pulsante di revoca; per quella usa **Esci** nel menu utente.
@@ -99,7 +100,7 @@ pulsante di revoca; per quella usa **Esci** nel menu utente.
 
 Per terminare tutte le sessioni tranne quella che stai usando, scegli **Disconnetti tutte le altre
 sessioni** nell'intestazione di **Le tue sessioni**. Il pulsante compare quando esiste almeno
-un'altra sessione.
+un'altra sessione. Studio chiede prima una conferma che indica quante sessioni terminano.
 
 La tua sessione attuale non viene mai disconnessa. Ogni altra sessione viene disconnessa
 separatamente; se alcune non possono esserlo (ad esempio per il limite di richieste), Studio ti dice

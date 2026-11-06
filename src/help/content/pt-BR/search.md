@@ -59,6 +59,9 @@ Em **Tipos**, digite um ou mais tipos separados por vírgulas para ver só esses
 minúsculas, dígitos, pontos, hífens e sublinhados e começam com uma letra; no máximo 20 de cada vez.
 Deixe o campo vazio para pesquisar em todos os tipos.
 
+Abaixo do campo, **Tipos indexados** lista os tipos do índice do tenant com o número de
+documentos. Selecione um para adicioná-lo ao campo, ou selecione-o de novo para removê-lo.
+
 ## Ler os resultados {#results}
 
 Os resultados são ordenados por relevância: correspondências no título contam mais do que no texto,

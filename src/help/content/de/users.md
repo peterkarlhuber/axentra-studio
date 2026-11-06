@@ -47,9 +47,19 @@ Die Karte **Profil** zeigt:
 | **Passwort-Anmeldung**             | **Passwort gesetzt** oder **Kein Passwort (nur Single Sign-on)**.                    |
 | **Letzte Anmeldung**, **Erstellt** | Zeitstempel.                                                                         |
 
-Die Benutzerseite listet die Mitgliedschaften des Benutzers nicht auf. Um zu sehen oder zu ändern, was
-ein Benutzer in einem Mandanten tun darf, öffne den Tab **Mitglieder** des Mandanten; bei
-Produktverantwortlichen den Tab **Mitglieder** des Produkts.
+### Mitgliedschaften {#memberships}
+
+Die Karte **Mitgliedschaften** zeigt, wozu der Benutzer gehört, soweit du es sehen darfst:
+
+- **Produktrollen**: Produkte, in denen der Benutzer Produktverantwortlicher ist, mit der Rolle.
+  Plattform-Administratoren und Plattform-Betrachter sehen alle; andere sehen die Produkte, in
+  denen sie `product_members:read` haben.
+- **Mitgliedschaften in Mandanten**: Mandanten, in denen der Benutzer Mitglied ist, mit Produkt,
+  Rolle und Status des Mandanten. Andere sehen die Mandanten, in denen sie `members:read` haben.
+
+Die Karte ist schreibgeschützt. Um zu ändern, was ein Benutzer tun darf, öffne den Tab
+**Mitglieder** des Mandanten (über den Namen des Mandanten) oder bei Produktverantwortlichen den Tab
+**Mitglieder** des Produkts.
 
 ### Benutzer ohne E-Mail-Adresse {#no-email}
 

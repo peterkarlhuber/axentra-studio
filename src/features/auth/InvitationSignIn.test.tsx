@@ -49,7 +49,10 @@ describe('signed-out invitation links', () => {
       </>,
       {
         route: link,
-        meta: { ...testMeta, auth: { password: true, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+        meta: {
+          ...testMeta,
+          auth: { ...testMeta.auth, password: true, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+        },
       },
     );
     const sso = await screen.findByRole('link', { name: /Corp SSO/ });

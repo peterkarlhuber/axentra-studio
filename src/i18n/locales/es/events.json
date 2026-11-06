@@ -115,7 +115,12 @@
     "priorityInfo": "La prioridad solo decide qué tarea pendiente toma primero un worker libre. No interrumpe las tareas en ejecución ni garantiza un orden.",
     "maxAttemptsInfo": "Tras un error, la tarea se reintenta con una espera cada vez mayor. Cuando falla el último intento, pasa a fallida definitivamente y permanece en la lista, para que puedas leer el error y reintentarla.",
     "idempotencyKeyInfo": "Studio rellena una clave aleatoria nueva cada vez que abres este diálogo, así que un doble clic solo pone la tarea en cola una vez. La misma clave con otro payload u otra prioridad se rechaza.",
-    "skipped": "No ejecutado: producto o inquilino inactivo"
+    "skipped": "No ejecutado: producto o inquilino inactivo",
+    "tenantRequired": "Las tareas que puedes poner en cola se ejecutan en uno de tus inquilinos.",
+    "noOpenKindsTitle": "Aquí no tienes ningún tipo de tarea abierto",
+    "noOpenKinds": "En este inquilino no hay ningún tipo de tarea abierto para tu rol. Pide a un operador del producto que ponga la tarea en cola o que abra el tipo.",
+    "kindOpenHelp": "Los tipos que el producto abrió para tu rol en este inquilino.",
+    "chooseKind": "Elige un tipo"
   },
   "schedules": {
     "title": "Programaciones",

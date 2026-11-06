@@ -70,13 +70,14 @@
     "revoked": "Invito revocato",
     "tokenHelp": "Non è stato generato alcun link di invito perché le notifiche non sono attive su questo server, quindi condividi il token. La persona accede e lo inserisce in “Accetta invito”.",
     "roleHelp": "Dopo l'accettazione, la persona ottiene questo ruolo nel tenant.",
+    "roleHelpProduct": "Dopo l'accettazione, la persona ottiene questo ruolo nel team del prodotto.",
     "emailInfo": "Solo un utente che ha effettuato l'accesso con un account che ha esattamente questo indirizzo email può accettare l'invito.",
     "expiresInfo": "Gli inviti sono validi per 7 giorni. Per prolungarne uno, revocalo e invita di nuovo.",
     "expiresAbout": "Informazioni sulla scadenza degli inviti"
   },
   "accept": {
     "title": "Accetta invito",
-    "description": "Unisciti a un tenant con il link di invito o il token che hai ricevuto. Accedi con l'account dell'indirizzo email a cui è stato inviato l'invito, controlla i dati e conferma.",
+    "description": "Unisciti a un tenant o al team di un prodotto con il link di invito o il token che hai ricevuto. Accedi con l'account dell'indirizzo email a cui è stato inviato l'invito, controlla i dati e conferma.",
     "token": "Token di invito",
     "tokenHelp": "Incolla il token dell'invito se non hai aperto il link.",
     "tokenFromLink": "Ripreso dal tuo link di invito. Non compare più nella barra degli indirizzi.",
@@ -85,7 +86,9 @@
     "successBody": "Ora sei membro con il ruolo {{role}}. Potrebbe essere necessario qualche istante prima che l'accesso sia visibile ovunque.",
     "continue": "Vai alla pagina iniziale",
     "successBodyNamed": "Ora sei membro di {{tenant}} in {{product}} con il ruolo {{role}}.",
+    "successBodyProduct": "Ora fai parte del team di {{product}} con il ruolo {{role}}.",
     "openTenant": "Apri il tenant",
+    "openProduct": "Apri il prodotto",
     "signedInAs": "Accesso effettuato come <strong>{{account}}</strong>.",
     "switchAccount": "Usa un altro account",
     "switchAccountAction": "Esci e usa l'indirizzo invitato",
@@ -110,11 +113,14 @@
       },
       "inactive": {
         "title": "Il tenant non è attivo",
-        "body": "Il tenant (o il suo prodotto) a cui sei stato invitato è sospeso o chiuso, quindi al momento nessuno può entrarvi. Il tuo invito non è stato usato. Chiedi alla persona che ti ha invitato di riattivare il tenant, poi riprova."
+        "body": "Il tenant (o il suo prodotto) a cui sei stato invitato è sospeso o chiuso, quindi al momento nessuno può entrarvi. Il tuo invito non è stato usato. Chiedi alla persona che ti ha invitato di riattivare il tenant, poi riprova.",
+        "titleProduct": "Il prodotto non è attivo",
+        "bodyProduct": "Il prodotto a cui sei stato invitato è archiviato, quindi al momento nessuno può entrare nel suo team. Il tuo invito non è stato usato. Chiedi alla persona che ti ha invitato di ripristinare il prodotto, poi riprova."
       },
       "inviterLost": {
         "title": "L’invito non è più valido",
-        "body": "La persona che ti ha invitato non può più assegnarti questo ruolo, per esempio perché il suo ruolo o la sua appartenenza sono cambiati. Chiedi a lei o a un’altra persona che amministra il tenant un nuovo invito."
+        "body": "La persona che ti ha invitato non può più assegnarti questo ruolo, per esempio perché il suo ruolo o la sua appartenenza sono cambiati. Chiedi a lei o a un’altra persona che amministra il tenant un nuovo invito.",
+        "bodyProduct": "La persona che ti ha invitato non può più assegnarti questo ruolo, per esempio perché il suo ruolo o la sua appartenenza sono cambiati. Chiedi a lei o a un’altra persona che amministra il prodotto un nuovo invito."
       },
       "unreachable": {
         "title": "Il server non è raggiungibile",

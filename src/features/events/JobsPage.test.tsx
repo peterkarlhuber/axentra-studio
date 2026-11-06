@@ -175,6 +175,108 @@ describe('JobsPage', { timeout: 20_000 }, () => {
     expect(screen.queryByRole('button', { name: /Actions for job/ })).not.toBeInTheDocument();
   });
 
+  it('lets a tenant member enqueue only the kinds opened to them in a tenant', async () => {
+    const { calls } = mockApi(
+      ({ method, path, search }) => {
+        if (path.endsWith('/jobs/stats')) return jsonResponse(stats);
+        if (method === 'GET' && path === `/v1/products/${PID}/jobs`) return page([]);
+        if (path === `/v1/products/${PID}/jobs/kinds`)
+          return jsonResponse(
+            search.get('tenant_id') === 'ten_1'
+              ? {
+                  any_kind: false,
+                  items: [{ kind: 'reports.export', enqueue_permission: 'reports:export' }],
+                }
+              : { any_kind: false, items: [] },
+          );
+        if (method === 'POST' && path === `/v1/products/${PID}/jobs`)
+          return jsonResponse({ ...baseJob, id: 'job_new' }, { status: 201 });
+        return undefined;
+      },
+      {
+        permissions: [],
+        tenants: [
+          {
+            tenant: { id: 'ten_1', name: 'Acme' },
+            role: 'member',
+            permissions: ['jobs:read', 'reports:export'],
+          },
+        ],
+      },
+    );
+    const user = userEvent.setup();
+    render();
+    await user.click(await screen.findByRole('button', { name: 'Enqueue job' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Enqueue job' });
+    const kind = within(dialog).getByRole('combobox', { name: /^Kind/ });
+    expect(kind).toBeDisabled();
+    // No product-level option: a tenant is required.
+    const tenant = within(dialog).getByRole('combobox', { name: /^Tenant/ });
+    expect(within(tenant).queryByRole('option', { name: 'Product level' })).toBeNull();
+    await user.selectOptions(tenant, await within(tenant).findByRole('option', { name: 'Acme' }));
+    await within(kind).findByRole('option', { name: 'reports.export' });
+    await user.selectOptions(kind, 'reports.export');
+    await user.click(within(dialog).getByRole('button', { name: 'Enqueue' }));
+    expect(await screen.findByTestId('location')).toHaveTextContent(`/p/${PID}/jobs/job_new`);
+    const post = calls.find((call) => call.method === 'POST' && call.path.endsWith('/jobs'));
+    expect(post?.body).toMatchObject({ kind: 'reports.export', tenant_id: 'ten_1' });
+    // The kinds were asked for the chosen tenant only, never at product level.
+    const kindCalls = calls.filter((call) => call.path.endsWith('/jobs/kinds'));
+    expect(kindCalls.length).toBeGreaterThan(0);
+    expect(kindCalls.every((call) => call.search.get('tenant_id') === 'ten_1')).toBe(true);
+  });
+
+  it('tells a tenant member when no kind is open to them in the tenant', async () => {
+    mockApi(
+      ({ method, path }) => {
+        if (path.endsWith('/jobs/stats')) return jsonResponse(stats);
+        if (method === 'GET' && path === `/v1/products/${PID}/jobs`) return page([]);
+        if (path === `/v1/products/${PID}/jobs/kinds`)
+          return jsonResponse({ any_kind: false, items: [] });
+        return undefined;
+      },
+      {
+        permissions: [],
+        tenants: [
+          { tenant: { id: 'ten_1', name: 'Acme' }, role: 'viewer', permissions: ['jobs:read'] },
+        ],
+      },
+    );
+    const user = userEvent.setup();
+    render();
+    await user.click(await screen.findByRole('button', { name: 'Enqueue job' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Enqueue job' });
+    const tenant = within(dialog).getByRole('combobox', { name: /^Tenant/ });
+    await user.selectOptions(tenant, await within(tenant).findByRole('option', { name: 'Acme' }));
+    expect(
+      await within(dialog).findByText('No job kinds are open to you here'),
+    ).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: 'Enqueue' })).toBeDisabled();
+  });
+
+  it('suggests the declared kinds to jobs:manage holders without limiting them', async () => {
+    mockApi(({ method, path }) => {
+      if (path.endsWith('/jobs/stats')) return jsonResponse(stats);
+      if (method === 'GET' && path === `/v1/products/${PID}/jobs`) return page([]);
+      if (path === `/v1/products/${PID}/jobs/kinds`)
+        return jsonResponse({
+          any_kind: true,
+          items: [{ kind: 'reports.send', enqueue_permission: null }],
+        });
+      return undefined;
+    });
+    const user = userEvent.setup();
+    render();
+    await user.click(await screen.findByRole('button', { name: 'Enqueue job' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Enqueue job' });
+    const kind = within(dialog).getByRole('combobox', { name: /^Kind/ });
+    await waitFor(() => expect(kind).toHaveAttribute('list'));
+    const list = document.getElementById(kind.getAttribute('list') ?? '');
+    expect(list?.querySelector('option')?.getAttribute('value')).toBe('reports.send');
+    await user.type(kind, 'anything.else');
+    expect(within(dialog).getByRole('button', { name: 'Enqueue' })).toBeEnabled();
+  });
+
   it('explains a missing permission from the server', async () => {
     mockApi(({ path }) =>
       path.includes('/jobs')

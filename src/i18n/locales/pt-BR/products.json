@@ -30,14 +30,16 @@
   "empty": {
     "title": "Nenhum produto ainda",
     "body": "Você não é membro de nenhum produto. Peça acesso a um administrador da plataforma.",
-    "bodyAdmin": "Crie o primeiro produto para começar a gerenciar tenants e usuários."
+    "bodyAdmin": "Crie o primeiro produto para começar a gerenciar tenants e usuários.",
+    "titleNoAccess": "Ainda não há produtos para você"
   },
   "tabs": {
     "label": "Seções do produto",
     "details": "Detalhes",
     "settings": "Configurações",
     "files": "Arquivos",
-    "members": "Membros"
+    "members": "Membros",
+    "invitations": "Convites"
   },
   "settings": {
     "title": "Configurações do produto",
@@ -61,5 +63,6 @@
     "archivedNotice": "Este produto está arquivado: seus operadores, membros de tenants e chaves de API não têm acesso. Restaure-o para fazer alterações.",
     "singleMode": "O servidor opera no modo de produto único, portanto este produto não pode ser arquivado. Você pode alterar o nome, a descrição, as configurações e os membros."
   },
-  "membersDescription": "Operadores deste produto. A função deles vale em todos os tenants; os membros de tenants são gerenciados em cada tenant."
+  "membersDescription": "Operadores deste produto. A função deles vale em todos os tenants; os membros de tenants são gerenciados em cada tenant.",
+  "invitationsDescription": "Convide operadores por e-mail para a equipe deste produto. Depois de aceitar, eles têm a função do produto em todos os tenants."
 }

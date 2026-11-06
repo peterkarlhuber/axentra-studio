@@ -54,7 +54,8 @@
     "keyInfo": "2–41 Kleinbuchstaben, Ziffern oder Unterstriche. Schlüssel integrierter Rollen wie „member“ sind nicht erlaubt.",
     "scopeInfo": "Der Geltungsbereich lässt sich nach dem Anlegen nicht mehr ändern.",
     "permissionsInfo": "Plattform-Berechtigungen können nicht Teil einer Rolle sein. Eine Rolle vergeben kann nur, wer alle ihre Berechtigungen selbst besitzt (Rollen-Obergrenze).",
-    "permissionsAbout": "Über Rollenberechtigungen"
+    "permissionsAbout": "Über Rollenberechtigungen",
+    "retiredKept": "Stillgelegte Berechtigungen, die erhalten bleiben: {{permissions}}. Solange stillgelegt, gewähren diese nichts; beim Speichern bleiben sie erhalten."
   },
   "keys": {
     "title": "API-Schlüssel",
@@ -118,11 +119,13 @@
     "lastUsedInfo": "Zeitpunkt der letzten erfolgreichen Anfrage mit diesem Schlüssel. Wird höchstens einmal pro Minute aktualisiert.",
     "lastUsedAbout": "Über „Zuletzt verwendet“",
     "secretUsage": "Sende das Geheimnis bei jeder Anfrage im Header „Authorization: Bearer <Geheimnis>“ oder „X-API-Key: <Geheimnis>“.",
-    "creatorHint": "Ein Schlüssel funktioniert nur, solange die Person, die ihn erstellt hat, die Berechtigungen noch besitzt, die er verwendet."
+    "creatorHint": "Ein Schlüssel funktioniert nur, solange die Person, die ihn erstellt hat, die Berechtigungen noch besitzt, die er verwendet.",
+    "creatorLost": "Ersteller ohne Zugriff",
+    "creatorLostMissing": "Nicht nutzbar für: {{permissions}}"
   },
   "catalog": {
     "title": "Berechtigungen",
-    "description": "Alles, was in diesem Produkt vergeben werden kann: die Berechtigungen, die das Produkt selbst festlegt, und die integrierten Berechtigungen von Axentra. Nur lesbar; Produkte legen ihre Berechtigungen im eigenen Code oder über die API fest.",
+    "description": "Alles, was in diesem Produkt vergeben werden kann: die Berechtigungen, die das Produkt selbst festlegt, und die integrierten Berechtigungen von Axentra. Produkte legen ihre Berechtigungen im eigenen Code oder über die API fest; mit permissions:manage kannst du sie auch hier festlegen.",
     "own": "Produktberechtigungen",
     "ownDescription": "Von diesem Produkt festgelegt. Inhaber und Administratoren erhalten sie automatisch; Betrachter und Support erhalten die nur lesenden.",
     "ownEmpty": "Dieses Produkt legt keine eigenen Berechtigungen fest",
@@ -147,5 +150,33 @@
     "defaultRolesAbout": "Über Standardzuweisungen",
     "declaredByInfo": "Produktcode: vom Code des Produkts beim Start registriert; dort zu ändern. API: über die HTTP-API von jemandem mit permissions:manage festgelegt.",
     "declaredByAbout": "Über „Festgelegt durch“"
+  },
+  "declare": {
+    "title": "Berechtigung festlegen",
+    "editTitle": "{{name}} ändern",
+    "description": "Eine hier festgelegte Berechtigung kann über eigene Rollen und API-Schlüssel vergeben werden. Dein Produktcode prüft sie.",
+    "submit": "Berechtigung festlegen",
+    "nameHelp": "<namespace>.<resource>:<action>, kleingeschrieben, zum Beispiel crm.deals:approve. Lässt sich später nicht ändern.",
+    "nameInvalid": "Verwende <namespace>.<resource>:<action> aus Kleinbuchstaben, Ziffern und Unterstrichen, zum Beispiel crm.deals:approve.",
+    "scopeHelp": {
+      "tenant": "Wird pro Mandant vergeben (Mandantenrollen, mandantenbezogene Schlüssel).",
+      "product": "Wird für das ganze Produkt vergeben (Produktrollen, Schlüssel auf Produktebene)."
+    },
+    "descriptionField": "Beschreibung",
+    "defaultRolesHelp": "Owner und Admins haben sie immer. Wähle weitere integrierte Rollen, die sie haben sollen.",
+    "readLike": "Liest nur Daten",
+    "readLikeHelp": "Rollen mit Lesezugriff (Support und Viewer) erhalten Berechtigungen, die nur Daten lesen.",
+    "readLikeAuto": "Automatisch (wenn der Name auf :read endet)",
+    "readLikeYes": "Ja",
+    "readLikeNo": "Nein",
+    "created": "Berechtigung {{name}} festgelegt",
+    "updated": "Berechtigung {{name}} gespeichert",
+    "editNamed": "{{name}} ändern",
+    "reactivateNamed": "{{name}} reaktivieren",
+    "retireNamed": "{{name}} stilllegen",
+    "retire": "Berechtigung stilllegen",
+    "retireTitle": "Berechtigung stilllegen?",
+    "retireBody": "{{name}} gewährt dann nichts mehr, auch dort nicht, wo eigene Rollen und API-Schlüssel sie noch aufführen. Erneutes Festlegen stellt sie wieder her. Gib zur Bestätigung den Namen ein.",
+    "retired": "Berechtigung {{name}} stillgelegt"
   }
 }

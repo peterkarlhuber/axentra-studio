@@ -12,8 +12,8 @@ de ces deux façons :
 - **Inviter** une personne par e-mail. Elle accepte l’invitation après s’être connectée et devient membre
   avec le rôle que tu as choisi.
 
-Les opérateurs d’un produit entier se gèrent quant à eux au niveau du produit, voir
-[produits](help:products#members).
+Les opérateurs d’un produit entier se gèrent au niveau du produit et peuvent être invités dans
+son équipe de la même façon, voir [invitations dans l’équipe du produit](#product-team).
 
 > [!IMPORTANT]
 > Voir les onglets **Membres** et **Invitations** d’un locataire exige `members:read` dans le locataire ;
@@ -111,6 +111,24 @@ de nouveau la personne. Il ne peut exister qu’une seule invitation ouverte à 
 
 Choisis l’icône de corbeille à côté d’une invitation **En attente** et confirme **Révoquer l’invitation ?**. Le
 lien et le jeton cessent immédiatement de fonctionner.
+
+## Inviter des opérateurs dans l’équipe d’un produit {#product-team}
+
+Tu peux aussi inviter des opérateurs (utilisateurs avec un rôle de produit, voir
+[produits](help:products#members)) par e-mail. Ouvre le produit depuis [Produits](app:products) et
+sélectionne l’onglet **Invitations**, ou choisis **Envoyer plutôt une invitation** quand **Ajouter
+un membre** dans l’onglet **Membres** ne trouve pas l’adresse. Studio présélectionne **Product
+viewer**, ou le premier rôle de produit que tu peux attribuer.
+
+- L’onglet nécessite `product_members:read` ; inviter et révoquer nécessite
+  `product_members:manage`.
+- Le lien, le jeton, l’envoi, la validité de 7 jours et la révocation fonctionnent comme pour les
+  invitations dans un locataire. Le jeton commence par `axpinv_`, et la page **Accepter
+  l’invitation** le reconnaît.
+- Après avoir accepté, la personne a le rôle de produit dans chaque locataire du produit. Un rôle
+  de produit qu’elle a déjà reste inchangé.
+- Personne ne peut rejoindre l’équipe d’un produit archivé. L’invitation reste inutilisée jusqu’à
+  la restauration du produit.
 
 ## Accepter une invitation {#accept}
 

@@ -49,9 +49,19 @@ La tarjeta **Perfil** muestra:
 | **Inicio de sesión con contraseña**     | **Contraseña establecida** o **Sin contraseña (solo inicio de sesión único)**.                   |
 | **Último inicio de sesión**, **Creado** | Marcas de tiempo.                                                                                |
 
-La página del usuario no muestra sus membresías. Para ver o cambiar lo que un usuario puede hacer en
-un inquilino, abre la pestaña **Miembros** del inquilino; para los operadores, la pestaña
-**Miembros** del producto.
+### Membresías {#memberships}
+
+La tarjeta **Membresías** muestra a qué pertenece el usuario, en la medida en que puedas verlo:
+
+- **Roles de producto**: productos en los que el usuario es operador, con el rol. Los
+  administradores y observadores de la plataforma ven todos; los demás ven los productos en los
+  que tienen `product_members:read`.
+- **Membresías de inquilinos**: inquilinos en los que el usuario es miembro, con el producto, el
+  rol y el estado del inquilino. Los demás ven los inquilinos en los que tienen `members:read`.
+
+La tarjeta es de solo lectura. Para cambiar lo que un usuario puede hacer, abre la pestaña
+**Miembros** del inquilino (desde su nombre) o, para los operadores, la pestaña **Miembros** del
+producto.
 
 ### Usuarios sin dirección de correo electrónico {#no-email}
 

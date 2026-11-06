@@ -54,7 +54,8 @@
     "keyInfo": "2–41 lowercase letters, digits or underscores. Built-in keys such as “member” cannot be used.",
     "scopeInfo": "The scope cannot be changed after the role is created.",
     "permissionsInfo": "Platform permissions cannot be part of a role. Only people who hold all of a role's permissions can assign it to others (role ceiling).",
-    "permissionsAbout": "About role permissions"
+    "permissionsAbout": "About role permissions",
+    "retiredKept": "Retired permissions it keeps: {{permissions}}. They grant nothing while retired and are kept on save."
   },
   "keys": {
     "title": "API keys",
@@ -118,11 +119,13 @@
     "lastUsedInfo": "Time of the last successful request with this key. Updated at most once a minute.",
     "lastUsedAbout": "About last used",
     "secretUsage": "Send the secret with every request in the header “Authorization: Bearer <secret>” or “X-API-Key: <secret>”.",
-    "creatorHint": "A key works only as long as the person who created it still holds the permissions it uses."
+    "creatorHint": "A key works only as long as the person who created it still holds the permissions it uses.",
+    "creatorLost": "Creator lost access",
+    "creatorLostMissing": "Not usable for: {{permissions}}"
   },
   "catalog": {
     "title": "Permissions",
-    "description": "Everything that can be granted in this product: the permissions the product declares itself and Axentra’s built-in permissions. Read-only; products declare their permissions in their code or through the API.",
+    "description": "Everything that can be granted in this product: the permissions the product declares itself and Axentra’s built-in permissions. Products declare their permissions in their code or through the API; with permissions:manage you can declare them here too.",
     "own": "Product permissions",
     "ownDescription": "Declared by this product. Owners and admins hold them automatically; viewers and support hold the read-only ones.",
     "ownEmpty": "This product declares no permissions of its own",
@@ -147,5 +150,33 @@
     "defaultRolesAbout": "About default grants",
     "declaredByInfo": "Product code: registered by the product's code at start; change it there. API: declared over the HTTP API by someone with permissions:manage.",
     "declaredByAbout": "About declared by"
+  },
+  "declare": {
+    "title": "Declare permission",
+    "editTitle": "Change {{name}}",
+    "description": "A permission declared here can be granted through custom roles and API keys. Your product code checks it.",
+    "submit": "Declare permission",
+    "nameHelp": "<namespace>.<resource>:<action>, lowercase, for example crm.deals:approve. Cannot be changed later.",
+    "nameInvalid": "Use <namespace>.<resource>:<action> in lowercase letters, digits and underscores, for example crm.deals:approve.",
+    "scopeHelp": {
+      "tenant": "Granted per tenant (tenant roles, tenant-scoped keys).",
+      "product": "Granted for the whole product (product roles, product-level keys)."
+    },
+    "descriptionField": "Description",
+    "defaultRolesHelp": "Owners and admins always hold it. Select further built-in roles that should hold it.",
+    "readLike": "Only reads data",
+    "readLikeHelp": "Read-only roles (support and viewers) hold permissions that only read data.",
+    "readLikeAuto": "Automatic (when the name ends in :read)",
+    "readLikeYes": "Yes",
+    "readLikeNo": "No",
+    "created": "Permission {{name}} declared",
+    "updated": "Permission {{name}} saved",
+    "editNamed": "Change {{name}}",
+    "reactivateNamed": "Re-activate {{name}}",
+    "retireNamed": "Retire {{name}}",
+    "retire": "Retire permission",
+    "retireTitle": "Retire permission?",
+    "retireBody": "{{name}} stops granting anything, also where custom roles and API keys still list it. Declaring it again restores it. Type the name to confirm.",
+    "retired": "Permission {{name}} retired"
   }
 }

@@ -12,8 +12,8 @@ kann. Du gibst jemandem auf eine von zwei Arten Zugriff:
 - **Einladen**: eine Person per E-Mail einladen. Die Person nimmt die Einladung nach der Anmeldung an und
   wird Mitglied mit der Rolle, die du gewählt hast.
 
-Die Verantwortlichen eines ganzen Produkts werden dagegen beim Produkt verwaltet, siehe
-[Produkte](help:products#members).
+Die Verantwortlichen eines ganzen Produkts werden beim Produkt verwaltet und können genauso in
+sein Team eingeladen werden, siehe [Einladungen ins Produktteam](#product-team).
 
 > [!IMPORTANT]
 > Um die Tabs **Mitglieder** und **Einladungen** eines Mandanten zu sehen, brauchst du im Mandanten
@@ -115,6 +115,23 @@ geben.
 
 Wähle das Papierkorbsymbol neben einer **ausstehenden** Einladung und bestätige **Einladung
 widerrufen?**. Link und Token funktionieren sofort nicht mehr.
+
+## Produktverantwortliche ins Produktteam einladen {#product-team}
+
+Auch Produktverantwortliche (Benutzer mit einer Produktrolle, siehe
+[Produkte](help:products#members)) kannst du per E-Mail einladen. Öffne das Produkt über
+[Produkte](app:products) und wähle den Tab **Einladungen**, oder wähle **Stattdessen einladen**, wenn
+**Mitglied hinzufügen** im Tab **Mitglieder** die Adresse nicht findet. Studio wählt **Product
+viewer** vor, oder die erste Produktrolle, die du vergeben darfst.
+
+- Der Tab braucht `product_members:read`; Einladen und Widerrufen braucht `product_members:manage`.
+- Link, Token, Zustellung, die Gültigkeit von 7 Tagen und das Widerrufen funktionieren wie bei
+  Einladungen in einen Mandanten. Das Token beginnt mit `axpinv_`, und die Seite **Einladung
+  annehmen** erkennt es.
+- Nach dem Annehmen hat die Person die Produktrolle in allen Mandanten des Produkts. Eine
+  Produktrolle, die sie schon hat, bleibt unverändert.
+- Dem Team eines archivierten Produkts kann niemand beitreten. Die Einladung bleibt unverbraucht,
+  bis das Produkt wiederhergestellt ist.
 
 ## Eine Einladung annehmen {#accept}
 

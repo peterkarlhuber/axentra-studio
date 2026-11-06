@@ -109,11 +109,11 @@ Funções de produto personalizadas também aparecem na lista. Veja
 > `product_members:manage` (proprietários do produto e administradores da plataforma).
 
 > [!NOTE]
-> Não existem convites para operadores. A pessoa já precisa ter uma conta que você consiga ver:
-> administradores da plataforma veem todas as contas; usuários com `product_users:read` veem os
-> usuários deste produto (membros dos tenants dele e operadores). Para qualquer outra pessoa, o
-> servidor responde **Usuário não encontrado**. Convide a pessoa para um dos tenants do produto
-> primeiro ou peça a um administrador da plataforma que a adicione.
+> Você só pode adicionar contas que consiga ver: administradores da plataforma veem todas as
+> contas; usuários com `product_users:read` veem os usuários deste produto (membros dos tenants
+> dele e operadores). Para qualquer outra pessoa, o servidor responde **Usuário não encontrado** e
+> a caixa de diálogo oferece **Enviar convite**, que convida o endereço para a equipe do produto.
+> Veja [convites para a equipe do produto](help:members-invitations#product-team).
 
 Para alterar a função de um operador, escolha uma nova na coluna **Função**. Para remover um
 operador, escolha o ícone de lixeira na linha dele e confirme. Funções acima do seu nível aparecem,

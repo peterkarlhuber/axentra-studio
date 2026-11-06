@@ -115,7 +115,12 @@
     "priorityInfo": "Die Priorität entscheidet nur, welchen fälligen Job ein freier Worker zuerst übernimmt; laufende Jobs unterbricht sie nicht, und eine Reihenfolge ist nicht garantiert.",
     "maxAttemptsInfo": "Nach einem Fehler wird der Job mit wachsender Wartezeit wiederholt. Scheitert der letzte Versuch, ist er endgültig fehlgeschlagen und bleibt in der Liste, damit du den Fehler lesen und ihn erneut ausführen kannst.",
     "idempotencyKeyInfo": "Studio setzt bei jedem Öffnen dieses Dialogs einen neuen zufälligen Schlüssel ein, damit ein Doppelklick nur einmal einreiht. Derselbe Schlüssel mit anderen Nutzdaten oder anderer Priorität wird abgelehnt.",
-    "skipped": "Nicht ausgeführt: Produkt oder Mandant inaktiv"
+    "skipped": "Nicht ausgeführt: Produkt oder Mandant inaktiv",
+    "tenantRequired": "Jobs, die du einreihen darfst, laufen in einem deiner Mandanten.",
+    "noOpenKindsTitle": "Hier sind keine Job-Arten für dich freigegeben",
+    "noOpenKinds": "In diesem Mandanten ist keine Job-Art für deine Rolle freigegeben. Bitte eine Produktverantwortliche oder einen Produktverantwortlichen, den Job einzureihen oder die Art freizugeben.",
+    "kindOpenHelp": "Die Arten, die das Produkt in diesem Mandanten für deine Rolle freigegeben hat.",
+    "chooseKind": "Art wählen"
   },
   "schedules": {
     "title": "Zeitpläne",

@@ -26,6 +26,13 @@ const SSO_KEY = 'axentra.studio.invitationSentWithSso';
  * invitation given on start (`invitation_accepted=<tenant id>`).
  */
 export const INVITATION_ACCEPTED_PARAM = 'invitation_accepted';
+/** The same for a product team invitation (`product_invitation_accepted=<product id>`). */
+export const PRODUCT_INVITATION_ACCEPTED_PARAM = 'product_invitation_accepted';
+
+/** Product team invitations (operators) have their own token prefix and accept endpoint. */
+export function isProductInvitationToken(token: string): boolean {
+  return token.startsWith('axpinv_');
+}
 
 /** The token kept for this tab, or null. */
 export function readPendingInvitation(): string | null {

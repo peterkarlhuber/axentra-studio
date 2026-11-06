@@ -106,7 +106,7 @@ exemple `crm.deals:approve`. Leur nom contient toujours un point : `<namespace>
 Une fois déclarées, elles peuvent être accordées par des rôles personnalisés et des clés d’API comme les autorisations intégrées, et le
 code de ton produit les vérifie.
 
-Ouvre [Autorisations](app:permissions) pour voir le catalogue du produit. Il est en lecture seule.
+Ouvre [Autorisations](app:permissions) pour voir le catalogue du produit. Avec `permissions:manage` (propriétaires du produit), tu peux aussi y déclarer des autorisations.
 
 | Colonne                  | Signification                                                                                                                                                                                                                                                                               |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,15 +120,19 @@ Les propriétaires et administrateurs du produit ainsi que les administrateurs d
 actives ; les propriétaires et administrateurs d’un locataire, toutes celles de portée locataire.
 
 > [!NOTE]
-> Studio ne peut ni déclarer ni retirer des autorisations. C’est le code du produit qui les enregistre, ou une personne disposant de
-> `permissions:manage` (propriétaires du produit) qui utilise l’API : `PUT` et `DELETE`
-> `/v1/products/{product_id}/permissions/{name}`. Un produit peut déclarer jusqu’à 500 autorisations.
+> Choisis **Déclarer une autorisation** pour en déclarer une via l’API. Pour les autorisations
+> déclarées ainsi, le crayon en modifie une (ou réactive une autorisation retirée) et la corbeille
+> la retire après que tu as saisi son nom. Les autorisations enregistrées par le code du produit se
+> modifient dans le code ; Studio ne propose aucune action pour elles. Un produit peut déclarer
+> jusqu’à 500 autorisations.
 
 ### Autorisations retirées {#retired}
 
-Une autorisation retirée n’accorde plus rien, même là où elle est encore enregistrée dans un rôle personnalisé ou une clé d’API.
-La déclarer de nouveau rétablit son effet pour ces détenteurs. Enregistrer un rôle personnalisé dans Studio en retire
-les noms retirés, et le renouvellement d’une clé d’API les retire de la clé de remplacement.
+Une autorisation retirée n’accorde plus rien, même là où elle est encore enregistrée dans un rôle
+personnalisé ou une clé d’API. La déclarer de nouveau rétablit son effet pour ces détenteurs.
+Enregistrer un rôle personnalisé dans Studio conserve les noms retirés qu’il contient (l’éditeur les
+indique sous la liste) sans permettre d’en ajouter, et le renouvellement d’une clé d’API les retire
+de la clé de remplacement.
 
 ## Dépannage {#troubleshooting}
 

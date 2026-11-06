@@ -14,10 +14,11 @@ operadores tentem novamente ou cancelem jobs.
 > [!IMPORTANT]
 > Os jobs exigem o módulo do servidor `events`; sem ele, **Jobs** não aparece na barra lateral.
 > Visualizar exige a permissão `jobs:read` (proprietários, administradores, suporte e leitores do
-> produto a têm). **Enfileirar job**, **Tentar novamente** e **Cancelar job** exigem
-> `jobs:manage`; sem essa permissão, esses botões ficam ocultos. Os jobs só rodam enquanto houver
-> pelo menos um processo worker (`axentra worker`) em execução. Isso é uma tarefa de operação;
-> veja [Configuração do servidor](help:server-configuration).
+> produto a têm). **Tentar novamente** e **Cancelar job** exigem `jobs:manage`; sem essa permissão,
+> esses botões ficam ocultos. **Enfileirar job** também exige `jobs:manage`, exceto para tipos
+> liberados para membros de tenant (veja [quem pode enfileirar cada tipo](#kind-permissions)). Os
+> jobs só rodam enquanto houver pelo menos um processo worker (`axentra worker`) em execução. Isso é
+> uma tarefa de operação; veja [Configuração do servidor](help:server-configuration).
 
 ## Ler a lista de jobs {#jobs-list}
 
@@ -203,8 +204,10 @@ A lista de jobs e as estatísticas também estão disponíveis pela API:
 
 Quem tem `jobs:manage` pode enfileirar qualquer tipo que não comece com `axentra.`. Pela API,
 membros de tenant que têm apenas `events:publish` só podem enfileirar um tipo quando o produto o
-liberou explicitamente para eles; caso contrário, o servidor responde “não permitido”. O Studio só
-oferece **Enfileirar job** a quem tem `jobs:manage`.
+liberou explicitamente para eles; caso contrário, o servidor responde “não permitido”. O Studio
+também oferece **Enfileirar job** a membros de tenant sem `jobs:manage`: eles escolhem primeiro um
+**Tenant** e depois um dos tipos liberados para eles ali. Se nenhum tipo estiver liberado para eles
+nesse tenant, a caixa de diálogo informa isso.
 
 ### Tipos de job integrados {#system-kinds}
 

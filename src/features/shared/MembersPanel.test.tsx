@@ -25,6 +25,36 @@ const VIEWER = ['tenant:read', 'members:read', 'records:read', 'files:read'];
 const role = (key: string, name: string, permissions: string[], scope = 'tenant'): Role =>
   ({ key, name, permissions, scope, builtin: true, description: '', id: null, version: 1 }) as Role;
 
+const PRODUCT_PERMS = [
+  'product:read',
+  'product_members:read',
+  'product_members:manage',
+  'tenants:read',
+];
+
+const productRoles = [
+  role('product_owner', 'Product owner', PRODUCT_PERMS, 'product'),
+  role('product_admin', 'Product admin', ['product:read', 'tenants:read'], 'product'),
+  role('product_viewer', 'Product viewer', ['product:read'], 'product'),
+];
+
+const productInvitationCreated = (email: string) => ({
+  invitation: {
+    id: 'pinv_new',
+    product_id: PRODUCT,
+    email,
+    role: 'product_viewer',
+    status: 'pending',
+    invited_by: 'usr_me',
+    created_at: '2026-11-06T00:00:00Z',
+    expires_at: '2026-11-13T00:00:00Z',
+    accepted_at: null,
+    revoked_at: null,
+  },
+  token: 'axpinv_secret',
+  accept_url: null,
+});
+
 const tenantRoles = [
   role('tenant_owner', 'Owner', TENANT_PERMS),
   role('tenant_admin', 'Admin', TENANT_PERMS),
@@ -53,7 +83,7 @@ function makeMe(product: { role: string | null; permissions: string[] }, tenantR
 
 type Handler = (request: Request, url: URL) => Response | undefined;
 
-function mockApi(me: Me, handler: Handler) {
+function mockApi(me: Me, handler: Handler, roles: Role[] = tenantRoles) {
   const calls: Request[] = [];
   configureApi({
     baseUrl: 'http://axentra.test',
@@ -62,7 +92,7 @@ function mockApi(me: Me, handler: Handler) {
       const url = new URL(request.url);
       if (url.pathname === '/v1/auth/session') return jsonResponse({ csrf_token: 'csrf' });
       if (url.pathname === '/v1/me') return jsonResponse(me);
-      if (url.pathname === `/v1/products/${PRODUCT}/roles`) return jsonResponse(tenantRoles);
+      if (url.pathname === `/v1/products/${PRODUCT}/roles`) return jsonResponse(roles);
       return (
         handler(request, url) ?? jsonResponse({ code: 'not_found', status: 404 }, { status: 404 })
       );
@@ -226,7 +256,57 @@ describe('MembersPanel add → invite instead', () => {
     expect(await invite.json()).toEqual({ email: 'new@example.com', role: 'viewer' });
   });
 
-  it('explains the 404 for product members, where Axentra has no invitations', async () => {
+  it('invites an unknown address to the product team instead', async () => {
+    const me = makeMe({ role: 'product_owner', permissions: [...PRODUCT_PERMS] });
+    const path = `/v1/products/${PRODUCT}/members`;
+    const calls = mockApi(
+      me,
+      (request, url) => {
+        if (url.pathname === path && request.method === 'GET') return jsonResponse([]);
+        if (url.pathname === path && request.method === 'POST')
+          return jsonResponse({ code: 'not_found', status: 404 }, { status: 404 });
+        if (url.pathname === `/v1/products/${PRODUCT}/invitations` && request.method === 'POST')
+          return jsonResponse(productInvitationCreated('x@example.com'), { status: 201 });
+        return undefined;
+      },
+      [...tenantRoles, ...productRoles],
+    );
+    renderWithProviders(
+      <MembersPanel
+        productId={PRODUCT}
+        scope="product"
+        caption="Members"
+        queryKey={['test', 'product-members-invite']}
+        list={() => productsApi.members(PRODUCT)}
+        add={(body) => productsApi.addMember(PRODUCT, body)}
+        updateRole={(userId, next) => productsApi.updateMember(PRODUCT, userId, next)}
+        remove={(userId) => productsApi.removeMember(PRODUCT, userId)}
+        invite={(body) => productsApi.invite(PRODUCT, body)}
+        canManage
+      />,
+    );
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: 'Add member' }));
+    const dialog = await screen.findByRole('dialog');
+    await user.type(
+      within(dialog).getByRole('textbox', { name: /Email address/ }),
+      'x@example.com',
+    );
+    const select = within(dialog).getByRole('combobox', { name: /Role/ });
+    await within(select).findByRole('option', { name: /Product viewer/ });
+    await user.selectOptions(select, 'product_viewer');
+    await user.click(within(dialog).getByRole('button', { name: 'Add member' }));
+    await user.click(
+      await within(dialog).findByRole('button', { name: 'Send invitation instead' }),
+    );
+    expect(await within(dialog).findByLabelText('Invitation token')).toBeInTheDocument();
+    const invite = calls.find(
+      (call) => call.method === 'POST' && call.url.endsWith(`/products/${PRODUCT}/invitations`),
+    ) as Request;
+    expect(await invite.json()).toEqual({ email: 'x@example.com', role: 'product_viewer' });
+  });
+
+  it('explains the 404 for product members when inviting is not offered', async () => {
     const me = {
       ...makeMe({ role: null, permissions: [] }),
       platform_role: 'platform_admin',
@@ -267,6 +347,68 @@ describe('MembersPanel add → invite instead', () => {
     await waitFor(() =>
       expect(within(dialog).queryByRole('button', { name: 'Send invitation instead' })).toBeNull(),
     );
+  });
+});
+
+describe('InvitationsPanel for a product team', () => {
+  it('lists, invites with a product role and revokes product team invitations', async () => {
+    const me = makeMe({ role: 'product_owner', permissions: [...PRODUCT_PERMS] });
+    const path = `/v1/products/${PRODUCT}/invitations`;
+    const calls = mockApi(
+      me,
+      (request, url) => {
+        if (url.pathname === path && request.method === 'GET')
+          return jsonResponse([
+            {
+              id: 'pinv_1',
+              product_id: PRODUCT,
+              email: 'ops@example.com',
+              role: 'product_admin',
+              status: 'pending',
+              invited_by: 'usr_me',
+              created_at: '2026-11-01T00:00:00Z',
+              expires_at: '2030-01-01T00:00:00Z',
+              accepted_at: null,
+              revoked_at: null,
+            },
+          ]);
+        if (url.pathname === path && request.method === 'POST')
+          return jsonResponse(productInvitationCreated('new@example.com'), { status: 201 });
+        if (url.pathname === `${path}/pinv_1` && request.method === 'DELETE')
+          return new Response(null, { status: 204 });
+        return undefined;
+      },
+      [...tenantRoles, ...productRoles],
+    );
+    renderWithProviders(<InvitationsPanel productId={PRODUCT} canManage />);
+    const user = userEvent.setup();
+    expect(await screen.findByText('ops@example.com')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Invite member' }));
+    const dialog = await screen.findByRole('dialog');
+    const select = within(dialog).getByRole('combobox', { name: /Role/ });
+    await within(select).findByRole('option', { name: /Product viewer/ });
+    // Product roles only, the weakest preselected.
+    expect(select).toHaveValue('product_viewer');
+    expect(within(select).queryByRole('option', { name: /^Member/ })).toBeNull();
+    expect(within(dialog).getByText(/this role in the product team/)).toBeInTheDocument();
+    await user.type(within(dialog).getByRole('textbox', { name: /Email/ }), 'new@example.com');
+    await user.click(within(dialog).getByRole('button', { name: /Send invitation/ }));
+    expect(await within(dialog).findByLabelText('Invitation token')).toBeInTheDocument();
+    const post = calls.find((call) => call.method === 'POST' && call.url.endsWith(path)) as Request;
+    expect(await post.json()).toEqual({ email: 'new@example.com', role: 'product_viewer' });
+    await user.click(within(dialog).getByRole('button', { name: 'Done' }));
+
+    await user.click(screen.getByRole('button', { name: 'Revoke invitation for ops@example.com' }));
+    const confirm = await screen.findByRole('dialog');
+    await user.click(within(confirm).getByRole('button', { name: 'Revoke invitation' }));
+    await waitFor(() =>
+      expect(
+        calls.some((call) => call.method === 'DELETE' && call.url.endsWith(`${path}/pinv_1`)),
+      ).toBe(true),
+    );
+    // The tenant endpoints are never used for the product team.
+    expect(calls.some((call) => call.url.includes('/tenants/'))).toBe(false);
   });
 });
 

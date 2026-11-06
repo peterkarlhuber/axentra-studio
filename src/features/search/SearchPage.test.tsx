@@ -116,6 +116,54 @@ describe('SearchPage', () => {
     expect(screen.getByText('3 results')).toBeInTheDocument();
   });
 
+  it('offers the indexed kinds of the tenant as toggles for the kind filter', async () => {
+    const calls = api((_request, url) =>
+      url.pathname === `${BASE}/kinds`
+        ? jsonResponse([
+            { kind: 'invoice', count: 12 },
+            { kind: 'note', count: 3 },
+          ])
+        : undefined,
+    );
+    renderPage(<SearchPage />, {
+      me: meWith([], ['search:query']),
+      route: route(),
+      modules: MODULES,
+    });
+    const user = userEvent.setup();
+    const group = await screen.findByRole('group', { name: 'Indexed kinds' });
+    const note = within(group).getByRole('button', { name: 'note (3)' });
+    expect(note).toHaveAttribute('aria-pressed', 'false');
+    await user.click(note);
+    await user.click(within(group).getByRole('button', { name: 'invoice (12)' }));
+    expect(screen.getByLabelText(/^Kinds/)).toHaveValue('note, invoice');
+    expect(note).toHaveAttribute('aria-pressed', 'true');
+    await user.click(note);
+    expect(screen.getByLabelText(/^Kinds/)).toHaveValue('invoice');
+    await user.type(screen.getByLabelText('Search for'), 'acme');
+    await user.click(screen.getByRole('button', { name: 'Search' }));
+    await screen.findByRole('button', { name: 'Invoice 1 for Acme' });
+    const search = calls.find((call) => new URL(call.url).pathname === BASE);
+    expect(new URL(search?.url ?? 'http://x').searchParams.getAll('kind')).toEqual(['invoice']);
+  });
+
+  it('keeps the free-text kind field when the server cannot list kinds', async () => {
+    api((_request, url) =>
+      url.pathname === `${BASE}/kinds`
+        ? jsonResponse({ code: 'conflict', status: 409 }, { status: 409 })
+        : undefined,
+    );
+    renderPage(<SearchPage />, {
+      me: meWith([], ['search:query']),
+      route: route(),
+      modules: MODULES,
+    });
+    expect(await screen.findByLabelText(/^Kinds/)).toBeEnabled();
+    await waitFor(() =>
+      expect(screen.queryByRole('group', { name: 'Indexed kinds' })).not.toBeInTheDocument(),
+    );
+  });
+
   it('refuses an invalid kind before sending anything', async () => {
     const calls = api();
     renderPage(<SearchPage />, {

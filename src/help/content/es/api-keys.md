@@ -163,8 +163,9 @@ Una clave solo funciona mientras la persona que la creó siga teniendo los permi
 El servidor lo comprueba en cada solicitud: si se cambió el rol de esa persona, se la quitó del
 producto o se desactivó su cuenta, una solicitud que necesita un permiso que ya no tiene se rechaza
 con `403 api_key_creator_lost_access`, y la respuesta indica ese permiso en `permission`. La lista
-de claves sigue mostrando esa clave como **Activo**. Devuélvele el permiso a esa persona, o crea una
-clave nueva como alguien que lo tenga, cambia tus servicios a ella y revoca la clave antigua.
+de claves marca esa clave con **El creador perdió el acceso** e indica los permisos que ya no puede
+usar. Devuélvele el permiso a esa persona, o crea una clave nueva como alguien que lo tenga, cambia
+tus servicios a ella y revoca la clave antigua.
 
 Studio nunca recibe este rechazo: usa tu sesión de usuario, no una clave.
 

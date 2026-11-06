@@ -28,6 +28,11 @@
     "typeToConfirm": "Escribe {{text}} para confirmar",
     "typeToConfirmHelp": "Esto evita clics accidentales."
   },
+  "unsaved": {
+    "title": "¿Salir sin guardar?",
+    "body": "Tus cambios en esta página aún no se han guardado. Si sales ahora, se perderán.",
+    "leave": "Salir de la página"
+  },
   "toast": {
     "label": "Notificación",
     "region": "Notificaciones ({hotkey})"
@@ -153,5 +158,11 @@
     "tenant_admin": "Gestiona los miembros y los datos del inquilino",
     "member": "Trabaja con los datos del inquilino",
     "viewer": "Acceso de solo lectura al inquilino"
+  },
+  "passwordPolicy": {
+    "too_short": "Usa al menos {{min}} caracteres.",
+    "too_long": "Usa como máximo {{max}} caracteres.",
+    "equals_email": "La contraseña no puede ser tu dirección de correo electrónico.",
+    "too_simple": "Usa al menos 4 caracteres diferentes."
   }
 }

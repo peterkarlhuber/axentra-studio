@@ -119,6 +119,47 @@ describe('RolesPage', () => {
     expect(dialog).toBeInTheDocument();
   });
 
+  it('enables Save only after a change and keeps retired permissions the role holds', async () => {
+    const retired = { ...CUSTOM, permissions: ['crm.deals:approve', 'records:read'] };
+    const calls = mockApi(
+      (request, url) => {
+        const base = `/v1/products/${PRODUCT_ID}/roles`;
+        if (url.pathname === base && request.method === 'GET') return jsonResponse([retired]);
+        if (url.pathname === `/v1/products/${PRODUCT_ID}/permissions`)
+          return jsonResponse(PERMISSIONS);
+        if (request.method === 'PATCH') return jsonResponse({ ...retired, version: 5 });
+        return undefined;
+      },
+      makeMe(['roles:read', 'roles:manage']),
+    );
+    renderProductPage(<RolesPage />, {
+      route: `/p/${PRODUCT_ID}/roles`,
+      path: '/p/:productId/roles',
+    });
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: 'Edit role Support agent' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Edit role Support agent' });
+    const save = within(dialog).getByRole('button', { name: 'Save changes' });
+    const write = await within(dialog).findByRole('checkbox', { name: /records:write/ });
+    expect(save).toBeDisabled();
+    expect(
+      within(dialog).getByText(/Retired permissions it keeps: crm\.deals:approve/),
+    ).toBeInTheDocument();
+    await user.click(write);
+    expect(save).toBeEnabled();
+    await user.click(write);
+    expect(save).toBeDisabled();
+    await user.click(write);
+    await user.click(save);
+    await waitFor(() => expect(calls.some((call) => call.method === 'PATCH')).toBe(true));
+    const patch = calls.find((call) => call.method === 'PATCH');
+    expect([...((patch?.body as { permissions: string[] }).permissions ?? [])].sort()).toEqual([
+      'crm.deals:approve',
+      'records:read',
+      'records:write',
+    ]);
+  });
+
   it('deletes a custom role only after typing its name', async () => {
     const calls = api(['roles:read', 'roles:manage'], (request) =>
       request.method === 'DELETE' ? new Response(null, { status: 204 }) : undefined,

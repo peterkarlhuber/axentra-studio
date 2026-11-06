@@ -91,3 +91,10 @@
   background: var(--ax-color-surface-2);
   font-size: var(--ax-text-sm);
 }
+
+.kindChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ax-space-2);
+}

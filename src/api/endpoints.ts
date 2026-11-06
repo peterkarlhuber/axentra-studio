@@ -63,6 +63,13 @@ import type {
   NotifyTemplateInput,
   NotifyTemplatePatch,
   ProductInput,
+  ProductInvitation,
+  UserMemberships,
+  EnqueueableKinds,
+  SearchKindCount,
+  PermissionDeclareInput,
+  ProductInvitationInput,
+  NewProductInvitation,
   ProductMember,
   ProductOverview,
   ProductPatch,
@@ -245,6 +252,21 @@ export const productsApi = {
         params: { path: { product_id: productId, user_id: userId } },
       }),
     ),
+  /** Invitations to the product team (operators), newest first. */
+  invitations: (productId: string) =>
+    unwrap<ProductInvitation[]>(
+      api().GET('/v1/products/{product_id}/invitations', { params: productPath(productId) }),
+    ),
+  invite: (productId: string, body: ProductInvitationInput) =>
+    unwrap<NewProductInvitation>(
+      api().POST('/v1/products/{product_id}/invitations', { params: productPath(productId), body }),
+    ),
+  revokeInvitation: (productId: string, invitationId: string) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/invitations/{invitation_id}', {
+        params: { path: { product_id: productId, invitation_id: invitationId } },
+      }),
+    ),
 };
 
 // ---- Tenants ---------------------------------------------------------------------------
@@ -256,6 +278,8 @@ const tenantPath = (productId: string, tenantId: string) => ({
 export interface TenantListParams extends ListParams {
   q?: string;
   status?: 'active' | 'suspended' | '';
+  /** `id` (default, oldest first) or `name` (case-insensitive). */
+  sort?: 'id' | 'name';
 }
 
 export const tenantsApi = {
@@ -267,6 +291,7 @@ export const tenantsApi = {
           query: cleanQuery(params) as {
             q?: string;
             status?: 'active' | 'suspended';
+            sort?: 'id' | 'name';
             limit?: number;
             cursor?: string;
           },
@@ -348,6 +373,9 @@ export const tenantsApi = {
 export const invitationsApi = {
   accept: (token: string) =>
     unwrap<TenantMember>(api().POST('/v1/invitations/accept', { body: { token } })),
+  /** A product team invitation (`axpinv_...` token). */
+  acceptProduct: (token: string) =>
+    unwrap<ProductMember>(api().POST('/v1/product-invitations/accept', { body: { token } })),
 };
 
 // ---- Users -----------------------------------------------------------------------------
@@ -385,6 +413,11 @@ export const usersApi = {
     unwrap<RevokeResult>(
       api().POST('/v1/users/{user_id}/sessions/revoke', { params: userPath(userId) }),
     ),
+  /** Product roles and tenant memberships of the user, as far as the caller may read them. */
+  memberships: (userId: string) =>
+    unwrap<UserMemberships>(
+      api().GET('/v1/users/{user_id}/memberships', { params: userPath(userId) }),
+    ),
 };
 
 // ---- Access ----------------------------------------------------------------------------
@@ -403,6 +436,21 @@ export const accessApi = {
           ...productPath(productId),
           query: includeRetired ? { include_retired: true } : {},
         },
+      }),
+    ),
+  /** Create, change or re-activate a permission declared over the API (`permissions:manage`). */
+  declarePermission: (productId: string, name: string, body: PermissionDeclareInput) =>
+    unwrap<Permission>(
+      api().PUT('/v1/products/{product_id}/permissions/{name}', {
+        params: { path: { product_id: productId, name } },
+        body,
+      }),
+    ),
+  /** Retire a permission declared over the API (idempotent). */
+  retirePermission: (productId: string, name: string) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/permissions/{name}', {
+        params: { path: { product_id: productId, name } },
       }),
     ),
   roles: (productId: string) =>
@@ -606,6 +654,13 @@ const searchDocumentPath = (productId: string, tenantId: string, kind: string, r
 
 /** The tenant's full-text index (`docs/modules/SEARCH.md` in the Axentra repository). */
 export const searchApi = {
+  /** Kinds indexed in the tenant with their document counts (`409` if the adapter cannot list them). */
+  kinds: (productId: string, tenantId: string) =>
+    unwrap<SearchKindCount[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/search/kinds', {
+        params: { path: { product_id: productId, tenant_id: tenantId } },
+      }),
+    ),
   query: (productId: string, tenantId: string, params: SearchParams) => {
     const { kind, ...rest } = params;
     const query = cleanQuery({ ...rest, kind: kind && kind.length > 0 ? kind : undefined });
@@ -1085,6 +1140,13 @@ export const jobsApi = {
   stats: (productId: string) =>
     unwrap<JobStats>(
       api().GET('/v1/products/{product_id}/jobs/stats', { params: productPath(productId) }),
+    ),
+  /** Job kinds the caller may enqueue in the product or one tenant (`any_kind` with `jobs:manage`). */
+  kinds: (productId: string, tenantId?: string) =>
+    unwrap<EnqueueableKinds>(
+      api().GET('/v1/products/{product_id}/jobs/kinds', {
+        params: { ...productPath(productId), query: tenantId ? { tenant_id: tenantId } : {} },
+      }),
     ),
   get: (productId: string, jobId: string) =>
     unwrap<Job>(

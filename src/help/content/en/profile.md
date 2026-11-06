@@ -89,14 +89,16 @@ password (all other sessions) or when an administrator disables your account.
 
 1. Find the browser in **Your sessions**.
 2. Choose **Revoke session** (the bin icon at the end of the row).
+3. Confirm **Revoke this session?** with **Revoke session**.
 
 That browser is signed out with its next request. Your current session has no revoke button; use
 **Sign out** in the user menu for it.
 
 ### Sign out everywhere else {#sign-out-elsewhere}
 
-To end all sessions except the one you are using, choose **Sign out all other sessions** in the header of
-**Your sessions**. The button appears when at least one other session exists.
+To end all sessions except the one you are using, choose **Sign out all other sessions** in the
+header of **Your sessions**. The button appears when at least one other session exists. Studio asks
+for a confirmation that says how many sessions end.
 
 Your current session is never signed out. Each other session is signed out separately; if some
 cannot be (for example because of the request rate limit), Studio says how many, the list shows the

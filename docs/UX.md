@@ -120,6 +120,11 @@ Edit forms only enable "Save" when something changed.
   form.
 - Submit buttons show a spinner and prevent double submission. Dialogs close only on success.
 - Focus moves into the dialog on open and back to the trigger on close.
+- Edit forms on a page (profile name, product settings, notification preferences, template
+  editor) render `UnsavedChangesGuard` with their dirty state: a reload or closing the tab shows
+  the browser's prompt, and leaving the page inside Studio asks **Leave without saving?**. Query
+  string changes on the same page (tabs, `?new=1`) are not blocked. Turn the guard off while a
+  save runs. **Save changes** stays disabled while nothing changed where the form can tell.
 
 ### Secrets and tokens
 

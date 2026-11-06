@@ -136,7 +136,7 @@ Mandanten. Der Button erscheint, wenn das Datensatzmodul aktiviert ist und du im
 - Produktverantwortliche brauchen keine Mitgliedschaft, denn ihre Produktrolle deckt bereits jeden
   Mandanten ab.
 - Auswahllisten auf anderen Seiten (zum Beispiel **Mandantenbindung** bei API-Schlüsseln oder die
-  Seite **Einladungen**) listen die 200 ältesten Mandanten, nach Namen sortiert.
+  Seite **Einladungen**) listen die ersten 200 Mandanten nach Namen.
 
 ## Fehlerbehebung {#troubleshooting}
 

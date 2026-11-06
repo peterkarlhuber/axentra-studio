@@ -12,8 +12,8 @@ pessoa pode fazer nesse tenant. Você dá acesso a alguém de uma de duas formas
 - **Convidar** uma pessoa por e-mail. Ela aceita o convite depois de entrar e se torna membro com a
   função que você escolheu.
 
-Os operadores de um produto inteiro são gerenciados no próprio produto; veja
-[produtos](help:products#members).
+Os operadores de um produto inteiro são gerenciados no próprio produto e podem ser convidados
+para a equipe dele da mesma forma; veja [convites para a equipe do produto](#product-team).
 
 > [!IMPORTANT]
 > Ver as guias **Membros** e **Convites** de um tenant exige `members:read` no tenant; adicionar,
@@ -114,6 +114,22 @@ tempo.
 
 Escolha o ícone de lixeira ao lado de um convite **Pendente** e confirme **Revogar convite?**. O
 link e o token param de funcionar imediatamente.
+
+## Convidar operadores para a equipe de um produto {#product-team}
+
+Você também pode convidar operadores (usuários com uma função de produto, veja
+[produtos](help:products#members)) por e-mail. Abra o produto em [Produtos](app:products) e
+selecione a aba **Convites**, ou escolha **Enviar convite** quando **Adicionar membro** na aba
+**Membros** não encontrar o endereço. O Studio pré-seleciona **Product viewer**, ou a primeira
+função de produto que você pode atribuir.
+
+- A aba precisa de `product_members:read`; convidar e revogar precisa de `product_members:manage`.
+- O link, o token, o envio, a validade de 7 dias e a revogação funcionam como nos convites para um
+  tenant. O token começa com `axpinv_`, e a página **Aceitar convite** o reconhece.
+- Depois de aceitar, a pessoa tem a função de produto em todos os tenants do produto. Uma função
+  de produto que ela já tenha continua igual.
+- Ninguém pode entrar na equipe de um produto arquivado. O convite continua sem uso até o produto
+  ser restaurado.
 
 ## Aceitar um convite {#accept}
 

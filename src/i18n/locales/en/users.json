@@ -61,5 +61,18 @@
     "saved": "Platform role changed",
     "confirmTitle": "Change platform role?",
     "confirmBody": "{{name}} gets the platform role “{{role}}”. This changes access to every product on this server."
+  },
+  "memberships": {
+    "title": "Memberships",
+    "description": "Products where the user is an operator and tenants where the user is a member, as far as you may see them. Roles are changed on each product's or tenant's Members tab.",
+    "product": "Product",
+    "tenant": "Tenant",
+    "role": "Role",
+    "since": "Since",
+    "tenantStatus": "Tenant status",
+    "productsCaption": "Product roles",
+    "tenantsCaption": "Tenant memberships",
+    "noProducts": "No product roles you can see",
+    "noTenants": "No tenant memberships you can see"
   }
 }

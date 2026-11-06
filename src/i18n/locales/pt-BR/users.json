@@ -62,5 +62,18 @@
     "saved": "Função na plataforma alterada",
     "confirmTitle": "Alterar função na plataforma?",
     "confirmBody": "{{name}} recebe a função na plataforma “{{role}}”. Isso altera o acesso a todos os produtos deste servidor."
+  },
+  "memberships": {
+    "title": "Associações",
+    "description": "Produtos em que o usuário é operador e tenants em que é membro, até onde você pode vê-los. As funções são alteradas na aba Membros de cada produto ou tenant.",
+    "product": "Produto",
+    "tenant": "Tenant",
+    "role": "Função",
+    "since": "Desde",
+    "tenantStatus": "Status do tenant",
+    "productsCaption": "Funções de produto",
+    "tenantsCaption": "Associações em tenants",
+    "noProducts": "Nenhuma função de produto que você possa ver",
+    "noTenants": "Nenhuma associação em tenant que você possa ver"
   }
 }

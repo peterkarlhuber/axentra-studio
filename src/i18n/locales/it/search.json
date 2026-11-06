@@ -29,7 +29,9 @@
     "kindsPlaceholder": "per esempio invoice, note",
     "kindInvalid": "«{{kind}}» non è un tipo valido: usa lettere minuscole, cifre, punti, trattini e trattini bassi, iniziando con una lettera.",
     "kindTooMany": "Inserisci al massimo 20 tipi.",
-    "submit": "Avvia ricerca"
+    "submit": "Avvia ricerca",
+    "indexedKinds": "Tipi indicizzati",
+    "kindCount": "{{kind}} ({{count}})"
   },
   "results": {
     "heading": "Risultati per {{query}}",

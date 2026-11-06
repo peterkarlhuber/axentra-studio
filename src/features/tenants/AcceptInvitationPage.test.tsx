@@ -61,9 +61,23 @@ const me = {
   ],
 };
 
-function problem(status: number, code: string, detail: string) {
-  return jsonResponse({ status, code, title: code, detail }, { status });
+function problem(status: number, code: string, detail: string, reason?: string) {
+  return jsonResponse({ status, code, title: code, detail, reason }, { status });
 }
+
+const PRODUCT_TOKEN = 'axpinv_team-secret';
+
+const productMembership = {
+  product_id: 'prd_1',
+  user_id: 'usr_1',
+  role: 'product_viewer',
+  email: 'kim@example.com',
+  name: 'kim',
+  created_at: '2026-11-02T00:00:00Z',
+};
+
+/** `/v1/me` of the current test (a product team member in the product team tests). */
+let currentMe: typeof me | (Omit<typeof me, 'products'> & { products: unknown[] }) = me;
 
 /** Shows the current location so tests can assert that the token left the address bar. */
 function Where() {
@@ -86,9 +100,11 @@ function setup(
         body: request.method === 'POST' ? await request.clone().text() : null,
       });
       if (path === '/v1/auth/session') return jsonResponse(session(email));
-      if (path === '/v1/me') return jsonResponse(me);
+      if (path === '/v1/me') return jsonResponse(currentMe);
       if (path === '/v1/auth/logout') return new Response(null, { status: 204 });
-      if (path === '/v1/invitations/accept') return accept(request);
+      if (path === '/v1/invitations/accept' || path === '/v1/product-invitations/accept') {
+        return accept(request);
+      }
       return jsonResponse({});
     },
   });
@@ -106,7 +122,10 @@ function setup(
   return calls;
 }
 
-beforeEach(() => window.sessionStorage.clear());
+beforeEach(() => {
+  window.sessionStorage.clear();
+  currentMe = me;
+});
 afterEach(() => {
   configureApi({ baseUrl: '' });
   setCsrfToken(null);
@@ -283,6 +302,91 @@ describe('invitation links', () => {
     expect(
       screen.queryByRole('button', { name: 'Sign out and use the invited address' }),
     ).not.toBeInTheDocument();
+  });
+
+  it.each([
+    ['scope_inactive', 'The tenant is not active'],
+    ['inviter_lost_access', 'The invitation is no longer valid'],
+    ['email_mismatch', 'Invitation for another email address'],
+  ])('tells refusals apart by the reason %s, not by the wording', async (reason, title) => {
+    setup(`/invitations/accept?token=${encodeURIComponent(TOKEN)}`, () =>
+      problem(403, 'forbidden', 'reworded message', reason),
+    );
+    const userEvt = userEvent.setup();
+    await userEvt.click(await screen.findByRole('button', { name: 'Accept invitation' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent(title);
+  });
+
+  it('accepts a product team invitation with its own endpoint and names the product', async () => {
+    const calls = setup(`/invitations/accept?token=${encodeURIComponent(PRODUCT_TOKEN)}`, () =>
+      jsonResponse(productMembership),
+    );
+    const userEvt = userEvent.setup();
+    await userEvt.click(await screen.findByRole('button', { name: 'Accept invitation' }));
+    expect(await screen.findByText('Invitation accepted')).toBeInTheDocument();
+    expect(screen.getByText(/on the team of CRM with the role product_viewer/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Open the product' })).toHaveAttribute(
+      'href',
+      '/p/prd_1',
+    );
+    const accepted = calls.filter((call) => call.path.endsWith('/accept'));
+    expect(accepted.map((call) => call.path)).toEqual(['/v1/product-invitations/accept']);
+    expect(JSON.parse(String(accepted[0]?.body))).toEqual({ token: PRODUCT_TOKEN });
+    expect(readPendingInvitation()).toBeNull();
+  });
+
+  it('explains that an archived product cannot be joined', async () => {
+    setup(`/invitations/accept?token=${encodeURIComponent(PRODUCT_TOKEN)}`, () =>
+      problem(
+        403,
+        'forbidden',
+        'the invitation cannot be accepted: the product is not active',
+        'scope_inactive',
+      ),
+    );
+    const userEvt = userEvent.setup();
+    await userEvt.click(await screen.findByRole('button', { name: 'Accept invitation' }));
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('The product is not active');
+    expect(alert).toHaveTextContent(/archived.*Your invitation was not used/);
+  });
+
+  it('shows a product team invitation accepted during single sign-on', async () => {
+    currentMe = {
+      ...me,
+      products: [
+        {
+          permissions: [],
+          role: 'product_viewer',
+          product: { id: 'prd_1', name: 'CRM' },
+          tenants: [],
+        },
+      ],
+    };
+    writePendingInvitation(PRODUCT_TOKEN);
+    markInvitationSentWithSso();
+    const calls = setup('/invitations/accept?product_invitation_accepted=prd_1', () =>
+      problem(404, 'not_found', 'the invitation is invalid or expired'),
+    );
+    expect(await screen.findByText('Invitation accepted')).toBeInTheDocument();
+    expect(screen.getByText(/on the team of CRM with the role product_viewer/)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByTestId('where')).toHaveTextContent(/^\/invitations\/accept$/),
+    );
+    expect(readPendingInvitation()).toBeNull();
+    expect(calls.some((call) => call.path.endsWith('/accept'))).toBe(false);
+  });
+
+  it('asks for the confirmation when /v1/me shows no product role after single sign-on', async () => {
+    writePendingInvitation(PRODUCT_TOKEN);
+    markInvitationSentWithSso();
+    setup('/invitations/accept?product_invitation_accepted=prd_1', () =>
+      jsonResponse(productMembership),
+    );
+    expect(await screen.findByLabelText(/Invitation token/)).toHaveValue(PRODUCT_TOKEN);
+    expect(screen.getByRole('button', { name: 'Accept invitation' })).toBeInTheDocument();
+    await waitFor(() => expect(invitationSentWithSso()).toBe(false));
+    expect(readPendingInvitation()).toBe(PRODUCT_TOKEN);
   });
 
   it('shows the server message for a refusal it does not recognize', async () => {

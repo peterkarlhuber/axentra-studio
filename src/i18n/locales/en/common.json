@@ -28,6 +28,11 @@
     "typeToConfirm": "Type {{text}} to confirm",
     "typeToConfirmHelp": "This protects against accidental clicks."
   },
+  "unsaved": {
+    "title": "Leave without saving?",
+    "body": "Your changes on this page are not saved yet. If you leave now, they are lost.",
+    "leave": "Leave page"
+  },
   "toast": {
     "label": "Notification",
     "region": "Notifications ({hotkey})"
@@ -152,5 +157,11 @@
     "tenant_admin": "Manages members and data of the tenant",
     "member": "Works with the tenant's data",
     "viewer": "Read-only access to the tenant"
+  },
+  "passwordPolicy": {
+    "too_short": "Use at least {{min}} characters.",
+    "too_long": "Use at most {{max}} characters.",
+    "equals_email": "The password must not be your email address.",
+    "too_simple": "Use at least 4 different characters."
   }
 }

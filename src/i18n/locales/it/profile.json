@@ -29,7 +29,7 @@
     "setDescription": "Attualmente accedi solo tramite single sign-on. Una password abilita anche l'accesso con password. Per sicurezza serve un accesso recente.",
     "reauth": "Accedi di nuovo",
     "reauthBody": "Puoi impostare una prima password solo poco dopo aver effettuato l'accesso. Accedi di nuovo (tornerai a questa pagina), quindi imposta la password entro pochi minuti.",
-    "rules": "Almeno la lunghezza minima del server (12 caratteri, salvo modifiche dell'operatore), diversa dal tuo indirizzo email e con almeno 4 caratteri diversi.",
+    "rules": "Almeno {{min}} caratteri, diversa dal tuo indirizzo email e con almeno 4 caratteri diversi.",
     "setSubmit": "Imposta password"
   },
   "sessions": {
@@ -42,6 +42,12 @@
     "othersRevoked_other": "{{count}} altre sessioni disconnesse",
     "othersPartial_one": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni",
     "othersPartial_many": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni",
-    "othersPartial_other": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni"
+    "othersPartial_other": "Non è stato possibile disconnettere {{count}} delle {{total}} altre sessioni",
+    "revokeTitle": "Revocare questa sessione?",
+    "revokeBody": "{{device}} verrà disconnesso alla prossima richiesta.",
+    "revokeOthersTitle": "Disconnettere tutte le altre sessioni?",
+    "revokeOthersBody_one": "Termina {{count}} altra sessione. Questo browser resta connesso.",
+    "revokeOthersBody_many": "Terminano {{count}} altre sessioni. Questo browser resta connesso.",
+    "revokeOthersBody_other": "Terminano {{count}} altre sessioni. Questo browser resta connesso."
   }
 }

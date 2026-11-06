@@ -11,6 +11,7 @@ export const queryKeys = {
   product: (productId: string) => ['products', productId] as const,
   productOverview: (productId: string) => ['products', productId, 'overview'] as const,
   productMembers: (productId: string) => ['products', productId, 'members'] as const,
+  productInvitations: (productId: string) => ['products', productId, 'invitations'] as const,
   tenants: (productId: string, params?: unknown) =>
     ['products', productId, 'tenants', 'list', params ?? {}] as const,
   tenant: (productId: string, tenantId: string) =>
@@ -21,6 +22,7 @@ export const queryKeys = {
     ['products', productId, 'tenants', tenantId, 'invitations'] as const,
   users: (params?: unknown) => ['users', 'list', params ?? {}] as const,
   user: (userId: string) => ['users', userId] as const,
+  userMemberships: (userId: string) => ['users', userId, 'memberships'] as const,
   userSessions: (userId: string) => ['users', userId, 'sessions'] as const,
   roles: (productId: string) => ['products', productId, 'roles'] as const,
   productPermissions: (productId: string, includeRetired = false) =>
@@ -51,6 +53,8 @@ export const queryKeys = {
   jobs: (productId: string, params?: unknown) =>
     ['products', productId, 'jobs', 'list', params ?? {}] as const,
   jobStats: (productId: string) => ['products', productId, 'jobs', 'stats'] as const,
+  jobKinds: (productId: string, tenantId: string) =>
+    ['products', productId, 'jobs', 'kinds', tenantId] as const,
   job: (productId: string, jobId: string) => ['products', productId, 'jobs', jobId] as const,
   schedules: (productId: string) => ['products', productId, 'schedules'] as const,
   events: (productId: string, params?: unknown) =>
@@ -73,6 +77,8 @@ export const queryKeys = {
   // ---- Search ----
   search: (productId: string, tenantId: string, params?: unknown) =>
     ['products', productId, 'search', tenantId, 'hits', params ?? {}] as const,
+  searchKinds: (productId: string, tenantId: string) =>
+    ['products', productId, 'tenants', tenantId, 'search', 'kinds'] as const,
   searchDocument: (productId: string, tenantId: string, kind: string, refId: string) =>
     ['products', productId, 'search', tenantId, 'document', kind, refId] as const,
 };

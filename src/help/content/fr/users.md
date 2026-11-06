@@ -46,8 +46,20 @@ La carte **Profil** affiche :
 | **Connexion par mot de passe**      | **Mot de passe défini**, ou **Aucun mot de passe (authentification unique uniquement)**.               |
 | **Dernière connexion**, **Créé le** | Horodatages.                                                                                           |
 
-La page d’un utilisateur ne liste pas ses adhésions. Pour voir ou modifier ce qu’un utilisateur peut faire dans un
-locataire, ouvre l’onglet **Membres** du locataire ; pour les opérateurs, l’onglet **Membres** du produit.
+### Adhésions {#memberships}
+
+La carte **Adhésions** montre ce à quoi l’utilisateur appartient, dans la mesure où tu peux le
+voir :
+
+- **Rôles de produit** : les produits dont l’utilisateur est opérateur, avec le rôle. Les
+  administrateurs et observateurs de la plateforme les voient tous ; les autres voient les produits
+  où ils disposent de `product_members:read`.
+- **Adhésions aux locataires** : les locataires dont l’utilisateur est membre, avec le produit, le
+  rôle et le statut du locataire. Les autres voient les locataires où ils disposent de
+  `members:read`.
+
+La carte est en lecture seule. Pour modifier ce qu’un utilisateur peut faire, ouvre l’onglet
+**Membres** du locataire (depuis son nom) ou, pour les opérateurs, l’onglet **Membres** du produit.
 
 ### Utilisateurs sans adresse e-mail {#no-email}
 

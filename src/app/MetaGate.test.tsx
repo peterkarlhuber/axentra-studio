@@ -1,7 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { configureApi } from '@/api/client';
+import { api, configureApi } from '@/api/client';
 import { createTestQueryClient, jsonResponse, testMeta } from '@/test/utils';
 import { MetaGate } from './MetaGate';
 
@@ -44,5 +44,37 @@ describe('MetaGate', () => {
       await screen.findByRole('button', { name: 'Try again' }, { timeout: 4000 }),
     ).toBeInTheDocument();
     expect(screen.queryByText('app content')).not.toBeInTheDocument();
+  });
+
+  it('reloads the metadata when a response announces another API version', async () => {
+    let served = { major: 1, minor: 0 };
+    const fetch = vi.fn(async (request: Request) => {
+      const version = `${served.major}.${served.minor}`;
+      const headers = { 'Axentra-API-Version': version };
+      if (new URL(request.url).pathname === '/v1/meta')
+        return jsonResponse({ ...testMeta, api_version: served }, { headers });
+      return jsonResponse({}, { headers });
+    });
+    configureApi({ baseUrl: 'http://axentra.test', fetch });
+    render(
+      <QueryClientProvider client={createTestQueryClient()}>
+        <MetaGate>
+          <p>app content</p>
+        </MetaGate>
+      </QueryClientProvider>,
+    );
+    expect(await screen.findByText('app content')).toBeInTheDocument();
+    const metaCalls = () =>
+      fetch.mock.calls.filter(([request]) => new URL(request.url).pathname === '/v1/meta').length;
+    // Same version: nothing is reloaded.
+    await api().GET('/v1/health/live');
+    expect(metaCalls()).toBe(1);
+    // The server was upgraded to an incompatible major version while the tab is open.
+    served = { major: 2, minor: 0 };
+    await api().GET('/v1/health/live');
+    expect(
+      await screen.findByRole('heading', { name: 'Incompatible server version' }),
+    ).toBeInTheDocument();
+    await waitFor(() => expect(metaCalls()).toBe(2));
   });
 });

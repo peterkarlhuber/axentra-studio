@@ -40,6 +40,17 @@ export type TenantMember = Schemas['Membership'];
 export type Tenant = Schemas['Tenant'];
 export type Invitation = Schemas['Invitation'];
 export type NewInvitation = Schemas['NewInvitation'];
+export type ProductInvitation = Schemas['ProductInvitation'];
+export type NewProductInvitation = Schemas['NewProductInvitation'];
+export type ProductInvitationInput = Schemas['ProductInvitationCreate'];
+/** What both invitation kinds (tenant, product team) share in the UI. */
+export type InvitationRow = Invitation | ProductInvitation;
+/** A just-created invitation of either kind (token returned once). */
+export type NewInvitationLike = NewInvitation | NewProductInvitation;
+export type UserMemberships = Schemas['UserMemberships'];
+export type EnqueueableKinds = Schemas['EnqueueableKinds'];
+export type SearchKindCount = Schemas['KindCount'];
+export type PermissionDeclareInput = Schemas['ProductPermissionDeclare'];
 
 export type Permission = Schemas['PermissionInfo'];
 export type Role = Schemas['Role'];

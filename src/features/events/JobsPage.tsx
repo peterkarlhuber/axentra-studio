@@ -10,14 +10,15 @@ import {
   RotateCcw,
   Search,
 } from 'lucide-react';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { eventsApi, jobsApi, type JobListParams } from '@/api/endpoints';
 import { isIdempotencyConflict } from '@/api/errors';
 import type { Job, JobStats, JobStatus } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
-import { useCan, useErrorToast } from '@/app/auth';
+import { useCan, useErrorToast, useMe } from '@/app/auth';
+import { productAccess } from '@/app/permissions';
 import { useProductScope } from '@/app/contexts';
 import {
   Alert,
@@ -71,6 +72,11 @@ export function JobsPage() {
   const { productId } = useProductScope();
   const can = useCan();
   const canManage = can('jobs:manage');
+  const { data: me } = useMe();
+  // Tenant members without jobs:manage may enqueue the kinds opened to them with an
+  // enqueue_permission (listed per tenant by GET .../jobs/kinds).
+  const tenantCaller = !canManage && Boolean(productAccess(me, productId)?.tenants.length);
+  const canEnqueue = canManage || tenantCaller;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [params, setParams] = useSearchParams();
@@ -84,7 +90,7 @@ export function JobsPage() {
   const [draft, setDraft] = useState(applied);
   const [confirm, setConfirm] = useState<JobAction | null>(null);
   const [live, setLive] = useState(false);
-  const creating = params.get('new') === '1' && canManage;
+  const creating = params.get('new') === '1' && canEnqueue;
 
   const stats = useQuery({
     queryKey: queryKeys.jobStats(productId),
@@ -253,7 +259,7 @@ export function JobsPage() {
             <ButtonLink to="../schedules" relative="path" icon={<CalendarClock />}>
               {t('schedules.title')}
             </ButtonLink>
-            {canManage ? (
+            {canEnqueue ? (
               <Button variant="primary" icon={<Plus />} onClick={() => setCreating(true)}>
                 {t('jobs.enqueue')}
               </Button>
@@ -341,6 +347,7 @@ export function JobsPage() {
       {creating ? (
         <EnqueueJobDialog
           productId={productId}
+          restricted={!canManage}
           onClose={() => setCreating(false)}
           onCreated={(job) => {
             void queryClient.invalidateQueries({ queryKey: ['products', productId, 'jobs'] });
@@ -471,10 +478,13 @@ export function JobActionDialog({
 
 function EnqueueJobDialog({
   productId,
+  restricted,
   onClose,
   onCreated,
 }: {
   productId: string;
+  /** Without jobs:manage: a tenant is required and only the kinds opened to the caller there. */
+  restricted: boolean;
   onClose: () => void;
   onCreated: (job: Job) => void;
 }) {
@@ -490,6 +500,17 @@ function EnqueueJobDialog({
   const [idempotencyKey, setIdempotencyKey] = useState(newIdempotencyKey);
   const parsed = parseJsonObject(payload);
   const kindIssue = kindProblem(kind);
+  // Known kinds: suggestions for jobs:manage holders (any kind allowed), the only choices
+  // otherwise. Listed by the answering API process from its declarations.
+  const kinds = useQuery({
+    queryKey: queryKeys.jobKinds(productId, tenantId),
+    queryFn: () => jobsApi.kinds(productId, tenantId || undefined),
+    enabled: !restricted || Boolean(tenantId),
+    retry: false,
+  });
+  const knownKinds = kinds.data?.items ?? [];
+  const noOpenKinds = restricted && Boolean(tenantId) && kinds.isSuccess && knownKinds.length === 0;
+  const kindsListId = useId();
 
   const enqueue = useMutation({
     mutationFn: () =>
@@ -560,22 +581,74 @@ function EnqueueJobDialog({
         ) : (
           <FormError error={enqueue.error} />
         )}
-        <FormField
-          label={t('jobs.kind')}
-          help={t('jobs.kindHelp')}
-          info={t('jobs.kindInfo')}
-          infoTopic="jobs#workers"
-          error={kindIssue ? t(`validation.kind.${kindIssue}`) : fields.kind}
-          required
-        >
-          <Input
-            value={kind}
-            onChange={(event) => setKind(event.target.value)}
-            placeholder="reports.send"
-            autoComplete="off"
-            spellCheck={false}
+        {restricted ? (
+          <TenantPicker
+            productId={productId}
+            value={tenantId}
+            onChange={(next) => {
+              setTenantId(next);
+              setKind('');
+            }}
+            label={t('jobs.tenant')}
+            help={t('jobs.tenantRequired')}
           />
-        </FormField>
+        ) : null}
+        {noOpenKinds ? (
+          <Alert tone="info" title={t('jobs.noOpenKindsTitle')}>
+            {t('jobs.noOpenKinds')}{' '}
+            <HelpLink topic="jobs#kind-permissions">{t('common:help.learnMore')}</HelpLink>
+          </Alert>
+        ) : null}
+        {restricted ? (
+          <FormField
+            label={t('jobs.kind')}
+            help={t('jobs.kindOpenHelp')}
+            info={t('jobs.kindInfo')}
+            infoTopic="jobs#workers"
+            error={fields.kind}
+            required
+          >
+            <Select
+              value={kind}
+              onChange={(event) => setKind(event.target.value)}
+              disabled={!tenantId || knownKinds.length === 0}
+            >
+              <option value="" disabled>
+                {tenantId && kinds.isPending ? t('common:states.loading') : t('jobs.chooseKind')}
+              </option>
+              {knownKinds.map((entry) => (
+                <option key={entry.kind} value={entry.kind}>
+                  {entry.kind}
+                </option>
+              ))}
+            </Select>
+          </FormField>
+        ) : (
+          <FormField
+            label={t('jobs.kind')}
+            help={t('jobs.kindHelp')}
+            info={t('jobs.kindInfo')}
+            infoTopic="jobs#workers"
+            error={kindIssue ? t(`validation.kind.${kindIssue}`) : fields.kind}
+            required
+          >
+            <Input
+              value={kind}
+              onChange={(event) => setKind(event.target.value)}
+              placeholder="reports.send"
+              autoComplete="off"
+              spellCheck={false}
+              list={knownKinds.length ? kindsListId : undefined}
+            />
+          </FormField>
+        )}
+        {!restricted && knownKinds.length ? (
+          <datalist id={kindsListId}>
+            {knownKinds.map((entry) => (
+              <option key={entry.kind} value={entry.kind} />
+            ))}
+          </datalist>
+        ) : null}
         <FormField
           label={t('jobs.payload')}
           help={t('jobs.payloadHelp')}
@@ -591,14 +664,16 @@ function EnqueueJobDialog({
             spellCheck={false}
           />
         </FormField>
-        <TenantPicker
-          productId={productId}
-          value={tenantId}
-          onChange={setTenantId}
-          label={t('jobs.tenant')}
-          allowNone
-          noneLabel={t('jobs.productLevel')}
-        />
+        {restricted ? null : (
+          <TenantPicker
+            productId={productId}
+            value={tenantId}
+            onChange={setTenantId}
+            label={t('jobs.tenant')}
+            allowNone
+            noneLabel={t('jobs.productLevel')}
+          />
+        )}
         <div className={layout.row}>
           <FormField
             label={t('jobs.priority')}

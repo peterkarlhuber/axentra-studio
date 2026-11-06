@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowRight, Boxes, Plus } from 'lucide-react';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { productsApi } from '@/api/endpoints';
 import type { Product } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
@@ -34,7 +33,7 @@ export function ProductsPage() {
   const toast = useToast();
   const showError = useErrorToast();
   const queryClient = useQueryClient();
-  const [creating, setCreating] = useState(false);
+  const [params, setParams] = useSearchParams();
   const products = useVisibleProducts();
   const rows = products.data
     ? [...products.data].sort((a, b) => a.name.localeCompare(b.name))
@@ -42,6 +41,19 @@ export function ProductsPage() {
 
   // Creating products needs the platform permission and multi-product mode.
   const canCreate = meta.mode === 'multi' && can('products:create');
+  // The create dialog follows the address (`?new=1`), like the other create dialogs (UX.md), so
+  // it can be linked and survives a reload.
+  const creating = canCreate && params.get('new') === '1';
+  const setCreating = (open: boolean) =>
+    setParams(
+      (current) => {
+        const next = new URLSearchParams(current);
+        if (open) next.set('new', '1');
+        else next.delete('new');
+        return next;
+      },
+      { replace: true },
+    );
 
   const create = useMutation({
     mutationFn: productsApi.create,
@@ -136,9 +148,11 @@ export function ProductsPage() {
           empty={
             <EmptyState
               compact
-              headingLevel={3}
+              headingLevel={2}
               icon={<Boxes />}
-              title={t('empty.title')}
+              // Without products:create the list is empty because nothing was shared yet, not
+              // because the installation is empty.
+              title={canCreate ? t('empty.title') : t('empty.titleNoAccess')}
               description={canCreate ? t('empty.bodyAdmin') : t('empty.body')}
               action={
                 canCreate ? (

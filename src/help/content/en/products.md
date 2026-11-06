@@ -110,11 +110,11 @@ Custom product roles appear in the list too. See [roles and permissions](help:ro
 > `product_members:manage` (product owners and platform administrators).
 
 > [!NOTE]
-> There are no invitations for operators. The person must already have an account that you can
-> see: platform administrators see every account, users with `product_users:read` see the users
-> of this product (members of its tenants and its operators). For anyone else, the server answers
-> **User not found**. Invite the person to one of the product's tenants first, or ask a platform
-> administrator to add them.
+> You can add only accounts you can see: platform administrators see every account, users with
+> `product_users:read` see the users of this product (members of its tenants and its operators).
+> For anyone else, the server answers **User not found** and the dialog offers **Send invitation
+> instead**, which invites the address to the product team. See
+> [product team invitations](help:members-invitations#product-team).
 
 To change an operator's role, pick a new one in the **Role** column. To remove an operator, choose
 the trash icon in their row and confirm. Roles above your own level are shown but cannot be

@@ -134,7 +134,7 @@ export function TenantDetailPage() {
               )
             ) : null}
             {can('tenants:delete') ? (
-              <Button variant="danger" icon={<Trash2 />} onClick={() => setDeleting(true)}>
+              <Button variant="dangerOutline" icon={<Trash2 />} onClick={() => setDeleting(true)}>
                 {t('detail.delete')}
               </Button>
             ) : null}

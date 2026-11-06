@@ -87,10 +87,10 @@ Produktrolle haben. Siehe [Mitglieder und Einladungen](help:members-invitations)
 ## Einladung {#invitation}
 
 Eine **Einladung** fordert eine Person über ihre E-Mail-Adresse auf, einem Mandanten mit einer
-bestimmten Rolle beizutreten. Die Einladung enthält ein Einmal-Token, ist 7 Tage gültig und kann widerrufen
-werden. Die eingeladene Person nimmt sie an, während sie mit einem Konto angemeldet ist, das **dieselbe
-E-Mail-Adresse** hat. Für Produktverantwortliche gibt es keine Einladungen. Siehe
-[Mitglieder und Einladungen](help:members-invitations).
+bestimmten Rolle beizutreten. Die Einladung enthält ein Einmal-Token, ist 7 Tage gültig und kann
+widerrufen werden. Die eingeladene Person nimmt sie an, während sie mit einem Konto angemeldet ist,
+das **dieselbe E-Mail-Adresse** hat. Produktverantwortliche können genauso in das Team eines
+Produkts eingeladen werden. Siehe [Mitglieder und Einladungen](help:members-invitations).
 
 ## Rolle {#role}
 

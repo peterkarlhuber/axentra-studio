@@ -28,6 +28,11 @@
     "typeToConfirm": "Digite {{text}} para confirmar",
     "typeToConfirmHelp": "Isso protege contra cliques acidentais."
   },
+  "unsaved": {
+    "title": "Sair sem salvar?",
+    "body": "Suas alterações nesta página ainda não foram salvas. Se você sair agora, elas serão perdidas.",
+    "leave": "Sair da página"
+  },
   "toast": {
     "label": "Notificação",
     "region": "Notificações ({hotkey})"
@@ -153,5 +158,11 @@
     "tenant_admin": "Gerencia membros e dados do tenant",
     "member": "Trabalha com os dados do tenant",
     "viewer": "Acesso somente leitura ao tenant"
+  },
+  "passwordPolicy": {
+    "too_short": "Use pelo menos {{min}} caracteres.",
+    "too_long": "Use no máximo {{max}} caracteres.",
+    "equals_email": "A senha não pode ser o seu endereço de e-mail.",
+    "too_simple": "Use pelo menos 4 caracteres diferentes."
   }
 }

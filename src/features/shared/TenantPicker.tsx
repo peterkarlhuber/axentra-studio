@@ -35,7 +35,9 @@ export function TenantPicker({
   infoTopic?: HelpTopic;
 }) {
   const { t, i18n } = useTranslation('common');
-  const params = { limit: PICKER_LIMIT };
+  // The first PICKER_LIMIT tenants by name (server-side order, so a large product does not
+  // show only its oldest tenants); sorted again in the UI language for display.
+  const params = { limit: PICKER_LIMIT, sort: 'name' as const };
   const query = useQuery({
     queryKey: queryKeys.tenants(productId, params),
     queryFn: () => tenantsApi.list(productId, params),

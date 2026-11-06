@@ -130,7 +130,7 @@ affiché quand le module des enregistrements est activé et que tu détiens `rec
   différent dans chacun.
 - Les opérateurs de produit n’ont pas besoin d’adhésion : leur rôle de produit couvre déjà tous les locataires.
 - Les sélecteurs des autres écrans (par exemple **Portée locataire** pour les clés d’API, ou l’écran **Invitations**)
-  listent les 200 locataires les plus anciens, triés par nom.
+  listent les 200 premiers locataires par ordre alphabétique.
 
 ## Dépannage {#troubleshooting}
 

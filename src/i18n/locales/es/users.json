@@ -62,5 +62,18 @@
     "saved": "Rol de plataforma cambiado",
     "confirmTitle": "¿Cambiar rol de plataforma?",
     "confirmBody": "{{name}} recibe el rol de plataforma “{{role}}”. Esto cambia el acceso a todos los productos de este servidor."
+  },
+  "memberships": {
+    "title": "Membresías",
+    "description": "Productos en los que el usuario es operador e inquilinos en los que es miembro, en la medida en que puedas verlos. Los roles se cambian en la pestaña Miembros de cada producto o inquilino.",
+    "product": "Producto",
+    "tenant": "Inquilino",
+    "role": "Rol",
+    "since": "Desde",
+    "tenantStatus": "Estado del inquilino",
+    "productsCaption": "Roles de producto",
+    "tenantsCaption": "Membresías de inquilinos",
+    "noProducts": "No hay roles de producto que puedas ver",
+    "noTenants": "No hay membresías de inquilinos que puedas ver"
   }
 }

@@ -8,6 +8,7 @@ import { queryKeys } from '@/api/queryKeys';
 import { useErrorToast, useMe, useReauthenticate } from '@/app/auth';
 import {
   Alert,
+  ConfirmDialog,
   Badge,
   Button,
   Card,
@@ -19,12 +20,16 @@ import {
   Skeleton,
   layout,
   useToast,
+  UnsavedChangesGuard,
 } from '@/components/ui';
 import { describeError, fieldErrors } from '@/lib/errors';
+import { passwordPolicy, passwordRefusal } from '@/lib/password';
+import { useMeta } from '@/app/contexts';
 import { ApiError, isReauthenticationRequired } from '@/api/errors';
 import { SessionsTable } from '@/features/shared/SessionsTable';
 import { HelpLink } from '@/help/HelpLink';
 import { revokeOtherSessions } from './revoke-other-sessions';
+import { describeUserAgent } from '@/lib/user-agent';
 
 export function ProfilePage() {
   const { t } = useTranslation('profile');
@@ -110,6 +115,7 @@ function NameForm({ name: initial }: { name: string }) {
   };
   return (
     <Card title={t('name.title')}>
+      <UnsavedChangesGuard when={name.trim() !== initial && !save.isPending} />
       <form className={layout.form} onSubmit={submit}>
         <FormField label={t('name.label')} info={t('name.info')} required>
           <Input
@@ -137,6 +143,7 @@ function NameForm({ name: initial }: { name: string }) {
 
 function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
   const { t } = useTranslation('profile');
+  const policy = passwordPolicy(useMeta());
   const toast = useToast();
   const showError = useErrorToast();
   const [current, setCurrent] = useState('');
@@ -153,8 +160,11 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
       setConfirm('');
     },
     onError: (error) => {
-      // A first password needs a recent sign-in (`403 reauthentication_required`): shown inline.
-      if (!isReauthenticationRequired(error)) showError(error);
+      // A first password needs a recent sign-in (`403 reauthentication_required`) and a policy
+      // refusal is explained at the field: both shown inline.
+      if (!isReauthenticationRequired(error) && !passwordRefusal(t, error, policy)) {
+        showError(error);
+      }
     },
   });
   const reauthenticate = useReauthenticate();
@@ -169,6 +179,7 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
     change.mutate();
   };
   const fields = change.error ? fieldErrors(change.error) : {};
+  const newPasswordError = passwordRefusal(t, change.error, policy) ?? fields.new_password;
   return (
     <Card
       title={hasPassword ? t('password.title') : t('password.setTitle')}
@@ -204,8 +215,8 @@ function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
         ) : null}
         <FormField
           label={t('password.new')}
-          error={fields.new_password}
-          info={t('password.rules')}
+          error={newPasswordError}
+          info={t('password.rules', policy)}
           infoTopic="profile#password"
           required
         >
@@ -250,6 +261,8 @@ function OwnSessions() {
   const showError = useErrorToast();
   const queryClient = useQueryClient();
   const sessions = useQuery({ queryKey: queryKeys.ownSessions, queryFn: authApi.sessions });
+  // Both actions sign devices out: confirm first, naming the device or the count.
+  const [confirming, setConfirming] = useState<UserSession | 'others' | null>(null);
   const revoke = useMutation({
     mutationFn: (session: UserSession) => authApi.revokeSession(session.id),
     onSuccess: () => {
@@ -296,7 +309,7 @@ function OwnSessions() {
             size="sm"
             icon={<LogOut />}
             loading={revokeOthers.isPending}
-            onClick={() => revokeOthers.mutate()}
+            onClick={() => setConfirming('others')}
           >
             {t('sessions.revokeOthers')}
           </Button>
@@ -310,8 +323,30 @@ function OwnSessions() {
         status={sessions.status}
         error={sessions.error}
         onRetry={() => void sessions.refetch()}
-        onRevoke={(session) => revoke.mutate(session)}
+        onRevoke={(session) => setConfirming(session)}
         revokingId={revoke.isPending ? (revoke.variables?.id ?? null) : null}
+      />
+      <ConfirmDialog
+        open={confirming !== null}
+        onOpenChange={(open) => (open ? undefined : setConfirming(null))}
+        title={
+          confirming === 'others' ? t('sessions.revokeOthersTitle') : t('sessions.revokeTitle')
+        }
+        description={
+          confirming === 'others'
+            ? t('sessions.revokeOthersBody', { count: others.length })
+            : t('sessions.revokeBody', {
+                device:
+                  describeUserAgent(confirming?.user_agent) || t('common:sessions.unknownDevice'),
+              })
+        }
+        confirmLabel={
+          confirming === 'others' ? t('sessions.revokeOthers') : t('common:sessions.revoke')
+        }
+        onConfirm={async () => {
+          if (confirming === 'others') await revokeOthers.mutateAsync();
+          else if (confirming) await revoke.mutateAsync(confirming);
+        }}
       />
     </Card>
   );

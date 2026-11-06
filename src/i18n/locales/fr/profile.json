@@ -29,7 +29,7 @@
     "setDescription": "Tu te connectes actuellement uniquement par authentification unique (SSO). Un mot de passe permet également la connexion par mot de passe. Pour ta sécurité, cela nécessite une connexion récente.",
     "reauth": "Se reconnecter",
     "reauthBody": "La définition d’un premier mot de passe n’est autorisée que peu après la connexion. Reconnecte-toi (tu seras ramené ici), puis définis le mot de passe dans les minutes qui suivent.",
-    "rules": "Au moins la longueur minimale du serveur (12 caractères, sauf si l’opérateur l’a modifiée), pas ton adresse e-mail, et au moins 4 caractères différents.",
+    "rules": "Au moins {{min}} caractères, pas ton adresse e-mail, et au moins 4 caractères différents.",
     "setSubmit": "Définir le mot de passe"
   },
   "sessions": {
@@ -42,6 +42,12 @@
     "othersRevoked_other": "{{count}} autres sessions déconnectées",
     "othersPartial_one": "{{count}} des {{total}} autres sessions n’a pas pu être déconnectée",
     "othersPartial_many": "{{count}} des {{total}} autres sessions n’ont pas pu être déconnectées",
-    "othersPartial_other": "{{count}} des {{total}} autres sessions n’ont pas pu être déconnectées"
+    "othersPartial_other": "{{count}} des {{total}} autres sessions n’ont pas pu être déconnectées",
+    "revokeTitle": "Révoquer cette session ?",
+    "revokeBody": "{{device}} sera déconnecté à sa prochaine requête.",
+    "revokeOthersTitle": "Déconnecter toutes les autres sessions ?",
+    "revokeOthersBody_one": "{{count}} autre session prend fin. Ce navigateur reste connecté.",
+    "revokeOthersBody_many": "{{count}} autres sessions prennent fin. Ce navigateur reste connecté.",
+    "revokeOthersBody_other": "{{count}} autres sessions prennent fin. Ce navigateur reste connecté."
   }
 }

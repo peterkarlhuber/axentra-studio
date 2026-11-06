@@ -95,6 +95,8 @@ export function SearchPage() {
             initialQuery={q}
             initialKinds={kinds.join(', ')}
             disabled={!tenantId}
+            productId={productId}
+            tenantId={canQuery ? tenantId : ''}
             onSearch={(query, kindList) => update({ q: query, kind: kindList.join(',') })}
           />
         </div>
@@ -166,11 +168,16 @@ function SearchForm({
   initialQuery,
   initialKinds,
   disabled,
+  productId,
+  tenantId,
   onSearch,
 }: {
   initialQuery: string;
   initialKinds: string;
   disabled: boolean;
+  productId: string;
+  /** The tenant whose indexed kinds are offered ('' = none: no tenant or no search:query). */
+  tenantId: string;
   onSearch: (query: string, kinds: string[]) => void;
 }) {
   const { t } = useTranslation('search');
@@ -179,6 +186,21 @@ function SearchForm({
   const [touched, setTouched] = useState(false);
   const kinds = parseKinds(kindText);
   const problem = kindsProblem(kinds);
+  // Indexed kinds of the tenant as toggles; the field stays editable (an adapter that cannot
+  // list kinds answers 409, then only the field is shown).
+  const indexed = useQuery({
+    queryKey: queryKeys.searchKinds(productId, tenantId),
+    queryFn: () => searchApi.kinds(productId, tenantId),
+    enabled: Boolean(tenantId),
+    retry: false,
+    staleTime: 60_000,
+  });
+  const toggleKind = (kind: string) =>
+    setKindText(
+      (kinds.includes(kind) ? kinds.filter((entry) => entry !== kind) : [...kinds, kind]).join(
+        ', ',
+      ),
+    );
   const kindError = problem
     ? problem.reason === 'invalid'
       ? t('form.kindInvalid', { kind: problem.kind })
@@ -218,6 +240,23 @@ function SearchForm({
           />
         </FormField>
       </div>
+      {indexed.data && indexed.data.length > 0 ? (
+        <div role="group" aria-label={t('form.indexedKinds')} className={styles.kindChips}>
+          <span className={layout.muted}>{t('form.indexedKinds')}:</span>
+          {indexed.data.map((entry) => (
+            <Button
+              key={entry.kind}
+              size="sm"
+              variant={kinds.includes(entry.kind) ? 'secondary' : 'ghost'}
+              aria-pressed={kinds.includes(entry.kind)}
+              onClick={() => toggleKind(entry.kind)}
+              disabled={disabled}
+            >
+              {t('form.kindCount', { kind: entry.kind, count: entry.count })}
+            </Button>
+          ))}
+        </div>
+      ) : null}
       <div>
         <Button type="submit" variant="primary" icon={<Search />} disabled={disabled}>
           {t('form.submit')}

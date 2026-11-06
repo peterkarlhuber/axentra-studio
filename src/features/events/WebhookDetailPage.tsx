@@ -400,7 +400,7 @@ function Deliveries({
         empty={
           <EmptyState
             compact
-            headingLevel={3}
+            headingLevel={2}
             icon={<Inbox />}
             title={status ? t('deliveries.emptyFiltered') : t('deliveries.empty')}
             description={status ? undefined : t('deliveries.emptyBody')}

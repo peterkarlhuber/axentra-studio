@@ -182,6 +182,38 @@ describe('ApiKeysPage create dialog: expiry', () => {
     const row = await screen.findByRole('row', { name: /nightly-export/ });
     expect(row.querySelector(`time[datetime="${expiresAt}"]`)).not.toBeNull();
   });
+
+  it('marks an active key whose creator lost permissions and names them', async () => {
+    api([
+      keyRow({
+        creator_has_access: false,
+        withheld_permissions: ['records:read'],
+        grace_until: null,
+      }),
+      keyRow({ id: 'key_ok', name: 'healthy', creator_has_access: true, withheld_permissions: [] }),
+    ]);
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    const row = await screen.findByRole('row', { name: /nightly-export/ });
+    expect(within(row).getByText('Creator lost access')).toBeInTheDocument();
+    expect(within(row).getByText('Not usable for: records:read')).toBeInTheDocument();
+    const healthy = screen.getByRole('row', { name: /healthy/ });
+    expect(within(healthy).queryByText('Creator lost access')).not.toBeInTheDocument();
+  });
+
+  it('shows the end of a rotation grace period from grace_until', async () => {
+    const graceUntil = new Date(Date.now() + DAY).toISOString();
+    api([keyRow({ grace_until: graceUntil, revoked_at: graceUntil })]);
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    const row = await screen.findByRole('row', { name: /nightly-export/ });
+    expect(within(row).getByText(/Replaced, stops working/)).toBeInTheDocument();
+    expect(row.querySelector(`time[datetime="${graceUntil}"]`)).not.toBeNull();
+  });
 });
 
 describe('ApiKeysPage rotate and revoke', () => {

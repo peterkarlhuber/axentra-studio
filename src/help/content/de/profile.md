@@ -95,6 +95,7 @@ dein Passwort änderst (alle anderen Sitzungen) oder wenn ein Administrator dein
 
 1. Suche den Browser unter **Deine Sitzungen**.
 2. Wähle **Sitzung beenden** (das Papierkorbsymbol am Ende der Zeile).
+3. Bestätige **Diese Sitzung beenden?** mit **Sitzung beenden**.
 
 Dieser Browser wird mit seiner nächsten Anfrage abgemeldet. Deine aktuelle Sitzung hat keine
 Schaltfläche zum Beenden; verwende dafür **Abmelden** im Benutzermenü.
@@ -103,7 +104,7 @@ Schaltfläche zum Beenden; verwende dafür **Abmelden** im Benutzermenü.
 
 Um alle Sitzungen außer der aktuellen zu beenden, wähle **Alle anderen Sitzungen abmelden** im Kopf
 von **Deine Sitzungen**. Die Schaltfläche erscheint, sobald mindestens eine andere Sitzung
-existiert.
+existiert. Studio fragt vorher nach einer Bestätigung, die sagt, wie viele Sitzungen enden.
 
 Deine aktuelle Sitzung wird nie abgemeldet. Jede andere Sitzung wird einzeln abgemeldet; klappt das
 bei einigen nicht (zum Beispiel wegen des Anfragelimits), sagt Studio dir, wie viele, die Liste

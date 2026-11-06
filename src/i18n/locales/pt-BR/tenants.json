@@ -70,13 +70,14 @@
     "revoked": "Convite revogado",
     "tokenHelp": "Nenhum link de convite foi gerado porque as notificações não estão habilitadas neste servidor, então compartilhe o token. A pessoa entra e o digita em “Aceitar convite”.",
     "roleHelp": "A pessoa recebe esta função no tenant depois de aceitar.",
+    "roleHelpProduct": "A pessoa recebe esta função na equipe do produto depois de aceitar.",
     "emailInfo": "Só um usuário conectado cuja conta tenha exatamente este endereço de e-mail pode aceitar o convite.",
     "expiresInfo": "Os convites são válidos por 7 dias. Para prorrogar um, revogue-o e convide de novo.",
     "expiresAbout": "Sobre a expiração de convites"
   },
   "accept": {
     "title": "Aceitar convite",
-    "description": "Participe de um tenant com o link ou o token de convite que você recebeu. Entre com a conta do endereço de e-mail para o qual o convite foi enviado, confira os dados e confirme.",
+    "description": "Participe de um tenant ou da equipe de um produto com o link ou o token de convite que você recebeu. Entre com a conta do endereço de e-mail para o qual o convite foi enviado, confira os dados e confirme.",
     "token": "Token do convite",
     "tokenHelp": "Cole o token do convite se você não abriu o link.",
     "tokenFromLink": "Preenchido a partir do seu link de convite. Ele não aparece mais na barra de endereço.",
@@ -85,7 +86,9 @@
     "successBody": "Agora você é membro com a função {{role}}. Pode levar um momento até que o acesso apareça em todos os lugares.",
     "continue": "Ir para a página inicial",
     "successBodyNamed": "Agora você é membro de {{tenant}} em {{product}} com a função {{role}}.",
+    "successBodyProduct": "Agora você faz parte da equipe de {{product}} com a função {{role}}.",
     "openTenant": "Abrir o tenant",
+    "openProduct": "Abrir o produto",
     "signedInAs": "Conectado como <strong>{{account}}</strong>.",
     "switchAccount": "Usar outra conta",
     "switchAccountAction": "Sair e usar o endereço convidado",
@@ -110,11 +113,14 @@
       },
       "inactive": {
         "title": "O tenant não está ativo",
-        "body": "O tenant (ou o produto dele) para o qual você foi convidado está suspenso ou encerrado, então ninguém pode entrar agora. Seu convite não foi usado. Peça à pessoa que te convidou para reativar o tenant e tente de novo."
+        "body": "O tenant (ou o produto dele) para o qual você foi convidado está suspenso ou encerrado, então ninguém pode entrar agora. Seu convite não foi usado. Peça à pessoa que te convidou para reativar o tenant e tente de novo.",
+        "titleProduct": "O produto não está ativo",
+        "bodyProduct": "O produto para o qual você foi convidado está arquivado, então ninguém pode entrar na equipe dele agora. Seu convite não foi usado. Peça à pessoa que te convidou para restaurar o produto e tente de novo."
       },
       "inviterLost": {
         "title": "O convite não é mais válido",
-        "body": "A pessoa que te convidou não pode mais te dar este papel, por exemplo porque o papel ou a participação dela mudou. Peça a ela ou a outra pessoa que administra o tenant um novo convite."
+        "body": "A pessoa que te convidou não pode mais te dar este papel, por exemplo porque o papel ou a participação dela mudou. Peça a ela ou a outra pessoa que administra o tenant um novo convite.",
+        "bodyProduct": "A pessoa que te convidou não pode mais te dar este papel, por exemplo porque o papel ou a participação dela mudou. Peça a ela ou a outra pessoa que administra o produto um novo convite."
       },
       "unreachable": {
         "title": "Não foi possível acessar o servidor",

@@ -110,7 +110,7 @@ recursos, por exemplo `crm.deals:approve`. Os nomes delas sempre contêm um pont
 `<namespace>.<resource>:<action>`. Depois de declaradas, podem ser concedidas por funções
 personalizadas e chaves de API como as integradas, e o código do seu produto as verifica.
 
-Abra [Permissões](app:permissions) para ver o catálogo do produto. Ele é somente leitura.
+Abra [Permissões](app:permissions) para ver o catálogo do produto. Com `permissions:manage` (proprietários do produto) você também pode declarar permissões lá.
 
 | Coluna                 | Significado                                                                                                                                                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -125,16 +125,18 @@ todas as permissões de produto ativas; proprietários e administradores de tena
 escopo de tenant.
 
 > [!NOTE]
-> O Studio não consegue declarar nem descontinuar permissões. O código do produto as registra, ou
-> alguém com `permissions:manage` (proprietários do produto) usa a API: `PUT` e `DELETE`
-> `/v1/products/{product_id}/permissions/{name}`. Um produto pode declarar até 500 permissões.
+> Escolha **Declarar permissão** para declarar uma pela API. Nas permissões declaradas assim, o
+> lápis altera uma (ou reativa uma descontinuada) e a lixeira a descontinua depois que você digitar
+> o nome dela. As permissões registradas pelo código do produto são alteradas no código; o Studio
+> não oferece ações para elas. Um produto pode declarar até 500 permissões.
 
 ### Permissões descontinuadas {#retired}
 
 Uma permissão descontinuada não concede nada, mesmo onde ainda está armazenada em uma função
 personalizada ou chave de API. Declará-la de novo restaura o efeito para quem a tem. Salvar uma
-função personalizada no Studio remove dela os nomes descontinuados, e rotacionar uma chave de API
-os remove da chave substituta.
+função personalizada no Studio mantém os nomes descontinuados que ela tem (o editor os mostra abaixo
+da lista) e não permite adicionar novos, e rotacionar uma chave de API os remove da chave
+substituta.
 
 ## Solução de problemas {#troubleshooting}
 

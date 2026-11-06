@@ -62,6 +62,9 @@ Cada documento indexado tiene un **tipo** que elige tu producto, por ejemplo `in
 minúsculas, dígitos, puntos, guiones y guiones bajos y empiezan por una letra; como máximo 20 a la
 vez. Deja el campo vacío para buscar en todos los tipos.
 
+Debajo del campo, **Tipos indexados** muestra los tipos del índice del inquilino con su número de
+documentos. Selecciona uno para añadirlo al campo, o vuelve a seleccionarlo para quitarlo.
+
 ## Leer los resultados {#results}
 
 Los resultados se ordenan por relevancia: las coincidencias en el título cuentan más que las del

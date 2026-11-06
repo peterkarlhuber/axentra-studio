@@ -110,7 +110,7 @@ funciones, por ejemplo `crm.deals:approve`. Sus nombres siempre contienen un pun
 `<namespace>.<resource>:<action>`. Una vez declarados, se pueden conceder mediante roles
 personalizados y claves de API igual que los integrados, y el código de tu producto los comprueba.
 
-Abre [Permisos](app:permissions) para ver el catálogo del producto. Es de solo lectura.
+Abre [Permisos](app:permissions) para ver el catálogo del producto. Con `permissions:manage` (propietarios del producto) también puedes declarar permisos allí.
 
 | Columna                 | Significado                                                                                                                                                                                                                                                              |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -125,16 +125,18 @@ siempre todos los permisos de producto activos; los propietarios y administrador
 inquilinos, todos los de ámbito de inquilino.
 
 > [!NOTE]
-> Studio no puede declarar ni retirar permisos. Los registra el código del producto, o alguien con
-> `permissions:manage` (propietarios del producto) usa la API: `PUT` y `DELETE`
-> `/v1/products/{product_id}/permissions/{name}`. Un producto puede declarar hasta 500 permisos.
+> Elige **Declarar permiso** para declarar uno mediante la API. En los permisos declarados así, el
+> lápiz cambia uno (o reactiva uno retirado) y la papelera lo retira después de que escribas su
+> nombre. Los permisos que registra el código del producto se cambian en el código; Studio no ofrece
+> acciones para ellos. Un producto puede declarar hasta 500 permisos.
 
 ### Permisos retirados {#retired}
 
 Un permiso retirado no concede nada, aunque siga guardado en un rol personalizado o en una clave de
 API. Si se vuelve a declarar, recupera su efecto para quienes lo tienen. Al guardar un rol
-personalizado en Studio se eliminan de él los nombres retirados, y al rotar una clave de API se
-eliminan de la clave de sustitución.
+personalizado en Studio se conservan los nombres retirados que tiene (el editor los muestra debajo
+de la lista) y no se pueden añadir otros nuevos, y al rotar una clave de API se eliminan de la clave
+de sustitución.
 
 ## Solución de problemas {#troubleshooting}
 

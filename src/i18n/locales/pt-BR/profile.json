@@ -29,7 +29,7 @@
     "setDescription": "No momento, você entra apenas com login único (SSO). Uma senha também habilita o login por senha. Para sua segurança, isso exige um login recente.",
     "reauth": "Entrar novamente",
     "reauthBody": "Definir a primeira senha só é permitido logo após o login. Entre novamente (você voltará para cá) e defina a senha em poucos minutos.",
-    "rules": "Pelo menos o comprimento mínimo do servidor (12 caracteres, a menos que o operador tenha alterado), diferente do seu endereço de e-mail e com pelo menos 4 caracteres diferentes.",
+    "rules": "Pelo menos {{min}} caracteres, diferente do seu endereço de e-mail e com pelo menos 4 caracteres diferentes.",
     "setSubmit": "Definir senha"
   },
   "sessions": {
@@ -42,6 +42,12 @@
     "othersRevoked_other": "{{count}} outras sessões encerradas",
     "othersPartial_one": "{{count}} de {{total}} outras sessões não pôde ser encerrada",
     "othersPartial_many": "{{count}} de {{total}} outras sessões não puderam ser encerradas",
-    "othersPartial_other": "{{count}} de {{total}} outras sessões não puderam ser encerradas"
+    "othersPartial_other": "{{count}} de {{total}} outras sessões não puderam ser encerradas",
+    "revokeTitle": "Revogar esta sessão?",
+    "revokeBody": "{{device}} será desconectado na próxima solicitação.",
+    "revokeOthersTitle": "Encerrar todas as outras sessões?",
+    "revokeOthersBody_one": "{{count}} outra sessão termina. Este navegador continua conectado.",
+    "revokeOthersBody_many": "{{count}} outras sessões terminam. Este navegador continua conectado.",
+    "revokeOthersBody_other": "{{count}} outras sessões terminam. Este navegador continua conectado."
   }
 }

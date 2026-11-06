@@ -285,6 +285,8 @@ test('own account: change the password, sign out another session, sign out', asy
   await expect(sessions.getByRole('row')).toHaveCount(3); // header + two sessions
   // ---- Sign out the other session from its row ----
   await sessions.getByRole('button', { name: /^Revoke the session on/ }).click();
+  const confirm = page.getByRole('dialog', { name: 'Revoke this session?' });
+  await confirm.getByRole('button', { name: 'Revoke session' }).click();
   await expect(page.getByText('Session revoked', { exact: true })).toBeVisible();
   await expect(sessions.getByRole('row')).toHaveCount(2);
   const [otherPage] = other.pages();

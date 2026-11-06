@@ -71,6 +71,51 @@ describe('ProductsPage', () => {
     });
   });
 
+  it('opens the create dialog from the address and closes it back to the plain list', async () => {
+    mockApi(
+      (request, url) => {
+        if (url.pathname === '/v1/products' && request.method === 'GET') return jsonResponse([]);
+        return undefined;
+      },
+      makeMe(['products:create', 'products:read']),
+    );
+    renderWithProviders(
+      <Routes>
+        <Route path="/products" element={<ProductsPage />} />
+      </Routes>,
+      { route: '/products?new=1' },
+    );
+    const user = userEvent.setup();
+    const dialog = await screen.findByRole('dialog', { name: 'Create product' });
+    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Create product' })).not.toBeInTheDocument(),
+    );
+  });
+
+  it('ignores ?new=1 without products:create', async () => {
+    mockApi(
+      (request, url) => {
+        if (url.pathname === '/v1/products' && request.method === 'GET') return jsonResponse([]);
+        return undefined;
+      },
+      makeMe(['products:read']),
+    );
+    renderWithProviders(
+      <Routes>
+        <Route path="/products" element={<ProductsPage />} />
+      </Routes>,
+      { route: '/products?new=1' },
+    );
+    // A level-2 heading (no skipped level after the page heading) that does not read like an
+    // empty installation.
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'No products for you yet' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Ask a platform administrator for access/)).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
   it('shows a slug the server refuses at the field and keeps the dialog open', async () => {
     mockApi(
       (request, url) => {

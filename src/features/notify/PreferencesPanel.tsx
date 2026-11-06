@@ -15,6 +15,7 @@ import {
   Skeleton,
   layout,
   useToast,
+  UnsavedChangesGuard,
 } from '@/components/ui';
 import { TenantPicker } from '@/features/shared/TenantPicker';
 import { InfoTip } from '@/help/InfoTip';
@@ -131,6 +132,7 @@ function PreferencesForm({
 
   return (
     <form className={layout.form} onSubmit={submit}>
+      <UnsavedChangesGuard when={dirty && !save.isPending} />
       <fieldset className={styles.categories}>
         <legend className={styles.legend}>{t('preferences.receive')}</legend>
         {categories.map((category) =>

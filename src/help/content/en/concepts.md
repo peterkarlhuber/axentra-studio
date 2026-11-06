@@ -84,10 +84,10 @@ role. See [members and invitations](help:members-invitations).
 
 ## Invitation {#invitation}
 
-An **invitation** asks a person, by email address, to join a tenant with a given role. It contains
-a one-time token, is valid for 7 days and can be revoked. The invited person accepts it while
-signed in with an account that has **the same email address**. There are no invitations for product
-operators. See [members and invitations](help:members-invitations).
+An **invitation** asks a person, by email address, to join a tenant with a given role. It contains a
+one-time token, is valid for 7 days and can be revoked. The invited person accepts it while signed
+in with an account that has **the same email address**. Product operators can be invited to a
+product's team in the same way. See [members and invitations](help:members-invitations).
 
 ## Role {#role}
 

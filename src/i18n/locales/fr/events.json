@@ -115,7 +115,12 @@
     "priorityInfo": "La priorité décide seulement quelle tâche due un worker libre prend en premier. Elle n’interrompt pas les tâches en cours et ne garantit aucun ordre.",
     "maxAttemptsInfo": "Après une erreur, la tâche est relancée avec une attente croissante. Si la dernière tentative échoue, elle est abandonnée et reste dans la liste : tu peux lire l’erreur et la relancer.",
     "idempotencyKeyInfo": "Studio remplit une nouvelle clé aléatoire à chaque ouverture de cette boîte de dialogue, ainsi un double clic ne met la tâche en file d’attente qu’une seule fois. La même clé avec une autre charge utile ou une autre priorité est refusée.",
-    "skipped": "Non exécuté : produit ou locataire inactif"
+    "skipped": "Non exécuté : produit ou locataire inactif",
+    "tenantRequired": "Les tâches que tu peux mettre en file d’attente s’exécutent dans l’un de tes locataires.",
+    "noOpenKindsTitle": "Aucun type de tâche ne t’est ouvert ici",
+    "noOpenKinds": "Dans ce locataire, aucun type de tâche n’est ouvert à ton rôle. Demande à un opérateur du produit de mettre la tâche en file d’attente ou d’ouvrir le type.",
+    "kindOpenHelp": "Les types que le produit a ouverts à ton rôle dans ce locataire.",
+    "chooseKind": "Choisis un type"
   },
   "schedules": {
     "title": "Planifications",

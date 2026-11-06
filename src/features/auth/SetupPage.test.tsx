@@ -85,3 +85,48 @@ describe('SetupPage conflicts', () => {
     expect(alert).not.toHaveTextContent('Setup is already complete');
   });
 });
+
+describe('SetupPage password policy', () => {
+  it('shows the minimum length from the server and a refusal at the password field', async () => {
+    configureApi({
+      baseUrl: 'http://axentra.test',
+      fetch: async (request: Request) => {
+        const path = new URL(request.url).pathname;
+        if (path === '/v1/auth/setup')
+          return jsonResponse(
+            {
+              code: 'validation_failed',
+              status: 422,
+              title: 'Validation failed',
+              detail: 'the password must have at least 16 characters',
+              reason: 'too_short',
+              min_length: 16,
+              errors: [
+                { loc: ['body', 'password'], msg: 'the password must have at least 16 characters' },
+              ],
+            },
+            { status: 422 },
+          );
+        return jsonResponse({ code: 'unauthenticated', status: 401 }, { status: 401 });
+      },
+    });
+    const meta = {
+      ...testMeta,
+      setup_required: true,
+      auth: { ...testMeta.auth, password_policy: { min_length: 16, max_length: 1024 } },
+    };
+    renderWithProviders(
+      <Routes>
+        <Route path="/setup" element={<SetupPage />} />
+      </Routes>,
+      { route: '/setup', meta },
+    );
+    expect(
+      await screen.findByText('At least 16 characters. Not your email address.'),
+    ).toBeInTheDocument();
+    await submit();
+    const field = screen.getByLabelText(/^Password/, { selector: 'input' });
+    expect(field).toHaveAccessibleDescription(/Use at least 16 characters\./);
+    expect(field).toHaveAttribute('aria-invalid', 'true');
+  });
+});

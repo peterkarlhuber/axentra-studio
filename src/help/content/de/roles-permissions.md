@@ -111,7 +111,7 @@ festlegen, zum Beispiel `crm.deals:approve`. Deren Namen enthalten immer einen P
 `<namespace>.<resource>:<action>`. Einmal festgelegt, lassen sie sich wie integrierte Berechtigungen
 über eigene Rollen und API-Schlüssel gewähren, und dein Produktcode prüft sie.
 
-Öffne [Berechtigungen](app:permissions), um den Katalog des Produkts zu sehen. Er ist schreibgeschützt.
+Öffne [Berechtigungen](app:permissions), um den Katalog des Produkts zu sehen. Mit `permissions:manage` (Product owner) kannst du dort auch Berechtigungen festlegen.
 
 | Spalte                    | Bedeutung                                                                                                                                                                                                                                                              |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -125,16 +125,19 @@ Product owner, Product admin und Plattform-Administratoren haben immer jede akti
 Produktberechtigung; Owner und Admins von Mandanten jede mandantenbezogene.
 
 > [!NOTE]
-> Studio kann keine Berechtigungen festlegen oder stilllegen. Das erledigt der Produktcode, oder
-> jemand mit `permissions:manage` (Product owner) verwendet die API: `PUT` und `DELETE`
-> `/v1/products/{product_id}/permissions/{name}`. Ein Produkt kann bis zu 500 Berechtigungen festlegen.
+> Wähle **Berechtigung festlegen**, um eine über die API festzulegen. Bei so festgelegten
+> Berechtigungen ändert der Stift eine (oder reaktiviert eine stillgelegte), und der Papierkorb legt
+> sie still, nachdem du ihren Namen eingegeben hast. Berechtigungen, die der Produktcode
+> registriert, änderst du im Code; Studio bietet dafür keine Aktionen. Ein Produkt kann bis zu 500
+> Berechtigungen festlegen.
 
 ### Stillgelegte Berechtigungen {#retired}
 
 Eine stillgelegte Berechtigung gewährt nichts, auch wenn sie noch in einer eigenen Rolle oder einem
 API-Schlüssel gespeichert ist. Wird sie erneut festgelegt, wirkt sie für diese Inhaber wieder. Beim
-Speichern einer eigenen Rolle in Studio werden stillgelegte Namen daraus entfernt, und beim Rotieren
-eines API-Schlüssels fehlen sie im Ersatzschlüssel.
+Speichern einer eigenen Rolle in Studio bleiben ihre stillgelegten Namen erhalten (der Editor nennt
+sie unter der Checkliste), neue lassen sich nicht hinzufügen, und beim Rotieren eines API-Schlüssels
+fehlen sie im Ersatzschlüssel.
 
 ## Fehlerbehebung {#troubleshooting}
 

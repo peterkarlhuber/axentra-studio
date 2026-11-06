@@ -31,6 +31,7 @@ import {
   Time,
   layout,
   useToast,
+  UnsavedChangesGuard,
 } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
 import { describeError } from '@/lib/errors';
@@ -197,6 +198,7 @@ function TemplateEditor({
   const { access } = useProductScope();
   const canSend = can('notify:send') || canInAnyTenant(access, 'notify:send');
   const [draft, setDraft] = useState<Draft>(() => draftFrom(template));
+  const [initialDraft] = useState(() => JSON.stringify(draftFrom(template)));
   const [activeLocale, setActiveLocale] = useState('en');
   const [newLocale, setNewLocale] = useState('');
   const [previewLocale, setPreviewLocale] = useState('en');
@@ -383,6 +385,9 @@ function TemplateEditor({
         </Alert>
       ) : null}
       <div className={styles.editorGrid}>
+        <UnsavedChangesGuard
+          when={JSON.stringify(draft) !== initialDraft && !save.isPending && !deleting}
+        />
         <form className={layout.stack} onSubmit={submit} aria-label={t('editor.formLabel')}>
           <Card title={t('editor.general')}>
             <div className={layout.form}>
