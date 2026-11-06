@@ -35,11 +35,12 @@ Se `/config.json` manca o non è valido, Studio usa la stessa origine.
 
 Con l'immagine container di Studio non devi scrivere il file da solo:
 
-| Variabile                 | Effetto                                                                                                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `AXENTRA_API_URL`         | Il container inoltra `/v1` e `/metrics` a questo indirizzo dell'API (configurazione a stessa origine)               |
-| `AXENTRA_PUBLIC_API_URL`  | Scritto in `config.json` come `apiBaseUrl` e consentito nella Content-Security-Policy (indirizzo dell'API separato) |
-| `AXENTRA_CSP_CONNECT_SRC` | Indirizzi aggiuntivi a cui Studio può connettersi                                                                   |
+| Variabile                 | Effetto                                                                                                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `AXENTRA_API_URL`         | Il container inoltra `/v1` e `/metrics` a questo indirizzo dell'API (configurazione a stessa origine)                                                                          |
+| `AXENTRA_PUBLIC_API_URL`  | Scritto in `config.json` come `apiBaseUrl` e consentito nella Content-Security-Policy (indirizzo dell'API separato)                                                            |
+| `AXENTRA_CSP_CONNECT_SRC` | Origini `https://` aggiuntive a cui Studio può connettersi, separate da spazi (`https://host` o `https://host:porta`); qualsiasi altro valore interrompe l'avvio del container |
+| `AXENTRA_TLS_TERMINATED`  | `true` quando gli utenti raggiungono Studio tramite HTTPS (TLS terminato davanti al container): aggiunge `Strict-Transport-Security`. Predefinito `false`                      |
 
 ## Fare in modo che l'API accetti Studio {#allowed-origins}
 

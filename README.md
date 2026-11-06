@@ -134,19 +134,30 @@ probes). At start, `docker/40-axentra-studio.sh` writes `config.json`, the optio
 | `Referrer-Policy`                                 | `no-referrer`                                                                                                                                                                                                                                                           |
 | `Permissions-Policy`                              | camera, microphone, geolocation, payment, usb disabled                                                                                                                                                                                                                  |
 | `Cross-Origin-Opener-Policy` / `-Resource-Policy` | `same-origin`                                                                                                                                                                                                                                                           |
+| `Strict-Transport-Security`                       | `max-age=31536000; includeSubDomains`, only with `AXENTRA_TLS_TERMINATED=true`                                                                                                                                                                                          |
 
 Scripts never run inline (the pre-paint theme script is the external `/theme-init.js`).
 `style-src` needs `'unsafe-inline'` because Radix UI sets inline positioning styles and its
-scroll lock injects a `<style>` element; a stricter policy was tested and breaks dialogs. Add
-HSTS at your TLS terminator. With `AXENTRA_API_URL` set, the API sees the Studio's `Origin`, so
+scroll lock injects a `<style>` element; a stricter policy was tested and breaks dialogs. HSTS is
+sent only with `AXENTRA_TLS_TERMINATED=true`, that is when browsers reach Studio over HTTPS through
+a TLS-terminating proxy in front of the container (the container itself speaks plain HTTP); you
+may also add it at your TLS terminator instead. With `AXENTRA_API_URL` set, the API sees the Studio's `Origin`, so
 put the public Studio URL into the API's `security.allowed_origins` (or make it the API's
 `public_url`).
 
-| Variable                  | Purpose                                                           |
-| ------------------------- | ----------------------------------------------------------------- |
-| `AXENTRA_API_URL`         | Upstream for the `/v1` reverse proxy. Unset: no proxy.            |
-| `AXENTRA_PUBLIC_API_URL`  | Written to `config.json` as `apiBaseUrl`, added to `connect-src`. |
-| `AXENTRA_CSP_CONNECT_SRC` | Extra `connect-src` sources, space-separated.                     |
+| Variable                  | Purpose                                                                                                                                                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `AXENTRA_API_URL`         | Upstream for the `/v1` reverse proxy. Unset: no proxy.                                                                                                                                                                                                       |
+| `AXENTRA_PUBLIC_API_URL`  | Written to `config.json` as `apiBaseUrl`, added to `connect-src`.                                                                                                                                                                                            |
+| `AXENTRA_CSP_CONNECT_SRC` | Extra `connect-src` sources: space-separated `https://host` or `https://host:port` origins. Anything else (other schemes such as `http:` or `wss:`, keywords such as `'self'`, paths, wildcards, quotes, semicolons, line breaks) stops the container start. |
+| `AXENTRA_TLS_TERMINATED`  | `true` (or `1`) adds `Strict-Transport-Security`; `false`, `0` or unset (default): none. Other values stop the start.                                                                                                                                        |
+
+`connect-src` always contains `'self'` (same-origin requests, including the `/v1` proxy and its
+server-sent events), and `AXENTRA_PUBLIC_API_URL` is added on its own (it may be `http://` for a
+local API, for example `http://localhost:8080`). `AXENTRA_CSP_CONNECT_SRC` is therefore only for
+further `https://` origins; it is written into the nginx configuration, so the start fails on any
+other value instead of producing a weaker or broken policy. Local development uses `npm run dev`,
+which does not read these variables.
 
 ## Deployment modes (single and multi product)
 

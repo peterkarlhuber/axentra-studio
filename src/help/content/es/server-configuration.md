@@ -35,11 +35,12 @@ Si `/config.json` falta o no es válido, Studio usa el mismo origen.
 
 Con la imagen de contenedor de Studio no escribes el archivo tú mismo:
 
-| Variable                  | Efecto                                                                                                                    |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `AXENTRA_API_URL`         | El contenedor redirige `/v1` y `/metrics` a esta dirección de la API (configuración de mismo origen)                      |
-| `AXENTRA_PUBLIC_API_URL`  | Se escribe en `config.json` como `apiBaseUrl` y se permite en la Content-Security-Policy (dirección de API independiente) |
-| `AXENTRA_CSP_CONNECT_SRC` | Direcciones adicionales a las que puede conectarse Studio                                                                 |
+| Variable                  | Efecto                                                                                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AXENTRA_API_URL`         | El contenedor redirige `/v1` y `/metrics` a esta dirección de la API (configuración de mismo origen)                                                                                        |
+| `AXENTRA_PUBLIC_API_URL`  | Se escribe en `config.json` como `apiBaseUrl` y se permite en la Content-Security-Policy (dirección de API independiente)                                                                   |
+| `AXENTRA_CSP_CONNECT_SRC` | Orígenes `https://` adicionales a los que puede conectarse Studio, separados por espacios (`https://host` o `https://host:puerto`); cualquier otro valor detiene el arranque del contenedor |
+| `AXENTRA_TLS_TERMINATED`  | `true` cuando los usuarios acceden a Studio por HTTPS (TLS termina delante del contenedor): añade `Strict-Transport-Security`. Valor predeterminado `false`                                 |
 
 ## Hacer que la API acepte Studio {#allowed-origins}
 

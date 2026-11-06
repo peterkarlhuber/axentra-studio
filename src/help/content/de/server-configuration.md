@@ -36,11 +36,12 @@ Fehlt `/config.json` oder ist die Datei ungültig, verwendet Studio den gleichen
 
 Mit dem Container-Image von Studio schreibst du die Datei nicht selbst:
 
-| Variable                  | Wirkung                                                                                                              |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `AXENTRA_API_URL`         | Der Container leitet `/v1` und `/metrics` an diese API-Adresse weiter (Betrieb mit gleichem Ursprung)                |
-| `AXENTRA_PUBLIC_API_URL`  | Wird als `apiBaseUrl` in `config.json` geschrieben und in der Content-Security-Policy erlaubt (separate API-Adresse) |
-| `AXENTRA_CSP_CONNECT_SRC` | Zusätzliche Adressen, zu denen Studio Verbindungen aufbauen darf                                                     |
+| Variable                  | Wirkung                                                                                                                                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AXENTRA_API_URL`         | Der Container leitet `/v1` und `/metrics` an diese API-Adresse weiter (Betrieb mit gleichem Ursprung)                                                                                              |
+| `AXENTRA_PUBLIC_API_URL`  | Wird als `apiBaseUrl` in `config.json` geschrieben und in der Content-Security-Policy erlaubt (separate API-Adresse)                                                                               |
+| `AXENTRA_CSP_CONNECT_SRC` | Zusätzliche `https://`-Ursprünge, zu denen Studio Verbindungen aufbauen darf, durch Leerzeichen getrennt (`https://host` oder `https://host:port`); jeder andere Wert bricht den Containerstart ab |
+| `AXENTRA_TLS_TERMINATED`  | `true`, wenn Benutzer Studio über HTTPS erreichen (TLS endet vor dem Container): setzt `Strict-Transport-Security`. Standard `false`                                                               |
 
 ## Die API Studio akzeptieren lassen {#allowed-origins}
 

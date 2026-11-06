@@ -36,11 +36,12 @@ Si `/config.json` est absent ou invalide, le Studio utilise la même origine.
 
 Avec l’image de conteneur du Studio, tu n’écris pas le fichier toi-même :
 
-| Variable                  | Effet                                                                                                               |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `AXENTRA_API_URL`         | Le conteneur relaie `/v1` et `/metrics` vers cette adresse d’API (configuration sur la même origine)                |
-| `AXENTRA_PUBLIC_API_URL`  | Écrite dans `config.json` comme `apiBaseUrl` et autorisée dans la Content-Security-Policy (adresse d’API distincte) |
-| `AXENTRA_CSP_CONNECT_SRC` | Adresses supplémentaires auxquelles le Studio peut se connecter                                                     |
+| Variable                  | Effet                                                                                                                                                                                                    |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AXENTRA_API_URL`         | Le conteneur relaie `/v1` et `/metrics` vers cette adresse d’API (configuration sur la même origine)                                                                                                     |
+| `AXENTRA_PUBLIC_API_URL`  | Écrite dans `config.json` comme `apiBaseUrl` et autorisée dans la Content-Security-Policy (adresse d’API distincte)                                                                                      |
+| `AXENTRA_CSP_CONNECT_SRC` | Origines `https://` supplémentaires auxquelles le Studio peut se connecter, séparées par des espaces (`https://hôte` ou `https://hôte:port`) ; toute autre valeur fait échouer le démarrage du conteneur |
+| `AXENTRA_TLS_TERMINATED`  | `true` si les utilisateurs accèdent au Studio en HTTPS (TLS terminé devant le conteneur) : ajoute `Strict-Transport-Security`. Par défaut `false`                                                        |
 
 ## Faire accepter le Studio par l’API {#allowed-origins}
 

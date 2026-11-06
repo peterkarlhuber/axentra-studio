@@ -58,7 +58,6 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   for engine-specific failures.
 - **`style-src 'unsafe-inline'` in the CSP.** Required by Radix UI's inline positioning and
   scroll-lock styles; a stricter policy breaks dialogs. Scripts never run inline.
-- **HSTS is not set by the Docker image.** Add it at the TLS terminator.
 - **The Docker image is not built or tested in CI.** CI runs the e2e suite against `vite preview`,
   which sends no security headers. The production CSP of `docker/40-axentra-studio.sh` was
   exercised once locally without Docker (headers emulated, see the implementation report); a CI job

@@ -35,11 +35,12 @@ If `/config.json` is missing or invalid, Studio uses the same origin.
 
 With the Studio container image you do not write the file yourself:
 
-| Variable                  | Effect                                                                                                     |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `AXENTRA_API_URL`         | The container proxies `/v1` and `/metrics` to this API address (same-origin setup)                         |
-| `AXENTRA_PUBLIC_API_URL`  | Written to `config.json` as `apiBaseUrl` and allowed in the Content-Security-Policy (separate API address) |
-| `AXENTRA_CSP_CONNECT_SRC` | Additional addresses Studio may connect to                                                                 |
+| Variable                  | Effect                                                                                                                                                      |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AXENTRA_API_URL`         | The container proxies `/v1` and `/metrics` to this API address (same-origin setup)                                                                          |
+| `AXENTRA_PUBLIC_API_URL`  | Written to `config.json` as `apiBaseUrl` and allowed in the Content-Security-Policy (separate API address)                                                  |
+| `AXENTRA_CSP_CONNECT_SRC` | Additional `https://` origins Studio may connect to, separated by spaces (`https://host` or `https://host:port`); any other value stops the container start |
+| `AXENTRA_TLS_TERMINATED`  | `true` when users reach Studio over HTTPS (TLS ends in front of the container): adds `Strict-Transport-Security`. Default `false`                           |
 
 ## Let the API accept Studio {#allowed-origins}
 
