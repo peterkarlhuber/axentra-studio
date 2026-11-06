@@ -70,9 +70,13 @@ export interface Call {
 type Handler = (call: Call) => Response | undefined | Promise<Response | undefined>;
 
 /** Route API requests to `handler`; session, me and tenants have defaults. */
-export function mockApi(handler: Handler, options: { permissions?: string[] } = {}) {
+export function mockApi(
+  handler: Handler,
+  options: { permissions?: string[]; tenants?: unknown[] } = {},
+) {
   const calls: Call[] = [];
   const me = makeMe(options.permissions);
+  if (options.tenants) (me.products[0] as { tenants: unknown[] }).tenants = options.tenants;
   configureApi({
     baseUrl: API,
     fetch: async (request: Request) => {

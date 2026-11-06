@@ -14,10 +14,11 @@ jobs.
 
 > [!IMPORTANT]
 > Jobs need the server module `events`; without it, **Jobs** is not shown in the sidebar. Viewing
-> needs the permission `jobs:read` (product owners, admins, support and viewers have it).
-> **Enqueue job**, **Retry** and **Cancel job** need `jobs:manage`; without it these buttons are
-> hidden. Jobs only run while at least one worker process (`axentra worker`) is running. That is
-> an operations task, see [Server configuration](help:server-configuration).
+> needs the permission `jobs:read` (product owners, admins, support and viewers have it). **Retry**
+> and **Cancel job** need `jobs:manage`; without it these buttons are hidden. **Enqueue job** needs
+> `jobs:manage` too, except for kinds opened to tenant members (see [who may enqueue which
+> kind](#kind-permissions)). Jobs only run while at least one worker process (`axentra worker`) is
+> running. That is an operations task, see [Server configuration](help:server-configuration).
 
 ## Read the jobs list {#jobs-list}
 
@@ -189,8 +190,9 @@ The jobs list and stats are also available through the API: `GET /v1/products/{p
 
 Holders of `jobs:manage` may enqueue any kind that does not start with `axentra.`. Through the API,
 tenant members with only `events:publish` may enqueue a kind only when the product explicitly opened
-that kind to them; otherwise the server answers "not permitted". Studio offers **Enqueue job** only to
-`jobs:manage` holders.
+that kind to them; otherwise the server answers "not permitted". Studio offers **Enqueue job** to
+tenant members without `jobs:manage` too: they choose a **Tenant** first and then one of the kinds
+opened to them there. If no kind is open to them in that tenant, the dialog says so.
 
 ### Built-in job kinds {#system-kinds}
 

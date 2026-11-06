@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { asItems, usersApi } from '@/api/endpoints';
 import { queryKeys } from '@/api/queryKeys';
 import { useCan, useErrorToast, useIsPlatformAdmin, useSession } from '@/app/auth';
+import { MembershipsCard } from './MembershipsCard';
 import { PlatformRoleCard } from './PlatformRoleCard';
 import { useCrumbLabel } from '@/app/crumbs';
 import {
@@ -154,6 +155,7 @@ export function UserDetailPage() {
           />
         </Card>
         {canManage && isAdmin ? <PlatformRoleCard user={data} isSelf={isSelf} /> : null}
+        <MembershipsCard userId={data.id} />
         {canManage ? (
           <Card title={t('detail.sessions')} flush>
             <SessionsTable

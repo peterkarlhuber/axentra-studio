@@ -62,5 +62,18 @@
     "saved": "Rôle sur la plateforme modifié",
     "confirmTitle": "Changer le rôle sur la plateforme ?",
     "confirmBody": "{{name}} reçoit le rôle sur la plateforme « {{role}} ». Cela modifie l’accès à tous les produits de ce serveur."
+  },
+  "memberships": {
+    "title": "Adhésions",
+    "description": "Les produits dont l’utilisateur est opérateur et les locataires dont il est membre, dans la mesure où tu peux les voir. Les rôles se modifient dans l’onglet Membres de chaque produit ou locataire.",
+    "product": "Produit",
+    "tenant": "Locataire",
+    "role": "Rôle",
+    "since": "Depuis",
+    "tenantStatus": "Statut du locataire",
+    "productsCaption": "Rôles de produit",
+    "tenantsCaption": "Adhésions aux locataires",
+    "noProducts": "Aucun rôle de produit visible pour toi",
+    "noTenants": "Aucune adhésion à un locataire visible pour toi"
   }
 }

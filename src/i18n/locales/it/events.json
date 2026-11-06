@@ -115,7 +115,12 @@
     "priorityInfo": "La priorità decide solo quale job pronto viene preso per primo da un worker libero. Non interrompe i job in esecuzione e non garantisce un ordine.",
     "maxAttemptsInfo": "Dopo un errore il job viene riprovato con un'attesa crescente. Quando l'ultimo tentativo fallisce diventa esaurito e resta nell'elenco, così puoi leggere l'errore e riprovarlo.",
     "idempotencyKeyInfo": "Studio inserisce una nuova chiave casuale ogni volta che apri questa finestra di dialogo, quindi un doppio clic accoda il job una sola volta. La stessa chiave con un payload o una priorità diversi viene rifiutata.",
-    "skipped": "Non eseguito: prodotto o tenant non attivo"
+    "skipped": "Non eseguito: prodotto o tenant non attivo",
+    "tenantRequired": "I job che puoi accodare vengono eseguiti in uno dei tuoi tenant.",
+    "noOpenKindsTitle": "Qui non hai tipi di job aperti",
+    "noOpenKinds": "In questo tenant nessun tipo di job è aperto al tuo ruolo. Chiedi a un operatore del prodotto di accodare il job o di aprire il tipo.",
+    "kindOpenHelp": "I tipi che il prodotto ha aperto al tuo ruolo in questo tenant.",
+    "chooseKind": "Scegli un tipo"
   },
   "schedules": {
     "title": "Pianificazioni",

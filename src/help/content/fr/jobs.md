@@ -12,11 +12,14 @@ ce qui attend, ce qui s’exécute, ce qui a réussi et ce qui a échoué, et pe
 des tâches.
 
 > [!IMPORTANT]
-> Les tâches exigent le module serveur `events` ; sans lui, **Tâches** n’apparaît pas dans la barre latérale. La consultation
-> exige l’autorisation `jobs:read` (les propriétaires, administrateurs, support et lecteurs du produit la détiennent).
-> **Mettre une tâche en file d’attente**, **Relancer** et **Annuler la tâche** exigent `jobs:manage` ; sans elle, ces boutons sont
-> masqués. Les tâches ne s’exécutent que tant qu’au moins un processus worker (`axentra worker`) fonctionne. Cela relève
-> de l’exploitation, voir la [configuration du serveur](help:server-configuration).
+> Les tâches exigent le module serveur `events` ; sans lui, **Tâches** n’apparaît pas dans la barre
+> latérale. La consultation exige l’autorisation `jobs:read` (les propriétaires, administrateurs,
+> support et lecteurs du produit la détiennent). **Relancer** et **Annuler la tâche** exigent
+> `jobs:manage` ; sans elle, ces boutons sont masqués. **Mettre une tâche en file d’attente** exige
+> aussi `jobs:manage`, sauf pour les types ouverts aux membres d’un locataire (voir [qui peut mettre
+> quel type en file d’attente](#kind-permissions)). Les tâches ne s’exécutent que tant qu’au moins
+> un processus worker (`axentra worker`) fonctionne. Cela relève de l’exploitation, voir la
+> [configuration du serveur](help:server-configuration).
 
 ## Lire la liste des tâches {#jobs-list}
 
@@ -187,10 +190,13 @@ La liste des tâches et les statistiques sont aussi disponibles via l’API : `
 
 ### Qui peut mettre quel type en file d’attente {#kind-permissions}
 
-Les détenteurs de `jobs:manage` peuvent mettre en file d’attente tout type qui ne commence pas par `axentra.`. Via l’API,
-les membres d’un locataire qui n’ont que `events:publish` ne peuvent mettre un type en file d’attente que si le produit leur a explicitement ouvert
-ce type ; sinon le serveur répond « not permitted ». Studio ne propose **Mettre une tâche en file d’attente** qu’aux
-détenteurs de `jobs:manage`.
+Les détenteurs de `jobs:manage` peuvent mettre en file d’attente tout type qui ne commence pas par
+`axentra.`. Via l’API, les membres d’un locataire qui n’ont que `events:publish` ne peuvent mettre
+un type en file d’attente que si le produit leur a explicitement ouvert ce type ; sinon le serveur
+répond « not permitted ». Studio propose aussi **Mettre une tâche en file d’attente** aux membres
+d’un locataire sans `jobs:manage` : ils choisissent d’abord un **Locataire**, puis l’un des types
+qui leur y sont ouverts. Si aucun type ne leur est ouvert dans ce locataire, la boîte de dialogue
+l’indique.
 
 ### Types de tâches intégrés {#system-kinds}
 

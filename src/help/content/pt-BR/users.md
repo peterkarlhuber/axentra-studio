@@ -48,8 +48,18 @@ O cartão **Perfil** mostra:
 | **Login por senha**              | **Senha definida** ou **Sem senha (somente login único)**.                                     |
 | **Último login**, **Criado em**  | Data e hora.                                                                                   |
 
-A página do usuário não lista as associações dele. Para ver ou alterar o que um usuário pode fazer
-em um tenant, abra a guia **Membros** do tenant; para operadores, a guia **Membros** do produto.
+### Associações {#memberships}
+
+O cartão **Associações** mostra a que o usuário pertence, até onde você pode ver:
+
+- **Funções de produto**: produtos em que o usuário é operador, com a função. Administradores e
+  observadores da plataforma veem todos; os demais veem os produtos em que têm
+  `product_members:read`.
+- **Associações em tenants**: tenants em que o usuário é membro, com o produto, a função e o
+  status do tenant. Os demais veem os tenants em que têm `members:read`.
+
+O cartão é somente leitura. Para alterar o que um usuário pode fazer, abra a guia **Membros** do
+tenant (pelo nome dele) ou, para operadores, a guia **Membros** do produto.
 
 ### Usuários sem endereço de e-mail {#no-email}
 

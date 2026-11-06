@@ -14,10 +14,12 @@ funzionato e che cosa non è riuscito, e consente agli operatori di riprovare o 
 > [!IMPORTANT]
 > I job richiedono il modulo del server `events`; senza di esso, **Job** non compare nella barra
 > laterale. La visualizzazione richiede l'autorizzazione `jobs:read` (la possiedono proprietari,
-> amministratori, supporto e visualizzatori del prodotto). **Accoda job**, **Riprova** e **Annulla
-> job** richiedono `jobs:manage`; senza questa autorizzazione i pulsanti sono nascosti. I job vengono
-> eseguiti solo finché è attivo almeno un processo worker (`axentra worker`). Si tratta di un compito
-> operativo, vedi [Configurazione del server](help:server-configuration).
+> amministratori, supporto e visualizzatori del prodotto). **Riprova** e **Annulla job** richiedono
+> `jobs:manage`; senza questa autorizzazione i pulsanti sono nascosti. Anche **Accoda job** richiede
+> `jobs:manage`, tranne per i tipi aperti ai membri dei tenant (vedi [chi può accodare quale
+> tipo](#kind-permissions)). I job vengono eseguiti solo finché è attivo almeno un processo worker
+> (`axentra worker`). Si tratta di un compito operativo, vedi [Configurazione del
+> server](help:server-configuration).
 
 ## Leggere l'elenco dei job {#jobs-list}
 
@@ -201,10 +203,12 @@ L'elenco dei job e le statistiche sono disponibili anche tramite l'API:
 
 ### Chi può accodare quale tipo {#kind-permissions}
 
-Chi possiede `jobs:manage` può accodare qualsiasi tipo che non inizi con `axentra.`. Tramite l'API, i
-membri dei tenant che hanno solo `events:publish` possono accodare un tipo solo se il prodotto lo ha
-esplicitamente aperto a loro; altrimenti il server risponde “not permitted”. Studio offre **Accoda
-job** solo a chi possiede `jobs:manage`.
+Chi possiede `jobs:manage` può accodare qualsiasi tipo che non inizi con `axentra.`. Tramite l'API,
+i membri dei tenant che hanno solo `events:publish` possono accodare un tipo solo se il prodotto lo
+ha esplicitamente aperto a loro; altrimenti il server risponde “not permitted”. Studio offre
+**Accoda job** anche ai membri dei tenant senza `jobs:manage`: scelgono prima un **Tenant** e poi
+uno dei tipi aperti a loro in quel tenant. Se in quel tenant non è aperto alcun tipo, la finestra di
+dialogo lo indica.
 
 ### Tipi di job predefiniti {#system-kinds}
 

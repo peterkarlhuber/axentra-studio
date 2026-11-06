@@ -18,13 +18,13 @@ const tenant = (id: string, name: string) => ({
 afterEach(() => configureApi({ baseUrl: '' }));
 
 describe('TenantPicker', () => {
-  it('sorts the listed tenants by name and sends only parameters the API knows', async () => {
+  it('asks the server for the first tenants by name and sorts them in the UI language', async () => {
     const urls: URL[] = [];
     configureApi({
       baseUrl: 'http://axentra.test',
       fetch: async (input: Request) => {
         urls.push(new URL(input.url));
-        // The server lists oldest first (by id), not by name.
+        // Server order is byte-wise lower(name); the UI sorts again for its language.
         return jsonResponse({
           items: [tenant('ten_1', 'Zeta'), tenant('ten_2', 'alpha'), tenant('ten_3', 'Mu')],
           next_cursor: 'more',
@@ -39,6 +39,6 @@ describe('TenantPicker', () => {
       .map((option) => option.textContent);
     expect(names).toEqual(['Choose a tenant', 'alpha', 'Mu', 'Zeta']);
     expect(screen.getByText('Only the first 200 tenants are listed.')).toBeInTheDocument();
-    expect([...(urls[0]?.searchParams.keys() ?? [])]).toEqual(['limit']);
+    expect(Object.fromEntries(urls[0]?.searchParams ?? [])).toEqual({ limit: '200', sort: 'name' });
   });
 });

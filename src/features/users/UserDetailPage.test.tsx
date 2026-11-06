@@ -32,8 +32,37 @@ const adaSession = {
   expires_at: '2026-11-08T10:00:00Z',
 };
 
+const adaMemberships = {
+  products: [
+    {
+      product_id: 'prd_1',
+      product_slug: 'crm',
+      product_name: 'CRM',
+      role: 'product_admin',
+      created_at: '2026-10-02T00:00:00Z',
+    },
+  ],
+  tenants: [
+    {
+      product_id: 'prd_1',
+      product_slug: 'crm',
+      product_name: 'CRM',
+      tenant_id: 'ten_1',
+      tenant_slug: 'acme',
+      tenant_name: 'Acme',
+      tenant_status: 'suspended',
+      role: 'viewer',
+      created_at: '2026-10-03T00:00:00Z',
+    },
+  ],
+};
+
 /** `signedInAs`: the id of the signed-in user (the page hides "Disable" for oneself). */
-function api({ me = makeMe(['users:read', 'users:manage']), signedInAs = 'usr_1' } = {}) {
+function api({
+  me = makeMe(['users:read', 'users:manage']),
+  signedInAs = 'usr_1',
+  memberships = adaMemberships,
+} = {}) {
   let user = { ...ada };
   return mockApi((request, url) => {
     if (url.pathname === '/v1/auth/session')
@@ -47,6 +76,7 @@ function api({ me = makeMe(['users:read', 'users:manage']), signedInAs = 'usr_1'
     }
     if (url.pathname === `${userUrl}/sessions`) return jsonResponse([adaSession]);
     if (url.pathname === `${userUrl}/sessions/revoke`) return jsonResponse({ revoked: 1 });
+    if (url.pathname === `${userUrl}/memberships`) return jsonResponse(memberships);
     return undefined;
   }, me);
 }
@@ -70,6 +100,31 @@ describe('UserDetailPage', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('ada@example.com')).toBeInTheDocument();
     expect(await screen.findByText(/203\.0\.113\.7/)).toBeInTheDocument();
+  });
+
+  it('lists the product roles and tenant memberships with links to manage them', async () => {
+    api();
+    renderPage();
+    const products = await screen.findByRole('table', { name: 'Product roles' });
+    expect(await within(products).findByRole('link', { name: 'CRM' })).toHaveAttribute(
+      'href',
+      '/products/prd_1',
+    );
+    expect(within(products).getByText('product_admin')).toBeInTheDocument();
+    const tenants = screen.getByRole('table', { name: 'Tenant memberships' });
+    expect(within(tenants).getByRole('link', { name: 'Acme' })).toHaveAttribute(
+      'href',
+      '/p/prd_1/tenants/ten_1',
+    );
+    expect(within(tenants).getByText('viewer')).toBeInTheDocument();
+    expect(within(tenants).getByText('Suspended')).toBeInTheDocument();
+  });
+
+  it('says when no memberships are visible', async () => {
+    api({ me: makeMe(['users:read']), memberships: { products: [], tenants: [] } });
+    renderPage();
+    expect(await screen.findByText('No product roles you can see')).toBeInTheDocument();
+    expect(screen.getByText('No tenant memberships you can see')).toBeInTheDocument();
   });
 
   it('disables a user only after typing the email address, then offers to enable', async () => {

@@ -61,5 +61,18 @@
     "saved": "Plattformrolle geändert",
     "confirmTitle": "Plattformrolle ändern?",
     "confirmBody": "{{name}} erhält die Plattformrolle „{{role}}“. Das ändert den Zugriff auf alle Produkte dieses Servers."
+  },
+  "memberships": {
+    "title": "Mitgliedschaften",
+    "description": "Produkte, in denen der Benutzer Produktverantwortlicher ist, und Mandanten, in denen er Mitglied ist, soweit du sie sehen darfst. Rollen änderst du im Tab „Mitglieder“ des jeweiligen Produkts oder Mandanten.",
+    "product": "Produkt",
+    "tenant": "Mandant",
+    "role": "Rolle",
+    "since": "Seit",
+    "tenantStatus": "Status des Mandanten",
+    "productsCaption": "Produktrollen",
+    "tenantsCaption": "Mitgliedschaften in Mandanten",
+    "noProducts": "Keine Produktrollen, die du sehen kannst",
+    "noTenants": "Keine Mitgliedschaften in Mandanten, die du sehen kannst"
   }
 }

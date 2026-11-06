@@ -62,5 +62,18 @@
     "saved": "Ruolo nella piattaforma modificato",
     "confirmTitle": "Cambiare il ruolo nella piattaforma?",
     "confirmBody": "{{name}} riceverà il ruolo nella piattaforma “{{role}}”. Questo modifica l'accesso a tutti i prodotti di questo server."
+  },
+  "memberships": {
+    "title": "Appartenenze",
+    "description": "I prodotti in cui l'utente è operatore e i tenant in cui è membro, per quanto puoi vederli. I ruoli si cambiano nella scheda Membri di ciascun prodotto o tenant.",
+    "product": "Prodotto",
+    "tenant": "Tenant",
+    "role": "Ruolo",
+    "since": "Dal",
+    "tenantStatus": "Stato del tenant",
+    "productsCaption": "Ruoli di prodotto",
+    "tenantsCaption": "Appartenenze ai tenant",
+    "noProducts": "Nessun ruolo di prodotto che puoi vedere",
+    "noTenants": "Nessuna appartenenza a tenant che puoi vedere"
   }
 }

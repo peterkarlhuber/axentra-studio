@@ -22,6 +22,7 @@ export const queryKeys = {
     ['products', productId, 'tenants', tenantId, 'invitations'] as const,
   users: (params?: unknown) => ['users', 'list', params ?? {}] as const,
   user: (userId: string) => ['users', userId] as const,
+  userMemberships: (userId: string) => ['users', userId, 'memberships'] as const,
   userSessions: (userId: string) => ['users', userId, 'sessions'] as const,
   roles: (productId: string) => ['products', productId, 'roles'] as const,
   productPermissions: (productId: string, includeRetired = false) =>
@@ -52,6 +53,8 @@ export const queryKeys = {
   jobs: (productId: string, params?: unknown) =>
     ['products', productId, 'jobs', 'list', params ?? {}] as const,
   jobStats: (productId: string) => ['products', productId, 'jobs', 'stats'] as const,
+  jobKinds: (productId: string, tenantId: string) =>
+    ['products', productId, 'jobs', 'kinds', tenantId] as const,
   job: (productId: string, jobId: string) => ['products', productId, 'jobs', jobId] as const,
   schedules: (productId: string) => ['products', productId, 'schedules'] as const,
   events: (productId: string, params?: unknown) =>

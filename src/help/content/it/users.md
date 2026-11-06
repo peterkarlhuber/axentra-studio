@@ -49,9 +49,18 @@ Il riquadro **Profilo** mostra:
 | **Accesso con password**       | **Password impostata** oppure **Nessuna password (solo single sign-on)**.                                        |
 | **Ultimo accesso**, **Creato** | Data e ora.                                                                                                      |
 
-La pagina dell'utente non elenca le sue appartenenze. Per vedere o modificare che cosa può fare un
-utente in un tenant, apri la scheda **Membri** del tenant; per gli operatori, la scheda **Membri** del
-prodotto.
+### Appartenenze {#memberships}
+
+La scheda **Appartenenze** mostra a che cosa appartiene l'utente, per quanto puoi vederlo:
+
+- **Ruoli di prodotto**: i prodotti in cui l'utente è operatore, con il ruolo. Amministratori e
+  osservatori della piattaforma li vedono tutti; gli altri vedono i prodotti in cui hanno
+  `product_members:read`.
+- **Appartenenze ai tenant**: i tenant in cui l'utente è membro, con prodotto, ruolo e stato del
+  tenant. Gli altri vedono i tenant in cui hanno `members:read`.
+
+La scheda è in sola lettura. Per cambiare che cosa può fare un utente, apri la scheda **Membri**
+del tenant (dal suo nome) oppure, per gli operatori, la scheda **Membri** del prodotto.
 
 ### Utenti senza indirizzo email {#no-email}
 

@@ -134,7 +134,7 @@ inquilino. Consulta [registros](help:records).
 - Los operadores de producto no necesitan una membresía: su rol de producto ya abarca todos los
   inquilinos.
 - Los selectores de otras pantallas (por ejemplo, **Ámbito de inquilino** en las claves de API o la
-  pantalla **Invitaciones**) muestran los 200 inquilinos más antiguos, ordenados por nombre.
+  pantalla **Invitaciones**) muestran los primeros 200 inquilinos por nombre.
 
 ## Solución de problemas {#troubleshooting}
 

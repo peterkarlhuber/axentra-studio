@@ -64,6 +64,8 @@ import type {
   NotifyTemplatePatch,
   ProductInput,
   ProductInvitation,
+  UserMemberships,
+  EnqueueableKinds,
   ProductInvitationInput,
   NewProductInvitation,
   ProductMember,
@@ -274,6 +276,8 @@ const tenantPath = (productId: string, tenantId: string) => ({
 export interface TenantListParams extends ListParams {
   q?: string;
   status?: 'active' | 'suspended' | '';
+  /** `id` (default, oldest first) or `name` (case-insensitive). */
+  sort?: 'id' | 'name';
 }
 
 export const tenantsApi = {
@@ -285,6 +289,7 @@ export const tenantsApi = {
           query: cleanQuery(params) as {
             q?: string;
             status?: 'active' | 'suspended';
+            sort?: 'id' | 'name';
             limit?: number;
             cursor?: string;
           },
@@ -405,6 +410,11 @@ export const usersApi = {
   revokeSessions: (userId: string) =>
     unwrap<RevokeResult>(
       api().POST('/v1/users/{user_id}/sessions/revoke', { params: userPath(userId) }),
+    ),
+  /** Product roles and tenant memberships of the user, as far as the caller may read them. */
+  memberships: (userId: string) =>
+    unwrap<UserMemberships>(
+      api().GET('/v1/users/{user_id}/memberships', { params: userPath(userId) }),
     ),
 };
 
@@ -1106,6 +1116,13 @@ export const jobsApi = {
   stats: (productId: string) =>
     unwrap<JobStats>(
       api().GET('/v1/products/{product_id}/jobs/stats', { params: productPath(productId) }),
+    ),
+  /** Job kinds the caller may enqueue in the product or one tenant (`any_kind` with `jobs:manage`). */
+  kinds: (productId: string, tenantId?: string) =>
+    unwrap<EnqueueableKinds>(
+      api().GET('/v1/products/{product_id}/jobs/kinds', {
+        params: { ...productPath(productId), query: tenantId ? { tenant_id: tenantId } : {} },
+      }),
     ),
   get: (productId: string, jobId: string) =>
     unwrap<Job>(

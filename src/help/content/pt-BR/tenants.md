@@ -132,7 +132,7 @@ Veja [registros](help:records).
 - Operadores de produto não precisam de associação: a função de produto deles já abrange todos os
   tenants.
 - Os seletores em outras telas (por exemplo **Escopo de tenant** nas chaves de API ou a tela
-  **Convites**) listam os 200 tenants mais antigos, ordenados por nome.
+  **Convites**) listam os primeiros 200 tenants por nome.
 
 ## Solução de problemas {#troubleshooting}
 

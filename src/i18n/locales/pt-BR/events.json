@@ -115,7 +115,12 @@
     "priorityInfo": "A prioridade decide apenas qual job pendente um worker livre pega primeiro. Ela não interrompe jobs em execução e não garante uma ordem.",
     "maxAttemptsInfo": "Depois de um erro, o job é tentado novamente com uma espera crescente. Quando a última tentativa falha, ele passa para falha definitiva e permanece na lista, para que você possa ler o erro e tentar de novo.",
     "idempotencyKeyInfo": "O Studio preenche uma nova chave aleatória sempre que você abre esta caixa de diálogo, assim um clique duplo enfileira apenas uma vez. A mesma chave com outro payload ou outra prioridade é recusada.",
-    "skipped": "Não executado: produto ou tenant inativo"
+    "skipped": "Não executado: produto ou tenant inativo",
+    "tenantRequired": "Os jobs que você pode enfileirar rodam em um dos seus tenants.",
+    "noOpenKindsTitle": "Nenhum tipo de job está liberado para você aqui",
+    "noOpenKinds": "Neste tenant, nenhum tipo de job está liberado para a sua função. Peça a um operador do produto para enfileirar o job ou liberar o tipo.",
+    "kindOpenHelp": "Os tipos que o produto liberou para a sua função neste tenant.",
+    "chooseKind": "Escolha um tipo"
   },
   "schedules": {
     "title": "Agendamentos",
