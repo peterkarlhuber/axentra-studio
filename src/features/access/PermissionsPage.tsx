@@ -1,35 +1,48 @@
-import { useQuery } from '@tanstack/react-query';
-import { Lock, ShieldPlus } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Lock, Pencil, Plus, ShieldPlus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { accessApi, asItems } from '@/api/endpoints';
 import type { Permission } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
 import { useProductScope } from '@/app/contexts';
+import { useCan, useErrorToast } from '@/app/auth';
 import {
   Badge,
+  Button,
   Card,
+  ConfirmDialog,
+  IconButton,
   DataTable,
   EmptyState,
   PageHeader,
   Switch,
   Time,
   layout,
+  useToast,
   type Column,
 } from '@/components/ui';
+import { PermissionDeclareDialog } from './PermissionDeclareDialog';
 import { isProductPermission } from './permission-groups';
 import { InfoTip } from '@/help/InfoTip';
 
 /**
- * Read-only catalog of everything that can be granted in the product: the permissions the product
- * declared itself (`GET /v1/products/{id}/permissions`, `source: product`) and Axentra's built-in
- * product and tenant permissions. Products declare permissions in code or over the API; Studio
- * only shows them.
+ * Catalog of everything that can be granted in the product: the permissions the product declared
+ * itself (`GET /v1/products/{id}/permissions`, `source: product`) and Axentra's built-in product
+ * and tenant permissions. With `permissions:manage`, permissions can be declared, changed and
+ * retired over the API here; those registered by the product's code are changed in the code.
  */
 export function PermissionsPage() {
   const { t } = useTranslation('access');
   const { productId } = useProductScope();
   const [showRetired, setShowRetired] = useState(false);
+  const can = useCan();
+  const canManage = can('permissions:manage');
+  const toast = useToast();
+  const showError = useErrorToast();
+  const queryClient = useQueryClient();
+  const [editing, setEditing] = useState<Permission | 'new' | null>(null);
+  const [retiring, setRetiring] = useState<Permission | null>(null);
   const query = useQuery({
     queryKey: queryKeys.productPermissions(productId, showRetired),
     queryFn: () => accessApi.productPermissions(productId, showRetired),
@@ -113,6 +126,39 @@ export function PermissionsPage() {
     },
   ];
 
+  if (canManage) {
+    ownColumns.push({
+      id: 'actions',
+      header: <span className="ax-sr-only">{t('common:table.actions')}</span>,
+      align: 'end',
+      // Only API-declared permissions can be changed here (code registrations answer 409).
+      cell: (permission) =>
+        permission.declared_by !== 'api' ? null : (
+          <span className={layout.actions}>
+            <IconButton
+              size="sm"
+              icon={<Pencil />}
+              label={
+                permission.retired_at
+                  ? t('declare.reactivateNamed', { name: permission.name })
+                  : t('declare.editNamed', { name: permission.name })
+              }
+              onClick={() => setEditing(permission)}
+            />
+            {permission.retired_at ? null : (
+              <IconButton
+                size="sm"
+                variant="danger"
+                icon={<Trash2 />}
+                label={t('declare.retireNamed', { name: permission.name })}
+                onClick={() => setRetiring(permission)}
+              />
+            )}
+          </span>
+        ),
+    });
+  }
+
   const builtInColumns: Column<Permission>[] = [
     { id: 'name', header: t('catalog.name'), rowHeader: true, cell: nameCell },
     { id: 'scope', header: t('catalog.scope'), cell: scopeBadge },
@@ -130,6 +176,13 @@ export function PermissionsPage() {
         title={t('catalog.title')}
         description={t('catalog.description')}
         help="roles-permissions#product-permissions"
+        actions={
+          canManage ? (
+            <Button variant="primary" icon={<Plus />} onClick={() => setEditing('new')}>
+              {t('declare.title')}
+            </Button>
+          ) : undefined
+        }
       />
       <Card
         flush
@@ -177,6 +230,34 @@ export function PermissionsPage() {
           {...tableState}
         />
       </Card>
+      {editing ? (
+        <PermissionDeclareDialog
+          productId={productId}
+          permission={editing === 'new' ? undefined : editing}
+          onClose={() => setEditing(null)}
+        />
+      ) : null}
+      <ConfirmDialog
+        open={retiring !== null}
+        onOpenChange={(open) => (open ? undefined : setRetiring(null))}
+        title={t('declare.retireTitle')}
+        description={t('declare.retireBody', { name: retiring?.name })}
+        confirmLabel={t('declare.retire')}
+        confirmText={retiring?.name}
+        onConfirm={async () => {
+          if (!retiring) return;
+          try {
+            await accessApi.retirePermission(productId, retiring.name);
+            toast.success(t('declare.retired', { name: retiring.name }));
+            void queryClient.invalidateQueries({
+              queryKey: ['products', productId, 'permissions'],
+            });
+          } catch (error) {
+            showError(error);
+            throw error;
+          }
+        }}
+      />
     </div>
   );
 }

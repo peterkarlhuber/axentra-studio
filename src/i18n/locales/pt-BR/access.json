@@ -56,7 +56,8 @@
     "keyInfo": "De 2 a 41 letras minúsculas, dígitos ou sublinhados. Chaves integradas como “member” não podem ser usadas.",
     "scopeInfo": "O escopo não pode ser alterado depois que a função é criada.",
     "permissionsInfo": "Permissões da plataforma não podem fazer parte de uma função. Só quem tem todas as permissões de uma função pode atribuí-la a outras pessoas (teto de função).",
-    "permissionsAbout": "Sobre as permissões de funções"
+    "permissionsAbout": "Sobre as permissões de funções",
+    "retiredKept": "Permissões descontinuadas mantidas: {{permissions}}. Elas não concedem nada enquanto estiverem descontinuadas e são mantidas ao salvar."
   },
   "keys": {
     "title": "Chaves de API",
@@ -128,7 +129,7 @@
   },
   "catalog": {
     "title": "Permissões",
-    "description": "Tudo o que pode ser concedido neste produto: as permissões que o próprio produto declara e as permissões integradas do Axentra. Somente leitura; os produtos declaram suas permissões no código ou pela API.",
+    "description": "Tudo o que pode ser concedido neste produto: as permissões que o próprio produto declara e as permissões integradas do Axentra. Os produtos declaram suas permissões no código ou pela API; com permissions:manage você também pode declará-las aqui.",
     "own": "Permissões do produto",
     "ownDescription": "Declaradas por este produto. Proprietários e administradores as têm automaticamente; leitores e suporte têm as de somente leitura.",
     "ownEmpty": "Este produto não declara permissões próprias",
@@ -153,5 +154,33 @@
     "defaultRolesAbout": "Sobre as concessões padrão",
     "declaredByInfo": "Código do produto: registrada pelo código do produto na inicialização; altere-a lá. API: declarada pela API HTTP por alguém com permissions:manage.",
     "declaredByAbout": "Sobre “Declarada por”"
+  },
+  "declare": {
+    "title": "Declarar permissão",
+    "editTitle": "Alterar {{name}}",
+    "description": "Uma permissão declarada aqui pode ser concedida por funções personalizadas e chaves de API. O código do seu produto a verifica.",
+    "submit": "Declarar permissão",
+    "nameHelp": "<namespace>.<resource>:<action>, em minúsculas, por exemplo crm.deals:approve. Não pode ser alterado depois.",
+    "nameInvalid": "Use <namespace>.<resource>:<action> com letras minúsculas, dígitos e sublinhados, por exemplo crm.deals:approve.",
+    "scopeHelp": {
+      "tenant": "Concedida por tenant (funções de tenant, chaves de um tenant).",
+      "product": "Concedida para o produto inteiro (funções de produto, chaves no nível do produto)."
+    },
+    "descriptionField": "Descrição",
+    "defaultRolesHelp": "Proprietários e administradores sempre a têm. Selecione outras funções integradas que devem tê-la.",
+    "readLike": "Só lê dados",
+    "readLikeHelp": "Funções somente leitura (suporte e observadores) têm as permissões que só leem dados.",
+    "readLikeAuto": "Automático (quando o nome termina em :read)",
+    "readLikeYes": "Sim",
+    "readLikeNo": "Não",
+    "created": "Permissão {{name}} declarada",
+    "updated": "Permissão {{name}} salva",
+    "editNamed": "Alterar {{name}}",
+    "reactivateNamed": "Reativar {{name}}",
+    "retireNamed": "Descontinuar {{name}}",
+    "retire": "Descontinuar permissão",
+    "retireTitle": "Descontinuar a permissão?",
+    "retireBody": "{{name}} deixa de conceder qualquer coisa, também onde funções personalizadas e chaves de API ainda a listam. Declará-la de novo a restaura. Digite o nome para confirmar.",
+    "retired": "Permissão {{name}} descontinuada"
   }
 }

@@ -56,7 +56,8 @@
     "keyInfo": "Da 2 a 41 lettere minuscole, cifre o trattini bassi. Non puoi usare chiavi predefinite come “member”.",
     "scopeInfo": "L'ambito non può essere modificato dopo la creazione del ruolo.",
     "permissionsInfo": "Le autorizzazioni della piattaforma non possono far parte di un ruolo. Solo chi ha tutte le autorizzazioni di un ruolo può assegnarlo ad altri (limite del ruolo).",
-    "permissionsAbout": "Informazioni sulle autorizzazioni dei ruoli"
+    "permissionsAbout": "Informazioni sulle autorizzazioni dei ruoli",
+    "retiredKept": "Autorizzazioni dismesse mantenute: {{permissions}}. Non concedono nulla finché sono dismesse e restano al salvataggio."
   },
   "keys": {
     "title": "Chiavi API",
@@ -128,7 +129,7 @@
   },
   "catalog": {
     "title": "Autorizzazioni",
-    "description": "Tutto ciò che può essere concesso in questo prodotto: le autorizzazioni dichiarate dal prodotto stesso e le autorizzazioni predefinite di Axentra. Sola lettura; i prodotti dichiarano le proprie autorizzazioni nel codice o tramite l'API.",
+    "description": "Tutto ciò che può essere concesso in questo prodotto: le autorizzazioni dichiarate dal prodotto stesso e le autorizzazioni predefinite di Axentra. I prodotti dichiarano le proprie autorizzazioni nel codice o tramite l'API; con permissions:manage puoi dichiararle anche qui.",
     "own": "Autorizzazioni del prodotto",
     "ownDescription": "Dichiarate da questo prodotto. Proprietari e amministratori le possiedono automaticamente; i ruoli viewer e support possiedono quelle di sola lettura.",
     "ownEmpty": "Questo prodotto non dichiara autorizzazioni proprie",
@@ -153,5 +154,33 @@
     "defaultRolesAbout": "Informazioni sulle assegnazioni predefinite",
     "declaredByInfo": "Codice del prodotto: registrata dal codice del prodotto all'avvio; modificala lì. API: dichiarata tramite l'API HTTP da qualcuno con permissions:manage.",
     "declaredByAbout": "Informazioni su “dichiarata da”"
+  },
+  "declare": {
+    "title": "Dichiara autorizzazione",
+    "editTitle": "Modifica {{name}}",
+    "description": "Un'autorizzazione dichiarata qui può essere concessa tramite ruoli personalizzati e chiavi API. Il codice del tuo prodotto la verifica.",
+    "submit": "Dichiara autorizzazione",
+    "nameHelp": "<namespace>.<resource>:<action>, in minuscolo, per esempio crm.deals:approve. Non si può cambiare in seguito.",
+    "nameInvalid": "Usa <namespace>.<resource>:<action> con lettere minuscole, cifre e trattini bassi, per esempio crm.deals:approve.",
+    "scopeHelp": {
+      "tenant": "Concessa per tenant (ruoli di tenant, chiavi di un tenant).",
+      "product": "Concessa per l'intero prodotto (ruoli di prodotto, chiavi a livello di prodotto)."
+    },
+    "descriptionField": "Descrizione",
+    "defaultRolesHelp": "Proprietari e amministratori la hanno sempre. Seleziona altri ruoli predefiniti che devono averla.",
+    "readLike": "Legge solo dati",
+    "readLikeHelp": "I ruoli in sola lettura (supporto e visualizzatori) hanno le autorizzazioni che leggono soltanto.",
+    "readLikeAuto": "Automatico (se il nome termina con :read)",
+    "readLikeYes": "Sì",
+    "readLikeNo": "No",
+    "created": "Autorizzazione {{name}} dichiarata",
+    "updated": "Autorizzazione {{name}} salvata",
+    "editNamed": "Modifica {{name}}",
+    "reactivateNamed": "Riattiva {{name}}",
+    "retireNamed": "Dismetti {{name}}",
+    "retire": "Dismetti autorizzazione",
+    "retireTitle": "Dismettere l'autorizzazione?",
+    "retireBody": "{{name}} smette di concedere qualsiasi cosa, anche dove ruoli personalizzati e chiavi API la elencano ancora. Dichiararla di nuovo la ripristina. Digita il nome per confermare.",
+    "retired": "Autorizzazione {{name}} dismessa"
   }
 }

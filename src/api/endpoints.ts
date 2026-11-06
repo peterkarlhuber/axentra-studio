@@ -67,6 +67,7 @@ import type {
   UserMemberships,
   EnqueueableKinds,
   SearchKindCount,
+  PermissionDeclareInput,
   ProductInvitationInput,
   NewProductInvitation,
   ProductMember,
@@ -435,6 +436,21 @@ export const accessApi = {
           ...productPath(productId),
           query: includeRetired ? { include_retired: true } : {},
         },
+      }),
+    ),
+  /** Create, change or re-activate a permission declared over the API (`permissions:manage`). */
+  declarePermission: (productId: string, name: string, body: PermissionDeclareInput) =>
+    unwrap<Permission>(
+      api().PUT('/v1/products/{product_id}/permissions/{name}', {
+        params: { path: { product_id: productId, name } },
+        body,
+      }),
+    ),
+  /** Retire a permission declared over the API (idempotent). */
+  retirePermission: (productId: string, name: string) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/permissions/{name}', {
+        params: { path: { product_id: productId, name } },
       }),
     ),
   roles: (productId: string) =>

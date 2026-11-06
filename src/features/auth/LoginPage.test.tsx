@@ -124,6 +124,36 @@ describe('LoginPage', () => {
     expect(screen.queryByText(/continue where you left off/i)).not.toBeInTheDocument();
   });
 
+  it('keeps the deep link that Axentra returns with a failed single sign-on', async () => {
+    let loggedIn = false;
+    configureApi({
+      baseUrl: 'http://axentra.test',
+      fetch: async (request: Request) => {
+        const path = new URL(request.url).pathname;
+        if (path === '/v1/auth/login/password') {
+          loggedIn = true;
+          return jsonResponse({ csrf_token: 'tok-1' });
+        }
+        if (path === '/v1/auth/session') return loggedIn ? jsonResponse({}) : unauthenticated();
+        return jsonResponse({});
+      },
+    });
+    renderWithProviders(
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/audit" element={<p>audit page</p>} />
+      </Routes>,
+      // Axentra adds the original return_to to the error redirect (same origin, relative).
+      { route: '/login?login_error=access_denied&return_to=%2Faudit%3Fq%3Dx' },
+    );
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText(/Email/), 'ada@example.com');
+    await user.type(screen.getByLabelText(/Password/), 'correct horse');
+    await user.click(screen.getByRole('button', { name: /sign in/i }));
+    expect(await screen.findByText('audit page')).toBeInTheDocument();
+  });
+
   it('explains a refused invitation on the GET single sign-on start (R4-1)', async () => {
     configureApi({ baseUrl: 'http://axentra.test', fetch: async () => unauthenticated() });
     renderWithProviders(<LoginPage />, { route: '/login?login_error=invitation_requires_post' });

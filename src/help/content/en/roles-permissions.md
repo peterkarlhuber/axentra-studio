@@ -107,7 +107,7 @@ example `crm.deals:approve`. Their names always contain a dot: `<namespace>.<res
 Once declared, they can be granted through custom roles and API keys like built-in ones, and your
 product code checks them.
 
-Open [Permissions](app:permissions) to see the product's catalog. It is read-only.
+Open [Permissions](app:permissions) to see the product's catalog. With `permissions:manage` (product owners) you can also declare permissions there.
 
 | Column              | Meaning                                                                                                                                                                                                |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -121,15 +121,17 @@ Product owners, product admins and platform administrators always hold every act
 permission; tenant owners and admins every tenant-scoped one.
 
 > [!NOTE]
-> Studio cannot declare or retire permissions. Product code registers them, or someone with
-> `permissions:manage` (product owners) uses the API: `PUT` and `DELETE`
-> `/v1/products/{product_id}/permissions/{name}`. A product can declare up to 500 permissions.
+> Choose **Declare permission** to declare one over the API. For permissions declared that way, the
+> pencil changes one (or re-activates a retired one) and the bin retires it after you type its name.
+> Permissions registered by the product's code are changed in the code; Studio offers no actions for
+> them. A product can declare up to 500 permissions.
 
 ### Retired permissions {#retired}
 
 A retired permission grants nothing, even where it is still stored in a custom role or API key.
-Declaring it again restores its effect for those holders. Saving a custom role in Studio drops
-retired names from it, and rotating an API key drops them from the replacement key.
+Declaring it again restores its effect for those holders. Saving a custom role in Studio keeps the
+retired names it holds (the editor lists them below the checklist) and cannot add new ones, and
+rotating an API key drops them from the replacement key.
 
 ## Troubleshooting {#troubleshooting}
 

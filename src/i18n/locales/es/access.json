@@ -56,7 +56,8 @@
     "keyInfo": "Entre 2 y 41 letras minúsculas, dígitos o guiones bajos. No se pueden usar claves integradas como “member”.",
     "scopeInfo": "El ámbito no se puede cambiar después de crear el rol.",
     "permissionsInfo": "Los permisos de plataforma no pueden formar parte de un rol. Solo quien tiene todos los permisos de un rol puede asignarlo a otras personas (techo de rol).",
-    "permissionsAbout": "Acerca de los permisos de rol"
+    "permissionsAbout": "Acerca de los permisos de rol",
+    "retiredKept": "Permisos retirados que se conservan: {{permissions}}. No conceden nada mientras estén retirados y se conservan al guardar."
   },
   "keys": {
     "title": "Claves de API",
@@ -128,7 +129,7 @@
   },
   "catalog": {
     "title": "Permisos",
-    "description": "Todo lo que se puede conceder en este producto: los permisos que declara el propio producto y los permisos integrados de Axentra. Solo lectura; los productos declaran sus permisos en su código o mediante la API.",
+    "description": "Todo lo que se puede conceder en este producto: los permisos que declara el propio producto y los permisos integrados de Axentra. Los productos declaran sus permisos en su código o mediante la API; con permissions:manage también puedes declararlos aquí.",
     "own": "Permisos del producto",
     "ownDescription": "Declarados por este producto. Los propietarios y administradores los tienen automáticamente; los observadores y el soporte tienen los de solo lectura.",
     "ownEmpty": "Este producto no declara permisos propios",
@@ -153,5 +154,33 @@
     "defaultRolesAbout": "Acerca de las concesiones predeterminadas",
     "declaredByInfo": "Código del producto: lo registra el código del producto al arrancar; cámbialo allí. API: lo declaró a través de la API HTTP alguien con permissions:manage.",
     "declaredByAbout": "Acerca de “declarado por”"
+  },
+  "declare": {
+    "title": "Declarar permiso",
+    "editTitle": "Cambiar {{name}}",
+    "description": "Un permiso declarado aquí se puede conceder mediante roles personalizados y claves de API. El código de tu producto lo comprueba.",
+    "submit": "Declarar permiso",
+    "nameHelp": "<namespace>.<resource>:<action>, en minúsculas, por ejemplo crm.deals:approve. No se puede cambiar después.",
+    "nameInvalid": "Usa <namespace>.<resource>:<action> con minúsculas, dígitos y guiones bajos, por ejemplo crm.deals:approve.",
+    "scopeHelp": {
+      "tenant": "Se concede por inquilino (roles de inquilino, claves de un inquilino).",
+      "product": "Se concede para todo el producto (roles de producto, claves de nivel de producto)."
+    },
+    "descriptionField": "Descripción",
+    "defaultRolesHelp": "Los propietarios y administradores siempre lo tienen. Selecciona otros roles integrados que deban tenerlo.",
+    "readLike": "Solo lee datos",
+    "readLikeHelp": "Los roles de solo lectura (soporte y observadores) tienen los permisos que solo leen datos.",
+    "readLikeAuto": "Automático (cuando el nombre termina en :read)",
+    "readLikeYes": "Sí",
+    "readLikeNo": "No",
+    "created": "Permiso {{name}} declarado",
+    "updated": "Permiso {{name}} guardado",
+    "editNamed": "Cambiar {{name}}",
+    "reactivateNamed": "Reactivar {{name}}",
+    "retireNamed": "Retirar {{name}}",
+    "retire": "Retirar permiso",
+    "retireTitle": "¿Retirar el permiso?",
+    "retireBody": "{{name}} deja de conceder nada, también donde roles personalizados y claves de API aún lo incluyen. Declararlo de nuevo lo restaura. Escribe el nombre para confirmar.",
+    "retired": "Permiso {{name}} retirado"
   }
 }

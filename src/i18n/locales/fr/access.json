@@ -56,7 +56,8 @@
     "keyInfo": "2 à 41 lettres minuscules, chiffres ou tirets bas. Les clés intégrées comme « member » ne peuvent pas être utilisées.",
     "scopeInfo": "La portée ne peut plus être modifiée une fois le rôle créé.",
     "permissionsInfo": "Les autorisations de la plateforme ne peuvent pas faire partie d’un rôle. Seules les personnes qui détiennent toutes les autorisations d’un rôle peuvent l’attribuer à d’autres (plafond de rôle).",
-    "permissionsAbout": "À propos des autorisations des rôles"
+    "permissionsAbout": "À propos des autorisations des rôles",
+    "retiredKept": "Autorisations retirées conservées : {{permissions}}. Elles n’accordent rien tant qu’elles sont retirées et sont conservées à l’enregistrement."
   },
   "keys": {
     "title": "Clés d’API",
@@ -128,7 +129,7 @@
   },
   "catalog": {
     "title": "Autorisations",
-    "description": "Tout ce qui peut être accordé dans ce produit : les autorisations déclarées par le produit lui-même et les autorisations intégrées d’Axentra. Lecture seule ; les produits déclarent leurs autorisations dans leur code ou via l’API.",
+    "description": "Tout ce qui peut être accordé dans ce produit : les autorisations déclarées par le produit lui-même et les autorisations intégrées d’Axentra. Les produits déclarent leurs autorisations dans leur code ou via l’API ; avec permissions:manage, tu peux aussi les déclarer ici.",
     "own": "Autorisations du produit",
     "ownDescription": "Déclarées par ce produit. Les propriétaires et les administrateurs les détiennent automatiquement ; les lecteurs et le support détiennent celles en lecture seule.",
     "ownEmpty": "Ce produit ne déclare aucune autorisation propre",
@@ -153,5 +154,33 @@
     "defaultRolesAbout": "À propos des attributions par défaut",
     "declaredByInfo": "Code du produit : enregistrée par le code du produit au démarrage ; c’est là qu’il faut la modifier. API : déclarée via l’API HTTP par une personne disposant de permissions:manage.",
     "declaredByAbout": "À propos de « Déclarée par »"
+  },
+  "declare": {
+    "title": "Déclarer une autorisation",
+    "editTitle": "Modifier {{name}}",
+    "description": "Une autorisation déclarée ici peut être accordée via des rôles personnalisés et des clés d’API. Le code de ton produit la vérifie.",
+    "submit": "Déclarer l’autorisation",
+    "nameHelp": "<namespace>.<resource>:<action>, en minuscules, par exemple crm.deals:approve. Non modifiable ensuite.",
+    "nameInvalid": "Utilise <namespace>.<resource>:<action> en lettres minuscules, chiffres et tirets bas, par exemple crm.deals:approve.",
+    "scopeHelp": {
+      "tenant": "Accordée par locataire (rôles de locataire, clés d’un locataire).",
+      "product": "Accordée pour tout le produit (rôles de produit, clés au niveau du produit)."
+    },
+    "descriptionField": "Description",
+    "defaultRolesHelp": "Les propriétaires et administrateurs la détiennent toujours. Sélectionne d’autres rôles intégrés qui doivent la détenir.",
+    "readLike": "Lit seulement des données",
+    "readLikeHelp": "Les rôles en lecture seule (support et observateurs) détiennent les autorisations qui ne font que lire.",
+    "readLikeAuto": "Automatique (quand le nom se termine par :read)",
+    "readLikeYes": "Oui",
+    "readLikeNo": "Non",
+    "created": "Autorisation {{name}} déclarée",
+    "updated": "Autorisation {{name}} enregistrée",
+    "editNamed": "Modifier {{name}}",
+    "reactivateNamed": "Réactiver {{name}}",
+    "retireNamed": "Retirer {{name}}",
+    "retire": "Retirer l’autorisation",
+    "retireTitle": "Retirer l’autorisation ?",
+    "retireBody": "{{name}} n’accorde plus rien, même là où des rôles personnalisés et des clés d’API la listent encore. La déclarer de nouveau la rétablit. Saisis le nom pour confirmer.",
+    "retired": "Autorisation {{name}} retirée"
   }
 }

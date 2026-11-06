@@ -50,6 +50,7 @@ export type NewInvitationLike = NewInvitation | NewProductInvitation;
 export type UserMemberships = Schemas['UserMemberships'];
 export type EnqueueableKinds = Schemas['EnqueueableKinds'];
 export type SearchKindCount = Schemas['KindCount'];
+export type PermissionDeclareInput = Schemas['ProductPermissionDeclare'];
 
 export type Permission = Schemas['PermissionInfo'];
 export type Role = Schemas['Role'];
