@@ -5,7 +5,12 @@
     "home": "Inicio de Axentra Studio"
   },
   "form": {
-    "required": "obligatorio"
+    "required": "obligatorio",
+    "valueMissing": "Rellena este campo.",
+    "typeMismatch": "Introduce un valor con el formato esperado.",
+    "rangeUnderflow": "Introduce {{min}} o posterior.",
+    "rangeOverflow": "Introduce {{max}} o anterior.",
+    "invalidValue": "Revisa este valor."
   },
   "actions": {
     "retry": "Reintentar",

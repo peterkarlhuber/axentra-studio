@@ -5,7 +5,12 @@
     "home": "Axentra Studio home"
   },
   "form": {
-    "required": "required"
+    "required": "required",
+    "valueMissing": "Fill in this field.",
+    "typeMismatch": "Enter a value in the expected format.",
+    "rangeUnderflow": "Enter {{min}} or later.",
+    "rangeOverflow": "Enter {{max}} or earlier.",
+    "invalidValue": "Check this value."
   },
   "actions": {
     "retry": "Try again",
