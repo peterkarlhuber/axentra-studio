@@ -11,6 +11,7 @@ import { useProductScope } from '@/app/contexts';
 import {
   Badge,
   Button,
+  Checkbox,
   Card,
   ConfirmDialog,
   DetailList,
@@ -62,6 +63,8 @@ export function SearchPage() {
   const tenantId = params.get('tenant') ?? '';
   const q = params.get('q') ?? '';
   const kinds = parseKinds(params.get('kind') ?? '');
+  // `match=prefix`: search as you type (terms also match the beginnings of words).
+  const prefix = params.get('match') === 'prefix';
   const canQuery = tenantId ? can('search:query', { tenantId }) : false;
   const canIndex = tenantId ? can('search:index', { tenantId }) : false;
 
@@ -91,13 +94,16 @@ export function SearchPage() {
           </div>
           <SearchForm
             // A new URL (back/forward, a shared link) resets the fields to it.
-            key={`${q}|${kinds.join(',')}`}
+            key={`${q}|${kinds.join(',')}|${prefix}`}
             initialQuery={q}
             initialKinds={kinds.join(', ')}
+            initialPrefix={prefix}
             disabled={!tenantId}
             productId={productId}
             tenantId={canQuery ? tenantId : ''}
-            onSearch={(query, kindList) => update({ q: query, kind: kindList.join(',') })}
+            onSearch={(query, kindList, byPrefix) =>
+              update({ q: query, kind: kindList.join(','), match: byPrefix ? 'prefix' : '' })
+            }
           />
         </div>
       </Card>
@@ -125,11 +131,12 @@ export function SearchPage() {
       ) : (
         <SuspendedTenantGate productId={productId} tenantId={tenantId} permission="search:query">
           <SearchResults
-            key={`${tenantId}|${q}|${kinds.join(',')}`}
+            key={`${tenantId}|${q}|${kinds.join(',')}|${prefix}`}
             productId={productId}
             tenantId={tenantId}
             q={q}
             kinds={kinds}
+            prefix={prefix}
             canIndex={canIndex}
           />
         </SuspendedTenantGate>
@@ -156,6 +163,9 @@ function SyntaxHelp() {
         <li>
           <code>invoice -draft</code> {t('syntax.exclude')}
         </li>
+        <li>
+          <code>inv</code> + <strong>{t('form.prefix')}</strong> {t('syntax.prefix')}
+        </li>
       </ul>
       <p>
         <HelpLink topic="search#query">{t('common:help.learnMore')}</HelpLink>
@@ -167,6 +177,7 @@ function SyntaxHelp() {
 function SearchForm({
   initialQuery,
   initialKinds,
+  initialPrefix,
   disabled,
   productId,
   tenantId,
@@ -174,14 +185,16 @@ function SearchForm({
 }: {
   initialQuery: string;
   initialKinds: string;
+  initialPrefix: boolean;
   disabled: boolean;
   productId: string;
   /** The tenant whose indexed kinds are offered ('' = none: no tenant or no search:query). */
   tenantId: string;
-  onSearch: (query: string, kinds: string[]) => void;
+  onSearch: (query: string, kinds: string[], prefix: boolean) => void;
 }) {
   const { t } = useTranslation('search');
   const [query, setQuery] = useState(initialQuery);
+  const [prefix, setPrefix] = useState(initialPrefix);
   const [kindText, setKindText] = useState(initialKinds);
   const [touched, setTouched] = useState(false);
   const kinds = parseKinds(kindText);
@@ -212,7 +225,7 @@ function SearchForm({
     event.preventDefault();
     setTouched(true);
     if (!query.trim() || problem) return;
-    onSearch(query.trim(), kinds);
+    onSearch(query.trim(), kinds, prefix);
   };
 
   return (
@@ -257,6 +270,13 @@ function SearchForm({
           ))}
         </div>
       ) : null}
+      <Checkbox
+        checked={prefix}
+        onCheckedChange={setPrefix}
+        label={t('form.prefix')}
+        description={t('form.prefixHelp')}
+        disabled={disabled}
+      />
       <div>
         <Button type="submit" variant="primary" icon={<Search />} disabled={disabled}>
           {t('form.submit')}
@@ -271,20 +291,29 @@ function SearchResults({
   tenantId,
   q,
   kinds,
+  prefix,
   canIndex,
 }: {
   productId: string;
   tenantId: string;
   q: string;
   kinds: string[];
+  prefix: boolean;
   canIndex: boolean;
 }) {
   const { t } = useTranslation('search');
   const headingId = useId();
   const [open, setOpen] = useState<SearchHit | null>(null);
   const { query, rows } = useCursorList(
-    queryKeys.search(productId, tenantId, { q, kinds }),
-    (cursor) => searchApi.query(productId, tenantId, { q, kind: kinds, limit: PAGE_SIZE, cursor }),
+    queryKeys.search(productId, tenantId, { q, kinds, prefix }),
+    (cursor) =>
+      searchApi.query(productId, tenantId, {
+        q,
+        kind: kinds,
+        limit: PAGE_SIZE,
+        cursor,
+        match: prefix ? 'prefix' : undefined,
+      }),
   );
 
   if (query.isPending) {

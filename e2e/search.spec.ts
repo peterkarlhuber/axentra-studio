@@ -118,8 +118,19 @@ test('search a tenant, filter by kind, open a document and remove it from the in
   await expect(first).toHaveCount(0);
   await expect(page.getByText('1 result', { exact: true })).toBeVisible();
 
-  // ---- No matches explains what to try ----
+  // ---- Word beginnings (search as you type) ----
   await page.getByLabel(/^Kinds/).fill('');
+  await searchBox.fill('remind');
+  await searchBox.press('Enter');
+  await expect(page.getByRole('heading', { name: 'No matches' })).toBeVisible();
+  await page.getByRole('checkbox', { name: 'Match word beginnings' }).click();
+  await page.getByRole('button', { name: 'Search', exact: true }).click();
+  await expect(first).toBeVisible();
+  await expect(page.getByText('1 result', { exact: true })).toBeVisible();
+  expect(page.url()).toContain('match=prefix');
+  await page.getByRole('checkbox', { name: 'Match word beginnings' }).click();
+
+  // ---- No matches explains what to try ----
   await searchBox.fill('zebra');
   await searchBox.press('Enter');
   await expect(page.getByRole('heading', { name: 'No matches' })).toBeVisible();

@@ -47,12 +47,21 @@ autorisations ; consulte les [rôles et autorisations](help:roles-permissions).
 | `invoice -draft`   | les documents avec `invoice` qui ne contiennent pas `draft`             |
 
 La recherche trouve des mots entiers, sans tenir compte des majuscules et minuscules. Elle ne trouve
-pas les parties de mots (`inv` ne trouve pas `invoice`) et ne corrige pas l’orthographe. Le fait que
+pas les parties de mots (`inv` ne trouve pas `invoice`, sauf avec [Trouver les débuts de mots](#prefix)) et ne corrige pas l’orthographe. Le fait que
 `invoices` trouve aussi `invoice` dépend de la langue avec laquelle le serveur indexe (consulte
 [Bon à savoir](#limits)).
 
 La recherche et le locataire font partie de l’adresse : tu peux donc mettre une recherche en favori
 ou envoyer le lien à quelqu’un qui a accès au même locataire.
+
+### Trouver les débuts de mots {#prefix}
+
+Choisis **Trouver les débuts de mots** pour la recherche pendant la saisie : chaque mot saisi doit
+correspondre, et les mots de deux caractères ou plus trouvent aussi les mots plus longs qui
+commencent ainsi (`inv` trouve `invoice`, `inv acme` trouve les documents avec un mot qui commence
+par `inv` et le mot `acme`). Dans ce mode, les guillemets, `or` et `-mot` n’ont pas de sens
+particulier, et seuls les huit premiers mots comptent. Le choix fait partie de l’adresse, comme la
+recherche elle-même.
 
 ### Restreindre par type {#kinds}
 
@@ -117,14 +126,14 @@ serveur le désactive, dans le [journal d’audit](help:audit) (`search.document
 
 ## Bon à savoir {#limits}
 
-| Élément            | Règle                                                                                                                  |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| Portée             | Un locataire à la fois. Toute personne ayant `search:query` dans le locataire voit chaque document de ce locataire.    |
-| Texte de recherche | De 1 à 500 caractères. Une recherche composée uniquement de ponctuation ou de mots très courants ne trouve rien.       |
-| Types              | `^[a-z][a-z0-9_.-]{0,62}$`, 20 au maximum par recherche                                                                |
-| Correspondance     | Mots entiers ; pas de préfixe, de recherche approximative ni d’insensibilité aux accents (`café` ne trouve pas `cafe`) |
-| Langue             | Une par installation (paramètre serveur `search.language`, par défaut `simple` : sans racinisation ni mots vides)      |
-| Pagination         | 20 par page dans le Studio, au plus jusqu’à la position `search.max_offset` (1000 par défaut)                          |
+| Élément            | Règle                                                                                                                                                             |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Portée             | Un locataire à la fois. Toute personne ayant `search:query` dans le locataire voit chaque document de ce locataire.                                               |
+| Texte de recherche | De 1 à 500 caractères. Une recherche composée uniquement de ponctuation ou de mots très courants ne trouve rien.                                                  |
+| Types              | `^[a-z][a-z0-9_.-]{0,62}$`, 20 au maximum par recherche                                                                                                           |
+| Correspondance     | Mots entiers, ou débuts de mots avec **Trouver les débuts de mots** ; pas de recherche approximative ni d’insensibilité aux accents (`café` ne trouve pas `cafe`) |
+| Langue             | Une par installation (paramètre serveur `search.language`, par défaut `simple` : sans racinisation ni mots vides)                                                 |
+| Pagination         | 20 par page dans le Studio, au plus jusqu’à la position `search.max_offset` (1000 par défaut)                                                                     |
 
 ## Dépannage {#troubleshooting}
 

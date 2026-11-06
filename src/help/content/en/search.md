@@ -47,11 +47,19 @@ search the tenant. A custom role can grant both permissions; see
 | `invoice -draft`   | documents with `invoice` that do not contain `draft` |
 
 Search matches whole words, ignoring upper and lower case. It does not match parts of words
-(`inv` does not find `invoice`) and does not correct spelling. Whether `invoices` also finds
+(`inv` does not find `invoice`, unless you select [Match word beginnings](#prefix)) and does not correct spelling. Whether `invoices` also finds
 `invoice` depends on the language the server indexes with (see [Good to know](#limits)).
 
 The search and the tenant are part of the address, so you can bookmark a search or send the link
 to a colleague who has access to the same tenant.
+
+### Match word beginnings {#prefix}
+
+Select **Match word beginnings** for search as you type: every word you enter must match, and
+words of two or more characters also find longer words that start with them (`inv` finds
+`invoice`, `inv acme` finds documents with a word starting with `inv` and the word `acme`). In this
+mode quotes, `or` and `-word` have no special meaning, and only the first eight words count. The
+choice is part of the address, like the search itself.
 
 ### Narrow by kind {#kinds}
 
@@ -113,14 +121,14 @@ itself. Who indexed a document is recorded on it and, unless the server turns th
 
 ## Good to know {#limits}
 
-| Item        | Rule                                                                                                  |
-| ----------- | ----------------------------------------------------------------------------------------------------- |
-| Scope       | One tenant at a time. Everyone with `search:query` in the tenant sees every document of that tenant.  |
-| Search text | 1 to 500 characters. A search with only punctuation or very common words finds nothing.               |
-| Kinds       | `^[a-z][a-z0-9_.-]{0,62}$`, at most 20 per search                                                     |
-| Matching    | Whole words; no prefix, fuzzy or accent-insensitive matching (`café` does not find `cafe`)            |
-| Language    | One per installation (server setting `search.language`, default `simple`: no stemming, no stop words) |
-| Paging      | 20 per page in Studio, at most up to position `search.max_offset` (default 1000)                      |
+| Item        | Rule                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Scope       | One tenant at a time. Everyone with `search:query` in the tenant sees every document of that tenant.                                  |
+| Search text | 1 to 500 characters. A search with only punctuation or very common words finds nothing.                                               |
+| Kinds       | `^[a-z][a-z0-9_.-]{0,62}$`, at most 20 per search                                                                                     |
+| Matching    | Whole words, or word beginnings with **Match word beginnings**; no fuzzy or accent-insensitive matching (`café` does not find `cafe`) |
+| Language    | One per installation (server setting `search.language`, default `simple`: no stemming, no stop words)                                 |
+| Paging      | 20 per page in Studio, at most up to position `search.max_offset` (default 1000)                                                      |
 
 ## Troubleshooting {#troubleshooting}
 

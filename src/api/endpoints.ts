@@ -661,6 +661,8 @@ export interface SearchParams extends ListParams {
   q: string;
   /** Restrict to these document kinds (repeatable `kind`, at most 20). */
   kind?: string[];
+  /** `prefix`: search as you type (terms also match word beginnings); default `words`. */
+  match?: 'words' | 'prefix';
 }
 
 const searchDocumentPath = (productId: string, tenantId: string, kind: string, refId: string) => ({

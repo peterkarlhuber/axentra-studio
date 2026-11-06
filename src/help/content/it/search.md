@@ -46,11 +46,19 @@ entrambe le autorizzazioni; vedi [Ruoli e autorizzazioni](help:roles-permissions
 | `invoice -draft`   | i documenti con `invoice` che non contengono `draft`                |
 
 La ricerca trova parole intere e non distingue tra maiuscole e minuscole. Non trova parti di parole
-(`inv` non trova `invoice`) e non corregge l'ortografia. Se `invoices` trova anche `invoice` dipende
+(`inv` non trova `invoice`, tranne con [Trova inizi di parola](#prefix)) e non corregge l'ortografia. Se `invoices` trova anche `invoice` dipende
 dalla lingua con cui il server indicizza (vedi [Buono a sapersi](#limits)).
 
 La ricerca e il tenant fanno parte dell'indirizzo, quindi puoi salvare una ricerca nei preferiti o
 inviare il link a chi ha accesso allo stesso tenant.
+
+### Trova inizi di parola {#prefix}
+
+Scegli **Trova inizi di parola** per la ricerca durante la digitazione: ogni parola inserita deve
+corrispondere, e le parole di due o più caratteri trovano anche parole più lunghe che iniziano così
+(`inv` trova `invoice`, `inv acme` trova i documenti con una parola che inizia con `inv` e la parola
+`acme`). In questa modalità virgolette, `or` e `-parola` non hanno un significato speciale, e
+contano solo le prime otto parole. La scelta fa parte dell'indirizzo, come la ricerca stessa.
 
 ### Restringere per tipo {#kinds}
 
@@ -114,14 +122,14 @@ il server non lo disattivi, nel [log di audit](help:audit) (`search.document.ups
 
 ## Buono a sapersi {#limits}
 
-| Voce                | Regola                                                                                                                |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Ambito              | Un tenant alla volta. Chiunque abbia `search:query` nel tenant vede ogni documento di quel tenant.                    |
-| Testo della ricerca | Da 1 a 500 caratteri. Una ricerca fatta solo di punteggiatura o di parole molto comuni non trova nulla.               |
-| Tipi                | `^[a-z][a-z0-9_.-]{0,62}$`, al massimo 20 per ricerca                                                                 |
-| Corrispondenza      | Parole intere; niente prefissi, ricerca approssimata o insensibilità agli accenti (`café` non trova `cafe`)           |
-| Lingua              | Una per installazione (impostazione del server `search.language`, predefinita `simple`: senza radici né parole vuote) |
-| Paginazione         | 20 per pagina in Studio, al massimo fino alla posizione `search.max_offset` (predefinita 1000)                        |
+| Voce                | Regola                                                                                                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ambito              | Un tenant alla volta. Chiunque abbia `search:query` nel tenant vede ogni documento di quel tenant.                                                 |
+| Testo della ricerca | Da 1 a 500 caratteri. Una ricerca fatta solo di punteggiatura o di parole molto comuni non trova nulla.                                            |
+| Tipi                | `^[a-z][a-z0-9_.-]{0,62}$`, al massimo 20 per ricerca                                                                                              |
+| Corrispondenza      | Parole intere, o inizi di parola con **Trova inizi di parola**; niente ricerca approssimata o insensibilità agli accenti (`café` non trova `cafe`) |
+| Lingua              | Una per installazione (impostazione del server `search.language`, predefinita `simple`: senza radici né parole vuote)                              |
+| Paginazione         | 20 per pagina in Studio, al massimo fino alla posizione `search.max_offset` (predefinita 1000)                                                     |
 
 ## Risoluzione dei problemi {#troubleshooting}
 

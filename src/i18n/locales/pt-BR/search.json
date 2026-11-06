@@ -13,7 +13,8 @@
     "all": "encontra documentos que contêm as duas palavras",
     "phrase": "encontra a frase exata",
     "or": "encontra documentos com qualquer uma das palavras",
-    "exclude": "deixa de fora documentos que contêm \"draft\""
+    "exclude": "deixa de fora documentos que contêm \"draft\"",
+    "prefix": "também encontra palavras que começam com o que você digitou"
   },
   "noAccess": {
     "title": "Você não pode pesquisar neste tenant",
@@ -31,7 +32,9 @@
     "kindTooMany": "Digite no máximo 20 tipos.",
     "submit": "Pesquisar",
     "indexedKinds": "Tipos indexados",
-    "kindCount": "{{kind}} ({{count}})"
+    "kindCount": "{{kind}} ({{count}})",
+    "prefix": "Encontrar inícios de palavras",
+    "prefixHelp": "Para pesquisar enquanto digita: “fat” também encontra “fatura”. Aspas, or e -palavra passam a ser texto comum."
   },
   "results": {
     "heading": "Resultados para {{query}}",
