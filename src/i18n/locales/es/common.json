@@ -153,5 +153,11 @@
     "tenant_admin": "Gestiona los miembros y los datos del inquilino",
     "member": "Trabaja con los datos del inquilino",
     "viewer": "Acceso de solo lectura al inquilino"
+  },
+  "passwordPolicy": {
+    "too_short": "Usa al menos {{min}} caracteres.",
+    "too_long": "Usa como máximo {{max}} caracteres.",
+    "equals_email": "La contraseña no puede ser tu dirección de correo electrónico.",
+    "too_simple": "Usa al menos 4 caracteres diferentes."
   }
 }

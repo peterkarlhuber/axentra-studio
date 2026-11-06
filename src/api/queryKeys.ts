@@ -77,6 +77,8 @@ export const queryKeys = {
   // ---- Search ----
   search: (productId: string, tenantId: string, params?: unknown) =>
     ['products', productId, 'search', tenantId, 'hits', params ?? {}] as const,
+  searchKinds: (productId: string, tenantId: string) =>
+    ['products', productId, 'tenants', tenantId, 'search', 'kinds'] as const,
   searchDocument: (productId: string, tenantId: string, kind: string, refId: string) =>
     ['products', productId, 'search', tenantId, 'document', kind, refId] as const,
 };

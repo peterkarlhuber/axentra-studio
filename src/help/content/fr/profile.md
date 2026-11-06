@@ -98,6 +98,7 @@ administrateur désactive ton compte.
 
 1. Repère le navigateur dans **Tes sessions**.
 2. Choisis **Révoquer la session** (l’icône de corbeille en fin de ligne).
+3. Confirme **Révoquer cette session ?** avec **Révoquer la session**.
 
 Ce navigateur est déconnecté à sa prochaine requête. Ta session actuelle n’a pas de bouton de
 révocation ; utilise pour elle **Se déconnecter** dans le menu utilisateur.
@@ -106,7 +107,8 @@ révocation ; utilise pour elle **Se déconnecter** dans le menu utilisateur.
 
 Pour mettre fin à toutes les sessions sauf celle que tu utilises, choisis **Déconnecter toutes les
 autres sessions** dans l’en-tête de **Tes sessions**. Le bouton apparaît dès qu’il existe au moins
-une autre session.
+une autre session. Studio demande d’abord une confirmation qui indique combien de sessions prennent
+fin.
 
 Ta session actuelle n’est jamais déconnectée. Chaque autre session est déconnectée séparément ; si
 certaines ne peuvent pas l’être (par exemple à cause de la limite de requêtes), Studio t’indique

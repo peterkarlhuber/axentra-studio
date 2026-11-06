@@ -60,6 +60,9 @@ Under **Kinds**, enter one or more kinds separated by commas to see only those. 
 lowercase letters, digits, dots, hyphens and underscores and start with a letter; at most 20 at
 once. Leave the field empty to search all kinds.
 
+Below the field, **Indexed kinds** lists the kinds in the tenant's index with their number of
+documents. Select one to add it to the field, or select it again to remove it.
+
 ## Read the results {#results}
 
 Results are sorted by relevance: matches in the title count more than matches in the text, more

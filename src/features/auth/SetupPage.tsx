@@ -11,6 +11,7 @@ import { useMeta } from '@/app/contexts';
 import { CenteredLayout } from '@/components/layout/CenteredLayout';
 import { Alert, Button, FormField, Input, useToast } from '@/components/ui';
 import { HelpLink } from '@/help/HelpLink';
+import { passwordPolicy, passwordRefusal } from '@/lib/password';
 import { describeError, fieldErrors } from '@/lib/errors';
 import { AuthLanguageSwitch } from './AuthLanguageSwitch';
 import styles from './auth.module.css';
@@ -78,6 +79,9 @@ export function SetupPage() {
 
   const described = error ? describeError(t, error) : null;
   const fields = error ? fieldErrors(error) : {};
+  const policy = passwordPolicy(meta);
+  // A policy refusal names the field and its reason: show it translated at the field.
+  const passwordError = passwordRefusal(t, error, policy) ?? fields.password;
   // The setup endpoint answers 401 for a wrong, expired or used token: not a session problem.
   const tokenRejected = isApiError(error) && error.status === 401;
   // 409 has two causes: setup was completed in the meantime (`setup_already_completed`), or the
@@ -171,9 +175,9 @@ export function SetupPage() {
         </FormField>
         <FormField
           label={t('fields.password')}
-          error={fields.password}
-          help={t('setup.passwordHelp')}
-          info={t('setup.passwordInfo')}
+          error={passwordError}
+          help={t('setup.passwordHelp', policy)}
+          info={t('setup.passwordInfo', policy)}
           infoTopic="first-run-setup#password-policy"
           required
         >

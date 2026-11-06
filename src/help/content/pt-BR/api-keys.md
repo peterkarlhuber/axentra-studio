@@ -160,9 +160,9 @@ Uma chave só funciona enquanto a pessoa que a criou ainda tiver as permissões 
 servidor verifica isso a cada solicitação: se o papel dessa pessoa mudou, se ela foi removida do
 produto ou se a conta dela foi desabilitada, uma solicitação que precisa de uma permissão que ela
 não tem mais é recusada com `403 api_key_creator_lost_access`, e a resposta indica essa permissão em
-`permission`. A lista de chaves continua mostrando essa chave como **Ativo**. Devolva a permissão a
-essa pessoa, ou crie uma nova chave como alguém que a tenha, mude seus serviços para ela e revogue a
-chave antiga.
+`permission`. A lista de chaves marca essa chave com **O criador perdeu o acesso** e indica as
+permissões que ela não pode mais usar. Devolva a permissão a essa pessoa, ou crie uma nova chave
+como alguém que a tenha, mude seus serviços para ela e revogue a chave antiga.
 
 O próprio Studio nunca é recusado assim: ele usa a sua sessão de usuário, não uma chave.
 

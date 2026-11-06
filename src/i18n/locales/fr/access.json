@@ -122,7 +122,9 @@
     "lastUsedInfo": "Heure de la dernière requête réussie avec cette clé. Mise à jour au plus une fois par minute.",
     "lastUsedAbout": "À propos de la dernière utilisation",
     "secretUsage": "Envoie le secret avec chaque requête dans l’en-tête « Authorization: Bearer <secret> » ou « X-API-Key: <secret> ».",
-    "creatorHint": "Une clé ne fonctionne que tant que la personne qui l’a créée détient encore les autorisations qu’elle utilise."
+    "creatorHint": "Une clé ne fonctionne que tant que la personne qui l’a créée détient encore les autorisations qu’elle utilise.",
+    "creatorLost": "Le créateur a perdu l’accès",
+    "creatorLostMissing": "Inutilisable pour : {{permissions}}"
   },
   "catalog": {
     "title": "Autorisations",

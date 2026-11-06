@@ -99,19 +99,40 @@ export function ApiKeysPage() {
           </InfoTip>
         </>
       ),
-      cell: (apiKey) =>
-        // A rotated key keeps working until the end of its grace period (`revoked_at` in the
-        // future); say so, otherwise it looks like an ordinary active key.
-        apiKey.status === 'active' && apiKey.revoked_at ? (
+      cell: (apiKey) => {
+        // A rotated key keeps working until the end of its grace period (`grace_until`; older
+        // servers: `revoked_at` in the future); say so, otherwise it looks like an ordinary
+        // active key.
+        const graceUntil =
+          apiKey.status === 'active' ? (apiKey.grace_until ?? apiKey.revoked_at) : null;
+        // The creator no longer holds some of the key's permissions: requests needing them are
+        // refused (`api_key_creator_lost_access`) although the key is active.
+        const withheld =
+          apiKey.status === 'active' && apiKey.creator_has_access === false
+            ? (apiKey.withheld_permissions ?? [])
+            : null;
+        if (!graceUntil && !withheld) return <StatusPill status={apiKey.status} />;
+        return (
           <span className={layout.cellStack}>
             <StatusPill status={apiKey.status} />
-            <span className={layout.muted}>
-              {t('keys.graceUntil')} <Time value={apiKey.revoked_at} />
-            </span>
+            {withheld ? (
+              <>
+                <Badge tone="warning">{t('keys.creatorLost')}</Badge>
+                {withheld.length > 0 ? (
+                  <span className={layout.muted}>
+                    {t('keys.creatorLostMissing', { permissions: withheld.join(', ') })}
+                  </span>
+                ) : null}
+              </>
+            ) : null}
+            {graceUntil ? (
+              <span className={layout.muted}>
+                {t('keys.graceUntil')} <Time value={graceUntil} />
+              </span>
+            ) : null}
           </span>
-        ) : (
-          <StatusPill status={apiKey.status} />
-        ),
+        );
+      },
     },
     {
       id: 'scope',

@@ -66,6 +66,7 @@ import type {
   ProductInvitation,
   UserMemberships,
   EnqueueableKinds,
+  SearchKindCount,
   ProductInvitationInput,
   NewProductInvitation,
   ProductMember,
@@ -637,6 +638,13 @@ const searchDocumentPath = (productId: string, tenantId: string, kind: string, r
 
 /** The tenant's full-text index (`docs/modules/SEARCH.md` in the Axentra repository). */
 export const searchApi = {
+  /** Kinds indexed in the tenant with their document counts (`409` if the adapter cannot list them). */
+  kinds: (productId: string, tenantId: string) =>
+    unwrap<SearchKindCount[]>(
+      api().GET('/v1/products/{product_id}/tenants/{tenant_id}/search/kinds', {
+        params: { path: { product_id: productId, tenant_id: tenantId } },
+      }),
+    ),
   query: (productId: string, tenantId: string, params: SearchParams) => {
     const { kind, ...rest } = params;
     const query = cleanQuery({ ...rest, kind: kind && kind.length > 0 ? kind : undefined });

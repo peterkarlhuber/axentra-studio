@@ -153,5 +153,11 @@
     "tenant_admin": "Gestisce membri e dati del tenant",
     "member": "Lavora con i dati del tenant",
     "viewer": "Accesso in sola lettura al tenant"
+  },
+  "passwordPolicy": {
+    "too_short": "Usa almeno {{min}} caratteri.",
+    "too_long": "Usa al massimo {{max}} caratteri.",
+    "equals_email": "La password non può essere il tuo indirizzo email.",
+    "too_simple": "Usa almeno 4 caratteri diversi."
   }
 }

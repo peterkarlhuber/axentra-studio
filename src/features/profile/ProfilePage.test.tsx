@@ -82,6 +82,44 @@ describe('ProfilePage', () => {
     );
     expect(await screen.findByText('login page ?return_to=%2Fprofile')).toBeInTheDocument();
   });
+
+  it('explains a password policy refusal at the new password field, without a toast', async () => {
+    configureApi({
+      baseUrl: 'http://axentra.test',
+      fetch: async (request: Request) => {
+        const url = new URL(request.url);
+        if (url.pathname === '/v1/auth/session') return jsonResponse({ csrf_token: 'csrf' });
+        if (url.pathname === '/v1/me')
+          return jsonResponse({ ...me, user: { ...me.user, has_password: true } });
+        if (url.pathname === '/v1/auth/sessions') return jsonResponse([]);
+        if (url.pathname === '/v1/me/password')
+          return jsonResponse(
+            {
+              code: 'validation_failed',
+              status: 422,
+              detail: 'the password is too simple',
+              reason: 'too_simple',
+              min_length: 12,
+              errors: [{ loc: ['body', 'new_password'], msg: 'the password is too simple' }],
+            },
+            { status: 422 },
+          );
+        return jsonResponse({ code: 'not_found', status: 404 }, { status: 404 });
+      },
+    });
+    renderWithProviders(<ProfilePage />, { route: '/profile' });
+    const user = userEvent.setup();
+    await screen.findByRole('heading', { name: 'Change password' });
+    await user.type(screen.getByLabelText(/^Current password/), 'the-old-password');
+    await user.type(screen.getByLabelText(/^New password/), 'aaaaaaaaaaaaaaaa');
+    await user.type(screen.getByLabelText(/^Repeat new password/), 'aaaaaaaaaaaaaaaa');
+    await user.click(screen.getByRole('button', { name: 'Change password' }));
+    const field = screen.getByLabelText(/^New password/);
+    await waitFor(() =>
+      expect(field).toHaveAccessibleDescription(/Use at least 4 different characters\./),
+    );
+    expect(screen.queryByText('the password is too simple')).not.toBeInTheDocument();
+  });
 });
 
 function session(id: string, current = false) {
@@ -175,10 +213,39 @@ describe('ProfilePage: sign out all other sessions', () => {
     return { deletes, lists: () => lists };
   }
 
-  it('signs out the others, reports success and reloads the list', async () => {
+  async function confirmOthers(user: ReturnType<typeof userEvent.setup>) {
+    await user.click(await screen.findByRole('button', { name: 'Sign out all other sessions' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Sign out all other sessions?' });
+    expect(dialog).toHaveTextContent('3 other sessions end. This browser stays signed in.');
+    await user.click(within(dialog).getByRole('button', { name: 'Sign out all other sessions' }));
+  }
+
+  it('asks before signing out the others and does nothing on cancel', async () => {
     const api = setup([]);
     const user = userEvent.setup();
     await user.click(await screen.findByRole('button', { name: 'Sign out all other sessions' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Sign out all other sessions?' });
+    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
+    expect(api.deletes).toEqual([]);
+  });
+
+  it('asks before revoking one session and names its device', async () => {
+    const api = setup([]);
+    const user = userEvent.setup();
+    const buttons = await screen.findAllByRole('button', { name: /^Revoke the session on/ });
+    await user.click(buttons[0] as HTMLElement);
+    const dialog = await screen.findByRole('dialog', { name: 'Revoke this session?' });
+    expect(dialog).toHaveTextContent(/Firefox.*is signed out with its next request/);
+    expect(api.deletes).toEqual([]);
+    await user.click(within(dialog).getByRole('button', { name: 'Revoke session' }));
+    await waitFor(() => expect(api.deletes).toHaveLength(1));
+    expect(await screen.findByText('Session revoked')).toBeInTheDocument();
+  });
+
+  it('signs out the others, reports success and reloads the list', async () => {
+    const api = setup([]);
+    const user = userEvent.setup();
+    await confirmOthers(user);
     expect(await screen.findByText('3 other sessions signed out')).toBeInTheDocument();
     expect(api.deletes.sort()).toEqual(['ses_a', 'ses_b', 'ses_c']);
     await waitFor(() =>
@@ -192,7 +259,7 @@ describe('ProfilePage: sign out all other sessions', () => {
   it('reports how many could not be signed out and keeps them listed', async () => {
     const api = setup(['ses_b']);
     const user = userEvent.setup();
-    await user.click(await screen.findByRole('button', { name: 'Sign out all other sessions' }));
+    await confirmOthers(user);
     expect(
       await screen.findByText('1 of 3 other sessions could not be signed out'),
     ).toBeInTheDocument();

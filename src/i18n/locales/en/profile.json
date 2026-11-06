@@ -29,7 +29,7 @@
     "setDescription": "You currently sign in with single sign-on only. A password enables password sign-in as well. For your security this needs a recent sign-in.",
     "reauth": "Sign in again",
     "reauthBody": "Setting a first password is only allowed shortly after you signed in. Sign in again (you come back here), then set the password within a few minutes.",
-    "rules": "At least the server's minimum length (12 characters unless the operator changed it), not your email address, and at least 4 different characters.",
+    "rules": "At least {{min}} characters, not your email address, and at least 4 different characters.",
     "setSubmit": "Set password"
   },
   "sessions": {
@@ -40,6 +40,11 @@
     "othersRevoked_one": "{{count}} other session signed out",
     "othersRevoked_other": "{{count}} other sessions signed out",
     "othersPartial_one": "{{count}} of {{total}} other sessions could not be signed out",
-    "othersPartial_other": "{{count}} of {{total}} other sessions could not be signed out"
+    "othersPartial_other": "{{count}} of {{total}} other sessions could not be signed out",
+    "revokeTitle": "Revoke this session?",
+    "revokeBody": "{{device}} is signed out with its next request.",
+    "revokeOthersTitle": "Sign out all other sessions?",
+    "revokeOthersBody_one": "{{count}} other session ends. This browser stays signed in.",
+    "revokeOthersBody_other": "{{count}} other sessions end. This browser stays signed in."
   }
 }

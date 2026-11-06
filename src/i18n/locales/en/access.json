@@ -118,7 +118,9 @@
     "lastUsedInfo": "Time of the last successful request with this key. Updated at most once a minute.",
     "lastUsedAbout": "About last used",
     "secretUsage": "Send the secret with every request in the header “Authorization: Bearer <secret>” or “X-API-Key: <secret>”.",
-    "creatorHint": "A key works only as long as the person who created it still holds the permissions it uses."
+    "creatorHint": "A key works only as long as the person who created it still holds the permissions it uses.",
+    "creatorLost": "Creator lost access",
+    "creatorLostMissing": "Not usable for: {{permissions}}"
   },
   "catalog": {
     "title": "Permissions",

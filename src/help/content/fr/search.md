@@ -61,6 +61,10 @@ Chaque document indexé a un **type** choisi par ton produit, par exemple `invoi
 utilisent des minuscules, des chiffres, des points, des tirets et des tirets bas et commencent par
 une lettre ; 20 au maximum à la fois. Laisse le champ vide pour chercher dans tous les types.
 
+Sous le champ, **Types indexés** liste les types présents dans l’index du locataire avec leur
+nombre de documents. Sélectionne-en un pour l’ajouter au champ, ou sélectionne-le à nouveau pour le
+retirer.
+
 ## Lire les résultats {#results}
 
 Les résultats sont triés par pertinence : les correspondances dans le titre comptent plus que celles

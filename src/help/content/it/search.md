@@ -59,6 +59,9 @@ In **Tipi**, inserisci uno o più tipi separati da virgole per vedere solo quell
 minuscole, cifre, punti, trattini e trattini bassi e iniziano con una lettera; al massimo 20 alla
 volta. Lascia il campo vuoto per cercare in tutti i tipi.
 
+Sotto il campo, **Tipi indicizzati** elenca i tipi presenti nell'indice del tenant con il numero
+di documenti. Selezionane uno per aggiungerlo al campo, oppure selezionalo di nuovo per toglierlo.
+
 ## Leggere i risultati {#results}
 
 I risultati sono ordinati per pertinenza: le corrispondenze nel titolo contano più di quelle nel

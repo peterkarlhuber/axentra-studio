@@ -152,5 +152,11 @@
     "tenant_admin": "Verwaltet Mitglieder und Daten des Mandanten",
     "member": "Arbeitet mit den Daten des Mandanten",
     "viewer": "Nur-Lese-Zugriff auf den Mandanten"
+  },
+  "passwordPolicy": {
+    "too_short": "Verwende mindestens {{min}} Zeichen.",
+    "too_long": "Verwende höchstens {{max}} Zeichen.",
+    "equals_email": "Das Passwort darf nicht deine E-Mail-Adresse sein.",
+    "too_simple": "Verwende mindestens 4 verschiedene Zeichen."
   }
 }

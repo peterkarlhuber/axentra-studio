@@ -29,7 +29,7 @@
     "setDescription": "Actualmente solo inicias sesión mediante inicio de sesión único. Una contraseña habilita también el inicio de sesión con contraseña. Por tu seguridad, esto requiere un inicio de sesión reciente.",
     "reauth": "Volver a iniciar sesión",
     "reauthBody": "Solo se permite establecer una primera contraseña poco después de iniciar sesión. Vuelve a iniciar sesión (regresarás aquí) y establece la contraseña en unos minutos.",
-    "rules": "Al menos la longitud mínima del servidor (12 caracteres salvo que el operador la haya cambiado), distinta de tu dirección de correo electrónico y con al menos 4 caracteres diferentes.",
+    "rules": "Al menos {{min}} caracteres, distinta de tu dirección de correo electrónico y con al menos 4 caracteres diferentes.",
     "setSubmit": "Establecer contraseña"
   },
   "sessions": {
@@ -42,6 +42,12 @@
     "othersRevoked_other": "Se cerraron {{count}} sesiones más",
     "othersPartial_one": "No se pudo cerrar {{count}} de {{total}} sesiones más",
     "othersPartial_many": "No se pudieron cerrar {{count}} de {{total}} sesiones más",
-    "othersPartial_other": "No se pudieron cerrar {{count}} de {{total}} sesiones más"
+    "othersPartial_other": "No se pudieron cerrar {{count}} de {{total}} sesiones más",
+    "revokeTitle": "¿Revocar esta sesión?",
+    "revokeBody": "Se cerrará la sesión en {{device}} con su próxima solicitud.",
+    "revokeOthersTitle": "¿Cerrar todas las demás sesiones?",
+    "revokeOthersBody_one": "Termina {{count}} sesión más. Este navegador sigue con la sesión iniciada.",
+    "revokeOthersBody_many": "Terminan {{count}} sesiones más. Este navegador sigue con la sesión iniciada.",
+    "revokeOthersBody_other": "Terminan {{count}} sesiones más. Este navegador sigue con la sesión iniciada."
   }
 }

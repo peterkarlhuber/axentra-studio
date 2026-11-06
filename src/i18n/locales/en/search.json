@@ -29,7 +29,9 @@
     "kindsPlaceholder": "for example invoice, note",
     "kindInvalid": "“{{kind}}” is not a valid kind: use lowercase letters, digits, dots, hyphens and underscores, starting with a letter.",
     "kindTooMany": "Enter at most 20 kinds.",
-    "submit": "Search"
+    "submit": "Search",
+    "indexedKinds": "Indexed kinds",
+    "kindCount": "{{kind}} ({{count}})"
   },
   "results": {
     "heading": "Results for {{query}}",

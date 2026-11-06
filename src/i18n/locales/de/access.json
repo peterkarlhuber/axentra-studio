@@ -118,7 +118,9 @@
     "lastUsedInfo": "Zeitpunkt der letzten erfolgreichen Anfrage mit diesem Schlüssel. Wird höchstens einmal pro Minute aktualisiert.",
     "lastUsedAbout": "Über „Zuletzt verwendet“",
     "secretUsage": "Sende das Geheimnis bei jeder Anfrage im Header „Authorization: Bearer <Geheimnis>“ oder „X-API-Key: <Geheimnis>“.",
-    "creatorHint": "Ein Schlüssel funktioniert nur, solange die Person, die ihn erstellt hat, die Berechtigungen noch besitzt, die er verwendet."
+    "creatorHint": "Ein Schlüssel funktioniert nur, solange die Person, die ihn erstellt hat, die Berechtigungen noch besitzt, die er verwendet.",
+    "creatorLost": "Ersteller ohne Zugriff",
+    "creatorLostMissing": "Nicht nutzbar für: {{permissions}}"
   },
   "catalog": {
     "title": "Berechtigungen",

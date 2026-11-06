@@ -39,6 +39,21 @@ export function reportUnauthenticated(): void {
   unauthenticatedListeners.forEach((listener) => listener());
 }
 
+type ApiVersionListener = (version: string) => void;
+const apiVersionListeners = new Set<ApiVersionListener>();
+let lastApiVersion: string | null = null;
+
+/**
+ * Subscribe to the `Axentra-API-Version` response header: called with its value whenever it
+ * differs from the previous response's (also for the first response that carries it), so a
+ * server upgraded while the tab is open is noticed without a reload. Returns an unsubscribe
+ * function.
+ */
+export function onApiVersion(listener: ApiVersionListener): () => void {
+  apiVersionListeners.add(listener);
+  return () => apiVersionListeners.delete(listener);
+}
+
 const axentraMiddleware: Middleware = {
   onRequest({ request }) {
     const token = getCsrfToken();
@@ -48,6 +63,11 @@ const axentraMiddleware: Middleware = {
     return request;
   },
   onResponse({ response, schemaPath }) {
+    const version = response.headers.get('Axentra-API-Version')?.trim();
+    if (version && version !== lastApiVersion) {
+      lastApiVersion = version;
+      apiVersionListeners.forEach((listener) => listener(version));
+    }
     if (response.status === 401 && !EXPECTED_401_PATHS.has(schemaPath)) {
       unauthenticatedListeners.forEach((listener) => listener());
     }
@@ -77,6 +97,7 @@ let currentBaseUrl = '';
 /** Point the shared client at another API origin (from `/config.json`). */
 export function configureApi(options: ClientOptions): void {
   currentBaseUrl = options.baseUrl;
+  lastApiVersion = null;
   currentClient = createAxentraClient(options);
 }
 

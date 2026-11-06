@@ -89,6 +89,7 @@ as outras sessões) ou quando um administrador desabilita a sua conta.
 
 1. Encontre o navegador em **Suas sessões**.
 2. Escolha **Revogar sessão** (o ícone de lixeira no fim da linha).
+3. Confirme **Revogar esta sessão?** com **Revogar sessão**.
 
 Esse navegador é desconectado na próxima requisição. A sua sessão atual não tem botão de revogar;
 para ela, use **Sair** no menu do usuário.
@@ -97,7 +98,7 @@ para ela, use **Sair** no menu do usuário.
 
 Para encerrar todas as sessões, exceto a que você está usando, escolha **Sair de todas as outras
 sessões** no cabeçalho de **Suas sessões**. O botão aparece quando existe pelo menos uma outra
-sessão.
+sessão. O Studio pede antes uma confirmação que informa quantas sessões terminam.
 
 Sua sessão atual nunca é encerrada. Cada uma das outras sessões é encerrada separadamente; se
 algumas não puderem ser encerradas (por exemplo, por causa do limite de requisições), o Studio

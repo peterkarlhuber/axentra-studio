@@ -164,9 +164,10 @@ Una chiave funziona solo finché la persona che l'ha creata ha ancora le autoriz
 usa. Il server lo verifica a ogni richiesta: se il ruolo di quella persona è cambiato, se è stata
 rimossa dal prodotto o se il suo account è stato disattivato, una richiesta che ha bisogno di
 un'autorizzazione che non ha più viene rifiutata con `403 api_key_creator_lost_access`, e la
-risposta indica quell'autorizzazione in `permission`. L'elenco delle chiavi mostra comunque la
-chiave come **Attivo**. Restituisci l'autorizzazione a quella persona, oppure crea una nuova chiave
-come qualcuno che la possiede, passa i tuoi servizi alla nuova chiave e revoca quella vecchia.
+risposta indica quell'autorizzazione in `permission`. L'elenco delle chiavi segna la chiave con **Il
+creatore ha perso l'accesso** e indica le autorizzazioni che non può più usare. Restituisci
+l'autorizzazione a quella persona, oppure crea una nuova chiave come qualcuno che la possiede, passa
+i tuoi servizi alla nuova chiave e revoca quella vecchia.
 
 Studio stesso non viene mai rifiutato in questo modo: usa la tua sessione utente, non una chiave.
 

@@ -122,7 +122,9 @@
     "lastUsedInfo": "Hora de la última solicitud correcta con esta clave. Se actualiza como máximo una vez por minuto.",
     "lastUsedAbout": "Acerca del último uso",
     "secretUsage": "Envía el secreto en cada solicitud en la cabecera “Authorization: Bearer <secret>” o “X-API-Key: <secret>”.",
-    "creatorHint": "Una clave solo funciona mientras la persona que la creó siga teniendo los permisos que usa."
+    "creatorHint": "Una clave solo funciona mientras la persona que la creó siga teniendo los permisos que usa.",
+    "creatorLost": "El creador perdió el acceso",
+    "creatorLostMissing": "No se puede usar para: {{permissions}}"
   },
   "catalog": {
     "title": "Permisos",

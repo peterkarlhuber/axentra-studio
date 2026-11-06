@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PlugZap, RefreshCw, ServerCrash } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { checkCompatibility, formatApiVersion } from '@/api/compat';
-import { STUDIO_VERSION } from '@/api/client';
+import { checkCompatibility, formatApiVersion, parseApiVersion } from '@/api/compat';
+import { STUDIO_VERSION, onApiVersion } from '@/api/client';
 import { metaApi } from '@/api/endpoints';
 import { queryKeys } from '@/api/queryKeys';
 import { FullPageMessage, SplashScreen } from '@/components/layout/FullPageMessage';
@@ -39,6 +39,23 @@ export function MetaGate({ children }: { children: ReactNode }) {
     staleTime: Infinity,
     retry: 1,
   });
+  // A response announcing another API version than the loaded metadata (the server was
+  // upgraded while this tab is open) reloads `/v1/meta`: an incompatible server then shows the
+  // page below, a compatible one updates modules and settings.
+  const queryClient = useQueryClient();
+  const loaded = query.data?.api_version;
+  useEffect(
+    () =>
+      onApiVersion((header) => {
+        const announced = parseApiVersion(header);
+        const current = parseApiVersion(loaded);
+        if (!announced || !current) return;
+        if (announced.major !== current.major || announced.minor !== current.minor) {
+          void queryClient.invalidateQueries({ queryKey: queryKeys.meta });
+        }
+      }),
+    [loaded, queryClient],
+  );
 
   if (query.isPending) return <SplashScreen label={t('common:states.connecting')} />;
 

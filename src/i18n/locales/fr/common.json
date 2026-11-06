@@ -153,5 +153,11 @@
     "tenant_admin": "Gère les membres et les données du locataire",
     "member": "Travaille avec les données du locataire",
     "viewer": "Accès en lecture seule au locataire"
+  },
+  "passwordPolicy": {
+    "too_short": "Utilise au moins {{min}} caractères.",
+    "too_long": "Utilise au plus {{max}} caractères.",
+    "equals_email": "Le mot de passe ne doit pas être ton adresse e-mail.",
+    "too_simple": "Utilise au moins 4 caractères différents."
   }
 }

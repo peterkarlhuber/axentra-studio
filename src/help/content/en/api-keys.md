@@ -157,9 +157,9 @@ A key works only as long as the person who created it still holds the permission
 server checks this on every request: if the creator's role was changed, they were removed from the
 product or their account was disabled, a request that needs a permission they no longer hold is
 refused with `403 api_key_creator_lost_access`, and the response names that permission in
-`permission`. The key list still shows such a key as **Active**. Give the creator the permission
-again, or create a new key as someone who holds it, switch your services over and revoke the old
-key.
+`permission`. The key list marks such a key **Creator lost access** and names the permissions it can
+no longer use. Give the creator the permission again, or create a new key as someone who holds it,
+switch your services over and revoke the old key.
 
 Studio itself is never refused this way: it uses your user session, not a key.
 
