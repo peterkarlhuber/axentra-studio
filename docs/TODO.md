@@ -11,9 +11,12 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
-Last full review: 2026-11-05 against `master` at `d124ae4` (quality round 3 close-out; TODO consolidated). Backend
-pin `api/BACKEND_REF`: `cfa80dc` (Axentra #42, sign-in audit context; moved from `0a1d1cc` in the same PR; contract
-unchanged). Before that: 2026-11-04 in UX round 3 against backend `0a1d1cc`.
+Last full review: 2026-11-06 against master at 715da0d (TODO abatement round). Backend pin
+`api/BACKEND_REF`: the round's Axentra commit (product invitations, memberships, job and search
+kinds, password policy, key states; additive `/v1` changes, see the backend's CHANGELOG). It must
+point to a pushed Axentra commit before CI can run, see "The pinned backend commit must be
+pushed". Before that: 2026-11-05 against `d124ae4` (quality round 3 close-out) with backend
+`cfa80dc`.
 
 ## P0
 
@@ -25,11 +28,6 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## P1
 
-- **Two Phase 1 pages have no component tests.** `ProductDetailPage` and `SettingsPage` have no
-  Vitest test (UX round 3 added `UsersPage`, `UserDetailPage`, `HealthPage` and `NotFoundPage`;
-  `DashboardPage` and the suspended-tenant gate of `InvitationsPage` are covered). They are
-  rendered by the e2e a11y sweep and partly driven by area specs, but their actions are not
-  asserted in isolation.
 - **Drawers and toasts are not in the interactive a11y harness.** `e2e/a11y-interactive.spec.ts`
   checks open dialogs, menus, the info tip, the page help panel and form error states in both
   themes on desktop and 360 px, and since UX round 3 the audit drawer, the phone navigation drawer
@@ -40,23 +38,12 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   skipped with "no fixture for :fileId" until `scripts/e2e-backend.sh` creates such an object and
   `e2e/a11y.spec.ts` maps it.
 
-- **No invitations for product operators (backend).** `POST /v1/products/{id}/members` resolves
-  only users the caller can see (`404` otherwise), and there is no product-level invitation, so a
-  product owner who is not a platform admin cannot add an operator without an account they can
-  see. Studio explains this in the add dialog.
-
 ## P2
-
-- **Studio cannot list a user's memberships.** API-only today.
 
 - **Role ceiling needs the role catalog.** Studio disables roles above the caller only when
   `GET .../roles` is readable (`roles:read`); otherwise the role is a free-text field and the
   server's `403` explains a refusal. The ceiling is computed from `GET /v1/me`; a role changed
   while the page is open is noticed after the next `/v1/me` refresh.
-- **Job kinds open to tenant callers are not listed (backend).** Callers without `jobs:manage`
-  may enqueue only kinds opened with `enqueue_permission`, but the API does not expose which kinds
-  those are. Studio offers "Enqueue job" only to `jobs:manage` holders and shows the server's
-  `403` explanation otherwise.
 - **API key expiry inheritance is text only.** Studio creates keys with a user session, so the
   "inherits the creating key's expiry" rule (`422` for a later `expires_at`) never applies to
   Studio's own create form (which offers an optional expiry: presets or a date); the expiry info
@@ -70,11 +57,10 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   list the Studio origin in `security.allowed_origins`, the CSP must allow the API in
   `connect-src` (`AXENTRA_PUBLIC_API_URL`), and OIDC must accept the absolute Studio return URL.
   Same origin behind a reverse proxy is the recommended and the only e2e-tested setup.
-- **Compatibility is checked once per page load.** `MetaGate` reads `GET /v1/meta` with
-  `staleTime: Infinity`; a server upgraded while a tab is open is noticed only after a reload. The
-  `Axentra-API-Version` response header (sent and exposed by the backend) is not read.
 - **Only Chromium in e2e.** Playwright runs Chromium (desktop and a 360 px phone viewport); Firefox
-  and WebKit are untested.
+  and WebKit are untested. Adding the two Playwright projects is small, but the browsers must be
+  installed in CI (`npx playwright install --with-deps firefox webkit`) and the first runs checked
+  for engine-specific failures.
 - **`style-src 'unsafe-inline'` in the CSP.** Required by Radix UI's inline positioning and
   scroll-lock styles; a stricter policy breaks dialogs. Scripts never run inline.
 - **HSTS is not set by the Docker image.** Add it at the TLS terminator.
@@ -95,30 +81,12 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   least one new event" there (`e2e/events.spec.ts`). A new spec must follow `specProduct()` in
   `e2e/support.ts` or it will collide in single mode.
 
-- **Product permissions cannot be declared in Studio.** The Permissions page is read-only; the
-  backend's `PUT`/`DELETE /v1/products/{id}/permissions/{name}` (`permissions:manage`, product
-  owners) has no form yet. Products that embed Axentra declare them in code anyway.
-- **Retired permissions in custom roles are dropped on save.** The role editor offers only active
-  permissions; saving a role that still lists a retired product permission removes that name
-  (it had no effect while retired, but would have come back if the product re-declared it). The
-  read-only role view still lists it.
-
-- **No guard against losing unsaved input.** No page asks before a reload, a navigation or
-  sign-out while a form has unsaved changes (no `beforeunload`, no router blocker); the profile
-  name field, role editor and record editors lose edits silently. Dialogs close on Escape without
-  asking (their state is kept until the page unmounts, so reopening restores it, which in turn
-  shows stale input after **Cancel**). The role editor's **Save changes** is enabled without
-  changes. Needs one shared "dirty form" pattern.
-- **Revoking a session has no confirmation.** **Revoke** on a single session and **Sign out all
-  other sessions** act at once (profile and user detail). The buttons now name the device;
-  a confirmation that names the device, as for API keys, is still missing.
-- **Invitation refusals are told apart by their English detail text (backend).** Accepting answers
-  `403 forbidden` for three reasons (other email address, tenant or product not active, inviter
-  can no longer grant the role). Studio matches the `detail` text to explain each; distinct codes
-  (or a `reason` field) would make this robust. Unknown 403s show the server message. Backend: Axentra AXS-B1.
-- **The initial bundle carries the help library.** About 956 kB raw / 296 kB gzip load before the
-  first page, including the help index and article renderer that only `/help` and the help panel
-  need. Lazy-load them.
+- **Dialogs can lose unsaved input.** Page forms (profile name, product settings, notification
+  preferences, template editor) use `UnsavedChangesGuard` (browser prompt on reload, **Leave
+  without saving?** on navigation). Dialogs (role editor, record editor, create dialogs) still
+  close on Escape or an outside click without asking, and keep their state until the page
+  unmounts, so reopening after **Cancel** can show stale input. Extend the guard to `Dialog`
+  (ask on close while dirty, reset on **Cancel**).
 
 ## P3
 
@@ -147,10 +115,6 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
     `ci.yml` that run on every pull request, including both end-to-end modes) and block force
     pushes and deletion, without required approvals, so agent pull requests keep working;
     auto-merge stays off. Implementation is a separate work order (nodestro-studio ST-052).
-
-- **A failed single sign-on drops `return_to` (backend).** Axentra sends a failed OIDC login to
-  `<login page>?login_error=…` without the original `return_to`. Studio keeps an opened invitation
-  for the tab and returns to it after the next sign-in, but other deep links are lost.
 
 - **"Sign out all other sessions" sends one request per session (backend endpoint decided
   against for now).** Axentra offers `DELETE /v1/auth/sessions/{id}` for the caller and an admin
@@ -185,34 +149,25 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   `$AXENTRA_E2E_DB`/`$AXENTRA_E2E_DB_ROLE`; parallel runs on one PostgreSQL need distinct names
   and ports (all configurable through environment variables).
 
-- **Product creation does not use `?new=1`.** Other create dialogs open from the address (UX.md);
-  the product dialog does not, so it cannot be linked or restored on reload.
 - **Native and Studio validation mix.** Some inputs (for example the custom API key expiry date
   and the setup page's full name) use the browser's `required` bubble, others Studio's inline errors; the bubble is not translated
   by Studio and looks different.
-- **Search kinds are typed by hand (backend).** There is no endpoint that lists the kinds indexed
-  in a tenant, so the kind filter is free text with format validation. Backend: Axentra AXS-B2.
-- **Password policy refusals do not mark the field (backend).** A refused password (setup, password
-  change) answers `422` with only `detail`, so Studio cannot point to the password field or state the
-  exact minimum length. Backend: Axentra AXS-B6 (UX round 3 handover axs B-2).
-- **API keys of a creator who lost access still show as Active (backend).** Since AX3-01 such a key is
-  refused with `api_key_creator_lost_access`, but the key list has no effective state; the help says the
-  list still shows such keys as Active. Show it in the status column of `ApiKeysPage` once the backend
-  offers it. Backend: Axentra AX3-01 effective-state item (UX round 3 handover axs B-3).
-- **Vitest keeps a stale `import.meta.glob` result.** After adding a new i18n namespace, Vitest's
-  cache (`node_modules/.vitest-cache`, `node_modules/.vite/vitest`) served the old locale map
-  until it was deleted. Document it or disable the cache for `src/i18n`.
-
-- **Plain user lands on "No products yet".** A signed-in user without roles sees a heading that
-  reads like an empty installation (the body text is right).
-- **Heading order on four screens.** axe best-practice `heading-order` (h1 to h3) on schedules,
-  webhook detail, invitations and the "No products yet" table state.
-- **Tenant page at 360 px.** The breadcrumb starts with an orphan "›" when the parent crumb is
-  hidden, and Delete tenant is a filled danger button next to Suspend.
-- **Vitest timeouts under machine load.** About 37 jsdom + userEvent tests exceed the default 5 s
-  when the machine is busy (they pass alone and in CI); consider `testTimeout` 10 s or pool tuning.
 
 ## Recently fixed
+
+- **TODO abatement round (2026-11-06).** Product operators are invited at product level (Invitations
+  tab of a product; `axpinv_` links accepted on the accept page, also through single sign-on);
+  invitation refusals use the backend's `reason`; a user's page lists their memberships; tenant
+  members enqueue the job kinds opened to them; the search kind filter offers the indexed kinds;
+  password fields state and mark the server's policy; the API key list shows the grace period and
+  "Creator lost access"; a changed `Axentra-API-Version` header reloads the compatibility check;
+  revoking sessions asks first; product permissions can be declared, changed and retired, and
+  custom roles keep retired permissions on save (Save only when changed); a failed single sign-on
+  returns to the deep link; `?new=1` opens the product dialog; page forms ask before unsaved input
+  is lost; the help panel content loads on demand (no longer preloaded with the shell); heading
+  order, the 360 px breadcrumb and the tenant Delete emphasis are fixed; `ProductDetailPage` and
+  `SettingsPage` have component tests; Vitest runs without the module cache and with a 10 s test
+  timeout.
 
 - **Sign-in audit events carry client context (Axentra #42, `cfa80dc`).** `identity.login` (success and
   denied), `identity.setup.complete` and `identity.external.link` record IP and request id, and a successful

@@ -61,6 +61,25 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Fixed
 
+- Invitation refusals are told apart by the backend's `reason` (`email_mismatch`, `scope_inactive`,
+  `inviter_lost_access`) instead of the English detail text, which stays the fallback.
+- Password fields (setup, password change) state the server's policy (`auth.password_policy` in
+  `/v1/meta`) and mark the field with the server's reason on a refusal.
+- The API key list shows a rotated key's grace period (`grace_until`) and a key whose creator lost
+  access ("Creator lost access", with the withheld permissions) instead of **Active**.
+- A changed `Axentra-API-Version` response header reloads the compatibility check (a server upgraded
+  while the tab is open is noticed without a reload).
+- Revoking a session and **Sign out all other sessions** ask first and name the device.
+- The role editor keeps retired product permissions a custom role already holds (needs axentra with
+  the matching fix) and enables **Save changes** only when something changed; product settings too.
+- A failed single sign-on returns to the original deep link after the next sign-in (axentra passes
+  `return_to` back).
+- `?new=1` opens the product dialog; a signed-in user without products no longer sees
+  "No products yet"; heading order on schedules, webhook detail, invitations and the products table;
+  the 360 px breadcrumb no longer starts with an orphan separator; Delete tenant is an outlined
+  danger button next to Suspend.
+- Tenant pickers ask the server for `sort=name`, so they list the first 200 tenants by name.
+
 - Product owners and admins who are not platform administrators can reactivate a suspended tenant
   (needs axentra with the suspended-tenant read fix). The tenant page loads, shows a **This tenant
   is suspended** banner that says what suspension means and who can lift it, and offers
@@ -73,6 +92,13 @@ All notable changes to Axentra Studio are documented here. The format follows
   member of the tenant) cover it; `scripts/e2e-backend.sh` creates two plain users for such specs.
 
 ### Changed
+
+- The help panel content (help library and Markdown renderer) loads on demand when a help topic
+  opens, so it is no longer preloaded with the shell.
+- Vitest runs without the file-system module cache (a new i18n namespace was not picked up) and
+  with a 10 s test timeout (jsdom and user-event tests under machine load).
+- `api/BACKEND_REF` and the vendored contract are synced from the round's axentra commit
+  (additive `/v1` changes).
 
 - Dependencies (dependency round 2026-11-05): ESLint 10 (eslint 10.14.0, @eslint/js 10.0.1; an npm
   override lets eslint-plugin-jsx-a11y use it, same lint findings as ESLint 9), Playwright 1.64.1 without
@@ -148,6 +174,25 @@ All notable changes to Axentra Studio are documented here. The format follows
   user id then). The e2e notifier role includes `search:query`, which the backend's viewer role holds.
 
 ### Added
+
+- Product team invitations (needs axentra with product-level invitations): a product's
+  **Invitations** tab invites operators by email with a product role (`product_members:manage`,
+  role ceiling), lists and revokes open invitations, and the accept page accepts `axpinv_` links,
+  also through single sign-on (`product_invitation_accepted`), and opens the product. Help:
+  **Members and invitations**, section "Product team".
+- A user's page lists their product and tenant memberships (`GET /v1/users/{id}/memberships`).
+- Tenant members without `jobs:manage` can enqueue the job kinds opened to them: the enqueue dialog
+  requires a tenant and offers the kinds from `GET .../jobs/kinds`; managers get the kinds as
+  suggestions.
+- The search page offers the tenant's indexed kinds as toggle chips with counts
+  (`GET .../search/kinds`).
+- Product permissions can be declared, changed and retired on the Permissions page
+  (`permissions:manage`; only permissions declared over the API, code-registered ones stay
+  read-only).
+- `UnsavedChangesGuard`: the profile name, product settings, notification preferences and the
+  template editor ask before unsaved input is lost (browser prompt on reload, **Leave without
+  saving?** on navigation).
+- Component tests for `ProductDetailPage` and `SettingsPage`.
 
 - In-app help system. A help center at `/help` (public, also reachable when the API is down or
   incompatible) with 39 articles in 13 chapters written against the real product: introduction,
