@@ -70,13 +70,14 @@
     "revoked": "Invitación revocada",
     "tokenHelp": "No se generó ningún enlace de invitación porque las notificaciones no están activadas en este servidor, así que comparte el token. La persona inicia sesión y lo introduce en “Aceptar invitación”.",
     "roleHelp": "La persona obtiene este rol en el inquilino después de aceptar.",
+    "roleHelpProduct": "La persona obtiene este rol en el equipo del producto después de aceptar.",
     "emailInfo": "Solo un usuario con la sesión iniciada cuya cuenta tenga exactamente esta dirección de correo electrónico puede aceptar la invitación.",
     "expiresInfo": "Las invitaciones son válidas durante 7 días. Para prolongar una, revócala y vuelve a invitar.",
     "expiresAbout": "Acerca de la caducidad de las invitaciones"
   },
   "accept": {
     "title": "Aceptar invitación",
-    "description": "Únete a un inquilino con el enlace de invitación o el token que recibiste. Inicia sesión con la cuenta de la dirección de correo electrónico a la que se envió la invitación, revisa los datos y confirma.",
+    "description": "Únete a un inquilino o al equipo de un producto con el enlace de invitación o el token que recibiste. Inicia sesión con la cuenta de la dirección de correo electrónico a la que se envió la invitación, revisa los datos y confirma.",
     "token": "Token de invitación",
     "tokenHelp": "Pega el token de la invitación si no abriste el enlace.",
     "tokenFromLink": "Tomado de tu enlace de invitación. Ya no aparece en la barra de direcciones.",
@@ -85,7 +86,9 @@
     "successBody": "Ahora eres miembro con el rol {{role}}. Puede tardar un momento en que el acceso aparezca en todas partes.",
     "continue": "Ir a la página de inicio",
     "successBodyNamed": "Ahora eres miembro de {{tenant}} en {{product}} con el rol {{role}}.",
+    "successBodyProduct": "Ahora formas parte del equipo de {{product}} con el rol {{role}}.",
     "openTenant": "Abrir el inquilino",
+    "openProduct": "Abrir el producto",
     "signedInAs": "Sesión iniciada como <strong>{{account}}</strong>.",
     "switchAccount": "Usar otra cuenta",
     "switchAccountAction": "Cerrar sesión y usar la dirección invitada",
@@ -110,11 +113,14 @@
       },
       "inactive": {
         "title": "El inquilino no está activo",
-        "body": "El inquilino (o su producto) al que te invitaron está suspendido o cerrado, así que ahora nadie puede unirse. Tu invitación no se ha usado. Pide a la persona que te invitó que reactive el inquilino y vuelve a intentarlo."
+        "body": "El inquilino (o su producto) al que te invitaron está suspendido o cerrado, así que ahora nadie puede unirse. Tu invitación no se ha usado. Pide a la persona que te invitó que reactive el inquilino y vuelve a intentarlo.",
+        "titleProduct": "El producto no está activo",
+        "bodyProduct": "El producto al que te invitaron está archivado, así que ahora nadie puede unirse a su equipo. Tu invitación no se ha usado. Pide a la persona que te invitó que restaure el producto y vuelve a intentarlo."
       },
       "inviterLost": {
         "title": "La invitación ya no es válida",
-        "body": "La persona que te invitó ya no puede darte este rol, por ejemplo porque cambió su propio rol o su membresía. Pídele a ella o a otra persona que administre el inquilino una invitación nueva."
+        "body": "La persona que te invitó ya no puede darte este rol, por ejemplo porque cambió su propio rol o su membresía. Pídele a ella o a otra persona que administre el inquilino una invitación nueva.",
+        "bodyProduct": "La persona que te invitó ya no puede darte este rol, por ejemplo porque cambió su propio rol o su membresía. Pídele a ella o a otra persona que administre el producto una invitación nueva."
       },
       "unreachable": {
         "title": "No se pudo contactar con el servidor",

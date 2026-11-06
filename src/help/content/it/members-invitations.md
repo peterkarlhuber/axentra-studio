@@ -12,8 +12,8 @@ qualcuno in due modi:
 - **Invita** una persona via email. La persona accetta l'invito dopo aver eseguito l'accesso e
   diventa membro con il ruolo che hai scelto.
 
-Gli operatori di un intero prodotto si gestiscono invece nel prodotto, vedi
-[prodotti](help:products#members).
+Gli operatori di un intero prodotto si gestiscono nel prodotto e possono essere invitati nel suo
+team allo stesso modo, vedi [inviti nel team del prodotto](#product-team).
 
 > [!IMPORTANT]
 > Per vedere le schede **Membri** e **Inviti** di un tenant serve `members:read` nel tenant;
@@ -116,6 +116,22 @@ nuovo. Per ogni indirizzo email e tenant può esistere un solo invito aperto all
 
 Scegli l'icona del cestino accanto a un invito **In attesa** e conferma **Revocare l'invito?**. Il
 link e il token smettono subito di funzionare.
+
+## Invitare operatori nel team di un prodotto {#product-team}
+
+Puoi invitare via email anche gli operatori (utenti con un ruolo di prodotto, vedi
+[prodotti](help:products#members)). Apri il prodotto da [Prodotti](app:products) e seleziona la
+scheda **Inviti**, oppure scegli **Invia invece un invito** quando **Aggiungi membro** nella scheda
+**Membri** non trova l'indirizzo. Studio preseleziona **Product viewer**, o il primo ruolo di
+prodotto che puoi assegnare.
+
+- La scheda richiede `product_members:read`; invitare e revocare richiede `product_members:manage`.
+- Link, token, invio, validità di 7 giorni e revoca funzionano come per gli inviti in un tenant.
+  Il token inizia con `axpinv_`, e la pagina **Accetta invito** lo riconosce.
+- Dopo l'accettazione, la persona ha il ruolo di prodotto in ogni tenant del prodotto. Un ruolo di
+  prodotto che ha già resta invariato.
+- Nessuno può entrare nel team di un prodotto archiviato. L'invito resta inutilizzato finché il
+  prodotto non viene ripristinato.
 
 ## Accettare un invito {#accept}
 

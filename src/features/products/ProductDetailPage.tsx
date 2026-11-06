@@ -30,6 +30,7 @@ import {
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
+import { InvitationsPanel } from '@/features/tenants/InvitationsPanel';
 import { StoragePolicyCard } from '@/features/storage/StoragePolicyCard';
 import { isModuleEnabled } from '@/app/modules';
 import { HelpLink } from '@/help/HelpLink';
@@ -196,7 +197,31 @@ export function ProductDetailPage() {
                   add={(body) => productsApi.addMember(product.id, body)}
                   updateRole={(userId, role) => productsApi.updateMember(product.id, userId, role)}
                   remove={(userId) => productsApi.removeMember(product.id, userId)}
+                  invite={archived ? undefined : (body) => productsApi.invite(product.id, body)}
                   canManage={can('product_members:manage', { productId: product.id })}
+                />
+              </Card>
+            ),
+          },
+          {
+            value: 'invitations',
+            label: t('tabs.invitations'),
+            hidden: !can('product_members:read', { productId: product.id }),
+            content: (
+              <Card
+                flush
+                description={
+                  <>
+                    {t('invitationsDescription')}{' '}
+                    <HelpLink topic="members-invitations#product-team">
+                      {t('common:help.learnMore')}
+                    </HelpLink>
+                  </>
+                }
+              >
+                <InvitationsPanel
+                  productId={product.id}
+                  canManage={!archived && can('product_members:manage', { productId: product.id })}
                 />
               </Card>
             ),

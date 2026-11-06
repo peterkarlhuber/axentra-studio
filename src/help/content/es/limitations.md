@@ -13,9 +13,6 @@ otras del servidor; a veces la API del servidor ofrece más que Studio.
 - **En Studio no se crean cuentas.** Las cuentas se crean en la configuración inicial, al aceptar
   una invitación o en el primer inicio de sesión único. En su lugar, invita a las personas a un
   inquilino.
-- **No hay invitaciones para operadores de producto.** Solo puedes añadir un miembro del producto si
-  ya tiene una cuenta que puedas ver. Solución alternativa: invita primero a la persona a uno de los
-  inquilinos del producto, o pide a un administrador de la plataforma que la añada.
 - **Axentra no tiene por sí mismo restablecimiento de contraseña, verificación del correo
   electrónico ni autenticación en dos pasos.** Si usas inicio de sesión único, tu proveedor de
   identidad puede exigir la autenticación en dos pasos.

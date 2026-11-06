@@ -37,7 +37,8 @@
     "details": "Details",
     "settings": "Settings",
     "files": "Files",
-    "members": "Members"
+    "members": "Members",
+    "invitations": "Invitations"
   },
   "settings": {
     "title": "Product settings",
@@ -61,5 +62,6 @@
     "archivedNotice": "This product is archived: its operators, tenant members and API keys have no access. Restore it to make changes.",
     "singleMode": "The server runs in single-product mode, so this product cannot be archived. You can change its name, description, settings and members."
   },
-  "membersDescription": "Operators of this product. Their role applies in every tenant; tenant members are managed on each tenant."
+  "membersDescription": "Operators of this product. Their role applies in every tenant; tenant members are managed on each tenant.",
+  "invitationsDescription": "Invite operators by email to join this product's team. After accepting, they have the product role in every tenant."
 }

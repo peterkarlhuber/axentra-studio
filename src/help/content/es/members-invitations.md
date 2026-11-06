@@ -12,8 +12,8 @@ puede hacer la persona en ese inquilino. Puedes dar acceso a alguien de dos mane
 - **Invitar** a una persona por correo electrónico. Acepta la invitación tras iniciar sesión y se
   convierte en miembro con el rol que elegiste.
 
-Los operadores de un producto completo se gestionan, en cambio, en el producto; consulta
-[productos](help:products#members).
+Los operadores de un producto completo se gestionan en el producto y se pueden invitar a su
+equipo de la misma forma; consulta [invitaciones al equipo del producto](#product-team).
 
 > [!IMPORTANT]
 > Ver las pestañas **Miembros** e **Invitaciones** de un inquilino requiere `members:read` en el
@@ -117,6 +117,23 @@ la vez.
 
 Elige el icono de la papelera junto a una invitación **Pendiente** y confirma **¿Revocar
 invitación?**. El enlace y el token dejan de funcionar de inmediato.
+
+## Invitar operadores al equipo de un producto {#product-team}
+
+También puedes invitar por correo electrónico a operadores (usuarios con un rol de producto,
+consulta [productos](help:products#members)). Abre el producto desde [Productos](app:products) y
+selecciona la pestaña **Invitaciones**, o elige **Enviar invitación en su lugar** cuando **Añadir
+miembro** en la pestaña **Miembros** no encuentre la dirección. Studio preselecciona **Product
+viewer**, o el primer rol de producto que puedes asignar.
+
+- La pestaña necesita `product_members:read`; invitar y revocar necesita `product_members:manage`.
+- El enlace, el token, el envío, la validez de 7 días y la revocación funcionan como en las
+  invitaciones a un inquilino. El token empieza por `axpinv_`, y la página **Aceptar invitación**
+  lo reconoce.
+- Después de aceptar, la persona tiene el rol de producto en todos los inquilinos del producto. Un
+  rol de producto que ya tenga se mantiene sin cambios.
+- Nadie puede unirse al equipo de un producto archivado. La invitación sigue sin usarse hasta que
+  se restaure el producto.
 
 ## Aceptar una invitación {#accept}
 

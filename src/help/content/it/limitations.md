@@ -13,9 +13,6 @@ Studio, altre dal server; a volte l'API del server offre più di quanto offra St
 - **In Studio non si creano account.** Gli account nascono dalla configurazione iniziale,
   dall'accettazione di un invito o dal primo accesso tramite single sign-on. Invita invece le
   persone in un tenant.
-- **Nessun invito per gli operatori di prodotto.** Puoi aggiungere un membro del prodotto solo se
-  ha già un account visibile per te. Soluzione alternativa: invita prima la persona in uno dei
-  tenant del prodotto, oppure chiedi a un amministratore della piattaforma di aggiungerla.
 - **Nessun ripristino della password, verifica dell'email o autenticazione a due fattori** in
   Axentra stesso. Se usi il single sign-on, il tuo provider di identità può imporre
   l'autenticazione a due fattori.

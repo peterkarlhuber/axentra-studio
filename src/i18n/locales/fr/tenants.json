@@ -70,13 +70,14 @@
     "revoked": "Invitation révoquée",
     "tokenHelp": "Aucun lien d’invitation n’a été généré, car les notifications ne sont pas activées sur ce serveur : partage donc le jeton. La personne se connecte et le saisit sous « Accepter l’invitation ».",
     "roleHelp": "La personne reçoit ce rôle dans le locataire après avoir accepté.",
+    "roleHelpProduct": "La personne reçoit ce rôle dans l’équipe du produit après avoir accepté.",
     "emailInfo": "Seul un utilisateur connecté dont le compte a exactement cette adresse e-mail peut accepter l’invitation.",
     "expiresInfo": "Les invitations sont valables 7 jours. Pour en prolonger une, révoque-la et invite de nouveau.",
     "expiresAbout": "À propos de l’expiration des invitations"
   },
   "accept": {
     "title": "Accepter l’invitation",
-    "description": "Rejoins un locataire avec le lien ou le jeton d’invitation que tu as reçu. Connecte-toi avec le compte de l’adresse e-mail à laquelle l’invitation a été envoyée, vérifie les informations et confirme.",
+    "description": "Rejoins un locataire ou l’équipe d’un produit avec le lien ou le jeton d’invitation que tu as reçu. Connecte-toi avec le compte de l’adresse e-mail à laquelle l’invitation a été envoyée, vérifie les informations et confirme.",
     "token": "Jeton d’invitation",
     "tokenHelp": "Colle le jeton de l’invitation si tu n’as pas ouvert le lien.",
     "tokenFromLink": "Repris de ton lien d’invitation. Il n’apparaît plus dans la barre d’adresse.",
@@ -85,7 +86,9 @@
     "successBody": "Tu es maintenant membre avec le rôle {{role}}. L’accès peut mettre quelques instants à apparaître partout.",
     "continue": "Aller à la page d’accueil",
     "successBodyNamed": "Tu es maintenant membre de {{tenant}} dans {{product}} avec le rôle {{role}}.",
+    "successBodyProduct": "Tu fais maintenant partie de l’équipe de {{product}} avec le rôle {{role}}.",
     "openTenant": "Ouvrir le locataire",
+    "openProduct": "Ouvrir le produit",
     "signedInAs": "Connecté en tant que <strong>{{account}}</strong>.",
     "switchAccount": "Utiliser un autre compte",
     "switchAccountAction": "Se déconnecter et utiliser l’adresse invitée",
@@ -110,11 +113,14 @@
       },
       "inactive": {
         "title": "Le locataire n’est pas actif",
-        "body": "Le locataire (ou son produit) auquel tu as été invité est suspendu ou fermé : personne ne peut le rejoindre pour l’instant. Ton invitation n’a pas été utilisée. Demande à la personne qui t’a invité de réactiver le locataire, puis réessaie."
+        "body": "Le locataire (ou son produit) auquel tu as été invité est suspendu ou fermé : personne ne peut le rejoindre pour l’instant. Ton invitation n’a pas été utilisée. Demande à la personne qui t’a invité de réactiver le locataire, puis réessaie.",
+        "titleProduct": "Le produit n’est pas actif",
+        "bodyProduct": "Le produit auquel tu as été invité est archivé : personne ne peut rejoindre son équipe pour l’instant. Ton invitation n’a pas été utilisée. Demande à la personne qui t’a invité de restaurer le produit, puis réessaie."
       },
       "inviterLost": {
         "title": "L’invitation n’est plus valable",
-        "body": "La personne qui t’a invité ne peut plus t’attribuer ce rôle, par exemple parce que son propre rôle ou son appartenance a changé. Demande-lui, ou à une autre personne qui administre le locataire, une nouvelle invitation."
+        "body": "La personne qui t’a invité ne peut plus t’attribuer ce rôle, par exemple parce que son propre rôle ou son appartenance a changé. Demande-lui, ou à une autre personne qui administre le locataire, une nouvelle invitation.",
+        "bodyProduct": "La personne qui t’a invité ne peut plus t’attribuer ce rôle, par exemple parce que son propre rôle ou son appartenance a changé. Demande-lui, ou à une autre personne qui administre le produit, une nouvelle invitation."
       },
       "unreachable": {
         "title": "Le serveur est injoignable",

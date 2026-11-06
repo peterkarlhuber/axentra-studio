@@ -13,8 +13,8 @@ of two ways:
 - **Invite** a person by email. They accept the invitation after signing in and become a member
   with the role you chose.
 
-Operators of a whole product are managed on the product instead, see
-[products](help:products#members).
+Operators of a whole product are managed on the product and can be invited to its team in the
+same way, see [product team invitations](#product-team).
 
 > [!IMPORTANT]
 > Seeing a tenant's **Members** and **Invitations** tabs needs `members:read` in the tenant;
@@ -110,6 +110,21 @@ again. Only one open invitation per email address and tenant can exist at a time
 
 Choose the trash icon next to a **Pending** invitation and confirm **Revoke invitation?**. The
 link and token stop working immediately.
+
+## Invite operators to a product team {#product-team}
+
+Operators (users with a product role, see [products](help:products#members)) can be invited by
+email as well. Open the product from [Products](app:products) and select the **Invitations** tab, or
+choose **Send invitation instead** when **Add member** on the **Members** tab does not find the
+address. Studio preselects **Product viewer**, or the first product role you may assign.
+
+- The tab needs `product_members:read`; inviting and revoking needs `product_members:manage`.
+- The link, the token, delivery, the 7-day lifetime and revoking work as for tenant invitations.
+  The token starts with `axpinv_`, and the **Accept invitation** page recognizes it.
+- After accepting, the person has the product role in every tenant of the product. A product role
+  the person already holds stays unchanged.
+- Nobody can join the team of an archived product. The invitation stays unused until the product
+  is restored.
 
 ## Accept an invitation {#accept}
 

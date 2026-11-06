@@ -18,6 +18,12 @@ export interface ProblemDetails {
   period_start?: string;
   /** `api_key_creator_lost_access`: the permission the key's creator no longer holds. */
   permission?: string;
+  /**
+   * Why a request was refused, where the server distinguishes cases under one `code`
+   * (invitation acceptance: `email_mismatch`, `scope_inactive`, `inviter_lost_access`; password
+   * policy: `too_short`, `too_long`, `equals_email`, `too_simple`).
+   */
+  reason?: string;
 }
 
 /**
@@ -83,6 +89,8 @@ export class ApiError extends Error {
   readonly periodStart: string | undefined;
   /** The permission the key's creator lost (`api_key_creator_lost_access` only). */
   readonly permission: string | undefined;
+  /** The server's `reason` for the refusal, where it gives one (see ProblemDetails.reason). */
+  readonly reason: string | undefined;
 
   constructor(init: {
     status: number;
@@ -93,6 +101,7 @@ export class ApiError extends Error {
     errors?: ValidationIssue[];
     periodStart?: string;
     permission?: string;
+    reason?: string;
   }) {
     super(init.detail || init.title || init.code);
     this.name = 'ApiError';
@@ -104,6 +113,7 @@ export class ApiError extends Error {
     this.errors = init.errors ?? [];
     this.periodStart = init.periodStart;
     this.permission = init.permission;
+    this.reason = init.reason;
   }
 
   get isUnauthenticated(): boolean {
@@ -154,6 +164,7 @@ export function problemToError(body: unknown, response: Response | undefined): A
     errors: Array.isArray(problem.errors) ? problem.errors : [],
     periodStart: typeof problem.period_start === 'string' ? problem.period_start : undefined,
     permission: typeof problem.permission === 'string' ? problem.permission : undefined,
+    reason: typeof problem.reason === 'string' && problem.reason ? problem.reason : undefined,
   });
 }
 

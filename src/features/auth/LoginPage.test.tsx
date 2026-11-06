@@ -104,7 +104,10 @@ describe('LoginPage', () => {
     configureApi({ baseUrl: 'http://axentra.test', fetch: async () => unauthenticated() });
     renderWithProviders(<LoginPage />, {
       route: '/login',
-      meta: { ...testMeta, auth: { password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+      meta: {
+        ...testMeta,
+        auth: { ...testMeta.auth, password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+      },
     });
     const link = await screen.findByRole('link', { name: /Corp SSO/ });
     expect(link).toHaveAttribute(
@@ -160,7 +163,10 @@ describe('LoginPage', () => {
       </>,
       {
         route: `/login?return_to=${encodeURIComponent(back)}`,
-        meta: { ...testMeta, auth: { password: true, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+        meta: {
+          ...testMeta,
+          auth: { ...testMeta.auth, password: true, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+        },
       },
     );
     expect(await screen.findByText('Sign in to accept your invitation')).toBeInTheDocument();
@@ -224,7 +230,10 @@ describe('LoginPage', () => {
     });
     renderWithProviders(<LoginPage />, {
       route: `/login?return_to=${encodeURIComponent('/invitations/accept')}`,
-      meta: { ...testMeta, auth: { password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+      meta: {
+        ...testMeta,
+        auth: { ...testMeta.auth, password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+      },
     });
     const link = await screen.findByRole('link', { name: /Corp SSO/ });
     await userEvent.setup().click(link);
@@ -249,7 +258,10 @@ describe('LoginPage', () => {
     });
     renderWithProviders(<LoginPage />, {
       route: `/login?return_to=${encodeURIComponent('/invitations/accept')}`,
-      meta: { ...testMeta, auth: { password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+      meta: {
+        ...testMeta,
+        auth: { ...testMeta.auth, password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+      },
     });
     await userEvent.setup().click(await screen.findByRole('link', { name: /Corp SSO/ }));
     expect(await screen.findByRole('alert')).toBeInTheDocument();
@@ -274,7 +286,10 @@ describe('LoginPage', () => {
     const calls = startCalls();
     renderWithProviders(<LoginPage />, {
       route: '/login?login_error=access_denied',
-      meta: { ...testMeta, auth: { password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+      meta: {
+        ...testMeta,
+        auth: { ...testMeta.auth, password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+      },
     });
     const link = await screen.findByRole('link', { name: /Corp SSO/ });
     const start = new URL(link.getAttribute('href') ?? '');
@@ -297,7 +312,10 @@ describe('LoginPage', () => {
     const back = '/invitations/accept?lang=de&token=axinv%2Bodd%26token#details';
     renderWithProviders(<LoginPage />, {
       route: `/login?return_to=${encodeURIComponent(back)}`,
-      meta: { ...testMeta, auth: { password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+      meta: {
+        ...testMeta,
+        auth: { ...testMeta.auth, password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+      },
     });
     const link = await screen.findByRole('link', { name: /Corp SSO/ });
     const href = link.getAttribute('href') ?? '';
@@ -323,7 +341,10 @@ describe('LoginPage', () => {
     const calls = startCalls();
     renderWithProviders(<LoginPage />, {
       route: `/login?return_to=${encodeURIComponent('/audit?token=not-an-invitation&tab=2')}`,
-      meta: { ...testMeta, auth: { password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] } },
+      meta: {
+        ...testMeta,
+        auth: { ...testMeta.auth, password: false, oidc: [{ id: 'corp', name: 'Corp SSO' }] },
+      },
     });
     const link = await screen.findByRole('link', { name: /Corp SSO/ });
     const start = new URL(link.getAttribute('href') ?? '');

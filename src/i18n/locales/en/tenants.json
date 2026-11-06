@@ -70,13 +70,14 @@
     "revoked": "Invitation revoked",
     "tokenHelp": "No invitation link was generated because notifications are not enabled on this server, so share the token. The person signs in and enters it under “Accept invitation”.",
     "roleHelp": "The person gets this role in the tenant after accepting.",
+    "roleHelpProduct": "The person gets this role in the product team after accepting.",
     "emailInfo": "Only a signed-in user whose account has exactly this email address can accept the invitation.",
     "expiresInfo": "Invitations are valid for 7 days. To extend one, revoke it and invite again.",
     "expiresAbout": "About invitation expiry"
   },
   "accept": {
     "title": "Accept invitation",
-    "description": "Join a tenant with the invitation link or token you received. Sign in with the account for the email address the invitation was sent to, check the details and confirm.",
+    "description": "Join a tenant or a product team with the invitation link or token you received. Sign in with the account for the email address the invitation was sent to, check the details and confirm.",
     "token": "Invitation token",
     "tokenHelp": "Paste the token from the invitation if you did not open the link.",
     "tokenFromLink": "Filled in from your invitation link. It is no longer shown in the address bar.",
@@ -85,7 +86,9 @@
     "successBody": "You are now a member with the role {{role}}. It may take a moment until the access appears everywhere.",
     "continue": "Go to the start page",
     "successBodyNamed": "You are now a member of {{tenant}} in {{product}} with the role {{role}}.",
+    "successBodyProduct": "You are now on the team of {{product}} with the role {{role}}.",
     "openTenant": "Open the tenant",
+    "openProduct": "Open the product",
     "signedInAs": "Signed in as <strong>{{account}}</strong>.",
     "switchAccount": "Use another account",
     "switchAccountAction": "Sign out and use the invited address",
@@ -110,11 +113,14 @@
       },
       "inactive": {
         "title": "The tenant is not active",
-        "body": "The tenant (or its product) you were invited to is suspended or closed, so nobody can join it right now. Your invitation was not used. Ask the person who invited you to reactivate the tenant, then try again."
+        "body": "The tenant (or its product) you were invited to is suspended or closed, so nobody can join it right now. Your invitation was not used. Ask the person who invited you to reactivate the tenant, then try again.",
+        "titleProduct": "The product is not active",
+        "bodyProduct": "The product you were invited to is archived, so nobody can join its team right now. Your invitation was not used. Ask the person who invited you to restore the product, then try again."
       },
       "inviterLost": {
         "title": "The invitation is no longer valid",
-        "body": "The person who invited you can no longer give you this role, for example because their own role or membership changed. Ask them or another administrator of the tenant for a new invitation."
+        "body": "The person who invited you can no longer give you this role, for example because their own role or membership changed. Ask them or another administrator of the tenant for a new invitation.",
+        "bodyProduct": "The person who invited you can no longer give you this role, for example because their own role or membership changed. Ask them or another administrator of the product for a new invitation."
       },
       "unreachable": {
         "title": "The server could not be reached",

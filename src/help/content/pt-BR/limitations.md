@@ -12,9 +12,6 @@ do servidor; às vezes a API do servidor oferece mais do que o Studio.
 
 - **Nenhuma conta é criada no Studio.** As contas vêm da configuração inicial, do aceite de um
   convite ou do primeiro login por login único. Em vez disso, convide as pessoas para um tenant.
-- **Sem convites para operadores de produto.** Você só pode adicionar um membro do produto se a
-  pessoa já tiver uma conta que você consiga ver. Solução alternativa: primeiro convide a pessoa para
-  um dos tenants do produto, ou peça a um administrador da plataforma que a adicione.
 - **Sem redefinição de senha, verificação de e-mail ou autenticação de dois fatores** no próprio
   Axentra. Se você usa login único, o seu provedor de identidade pode exigir a autenticação de dois
   fatores.

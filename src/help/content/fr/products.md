@@ -109,11 +109,12 @@ Les rôles de produit personnalisés apparaissent aussi dans la liste. Consulte 
 > `product_members:manage` (propriétaires du produit et administrateurs de la plateforme).
 
 > [!NOTE]
-> Il n’existe pas d’invitation pour les opérateurs. La personne doit déjà avoir un compte visible pour
-> toi : les administrateurs de la plateforme voient tous les comptes, les utilisateurs disposant de `product_users:read` voient les utilisateurs
-> de ce produit (membres de ses locataires et ses opérateurs). Pour toute autre personne, le serveur répond
-> **Utilisateur introuvable**. Invite d’abord la personne dans l’un des locataires du produit, ou demande à un administrateur
-> de la plateforme de l’ajouter.
+> Tu ne peux ajouter que des comptes visibles pour toi : les administrateurs de la plateforme voient
+> tous les comptes, les utilisateurs disposant de `product_users:read` voient les utilisateurs de ce
+> produit (membres de ses locataires et ses opérateurs). Pour toute autre personne, le serveur
+> répond **Utilisateur introuvable** et la boîte de dialogue propose **Envoyer plutôt une
+> invitation**, qui invite l’adresse dans l’équipe du produit. Voir
+> [invitations dans l’équipe du produit](help:members-invitations#product-team).
 
 Pour modifier le rôle d’un opérateur, choisis-en un nouveau dans la colonne **Rôle**. Pour retirer un opérateur, choisis
 l’icône de corbeille de sa ligne et confirme. Les rôles au-dessus de ton propre niveau sont affichés mais ne peuvent pas être

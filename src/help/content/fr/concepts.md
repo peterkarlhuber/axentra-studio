@@ -83,10 +83,11 @@ de produit. Consulte les [membres et invitations](help:members-invitations).
 
 ## Invitation {#invitation}
 
-Une **invitation** propose à une personne, via son adresse e-mail, de rejoindre un locataire avec un rôle donné. Elle contient
-un jeton à usage unique, reste valable 7 jours et peut être révoquée. La personne invitée l’accepte en étant
-connectée avec un compte qui possède **la même adresse e-mail**. Il n’existe pas d’invitation pour les opérateurs
-de produit. Consulte les [membres et invitations](help:members-invitations).
+Une **invitation** propose à une personne, via son adresse e-mail, de rejoindre un locataire avec un
+rôle donné. Elle contient un jeton à usage unique, reste valable 7 jours et peut être révoquée. La
+personne invitée l’accepte en étant connectée avec un compte qui possède **la même adresse e-mail**.
+Les opérateurs de produit peuvent être invités dans l’équipe d’un produit de la même façon. Consulte
+les [membres et invitations](help:members-invitations).
 
 ## Rôle {#role}
 

@@ -37,7 +37,8 @@
     "details": "Détails",
     "settings": "Paramètres",
     "files": "Fichiers",
-    "members": "Membres"
+    "members": "Membres",
+    "invitations": "Invitations"
   },
   "settings": {
     "title": "Paramètres du produit",
@@ -61,5 +62,6 @@
     "archivedNotice": "Ce produit est archivé : ses opérateurs, les membres de ses locataires et ses clés d’API n’y ont pas accès. Restaure-le pour faire des modifications.",
     "singleMode": "Le serveur fonctionne en mode produit unique ; ce produit ne peut donc pas être archivé. Tu peux modifier son nom, sa description, ses paramètres et ses membres."
   },
-  "membersDescription": "Les opérateurs de ce produit. Leur rôle s’applique dans chaque locataire ; les membres des locataires se gèrent sur chaque locataire."
+  "membersDescription": "Les opérateurs de ce produit. Leur rôle s’applique dans chaque locataire ; les membres des locataires se gèrent sur chaque locataire.",
+  "invitationsDescription": "Invite des opérateurs par e-mail dans l’équipe de ce produit. Après avoir accepté, ils ont le rôle du produit dans chaque locataire."
 }

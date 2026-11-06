@@ -14,9 +14,6 @@ Studio.
 - **Aucun compte n’est créé dans le Studio.** Les comptes proviennent de la première installation,
   de l’acceptation d’une invitation ou de la première connexion par authentification unique.
   Invite plutôt les personnes dans un locataire.
-- **Pas d’invitations pour les opérateurs du produit.** Tu ne peux ajouter un membre au produit
-  que s’il a déjà un compte que tu peux voir. Contournement : invite d’abord la personne dans l’un
-  des locataires du produit, ou demande à un administrateur de la plateforme de l’ajouter.
 - **Pas de réinitialisation de mot de passe, de vérification d’adresse e-mail ni
   d’authentification à deux facteurs** dans Axentra lui-même. Si tu utilises l’authentification
   unique, ton fournisseur d’identité peut imposer l’authentification à deux facteurs.

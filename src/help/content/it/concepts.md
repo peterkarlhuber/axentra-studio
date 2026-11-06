@@ -91,8 +91,8 @@ hanno un ruolo di prodotto. Vedi [membri e inviti](help:members-invitations).
 Un **invito** chiede a una persona, tramite indirizzo email, di unirsi a un tenant con un
 determinato ruolo. Contiene un token monouso, è valido 7 giorni e può essere revocato. La persona
 invitata lo accetta dopo aver eseguito l'accesso con un account che ha **lo stesso indirizzo
-email**. Non esistono inviti per gli operatori di prodotto. Vedi
-[membri e inviti](help:members-invitations).
+email**. Gli operatori di prodotto possono essere invitati nel team di un prodotto allo stesso modo.
+Vedi [membri e inviti](help:members-invitations).
 
 ## Ruolo {#role}
 

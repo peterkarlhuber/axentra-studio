@@ -112,11 +112,11 @@ Eigene Produktrollen erscheinen ebenfalls in der Liste. Siehe
 > Plattform-Administratoren).
 
 > [!NOTE]
-> Für Produktverantwortliche gibt es keine Einladungen. Die Person muss bereits ein Konto haben, das du
-> sehen kannst: Plattform-Administratoren sehen jedes Konto, Benutzer mit `product_users:read` sehen
-> die Benutzer dieses Produkts (Mitglieder seiner Mandanten und seine Produktverantwortlichen). Für
-> alle anderen antwortet der Server mit **Benutzer nicht gefunden**. Lade die Person zuerst in einen
-> der Mandanten des Produkts ein oder bitte einen Plattform-Administrator, sie hinzuzufügen.
+> Du kannst nur Konten hinzufügen, die du sehen kannst: Plattform-Administratoren sehen jedes Konto,
+> Benutzer mit `product_users:read` sehen die Benutzer dieses Produkts (Mitglieder seiner Mandanten
+> und seine Produktverantwortlichen). Für alle anderen antwortet der Server mit **Benutzer nicht
+> gefunden**, und der Dialog bietet **Stattdessen einladen** an, das die Adresse ins Produktteam
+> einlädt. Siehe [Einladungen ins Produktteam](help:members-invitations#product-team).
 
 Um die Rolle einer oder eines Produktverantwortlichen zu ändern, wähle in der Spalte **Rolle** eine
 neue. Zum Entfernen wählst du das Papierkorbsymbol in der Zeile und bestätigst. Rollen oberhalb deiner

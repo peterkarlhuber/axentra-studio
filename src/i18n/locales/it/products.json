@@ -37,7 +37,8 @@
     "details": "Dettagli",
     "settings": "Impostazioni",
     "files": "File",
-    "members": "Membri"
+    "members": "Membri",
+    "invitations": "Inviti"
   },
   "settings": {
     "title": "Impostazioni del prodotto",
@@ -61,5 +62,6 @@
     "archivedNotice": "Questo prodotto è archiviato: i suoi operatori, i membri dei tenant e le chiavi API non hanno accesso. Ripristinalo per apportare modifiche.",
     "singleMode": "Il server funziona in modalità prodotto singolo, quindi questo prodotto non può essere archiviato. Puoi modificarne nome, descrizione, impostazioni e membri."
   },
-  "membersDescription": "Operatori di questo prodotto. Il loro ruolo vale in ogni tenant; i membri dei tenant si gestiscono in ciascun tenant."
+  "membersDescription": "Operatori di questo prodotto. Il loro ruolo vale in ogni tenant; i membri dei tenant si gestiscono in ciascun tenant.",
+  "invitationsDescription": "Invita via email gli operatori nel team di questo prodotto. Dopo l'accettazione, hanno il ruolo del prodotto in ogni tenant."
 }

@@ -63,6 +63,9 @@ import type {
   NotifyTemplateInput,
   NotifyTemplatePatch,
   ProductInput,
+  ProductInvitation,
+  ProductInvitationInput,
+  NewProductInvitation,
   ProductMember,
   ProductOverview,
   ProductPatch,
@@ -245,6 +248,21 @@ export const productsApi = {
         params: { path: { product_id: productId, user_id: userId } },
       }),
     ),
+  /** Invitations to the product team (operators), newest first. */
+  invitations: (productId: string) =>
+    unwrap<ProductInvitation[]>(
+      api().GET('/v1/products/{product_id}/invitations', { params: productPath(productId) }),
+    ),
+  invite: (productId: string, body: ProductInvitationInput) =>
+    unwrap<NewProductInvitation>(
+      api().POST('/v1/products/{product_id}/invitations', { params: productPath(productId), body }),
+    ),
+  revokeInvitation: (productId: string, invitationId: string) =>
+    unwrap<unknown>(
+      api().DELETE('/v1/products/{product_id}/invitations/{invitation_id}', {
+        params: { path: { product_id: productId, invitation_id: invitationId } },
+      }),
+    ),
 };
 
 // ---- Tenants ---------------------------------------------------------------------------
@@ -348,6 +366,9 @@ export const tenantsApi = {
 export const invitationsApi = {
   accept: (token: string) =>
     unwrap<TenantMember>(api().POST('/v1/invitations/accept', { body: { token } })),
+  /** A product team invitation (`axpinv_...` token). */
+  acceptProduct: (token: string) =>
+    unwrap<ProductMember>(api().POST('/v1/product-invitations/accept', { body: { token } })),
 };
 
 // ---- Users -----------------------------------------------------------------------------

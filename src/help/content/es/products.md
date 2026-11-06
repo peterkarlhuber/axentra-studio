@@ -111,11 +111,12 @@ Los roles de producto personalizados también aparecen en la lista. Consulta
 > requiere `product_members:manage` (propietarios del producto y administradores de la plataforma).
 
 > [!NOTE]
-> No existen invitaciones para operadores. La persona ya debe tener una cuenta que puedas ver: los
-> administradores de la plataforma ven todas las cuentas, y los usuarios con `product_users:read`
-> ven los usuarios de este producto (miembros de sus inquilinos y sus operadores). Para cualquier
-> otra persona, el servidor responde **Usuario no encontrado**. Invita primero a la persona a uno de
-> los inquilinos del producto o pide a un administrador de la plataforma que la añada.
+> Solo puedes añadir cuentas que puedas ver: los administradores de la plataforma ven todas las
+> cuentas, y los usuarios con `product_users:read` ven los usuarios de este producto (miembros de
+> sus inquilinos y sus operadores). Para cualquier otra persona, el servidor responde **Usuario no
+> encontrado** y el diálogo ofrece **Enviar invitación en su lugar**, que invita la dirección al
+> equipo del producto. Consulta
+> [invitaciones al equipo del producto](help:members-invitations#product-team).
 
 Para cambiar el rol de un operador, elige uno nuevo en la columna **Rol**. Para quitar un operador,
 elige el icono de la papelera en su fila y confirma. Los roles por encima de tu propio nivel se

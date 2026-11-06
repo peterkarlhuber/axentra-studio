@@ -37,7 +37,8 @@
     "details": "Details",
     "settings": "Einstellungen",
     "files": "Dateien",
-    "members": "Mitglieder"
+    "members": "Mitglieder",
+    "invitations": "Einladungen"
   },
   "settings": {
     "title": "Produkteinstellungen",
@@ -61,5 +62,6 @@
     "archivedNotice": "Dieses Produkt ist archiviert: Seine Produktverantwortlichen, Mandantenmitglieder und API-Schlüssel haben keinen Zugriff. Stelle es wieder her, um Änderungen vorzunehmen.",
     "singleMode": "Der Server läuft im Einzelproduktbetrieb, daher lässt sich dieses Produkt nicht archivieren. Name, Beschreibung, Einstellungen und Mitglieder kannst du ändern."
   },
-  "membersDescription": "Produktverantwortliche dieses Produkts. Die Produktrolle gilt in allen Mandanten; Mandantenmitglieder verwaltest du beim jeweiligen Mandanten."
+  "membersDescription": "Produktverantwortliche dieses Produkts. Die Produktrolle gilt in allen Mandanten; Mandantenmitglieder verwaltest du beim jeweiligen Mandanten.",
+  "invitationsDescription": "Lade Produktverantwortliche per E-Mail in das Team dieses Produkts ein. Nach dem Annehmen gilt ihre Produktrolle in allen Mandanten."
 }

@@ -15,7 +15,7 @@ export const testMeta: Meta = {
   mode: 'multi',
   modules: ['identity', 'tenancy', 'access', 'data', 'audit'],
   product: null,
-  auth: { password: true, oidc: [] },
+  auth: { password: true, oidc: [], password_policy: { min_length: 12, max_length: 1024 } },
   setup_required: false,
 };
 

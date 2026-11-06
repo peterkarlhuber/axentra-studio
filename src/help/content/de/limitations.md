@@ -13,9 +13,6 @@ stammen von Studio, andere vom Server; die API des Servers bietet manchmal mehr 
 - **In Studio werden keine Konten angelegt.** Konten entstehen bei der Ersteinrichtung, beim
   Annehmen einer Einladung oder bei der ersten Anmeldung per Single Sign-on. Lade Personen
   stattdessen in einen Mandanten ein.
-- **Keine Einladungen für Produktverantwortliche.** Ein Produktmitglied kannst du nur hinzufügen,
-  wenn es bereits ein Konto hat, das du sehen kannst. Umgehung: Lade die Person zuerst in einen der
-  Mandanten des Produkts ein oder bitte einen Plattform-Administrator, sie hinzuzufügen.
 - **Kein Zurücksetzen des Passworts, keine E-Mail-Bestätigung und keine
   Zwei-Faktor-Authentifizierung** in Axentra selbst. Verwendest du Single Sign-on, kann dein
   Identitätsanbieter die Zwei-Faktor-Authentifizierung erzwingen.

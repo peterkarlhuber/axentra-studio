@@ -3,7 +3,7 @@ import { MailPlus, Trash2, UserPlus } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isApiError } from '@/api/errors';
-import type { MemberLike, NewInvitation } from '@/api/models';
+import type { MemberLike, NewInvitationLike } from '@/api/models';
 import { useErrorToast } from '@/app/auth';
 import {
   Alert,
@@ -37,9 +37,9 @@ export interface MembersPanelProps {
   remove: (userId: string) => Promise<unknown>;
   /**
    * Invite by email when adding fails with `404` (the server resolves only users the caller
-   * can already see). Tenants only: Axentra has no invitations for product operators.
+   * can already see). Tenants invite tenant members, products invite product operators.
    */
-  invite?: (body: { email: string; role: string }) => Promise<NewInvitation>;
+  invite?: (body: { email: string; role: string }) => Promise<NewInvitationLike>;
   canManage: boolean;
   caption: string;
 }
@@ -72,7 +72,7 @@ export function MembersPanel({
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
   const [removing, setRemoving] = useState<MemberLike | null>(null);
-  const [invitation, setInvitation] = useState<NewInvitation | null>(null);
+  const [invitation, setInvitation] = useState<NewInvitationLike | null>(null);
   const ceilingApplies = !rolesUnavailable && someRoleBlocked(roles, blockFor);
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey });

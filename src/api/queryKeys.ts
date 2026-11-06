@@ -11,6 +11,7 @@ export const queryKeys = {
   product: (productId: string) => ['products', productId] as const,
   productOverview: (productId: string) => ['products', productId, 'overview'] as const,
   productMembers: (productId: string) => ['products', productId, 'members'] as const,
+  productInvitations: (productId: string) => ['products', productId, 'invitations'] as const,
   tenants: (productId: string, params?: unknown) =>
     ['products', productId, 'tenants', 'list', params ?? {}] as const,
   tenant: (productId: string, tenantId: string) =>
