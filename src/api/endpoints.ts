@@ -44,6 +44,10 @@ import type {
   Page,
   PasswordChangeInput,
   PasswordLoginInput,
+  PasswordResetConfirmInput,
+  PasswordResetRequestInput,
+  TokenConfirmInput,
+  EmailVerificationRequestInput,
   Permission,
   Plan,
   PlanInput,
@@ -175,6 +179,14 @@ export const authApi = {
   setup: (body: SetupInput) => unwrap<AuthSession>(api().POST('/v1/auth/setup', { body })),
   loginPassword: (body: PasswordLoginInput) =>
     unwrap<AuthSession>(api().POST('/v1/auth/login/password', { body })),
+  /** Always `202` for a well-formed request: the answer never tells whether an account exists. */
+  requestPasswordReset: (body: PasswordResetRequestInput) =>
+    unwrap<unknown>(api().POST('/v1/auth/password-reset', { body })),
+  /** Sets the new password and ends every session of the account (`400 invalid_token`). */
+  confirmPasswordReset: (body: PasswordResetConfirmInput) =>
+    unwrap<unknown>(api().POST('/v1/auth/password-reset/confirm', { body })),
+  confirmEmailVerification: (body: TokenConfirmInput) =>
+    unwrap<unknown>(api().POST('/v1/auth/email-verification/confirm', { body })),
   /**
    * Single sign-on start with the invitation in the body (never in a URL). Sets the login
    * cookie; the browser then navigates to `redirect_url` (the identity provider).
@@ -201,6 +213,9 @@ export const meApi = {
   update: (body: MePatch) => unwrap<User>(api().PATCH('/v1/me', { body })),
   changePassword: (body: PasswordChangeInput) =>
     unwrap<unknown>(api().POST('/v1/me/password', { body })),
+  /** Emails a verification link (`409` already verified, `429` within a minute). */
+  requestEmailVerification: (body: EmailVerificationRequestInput = {}) =>
+    unwrap<unknown>(api().POST('/v1/me/email-verification', { body })),
 };
 
 // ---- Products --------------------------------------------------------------------------
@@ -646,6 +661,8 @@ export interface SearchParams extends ListParams {
   q: string;
   /** Restrict to these document kinds (repeatable `kind`, at most 20). */
   kind?: string[];
+  /** `prefix`: search as you type (terms also match word beginnings); default `words`. */
+  match?: 'words' | 'prefix';
 }
 
 const searchDocumentPath = (productId: string, tenantId: string, kind: string, refId: string) => ({

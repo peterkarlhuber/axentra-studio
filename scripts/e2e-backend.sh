@@ -33,7 +33,8 @@
 #      backend created on start from [product], read from GET /v1/meta, after checking that
 #      POST /v1/products is refused with 409 mode_not_supported) with a tenant, a free plan the tenant subscribes to, a
 #      job, a webhook endpoint (no matching events) and a notification template, so every route
-#      of the a11y sweep (e2e/a11y.spec.ts) has its parameters,
+#      of the a11y sweep (e2e/a11y.spec.ts) has its parameters, and drawer fixtures for
+#      e2e/a11y-interactive.spec.ts (a record, a file, an event, a test delivery of a second endpoint),
 #   5. creates two plain users without any role (Axentra has no API to create password users, so
 #      through the installed library): specs make them product operators or tenant members of
 #      what they create, to check Studio for non-admins (e2e/tenant-suspension.spec.ts),
@@ -372,6 +373,23 @@ TOML
     json_get endpoint.id)"
   post "/v1/products/$product_id/notify/templates" \
     "{\"key\": \"$template_key\", \"name\": \"E2E fixture\", \"category\": \"onboarding\", \"variables\": [\"name\"], \"sample_data\": {\"name\": \"Ada\"}, \"variants\": {\"en\": {\"subject\": \"Hello {{ name }}\", \"text\": \"Hi {{ name }}.\", \"html\": \"<p>Hi {{ name }}.</p>\"}}}" >/dev/null
+  # Drawer fixtures for e2e/a11y-interactive.spec.ts (record, file, event, webhook delivery). The
+  # delivery comes from a synchronous test send to a second endpoint on port 9, so it exists
+  # without a worker and the first endpoint still never receives one.
+  log "creating drawer fixtures: record, file, event, webhook delivery"
+  post "/v1/products/$product_id/tenants/$tenant_id/records/e2e_notes" '{"title": "a11y drawer fixture"}' >/dev/null
+  local upload_code
+  upload_code="$(curl -sS -o /dev/null -w '%{http_code}' -b "$jar" -c "$jar" -H "X-Axentra-CSRF: $csrf" \
+    -F "file=@-;filename=a11y-fixture.txt;type=text/plain" \
+    "$base/v1/products/$product_id/tenants/$tenant_id/files" <<<"a11y drawer fixture")"
+  [[ "$upload_code" -lt 400 ]] || die "file fixture upload -> HTTP $upload_code"
+  post "/v1/products/$product_id/tenants/$tenant_id/events" \
+    '{"type": "e2e.a11y.fixture", "data": {"fixture": true}}' >/dev/null
+  local delivery_webhook_id
+  delivery_webhook_id="$(post "/v1/products/$product_id/webhooks" \
+    '{"url": "http://127.0.0.1:9/e2e-delivery-fixture", "event_types": ["e2e.fixture.never"], "description": "a11y drawer fixture"}' |
+    json_get endpoint.id)"
+  post "/v1/products/$product_id/webhooks/$delivery_webhook_id/test" '{}' >/dev/null
   rm -f "$jar"
 
   # 5. plain users (no platform role) for the specs
@@ -407,6 +425,7 @@ export AXENTRA_E2E_PRODUCT_ID=$product_id
 export AXENTRA_E2E_TENANT_ID=$tenant_id
 export AXENTRA_E2E_JOB_ID=$job_id
 export AXENTRA_E2E_WEBHOOK_ID=$webhook_id
+export AXENTRA_E2E_DELIVERY_WEBHOOK_ID=$delivery_webhook_id
 export AXENTRA_E2E_TEMPLATE_KEY=$template_key
 export AXENTRA_E2E_OPERATOR_EMAIL=$operator_email
 export AXENTRA_E2E_MEMBER_EMAIL=$member_email

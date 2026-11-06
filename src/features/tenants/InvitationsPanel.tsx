@@ -94,6 +94,8 @@ export function InvitationsPanel({
   const close = (next: boolean) => {
     setOpen(next);
     if (!next) {
+      setEmail('');
+      setRole('');
       setCreated(null);
       invite.reset();
     }
@@ -172,6 +174,7 @@ export function InvitationsPanel({
       <Dialog
         open={open}
         onOpenChange={close}
+        dirty={!created && Boolean(email.trim())}
         title={created ? t('invitations.createdTitle') : t('invitations.invite')}
         description={
           created ? undefined : (

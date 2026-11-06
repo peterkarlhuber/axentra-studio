@@ -1,7 +1,7 @@
 ---
 title: Tu perfil
 summary: Consulta tu cuenta y tus membresías, cambia tu nombre visible y tu contraseña, y cierra la sesión en los navegadores que ya no usas.
-keywords: perfil, cuenta, mi cuenta, nombre visible, nombre, contraseña, cambiar contraseña, establecer contraseña, sesiones, dispositivos, cerrar sesión, cerrar sesión en todas partes, inicio de sesión único, SSO
+keywords: perfil, cuenta, mi cuenta, nombre visible, nombre, contraseña, cambiar contraseña, establecer contraseña, sesiones, dispositivos, cerrar sesión, cerrar sesión en todas partes, inicio de sesión único, SSO, verificar correo, verificación, verificado
 ---
 
 En tu **Perfil** gestionas tu propia cuenta: el nombre que ven los demás, tu contraseña y los
@@ -26,6 +26,22 @@ La tarjeta **Cuenta** muestra:
 Las membresías de inquilinos no aparecen aquí; están en las páginas de los inquilinos. Para obtener
 otro rol, pídeselo a un propietario del producto o a un administrador de la plataforma; consulta
 [Roles y permisos](help:roles-permissions).
+
+## Confirmar tu correo electrónico {#email-verification}
+
+Junto a tu **Correo electrónico**, la tarjeta **Cuenta** muestra **Verificado** o **Sin verificar**.
+Una dirección está verificada cuando abriste un enlace de verificación o de restablecimiento de
+contraseña enviado a ella, o cuando tu proveedor de identidad la confirmó en tu primer inicio de
+sesión único.
+
+1. Elige **Enviar correo de verificación** junto a **Sin verificar**.
+2. Abre el enlace del correo (en cualquier navegador; no necesitas haber iniciado sesión en él) y
+   elige **Confirmar correo electrónico**.
+
+**Resultado esperado:** la página muestra **Correo electrónico confirmado** y tu perfil muestra
+**Verificado**. Puedes enviar un correo nuevo una vez por minuto; solo funciona el enlace más
+reciente, que caduca a las 48 horas por defecto. El correo lo envía uno de tus productos; si no
+perteneces a ninguno, el servidor responde que no puede enviarlo.
 
 ## Cambiar tu nombre visible {#name}
 

@@ -44,8 +44,9 @@ How Studio is organized and how its screens behave. Visual rules are in
 | `/health`                                                                        | Readiness and liveness checks                                                |
 | `/monitoring`                                                                    | Health checks, metrics, retention and tracing                                |
 | `/settings`                                                                      | Effective server settings (read-only)                                        |
-| `/profile`                                                                       | Name, language, theme, password, own sessions                                |
+| `/profile`                                                                       | Name, language, theme, password, email verification, own sessions            |
 | `/invitations/accept`, `/accept-invitation`                                      | Accept an invitation token (the second path is the default link alias)       |
+| `/forgot-password`, `/reset-password`, `/verify-email`                           | Public: request a reset link; the pages of the reset and verification links  |
 | `/help[/:article]`                                                               | Help center; works signed out and without a reachable API                    |
 
 ### Navigation
@@ -125,6 +126,10 @@ Edit forms only enable "Save" when something changed.
   the browser's prompt, and leaving the page inside Studio asks **Leave without saving?**. Query
   string changes on the same page (tabs, `?new=1`) are not blocked. Turn the guard off while a
   save runs. **Save changes** stays disabled while nothing changed where the form can tell.
+- Dialogs with input pass `dirty` to `Dialog`: Escape, an outside click or the close button then
+  asks **Discard your changes?** (**Keep editing** / **Discard changes**); **Cancel** discards
+  without asking. A dialog whose state outlives it (create dialogs opened from the address,
+  member and invitation dialogs) clears its input when it closes, so reopening starts empty.
 
 ### Secrets and tokens
 

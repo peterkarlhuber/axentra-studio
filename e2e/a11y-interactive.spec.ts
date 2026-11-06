@@ -1,7 +1,7 @@
 /**
  * Accessibility of interactive states, which the route sweep (e2e/a11y.spec.ts) does not reach:
- * open dialogs and drawers (audit entry, phone navigation), open menus, toggletips, the help side
- * panel, form error states and an error toast.
+ * open dialogs and drawers (audit entry, record, file, event, webhook delivery, phone navigation),
+ * open menus, toggletips, the help side panel, form error states and an error toast.
  * Each state is checked with axe (WCAG 2.1 A/AA) in the light and the dark theme, on the desktop
  * and the 360 px project, plus "no page-level horizontal scroll" and "focus is inside the open
  * layer". It only opens and validates forms, it never submits anything valid, so it does not
@@ -31,6 +31,16 @@ async function expectFocusInside(page: Page, role: 'dialog' | 'menu') {
       page.evaluate((r) => Boolean(document.activeElement?.closest(`[role="${r}"]`)), role),
     )
     .toBe(true);
+}
+
+/** An open drawer: visible, holds the focus, passes the checks and closes on Escape. */
+async function expectDrawer(page: Page) {
+  const drawer = page.getByRole('dialog');
+  await expect(drawer).toBeVisible();
+  await expectFocusInside(page, 'dialog');
+  await check(page);
+  await page.keyboard.press('Escape');
+  await expect(drawer).toBeHidden();
 }
 
 async function check(page: Page) {
@@ -154,6 +164,48 @@ const scenarios: Scenario[] = [
       await check(page);
       await page.keyboard.press('Escape');
       await expect(drawer).toBeHidden();
+    },
+  },
+  {
+    name: 'record drawer',
+    run: async (page) => {
+      await page.goto(
+        `${product()}/records?tenant=${encodeURIComponent(e2e.tenantId ?? '')}&collection=e2e_notes`,
+      );
+      await page
+        .getByRole('button', { name: /^View record / })
+        .first()
+        .click();
+      await expectDrawer(page);
+    },
+  },
+  {
+    name: 'file drawer',
+    run: async (page) => {
+      await page.goto(`${product()}/files?tenant=${encodeURIComponent(e2e.tenantId ?? '')}`);
+      await page.getByRole('button', { name: 'Actions for a11y-fixture.txt' }).first().click();
+      await page.getByRole('menuitem', { name: 'Details' }).click();
+      await expectDrawer(page);
+    },
+  },
+  {
+    name: 'event drawer',
+    run: async (page) => {
+      await page.goto(`${product()}/events`);
+      await page.getByRole('button', { name: 'Show details of e2e.a11y.fixture' }).first().click();
+      await expectDrawer(page);
+    },
+  },
+  {
+    name: 'webhook delivery drawer',
+    run: async (page) => {
+      test.skip(!e2e.deliveryWebhookId, 'no delivery fixture (older scripts/e2e-backend.sh)');
+      await page.goto(`${product()}/webhooks/${encodeURIComponent(e2e.deliveryWebhookId ?? '')}`);
+      await page
+        .getByRole('button', { name: /^Show delivery / })
+        .first()
+        .click();
+      await expectDrawer(page);
     },
   },
   {

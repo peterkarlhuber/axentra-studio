@@ -1,7 +1,7 @@
 ---
 title: Ton profil
 summary: Voir ton compte et tes adhésions, modifier ton nom d’affichage et ton mot de passe, et déconnecter les navigateurs que tu n’utilises plus.
-keywords: profil, compte, mon compte, nom d’affichage, nom, mot de passe, changer le mot de passe, définir un mot de passe, sessions, appareils, se déconnecter, déconnexion partout, authentification unique, SSO
+keywords: profil, compte, mon compte, nom d’affichage, nom, mot de passe, changer le mot de passe, définir un mot de passe, sessions, appareils, se déconnecter, déconnexion partout, authentification unique, SSO, vérifier l’e-mail, vérification, vérifiée
 ---
 
 Ton **Profil** est l’endroit où tu gères ton propre compte : le nom que voient les autres, ton mot
@@ -27,6 +27,22 @@ La carte **Compte** affiche :
 Les adhésions aux locataires ne sont pas listées ici ; elles figurent sur les pages des locataires.
 Pour obtenir un autre rôle, adresse-toi à un propriétaire du produit ou à un administrateur de la
 plateforme ; voir [Rôles et autorisations](help:roles-permissions).
+
+## Confirmer ton adresse e-mail {#email-verification}
+
+À côté de ton **Adresse e-mail**, la carte **Compte** affiche **Vérifiée** ou **Non vérifiée**. Une
+adresse est vérifiée quand tu as ouvert un lien de vérification ou de réinitialisation du mot de
+passe envoyé à cette adresse, ou quand ton fournisseur d’identité l’a confirmée lors de ta première
+authentification unique.
+
+1. Choisis **Envoyer l’e-mail de vérification** à côté de **Non vérifiée**.
+2. Ouvre le lien de l’e-mail (dans n’importe quel navigateur ; tu n’as pas besoin d’y être
+   connecté) et choisis **Confirmer l’adresse e-mail**.
+
+**Résultat attendu :** la page affiche **Adresse e-mail confirmée** et ton profil affiche
+**Vérifiée**. Tu peux envoyer un nouvel e-mail une fois par minute ; seul le lien le plus récent
+fonctionne, et il expire après 48 heures par défaut. L’e-mail est envoyé par l’un de tes produits ;
+si tu n’appartiens à aucun, le serveur répond qu’il ne peut pas l’envoyer.
 
 ## Modifier ton nom d’affichage {#name}
 

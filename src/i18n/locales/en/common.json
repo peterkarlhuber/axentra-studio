@@ -5,7 +5,12 @@
     "home": "Axentra Studio home"
   },
   "form": {
-    "required": "required"
+    "required": "required",
+    "valueMissing": "Fill in this field.",
+    "typeMismatch": "Enter a value in the expected format.",
+    "rangeUnderflow": "Enter {{min}} or later.",
+    "rangeOverflow": "Enter {{max}} or earlier.",
+    "invalidValue": "Check this value."
   },
   "actions": {
     "retry": "Try again",
@@ -32,6 +37,12 @@
     "title": "Leave without saving?",
     "body": "Your changes on this page are not saved yet. If you leave now, they are lost.",
     "leave": "Leave page"
+  },
+  "discard": {
+    "title": "Discard your changes?",
+    "body": "What you entered in this dialog is not saved yet.",
+    "confirm": "Discard changes",
+    "keep": "Keep editing"
   },
   "toast": {
     "label": "Notification",

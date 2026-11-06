@@ -142,9 +142,8 @@ Der Schlüssel funktioniert sofort und dauerhaft nicht mehr. Wird ein Schlüssel
 
 > [!CAUTION]
 > Beim Widerrufen werden auch alle Schlüssel widerrufen, die **mit diesem Schlüssel erstellt** wurden,
-> und die mit jenen erstellten, alle auf einmal. Die Bestätigung listet sie nicht auf; die
-> widerrufenen abgeleiteten Schlüssel findest du im Eintrag des Widerrufs im
-> [Audit-Protokoll](help:audit).
+> und die mit jenen erstellten, alle auf einmal. Die Bestätigung nennt die aktiven davon mit Namen;
+> auch der Eintrag des Widerrufs im [Audit-Protokoll](help:audit) führt sie auf.
 
 ## Abgeleitete Schlüssel und Ablauf {#derived-keys}
 

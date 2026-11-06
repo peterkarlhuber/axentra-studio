@@ -8,7 +8,13 @@
     "platformRole": "Rôle sur la plateforme",
     "noPlatformRole": "Aucun",
     "products": "Produits",
-    "noProducts": "Aucune adhésion à un produit"
+    "noProducts": "Aucune adhésion à un produit",
+    "noEmail": "Aucune adresse e-mail",
+    "verified": "Vérifiée",
+    "notVerified": "Non vérifiée",
+    "sendVerification": "Envoyer l’e-mail de vérification",
+    "verificationSent": "E-mail de vérification envoyé",
+    "verificationSentBody": "Ouvre le lien de l’e-mail pour confirmer ton adresse."
   },
   "name": {
     "title": "Nom d’affichage",

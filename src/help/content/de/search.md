@@ -47,12 +47,20 @@ wird, die im Mandanten suchen dürfen. Eine eigene Rolle kann beide Berechtigung
 | `invoice -draft`   | Dokumente mit `invoice`, die `draft` nicht enthalten              |
 
 Die Suche findet ganze Wörter und unterscheidet nicht zwischen Groß- und Kleinschreibung, findet
-aber keine Wortteile (`inv` findet nicht `invoice`) und korrigiert keine Tippfehler. Ob
+aber keine Wortteile (`inv` findet nicht `invoice`, außer mit [Wortanfänge finden](#prefix)) und korrigiert keine Tippfehler. Ob
 `invoices` auch `invoice` findet, hängt von der Sprache ab, mit der der Server indiziert (siehe
 [Gut zu wissen](#limits)).
 
 Suche und Mandant stehen in der Adresse, du kannst eine Suche also als Lesezeichen speichern oder
 den Link an jemanden schicken, der Zugriff auf denselben Mandanten hat.
+
+### Wortanfänge finden {#prefix}
+
+Wähle **Wortanfänge finden** für die Suche beim Tippen: Jedes eingegebene Wort muss passen, und
+Wörter ab zwei Zeichen finden auch längere Wörter, die damit beginnen (`inv` findet `invoice`,
+`inv acme` findet Dokumente mit einem Wort, das mit `inv` beginnt, und dem Wort `acme`). In diesem
+Modus haben Anführungszeichen, `or` und `-Wort` keine besondere Bedeutung, und nur die ersten acht
+Wörter zählen. Die Auswahl ist wie die Suche selbst Teil der Adresse.
 
 ### Nach Art eingrenzen {#kinds}
 
@@ -117,14 +125,14 @@ und, sofern der Server das nicht abschaltet, im [Audit-Log](help:audit)
 
 ## Gut zu wissen {#limits}
 
-| Punkt           | Regel                                                                                                          |
-| --------------- | -------------------------------------------------------------------------------------------------------------- |
-| Umfang          | Immer ein Mandant. Alle mit `search:query` im Mandanten sehen jedes Dokument dieses Mandanten.                 |
-| Suchtext        | 1 bis 500 Zeichen. Eine Suche nur aus Satzzeichen oder sehr häufigen Wörtern findet nichts.                    |
-| Arten           | `^[a-z][a-z0-9_.-]{0,62}$`, höchstens 20 pro Suche                                                             |
-| Übereinstimmung | Ganze Wörter; keine Präfix-, unscharfe oder akzentunabhängige Suche (`café` findet nicht `cafe`)               |
-| Sprache         | Eine pro Installation (Servereinstellung `search.language`, Standard `simple`: ohne Wortstamm und Stoppwörter) |
-| Blättern        | 20 pro Seite in Studio, höchstens bis Position `search.max_offset` (Standard 1000)                             |
+| Punkt           | Regel                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Umfang          | Immer ein Mandant. Alle mit `search:query` im Mandanten sehen jedes Dokument dieses Mandanten.                                       |
+| Suchtext        | 1 bis 500 Zeichen. Eine Suche nur aus Satzzeichen oder sehr häufigen Wörtern findet nichts.                                          |
+| Arten           | `^[a-z][a-z0-9_.-]{0,62}$`, höchstens 20 pro Suche                                                                                   |
+| Übereinstimmung | Ganze Wörter, mit **Wortanfänge finden** auch Wortanfänge; keine unscharfe oder akzentunabhängige Suche (`café` findet nicht `cafe`) |
+| Sprache         | Eine pro Installation (Servereinstellung `search.language`, Standard `simple`: ohne Wortstamm und Stoppwörter)                       |
+| Blättern        | 20 pro Seite in Studio, höchstens bis Position `search.max_offset` (Standard 1000)                                                   |
 
 ## Fehlerbehebung {#troubleshooting}
 

@@ -35,6 +35,8 @@ export const KNOWN_ERROR_CODES = [
   'bad_request',
   'validation_failed',
   'invalid_signature',
+  // 400 for a password reset or email verification link that is unknown, expired or used.
+  'invalid_token',
   'unauthenticated',
   'forbidden',
   'reauthentication_required',

@@ -106,6 +106,10 @@
       "title": "Chave de API recusada: o criador perdeu uma permissão",
       "message": "A chave de API foi recusada porque a pessoa que a criou não tem mais a permissão {{permission}}. Uma chave só funciona enquanto o criador ainda tiver as permissões que ela usa. Devolva a permissão a essa pessoa, ou crie uma nova chave como alguém que a tenha e revogue a antiga.",
       "messageNoPermission": "A chave de API foi recusada porque a pessoa que a criou não tem mais uma permissão de que esta solicitação precisa. Uma chave só funciona enquanto o criador ainda tiver as permissões que ela usa. Devolva a permissão a essa pessoa, ou crie uma nova chave como alguém que a tenha e revogue a antiga."
+    },
+    "invalid_token": {
+      "title": "Link inválido ou expirado",
+      "message": "O link é inválido, expirou ou já foi usado. Solicite um novo."
     }
   }
 }

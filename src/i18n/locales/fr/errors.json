@@ -106,6 +106,10 @@
       "title": "Clé d’API refusée : son créateur a perdu une autorisation",
       "message": "La clé d’API a été refusée, car la personne qui l’a créée ne détient plus l’autorisation {{permission}}. Une clé ne fonctionne que tant que son créateur détient encore les autorisations qu’elle utilise. Redonne l’autorisation à cette personne, ou crée une nouvelle clé en tant que quelqu’un qui la détient et révoque l’ancienne.",
       "messageNoPermission": "La clé d’API a été refusée, car la personne qui l’a créée ne détient plus une autorisation dont cette requête a besoin. Une clé ne fonctionne que tant que son créateur détient encore les autorisations qu’elle utilise. Redonne l’autorisation à cette personne, ou crée une nouvelle clé en tant que quelqu’un qui la détient et révoque l’ancienne."
+    },
+    "invalid_token": {
+      "title": "Lien invalide ou expiré",
+      "message": "Le lien est invalide, a expiré ou a déjà été utilisé. Demandes-en un nouveau."
     }
   }
 }

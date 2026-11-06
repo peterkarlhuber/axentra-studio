@@ -13,7 +13,8 @@
     "all": "trova i documenti che contengono entrambe le parole",
     "phrase": "trova la frase esatta",
     "or": "trova i documenti con una delle due parole",
-    "exclude": "esclude i documenti che contengono «draft»"
+    "exclude": "esclude i documenti che contengono «draft»",
+    "prefix": "trova anche le parole che iniziano con quanto digitato"
   },
   "noAccess": {
     "title": "Non puoi cercare in questo tenant",
@@ -31,7 +32,9 @@
     "kindTooMany": "Inserisci al massimo 20 tipi.",
     "submit": "Avvia ricerca",
     "indexedKinds": "Tipi indicizzati",
-    "kindCount": "{{kind}} ({{count}})"
+    "kindCount": "{{kind}} ({{count}})",
+    "prefix": "Trova inizi di parola",
+    "prefixHelp": "Per la ricerca durante la digitazione: «fatt» trova anche «fattura». Virgolette, or e -parola diventano testo normale."
   },
   "results": {
     "heading": "Risultati per {{query}}",

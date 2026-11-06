@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react';
+import { useCallback, useId, useMemo, useState, type ReactNode } from 'react';
 import { InfoTip } from '@/help/InfoTip';
 import type { HelpTopic } from '@/help/manifest';
 import { useTranslation } from 'react-i18next';
@@ -42,14 +42,48 @@ export function FormField({
   const { t } = useTranslation();
   const generated = useId();
   const controlId = id ?? `field-${generated}`;
+  // The browser's constraint validation, shown as Studio's inline error (see useFieldControl).
+  const [nativeError, setNativeError] = useState<string | null>(null);
+  const shownError = error ?? nativeError;
   const helpId = help ? `${controlId}-help` : undefined;
-  const errorId = error ? `${controlId}-error` : undefined;
+  const errorId = shownError ? `${controlId}-error` : undefined;
   const describedBy = [errorId, helpId].filter(Boolean).join(' ') || undefined;
 
+  const reportNative = useCallback(
+    (control: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => {
+      const { validity } = control;
+      setNativeError(
+        validity.valueMissing
+          ? t('form.valueMissing')
+          : validity.typeMismatch
+            ? t('form.typeMismatch')
+            : validity.rangeUnderflow
+              ? t('form.rangeUnderflow', { min: control.getAttribute('min') ?? '' })
+              : validity.rangeOverflow
+                ? t('form.rangeOverflow', { max: control.getAttribute('max') ?? '' })
+                : t('form.invalidValue'),
+      );
+      // Only the first refused control of the form takes the focus, as the browser would.
+      const first = control.form?.querySelector<HTMLElement>(':invalid');
+      if (!first || first === control) control.focus();
+    },
+    [t],
+  );
+  const clearNative = useCallback(() => setNativeError(null), []);
+  const context = useMemo(
+    () => ({
+      id: controlId,
+      describedBy,
+      invalid: Boolean(shownError),
+      required,
+      reportNative,
+      clearNative,
+    }),
+    [controlId, describedBy, shownError, required, reportNative, clearNative],
+  );
+
   return (
-    <FieldContext.Provider
-      value={{ id: controlId, describedBy, invalid: Boolean(error), required }}
-    >
+    <FieldContext.Provider value={context}>
       <div className={clsx(styles.field, className)}>
         <div className={clsx(styles.labelRow, hideLabel && 'ax-sr-only')}>
           <label htmlFor={controlId} className={styles.label}>
@@ -79,9 +113,9 @@ export function FormField({
             {help}
           </p>
         ) : null}
-        {error ? (
+        {shownError ? (
           <p id={errorId} className={styles.error}>
-            {error}
+            {shownError}
           </p>
         ) : null}
       </div>

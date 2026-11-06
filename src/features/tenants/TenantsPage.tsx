@@ -67,6 +67,16 @@ export function TenantsPage() {
   const [slug, setSlug] = useState('');
   const [slugTouched, setSlugTouched] = useState(false);
   const effectiveSlug = slugTouched ? slug : slugify(name);
+  // Closed (Cancel, discard, created): the next opening starts empty.
+  const [wasCreating, setWasCreating] = useState(creating);
+  if (wasCreating !== creating) {
+    setWasCreating(creating);
+    if (!creating) {
+      setName('');
+      setSlug('');
+      setSlugTouched(false);
+    }
+  }
   const filtered = Boolean(q || status);
   const setTenantStatus = useSetTenantStatus(productId);
   const [reactivating, setReactivating] = useState<Tenant | null>(null);
@@ -247,6 +257,7 @@ export function TenantsPage() {
       <Dialog
         open={creating}
         onOpenChange={setCreating}
+        dirty={Boolean(name.trim() || slug.trim())}
         title={t('create.title')}
         description={t('create.description')}
         footer={

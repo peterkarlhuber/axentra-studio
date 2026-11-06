@@ -86,6 +86,8 @@
     "revokeTitle": "Revoke API key?",
     "revokeBody": "“{{name}}” stops working immediately, and so does every key that was created with it (and the keys created with those). This cannot be undone.",
     "revoked": "API key “{{name}}” revoked",
+    "derivedTitle_one": "Also stops working: {{count}} key created with it",
+    "derivedTitle_other": "Also stops working: {{count}} keys created with it or with those",
     "secretTitle": "Secret for “{{name}}”",
     "secret": "API key secret",
     "secretWarningTitle": "Copy the secret now",

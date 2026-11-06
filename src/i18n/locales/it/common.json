@@ -5,7 +5,12 @@
     "home": "Home di Axentra Studio"
   },
   "form": {
-    "required": "obbligatorio"
+    "required": "obbligatorio",
+    "valueMissing": "Compila questo campo.",
+    "typeMismatch": "Inserisci un valore nel formato previsto.",
+    "rangeUnderflow": "Inserisci {{min}} o un valore successivo.",
+    "rangeOverflow": "Inserisci {{max}} o un valore precedente.",
+    "invalidValue": "Controlla questo valore."
   },
   "actions": {
     "retry": "Riprova",
@@ -32,6 +37,12 @@
     "title": "Uscire senza salvare?",
     "body": "Le tue modifiche in questa pagina non sono ancora salvate. Se esci ora, andranno perse.",
     "leave": "Esci dalla pagina"
+  },
+  "discard": {
+    "title": "Scartare le modifiche?",
+    "body": "Ciò che hai inserito in questa finestra non è ancora salvato.",
+    "confirm": "Scarta le modifiche",
+    "keep": "Continua a modificare"
   },
   "toast": {
     "label": "Notifica",

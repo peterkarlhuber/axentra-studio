@@ -20,6 +20,19 @@ export const routes: RouteObject[] = [
     children: [
       { path: 'setup', lazy: lazyPage(() => import('@/features/auth/SetupPage'), 'SetupPage') },
       { path: 'login', lazy: lazyPage(() => import('@/features/auth/LoginPage'), 'LoginPage') },
+      // Public: the password reset request and the pages of the reset and verification links.
+      {
+        path: 'forgot-password',
+        lazy: lazyPage(() => import('@/features/auth/ForgotPasswordPage'), 'ForgotPasswordPage'),
+      },
+      {
+        path: 'reset-password',
+        lazy: lazyPage(() => import('@/features/auth/ResetPasswordPage'), 'ResetPasswordPage'),
+      },
+      {
+        path: 'verify-email',
+        lazy: lazyPage(() => import('@/features/auth/VerifyEmailPage'), 'VerifyEmailPage'),
+      },
       // Public: the path of Axentra's default invitation link; forwards to /invitations/accept.
       { path: 'accept-invitation', element: <AcceptInvitationAlias /> },
       {

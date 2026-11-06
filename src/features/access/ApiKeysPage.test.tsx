@@ -303,6 +303,44 @@ describe('ApiKeysPage rotate and revoke', () => {
     );
   });
 
+  it('lists the keys that stop working with the revoked one', async () => {
+    mockApi(
+      (request, url) => {
+        if (url.pathname.endsWith('/api-keys') && request.method === 'GET')
+          return jsonResponse([
+            keyRow(),
+            keyRow({ id: 'key_2', name: 'child', prefix: 'axk_02', created_by: 'key_1' }),
+            keyRow({ id: 'key_3', name: 'grandchild', prefix: 'axk_03', created_by: 'key_2' }),
+            keyRow({
+              id: 'key_4',
+              name: 'gone',
+              prefix: 'axk_04',
+              created_by: 'key_1',
+              status: 'revoked',
+            }),
+            keyRow({ id: 'key_5', name: 'unrelated', prefix: 'axk_05' }),
+          ]);
+        return undefined;
+      },
+      makeMe(['api_keys:read', 'api_keys:manage', 'records:read']),
+    );
+    renderProductPage(<ApiKeysPage />, {
+      route: `/p/${PRODUCT_ID}/api-keys`,
+      path: '/p/:productId/api-keys',
+    });
+    const user = userEvent.setup();
+    await openAction(user, 'Revoke key');
+    const dialog = await screen.findByRole('dialog', { name: 'Revoke API key?' });
+    const list = within(dialog).getByRole('list', {
+      name: 'Also stops working: 2 keys created with it or with those',
+    });
+    expect(
+      within(list)
+        .getAllByRole('listitem')
+        .map((item) => item.textContent),
+    ).toEqual(['child axk_02…', 'grandchild axk_03…']);
+  });
+
   it('keeps the confirmation open and explains a refused revocation', async () => {
     mockApi(
       (request, url) => {

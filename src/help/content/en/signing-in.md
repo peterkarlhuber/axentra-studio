@@ -1,7 +1,7 @@
 ---
 title: Signing in and out
 summary: Sign in with a password or single sign-on, understand when a session ends, and fix sign-in problems.
-keywords: login, log in, sign in, logout, log out, sign out, password, SSO, single sign-on, OIDC, OpenID Connect, identity provider, Keycloak, Entra ID, Google, session, expired, timeout, language, return
+keywords: login, log in, sign in, logout, log out, sign out, password, SSO, single sign-on, OIDC, OpenID Connect, identity provider, Keycloak, Entra ID, Google, session, expired, timeout, language, return, forgot password, reset password
 related: first-run-setup, profile, interface, security, users, troubleshooting
 ---
 
@@ -22,6 +22,24 @@ last. If you have no product yet, you land on **Products**.
 The form is shown only when the server allows password sign-in. Accounts that were created through
 single sign-on have no password and cannot use the form; you can set a password for such an
 account in your [profile](help:profile), if the server allows it.
+
+## Forgotten password {#forgotten-password}
+
+1. On the **Sign in** page, choose **Forgot your password?** below the password field.
+2. Enter the email address of your account and choose **Send reset link**.
+3. Open the link in the email. On the page **Choose a new password**, enter the new password twice
+   and choose **Save new password**.
+
+**Expected result:** you are signed out everywhere, this browser included, and sign in with the new
+password. The address now counts as verified, because the link reached it.
+
+The page always says that a link is on its way: Studio and the server never reveal whether an
+account exists for an address. No email arrives when there is no account, when the account is
+disabled, when it signs in with single sign-on only (it has no password to reset), or when you asked
+for a link less than a minute ago. The link works once, expires after a short time (30 minutes by
+default) and only the newest link of an account works. A link that is invalid, expired or already
+used shows **This link cannot be used**; request a new one. Changing your password in the
+[profile](help:profile#password) also invalidates open reset links.
 
 ## Sign in with single sign-on {#sso}
 

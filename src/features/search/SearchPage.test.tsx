@@ -116,6 +116,35 @@ describe('SearchPage', () => {
     expect(screen.getByText('3 results')).toBeInTheDocument();
   });
 
+  it('searches word beginnings when asked and keeps the choice in the address', async () => {
+    const calls = api();
+    renderPage(<SearchPage />, {
+      me: meWith([], ['search:query']),
+      route: route(),
+      modules: MODULES,
+    });
+    const user = userEvent.setup();
+    await user.type(await screen.findByLabelText('Search for'), 'inv');
+    await user.click(screen.getByRole('button', { name: 'Search' }));
+    await screen.findByRole('button', { name: 'Invoice 1 for Acme' });
+    const plain = calls.filter((call) => new URL(call.url).pathname === BASE);
+    expect(new URL(plain[0]?.url ?? 'http://x').searchParams.has('match')).toBe(false);
+
+    await user.click(screen.getByRole('checkbox', { name: 'Match word beginnings' }));
+    await user.click(screen.getByRole('button', { name: 'Search' }));
+    await waitFor(() =>
+      expect(
+        calls.some(
+          (call) =>
+            new URL(call.url).pathname === BASE &&
+            new URL(call.url).searchParams.get('match') === 'prefix',
+        ),
+      ).toBe(true),
+    );
+    // The form keeps the option after the search (it is read back from the address).
+    expect(screen.getByRole('checkbox', { name: 'Match word beginnings' })).toBeChecked();
+  });
+
   it('offers the indexed kinds of the tenant as toggles for the kind filter', async () => {
     const calls = api((_request, url) =>
       url.pathname === `${BASE}/kinds`

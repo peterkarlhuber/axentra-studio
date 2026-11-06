@@ -5,7 +5,12 @@
     "home": "Inicio de Axentra Studio"
   },
   "form": {
-    "required": "obligatorio"
+    "required": "obligatorio",
+    "valueMissing": "Rellena este campo.",
+    "typeMismatch": "Introduce un valor con el formato esperado.",
+    "rangeUnderflow": "Introduce {{min}} o posterior.",
+    "rangeOverflow": "Introduce {{max}} o anterior.",
+    "invalidValue": "Revisa este valor."
   },
   "actions": {
     "retry": "Reintentar",
@@ -32,6 +37,12 @@
     "title": "¿Salir sin guardar?",
     "body": "Tus cambios en esta página aún no se han guardado. Si sales ahora, se perderán.",
     "leave": "Salir de la página"
+  },
+  "discard": {
+    "title": "¿Descartar tus cambios?",
+    "body": "Lo que has introducido en este diálogo aún no se ha guardado.",
+    "confirm": "Descartar cambios",
+    "keep": "Seguir editando"
   },
   "toast": {
     "label": "Notificación",

@@ -13,7 +13,8 @@
     "all": "finds documents that contain both words",
     "phrase": "finds the exact phrase",
     "or": "finds documents with either word",
-    "exclude": "leaves out documents that contain “draft”"
+    "exclude": "leaves out documents that contain “draft”",
+    "prefix": "also finds words that start with what you typed"
   },
   "noAccess": {
     "title": "You cannot search this tenant",
@@ -31,7 +32,9 @@
     "kindTooMany": "Enter at most 20 kinds.",
     "submit": "Search",
     "indexedKinds": "Indexed kinds",
-    "kindCount": "{{kind}} ({{count}})"
+    "kindCount": "{{kind}} ({{count}})",
+    "prefix": "Match word beginnings",
+    "prefixHelp": "For search as you type: “inv” also finds “invoice”. Quotes, or and -word are then plain text."
   },
   "results": {
     "heading": "Results for {{query}}",

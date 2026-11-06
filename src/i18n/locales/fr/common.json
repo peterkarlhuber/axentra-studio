@@ -5,7 +5,12 @@
     "home": "Accueil d’Axentra Studio"
   },
   "form": {
-    "required": "obligatoire"
+    "required": "obligatoire",
+    "valueMissing": "Remplis ce champ.",
+    "typeMismatch": "Saisis une valeur au format attendu.",
+    "rangeUnderflow": "Saisis {{min}} ou une valeur ultérieure.",
+    "rangeOverflow": "Saisis {{max}} ou une valeur antérieure.",
+    "invalidValue": "Vérifie cette valeur."
   },
   "actions": {
     "retry": "Réessayer",
@@ -32,6 +37,12 @@
     "title": "Quitter sans enregistrer ?",
     "body": "Tes modifications sur cette page ne sont pas encore enregistrées. Si tu quittes la page maintenant, elles seront perdues.",
     "leave": "Quitter la page"
+  },
+  "discard": {
+    "title": "Abandonner tes modifications ?",
+    "body": "Ce que tu as saisi dans cette boîte de dialogue n’est pas encore enregistré.",
+    "confirm": "Abandonner les modifications",
+    "keep": "Continuer la modification"
   },
   "toast": {
     "label": "Notification",

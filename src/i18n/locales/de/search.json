@@ -13,7 +13,8 @@
     "all": "findet Dokumente, die beide Wörter enthalten",
     "phrase": "findet genau diese Wortfolge",
     "or": "findet Dokumente mit einem der beiden Wörter",
-    "exclude": "lässt Dokumente weg, die „draft“ enthalten"
+    "exclude": "lässt Dokumente weg, die „draft“ enthalten",
+    "prefix": "findet auch Wörter, die mit dem Eingegebenen beginnen"
   },
   "noAccess": {
     "title": "Du kannst diesen Mandanten nicht durchsuchen",
@@ -31,7 +32,9 @@
     "kindTooMany": "Gib höchstens 20 Arten ein.",
     "submit": "Suchen",
     "indexedKinds": "Indizierte Arten",
-    "kindCount": "{{kind}} ({{count}})"
+    "kindCount": "{{kind}} ({{count}})",
+    "prefix": "Wortanfänge finden",
+    "prefixHelp": "Für die Suche beim Tippen: „rech“ findet auch „Rechnung“. Anführungszeichen, or und -Wort sind dann normaler Text."
   },
   "results": {
     "heading": "Ergebnisse für {{query}}",

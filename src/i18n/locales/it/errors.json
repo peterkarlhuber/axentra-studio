@@ -106,6 +106,10 @@
       "title": "Chiave API rifiutata: il suo creatore ha perso un'autorizzazione",
       "message": "La chiave API è stata rifiutata perché la persona che l'ha creata non ha più l'autorizzazione {{permission}}. Una chiave funziona solo finché il suo creatore ha ancora le autorizzazioni che usa. Restituisci l'autorizzazione a quella persona, oppure crea una nuova chiave come qualcuno che la possiede e revoca quella vecchia.",
       "messageNoPermission": "La chiave API è stata rifiutata perché la persona che l'ha creata non ha più un'autorizzazione necessaria per questa richiesta. Una chiave funziona solo finché il suo creatore ha ancora le autorizzazioni che usa. Restituisci l'autorizzazione a quella persona, oppure crea una nuova chiave come qualcuno che la possiede e revoca quella vecchia."
+    },
+    "invalid_token": {
+      "title": "Link non valido o scaduto",
+      "message": "Il link non è valido, è scaduto o è già stato usato. Richiedine uno nuovo."
     }
   }
 }

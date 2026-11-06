@@ -106,6 +106,10 @@
       "title": "Clave de API rechazada: su creador perdió un permiso",
       "message": "La clave de API se rechazó porque la persona que la creó ya no tiene el permiso {{permission}}. Una clave solo funciona mientras su creador siga teniendo los permisos que usa. Devuélvele el permiso a esa persona, o crea una clave nueva como alguien que lo tenga y revoca la antigua.",
       "messageNoPermission": "La clave de API se rechazó porque la persona que la creó ya no tiene un permiso que necesita esta solicitud. Una clave solo funciona mientras su creador siga teniendo los permisos que usa. Devuélvele el permiso a esa persona, o crea una clave nueva como alguien que lo tenga y revoca la antigua."
+    },
+    "invalid_token": {
+      "title": "Enlace no válido o caducado",
+      "message": "El enlace no es válido, ha caducado o ya se usó. Solicita uno nuevo."
     }
   }
 }

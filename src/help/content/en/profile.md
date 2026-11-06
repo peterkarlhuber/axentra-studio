@@ -1,7 +1,7 @@
 ---
 title: Your profile
 summary: See your account and memberships, change your display name and password, and sign out browsers you no longer use.
-keywords: profile, account, my account, display name, name, password, change password, set password, sessions, devices, sign out, log out everywhere, single sign-on, SSO
+keywords: profile, account, my account, display name, name, password, change password, set password, sessions, devices, sign out, log out everywhere, single sign-on, SSO, verify email, email verification, verified
 related: settings, signing-in, security, users, roles-permissions
 ---
 
@@ -26,6 +26,21 @@ The **Account** card shows:
 Tenant memberships are not listed here; they are on the tenant pages. To get a different role,
 ask a product owner or a platform administrator; see
 [Roles and permissions](help:roles-permissions).
+
+## Confirm your email address {#email-verification}
+
+Next to your **Email address**, the **Account** card shows **Verified** or **Not verified**. An
+address is verified when you opened a verification or password reset link sent to it, or when your
+identity provider confirmed it at your first single sign-on.
+
+1. Choose **Send verification email** next to **Not verified**.
+2. Open the link in the email (in any browser; you do not need to be signed in there) and choose
+   **Confirm email address**.
+
+**Expected result:** the page shows **Email address confirmed** and your profile shows
+**Verified**. You can send a new email once a minute; only the newest link works, and it expires
+after 48 hours by default. The email is sent by one of your products; if you belong to none, the
+server answers that it cannot send one.
 
 ## Change your display name {#name}
 

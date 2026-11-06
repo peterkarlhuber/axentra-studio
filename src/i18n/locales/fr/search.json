@@ -13,7 +13,8 @@
     "all": "trouve les documents qui contiennent les deux mots",
     "phrase": "trouve l’expression exacte",
     "or": "trouve les documents qui contiennent l’un des deux mots",
-    "exclude": "exclut les documents qui contiennent « draft »"
+    "exclude": "exclut les documents qui contiennent « draft »",
+    "prefix": "trouve aussi les mots qui commencent par ce que tu as saisi"
   },
   "noAccess": {
     "title": "Tu ne peux pas chercher dans ce locataire",
@@ -31,7 +32,9 @@
     "kindTooMany": "Saisis 20 types au maximum.",
     "submit": "Chercher",
     "indexedKinds": "Types indexés",
-    "kindCount": "{{kind}} ({{count}})"
+    "kindCount": "{{kind}} ({{count}})",
+    "prefix": "Trouver les débuts de mots",
+    "prefixHelp": "Pour la recherche pendant la saisie : « fact » trouve aussi « facture ». Les guillemets, or et -mot deviennent alors du texte ordinaire."
   },
   "results": {
     "heading": "Résultats pour {{query}}",

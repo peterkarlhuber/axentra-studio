@@ -87,10 +87,19 @@ describe('ProductsPage', () => {
     );
     const user = userEvent.setup();
     const dialog = await screen.findByRole('dialog', { name: 'Create product' });
+    await user.type(within(dialog).getByRole('textbox', { name: /^Name/ }), 'Billing');
+    // Escape with input asks first; Cancel discards without asking.
+    await user.keyboard('{Escape}');
+    const ask = await screen.findByRole('dialog', { name: 'Discard your changes?' });
+    await user.click(within(ask).getByRole('button', { name: 'Keep editing' }));
     await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     await waitFor(() =>
       expect(screen.queryByRole('dialog', { name: 'Create product' })).not.toBeInTheDocument(),
     );
+    // Reopening starts empty instead of showing the cancelled input.
+    await user.click(screen.getAllByRole('button', { name: 'New product' })[0] as HTMLElement);
+    const reopened = await screen.findByRole('dialog', { name: 'Create product' });
+    expect(within(reopened).getByRole('textbox', { name: /^Name/ })).toHaveValue('');
   });
 
   it('ignores ?new=1 without products:create', async () => {

@@ -46,11 +46,20 @@ pesquisar no tenant. Uma função própria pode conceder as duas permissões; ve
 | `invoice -draft`   | documentos com `invoice` que não contêm `draft`            |
 
 A pesquisa encontra palavras inteiras e não diferencia maiúsculas de minúsculas. Ela não encontra
-partes de palavras (`inv` não encontra `invoice`) e não corrige a ortografia. Se `invoices` também
+partes de palavras (`inv` não encontra `invoice`, exceto com [Encontrar inícios de palavras](#prefix)) e não corrige a ortografia. Se `invoices` também
 encontra `invoice` depende do idioma com que o servidor indexa (veja [Bom saber](#limits)).
 
 A pesquisa e o tenant fazem parte do endereço, então você pode salvar uma pesquisa nos favoritos ou
 enviar o link para alguém que tenha acesso ao mesmo tenant.
+
+### Encontrar inícios de palavras {#prefix}
+
+Escolha **Encontrar inícios de palavras** para pesquisar enquanto digita: cada palavra digitada
+precisa corresponder, e palavras de dois ou mais caracteres também encontram palavras mais longas
+que começam assim (`inv` encontra `invoice`, `inv acme` encontra documentos com uma palavra que
+começa com `inv` e a palavra `acme`). Nesse modo, aspas, `or` e `-palavra` não têm significado
+especial, e só contam as oito primeiras palavras. A escolha faz parte do endereço, como a própria
+pesquisa.
 
 ### Filtrar por tipo {#kinds}
 
@@ -114,14 +123,14 @@ desative isso, no [log de auditoria](help:audit) (`search.document.upsert`,
 
 ## Bom saber {#limits}
 
-| Item              | Regra                                                                                                             |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Escopo            | Um tenant por vez. Todos com `search:query` no tenant veem cada documento desse tenant.                           |
-| Texto da pesquisa | De 1 a 500 caracteres. Uma pesquisa só com pontuação ou palavras muito comuns não encontra nada.                  |
-| Tipos             | `^[a-z][a-z0-9_.-]{0,62}$`, no máximo 20 por pesquisa                                                             |
-| Correspondência   | Palavras inteiras; sem prefixo, busca aproximada ou insensibilidade a acentos (`café` não encontra `cafe`)        |
-| Idioma            | Um por instalação (configuração do servidor `search.language`, padrão `simple`: sem radicais nem palavras vazias) |
-| Paginação         | 20 por página no Studio, no máximo até a posição `search.max_offset` (padrão 1000)                                |
+| Item              | Regra                                                                                                                                                           |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Escopo            | Um tenant por vez. Todos com `search:query` no tenant veem cada documento desse tenant.                                                                         |
+| Texto da pesquisa | De 1 a 500 caracteres. Uma pesquisa só com pontuação ou palavras muito comuns não encontra nada.                                                                |
+| Tipos             | `^[a-z][a-z0-9_.-]{0,62}$`, no máximo 20 por pesquisa                                                                                                           |
+| Correspondência   | Palavras inteiras, ou inícios de palavras com **Encontrar inícios de palavras**; sem busca aproximada ou insensibilidade a acentos (`café` não encontra `cafe`) |
+| Idioma            | Um por instalação (configuração do servidor `search.language`, padrão `simple`: sem radicais nem palavras vazias)                                               |
+| Paginação         | 20 por página no Studio, no máximo até a posição `search.max_offset` (padrão 1000)                                                                              |
 
 ## Solução de problemas {#troubleshooting}
 

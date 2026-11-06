@@ -1,7 +1,7 @@
 ---
 title: Accesso e disconnessione
 summary: Accedi con una password o con il single sign-on, scopri quando termina una sessione e risolvi i problemi di accesso.
-keywords: login, accesso, accedere, entrare, logout, disconnessione, uscire, esci, password, SSO, single sign-on, OIDC, OpenID Connect, provider di identità, Keycloak, Entra ID, Google, sessione, scaduta, timeout, lingua, ritorno
+keywords: login, accesso, accedere, entrare, logout, disconnessione, uscire, esci, password, SSO, single sign-on, OIDC, OpenID Connect, provider di identità, Keycloak, Entra ID, Google, sessione, scaduta, timeout, lingua, ritorno, password dimenticata, reimpostare la password
 ---
 
 Studio lavora con il tuo account personale sul server Axentra. Quando accedi, il server avvia una
@@ -22,6 +22,24 @@ hai usato per ultimo. Se non hai ancora alcun prodotto, arrivi su **Prodotti**.
 Il modulo viene mostrato solo se il server consente l'accesso con password. Gli account creati
 tramite single sign-on non hanno una password e non possono usare il modulo; puoi impostare una
 password per un account di questo tipo nel tuo [profilo](help:profile), se il server lo consente.
+
+## Password dimenticata {#forgotten-password}
+
+1. Nella pagina **Accedi**, scegli **Password dimenticata?** sotto il campo della password.
+2. Inserisci l'indirizzo email del tuo account e scegli **Invia link di reimpostazione**.
+3. Apri il link nell'email. Nella pagina **Scegli una nuova password**, inserisci due volte la nuova
+   password e scegli **Salva la nuova password**.
+
+**Risultato atteso:** vieni disconnesso ovunque, anche in questo browser, e accedi con la nuova
+password. L'indirizzo ora risulta verificato, perché il link lo ha raggiunto.
+
+La pagina dice sempre che un link è in arrivo: né Studio né il server rivelano se esiste un account
+per un indirizzo. Nessuna email arriva se non c'è un account, se l'account è disattivato, se accede
+solo con il single sign-on (non ha una password da reimpostare) o se hai chiesto un link meno di un
+minuto fa. Il link funziona una volta, scade dopo poco tempo (30 minuti per impostazione predefinita)
+e funziona solo il link più recente di un account. Un link non valido, scaduto o già usato mostra
+**Questo link non è utilizzabile**; richiedine uno nuovo. Cambiare la password nel
+[profilo](help:profile#password) invalida anche i link di reimpostazione aperti.
 
 ## Accedere con il single sign-on {#sso}
 

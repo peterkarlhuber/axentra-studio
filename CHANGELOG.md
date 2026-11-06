@@ -175,6 +175,22 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Forgotten password, password reset and email verification (needs axentra with account emails): a
+  **Forgot your password?** link on the sign-in page, a page that requests the reset link (the same answer
+  whether or not the address exists), a reset page and a verify page for the emailed links (the token is
+  removed from the address bar at once; verification confirms only on a click), and a **Not verified** badge
+  with **Send verification email** on the profile. All six languages; help: **Signing in** (forgotten
+  password) and **Profile** (email verification); e2e `account-recovery.spec.ts`.
+- Search: **Match word beginnings** (search as you type, `match=prefix`), kept in the address; help updated
+  in all six languages.
+- The API key revoke confirmation lists the active keys created with the key (transitively), which stop
+  working with it.
+- Dialogs with input ask **Discard your changes?** on Escape, an outside click or close, and start empty
+  again after **Cancel** (role, permission, record, product, tenant, member and invitation dialogs).
+- Native form validation (required, type, range) shows Studio's translated message in the field instead
+  of the browser's bubble; the first invalid field takes the focus.
+- Tests: the interactive a11y harness opens the record, file, event and webhook delivery drawers (new
+  fixtures in `scripts/e2e-backend.sh`).
 - Product team invitations (needs axentra with product-level invitations): a product's
   **Invitations** tab invites operators by email with a product role (`product_members:manage`,
   role ceiling), lists and revokes open invitations, and the accept page accepts `axpinv_` links,

@@ -262,6 +262,9 @@ function RoleEditor({
   const effectiveKey = keyTouched ? key : slugify(name, '_');
   const [description, setDescription] = useState(role?.description ?? '');
   const [permissions, setPermissions] = useState<string[]>(role?.permissions ?? []);
+  const snapshot = JSON.stringify([name, key, keyTouched, scope, description, permissions]);
+  const [initialSnapshot] = useState(snapshot);
+  const dirty = !readOnly && snapshot !== initialSnapshot;
   // Built-in and product-defined permissions of this product (active ones only).
   const catalog = useQuery({
     queryKey: queryKeys.productPermissions(productId),
@@ -326,6 +329,7 @@ function RoleEditor({
     <Dialog
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
+      dirty={dirty}
       size="lg"
       title={title}
       description={

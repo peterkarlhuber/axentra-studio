@@ -48,12 +48,21 @@ los que pueden buscar en el inquilino. Un rol propio puede conceder ambos permis
 | `invoice -draft`   | documentos con `invoice` que no contienen `draft`            |
 
 La búsqueda encuentra palabras completas y no distingue mayúsculas de minúsculas. No encuentra
-partes de palabras (`inv` no encuentra `invoice`) ni corrige la ortografía. Que `invoices` también
+partes de palabras (`inv` no encuentra `invoice`, salvo con [Buscar comienzos de palabra](#prefix)) ni corrige la ortografía. Que `invoices` también
 encuentre `invoice` depende del idioma con el que indexa el servidor (consulta
 [Conviene saber](#limits)).
 
 La búsqueda y el inquilino forman parte de la dirección, así que puedes guardar una búsqueda en
 marcadores o enviar el enlace a alguien que tenga acceso al mismo inquilino.
+
+### Buscar comienzos de palabra {#prefix}
+
+Elige **Buscar comienzos de palabra** para buscar mientras escribes: cada palabra que introduzcas
+debe coincidir, y las palabras de dos o más caracteres también encuentran palabras más largas que
+empiezan por ellas (`inv` encuentra `invoice`, `inv acme` encuentra documentos con una palabra que
+empieza por `inv` y la palabra `acme`). En este modo las comillas, `or` y `-palabra` no tienen un
+significado especial, y solo cuentan las primeras ocho palabras. La opción forma parte de la
+dirección, como la búsqueda.
 
 ### Acotar por tipo {#kinds}
 
@@ -117,14 +126,14 @@ lo desactive, en el [registro de auditoría](help:audit) (`search.document.upser
 
 ## Conviene saber {#limits}
 
-| Aspecto           | Regla                                                                                                            |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Alcance           | Un inquilino a la vez. Todos los que tienen `search:query` en el inquilino ven cada documento de ese inquilino.  |
-| Texto de búsqueda | De 1 a 500 caracteres. Una búsqueda solo con signos de puntuación o palabras muy comunes no encuentra nada.      |
-| Tipos             | `^[a-z][a-z0-9_.-]{0,62}$`, como máximo 20 por búsqueda                                                          |
-| Coincidencia      | Palabras completas; sin prefijos, búsqueda aproximada ni insensibilidad a acentos (`café` no encuentra `cafe`)   |
-| Idioma            | Uno por instalación (ajuste del servidor `search.language`, por defecto `simple`: sin raíces ni palabras vacías) |
-| Paginación        | 20 por página en Studio, como máximo hasta la posición `search.max_offset` (por defecto 1000)                    |
+| Aspecto           | Regla                                                                                                                                                            |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Alcance           | Un inquilino a la vez. Todos los que tienen `search:query` en el inquilino ven cada documento de ese inquilino.                                                  |
+| Texto de búsqueda | De 1 a 500 caracteres. Una búsqueda solo con signos de puntuación o palabras muy comunes no encuentra nada.                                                      |
+| Tipos             | `^[a-z][a-z0-9_.-]{0,62}$`, como máximo 20 por búsqueda                                                                                                          |
+| Coincidencia      | Palabras completas, o comienzos de palabra con **Buscar comienzos de palabra**; sin búsqueda aproximada ni insensibilidad a acentos (`café` no encuentra `cafe`) |
+| Idioma            | Uno por instalación (ajuste del servidor `search.language`, por defecto `simple`: sin raíces ni palabras vacías)                                                 |
+| Paginación        | 20 por página en Studio, como máximo hasta la posición `search.max_offset` (por defecto 1000)                                                                    |
 
 ## Solución de problemas {#troubleshooting}
 

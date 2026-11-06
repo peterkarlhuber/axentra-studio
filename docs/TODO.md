@@ -12,8 +12,9 @@ Backend gaps (something the Axentra API does not offer) are marked **backend** a
 the backend's `docs/TODO.md`.
 
 Last full review: 2026-11-06 against master at 715da0d (TODO abatement round). Backend pin
-`api/BACKEND_REF`: the round's Axentra commit (product invitations, memberships, job and search
-kinds, password policy, key states; additive `/v1` changes, see the backend's CHANGELOG). It must
+`api/BACKEND_REF`: the round-2 Axentra commit (password reset and email verification, search
+`match=prefix`, usage batch, on top of round 1's product invitations, memberships, job and search
+kinds, password policy and key states; additive `/v1` changes, see the backend's CHANGELOG). It must
 point to a pushed Axentra commit before CI can run, see "The pinned backend commit must be
 pushed". Before that: 2026-11-05 against `d124ae4` (quality round 3 close-out) with backend
 `cfa80dc`.
@@ -28,11 +29,6 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## P1
 
-- **Drawers and toasts are not in the interactive a11y harness.** `e2e/a11y-interactive.spec.ts`
-  checks open dialogs, menus, the info tip, the page help panel and form error states in both
-  themes on desktop and 360 px, and since UX round 3 the audit drawer, the phone navigation drawer
-  and an error toast. The record, event, webhook delivery and file drawers still need fixtures and
-  are checked only where an area spec does so (for example `e2e/search.spec.ts`).
 - **Route parameters need fixtures.** The harness fills `:productId`, `:tenantId`, `:userId`,
   `:jobId`, `:webhookId` and `:templateKey` from the e2e backend. A new detail route with another parameter (for example `:fileId`) is
   skipped with "no fixture for :fileId" until `scripts/e2e-backend.sh` creates such an object and
@@ -47,9 +43,8 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 - **API key expiry inheritance is text only.** Studio creates keys with a user session, so the
   "inherits the creating key's expiry" rule (`422` for a later `expires_at`) never applies to
   Studio's own create form (which offers an optional expiry: presets or a date); the expiry info
-  tip and the help explain it, and the revoke confirmation says that derived
-  keys are revoked too. The confirmation does not list those derived keys (they could be found
-  through `created_by`, which holds the creating key's actor id; not built).
+  tip and the help explain it, and the revoke confirmation lists the derived keys that stop
+  working with it.
 
 - **Separate API origin needs a same-site setup.** Axentra's session cookie is `SameSite=Lax`, so
   with `apiBaseUrl` pointing to another origin the API and Studio must share the registrable domain
@@ -80,13 +75,6 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   per-run names and read product-wide counts from the API; the live event view only asserts "at
   least one new event" there (`e2e/events.spec.ts`). A new spec must follow `specProduct()` in
   `e2e/support.ts` or it will collide in single mode.
-
-- **Dialogs can lose unsaved input.** Page forms (profile name, product settings, notification
-  preferences, template editor) use `UnsavedChangesGuard` (browser prompt on reload, **Leave
-  without saving?** on navigation). Dialogs (role editor, record editor, create dialogs) still
-  close on Escape or an outside click without asking, and keep their state until the page
-  unmounts, so reopening after **Cancel** can show stale input. Extend the guard to `Dialog`
-  (ask on close while dirty, reset on **Cancel**).
 
 ## P3
 
@@ -149,12 +137,14 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   `$AXENTRA_E2E_DB`/`$AXENTRA_E2E_DB_ROLE`; parallel runs on one PostgreSQL need distinct names
   and ports (all configurable through environment variables).
 
-- **Native and Studio validation mix.** Some inputs (for example the custom API key expiry date
-  and the setup page's full name) use the browser's `required` bubble, others Studio's inline errors; the bubble is not translated
-  by Studio and looks different.
-
 ## Recently fixed
 
+- **TODO abatement round 2 (2026-11-06).** The record, file, event and webhook delivery drawers
+  are in the interactive a11y harness; dialogs ask before discarding unsaved input and start empty
+  again; native form validation shows Studio's translated messages in place of the browser bubble;
+  the API key revoke confirmation lists the derived keys it also stops; forgotten password, password
+  reset and email verification pages (with the profile's verification badge); search can match word
+  beginnings. Backend pin: the round-2 Axentra commit.
 - **TODO abatement round (2026-11-06).** Product operators are invited at product level (Invitations
   tab of a product; `axpinv_` links accepted on the accept page, also through single sign-on);
   invitation refusals use the backend's `reason`; a user's page lists their memberships; tenant

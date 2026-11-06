@@ -13,7 +13,8 @@
     "all": "encuentra documentos que contienen ambas palabras",
     "phrase": "encuentra la frase exacta",
     "or": "encuentra documentos con cualquiera de las dos palabras",
-    "exclude": "omite los documentos que contienen «draft»"
+    "exclude": "omite los documentos que contienen «draft»",
+    "prefix": "también encuentra palabras que empiezan por lo que escribiste"
   },
   "noAccess": {
     "title": "No puedes buscar en este inquilino",
@@ -31,7 +32,9 @@
     "kindTooMany": "Escribe como máximo 20 tipos.",
     "submit": "Buscar",
     "indexedKinds": "Tipos indexados",
-    "kindCount": "{{kind}} ({{count}})"
+    "kindCount": "{{kind}} ({{count}})",
+    "prefix": "Buscar comienzos de palabra",
+    "prefixHelp": "Para buscar mientras escribes: «fact» también encuentra «factura». Las comillas, or y -palabra son entonces texto normal."
   },
   "results": {
     "heading": "Resultados para {{query}}",

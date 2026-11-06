@@ -222,6 +222,7 @@ export function MembersPanel({
       <Dialog
         open={adding}
         onOpenChange={closeAdd}
+        dirty={!invitation && Boolean(email.trim())}
         title={invitation ? t('members.invitedTitle') : t('members.add')}
         description={invitation ? undefined : t('members.addDescription')}
         footer={
