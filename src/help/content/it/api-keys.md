@@ -141,8 +141,8 @@ nel periodo di tolleranza termina subito il periodo di tolleranza.
 
 > [!CAUTION]
 > La revoca revoca anche, all'istante, ogni chiave **creata con questa chiave** e le chiavi create
-> con quelle. La conferma non le elenca; controlla la voce del [registro di audit](help:audit)
-> relativa alla revoca per conoscere le chiavi derivate revocate.
+> con quelle. La conferma elenca per nome quelle attive; anche la voce della revoca nel
+> [registro di audit](help:audit) le riporta.
 
 ## Chiavi derivate e scadenza {#derived-keys}
 

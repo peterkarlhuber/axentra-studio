@@ -86,6 +86,8 @@
     "revokeTitle": "API-Schlüssel widerrufen?",
     "revokeBody": "„{{name}}“ funktioniert sofort nicht mehr, ebenso jeder Schlüssel, der damit angelegt wurde (und die mit diesen angelegten Schlüssel). Das kann nicht rückgängig gemacht werden.",
     "revoked": "API-Schlüssel „{{name}}“ widerrufen",
+    "derivedTitle_one": "Funktioniert ebenfalls nicht mehr: {{count}} damit angelegter Schlüssel",
+    "derivedTitle_other": "Funktionieren ebenfalls nicht mehr: {{count}} damit oder mit diesen angelegte Schlüssel",
     "secretTitle": "Geheimnis für „{{name}}“",
     "secret": "Geheimnis des API-Schlüssels",
     "secretWarningTitle": "Geheimnis jetzt kopieren",

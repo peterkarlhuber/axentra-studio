@@ -38,6 +38,7 @@ import { PermissionChecklist } from './PermissionChecklist';
 import { SecretRevealDialog } from './SecretRevealDialog';
 import { HelpLink } from '@/help/HelpLink';
 import { InfoTip } from '@/help/InfoTip';
+import { derivedKeys } from './derived-keys';
 import menuStyles from '@/components/ui/IconButton.module.css';
 
 export function ApiKeysPage() {
@@ -317,6 +318,9 @@ export function ApiKeysPage() {
           }
         }}
       >
+        {confirm?.action === 'revoke' ? (
+          <DerivedKeys keys={derivedKeys(keys.data ?? [], confirm.key.id)} />
+        ) : null}
         {confirm?.action === 'rotate' ? (
           <FormField
             label={t('keys.grace')}
@@ -506,5 +510,24 @@ function CreateKeyDialog({
         {fields.permissions ? <p role="alert">{fields.permissions}</p> : null}
       </form>
     </Dialog>
+  );
+}
+
+function DerivedKeys({ keys }: { keys: ApiKey[] }) {
+  const { t } = useTranslation('access');
+  if (!keys.length) return null;
+  return (
+    <div>
+      <p>
+        <strong>{t('keys.derivedTitle', { count: keys.length })}</strong>
+      </p>
+      <ul aria-label={t('keys.derivedTitle', { count: keys.length })}>
+        {keys.map((derived) => (
+          <li key={derived.id}>
+            {derived.name} <code className={layout.muted}>{derived.prefix}…</code>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

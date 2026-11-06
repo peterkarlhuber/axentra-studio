@@ -135,8 +135,8 @@ met fin à ce délai sur-le-champ.
 
 > [!CAUTION]
 > La révocation révoque aussi, d’un coup, toutes les clés **créées avec cette clé**, ainsi que les clés créées avec
-> celles-ci. La confirmation ne les liste pas ; consulte l’entrée du [journal d’audit](help:audit) correspondant à
-> la révocation pour connaître les clés dérivées révoquées.
+> celles-ci. La confirmation liste par leur nom celles qui sont actives ; l’entrée de la révocation dans le
+> [journal d’audit](help:audit) les mentionne aussi.
 
 ## Clés dérivées et expiration {#derived-keys}
 

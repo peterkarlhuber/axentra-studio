@@ -137,8 +137,8 @@ período de carência encerra esse período na hora.
 
 > [!CAUTION]
 > Revogar também revoga, de uma só vez, todas as chaves que foram **criadas com esta chave** e as
-> chaves criadas com essas. A confirmação não as lista; consulte a entrada da revogação no
-> [log de auditoria](help:audit) para ver as chaves derivadas revogadas.
+> chaves criadas com essas. A confirmação lista pelo nome as que estão ativas; a entrada da
+> revogação no [log de auditoria](help:audit) também as registra.
 
 ## Chaves derivadas e expiração {#derived-keys}
 

@@ -140,8 +140,8 @@ período de gracia termina ese período en el acto.
 
 > [!CAUTION]
 > Al revocar también se revocan a la vez todas las claves **creadas con esta clave**, y las claves
-> creadas con estas. La confirmación no las enumera; consulta la entrada del
-> [registro de auditoría](help:audit) de la revocación para ver las claves derivadas revocadas.
+> creadas con estas. La confirmación enumera por nombre las que están activas; la entrada de la
+> revocación en el [registro de auditoría](help:audit) también las recoge.
 
 ## Claves derivadas y caducidad {#derived-keys}
 

@@ -134,8 +134,8 @@ ends the grace period now.
 
 > [!CAUTION]
 > Revoking also revokes every key that was **created with this key**, and the keys created with
-> those, at once. The confirmation does not list them; check the [audit log](help:audit) entry of
-> the revocation for the revoked derived keys.
+> those, at once. The confirmation lists the active ones by name; the [audit log](help:audit) entry
+> of the revocation records them too.
 
 ## Derived keys and expiry {#derived-keys}
 
