@@ -28,6 +28,11 @@
     "typeToConfirm": "Saisis {{text}} pour confirmer",
     "typeToConfirmHelp": "Cela évite les clics accidentels."
   },
+  "unsaved": {
+    "title": "Quitter sans enregistrer ?",
+    "body": "Tes modifications sur cette page ne sont pas encore enregistrées. Si tu quittes la page maintenant, elles seront perdues.",
+    "leave": "Quitter la page"
+  },
   "toast": {
     "label": "Notification",
     "region": "Notifications ({hotkey})"

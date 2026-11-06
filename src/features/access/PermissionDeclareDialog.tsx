@@ -27,7 +27,7 @@ const DEFAULT_ROLE_CHOICES = {
   product: ['product_support', 'product_viewer'],
 } as const;
 
-export function isValidPermissionName(name: string): boolean {
+function isValidPermissionName(name: string): boolean {
   return name.length <= 128 && NAME_RE.test(name);
 }
 

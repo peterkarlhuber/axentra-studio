@@ -28,6 +28,11 @@
     "typeToConfirm": "Type {{text}} to confirm",
     "typeToConfirmHelp": "This protects against accidental clicks."
   },
+  "unsaved": {
+    "title": "Leave without saving?",
+    "body": "Your changes on this page are not saved yet. If you leave now, they are lost.",
+    "leave": "Leave page"
+  },
   "toast": {
     "label": "Notification",
     "region": "Notifications ({hotkey})"

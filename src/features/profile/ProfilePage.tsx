@@ -20,6 +20,7 @@ import {
   Skeleton,
   layout,
   useToast,
+  UnsavedChangesGuard,
 } from '@/components/ui';
 import { describeError, fieldErrors } from '@/lib/errors';
 import { passwordPolicy, passwordRefusal } from '@/lib/password';
@@ -114,6 +115,7 @@ function NameForm({ name: initial }: { name: string }) {
   };
   return (
     <Card title={t('name.title')}>
+      <UnsavedChangesGuard when={name.trim() !== initial && !save.isPending} />
       <form className={layout.form} onSubmit={submit}>
         <FormField label={t('name.label')} info={t('name.info')} required>
           <Input

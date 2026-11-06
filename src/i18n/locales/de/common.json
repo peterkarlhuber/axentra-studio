@@ -28,6 +28,11 @@
     "typeToConfirm": "Zur Bestätigung {{text}} eingeben",
     "typeToConfirmHelp": "Das schützt vor versehentlichen Klicks."
   },
+  "unsaved": {
+    "title": "Ohne Speichern verlassen?",
+    "body": "Deine Änderungen auf dieser Seite sind noch nicht gespeichert. Wenn du die Seite jetzt verlässt, gehen sie verloren.",
+    "leave": "Seite verlassen"
+  },
   "toast": {
     "label": "Benachrichtigung",
     "region": "Benachrichtigungen ({hotkey})"

@@ -5,6 +5,7 @@ export { buttonClassName } from './button-class';
 export { Card } from './Card';
 export { Checkbox } from './Checkbox';
 export { ConfirmDialog } from './ConfirmDialog';
+export { UnsavedChangesGuard } from './UnsavedChangesGuard';
 export { CopyField } from './CopyField';
 export { DataTable, type Column } from './DataTable';
 export { toSortParam, type SortState } from './sort';

@@ -47,6 +47,13 @@ function owner(permissions = PRODUCT_PERMS, platformPermissions: string[] = []):
   } as unknown as Me;
 }
 
+/** Whether a reload would ask first (unsaved input on the page). */
+function beforeUnloadPrevented() {
+  const event = new Event('beforeunload', { cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+}
+
 afterEach(() => {
   resetApi();
   setCsrfToken(null);
@@ -96,13 +103,16 @@ describe('ProductDetailPage', () => {
 
     await user.click(screen.getByRole('tab', { name: 'Settings' }));
     const name = await screen.findByRole('textbox', { name: /^Name/ });
+    expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
     await user.clear(name);
     await user.type(name, 'CRM Cloud');
     const settings = screen.getByRole('textbox', { name: /^Settings/ });
     await user.clear(settings);
     await user.type(settings, '{{"default_locale": "fr"}');
+    expect(beforeUnloadPrevented()).toBe(true);
     await user.click(screen.getByRole('button', { name: 'Save changes' }));
     expect(await screen.findByText('Product saved')).toBeInTheDocument();
+    await waitFor(() => expect(beforeUnloadPrevented()).toBe(false));
     const patch = calls.find((call) => call.method === 'PATCH');
     expect(patch?.body).toEqual({
       name: 'CRM Cloud',

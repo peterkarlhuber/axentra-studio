@@ -28,6 +28,11 @@
     "typeToConfirm": "Digita {{text}} per confermare",
     "typeToConfirmHelp": "Protegge da clic accidentali."
   },
+  "unsaved": {
+    "title": "Uscire senza salvare?",
+    "body": "Le tue modifiche in questa pagina non sono ancora salvate. Se esci ora, andranno perse.",
+    "leave": "Esci dalla pagina"
+  },
   "toast": {
     "label": "Notifica",
     "region": "Notifiche ({hotkey})"

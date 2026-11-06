@@ -27,6 +27,7 @@ import {
   Time,
   layout,
   useToast,
+  UnsavedChangesGuard,
 } from '@/components/ui';
 import { fieldErrors } from '@/lib/errors';
 import { MembersPanel } from '@/features/shared/MembersPanel';
@@ -293,12 +294,18 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
   };
 
   const fields = save.error ? fieldErrors(save.error) : {};
+  const dirty =
+    canEdit &&
+    (name.trim() !== product.name ||
+      description.trim() !== (product.description ?? '') ||
+      !sameJson(settings, product.settings ?? {}));
 
   return (
     <Card
       title={t('settings.title')}
       description={canEdit ? t('settings.description') : t('settings.readOnly')}
     >
+      <UnsavedChangesGuard when={dirty && !save.isPending} />
       <form className={layout.form} onSubmit={submit}>
         <FormField label={t('fields.name')} error={fields.name} required>
           <Input
@@ -332,7 +339,13 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
         </FormField>
         {canEdit ? (
           <div className={layout.actions}>
-            <Button type="submit" variant="primary" icon={<Save />} loading={save.isPending}>
+            <Button
+              type="submit"
+              variant="primary"
+              icon={<Save />}
+              loading={save.isPending}
+              disabled={!dirty}
+            >
               {t('common:actions.save')}
             </Button>
           </div>
@@ -340,4 +353,13 @@ function ProductSettingsForm({ product, canEdit }: { product: Product; canEdit: 
       </form>
     </Card>
   );
+}
+
+/** Whether the edited JSON text holds the same value as `saved` (text that does not parse differs). */
+function sameJson(text: string, saved: unknown): boolean {
+  try {
+    return JSON.stringify(JSON.parse(text || '{}')) === JSON.stringify(saved);
+  } catch {
+    return false;
+  }
 }
