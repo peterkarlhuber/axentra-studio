@@ -219,7 +219,7 @@ export function SchedulesPage() {
           empty={
             <EmptyState
               compact
-              headingLevel={3}
+              headingLevel={2}
               icon={<CalendarClock />}
               title={t('schedules.empty')}
               description={canManage ? t('schedules.emptyBody') : undefined}

@@ -30,7 +30,8 @@
   "empty": {
     "title": "Aucun produit pour l’instant",
     "body": "Tu n’es membre d’aucun produit. Demande l’accès à un administrateur de la plateforme.",
-    "bodyAdmin": "Crée le premier produit pour commencer à gérer des locataires et des utilisateurs."
+    "bodyAdmin": "Crée le premier produit pour commencer à gérer des locataires et des utilisateurs.",
+    "titleNoAccess": "Aucun produit pour toi pour l’instant"
   },
   "tabs": {
     "label": "Sections du produit",

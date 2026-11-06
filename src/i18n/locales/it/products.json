@@ -30,7 +30,8 @@
   "empty": {
     "title": "Ancora nessun prodotto",
     "body": "Non sei membro di alcun prodotto. Chiedi l'accesso a un amministratore della piattaforma.",
-    "bodyAdmin": "Crea il primo prodotto per iniziare a gestire tenant e utenti."
+    "bodyAdmin": "Crea il primo prodotto per iniziare a gestire tenant e utenti.",
+    "titleNoAccess": "Ancora nessun prodotto per te"
   },
   "tabs": {
     "label": "Sezioni del prodotto",

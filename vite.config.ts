@@ -44,6 +44,13 @@ export default defineConfig(({ mode }) => {
       include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.{ts,mjs}'],
       css: { modules: { classNameStrategy: 'non-scoped' } },
       restoreMocks: true,
+      // The transformed-module cache on disk (node_modules/.vitest-cache) bakes the result of
+      // `import.meta.glob` into the cached module: a new locale namespace or help article was
+      // missing until the cache was deleted. Transforms are a small share of the run.
+      fsModuleCache: false,
+      // jsdom + userEvent tests take several seconds when the machine is busy (CI runners,
+      // parallel e2e); the 5 s default made about 37 of them flaky under load.
+      testTimeout: 10_000,
     },
   };
 });

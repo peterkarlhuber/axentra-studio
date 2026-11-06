@@ -30,7 +30,8 @@
   "empty": {
     "title": "Noch keine Produkte",
     "body": "Du bist in keinem Produkt Mitglied. Bitte eine Plattform-Administration um Zugriff.",
-    "bodyAdmin": "Lege das erste Produkt an, um Mandanten und Benutzer zu verwalten."
+    "bodyAdmin": "Lege das erste Produkt an, um Mandanten und Benutzer zu verwalten.",
+    "titleNoAccess": "Noch keine Produkte für dich"
   },
   "tabs": {
     "label": "Produktbereiche",

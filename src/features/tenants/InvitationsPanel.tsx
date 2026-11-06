@@ -162,7 +162,7 @@ export function InvitationsPanel({
         columns={columns}
         getRowId={(inv) => inv.id}
         empty={
-          <EmptyState compact headingLevel={3} icon={<MailPlus />} title={t('invitations.empty')} />
+          <EmptyState compact headingLevel={2} icon={<MailPlus />} title={t('invitations.empty')} />
         }
         rows={invitations.data}
         status={invitations.status}

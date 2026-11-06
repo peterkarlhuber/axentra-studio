@@ -74,6 +74,14 @@
   --btn-border: transparent;
   --btn-bg-hover: var(--ax-color-danger-hover);
 }
+/* A destructive action next to other actions: visible as such without dominating them (the
+   confirmation dialog carries the filled danger button). */
+.dangerOutline {
+  --btn-bg: transparent;
+  --btn-fg: var(--ax-color-danger);
+  --btn-border: var(--ax-color-danger);
+  --btn-bg-hover: var(--ax-color-danger-bg);
+}
 
 .sm {
   min-height: 30px;

@@ -45,4 +45,8 @@
   .item:not(:last-child) {
     display: none;
   }
+  /* Only the current page is shown: no separator in front of it. */
+  .item:last-child .separator {
+    display: none;
+  }
 }

@@ -30,7 +30,8 @@
   "empty": {
     "title": "No products yet",
     "body": "You are not a member of any product. Ask a platform administrator for access.",
-    "bodyAdmin": "Create the first product to start managing tenants and users."
+    "bodyAdmin": "Create the first product to start managing tenants and users.",
+    "titleNoAccess": "No products for you yet"
   },
   "tabs": {
     "label": "Product sections",

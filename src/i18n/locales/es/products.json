@@ -30,7 +30,8 @@
   "empty": {
     "title": "Aún no hay productos",
     "body": "No eres miembro de ningún producto. Solicita acceso a un administrador de la plataforma.",
-    "bodyAdmin": "Crea el primer producto para empezar a administrar inquilinos y usuarios."
+    "bodyAdmin": "Crea el primer producto para empezar a administrar inquilinos y usuarios.",
+    "titleNoAccess": "Todavía no tienes productos"
   },
   "tabs": {
     "label": "Secciones del producto",
