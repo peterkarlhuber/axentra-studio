@@ -33,6 +33,12 @@
     "body": "Deine Änderungen auf dieser Seite sind noch nicht gespeichert. Wenn du die Seite jetzt verlässt, gehen sie verloren.",
     "leave": "Seite verlassen"
   },
+  "discard": {
+    "title": "Änderungen verwerfen?",
+    "body": "Was du in diesem Dialog eingegeben hast, ist noch nicht gespeichert.",
+    "confirm": "Änderungen verwerfen",
+    "keep": "Weiter bearbeiten"
+  },
   "toast": {
     "label": "Benachrichtigung",
     "region": "Benachrichtigungen ({hotkey})"

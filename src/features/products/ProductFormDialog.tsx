@@ -30,6 +30,17 @@ export function ProductFormDialog({
   const [description, setDescription] = useState('');
   const fields = error ? fieldErrors(error) : {};
   const effectiveSlug = slugTouched ? slug : slugify(name);
+  // Closed (Cancel, discard, created): the next opening starts empty.
+  const [wasOpen, setWasOpen] = useState(open);
+  if (wasOpen !== open) {
+    setWasOpen(open);
+    if (!open) {
+      setName('');
+      setSlug('');
+      setSlugTouched(false);
+      setDescription('');
+    }
+  }
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -40,6 +51,7 @@ export function ProductFormDialog({
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
+      dirty={Boolean(name.trim() || slug.trim() || description.trim())}
       title={t('create.title')}
       description={t('create.description')}
       footer={

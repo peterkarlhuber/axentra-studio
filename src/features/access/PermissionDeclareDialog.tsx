@@ -66,6 +66,8 @@ export function PermissionDeclareDialog({
         : 'no',
   );
   const [touched, setTouched] = useState(false);
+  const snapshot = JSON.stringify([name, scope, description, defaultRoles, readLike]);
+  const [initialSnapshot] = useState(snapshot);
   const trimmed = name.trim();
   const nameError =
     touched && trimmed && !isValidPermissionName(trimmed) ? t('declare.nameInvalid') : undefined;
@@ -102,6 +104,7 @@ export function PermissionDeclareDialog({
     <Dialog
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
+      dirty={snapshot !== initialSnapshot}
       size="lg"
       title={permission ? t('declare.editTitle', { name: permission.name }) : t('declare.title')}
       description={t('declare.description')}

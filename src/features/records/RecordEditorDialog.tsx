@@ -75,6 +75,7 @@ export function RecordEditorDialog({
     <Dialog
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
+      dirty={data !== initialData || name !== (record?.collection ?? collection)}
       size="lg"
       title={record ? t('write.editTitle') : t('write.createTitle')}
       description={record ? record.id : t('write.createDescription')}

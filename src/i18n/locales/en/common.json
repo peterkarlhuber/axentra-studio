@@ -33,6 +33,12 @@
     "body": "Your changes on this page are not saved yet. If you leave now, they are lost.",
     "leave": "Leave page"
   },
+  "discard": {
+    "title": "Discard your changes?",
+    "body": "What you entered in this dialog is not saved yet.",
+    "confirm": "Discard changes",
+    "keep": "Keep editing"
+  },
   "toast": {
     "label": "Notification",
     "region": "Notifications ({hotkey})"

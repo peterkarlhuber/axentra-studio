@@ -125,6 +125,10 @@ Edit forms only enable "Save" when something changed.
   the browser's prompt, and leaving the page inside Studio asks **Leave without saving?**. Query
   string changes on the same page (tabs, `?new=1`) are not blocked. Turn the guard off while a
   save runs. **Save changes** stays disabled while nothing changed where the form can tell.
+- Dialogs with input pass `dirty` to `Dialog`: Escape, an outside click or the close button then
+  asks **Discard your changes?** (**Keep editing** / **Discard changes**); **Cancel** discards
+  without asking. A dialog whose state outlives it (create dialogs opened from the address,
+  member and invitation dialogs) clears its input when it closes, so reopening starts empty.
 
 ### Secrets and tokens
 
