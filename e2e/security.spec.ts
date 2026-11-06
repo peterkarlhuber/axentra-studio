@@ -146,7 +146,7 @@ async function signInAs(
   return { context, page };
 }
 
-test('adding an unknown user offers an invitation instead (tenant) and explains it (product)', async ({
+test('adding an unknown user offers an invitation instead (tenant and product)', async ({
   page,
 }, testInfo) => {
   test.setTimeout(180_000);
@@ -173,7 +173,7 @@ test('adding an unknown user offers an invitation instead (tenant) and explains 
   await expect(row).toBeVisible();
   await expect(row.getByText('viewer')).toBeVisible();
 
-  // Product members: no invitations exist for operators, so the 404 is explained.
+  // Product members: an unknown address is offered a product team invitation too.
   await page.goto(`/products/${fixture.productId}`);
   await page.getByRole('tab', { name: 'Members' }).click();
   await page.getByRole('button', { name: 'Add member' }).click();
@@ -181,12 +181,16 @@ test('adding an unknown user offers an invitation instead (tenant) and explains 
   await productDialog.getByRole('textbox', { name: /Email address/ }).fill(stranger);
   await productDialog.getByRole('combobox', { name: /Role/ }).selectOption('product_viewer');
   await productDialog.getByRole('button', { name: 'Add member' }).click();
-  await expect(
-    productDialog.getByText(/Product members must already have an account/),
-  ).toBeVisible();
-  await expect(productDialog.getByRole('button', { name: 'Send invitation instead' })).toHaveCount(
-    0,
-  );
+  await expect(productDialog.getByText('User not found')).toBeVisible();
+  await productDialog.getByRole('button', { name: 'Send invitation instead' }).click();
+  await expect(productDialog.getByRole('heading', { name: 'Invitation created' })).toBeVisible();
+  await expect(productDialog.getByText('Shown only once')).toBeVisible();
+  await productDialog.getByRole('button', { name: 'Done' }).click();
+
+  await page.getByRole('tab', { name: 'Invitations' }).click();
+  const productRow = page.getByRole('row').filter({ hasText: stranger });
+  await expect(productRow).toBeVisible();
+  await expect(productRow.getByText('product_viewer')).toBeVisible();
 });
 
 test('the system-only invitation template offers no "Send test"; admins may send to any address', async ({
@@ -196,16 +200,17 @@ test('the system-only invitation template offers no "Send test"; admins may send
   const fixture = await createFixture(page, testInfo.project.name);
 
   await page.goto(`/p/${fixture.productId}/notifications`);
-  const invitationRow = page
+  // Tenant invitations and product team invitations: both templates are system only.
+  const invitationRows = page
     .getByRole('row')
     .filter({ hasText: 'invitation' })
     .filter({
       has: page.getByText('System only'),
     });
-  await expect(invitationRow).toBeVisible();
-  await expect(invitationRow.getByRole('button', { name: /Send test notification/ })).toHaveCount(
-    0,
-  );
+  await expect(invitationRows).toHaveCount(2);
+  for (const row of await invitationRows.all()) {
+    await expect(row.getByRole('button', { name: /Send test notification/ })).toHaveCount(0);
+  }
   await expect(page.getByText(/cannot be sent as a test/)).toBeVisible();
   await expectNoHorizontalScroll(page);
   await expectAccessibleInBothThemes(page);
