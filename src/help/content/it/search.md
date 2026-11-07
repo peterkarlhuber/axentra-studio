@@ -139,6 +139,14 @@ Controlla l'ortografia, usa parole intere e meno parole e rimuovi il filtro dei 
 dovrebbe esserci, il tuo prodotto non l'ha (ancora) indicizzato per questo tenant: l'indice contiene
 solo ciò che il prodotto vi inserisce.
 
+### La ricerca ha richiesto troppo tempo {#too-expensive}
+
+**La ricerca ha richiesto troppo tempo** significa che il server ha interrotto la ricerca al suo
+limite di tempo (impostazione del server `search.statement_timeout_ms`, predefinito 5 secondi), di
+solito perché una parola molto comune o un inizio di parola breve corrisponde a gran parte di un
+indice grande. Usa parole più specifiche o più parole, disattiva **Trova inizi di parola** o
+restringi la ricerca con un filtro per tipo.
+
 ### Altri messaggi {#messages}
 
 **Non puoi cercare in questo tenant.** Il tuo ruolo in questo tenant non include `search:query`.

@@ -28,7 +28,7 @@ How Studio is organized and how its screens behave. Visual rules are in
 | `/products`, `/products/:id`                                                     | Product list (create, archive, restore) and detail (settings, members)       |
 | `/p/:productId/dashboard`                                                        | Product overview: counters, health, server facts, module status              |
 | `/p/:productId/tenants[/:tenantId]`                                              | Tenants; detail with details, members and invitations tabs                   |
-| `/p/:productId/users[/:userId]`                                                  | Users of the product; detail with status, platform role, sessions            |
+| `/p/:productId/users[/:userId]`                                                  | Users; add a single sign-on user; detail with status, role, identities       |
 | `/p/:productId/invitations`                                                      | Open invitations across tenants                                              |
 | `/p/:productId/roles`                                                            | Built-in roles (read-only) and custom roles                                  |
 | `/p/:productId/permissions`                                                      | Permission catalog: built-in and product-defined permissions (read-only)     |
@@ -40,6 +40,7 @@ How Studio is organized and how its screens behave. Visual rules are in
 | `/p/:productId/search`                                                           | Full-text search per tenant: query, kind filter, document, remove from index |
 | `/p/:productId/{usage,plans,subscriptions[/:tenantId]}`                          | Usage & Billing: meters, usage, quotas; plans, subscriptions, entitlements   |
 | `/p/:productId/notifications`                                                    | Notifications: templates, message log, mailbox, preferences                  |
+| `/p/:productId/inbox`                                                            | The signed-in user's in-app notifications; unread count in the sidebar       |
 | `/audit`                                                                         | Audit log with filters and event detail                                      |
 | `/health`                                                                        | Readiness and liveness checks                                                |
 | `/monitoring`                                                                    | Health checks, metrics, retention and tracing                                |
@@ -59,7 +60,7 @@ The sidebar groups, in this order:
 4. **Data & Storage**: Data overview, Records, Files
 5. **Events & Jobs**: Jobs, Schedules, Events, Webhooks
 6. **Usage & Billing**: Usage, Plans, Subscriptions
-7. Notifications
+7. Notifications, Inbox (with the unread count; refreshed every minute)
 8. **Audit & Monitoring**: Audit log, System health
 9. Settings
 

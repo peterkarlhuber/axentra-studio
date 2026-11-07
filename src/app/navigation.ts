@@ -11,6 +11,7 @@ import {
   Gauge,
   FolderOpen,
   HardDrive,
+  Inbox,
   KeyRound,
   LifeBuoy,
   LayoutDashboard,
@@ -46,6 +47,8 @@ export interface NavItem {
    * public readiness checks) stay visible and explain the parts the user cannot read.
    */
   visibleTo?: (me: Me) => boolean;
+  /** A live count next to the label (the inbox's unread notifications). */
+  badge?: 'inboxUnread';
 }
 
 /**
@@ -267,6 +270,15 @@ export const NAVIGATION: NavGroup[] = [
         to: p('notifications'),
         scope: 'product',
         module: 'notifications',
+      },
+      {
+        id: 'inbox',
+        labelKey: 'inbox',
+        icon: Inbox,
+        to: p('inbox'),
+        scope: 'product',
+        module: 'notifications',
+        badge: 'inboxUnread',
       },
     ],
   },

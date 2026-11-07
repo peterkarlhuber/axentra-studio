@@ -28,10 +28,30 @@ membres de ses locataires.
 Ouvre [Utilisateurs](app:users). Utilise **Rechercher des utilisateurs** pour filtrer par nom ou par adresse e-mail, et le
 filtre **Statut** pour afficher les utilisateurs **Actif** ou **Désactivé**. Sélectionne un nom pour ouvrir la page de l’utilisateur.
 
-Studio ne crée pas de comptes. Ils sont créés quand le premier administrateur termine
+En dehors des [utilisateurs à authentification unique](help:users#external-user), le Studio ne crée pas de comptes. Ils sont créés quand le premier administrateur termine
 l’installation initiale, quand une personne se connecte pour la première fois par authentification unique (si les
 paramètres du fournisseur d’identité autorisent l’inscription, ou si une invitation est ouverte pour cette adresse e-mail), ou par
 le code d’un produit qui intègre Axentra. Consulte [se connecter](help:signing-in).
+
+## Ajouter un utilisateur à authentification unique {#external-user}
+
+Pour les migrations et les importations, les administrateurs de la plateforme créent des comptes qui
+se connectent uniquement via un fournisseur d’identité, avec ou sans adresse e-mail.
+
+1. Ouvre [Utilisateurs](app:users) et choisis **Ajouter un utilisateur SSO**.
+2. Saisis le **Fournisseur (émetteur)** : l’URL d’émetteur du fournisseur d’identité, exactement
+   comme dans les réglages d’authentification unique du serveur. Le Studio propose les fournisseurs
+   configurés.
+3. Saisis le **Sujet** : l’identifiant de l’utilisateur chez le fournisseur (la revendication
+   `sub`), pas l’adresse e-mail.
+4. Si tu veux, remplis **Nom** et **Adresse e-mail (facultative)**. Coche **Le fournisseur a vérifié
+   cette adresse** seulement si le fournisseur a confirmé que l’adresse appartient à l’utilisateur.
+5. Choisis **Ajouter l’utilisateur**. Le Studio ouvre la page du nouvel utilisateur.
+
+L’adresse e-mail devient celle de l’utilisateur seulement si elle est vérifiée ; sinon,
+l’utilisateur n’a pas d’adresse (voir [utilisateurs sans adresse e-mail](help:users#no-email)). Le
+nouvel utilisateur n’a ni mot de passe ni appartenance : ajoute-le aux locataires dans l’onglet
+**Membres** du locataire.
 
 ## La page d’un utilisateur {#profile}
 
@@ -71,6 +91,40 @@ Ces utilisateurs :
 - ne peuvent pas accepter d’invitations, car les invitations sont liées à une adresse ;
 - peuvent malgré tout être ajoutés directement à des locataires par une personne qui les voit (par exemple un administrateur
   de la plateforme).
+
+## Identités d’authentification unique {#identities}
+
+La carte **Identités d’authentification unique** de la page d’un utilisateur liste les comptes
+auprès de fournisseurs d’identité qui se connectent en tant que cet utilisateur, avec les colonnes
+**Fournisseur (émetteur)**, **Sujet**, **E-mail transmis** (l’adresse envoyée par le fournisseur) et
+**Associée**. Axentra associe une identité lors de la première connexion par authentification unique
+de l’utilisateur, ou quand un administrateur de la plateforme l’associe ici.
+
+> [!IMPORTANT]
+> La carte nécessite `users:manage`. Seuls les administrateurs de la plateforme associent et
+> dissocient des identités.
+
+### Associer une identité {#link-identity}
+
+1. Ouvre la page de l’utilisateur et choisis **Associer une identité** sur la carte **Identités
+   d’authentification unique**.
+2. Saisis le **Fournisseur (émetteur)** et le **Sujet**, puis choisis **Associer une identité**.
+
+L’utilisateur peut ensuite se connecter avec ce compte chez le fournisseur. Une identité
+n’appartient qu’à un seul utilisateur : **Conflit** signifie qu’elle est déjà associée, à cet
+utilisateur ou à un autre.
+
+### Dissocier une identité {#unlink-identity}
+
+1. Sur la carte **Identités d’authentification unique**, choisis le bouton de dissociation à côté de
+   l’identité.
+2. Lis l’avertissement et choisis **Dissocier l’identité**.
+
+Toutes les sessions de l’utilisateur prennent fin immédiatement, car une session n’enregistre pas
+l’identité qui l’a ouverte. Le dernier moyen de connexion d’un utilisateur ne peut pas être dissocié
+: si l’utilisateur n’a ni mot de passe ni autre identité, le Studio affiche **Dernier moyen de
+connexion de l’utilisateur**. Associe d’abord une autre identité, ou [désactive plutôt
+l’utilisateur](help:users#disable).
 
 ## Déconnecter un utilisateur partout {#sign-out}
 
@@ -143,3 +197,7 @@ de l’un de ses locataires. Ajoute-le ou invite-le, voir
 
 **Un utilisateur désactivé apparaît toujours dans des locataires.** La désactivation ne retire pas les adhésions. Retire-les
 dans l’onglet **Membres** du locataire si l’accès ne doit pas revenir quand l’utilisateur sera réactivé.
+
+**Conflit lors de l’ajout d’un utilisateur à authentification unique ou de l’association d’une
+identité.** L’identité est déjà associée à un utilisateur, ou l’adresse e-mail vérifiée appartient à
+un autre utilisateur. Cherche cet utilisateur, ou vérifie le fournisseur et le sujet.

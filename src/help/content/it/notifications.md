@@ -194,6 +194,26 @@ tenant; un'impostazione del tenant può disattivarne altre, ma non riattivarle. 
 compaiono quando il prodotto ha modelli che le usano. Per impostare le preferenze di un tenant
 serve `notify:preferences` in quel tenant (membri e amministratori ce l'hanno).
 
+## La tua posta in arrivo {#inbox}
+
+Alcune notifiche arrivano nell'app invece che per email: messaggi di modelli con il canale `inbox`
+che il tuo prodotto ti invia come utente. Apri [Posta in arrivo](app:inbox) per leggerle. La voce di
+navigazione mostra quante sono da leggere e aggiorna il numero ogni minuto.
+
+- **Tenant** limita l'elenco a un tenant; **Tutti i tenant e il prodotto** mostra tutto ciò che
+  riguarda questo prodotto.
+- **Solo da leggere** nasconde le notifiche che hai già letto.
+- Aprire una notifica ne mostra il testo e la segna come letta. Il pulsante con la busta ne segna
+  una come letta senza aprirla, e **Segna tutte come lette** segna tutte quelle da leggere
+  nell'ambito scelto.
+
+Tutti quelli che appartengono al prodotto hanno una posta in arrivo; per mostrare un solo tenant
+serve `notify:preferences` in quel tenant (membri e amministratori ce l'hanno). Le tue
+[preferenze](help:notifications#preferences) valgono anche per la posta in arrivo. Il testo dei
+modelli sensibili non viene mai mostrato e viene cancellato dopo la conservazione dei contenuti,
+come per le email. L'editor dei modelli di Studio crea solo modelli email; i modelli per la posta in
+arrivo si creano tramite l'API.
+
 ## Per amministratori e sviluppatori {#developers}
 
 - **Invio dal tuo prodotto**: `POST /v1/products/{product_id}/tenants/{tenant_id}/notify/send`
@@ -216,10 +236,13 @@ serve `notify:preferences` in quel tenant (membri e amministratori ce l'hanno).
 
 ## Buono a sapersi {#good-to-know}
 
-- Solo email: niente SMS né push, niente allegati, nessun indirizzo mittente per prodotto.
+- Solo email e la [posta in arrivo](help:notifications#inbox) nell'app: niente SMS né push, niente
+  allegati, nessun indirizzo mittente per prodotto.
 - Nessun link di disiscrizione né header `List-Unsubscribe`; le disiscrizioni funzionano solo
   tramite le preferenze e solo per indirizzi che appartengono a utenti.
-- Non esiste ancora un limite di frequenza di invio per tenant.
+- Ogni tenant può inviare al massimo 1000 notifiche in qualsiasi ora mobile (impostazione del server
+  `notify.tenant_send_limit_per_hour`); le altre vengono rifiutate con **Troppe richieste**. Inviti
+  ed email dell'account non contano.
 - Vedi [Limitazioni note](help:limitations).
 
 ## Risoluzione dei problemi {#troubleshooting}

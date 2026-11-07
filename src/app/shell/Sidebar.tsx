@@ -2,6 +2,7 @@ import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router';
 import { IconButton, Tooltip } from '@/components/ui';
+import { useInboxUnread } from '@/features/notify/useInboxUnread';
 import clsx from '@/lib/clsx';
 import { useMe } from '../auth';
 import { useMeta } from '../contexts';
@@ -30,6 +31,9 @@ export function Sidebar({
   const meta = useMeta();
   const { data: me } = useMe();
   const isCollapsed = variant === 'rail' && collapsed;
+  const inbox = useInboxUnread(productId);
+  const badgeCount = (item: NavItem) =>
+    item.badge === 'inboxUnread' ? (inbox.data?.unread ?? 0) : 0;
 
   // Items for disabled modules stay visible (they explain what to enable); items whose screen
   // the user cannot use at all are hidden once `/v1/me` is known. A direct visit still shows
@@ -66,18 +70,33 @@ export function Sidebar({
               <ul className={styles.list} aria-labelledby={group.labelKey ? headingId : undefined}>
                 {items.map((item) => {
                   const off = item.module ? !isModuleEnabled(meta.modules, item.module) : false;
-                  const label = t(item.labelKey);
+                  const count = off ? 0 : badgeCount(item);
+                  const countText = count > 0 ? t('unreadCount', { count }) : '';
+                  // "Inbox 3 unread": starts with the visible text ("Inbox", badge "3"), WCAG 2.5.3.
+                  const label = countText ? `${t(item.labelKey)} ${countText}` : t(item.labelKey);
                   const link = (
                     <NavLink
                       to={item.to(productId ?? '')}
                       onClick={onNavigate}
                       className={({ isActive }) => clsx(styles.link, isActive && styles.active)}
                       aria-label={
-                        isCollapsed ? (off ? `${label} (${t('moduleOff')})` : label) : undefined
+                        isCollapsed
+                          ? off
+                            ? `${label} (${t('moduleOff')})`
+                            : label
+                          : countText
+                            ? label
+                            : undefined
                       }
                     >
                       <item.icon className={styles.icon} aria-hidden />
-                      <span className={styles.label}>{label}</span>
+                      <span className={styles.label}>{t(item.labelKey)}</span>
+                      {count > 0 ? (
+                        // The link's aria-label carries the count in words.
+                        <span className={styles.badge} aria-hidden="true">
+                          {count}
+                        </span>
+                      ) : null}
                       {off ? (
                         <span className={styles.off}>
                           <span aria-hidden="true">{t('off')}</span>

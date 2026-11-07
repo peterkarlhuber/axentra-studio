@@ -425,6 +425,18 @@ export const routes: RouteObject[] = [
                       },
                     ],
                   },
+                  {
+                    // The signed-in user's in-app notifications (channel `inbox`).
+                    path: 'inbox',
+                    handle: { crumb: 'inbox' },
+                    element: <ModuleGate module="notifications" titleKey="inbox" />,
+                    children: [
+                      {
+                        index: true,
+                        lazy: lazyPage(() => import('@/features/notify/InboxPage'), 'InboxPage'),
+                      },
+                    ],
+                  },
                 ],
               },
               {

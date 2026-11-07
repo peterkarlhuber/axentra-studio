@@ -143,6 +143,14 @@ Vérifie l’orthographe, utilise des mots entiers et moins de mots, et retire l
 l’objet devrait y figurer, ton produit ne l’a pas (encore) indexé pour ce locataire : l’index ne
 contient que ce que le produit y place.
 
+### La recherche a pris trop de temps {#too-expensive}
+
+**La recherche a pris trop de temps** signifie que le serveur a arrêté la recherche à sa limite de
+temps (réglage du serveur `search.statement_timeout_ms`, 5 secondes par défaut), en général parce
+qu’un mot très courant ou un début de mot court correspond à une grande partie d’un gros index.
+Utilise des mots plus précis ou plus nombreux, désactive **Trouver les débuts de mots** ou restreins
+la recherche avec un filtre de type.
+
 ### Autres messages {#messages}
 
 **Tu ne peux pas chercher dans ce locataire.** Ton rôle dans ce locataire n’inclut pas

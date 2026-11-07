@@ -142,6 +142,14 @@ Prüfe die Schreibweise, verwende ganze Wörter und weniger davon und entferne d
 das Objekt dabei sein müsste, hat dein Produkt es für diesen Mandanten (noch) nicht indiziert: Der
 Index enthält nur, was das Produkt hineinlegt.
 
+### Die Suche hat zu lange gedauert {#too-expensive}
+
+**Suche hat zu lange gedauert** bedeutet, dass der Server die Suche nach ihrem Zeitlimit abgebrochen
+hat (Servereinstellung `search.statement_timeout_ms`, Standard 5 Sekunden), meist weil ein sehr
+häufiges Wort oder ein kurzer Wortanfang auf einen großen Teil eines großen Index passt. Verwende
+genauere oder mehr Wörter, schalte **Wortanfänge finden** aus oder grenze die Suche mit einem
+Artfilter ein.
+
 ### Andere Meldungen {#messages}
 
 **Du kannst diesen Mandanten nicht durchsuchen.** Deine Rolle in diesem Mandanten enthält

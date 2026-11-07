@@ -111,5 +111,15 @@
       "title": "Invalid or expired link",
       "message": "The link is invalid, has expired or was already used. Request a new one."
     }
+  },
+  "reasons": {
+    "query_too_expensive": {
+      "title": "Search took too long",
+      "message": "The server stopped this search because it took too long, usually because the terms match a very large part of the index. Use more specific terms or a kind filter and search again."
+    },
+    "last_sign_in_method": {
+      "title": "The user's last way to sign in",
+      "message": "This identity is the only way the user can sign in: the user has no password and no other identity. Link another identity first, or disable the user instead."
+    }
   }
 }

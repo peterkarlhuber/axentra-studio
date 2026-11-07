@@ -44,7 +44,7 @@ export function ErrorState({ error, onRetry, compact, headingLevel, action }: Er
           <>
             <p>{described.message}</p>
             <p className={styles.help}>
-              <HelpLink topic={errorTopic(apiError.code)} icon />
+              <HelpLink topic={errorTopic(apiError.code, apiError.reason)} icon />
             </p>
             {described.issues.length > 0 ? (
               <ul className={styles.issues}>

@@ -48,5 +48,8 @@
   "acceptInvitation": "Accept invitation",
   "monitoring": "Monitoring",
   "notifyNewTemplate": "New template",
-  "help": "Help center"
+  "help": "Help center",
+  "inbox": "Inbox",
+  "unreadCount_one": "{{count}} unread",
+  "unreadCount_other": "{{count}} unread"
 }

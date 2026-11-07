@@ -116,6 +116,51 @@ describe('describeError', () => {
     }
   });
 
+  it('prefers the text of a known problem reason over the general code text', () => {
+    const tooExpensive = describeError(
+      t,
+      problemToError(
+        {
+          code: 'validation_failed',
+          status: 422,
+          detail: 'the search took too long; use more specific terms or a kind filter',
+          reason: 'query_too_expensive',
+        },
+        new Response(null, { status: 422 }),
+      ),
+    );
+    expect(tooExpensive.title).toBe('Search took too long');
+    expect(tooExpensive.message).toMatch(/more specific terms or a kind filter/);
+    expect(tooExpensive.error.reason).toBe('query_too_expensive');
+
+    const lastMethod = describeError(
+      t,
+      new ApiError({ status: 409, code: 'conflict', reason: 'last_sign_in_method' }),
+    );
+    expect(lastMethod.title).toBe("The user's last way to sign in");
+    expect(lastMethod.message).toMatch(/disable the user instead/);
+
+    // A reason without its own text keeps the code's text (e.g. the invitation reasons, which
+    // the accept page explains itself).
+    const other = describeError(
+      t,
+      new ApiError({ status: 403, code: 'forbidden', reason: 'email_mismatch' }),
+    );
+    expect(other.title).toBe(t('errors:codes.forbidden.title'));
+  });
+
+  it('translates every problem reason in all six languages', () => {
+    const reasons = Object.keys(enErrors.reasons);
+    expect(reasons.sort()).toEqual(['last_sign_in_method', 'query_too_expensive']);
+    for (const locale of LOCALES) {
+      const tr = i18n.getFixedT(locale);
+      for (const reason of reasons) {
+        expect(tr(`errors:reasons.${reason}.title`)).not.toContain('reasons.');
+        expect(tr(`errors:reasons.${reason}.message`)).not.toContain('reasons.');
+      }
+    }
+  });
+
   it('lists exactly the codes that errors.json translates', () => {
     expect([...KNOWN_ERROR_CODES].sort()).toEqual(Object.keys(enErrors.codes).sort());
   });

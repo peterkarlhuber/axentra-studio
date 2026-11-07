@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { Me, ProductAccess } from '@/api/models';
 import { makeMe, mockApi, resetApi } from '@/features/billing/test-helpers';
-import { renderWithProviders, testMeta } from '@/test/utils';
+import { jsonResponse, renderWithProviders, testMeta } from '@/test/utils';
 import { canReadAudit } from '../navigation';
 import { Sidebar } from './Sidebar';
 
@@ -86,5 +86,31 @@ describe('Sidebar permission filter', () => {
     const webhooks = await screen.findByRole('link', { name: /Webhooks/ });
     expect(webhooks).toHaveTextContent('Off');
     expect(screen.getByRole('link', { name: 'Audit log' })).toBeInTheDocument();
+  });
+
+  it('shows the unread count of the inbox next to its entry', async () => {
+    const calls = mockApi(
+      (_request, url) =>
+        url.pathname === '/v1/products/prd_1/notify/inbox/me/unread'
+          ? jsonResponse({ unread: 3 })
+          : undefined,
+      operator(['product:read']),
+    );
+    const meta = { ...testMeta, modules: [...testMeta.modules, 'notify'] };
+    renderWithProviders(<Sidebar productId="prd_1" collapsed={false} />, { meta });
+    const inbox = await screen.findByRole('link', { name: /Inbox/ });
+    expect(inbox).toHaveAttribute('href', '/p/prd_1/inbox');
+    await waitFor(() => expect(inbox).toHaveTextContent('3'), { timeout: 5_000 });
+    expect(inbox).toHaveAccessibleName('Inbox 3 unread');
+    expect(calls.filter((call) => call.path.endsWith('/inbox/me/unread'))).toHaveLength(1);
+  });
+
+  it('does not ask for the unread count without the notify module', async () => {
+    const calls = mockApi(() => undefined, operator(['product:read']));
+    renderWithProviders(<Sidebar productId="prd_1" collapsed={false} />);
+    const inbox = await screen.findByRole('link', { name: /Inbox/ });
+    expect(inbox).toHaveTextContent('Off');
+    await waitFor(() => expect(calls.some((call) => call.path === '/v1/me')).toBe(true));
+    expect(calls.some((call) => call.path.includes('/inbox/'))).toBe(false);
   });
 });

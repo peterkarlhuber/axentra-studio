@@ -48,5 +48,9 @@
   "acceptInvitation": "Accepter l’invitation",
   "monitoring": "Supervision",
   "notifyNewTemplate": "Nouveau modèle",
-  "help": "Centre d’aide"
+  "help": "Centre d’aide",
+  "inbox": "Boîte de réception",
+  "unreadCount_many": "{{count}} de non lues",
+  "unreadCount_one": "{{count}} non lue",
+  "unreadCount_other": "{{count}} non lues"
 }

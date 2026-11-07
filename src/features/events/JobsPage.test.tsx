@@ -161,17 +161,35 @@ describe('JobsPage', { timeout: 20_000 }, () => {
   });
 
   it('hides management actions without jobs:manage', async () => {
+    // A reader without a product or tenant role (for example a platform viewer).
+    const { calls } = mockApi(
+      ({ method, path }) => {
+        if (path.endsWith('/jobs/stats')) return jsonResponse(stats);
+        if (method === 'GET' && path.endsWith('/jobs')) return page([baseJob]);
+        return undefined;
+      },
+      { permissions: ['jobs:read'], role: null },
+    );
+    render();
+    expect(await screen.findByRole('link', { name: 'reports.send' })).toBeInTheDocument();
+    await waitFor(() => expect(calls.some((call) => call.path === '/v1/me')).toBe(true));
+    expect(screen.queryByRole('button', { name: 'Enqueue job' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Actions for job/ })).not.toBeInTheDocument();
+  });
+
+  it('offers an operator without jobs:manage the kinds opened to its role', async () => {
+    // `/v1/me?tenants=memberships` lists no tenants for an operator without a tenant role; the
+    // product role still counts, and GET .../jobs/kinds decides per tenant.
     mockApi(
       ({ method, path }) => {
         if (path.endsWith('/jobs/stats')) return jsonResponse(stats);
         if (method === 'GET' && path.endsWith('/jobs')) return page([baseJob]);
         return undefined;
       },
-      { permissions: ['jobs:read'] },
+      { permissions: ['jobs:read'], role: 'product_support', tenants: [] },
     );
     render();
-    expect(await screen.findByRole('link', { name: 'reports.send' })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'Enqueue job' })).not.toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Enqueue job' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Actions for job/ })).not.toBeInTheDocument();
   });
 

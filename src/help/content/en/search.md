@@ -138,6 +138,13 @@ Check the spelling, use whole words and fewer of them, and remove
 the kind filter. If the object should be there, your product has not indexed it (yet) for this
 tenant: the index only contains what the product puts into it.
 
+### The search took too long {#too-expensive}
+
+**Search took too long** means that the server stopped the search after its time limit (server
+setting `search.statement_timeout_ms`, default 5 seconds), usually because a very common word or a
+short word beginning matches a large part of a big index. Use more specific or more words, turn off
+**Match word beginnings**, or narrow the search with a kind filter.
+
 ### Other messages {#messages}
 
 **You cannot search this tenant.** Your role in this tenant does not include `search:query`. Ask

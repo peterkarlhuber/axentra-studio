@@ -215,5 +215,32 @@
     "oldestQueuedLabel": "À propos des messages en file d’attente",
     "oldestQueued": "Un processus répartiteur distinct remet les messages. Si cette durée ne cesse d’augmenter, aucun répartiteur ne tourne.",
     "scope": "Les catégories désactivées pour tout le produit restent désactivées dans chaque locataire. Un paramètre de locataire peut seulement désactiver des catégories supplémentaires."
+  },
+  "inbox": {
+    "title": "Boîte de réception",
+    "description": "Tes notifications dans l’application pour ce produit, les plus récentes d’abord. Ouvrir une notification la marque comme lue.",
+    "notification": "Notification",
+    "unreadMark": "Non lue :",
+    "noSubject": "(sans objet)",
+    "received": "Reçue",
+    "markReadNamed": "Marquer « {{subject}} » comme lue",
+    "openNamed": "Ouvrir « {{subject}} »",
+    "unreadCount_many": "{{count}} de non lues",
+    "unreadCount_one": "{{count}} non lue",
+    "unreadCount_other": "{{count}} non lues",
+    "markAll": "Tout marquer comme lu",
+    "markedAll_many": "{{count}} de notifications marquées comme lues",
+    "markedAll_one": "{{count}} notification marquée comme lue",
+    "markedAll_other": "{{count}} notifications marquées comme lues",
+    "scope": "Locataire",
+    "productWide": "Tous les locataires et le produit",
+    "scopeHelp": "Afficher seulement les notifications d’un locataire.",
+    "unreadOnly": "Non lues seulement",
+    "empty": "Pas encore de notifications",
+    "emptyUnread": "Aucune notification non lue",
+    "emptyBody": "Les notifications que ce produit t’envoie dans l’application apparaissent ici.",
+    "detailSubtitle": "Notification dans l’application",
+    "tenant": "Locataire",
+    "noTenant": "Aucun (tout le produit)"
   }
 }

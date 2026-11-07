@@ -224,6 +224,33 @@ describe('SearchPage', () => {
     expect(screen.getByLabelText(/^Kinds/)).toHaveValue('note');
   });
 
+  it('explains a search the server stopped as too expensive and links its help', async () => {
+    api((_request, url) =>
+      url.pathname === BASE
+        ? jsonResponse(
+            {
+              code: 'validation_failed',
+              status: 422,
+              detail: 'the search took too long; use more specific terms or a kind filter',
+              reason: 'query_too_expensive',
+            },
+            { status: 422 },
+          )
+        : undefined,
+    );
+    renderPage(<SearchPage />, {
+      me: meWith([], ['search:query']),
+      route: route('&q=the'),
+      modules: MODULES,
+    });
+    const alert = await screen.findByRole('alert');
+    expect(
+      await within(alert).findByRole('heading', { name: 'Search took too long' }),
+    ).toBeInTheDocument();
+    expect(within(alert).getByText(/Use more specific terms or a kind filter/)).toBeInTheDocument();
+    expect(within(alert).queryByText('Please check your input')).not.toBeInTheDocument();
+  });
+
   it('shows a no-access state without search:query', async () => {
     const calls = api();
     renderPage(<SearchPage />, {

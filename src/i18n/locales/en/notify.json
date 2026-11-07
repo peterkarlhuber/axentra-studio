@@ -215,5 +215,30 @@
     "oldestQueuedLabel": "About queued messages",
     "oldestQueued": "A separate dispatcher process delivers the messages. If this time keeps growing, no dispatcher is running.",
     "scope": "Categories turned off for the whole product stay off in every tenant. A tenant setting can only turn off more categories."
+  },
+  "inbox": {
+    "title": "Inbox",
+    "description": "Your in-app notifications from this product, newest first. Opening a notification marks it as read.",
+    "notification": "Notification",
+    "unreadMark": "Unread:",
+    "noSubject": "(no subject)",
+    "received": "Received",
+    "markReadNamed": "Mark “{{subject}}” as read",
+    "openNamed": "Open “{{subject}}”",
+    "unreadCount_one": "{{count}} unread",
+    "unreadCount_other": "{{count}} unread",
+    "markAll": "Mark all as read",
+    "markedAll_one": "{{count}} notification marked as read",
+    "markedAll_other": "{{count}} notifications marked as read",
+    "scope": "Tenant",
+    "productWide": "All tenants and the product",
+    "scopeHelp": "Show only the notifications of one tenant.",
+    "unreadOnly": "Only unread",
+    "empty": "No notifications yet",
+    "emptyUnread": "No unread notifications",
+    "emptyBody": "Notifications that this product sends to you inside the app appear here.",
+    "detailSubtitle": "In-app notification",
+    "tenant": "Tenant",
+    "noTenant": "None (product-wide)"
   }
 }

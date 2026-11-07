@@ -111,5 +111,15 @@
       "title": "Ungültiger oder abgelaufener Link",
       "message": "Der Link ist ungültig, abgelaufen oder wurde schon verwendet. Fordere einen neuen an."
     }
+  },
+  "reasons": {
+    "query_too_expensive": {
+      "title": "Suche hat zu lange gedauert",
+      "message": "Der Server hat diese Suche abgebrochen, weil sie zu lange gedauert hat, meist weil die Begriffe auf einen sehr großen Teil des Index passen. Verwende genauere Begriffe oder einen Artfilter und suche erneut."
+    },
+    "last_sign_in_method": {
+      "title": "Letzte Anmeldemöglichkeit des Benutzers",
+      "message": "Über diese Identität kann sich der Benutzer als Einziges anmelden: Er hat kein Passwort und keine andere Identität. Verknüpfe zuerst eine andere Identität oder deaktiviere stattdessen den Benutzer."
+    }
   }
 }

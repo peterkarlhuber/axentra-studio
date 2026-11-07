@@ -203,6 +203,27 @@ Mandanten aus; eine Mandanteneinstellung kann weitere ausschalten, aber keine wi
 Kategorien erscheinen, sobald das Produkt Vorlagen darin hat. Einstellungen für einen Mandanten
 erfordern dort `notify:preferences` (Mitglieder und Administratoren haben sie).
 
+## Dein Posteingang {#inbox}
+
+Manche Benachrichtigungen kommen in der App statt per E-Mail an: Nachrichten von Vorlagen mit dem
+Kanal `inbox`, die dein Produkt dir als Benutzer schickt. Öffne [Posteingang](app:inbox), um sie zu
+lesen. Der Navigationseintrag zeigt, wie viele ungelesen sind, und aktualisiert die Zahl jede
+Minute.
+
+- **Mandant** beschränkt die Liste auf einen Mandanten; **Alle Mandanten und das Produkt** zeigt
+  alles aus diesem Produkt.
+- **Nur ungelesene** blendet gelesene Benachrichtigungen aus.
+- Beim Öffnen zeigt eine Benachrichtigung ihren Text und wird als gelesen markiert. Die
+  Umschlag-Schaltfläche markiert eine als gelesen, ohne sie zu öffnen, und **Alle als gelesen
+  markieren** markiert alle ungelesenen im gewählten Bereich.
+
+Alle, die zum Produkt gehören, haben einen Posteingang; für einen einzelnen Mandanten ist dort
+`notify:preferences` nötig (Mitglieder und Admins haben es). Deine
+[Einstellungen](help:notifications#preferences) gelten auch für den Posteingang. Der Text sensibler
+Vorlagen wird nie angezeigt und wie bei E-Mails nach der Aufbewahrungsfrist für Inhalte gelöscht.
+Der Vorlageneditor von Studio legt nur E-Mail-Vorlagen an; Posteingangsvorlagen entstehen über die
+API.
+
 ## Für Administratoren und Entwickler {#developers}
 
 - **Versand aus deinem Produkt**: `POST /v1/products/{product_id}/tenants/{tenant_id}/notify/send`
@@ -224,10 +245,13 @@ notify-dispatch --loop` oder ein Worker). Ohne ihn bleiben Nachrichten **In Wart
 
 ## Gut zu wissen {#good-to-know}
 
-- Nur E-Mail: keine SMS oder Push-Nachrichten, keine Anhänge, keine Absenderadresse pro Produkt.
+- Nur E-Mail und der [Posteingang](help:notifications#inbox) in der App: keine SMS oder
+  Push-Nachrichten, keine Anhänge, keine Absenderadresse pro Produkt.
 - Kein Abmeldelink und kein Header `List-Unsubscribe`; Abmeldungen funktionieren nur über die
   Einstellungen und nur für Adressen, die zu Benutzern gehören.
-- Noch keine Versandratenbegrenzung pro Mandant.
+- Jeder Mandant darf in jeder gleitenden Stunde höchstens 1000 Benachrichtigungen senden
+  (Servereinstellung `notify.tenant_send_limit_per_hour`); weitere werden mit **Zu viele Anfragen**
+  abgelehnt. Einladungen und Konto-E-Mails zählen nicht mit.
 - Siehe [Bekannte Einschränkungen](help:limitations).
 
 ## Fehlerbehebung {#troubleshooting}

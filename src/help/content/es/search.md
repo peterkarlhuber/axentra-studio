@@ -143,6 +143,14 @@ Revisa la ortografía, usa palabras completas y menos palabras, y quita el filtr
 objeto debería estar, tu producto (todavía) no lo ha indexado para este inquilino: el índice solo
 contiene lo que el producto guarda en él.
 
+### La búsqueda tardó demasiado {#too-expensive}
+
+**La búsqueda tardó demasiado** significa que el servidor detuvo la búsqueda al llegar a su límite
+de tiempo (ajuste del servidor `search.statement_timeout_ms`, 5 segundos por defecto), normalmente
+porque una palabra muy común o un comienzo de palabra corto coincide con gran parte de un índice
+grande. Usa palabras más específicas o más palabras, desactiva **Buscar comienzos de palabra** o
+acota la búsqueda con un filtro de tipo.
+
 ### Otros mensajes {#messages}
 
 **No puedes buscar en este inquilino.** Tu rol en este inquilino no incluye `search:query`. Pide

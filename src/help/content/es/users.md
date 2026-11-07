@@ -30,11 +30,31 @@ Abre [Usuarios](app:users). Usa **Buscar usuarios** para filtrar por nombre o di
 electrónico y el filtro **Estado** para mostrar los usuarios con estado **Activo** o **Desactivado**. Selecciona
 un nombre para abrir la página del usuario.
 
-Studio no crea cuentas. Las cuentas se crean cuando el primer administrador completa la
+Salvo los [usuarios de inicio de sesión único](help:users#external-user), Studio no crea cuentas. Las cuentas se crean cuando el primer administrador completa la
 configuración inicial, cuando alguien inicia sesión por primera vez mediante inicio de sesión único
 (si la configuración del proveedor de identidad permite el registro o hay una invitación abierta
 para esa dirección de correo electrónico) o mediante el código de un producto que integra Axentra.
 Consulta [iniciar sesión](help:signing-in).
+
+## Añadir un usuario de inicio de sesión único {#external-user}
+
+Para migraciones e importaciones, los administradores de la plataforma crean cuentas que solo
+inician sesión mediante un proveedor de identidad, con o sin dirección de correo electrónico.
+
+1. Abre [Usuarios](app:users) y elige **Añadir usuario de inicio de sesión único**.
+2. Escribe el **Proveedor (emisor)**: la URL de emisor del proveedor de identidad, exactamente como
+   figura en la configuración de inicio de sesión único del servidor. Studio sugiere los proveedores
+   configurados.
+3. Escribe el **Sujeto**: el ID del usuario en el proveedor (el claim `sub`), no la dirección de
+   correo.
+4. Si quieres, rellena **Nombre** y **Correo electrónico (opcional)**. Marca **El proveedor verificó
+   esta dirección** solo si el proveedor confirmó que la dirección pertenece al usuario.
+5. Elige **Añadir usuario**. Studio abre la página del nuevo usuario.
+
+La dirección de correo pasa a ser la del usuario solo si está verificada; si no, el usuario no tiene
+dirección (consulta [usuarios sin dirección de correo electrónico](help:users#no-email)). El nuevo
+usuario no tiene contraseña ni membresías: añádelo a los inquilinos en la pestaña **Miembros** del
+inquilino.
 
 ## La página del usuario {#profile}
 
@@ -73,6 +93,38 @@ ID del usuario en lugar de la dirección. Estos usuarios:
 - no pueden aceptar invitaciones, porque las invitaciones están vinculadas a una dirección;
 - sí pueden añadirse directamente a inquilinos por alguien que pueda verlos (por ejemplo, un
   administrador de la plataforma).
+
+## Identidades de inicio de sesión único {#identities}
+
+La tarjeta **Identidades de inicio de sesión único** de la página de un usuario lista las cuentas en
+proveedores de identidad que inician sesión como este usuario, con las columnas **Proveedor
+(emisor)**, **Sujeto**, **Correo informado** (la dirección que envió el proveedor) y **Vinculada**.
+Axentra vincula una identidad en el primer inicio de sesión único del usuario o cuando un
+administrador de la plataforma la vincula aquí.
+
+> [!IMPORTANT]
+> La tarjeta necesita `users:manage`. Solo los administradores de la plataforma vinculan y
+> desvinculan identidades.
+
+### Vincular una identidad {#link-identity}
+
+1. Abre la página del usuario y elige **Vincular identidad** en la tarjeta **Identidades de inicio
+   de sesión único**.
+2. Escribe el **Proveedor (emisor)** y el **Sujeto** y elige **Vincular identidad**.
+
+Después, el usuario puede iniciar sesión con esa cuenta del proveedor. Una identidad pertenece a un
+solo usuario: **Conflicto** significa que ya está vinculada, a este o a otro usuario.
+
+### Desvincular una identidad {#unlink-identity}
+
+1. En la tarjeta **Identidades de inicio de sesión único**, elige el botón de desvincular junto a la
+   identidad.
+2. Lee el aviso y elige **Desvincular identidad**.
+
+Todas las sesiones del usuario terminan de inmediato, porque una sesión no guarda con qué identidad
+empezó. La última forma de iniciar sesión de un usuario no se puede desvincular: si el usuario no
+tiene contraseña ni otra identidad, Studio muestra **Última forma de iniciar sesión del usuario**.
+Vincula primero otra identidad o, en su lugar, [desactiva al usuario](help:users#disable).
 
 ## Cerrar todas las sesiones de un usuario {#sign-out}
 
@@ -150,3 +202,7 @@ de sus inquilinos. Añádelo o invítalo; consulta [miembros e invitaciones](hel
 **Un usuario desactivado sigue apareciendo en los inquilinos.** Desactivar no quita las membresías.
 Quítalas en la pestaña **Miembros** del inquilino si el acceso no debe volver cuando se reactive el
 usuario.
+
+**Conflicto al añadir un usuario de inicio de sesión único o al vincular una identidad.** La
+identidad ya está vinculada a un usuario, o la dirección de correo verificada pertenece a otro
+usuario. Busca a ese usuario o revisa el proveedor y el sujeto.

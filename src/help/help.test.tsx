@@ -68,6 +68,24 @@ describe('front matter and anchors', () => {
     expect(errorTopic('something_new')).toBe('troubleshooting#unknown');
     // Explained where the feature is described.
     expect(errorTopic('api_key_creator_lost_access')).toBe('api-keys#creator-permissions');
+    // A reason with its own section wins over the code's section.
+    expect(errorTopic('validation_failed', 'query_too_expensive')).toBe('search#too-expensive');
+    expect(errorTopic('conflict', 'last_sign_in_method')).toBe('users#unlink-identity');
+    expect(errorTopic('conflict', 'something_else')).toBe('troubleshooting#conflict');
+  });
+
+  it('points error and reason topics to sections that exist', async () => {
+    const english = await loadLibrary('en');
+    const topics = [
+      errorTopic('api_key_creator_lost_access'),
+      errorTopic('validation_failed', 'query_too_expensive'),
+      errorTopic('conflict', 'last_sign_in_method'),
+    ];
+    for (const topic of topics) {
+      const { article, anchor } = splitTopic(topic);
+      const headings = english.get(article)?.headings.map((heading) => heading.id) ?? [];
+      expect(headings, topic).toContain(anchor);
+    }
   });
 });
 

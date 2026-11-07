@@ -3,7 +3,7 @@ import { jsonResponse } from '@/test/utils';
 import { CLIENT_HEADER, configureApi, onUnauthenticated, unwrap, api } from './client';
 import { setCsrfToken } from './csrf';
 import { ApiError } from './errors';
-import { authApi, cleanQuery, asItems, metaApi, productsApi, recordsApi } from './endpoints';
+import { authApi, cleanQuery, asItems, meApi, metaApi, productsApi, recordsApi } from './endpoints';
 
 const BASE = 'http://axentra.test';
 
@@ -127,6 +127,14 @@ describe('API client', () => {
     const url = new URL((calls[0] as Request).url);
     expect(JSON.parse(url.searchParams.get('where') ?? '')).toEqual({ status: 'open' });
     expect(url.searchParams.get('sort')).toBe('-created_at');
+  });
+
+  it('asks /v1/me only for the tenants with a tenant role (Axentra AX3-03)', async () => {
+    const { calls } = mockFetch(() => jsonResponse({ products: [] }));
+    await meApi.get();
+    const url = new URL((calls[0] as Request).url);
+    expect(url.pathname).toBe('/v1/me');
+    expect(url.searchParams.get('tenants')).toBe('memberships');
   });
 
   it('unwrap returns data for successful calls', async () => {

@@ -10,16 +10,18 @@ otras del servidor; a veces la API del servidor ofrece más que Studio.
 
 ## Usuarios e inicio de sesión {#users-sign-in}
 
-- **En Studio no se crean cuentas.** Las cuentas se crean en la configuración inicial, al aceptar
-  una invitación o en el primer inicio de sesión único. En su lugar, invita a las personas a un
-  inquilino.
-- **Axentra no tiene por sí mismo restablecimiento de contraseña, verificación del correo
-  electrónico ni autenticación en dos pasos.** Si usas inicio de sesión único, tu proveedor de
-  identidad puede exigir la autenticación en dos pasos.
+- **Studio solo crea cuentas de inicio de sesión único.** Las cuentas se crean en la configuración
+  inicial, al aceptar una invitación, en el primer inicio de sesión único o cuando un administrador
+  de la plataforma añade un [usuario de inicio de sesión único](help:users#external-user). No hay
+  formulario para cuentas con contraseña: en su lugar, invita a las personas a un inquilino.
+- **Axentra no tiene por sí mismo autenticación en dos pasos.** Si usas inicio de sesión único, tu
+  proveedor de identidad puede exigirla. El restablecimiento de contraseña y la verificación del
+  correo electrónico necesitan el módulo `notify`, que envía sus enlaces.
 - **Los proveedores de inicio de sesión único solo se configuran en la configuración del
   servidor.** Studio no puede listar, añadir ni desactivar proveedores de identidad.
 - **Las cuentas sin dirección de correo electrónico** (posibles con algunas configuraciones de
-  inicio de sesión único) no se pueden crear ni vincular en Studio.
+  inicio de sesión único) no pueden aceptar invitaciones, porque las invitaciones están vinculadas a
+  una dirección. Añádelas directamente a los inquilinos.
 - **No hay exportación ni borrado de los datos de una persona.** El operador tiene que gestionar las
   solicitudes de protección de datos en usuarios, registros, copias de seguridad y registros del
   sistema.
@@ -78,8 +80,11 @@ otras del servidor; a veces la API del servidor ofrece más que Studio.
 
 ## Notificaciones {#notifications}
 
-- **Solo correo electrónico.** No hay canales de SMS ni push.
-- **Aún no hay límite de envío por inquilino** para las notificaciones.
+- **Solo correo electrónico y la bandeja de entrada dentro de la app.** No hay canales de SMS ni
+  push, y el editor de plantillas de Studio solo crea plantillas de correo (las de bandeja de
+  entrada se crean mediante la API).
+- **El envío está limitado por inquilino**: por defecto, 1000 notificaciones en cualquier hora móvil
+  (`notify.tenant_send_limit_per_hour`); las demás se rechazan con **Demasiadas solicitudes**.
 
 ## Studio y el servidor {#studio-server}
 

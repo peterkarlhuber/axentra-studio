@@ -30,10 +30,27 @@ Abra [Usuários](app:users). Use **Pesquisar usuários** para filtrar por nome o
 e o filtro **Status** para mostrar usuários **Ativo** ou **Desabilitado**. Selecione um nome para
 abrir a página do usuário.
 
-O Studio não cria contas. Elas são criadas quando o primeiro administrador conclui a configuração
+Exceto os [usuários de login único](help:users#external-user), o Studio não cria contas. Elas são criadas quando o primeiro administrador conclui a configuração
 inicial, quando alguém entra pelo login único pela primeira vez (se as configurações do provedor de
 identidade permitirem cadastro ou se houver um convite em aberto para esse endereço de e-mail) ou
 pelo código de um produto que incorpora o Axentra. Veja [entrar e sair](help:signing-in).
+
+## Adicionar um usuário de login único {#external-user}
+
+Para migrações e importações, administradores da plataforma criam contas que entram apenas por um
+provedor de identidade, com ou sem endereço de e-mail.
+
+1. Abra [Usuários](app:users) e escolha **Adicionar usuário de login único**.
+2. Digite o **Provedor (emissor)**: a URL do emissor do provedor de identidade, exatamente como
+   aparece nas configurações de login único do servidor. O Studio sugere os provedores configurados.
+3. Digite o **Sujeito**: o ID do usuário no provedor (a claim `sub`), não o endereço de e-mail.
+4. Se quiser, preencha **Nome** e **Endereço de e-mail (opcional)**. Marque **O provedor verificou
+   este endereço** apenas se o provedor confirmou que o endereço pertence ao usuário.
+5. Escolha **Adicionar usuário**. O Studio abre a página do novo usuário.
+
+O endereço de e-mail só se torna o do usuário se estiver verificado; caso contrário, o usuário fica
+sem endereço (veja [usuários sem endereço de e-mail](help:users#no-email)). O novo usuário não tem
+senha nem associações: adicione-o aos tenants na guia **Membros** do tenant.
 
 ## A página do usuário {#profile}
 
@@ -71,6 +88,37 @@ no lugar do endereço. Esses usuários:
 - não podem aceitar convites, porque os convites são vinculados a um endereço;
 - ainda podem ser adicionados diretamente a tenants por alguém que consiga vê-los (por exemplo, um
   administrador da plataforma).
+
+## Identidades de login único {#identities}
+
+O cartão **Identidades de login único** na página de um usuário lista as contas em provedores de
+identidade que entram como este usuário, com as colunas **Provedor (emissor)**, **Sujeito**,
+**E-mail informado** (o endereço que o provedor enviou) e **Vinculada**. O Axentra vincula uma
+identidade no primeiro login único do usuário ou quando um administrador da plataforma a vincula
+aqui.
+
+> [!IMPORTANT]
+> O cartão precisa de `users:manage`. Apenas administradores da plataforma vinculam e desvinculam
+> identidades.
+
+### Vincular uma identidade {#link-identity}
+
+1. Abra a página do usuário e escolha **Vincular identidade** no cartão **Identidades de login
+   único**.
+2. Digite o **Provedor (emissor)** e o **Sujeito** e escolha **Vincular identidade**.
+
+Depois, o usuário pode entrar com essa conta no provedor. Uma identidade pertence a um único
+usuário: **Conflito** significa que ela já está vinculada, a este ou a outro usuário.
+
+### Desvincular uma identidade {#unlink-identity}
+
+1. No cartão **Identidades de login único**, escolha o botão de desvincular ao lado da identidade.
+2. Leia o aviso e escolha **Desvincular identidade**.
+
+Todas as sessões do usuário terminam imediatamente, porque uma sessão não registra com qual
+identidade começou. A última forma de entrar de um usuário não pode ser desvinculada: se o usuário
+não tem senha nem outra identidade, o Studio mostra **Última forma de entrar do usuário**. Vincule
+outra identidade primeiro ou, em vez disso, [desabilite o usuário](help:users#disable).
 
 ## Desconectar um usuário de todos os lugares {#sign-out}
 
@@ -148,3 +196,7 @@ tenants dele. Adicione-o ou convide-o; veja [membros e convites](help:members-in
 **Um usuário desabilitado ainda aparece nos tenants.** Desabilitar não remove associações.
 Remova-as na guia **Membros** do tenant se o acesso não deve voltar quando o usuário for habilitado
 novamente.
+
+**Conflito ao adicionar um usuário de login único ou ao vincular uma identidade.** A identidade já
+está vinculada a um usuário, ou o endereço de e-mail verificado pertence a outro usuário. Procure
+esse usuário ou confira o provedor e o sujeito.

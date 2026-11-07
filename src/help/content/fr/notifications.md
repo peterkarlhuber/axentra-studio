@@ -206,6 +206,27 @@ réactiver des catégories. Les catégories apparaissent dès que le produit con
 celles-ci. Définir des préférences pour un locataire nécessite `notify:preferences` dans celui-ci
 (les membres et les administrateurs en disposent).
 
+## Ta boîte de réception {#inbox}
+
+Certaines notifications arrivent dans l’application plutôt que par e-mail : des messages de modèles
+avec le canal `inbox`, que ton produit t’envoie en tant qu’utilisateur. Ouvre [Boîte de
+réception](app:inbox) pour les lire. L’entrée de navigation indique combien sont non lues et
+actualise ce nombre chaque minute.
+
+- **Locataire** limite la liste à un locataire ; **Tous les locataires et le produit** affiche tout
+  ce qui concerne ce produit.
+- **Non lues seulement** masque les notifications que tu as lues.
+- Ouvrir une notification affiche son texte et la marque comme lue. Le bouton enveloppe en marque
+  une comme lue sans l’ouvrir, et **Tout marquer comme lu** marque toutes les notifications non lues
+  de la portée choisie.
+
+Toute personne qui appartient au produit a une boîte de réception ; afficher un seul locataire
+nécessite `notify:preferences` dans ce locataire (les membres et les administrateurs l’ont). Tes
+[préférences](help:notifications#preferences) s’appliquent aussi à la boîte de réception. Le texte
+des modèles sensibles n’est jamais affiché, et il est effacé après la durée de conservation du
+contenu, comme pour les e-mails. L’éditeur de modèles du Studio crée uniquement des modèles d’e-mail
+; les modèles de boîte de réception se créent via l’API.
+
 ## Pour les administrateurs et les développeurs {#developers}
 
 - **Envoyer depuis ton produit** : `POST /v1/products/{product_id}/tenants/{tenant_id}/notify/send`
@@ -228,12 +249,14 @@ celles-ci. Définir des préférences pour un locataire nécessite `notify:prefe
 
 ## Bon à savoir {#good-to-know}
 
-- E-mail uniquement : pas de SMS ni de notifications push, pas de pièces jointes, pas d’adresse
-  d’expéditeur par produit.
+- E-mail et [boîte de réception](help:notifications#inbox) dans l’application uniquement : pas de
+  SMS ni de notifications push, pas de pièces jointes, pas d’adresse d’expéditeur par produit.
 - Pas de lien de désinscription ni d’en-tête `List-Unsubscribe` ; les désinscriptions passent
   uniquement par les préférences et seulement pour les adresses qui appartiennent à des
   utilisateurs.
-- Pas encore de limite de débit d’envoi par locataire.
+- Chaque locataire peut envoyer au plus 1000 notifications par heure glissante (réglage du serveur
+  `notify.tenant_send_limit_per_hour`) ; les suivantes sont refusées avec **Trop de requêtes**. Les
+  invitations et les e-mails de compte ne comptent pas.
 - Voir [Limitations connues](help:limitations).
 
 ## Dépannage {#troubleshooting}

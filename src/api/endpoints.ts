@@ -69,6 +69,10 @@ import type {
   ProductInput,
   ProductInvitation,
   UserMemberships,
+  ExternalIdentity,
+  ExternalUserInput,
+  IdentityLinkInput,
+  InboxEntry,
   EnqueueableKinds,
   SearchKindCount,
   PermissionDeclareInput,
@@ -209,7 +213,14 @@ export const authApi = {
 // ---- Me --------------------------------------------------------------------------------
 
 export const meApi = {
-  get: () => unwrap<Me>(api().GET('/v1/me')),
+  /**
+   * Who I am. `tenants=memberships` lists per product only the tenants where the caller holds a
+   * tenant role: product operators and platform roles get their tenant permissions from the
+   * product entry (`canAccess` falls back to it), so the full tenant list would only make the
+   * response grow with the number of tenants (Axentra AX3-03). Servers without the parameter
+   * ignore it and list every readable tenant, which Studio handles the same way.
+   */
+  get: () => unwrap<Me>(api().GET('/v1/me', { params: { query: { tenants: 'memberships' } } })),
   update: (body: MePatch) => unwrap<User>(api().PATCH('/v1/me', { body })),
   changePassword: (body: PasswordChangeInput) =>
     unwrap<unknown>(api().POST('/v1/me/password', { body })),
@@ -432,6 +443,29 @@ export const usersApi = {
   memberships: (userId: string) =>
     unwrap<UserMemberships>(
       api().GET('/v1/users/{user_id}/memberships', { params: userPath(userId) }),
+    ),
+  /** Create a user who signs in through an identity provider, with or without email (platform admins). */
+  createExternal: (body: ExternalUserInput) =>
+    unwrap<User>(api().POST('/v1/users/external', { body })),
+  /** External (single sign-on) identities linked to the user (`users:manage`). */
+  identities: (userId: string) =>
+    unwrap<ExternalIdentity[]>(
+      api().GET('/v1/users/{user_id}/identities', { params: userPath(userId) }),
+    ),
+  /** Link an external identity (platform admins); `409` when it is linked already. */
+  linkIdentity: (userId: string, body: IdentityLinkInput) =>
+    unwrap<ExternalIdentity>(
+      api().POST('/v1/users/{user_id}/identities', { params: userPath(userId), body }),
+    ),
+  /**
+   * Unlink an external identity (platform admins). Ends all of the user's sessions; `409`
+   * `reason: last_sign_in_method` when it is the user's only way to sign in.
+   */
+  unlinkIdentity: (userId: string, link: IdentityLinkInput) =>
+    unwrap<RevokeResult>(
+      api().DELETE('/v1/users/{user_id}/identities', {
+        params: { ...userPath(userId), query: { provider: link.provider, subject: link.subject } },
+      }),
     ),
 };
 
@@ -1362,6 +1396,11 @@ export interface NotifyMailboxParams extends ListParams {
   recipient?: string;
 }
 
+export interface NotifyInboxParams extends ListParams {
+  tenant_id?: string;
+  unread_only?: boolean;
+}
+
 export const notifyApi = {
   templates: (productId: string) =>
     unwrap<NotifyTemplate[]>(
@@ -1476,6 +1515,35 @@ export const notifyApi = {
           header: ifMatch(version),
         },
         body: { opted_out: optedOut },
+      }),
+    ),
+  /** The signed-in user's in-app notifications (channel `inbox`), newest first. */
+  inbox: (productId: string, params?: NotifyInboxParams) =>
+    unwrap<Page<InboxEntry>>(
+      api().GET('/v1/products/{product_id}/notify/inbox/me', {
+        params: {
+          ...productPath(productId),
+          query: cleanQuery({ ...params, unread_only: params?.unread_only || undefined }) as {
+            tenant_id?: string;
+            unread_only?: boolean;
+            limit?: number;
+            cursor?: string;
+          },
+        },
+      }),
+    ),
+  inboxUnread: (productId: string, tenantId?: string) =>
+    unwrap<{ unread: number }>(
+      api().GET('/v1/products/{product_id}/notify/inbox/me/unread', {
+        params: { ...productPath(productId), query: cleanQuery({ tenant_id: tenantId }) },
+      }),
+    ),
+  /** Mark the given messages, or (without ids) all unread ones in the scope, as read. */
+  markInboxRead: (productId: string, messageIds?: string[], tenantId?: string) =>
+    unwrap<{ marked: number }>(
+      api().POST('/v1/products/{product_id}/notify/inbox/me/read', {
+        params: { ...productPath(productId), query: cleanQuery({ tenant_id: tenantId }) },
+        body: messageIds ? { message_ids: messageIds } : {},
       }),
     ),
 };

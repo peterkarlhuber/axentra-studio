@@ -29,10 +29,27 @@ members of its tenants.
 Open [Users](app:users). Use **Search users** to filter by name or email address and the
 **Status** filter to show **Active** or **Disabled** users. Select a name to open the user's page.
 
-Studio does not create accounts. They are created when the first administrator completes the
+Apart from [single sign-on users](help:users#external-user), Studio does not create accounts. They are created when the first administrator completes the
 first-run setup, when someone signs in through single sign-on for the first time (if the
 identity provider settings allow sign-up, or an invitation is open for that email address), or by
 product code that embeds Axentra. See [signing in](help:signing-in).
+
+## Add a single sign-on user {#external-user}
+
+For migrations and imports, platform administrators create accounts that sign in only through an
+identity provider, with or without an email address.
+
+1. Open [Users](app:users) and choose **Add single sign-on user**.
+2. Enter the **Provider (issuer)**: the identity provider's issuer URL, exactly as the server's
+   single sign-on settings name it. Studio suggests the configured providers.
+3. Enter the **Subject**: the user's ID at the provider (the `sub` claim), not the email address.
+4. Optionally enter a **Name** and an **Email address (optional)**. Tick **The provider verified
+   this address** only if the provider confirmed that the address belongs to the user.
+5. Choose **Add user**. Studio opens the new user's page.
+
+The email address becomes the user's address only when it is verified; otherwise the user has no
+address (see [users without an email address](help:users#no-email)). The new user has no password
+and no memberships: add the user to tenants on the tenant's **Members** tab.
 
 ## The user page {#profile}
 
@@ -70,6 +87,34 @@ Such users:
 - cannot accept invitations, because invitations are bound to an address;
 - can still be added to tenants directly by someone who can see them (for example a platform
   administrator).
+
+## Single sign-on identities {#identities}
+
+The **Single sign-on identities** card on a user's page lists the accounts at identity providers
+that sign in as this user, with the columns **Provider (issuer)**, **Subject**, **Email reported**
+(the address the provider sent) and **Linked**. Axentra links an identity at the user's first single
+sign-on, or when a platform administrator links it here.
+
+> [!IMPORTANT]
+> The card needs `users:manage`. Only platform administrators link and unlink identities.
+
+### Link an identity {#link-identity}
+
+1. Open the user's page and choose **Link identity** on the **Single sign-on identities** card.
+2. Enter the **Provider (issuer)** and the **Subject**, then choose **Link identity**.
+
+The user can then sign in with that account at the provider. An identity belongs to one user only:
+**Conflict** means that it is already linked, to this or to another user.
+
+### Unlink an identity {#unlink-identity}
+
+1. On the **Single sign-on identities** card, choose the unlink button next to the identity.
+2. Read the warning and choose **Unlink identity**.
+
+All of the user's sessions end immediately, because a session does not record which identity started
+it. The user's last way to sign in cannot be unlinked: when the user has no password and no other
+identity, Studio shows **The user's last way to sign in**. Link another identity first, or [disable
+the user](help:users#disable) instead.
 
 ## Sign a user out everywhere {#sign-out}
 
@@ -141,3 +186,7 @@ of one of its tenants. Add or invite them, see
 
 **A disabled user still appears in tenants.** Disabling does not remove memberships. Remove them
 on the tenant's **Members** tab if access should not come back when the user is enabled again.
+
+**Conflict when adding a single sign-on user or linking an identity.** The identity is already
+linked to a user, or the verified email address belongs to another user. Find that user, or check
+the provider and subject.

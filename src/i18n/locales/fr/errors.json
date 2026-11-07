@@ -111,5 +111,15 @@
       "title": "Lien invalide ou expiré",
       "message": "Le lien est invalide, a expiré ou a déjà été utilisé. Demandes-en un nouveau."
     }
+  },
+  "reasons": {
+    "query_too_expensive": {
+      "title": "La recherche a pris trop de temps",
+      "message": "Le serveur a arrêté cette recherche parce qu’elle prenait trop de temps, en général parce que les termes correspondent à une très grande partie de l’index. Utilise des termes plus précis ou un filtre de type, puis relance la recherche."
+    },
+    "last_sign_in_method": {
+      "title": "Dernier moyen de connexion de l’utilisateur",
+      "message": "Cette identité est le seul moyen de connexion de l’utilisateur : il n’a ni mot de passe ni autre identité. Associe d’abord une autre identité, ou désactive plutôt l’utilisateur."
+    }
   }
 }

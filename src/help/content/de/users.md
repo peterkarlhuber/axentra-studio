@@ -29,10 +29,31 @@ Produktverantwortlichen und die Mitglieder seiner Mandanten.
 dem Filter **Status** zeigst du **Aktiv** oder **Deaktiviert** an. Wähle einen Namen, um die Seite des
 Benutzers zu öffnen.
 
-Studio legt keine Konten an. Konten entstehen, wenn der erste Administrator die Ersteinrichtung
+Abgesehen von [Single-Sign-on-Benutzern](help:users#external-user) legt Studio keine Konten an. Konten entstehen, wenn der erste Administrator die Ersteinrichtung
 abschließt, wenn sich jemand zum ersten Mal per Single Sign-on anmeldet (sofern die Einstellungen des
 Identitätsanbieters die Registrierung erlauben oder eine Einladung für diese E-Mail-Adresse offen ist)
 oder durch Produktcode, der Axentra einbettet. Siehe [Anmelden](help:signing-in).
+
+## Einen Single-Sign-on-Benutzer hinzufügen {#external-user}
+
+Für Migrationen und Importe legen Plattformadministratoren Konten an, die sich nur über einen
+Identitätsanbieter anmelden, mit oder ohne E-Mail-Adresse.
+
+1. Öffne [Benutzer](app:users) und wähle **Single-Sign-on-Benutzer hinzufügen**.
+2. Gib den **Anbieter (Issuer)** ein: die Issuer-URL des Identitätsanbieters, genau so, wie sie in
+   den Single-Sign-on-Einstellungen des Servers steht. Studio schlägt die konfigurierten Anbieter
+   vor.
+3. Gib das **Subject (Benutzer-ID)** ein: die ID des Benutzers beim Anbieter (der Claim `sub`),
+   nicht die E-Mail-Adresse.
+4. Fülle bei Bedarf **Name** und **E-Mail-Adresse (optional)** aus. Kreuze **Der Anbieter hat diese
+   Adresse bestätigt** nur an, wenn der Anbieter bestätigt hat, dass die Adresse zum Benutzer
+   gehört.
+5. Wähle **Benutzer hinzufügen**. Studio öffnet die Seite des neuen Benutzers.
+
+Die E-Mail-Adresse wird nur dann zur Adresse des Benutzers, wenn sie bestätigt ist; sonst hat der
+Benutzer keine Adresse (siehe [Benutzer ohne E-Mail-Adresse](help:users#no-email)). Der neue
+Benutzer hat kein Passwort und keine Mitgliedschaften: Füge ihn auf dem Tab **Mitglieder** des
+Mandanten zu Mandanten hinzu.
 
 ## Die Benutzerseite {#profile}
 
@@ -71,6 +92,40 @@ Benutzers. Solche Benutzer:
 - können keine Einladungen annehmen, weil Einladungen an eine Adresse gebunden sind;
 - können trotzdem direkt zu Mandanten hinzugefügt werden, und zwar von jemandem, der sie sehen kann
   (zum Beispiel von einem Plattform-Administrator).
+
+## Single-Sign-on-Identitäten {#identities}
+
+Die Karte **Single-Sign-on-Identitäten** auf der Seite eines Benutzers listet die Konten bei
+Identitätsanbietern, die sich als dieser Benutzer anmelden, mit den Spalten **Anbieter (Issuer)**,
+**Subject (Benutzer-ID)**, **Gemeldete E-Mail** (die Adresse, die der Anbieter übermittelt hat) und
+**Verknüpft**. Axentra verknüpft eine Identität bei der ersten Single-Sign-on-Anmeldung des
+Benutzers oder wenn ein Plattformadministrator sie hier verknüpft.
+
+> [!IMPORTANT]
+> Die Karte braucht `users:manage`. Nur Plattformadministratoren verknüpfen Identitäten und lösen
+> Verknüpfungen.
+
+### Eine Identität verknüpfen {#link-identity}
+
+1. Öffne die Seite des Benutzers und wähle auf der Karte **Single-Sign-on-Identitäten** die Option
+   **Identität verknüpfen**.
+2. Gib **Anbieter (Issuer)** und **Subject (Benutzer-ID)** ein und wähle **Identität verknüpfen**.
+
+Danach kann sich der Benutzer mit diesem Konto beim Anbieter anmelden. Eine Identität gehört immer
+nur zu einem Benutzer: **Konflikt** bedeutet, dass sie bereits verknüpft ist, mit diesem oder einem
+anderen Benutzer.
+
+### Eine Verknüpfung lösen {#unlink-identity}
+
+1. Wähle auf der Karte **Single-Sign-on-Identitäten** die Schaltfläche zum Lösen neben der
+   Identität.
+2. Lies den Hinweis und wähle **Verknüpfung lösen**.
+
+Alle Sitzungen des Benutzers enden sofort, weil eine Sitzung nicht speichert, mit welcher Identität
+sie begonnen wurde. Die letzte Anmeldemöglichkeit eines Benutzers lässt sich nicht lösen: Hat der
+Benutzer kein Passwort und keine andere Identität, zeigt Studio **Letzte Anmeldemöglichkeit des
+Benutzers**. Verknüpfe zuerst eine andere Identität oder [deaktiviere den
+Benutzer](help:users#disable) stattdessen.
 
 ## Einen Benutzer überall abmelden {#sign-out}
 
@@ -148,3 +203,7 @@ Produkts noch ist er Mitglied eines seiner Mandanten. Füge ihn hinzu oder lade 
 **Ein deaktivierter Benutzer erscheint weiterhin in Mandanten.** Das Deaktivieren entfernt keine
 Mitgliedschaften. Entferne sie auf dem Tab **Mitglieder** des Mandanten, wenn der Zugriff nach einer
 erneuten Aktivierung nicht zurückkehren soll.
+
+**Konflikt beim Hinzufügen eines Single-Sign-on-Benutzers oder beim Verknüpfen einer Identität.**
+Die Identität ist bereits mit einem Benutzer verknüpft, oder die bestätigte E-Mail-Adresse gehört
+einem anderen Benutzer. Suche diesen Benutzer oder prüfe Anbieter und Subject.

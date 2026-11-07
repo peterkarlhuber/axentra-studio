@@ -11,14 +11,17 @@ server; the server's API sometimes offers more than Studio does.
 
 ## Users and sign-in {#users-sign-in}
 
-- **No accounts are created in Studio.** Accounts come from the first-run setup, from accepting an
-  invitation, or from the first single sign-on login. Invite people to a tenant instead.
-- **No password reset, email verification or two-factor authentication** in Axentra itself. If
-  you use single sign-on, your identity provider can enforce two-factor authentication.
+- **Studio creates only single sign-on accounts.** Accounts come from the first-run setup, from
+  accepting an invitation, from the first single sign-on login, or from a platform administrator who
+  adds a [single sign-on user](help:users#external-user). There is no form for password accounts:
+  invite people to a tenant instead.
+- **No two-factor authentication** in Axentra itself. If you use single sign-on, your identity
+  provider can enforce two-factor authentication. Password reset and email verification need the
+  `notify` module, which sends their links.
 - **Single sign-on providers are set up only in the server configuration.** Studio cannot list,
   add or disable identity providers.
-- **Accounts without an email address** (possible with some single sign-on setups) cannot be
-  created or linked in Studio.
+- **Accounts without an email address** (possible with some single sign-on setups) cannot accept
+  invitations, because invitations are bound to an address. Add them to tenants directly.
 - **No export or erasure of a person's data.** Data protection requests have to be handled by the
   operator across users, records, backups and logs.
 - **Sign-in throttling is per minute.** Anyone who knows an email address can block password
@@ -71,8 +74,10 @@ server; the server's API sometimes offers more than Studio does.
 
 ## Notifications {#notifications}
 
-- **Email only.** There are no SMS or push channels.
-- **No per-tenant sending limit** for notifications yet.
+- **Email and the in-app inbox only.** There are no SMS or push channels, and Studio's template
+  editor creates email templates only (inbox templates are created over the API).
+- **Sending is limited per tenant**: by default 1000 notifications in any rolling hour
+  (`notify.tenant_send_limit_per_hour`); more are refused with **Too many requests**.
 
 ## Studio and the server {#studio-server}
 

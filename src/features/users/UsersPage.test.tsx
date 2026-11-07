@@ -1,6 +1,7 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it } from 'vitest';
+import type { Me } from '@/api/models';
 import {
   jsonResponse,
   makeMe,
@@ -96,5 +97,112 @@ describe('UsersPage', () => {
     await userEv.type(screen.getByRole('searchbox', { name: 'Search users' }), 'nobody');
     expect(await screen.findByText('No matching users')).toBeInTheDocument();
     expect(screen.getByText('Try a different search or status filter.')).toBeInTheDocument();
+  });
+
+  it('lists a user without an email address by name and id', async () => {
+    mockApi(
+      (_request, url) =>
+        url.pathname === '/v1/users'
+          ? jsonResponse({ items: [{ ...user('usr_x', 'Grace'), email: null }], next_cursor: null })
+          : undefined,
+      makeMe(['users:read']),
+    );
+    renderPage();
+    expect(await screen.findByRole('link', { name: 'Grace' })).toBeInTheDocument();
+    expect(screen.getByText('usr_x')).toBeInTheDocument();
+  });
+});
+
+describe('Add single sign-on user', () => {
+  /** `GET /v1/users` and `POST /v1/users/external`; `created` is the new user. */
+  function externalApi(me: Me = makeMe(['users:read', 'users:manage'])) {
+    return mockApi((request, url) => {
+      if (url.pathname === '/v1/users') return jsonResponse({ items: everyone, next_cursor: null });
+      if (url.pathname === '/v1/users/external' && request.method === 'POST') {
+        return request.json().then((body: { subject: string; name: string }) =>
+          body.subject === 'taken'
+            ? jsonResponse(
+                {
+                  code: 'conflict',
+                  status: 409,
+                  detail: 'this external identity is already linked',
+                },
+                { status: 409 },
+              )
+            : jsonResponse({ ...user('usr_new', body.name), email: null }, { status: 201 }),
+        );
+      }
+      return undefined;
+    }, me);
+  }
+
+  it('creates a user without an email address and opens the new user', async () => {
+    const calls = externalApi();
+    const userEv = userEvent.setup();
+    renderPage();
+    await userEv.click(await screen.findByRole('button', { name: 'Add single sign-on user' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Add a single sign-on user' });
+    const submit = within(dialog).getByRole('button', { name: 'Add user' });
+    expect(submit).toBeDisabled();
+    // "Verified" only makes sense with an address.
+    expect(within(dialog).getByRole('checkbox', { name: /provider verified/ })).toBeDisabled();
+
+    await userEv.type(
+      within(dialog).getByRole('textbox', { name: /Provider \(issuer\)/ }),
+      'https://login.example.com',
+    );
+    await userEv.type(within(dialog).getByRole('textbox', { name: /^Subject/ }), 'taken');
+    await userEv.type(within(dialog).getByRole('textbox', { name: /^Name/ }), 'Grace');
+    await userEv.click(submit);
+    expect(await within(dialog).findByText(/already linked/)).toBeInTheDocument();
+
+    const subject = within(dialog).getByRole('textbox', { name: /^Subject/ });
+    await userEv.clear(subject);
+    await userEv.type(subject, 'sub-1');
+    await userEv.click(submit);
+    expect(await screen.findByText('other page')).toBeInTheDocument();
+    expect(screen.getByText('User added')).toBeInTheDocument();
+    const posts = calls.filter((call) => call.path === '/v1/users/external');
+    expect(posts.at(-1)?.body).toEqual({
+      provider: 'https://login.example.com',
+      subject: 'sub-1',
+      name: 'Grace',
+      email: null,
+      email_verified: false,
+    });
+  });
+
+  it('sends the email as verified only when ticked', async () => {
+    const calls = externalApi();
+    const userEv = userEvent.setup();
+    renderPage();
+    await userEv.click(await screen.findByRole('button', { name: 'Add single sign-on user' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Add a single sign-on user' });
+    await userEv.type(
+      within(dialog).getByRole('textbox', { name: /Provider \(issuer\)/ }),
+      'https://login.example.com',
+    );
+    await userEv.type(within(dialog).getByRole('textbox', { name: /^Subject/ }), 'sub-2');
+    await userEv.type(
+      within(dialog).getByRole('textbox', { name: /Email address/ }),
+      'grace@example.com',
+    );
+    await userEv.click(within(dialog).getByRole('checkbox', { name: /provider verified/ }));
+    await userEv.click(within(dialog).getByRole('button', { name: 'Add user' }));
+    await screen.findByText('other page');
+    expect(calls.find((call) => call.path === '/v1/users/external')?.body).toMatchObject({
+      email: 'grace@example.com',
+      email_verified: true,
+    });
+  });
+
+  it('is offered to platform administrators only', async () => {
+    const viewer = { ...makeMe(['users:read']), platform_role: 'platform_viewer' } as Me;
+    externalApi(viewer);
+    renderPage();
+    await screen.findByRole('link', { name: 'Ada Lovelace' });
+    expect(
+      screen.queryByRole('button', { name: 'Add single sign-on user' }),
+    ).not.toBeInTheDocument();
   });
 });
