@@ -2,7 +2,10 @@
 # Generates the runtime snippets for Axentra Studio from the environment:
 #   AXENTRA_API_URL          upstream for the optional /v1 reverse proxy (e.g. http://api:8080)
 #   AXENTRA_PUBLIC_API_URL   API origin the browser calls when the API is on another origin
-#   AXENTRA_CSP_CONNECT_SRC  extra connect-src sources for the Content-Security-Policy
+#   AXENTRA_CSP_CONNECT_SRC  extra connect-src sources for the Content-Security-Policy: space-separated
+#                            https:// origins (https://host or https://host:port); anything else stops the start
+#   AXENTRA_TLS_TERMINATED   "true" when browsers reach Studio over HTTPS (TLS terminated in front of this
+#                            container): adds Strict-Transport-Security; "false" or unset: no HSTS
 set -eu
 
 out=/etc/nginx/axentra
@@ -35,11 +38,38 @@ fi
 # Runtime configuration read by the Studio at startup.
 printf '{"apiBaseUrl": "%s"}\n' "$public_api_url" > "$out/config.json"
 
+# Extra connect-src sources: only https origins, separated by spaces or tabs (MUP-ONA VB-6). The value
+# goes into an nginx add_header line, so quotes, semicolons, keywords ('unsafe-...'), schemes other than
+# https, paths, wildcards and line breaks are refused instead of being written into the configuration.
+# 'self' is always part of connect-src, and AXENTRA_PUBLIC_API_URL (http or https) is added on its own.
+extra_connect_src="$(printf '%s' "${AXENTRA_CSP_CONNECT_SRC:-}" | sed -e 's/^[[:blank:]]*//' -e 's/[[:blank:]]*$//')"
+if [ -n "$extra_connect_src" ]; then
+  nl='
+'
+  case "$extra_connect_src" in
+    *"$nl"*|*"$(printf '\r')"*)
+      echo "40-axentra-studio: AXENTRA_CSP_CONNECT_SRC must be one line of https:// origins" >&2; exit 1 ;;
+  esac
+  origin='https://[A-Za-z0-9.-]+(:[0-9]+)?'
+  if ! printf '%s\n' "$extra_connect_src" | grep -Eq "^${origin}([[:blank:]]+${origin})*\$"; then
+    echo "40-axentra-studio: AXENTRA_CSP_CONNECT_SRC must be space-separated https:// origins" \
+      "(https://host or https://host:port), got: $extra_connect_src" >&2
+    exit 1
+  fi
+fi
+
+# HSTS only when TLS is terminated in front of the container (a plain-http deployment must not send it).
+case "${AXENTRA_TLS_TERMINATED:-false}" in
+  true|1) hsts='add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;' ;;
+  false|0|"") hsts='# AXENTRA_TLS_TERMINATED is not "true": no Strict-Transport-Security header.' ;;
+  *) echo "40-axentra-studio: AXENTRA_TLS_TERMINATED must be true or false" >&2; exit 1 ;;
+esac
+
 # Security headers. Scripts only from this origin (no inline scripts); inline style
 # attributes are needed by Radix UI positioning, style elements by its scroll lock.
 connect_src="'self'"
 [ -n "$public_api_url" ] && connect_src="$connect_src $public_api_url"
-[ -n "${AXENTRA_CSP_CONNECT_SRC:-}" ] && connect_src="$connect_src ${AXENTRA_CSP_CONNECT_SRC}"
+[ -n "$extra_connect_src" ] && connect_src="$connect_src $extra_connect_src"
 csp="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src $connect_src; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 cat > "$out/security-headers.conf" <<CONF
@@ -50,4 +80,5 @@ add_header Referrer-Policy "no-referrer" always;
 add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" always;
 add_header Cross-Origin-Opener-Policy "same-origin" always;
 add_header Cross-Origin-Resource-Policy "same-origin" always;
+$hsts
 CONF

@@ -21,10 +21,14 @@ LABEL org.opencontainers.image.title="Axentra Studio" \
 
 # AXENTRA_API_URL: optional upstream for a same-origin /v1 reverse proxy.
 # AXENTRA_PUBLIC_API_URL: API origin for the browser when the API lives on another origin.
-# AXENTRA_CSP_CONNECT_SRC: extra connect-src entries for the Content-Security-Policy.
+# AXENTRA_CSP_CONNECT_SRC: extra connect-src entries for the Content-Security-Policy
+#   (space-separated https:// origins; any other value stops the start).
+# AXENTRA_TLS_TERMINATED: "true" when browsers reach Studio over HTTPS (TLS terminated in front of the
+#   container); adds Strict-Transport-Security.
 ENV AXENTRA_API_URL="" \
     AXENTRA_PUBLIC_API_URL="" \
-    AXENTRA_CSP_CONNECT_SRC=""
+    AXENTRA_CSP_CONNECT_SRC="" \
+    AXENTRA_TLS_TERMINATED="false"
 
 USER root
 RUN rm -f /etc/nginx/conf.d/default.conf \

@@ -8,6 +8,15 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Security
 
+- The Docker image validates `AXENTRA_CSP_CONNECT_SRC` at start (MUP-ONA VB-6): only space-separated
+  `https://host` or `https://host:port` origins are accepted, and any other value (other schemes such as
+  `http:` or `wss:`, keywords, paths, wildcards, quotes, semicolons, line breaks) stops the container start
+  instead of being written into nginx's `Content-Security-Policy` header line. The default (empty) is
+  unchanged; `'self'` and `AXENTRA_PUBLIC_API_URL` stay in `connect-src` as before. New
+  `AXENTRA_TLS_TERMINATED` (default `false`): `true` when browsers reach Studio over HTTPS through a
+  TLS-terminating proxy adds `Strict-Transport-Security: max-age=31536000; includeSubDomains`; an unknown
+  value stops the start. `scripts/entrypoint-security.test.mjs` runs the start script with valid and invalid
+  values (T-A7-5). Breaking only for a deployment that put non-`https` sources into `AXENTRA_CSP_CONNECT_SRC`.
 - The Docker image's nginx access log records no query strings any more (security review round 4, R4-2).
   The first request of an emailed link (`GET /invitations/accept?token=...`, `/setup?token=...`) reaches
   nginx before Studio can remove the token from the address bar, and the default `combined` format logged
