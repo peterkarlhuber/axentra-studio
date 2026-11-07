@@ -102,6 +102,13 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Changed
 
+- Studio asks `GET /v1/me?tenants=memberships` (axentra AX3-03): per product only the tenants with a tenant
+  role are listed, so the response no longer grows with the number of tenants for operators and platform
+  roles, whose tenant permissions come from the product entry. The jobs page counts an operator's product
+  role for **Enqueue job**. Older servers ignore the parameter.
+- Help corrections: the known limitations no longer say that Studio creates no accounts, that there is no
+  password reset or email verification, that notifications are email only or that there is no per-tenant
+  send limit; the notifications help names the limit (`notify.tenant_send_limit_per_hour`).
 - The help panel content (help library and Markdown renderer) loads on demand when a help topic
   opens, so it is no longer preloaded with the shell.
 - Vitest runs without the file-system module cache (a new i18n namespace was not picked up) and
@@ -184,6 +191,20 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- Single sign-on users and identities (axentra `fcacc25`): platform administrators add a user who signs in
+  through an identity provider, with or without an email address (**Add single sign-on user** on the Users
+  page, `POST /v1/users/external`). A user's page lists the **Single sign-on identities** (`users:manage`);
+  platform administrators link and unlink them (`.../users/{id}/identities`). The provider field suggests the
+  issuers of the server settings; unlinking asks first, ends the user's sessions and explains the refusal of
+  the user's last way to sign in (`409` `reason: last_sign_in_method`). Help: **Users** in all six
+  languages; e2e `inbox-identities.spec.ts`.
+- **Inbox** (`/p/:productId/inbox`): the signed-in user's in-app notifications (`.../notify/inbox/me`),
+  product-wide or for one tenant, optionally unread only; opening one marks it as read, **Mark all as read**
+  marks the scope. The sidebar entry shows the unread count, refreshed every minute. Help: **Notifications**
+  (your inbox) in all six languages.
+- A search the server stops at `search.statement_timeout_ms` (`422` `reason: query_too_expensive`) is
+  explained as **Search took too long** with a link to the new help section; problem reasons with their own
+  translation now take precedence over the code's general text.
 - Forgotten password, password reset and email verification (needs axentra with account emails): a
   **Forgot your password?** link on the sign-in page, a page that requests the reset link (the same answer
   whether or not the address exists), a reset page and a verify page for the emailed links (the token is
