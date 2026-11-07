@@ -215,5 +215,32 @@
     "oldestQueuedLabel": "Acerca de los mensajes en cola",
     "oldestQueued": "Un proceso despachador independiente entrega los mensajes. Si este tiempo no deja de crecer, no hay ningún despachador en ejecución.",
     "scope": "Las categorías desactivadas para todo el producto permanecen desactivadas en todos los inquilinos. Una configuración de inquilino solo puede desactivar más categorías."
+  },
+  "inbox": {
+    "title": "Bandeja de entrada",
+    "description": "Tus notificaciones dentro de la app de este producto, las más recientes primero. Al abrir una notificación, se marca como leída.",
+    "notification": "Notificación",
+    "unreadMark": "Sin leer:",
+    "noSubject": "(sin asunto)",
+    "received": "Recibida",
+    "markReadNamed": "Marcar “{{subject}}” como leída",
+    "openNamed": "Abrir “{{subject}}”",
+    "unreadCount_many": "{{count}} sin leer",
+    "unreadCount_one": "{{count}} sin leer",
+    "unreadCount_other": "{{count}} sin leer",
+    "markAll": "Marcar todas como leídas",
+    "markedAll_many": "{{count}} notificaciones marcadas como leídas",
+    "markedAll_one": "{{count}} notificación marcada como leída",
+    "markedAll_other": "{{count}} notificaciones marcadas como leídas",
+    "scope": "Inquilino",
+    "productWide": "Todos los inquilinos y el producto",
+    "scopeHelp": "Mostrar solo las notificaciones de un inquilino.",
+    "unreadOnly": "Solo sin leer",
+    "empty": "Todavía no hay notificaciones",
+    "emptyUnread": "No hay notificaciones sin leer",
+    "emptyBody": "Aquí aparecen las notificaciones que este producto te envía dentro de la app.",
+    "detailSubtitle": "Notificación dentro de la app",
+    "tenant": "Inquilino",
+    "noTenant": "Ninguno (todo el producto)"
   }
 }

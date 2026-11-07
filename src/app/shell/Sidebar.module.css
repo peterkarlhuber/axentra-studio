@@ -148,6 +148,28 @@
 .collapsed .off {
   display: none;
 }
+.badge {
+  flex: none;
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: var(--ax-radius-full);
+  background: var(--ax-sidebar-indicator);
+  color: var(--ax-sidebar-bg);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.collapsed .badge {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  min-width: 16px;
+  padding: 0 4px;
+  font-size: 0.625rem;
+  line-height: 16px;
+}
 .footer {
   display: flex;
   align-items: center;

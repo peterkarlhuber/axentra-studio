@@ -72,11 +72,12 @@ type Handler = (call: Call) => Response | undefined | Promise<Response | undefin
 /** Route API requests to `handler`; session, me and tenants have defaults. */
 export function mockApi(
   handler: Handler,
-  options: { permissions?: string[]; tenants?: unknown[] } = {},
+  options: { permissions?: string[]; tenants?: unknown[]; role?: string | null } = {},
 ) {
   const calls: Call[] = [];
   const me = makeMe(options.permissions);
   if (options.tenants) (me.products[0] as { tenants: unknown[] }).tenants = options.tenants;
+  if (options.role !== undefined) (me.products[0] as { role: string | null }).role = options.role;
   configureApi({
     baseUrl: API,
     fetch: async (request: Request) => {

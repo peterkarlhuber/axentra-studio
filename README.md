@@ -12,8 +12,10 @@ backend. Studio is a separate, static single-page app that talks to the Axentra 
   plans, subscriptions and entitlements (see "Usage & Billing" below).
 - Events & Jobs: jobs, schedules, the event log with a live view, and webhooks with their
   delivery log (see "Events & Jobs" below).
-- Notifications (templates, message log, mailbox, preferences) and Monitoring (health checks,
-  metrics, retention, tracing).
+- Notifications (templates, message log, mailbox, preferences, and your own in-app inbox with an
+  unread count) and Monitoring (health checks, metrics, retention, tracing).
+- Users without an email address and single sign-on identities: platform administrators add
+  single sign-on users and link or unlink their identities.
 - A section whose backend module is disabled shows "module not enabled" and never shows demo
   data.
 - Built-in help: a help center at `/help` (40 articles in 13 chapters: getting started, every

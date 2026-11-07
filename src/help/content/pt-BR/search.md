@@ -140,6 +140,14 @@ Confira a ortografia, use palavras inteiras e menos palavras e remova o filtro d
 deveria estar lá, o seu produto (ainda) não o indexou para este tenant: o índice contém apenas o que
 o produto coloca nele.
 
+### A pesquisa demorou demais {#too-expensive}
+
+**A pesquisa demorou demais** significa que o servidor interrompeu a pesquisa ao atingir o limite de
+tempo (configuração do servidor `search.statement_timeout_ms`, padrão de 5 segundos), geralmente
+porque uma palavra muito comum ou um início de palavra curto corresponde a grande parte de um índice
+grande. Use palavras mais específicas ou mais palavras, desative **Encontrar inícios de palavras**
+ou restrinja a pesquisa com um filtro de tipo.
+
 ### Outras mensagens {#messages}
 
 **Você não pode pesquisar neste tenant.** A sua função neste tenant não inclui `search:query`. Peça

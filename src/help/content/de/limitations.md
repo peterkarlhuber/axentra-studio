@@ -10,16 +10,18 @@ stammen von Studio, andere vom Server; die API des Servers bietet manchmal mehr 
 
 ## Benutzer und Anmeldung {#users-sign-in}
 
-- **In Studio werden keine Konten angelegt.** Konten entstehen bei der Ersteinrichtung, beim
-  Annehmen einer Einladung oder bei der ersten Anmeldung per Single Sign-on. Lade Personen
-  stattdessen in einen Mandanten ein.
-- **Kein Zurücksetzen des Passworts, keine E-Mail-Bestätigung und keine
-  Zwei-Faktor-Authentifizierung** in Axentra selbst. Verwendest du Single Sign-on, kann dein
-  Identitätsanbieter die Zwei-Faktor-Authentifizierung erzwingen.
+- **Studio legt nur Single-Sign-on-Konten an.** Konten entstehen bei der Ersteinrichtung, beim
+  Annehmen einer Einladung, bei der ersten Anmeldung per Single Sign-on oder wenn ein
+  Plattformadministrator einen [Single-Sign-on-Benutzer](help:users#external-user) hinzufügt. Für
+  Passwortkonten gibt es kein Formular: Lade Personen stattdessen in einen Mandanten ein.
+- **Keine Zwei-Faktor-Authentifizierung** in Axentra selbst. Verwendest du Single Sign-on, kann dein
+  Identitätsanbieter die Zwei-Faktor-Authentifizierung erzwingen. Zurücksetzen des Passworts und
+  E-Mail-Bestätigung brauchen das Modul `notify`, das ihre Links verschickt.
 - **Single-Sign-on-Anbieter werden nur in der Serverkonfiguration eingerichtet.** Studio kann
   Identitätsanbieter weder auflisten noch hinzufügen oder deaktivieren.
-- **Konten ohne E-Mail-Adresse** (bei manchen Single-Sign-on-Konfigurationen möglich) lassen sich
-  in Studio weder anlegen noch verknüpfen.
+- **Konten ohne E-Mail-Adresse** (bei manchen Single-Sign-on-Konfigurationen möglich) können keine
+  Einladungen annehmen, weil Einladungen an eine Adresse gebunden sind. Füge sie direkt zu Mandanten
+  hinzu.
 - **Kein Export und keine Löschung der Daten einer Person.** Datenschutzanfragen muss der Betreiber
   über Benutzer, Datensätze, Sicherungen und Protokolle hinweg bearbeiten.
 - **Die Drosselung der Anmeldung gilt pro Minute.** Wer eine E-Mail-Adresse kennt, kann durch
@@ -77,8 +79,12 @@ stammen von Studio, andere vom Server; die API des Servers bietet manchmal mehr 
 
 ## Benachrichtigungen {#notifications}
 
-- **Nur E-Mail.** SMS- oder Push-Kanäle gibt es nicht.
-- **Noch keine Versandbegrenzung pro Mandant** für Benachrichtigungen.
+- **Nur E-Mail und der Posteingang in der App.** SMS- oder Push-Kanäle gibt es nicht, und der
+  Vorlageneditor von Studio legt nur E-Mail-Vorlagen an (Posteingangsvorlagen entstehen über die
+  API).
+- **Der Versand ist pro Mandant begrenzt**: standardmäßig 1000 Benachrichtigungen in jeder
+  gleitenden Stunde (`notify.tenant_send_limit_per_hour`); weitere werden mit **Zu viele Anfragen**
+  abgelehnt.
 
 ## Studio und der Server {#studio-server}
 

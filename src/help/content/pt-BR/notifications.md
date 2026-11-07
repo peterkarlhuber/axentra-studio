@@ -194,6 +194,24 @@ em todos os tenants; uma configuração de tenant pode desativar mais categorias
 As categorias aparecem quando o produto tem modelos nelas. Definir preferências para um tenant
 exige `notify:preferences` nele (membros e administradores têm essa permissão).
 
+## Sua caixa de entrada {#inbox}
+
+Algumas notificações chegam dentro do app em vez de por e-mail: mensagens de modelos com o canal
+`inbox` que o seu produto envia para você como usuário. Abra [Caixa de entrada](app:inbox) para
+lê-las. O item da navegação mostra quantas estão não lidas e atualiza o número a cada minuto.
+
+- **Tenant** limita a lista a um tenant; **Todos os tenants e o produto** mostra tudo deste produto.
+- **Só não lidas** oculta as notificações que você já leu.
+- Abrir uma notificação mostra o texto dela e a marca como lida. O botão de envelope marca uma como
+  lida sem abri-la, e **Marcar todas como lidas** marca todas as não lidas do escopo escolhido.
+
+Todos que pertencem ao produto têm uma caixa de entrada; mostrar um tenant exige
+`notify:preferences` nele (membros e administradores têm). Suas
+[preferências](help:notifications#preferences) também valem para a caixa de entrada. O texto de
+modelos sensíveis nunca é exibido e é apagado após a retenção do conteúdo, como nos e-mails. O
+editor de modelos do Studio cria apenas modelos de e-mail; modelos de caixa de entrada são criados
+pela API.
+
 ## Para administradores e desenvolvedores {#developers}
 
 - **Envio a partir do seu produto**: `POST /v1/products/{product_id}/tenants/{tenant_id}/notify/send`
@@ -214,10 +232,13 @@ exige `notify:preferences` nele (membros e administradores têm essa permissão)
 
 ## Bom saber {#good-to-know}
 
-- Somente e-mail: sem SMS ou push, sem anexos, sem endereço de remetente por produto.
+- Somente e-mail e a [caixa de entrada](help:notifications#inbox) do app: sem SMS ou push, sem
+  anexos, sem endereço de remetente por produto.
 - Sem link de descadastro nem cabeçalho `List-Unsubscribe`; o cancelamento de recebimento funciona
   apenas pelas preferências e apenas para endereços que pertencem a usuários.
-- Ainda não há limite de taxa de envio por tenant.
+- Cada tenant pode enviar no máximo 1000 notificações em qualquer hora móvel (configuração do
+  servidor `notify.tenant_send_limit_per_hour`); as demais são recusadas com **Muitas requisições**.
+  Convites e e-mails da conta não contam.
 - Veja [Limitações conhecidas](help:limitations).
 
 ## Solução de problemas {#troubleshooting}

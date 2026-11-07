@@ -111,5 +111,15 @@
       "title": "Link non valido o scaduto",
       "message": "Il link non è valido, è scaduto o è già stato usato. Richiedine uno nuovo."
     }
+  },
+  "reasons": {
+    "query_too_expensive": {
+      "title": "La ricerca ha richiesto troppo tempo",
+      "message": "Il server ha interrotto questa ricerca perché richiedeva troppo tempo, di solito perché i termini corrispondono a una parte molto grande dell'indice. Usa termini più specifici o un filtro per tipo e cerca di nuovo."
+    },
+    "last_sign_in_method": {
+      "title": "Ultimo modo di accesso dell'utente",
+      "message": "Questa identità è l'unico modo in cui l'utente può accedere: non ha una password né un'altra identità. Collega prima un'altra identità oppure disattiva l'utente."
+    }
   }
 }

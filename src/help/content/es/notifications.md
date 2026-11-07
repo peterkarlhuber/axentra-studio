@@ -197,6 +197,26 @@ los inquilinos; un ajuste de inquilino puede desactivar más, pero no volver a a
 Las categorías aparecen cuando el producto tiene plantillas en ellas. Definir preferencias para un
 inquilino requiere `notify:preferences` en él (los miembros y administradores lo tienen).
 
+## Tu bandeja de entrada {#inbox}
+
+Algunas notificaciones llegan dentro de la app en lugar de por correo: mensajes de plantillas con el
+canal `inbox` que tu producto te envía como usuario. Abre [Bandeja de entrada](app:inbox) para
+leerlas. La entrada de la navegación muestra cuántas están sin leer y actualiza el número cada
+minuto.
+
+- **Inquilino** limita la lista a un inquilino; **Todos los inquilinos y el producto** muestra todo
+  lo de este producto.
+- **Solo sin leer** oculta las notificaciones que ya leíste.
+- Al abrir una notificación ves su texto y se marca como leída. El botón del sobre marca una como
+  leída sin abrirla, y **Marcar todas como leídas** marca todas las no leídas del ámbito elegido.
+
+Todas las personas que pertenecen al producto tienen bandeja de entrada; mostrar un inquilino
+requiere `notify:preferences` en él (los miembros y los administradores lo tienen). Tus
+[preferencias](help:notifications#preferences) también se aplican a la bandeja de entrada. El texto
+de las plantillas sensibles nunca se muestra y se borra tras la retención del contenido, como en los
+correos. El editor de plantillas de Studio solo crea plantillas de correo; las plantillas de bandeja
+de entrada se crean mediante la API.
+
 ## Para administradores y desarrolladores {#developers}
 
 - **Enviar desde tu producto**: `POST /v1/products/{product_id}/tenants/{tenant_id}/notify/send`
@@ -219,11 +239,13 @@ notify-dispatch --loop` o un worker). Sin él, los mensajes se quedan **En cola*
 
 ## Conviene saber {#good-to-know}
 
-- Solo correo electrónico: ni SMS ni push, ni archivos adjuntos, ni dirección de remitente por
-  producto.
+- Solo correo electrónico y la [bandeja de entrada](help:notifications#inbox) dentro de la app: ni
+  SMS ni push, ni archivos adjuntos, ni dirección de remitente por producto.
 - No hay enlace para darse de baja ni cabecera `List-Unsubscribe`; las bajas solo funcionan con las
   preferencias y solo para direcciones que pertenecen a usuarios.
-- Aún no hay límite de frecuencia de envío por inquilino.
+- Cada inquilino puede enviar como máximo 1000 notificaciones en cualquier hora móvil (ajuste del
+  servidor `notify.tenant_send_limit_per_hour`); las demás se rechazan con **Demasiadas
+  solicitudes**. Las invitaciones y los correos de la cuenta no cuentan.
 - Consulta [Limitaciones conocidas](help:limitations).
 
 ## Solución de problemas {#troubleshooting}

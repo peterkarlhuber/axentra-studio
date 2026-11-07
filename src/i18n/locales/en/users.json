@@ -74,5 +74,43 @@
     "tenantsCaption": "Tenant memberships",
     "noProducts": "No product roles you can see",
     "noTenants": "No tenant memberships you can see"
+  },
+  "identities": {
+    "title": "Single sign-on identities",
+    "description": "Accounts at identity providers that sign in as this user. Each one is identified by the provider's issuer and the subject, the user's ID at the provider.",
+    "provider": "Provider (issuer)",
+    "providerHelp": "Choose a configured provider or enter its issuer URL exactly as the server configures it.",
+    "providerHelpFree": "The identity provider's issuer URL, exactly as the server's single sign-on settings name it.",
+    "providerInfo": "Axentra matches a sign-in by issuer and subject. A value that differs only slightly (for example a missing slash at the end) creates an identity that never signs in.",
+    "subject": "Subject",
+    "subjectHelp": "The user's ID at the provider (the sub claim), not the email address.",
+    "email": "Email reported",
+    "noEmail": "None",
+    "linked": "Linked",
+    "empty": "No single sign-on identities",
+    "emptyPassword": "This user signs in with a password.",
+    "link": "Link identity",
+    "linkTitle": "Link a single sign-on identity",
+    "linkDescription": "The user can then sign in with this account at the provider. Use it to correct accounts after a migration or an import.",
+    "linkedToast": "Identity linked",
+    "unlink": "Unlink identity",
+    "unlinkNamed": "Unlink the identity at {{provider}}",
+    "unlinkTitle": "Unlink identity?",
+    "unlinkBody": "{{name}} can no longer sign in with this account at {{provider}}, and all of the user's sessions end immediately. The user's last way to sign in cannot be unlinked.",
+    "unlinked_one": "Identity unlinked, {{count}} session ended",
+    "unlinked_other": "Identity unlinked, {{count}} sessions ended"
+  },
+  "external": {
+    "open": "Add single sign-on user",
+    "title": "Add a single sign-on user",
+    "description": "Creates an account that signs in through an identity provider, for migrations and imports. The user gets no password and no memberships: add the user to tenants afterwards.",
+    "submit": "Add user",
+    "nameHelp": "Optional. Shown in Studio and in member lists.",
+    "email": "Email address (optional)",
+    "emailHelp": "Leave it empty for a user without an email address.",
+    "emailInfo": "The address becomes the user's email address only if the provider verified it. Otherwise the user has no address and the value is only kept on the identity for reference. Users without an address cannot accept invitations.",
+    "verified": "The provider verified this address",
+    "verifiedHelp": "Tick it only if the identity provider confirmed that the address belongs to this user.",
+    "created": "User added"
   }
 }

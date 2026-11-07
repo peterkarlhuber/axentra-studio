@@ -215,5 +215,32 @@
     "oldestQueuedLabel": "Sobre as mensagens na fila",
     "oldestQueued": "Um processo dispatcher separado entrega as mensagens. Se este tempo continuar aumentando, nenhum dispatcher está em execução.",
     "scope": "As categorias desativadas para o produto inteiro continuam desativadas em todos os tenants. Uma configuração de tenant só pode desativar mais categorias."
+  },
+  "inbox": {
+    "title": "Caixa de entrada",
+    "description": "Suas notificações no app deste produto, das mais recentes para as mais antigas. Abrir uma notificação a marca como lida.",
+    "notification": "Notificação",
+    "unreadMark": "Não lida:",
+    "noSubject": "(sem assunto)",
+    "received": "Recebida",
+    "markReadNamed": "Marcar “{{subject}}” como lida",
+    "openNamed": "Abrir “{{subject}}”",
+    "unreadCount_many": "{{count}} não lidas",
+    "unreadCount_one": "{{count}} não lida",
+    "unreadCount_other": "{{count}} não lidas",
+    "markAll": "Marcar todas como lidas",
+    "markedAll_many": "{{count}} notificações marcadas como lidas",
+    "markedAll_one": "{{count}} notificação marcada como lida",
+    "markedAll_other": "{{count}} notificações marcadas como lidas",
+    "scope": "Tenant",
+    "productWide": "Todos os tenants e o produto",
+    "scopeHelp": "Mostrar só as notificações de um tenant.",
+    "unreadOnly": "Só não lidas",
+    "empty": "Nenhuma notificação ainda",
+    "emptyUnread": "Nenhuma notificação não lida",
+    "emptyBody": "As notificações que este produto envia para você no app aparecem aqui.",
+    "detailSubtitle": "Notificação no app",
+    "tenant": "Tenant",
+    "noTenant": "Nenhum (produto inteiro)"
   }
 }

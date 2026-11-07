@@ -24,6 +24,7 @@ export const queryKeys = {
   user: (userId: string) => ['users', userId] as const,
   userMemberships: (userId: string) => ['users', userId, 'memberships'] as const,
   userSessions: (userId: string) => ['users', userId, 'sessions'] as const,
+  userIdentities: (userId: string) => ['users', userId, 'identities'] as const,
   roles: (productId: string) => ['products', productId, 'roles'] as const,
   productPermissions: (productId: string, includeRetired = false) =>
     ['products', productId, 'permissions', { includeRetired }] as const,
@@ -45,6 +46,12 @@ export const queryKeys = {
     ['products', productId, 'notify', 'message', messageId] as const,
   notifyMailbox: (productId: string, params?: unknown) =>
     ['products', productId, 'notify', 'mailbox', params ?? {}] as const,
+  /** Prefix of every inbox query of a product (list pages and unread counts). */
+  notifyInbox: (productId: string) => ['products', productId, 'notify', 'inbox'] as const,
+  notifyInboxList: (productId: string, params?: unknown) =>
+    ['products', productId, 'notify', 'inbox', 'list', params ?? {}] as const,
+  notifyInboxUnread: (productId: string, tenantId?: string) =>
+    ['products', productId, 'notify', 'inbox', 'unread', tenantId ?? ''] as const,
   notifyStats: (productId: string) => ['products', productId, 'notify', 'stats'] as const,
   notifyPreferences: (productId: string, tenantId?: string) =>
     ['products', productId, 'notify', 'preferences', tenantId ?? ''] as const,

@@ -185,6 +185,24 @@ A category you turn off for the whole product stays off in every tenant; a tenan
 off more, not turn categories back on. Categories appear once the product has templates in them.
 Setting preferences for a tenant needs `notify:preferences` there (members and admins have it).
 
+## Your inbox {#inbox}
+
+Some notifications arrive inside the app instead of by email: messages of templates with the channel
+`inbox`, which your product sends to you as a user. Open [Inbox](app:inbox) to read them. The
+navigation entry shows how many are unread and refreshes the count every minute.
+
+- **Tenant** narrows the list to one tenant; **All tenants and the product** shows everything of
+  this product.
+- **Only unread** hides the notifications you have read.
+- Opening a notification shows its text and marks it as read. The envelope button marks one as read
+  without opening it, and **Mark all as read** marks every unread notification in the chosen scope.
+
+Everyone who belongs to the product has an inbox; showing one tenant needs `notify:preferences`
+there (members and admins have it). Your [preferences](help:notifications#preferences) apply to the
+inbox as well. The text of sensitive templates is never shown, and it is erased after the content
+retention, as for emails. Studio's template editor creates email templates only; inbox templates are
+created over the API.
+
 ## For administrators and developers {#developers}
 
 - **Sending from your product**: `POST /v1/products/{product_id}/tenants/{tenant_id}/notify/send`
@@ -205,10 +223,13 @@ Setting preferences for a tenant needs `notify:preferences` there (members and a
 
 ## Good to know {#good-to-know}
 
-- Email only: no SMS or push, no attachments, no per-product sender address.
+- Email and the in-app [inbox](help:notifications#inbox) only: no SMS or push, no attachments, no
+  per-product sender address.
 - No unsubscribe link or `List-Unsubscribe` header; opt-outs work only through preferences and only
   for addresses that belong to users.
-- No per-tenant send rate limit yet.
+- Each tenant may send at most 1000 notifications in any rolling hour (server setting
+  `notify.tenant_send_limit_per_hour`); more are refused with **Too many requests**. Invitations and
+  account emails do not count.
 - See [Known limitations](help:limitations).
 
 ## Troubleshooting {#troubleshooting}

@@ -73,9 +73,11 @@ export function JobsPage() {
   const can = useCan();
   const canManage = can('jobs:manage');
   const { data: me } = useMe();
-  // Tenant members without jobs:manage may enqueue the kinds opened to them with an
-  // enqueue_permission (listed per tenant by GET .../jobs/kinds).
-  const tenantCaller = !canManage && Boolean(productAccess(me, productId)?.tenants.length);
+  // Operators and tenant members without jobs:manage may enqueue the kinds opened to them with
+  // an enqueue_permission (listed per tenant by GET .../jobs/kinds). `/v1/me` lists only the
+  // tenants with a tenant role, so an operator counts through its product role.
+  const access = productAccess(me, productId);
+  const tenantCaller = !canManage && Boolean(access?.role || access?.tenants.length);
   const canEnqueue = canManage || tenantCaller;
   const navigate = useNavigate();
   const queryClient = useQueryClient();

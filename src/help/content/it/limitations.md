@@ -10,16 +10,19 @@ Studio, altre dal server; a volte l'API del server offre più di quanto offra St
 
 ## Utenti e accesso {#users-sign-in}
 
-- **In Studio non si creano account.** Gli account nascono dalla configurazione iniziale,
-  dall'accettazione di un invito o dal primo accesso tramite single sign-on. Invita invece le
-  persone in un tenant.
-- **Nessun ripristino della password, verifica dell'email o autenticazione a due fattori** in
-  Axentra stesso. Se usi il single sign-on, il tuo provider di identità può imporre
-  l'autenticazione a due fattori.
+- **Studio crea solo account single sign-on.** Gli account nascono dalla configurazione iniziale,
+  dall'accettazione di un invito, dal primo accesso tramite single sign-on oppure da un
+  amministratore della piattaforma che aggiunge un [utente single
+  sign-on](help:users#external-user). Non esiste un modulo per gli account con password: invita
+  invece le persone in un tenant.
+- **Nessuna autenticazione a due fattori** in Axentra stesso. Se usi il single sign-on, il tuo
+  provider di identità può imporla. Il ripristino della password e la verifica dell'email richiedono
+  il modulo `notify`, che invia i relativi link.
 - **I provider di single sign-on si configurano solo nella configurazione del server.** Studio non
   può elencare, aggiungere o disattivare provider di identità.
 - **Gli account senza indirizzo email** (possibili con alcune configurazioni di single sign-on) non
-  possono essere creati o collegati in Studio.
+  possono accettare inviti, perché gli inviti sono vincolati a un indirizzo. Aggiungili direttamente
+  ai tenant.
 - **Nessuna esportazione o cancellazione dei dati di una persona.** Le richieste relative alla
   protezione dei dati devono essere gestite dall'operatore su utenti, record, backup e log.
 - **Il limite dei tentativi di accesso è per minuto.** Chiunque conosca un indirizzo email può
@@ -76,8 +79,10 @@ Studio, altre dal server; a volte l'API del server offre più di quanto offra St
 
 ## Notifiche {#notifications}
 
-- **Solo email.** Non esistono canali SMS o push.
-- **Non esiste ancora un limite di invio per tenant** per le notifiche.
+- **Solo email e posta in arrivo nell'app.** Non esistono canali SMS o push, e l'editor dei modelli
+  di Studio crea solo modelli email (i modelli per la posta in arrivo si creano tramite l'API).
+- **L'invio è limitato per tenant**: per impostazione predefinita 1000 notifiche in qualsiasi ora
+  mobile (`notify.tenant_send_limit_per_hour`); le altre vengono rifiutate con **Troppe richieste**.
 
 ## Studio e il server {#studio-server}
 

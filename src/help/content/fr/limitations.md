@@ -11,16 +11,20 @@ Studio.
 
 ## Utilisateurs et connexion {#users-sign-in}
 
-- **Aucun compte n’est créé dans le Studio.** Les comptes proviennent de la première installation,
-  de l’acceptation d’une invitation ou de la première connexion par authentification unique.
-  Invite plutôt les personnes dans un locataire.
-- **Pas de réinitialisation de mot de passe, de vérification d’adresse e-mail ni
-  d’authentification à deux facteurs** dans Axentra lui-même. Si tu utilises l’authentification
-  unique, ton fournisseur d’identité peut imposer l’authentification à deux facteurs.
+- **Le Studio crée uniquement des comptes à authentification unique.** Les comptes proviennent de la
+  première installation, de l’acceptation d’une invitation, de la première connexion par
+  authentification unique, ou d’un administrateur de la plateforme qui ajoute un [utilisateur à
+  authentification unique](help:users#external-user). Il n’existe pas de formulaire pour les comptes
+  à mot de passe : invite plutôt les personnes dans un locataire.
+- **Pas d’authentification à deux facteurs** dans Axentra lui-même. Si tu utilises
+  l’authentification unique, ton fournisseur d’identité peut l’imposer. La réinitialisation du mot
+  de passe et la vérification de l’adresse e-mail nécessitent le module `notify`, qui envoie leurs
+  liens.
 - **Les fournisseurs d’authentification unique se configurent uniquement dans la configuration du
   serveur.** Le Studio ne peut ni lister, ni ajouter, ni désactiver de fournisseurs d’identité.
 - **Les comptes sans adresse e-mail** (possibles avec certaines configurations d’authentification
-  unique) ne peuvent pas être créés ni liés dans le Studio.
+  unique) ne peuvent pas accepter d’invitations, car les invitations sont liées à une adresse.
+  Ajoute-les directement aux locataires.
 - **Pas d’export ni d’effacement des données d’une personne.** Les demandes relatives à la
   protection des données doivent être traitées par l’opérateur, dans les utilisateurs, les
   enregistrements, les sauvegardes et les journaux.
@@ -81,8 +85,11 @@ Studio.
 
 ## Notifications {#notifications}
 
-- **E-mail uniquement.** Il n’existe pas de canaux SMS ni de notifications push.
-- **Pas encore de limite d’envoi par locataire** pour les notifications.
+- **E-mail et boîte de réception dans l’application uniquement.** Il n’existe pas de canaux SMS ni
+  de notifications push, et l’éditeur de modèles du Studio crée uniquement des modèles d’e-mail (les
+  modèles de boîte de réception se créent via l’API).
+- **L’envoi est limité par locataire** : par défaut 1000 notifications par heure glissante
+  (`notify.tenant_send_limit_per_hour`) ; les suivantes sont refusées avec **Trop de requêtes**.
 
 ## Le Studio et le serveur {#studio-server}
 

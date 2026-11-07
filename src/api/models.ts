@@ -48,6 +48,9 @@ export type InvitationRow = Invitation | ProductInvitation;
 /** A just-created invitation of either kind (token returned once). */
 export type NewInvitationLike = NewInvitation | NewProductInvitation;
 export type UserMemberships = Schemas['UserMemberships'];
+export type ExternalIdentity = Schemas['ExternalIdentity'];
+export type ExternalUserInput = Schemas['ExternalUserCreate'];
+export type IdentityLinkInput = Schemas['IdentityLink'];
 export type EnqueueableKinds = Schemas['EnqueueableKinds'];
 export type SearchKindCount = Schemas['KindCount'];
 export type PermissionDeclareInput = Schemas['ProductPermissionDeclare'];
@@ -113,6 +116,7 @@ export type NotifyMailboxEntry = Schemas['MailboxEntry'];
 export type NotifyStats = Schemas['DeliveryStats'];
 export type NotifyStatusCounts = Schemas['StatusCounts'];
 export type NotifyPreferences = Schemas['Preferences'];
+export type InboxEntry = Schemas['InboxEntry'];
 
 // ---- Events & Jobs (module `events`) ---------------------------------------------------
 export type Job = Schemas['Job'];

@@ -48,5 +48,8 @@
   "acceptInvitation": "Einladung annehmen",
   "monitoring": "Monitoring",
   "notifyNewTemplate": "Neue Vorlage",
-  "help": "Hilfecenter"
+  "help": "Hilfecenter",
+  "inbox": "Posteingang",
+  "unreadCount_one": "{{count}} ungelesen",
+  "unreadCount_other": "{{count}} ungelesen"
 }

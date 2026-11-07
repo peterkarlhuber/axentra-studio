@@ -48,5 +48,9 @@
   "acceptInvitation": "Aceptar invitación",
   "monitoring": "Monitorización",
   "notifyNewTemplate": "Nueva plantilla",
-  "help": "Centro de ayuda"
+  "help": "Centro de ayuda",
+  "inbox": "Bandeja de entrada",
+  "unreadCount_many": "{{count}} sin leer",
+  "unreadCount_one": "{{count}} sin leer",
+  "unreadCount_other": "{{count}} sin leer"
 }

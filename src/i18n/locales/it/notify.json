@@ -215,5 +215,32 @@
     "oldestQueuedLabel": "Informazioni sui messaggi in coda",
     "oldestQueued": "Un processo dispatcher separato consegna i messaggi. Se questo tempo continua a crescere, nessun dispatcher è in esecuzione.",
     "scope": "Le categorie disattivate per l'intero prodotto restano disattivate in ogni tenant. Un'impostazione del tenant può solo disattivare altre categorie."
+  },
+  "inbox": {
+    "title": "Posta in arrivo",
+    "description": "Le tue notifiche in app di questo prodotto, dalle più recenti. Aprire una notifica la segna come letta.",
+    "notification": "Notifica",
+    "unreadMark": "Da leggere:",
+    "noSubject": "(senza oggetto)",
+    "received": "Ricevuta",
+    "markReadNamed": "Segna “{{subject}}” come letta",
+    "openNamed": "Apri “{{subject}}”",
+    "unreadCount_many": "{{count}} da leggere",
+    "unreadCount_one": "{{count}} da leggere",
+    "unreadCount_other": "{{count}} da leggere",
+    "markAll": "Segna tutte come lette",
+    "markedAll_many": "{{count}} notifiche segnate come lette",
+    "markedAll_one": "{{count}} notifica segnata come letta",
+    "markedAll_other": "{{count}} notifiche segnate come lette",
+    "scope": "Tenant",
+    "productWide": "Tutti i tenant e il prodotto",
+    "scopeHelp": "Mostra solo le notifiche di un tenant.",
+    "unreadOnly": "Solo da leggere",
+    "empty": "Ancora nessuna notifica",
+    "emptyUnread": "Nessuna notifica da leggere",
+    "emptyBody": "Qui compaiono le notifiche che questo prodotto ti invia nell'app.",
+    "detailSubtitle": "Notifica in app",
+    "tenant": "Tenant",
+    "noTenant": "Nessuno (intero prodotto)"
   }
 }

@@ -111,5 +111,15 @@
       "title": "Link inválido ou expirado",
       "message": "O link é inválido, expirou ou já foi usado. Solicite um novo."
     }
+  },
+  "reasons": {
+    "query_too_expensive": {
+      "title": "A pesquisa demorou demais",
+      "message": "O servidor interrompeu esta pesquisa porque ela demorou demais, geralmente porque os termos correspondem a uma parte muito grande do índice. Use termos mais específicos ou um filtro de tipo e pesquise de novo."
+    },
+    "last_sign_in_method": {
+      "title": "Última forma de entrar do usuário",
+      "message": "Esta identidade é a única forma de o usuário entrar: ele não tem senha nem outra identidade. Vincule outra identidade primeiro ou, em vez disso, desabilite o usuário."
+    }
   }
 }

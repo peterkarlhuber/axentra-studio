@@ -215,5 +215,30 @@
     "oldestQueuedLabel": "Über wartende Nachrichten",
     "oldestQueued": "Ein separater Dispatcher-Prozess stellt die Nachrichten zu. Wenn diese Zeit weiter wächst, läuft kein Dispatcher.",
     "scope": "Für das ganze Produkt abbestellte Kategorien bleiben in jedem Mandanten abbestellt. Eine Mandanten-Einstellung kann nur zusätzliche Kategorien abbestellen."
+  },
+  "inbox": {
+    "title": "Posteingang",
+    "description": "Deine In-App-Benachrichtigungen aus diesem Produkt, die neuesten zuerst. Beim Öffnen wird eine Benachrichtigung als gelesen markiert.",
+    "notification": "Benachrichtigung",
+    "unreadMark": "Ungelesen:",
+    "noSubject": "(kein Betreff)",
+    "received": "Erhalten",
+    "markReadNamed": "„{{subject}}“ als gelesen markieren",
+    "openNamed": "„{{subject}}“ öffnen",
+    "unreadCount_one": "{{count}} ungelesen",
+    "unreadCount_other": "{{count}} ungelesen",
+    "markAll": "Alle als gelesen markieren",
+    "markedAll_one": "{{count}} Benachrichtigung als gelesen markiert",
+    "markedAll_other": "{{count}} Benachrichtigungen als gelesen markiert",
+    "scope": "Mandant",
+    "productWide": "Alle Mandanten und das Produkt",
+    "scopeHelp": "Nur die Benachrichtigungen eines Mandanten anzeigen.",
+    "unreadOnly": "Nur ungelesene",
+    "empty": "Noch keine Benachrichtigungen",
+    "emptyUnread": "Keine ungelesenen Benachrichtigungen",
+    "emptyBody": "Hier erscheinen Benachrichtigungen, die dir dieses Produkt in der App schickt.",
+    "detailSubtitle": "In-App-Benachrichtigung",
+    "tenant": "Mandant",
+    "noTenant": "Keiner (produktweit)"
   }
 }

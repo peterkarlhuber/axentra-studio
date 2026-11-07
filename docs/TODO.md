@@ -11,11 +11,12 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
-Last full review: 2026-11-06 against master at 4f4b762 (TODO abatement round). Before that:
-2026-11-06 against `715da0d` (TODO abatement round 2). Backend pin
-`api/BACKEND_REF`: the round-2 Axentra commit (password reset and email verification, search
-`match=prefix`, usage batch, on top of round 1's product invitations, memberships, job and search
-kinds, password policy and key states; additive `/v1` changes, see the backend's CHANGELOG). It must
+Last full review: 2026-11-07 against master at 6422691 (TODO abatement round 5). Before that:
+2026-11-06 against `4f4b762` (TODO abatement round 4), 2026-11-06 against `715da0d` (TODO
+abatement round 2). Backend pin
+`api/BACKEND_REF`: Axentra `fcacc25` (TODO round 4: users without email and their identities, the
+caller's inbox, `GET /v1/me?tenants=`, search batches and cost limits, on top of round 2's password
+reset and email verification; additive `/v1` changes, see the backend's CHANGELOG). It must
 point to a pushed Axentra commit before CI can run, see "The pinned backend commit must be
 pushed". Before that: 2026-11-05 against `d124ae4` (quality round 3 close-out) with backend
 `cfa80dc`.
@@ -78,12 +79,16 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## P3
 
-- **No views yet for the backend's round-4 additions.** Axentra's TODO abatement round 4 added
-  users without an email address and their external identities (`POST /v1/users/external`,
-  `.../identities`), the caller's inbox (`.../notify/inbox/me`), search batches, delete by kind and
-  `metadata` filters, and `GET /v1/me?tenants=memberships` (smaller responses for operators with
-  many tenants). Studio uses none of them yet: they need `api/BACKEND_REF` moved to a pushed Axentra
-  commit that contains them, so that the generated contract types include them.
+- **Search: no metadata filter and no "remove every document of a kind".** Axentra's round 4
+  added a `metadata` filter to `GET .../search` and `DELETE .../search/documents/{kind}`; Studio's
+  search page offers neither yet (batch indexing is for product code and needs no view). The other
+  round-4 additions have their views (single sign-on users and identities, the inbox,
+  `GET /v1/me?tenants=memberships`, the `query_too_expensive` and `last_sign_in_method` reasons).
+- **The template editor creates email templates only.** Axentra accepts the channel `inbox` for
+  templates, and Studio shows the user's own inbox, but the editor's **Channel** field is fixed to
+  email, and the test send offers addresses, which an inbox template refuses (`422`). Inbox
+  templates are created over the API until the editor offers the channel (with a test send to a
+  user only).
 - **Dependency updates: what is held back and why** (dependency round 2026-11-05). Done in the PR
   that updates this entry: GitHub Actions v7 (replaced #18 to #21), marked 18.1.2 and Playwright
   1.64.1 without the `playwright-core` override (replaced #22), ESLint 10 (replaced #24 and #26),
@@ -145,6 +150,11 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## Recently fixed
 
+- **TODO abatement round 5 (2026-11-07).** Views for Axentra's round-4 additions: platform
+  administrators add single sign-on users (with or without email) and link and unlink identities on
+  a user's page; the **Inbox** page with an unread count in the sidebar; `GET /v1/me` asks only for
+  tenant memberships; `query_too_expensive` and `last_sign_in_method` have their own texts and help
+  sections. Covered by Vitest and `e2e/inbox-identities.spec.ts`.
 - **TODO abatement round 2 (2026-11-06).** The record, file, event and webhook delivery drawers
   are in the interactive a11y harness; dialogs ask before discarding unsaved input and start empty
   again; native form validation shows Studio's translated messages in place of the browser bubble;

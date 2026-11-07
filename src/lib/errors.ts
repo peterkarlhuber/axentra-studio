@@ -16,6 +16,19 @@ export interface DescribedError {
 export function describeError(t: TFunction, raw: unknown): DescribedError {
   const error = toApiError(raw);
   const key = `errors:codes.${error.code}`;
+  // A `reason` with its own text (errors:reasons) is more precise than the code's general text,
+  // e.g. `422 validation_failed` with `reason: query_too_expensive` for a cancelled search.
+  const reasonKey = error.reason ? `errors:reasons.${error.reason}` : '';
+  const reasonTitle = reasonKey ? t(`${reasonKey}.title`, { defaultValue: '' }) : '';
+  if (reasonTitle) {
+    return {
+      error,
+      title: reasonTitle,
+      message: t(`${reasonKey}.message`),
+      requestId: error.requestId,
+      issues: [],
+    };
+  }
   const title = t(`${key}.title`, { defaultValue: t('errors:codes.unknown.title') });
   // "Correct the fields marked below" would point at nothing when the server names no field
   // (for example a password policy refusal): then the message only points to the server text.

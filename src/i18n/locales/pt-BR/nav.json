@@ -48,5 +48,9 @@
   "acceptInvitation": "Aceitar convite",
   "monitoring": "Monitoramento",
   "notifyNewTemplate": "Novo modelo",
-  "help": "Central de ajuda"
+  "help": "Central de ajuda",
+  "inbox": "Caixa de entrada",
+  "unreadCount_many": "{{count}} não lidas",
+  "unreadCount_one": "{{count}} não lida",
+  "unreadCount_other": "{{count}} não lidas"
 }

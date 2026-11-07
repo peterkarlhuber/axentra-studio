@@ -1,12 +1,14 @@
-import { Search, Users } from 'lucide-react';
+import { Search, UserPlus, Users } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { usersApi } from '@/api/endpoints';
 import type { User } from '@/api/models';
 import { queryKeys } from '@/api/queryKeys';
+import { useIsPlatformAdmin } from '@/app/auth';
 import { useProductScope } from '@/app/contexts';
 import {
+  Button,
   Card,
   DataTable,
   EmptyState,
@@ -17,14 +19,20 @@ import {
   StatusPill,
   Time,
   layout,
+  useToast,
   type Column,
 } from '@/components/ui';
+import { ExternalUserDialog } from './ExternalUserDialog';
 import { useCursorList } from '@/lib/useCursorList';
 import { useDebouncedValue } from '@/lib/useDebouncedValue';
 
 export function UsersPage() {
   const { t } = useTranslation('users');
   const { productId } = useProductScope();
+  const isAdmin = useIsPlatformAdmin();
+  const navigate = useNavigate();
+  const toast = useToast();
+  const [creating, setCreating] = useState(false);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<'' | 'active' | 'disabled'>('');
   const q = useDebouncedValue(search.trim(), 300);
@@ -69,7 +77,18 @@ export function UsersPage() {
 
   return (
     <div className={layout.stack}>
-      <PageHeader title={t('title')} description={t('description')} help="users" />
+      <PageHeader
+        title={t('title')}
+        description={t('description')}
+        help="users"
+        actions={
+          isAdmin ? (
+            <Button icon={<UserPlus />} onClick={() => setCreating(true)}>
+              {t('external.open')}
+            </Button>
+          ) : null
+        }
+      />
       <Card flush>
         <div className={layout.toolbar} role="search">
           <FormField label={t('search')}>
@@ -107,6 +126,17 @@ export function UsersPage() {
           {...tableProps}
         />
       </Card>
+      {isAdmin ? (
+        <ExternalUserDialog
+          open={creating}
+          onOpenChange={setCreating}
+          onCreated={(user) => {
+            setCreating(false);
+            toast.success(t('external.created'));
+            void navigate(`/p/${productId}/users/${encodeURIComponent(user.id)}`);
+          }}
+        />
+      ) : null}
     </div>
   );
 }

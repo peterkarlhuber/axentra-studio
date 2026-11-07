@@ -10,15 +10,18 @@ do servidor; às vezes a API do servidor oferece mais do que o Studio.
 
 ## Usuários e login {#users-sign-in}
 
-- **Nenhuma conta é criada no Studio.** As contas vêm da configuração inicial, do aceite de um
-  convite ou do primeiro login por login único. Em vez disso, convide as pessoas para um tenant.
-- **Sem redefinição de senha, verificação de e-mail ou autenticação de dois fatores** no próprio
-  Axentra. Se você usa login único, o seu provedor de identidade pode exigir a autenticação de dois
-  fatores.
+- **O Studio cria apenas contas de login único.** As contas vêm da configuração inicial, do aceite
+  de um convite, do primeiro login por login único ou de um administrador da plataforma que adiciona
+  um [usuário de login único](help:users#external-user). Não há formulário para contas com senha: em
+  vez disso, convide as pessoas para um tenant.
+- **Sem autenticação de dois fatores** no próprio Axentra. Se você usa login único, o seu provedor
+  de identidade pode exigi-la. A redefinição de senha e a verificação de e-mail precisam do módulo
+  `notify`, que envia os links.
 - **Os provedores de login único só são configurados na configuração do servidor.** O Studio não
   pode listar, adicionar nem desativar provedores de identidade.
 - **Contas sem endereço de e-mail** (possíveis em algumas configurações de login único) não podem
-  ser criadas nem vinculadas no Studio.
+  aceitar convites, porque os convites são vinculados a um endereço. Adicione-as diretamente aos
+  tenants.
 - **Sem exportação nem eliminação dos dados de uma pessoa.** As solicitações de proteção de dados
   precisam ser tratadas pelo operador em usuários, registros, backups e logs.
 - **O bloqueio de tentativas de login é por minuto.** Qualquer pessoa que conheça um endereço de
@@ -74,8 +77,11 @@ do servidor; às vezes a API do servidor oferece mais do que o Studio.
 
 ## Notificações {#notifications}
 
-- **Somente e-mail.** Não há canais de SMS ou push.
-- **Ainda não há limite de envio por tenant** para notificações.
+- **Somente e-mail e a caixa de entrada do app.** Não há canais de SMS ou push, e o editor de
+  modelos do Studio cria apenas modelos de e-mail (modelos de caixa de entrada são criados pela
+  API).
+- **O envio é limitado por tenant**: por padrão, 1000 notificações em qualquer hora móvel
+  (`notify.tenant_send_limit_per_hour`); as demais são recusadas com **Muitas requisições**.
 
 ## O Studio e o servidor {#studio-server}
 

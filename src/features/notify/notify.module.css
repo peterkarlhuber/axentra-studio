@@ -151,3 +151,41 @@
   font-weight: var(--ax-weight-semibold);
   margin-bottom: var(--ax-space-2);
 }
+/* ---- Inbox ---- */
+.unread {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ax-space-2);
+  font-weight: var(--ax-weight-semibold);
+}
+.unreadDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--ax-radius-full);
+  background: var(--ax-color-primary);
+  /* Not only color: the dot is a shape, and the row says "Unread" to screen readers. */
+  align-self: center;
+}
+.excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-text-sm);
+  max-width: 60ch;
+}
+.rowActions {
+  display: inline-flex;
+  gap: var(--ax-space-1);
+}
+.message {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: inherit;
+  line-height: 1.55;
+}

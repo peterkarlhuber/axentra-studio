@@ -48,5 +48,9 @@
   "acceptInvitation": "Accetta invito",
   "monitoring": "Monitoraggio",
   "notifyNewTemplate": "Nuovo modello",
-  "help": "Centro assistenza"
+  "help": "Centro assistenza",
+  "inbox": "Posta in arrivo",
+  "unreadCount_many": "{{count}} da leggere",
+  "unreadCount_one": "{{count}} da leggere",
+  "unreadCount_other": "{{count}} da leggere"
 }

@@ -30,11 +30,30 @@ Apri [Utenti](app:users). Usa **Cerca utenti** per filtrare per nome o indirizzo
 **Stato** per mostrare gli utenti **Attivo** o **Disattivato**. Seleziona un nome per aprire la
 pagina dell'utente.
 
-Studio non crea account. Gli account vengono creati quando il primo amministratore completa la
+A parte gli [utenti single sign-on](help:users#external-user), Studio non crea account. Gli account vengono creati quando il primo amministratore completa la
 configurazione iniziale, quando qualcuno accede per la prima volta tramite single sign-on (se le
 impostazioni del provider di identità consentono la registrazione, o se è aperto un invito per
 quell'indirizzo email), oppure dal codice di un prodotto che integra Axentra. Vedi
 [accesso](help:signing-in).
+
+## Aggiungere un utente single sign-on {#external-user}
+
+Per migrazioni e importazioni, gli amministratori della piattaforma creano account che accedono solo
+tramite un provider di identità, con o senza indirizzo email.
+
+1. Apri [Utenti](app:users) e scegli **Aggiungi utente single sign-on**.
+2. Inserisci il **Provider (emittente)**: l'URL emittente del provider di identità, esattamente come
+   compare nelle impostazioni single sign-on del server. Studio propone i provider configurati.
+3. Inserisci il **Soggetto**: l'ID dell'utente presso il provider (il claim `sub`), non l'indirizzo
+   email.
+4. Se vuoi, compila **Nome** e **Indirizzo email (facoltativo)**. Seleziona **Il provider ha
+   verificato questo indirizzo** solo se il provider ha confermato che l'indirizzo appartiene
+   all'utente.
+5. Scegli **Aggiungi utente**. Studio apre la pagina del nuovo utente.
+
+L'indirizzo email diventa quello dell'utente solo se è verificato; altrimenti l'utente non ha un
+indirizzo (vedi [utenti senza indirizzo email](help:users#no-email)). Il nuovo utente non ha
+password né appartenenze: aggiungilo ai tenant nella scheda **Membri** del tenant.
 
 ## La pagina dell'utente {#profile}
 
@@ -72,6 +91,37 @@ dell'utente al posto dell'indirizzo. Questi utenti:
 - non possono accettare inviti, perché gli inviti sono legati a un indirizzo;
 - possono comunque essere aggiunti direttamente ai tenant da qualcuno che li vede (per esempio un
   amministratore della piattaforma).
+
+## Identità single sign-on {#identities}
+
+La scheda **Identità single sign-on** nella pagina di un utente elenca gli account presso provider
+di identità che accedono come questo utente, con le colonne **Provider (emittente)**, **Soggetto**,
+**Email comunicata** (l'indirizzo inviato dal provider) e **Collegata**. Axentra collega un'identità
+al primo accesso single sign-on dell'utente, oppure quando un amministratore della piattaforma la
+collega qui.
+
+> [!IMPORTANT]
+> La scheda richiede `users:manage`. Solo gli amministratori della piattaforma collegano e
+> scollegano identità.
+
+### Collegare un'identità {#link-identity}
+
+1. Apri la pagina dell'utente e scegli **Collega identità** nella scheda **Identità single
+   sign-on**.
+2. Inserisci **Provider (emittente)** e **Soggetto**, poi scegli **Collega identità**.
+
+Poi l'utente può accedere con quell'account presso il provider. Un'identità appartiene a un solo
+utente: **Conflitto** significa che è già collegata, a questo o a un altro utente.
+
+### Scollegare un'identità {#unlink-identity}
+
+1. Nella scheda **Identità single sign-on**, scegli il pulsante per scollegare accanto all'identità.
+2. Leggi l'avviso e scegli **Scollega identità**.
+
+Tutte le sessioni dell'utente terminano subito, perché una sessione non registra con quale identità
+è iniziata. L'ultimo modo di accesso di un utente non può essere scollegato: se l'utente non ha
+password né altre identità, Studio mostra **Ultimo modo di accesso dell'utente**. Collega prima
+un'altra identità oppure [disattiva l'utente](help:users#disable).
 
 ## Disconnettere un utente ovunque {#sign-out}
 
@@ -150,3 +200,7 @@ suoi tenant. Aggiungilo o invitalo, vedi [membri e inviti](help:members-invitati
 **Un utente disattivato compare ancora nei tenant.** La disattivazione non rimuove le appartenenze.
 Rimuovile nella scheda **Membri** del tenant se l'accesso non deve tornare quando l'utente viene
 riattivato.
+
+**Conflitto quando aggiungi un utente single sign-on o colleghi un'identità.** L'identità è già
+collegata a un utente, oppure l'indirizzo email verificato appartiene a un altro utente. Cerca
+quell'utente oppure controlla provider e soggetto.

@@ -111,5 +111,15 @@
       "title": "Enlace no válido o caducado",
       "message": "El enlace no es válido, ha caducado o ya se usó. Solicita uno nuevo."
     }
+  },
+  "reasons": {
+    "query_too_expensive": {
+      "title": "La búsqueda tardó demasiado",
+      "message": "El servidor detuvo esta búsqueda porque tardó demasiado, normalmente porque los términos coinciden con una parte muy grande del índice. Usa términos más específicos o un filtro de tipo y vuelve a buscar."
+    },
+    "last_sign_in_method": {
+      "title": "Última forma de iniciar sesión del usuario",
+      "message": "Esta identidad es la única forma en que el usuario puede iniciar sesión: no tiene contraseña ni otra identidad. Vincula primero otra identidad o, en su lugar, desactiva al usuario."
+    }
   }
 }

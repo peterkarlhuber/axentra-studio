@@ -74,5 +74,43 @@
     "tenantsCaption": "Mitgliedschaften in Mandanten",
     "noProducts": "Keine Produktrollen, die du sehen kannst",
     "noTenants": "Keine Mitgliedschaften in Mandanten, die du sehen kannst"
+  },
+  "identities": {
+    "title": "Single-Sign-on-Identitäten",
+    "description": "Konten bei Identitätsanbietern, die sich als dieser Benutzer anmelden. Jedes ist durch den Aussteller (Issuer) des Anbieters und das Subject bestimmt, die ID des Benutzers beim Anbieter.",
+    "provider": "Anbieter (Issuer)",
+    "providerHelp": "Wähle einen konfigurierten Anbieter oder gib seine Issuer-URL genau so ein, wie der Server sie konfiguriert.",
+    "providerHelpFree": "Die Issuer-URL des Identitätsanbieters, genau so, wie sie in den Single-Sign-on-Einstellungen des Servers steht.",
+    "providerInfo": "Axentra ordnet eine Anmeldung über Issuer und Subject zu. Ein nur leicht abweichender Wert (zum Beispiel ein fehlender Schrägstrich am Ende) ergibt eine Identität, mit der nie jemand angemeldet wird.",
+    "subject": "Subject (Benutzer-ID)",
+    "subjectHelp": "Die ID des Benutzers beim Anbieter (der Claim „sub“), nicht die E-Mail-Adresse.",
+    "email": "Gemeldete E-Mail",
+    "noEmail": "Keine",
+    "linked": "Verknüpft",
+    "empty": "Keine Single-Sign-on-Identitäten",
+    "emptyPassword": "Dieser Benutzer meldet sich mit Passwort an.",
+    "link": "Identität verknüpfen",
+    "linkTitle": "Single-Sign-on-Identität verknüpfen",
+    "linkDescription": "Danach kann sich der Benutzer mit diesem Konto beim Anbieter anmelden. Nutze das, um Konten nach einer Migration oder einem Import zu korrigieren.",
+    "linkedToast": "Identität verknüpft",
+    "unlink": "Verknüpfung lösen",
+    "unlinkNamed": "Verknüpfung mit der Identität bei {{provider}} lösen",
+    "unlinkTitle": "Verknüpfung lösen?",
+    "unlinkBody": "{{name}} kann sich nicht mehr mit diesem Konto bei {{provider}} anmelden, und alle Sitzungen des Benutzers enden sofort. Die letzte Anmeldemöglichkeit eines Benutzers lässt sich nicht lösen.",
+    "unlinked_one": "Verknüpfung gelöst, {{count}} Sitzung beendet",
+    "unlinked_other": "Verknüpfung gelöst, {{count}} Sitzungen beendet"
+  },
+  "external": {
+    "open": "Single-Sign-on-Benutzer hinzufügen",
+    "title": "Single-Sign-on-Benutzer hinzufügen",
+    "description": "Legt ein Konto an, das sich über einen Identitätsanbieter anmeldet, für Migrationen und Importe. Der Benutzer erhält kein Passwort und keine Mitgliedschaften: Füge ihn danach zu Mandanten hinzu.",
+    "submit": "Benutzer hinzufügen",
+    "nameHelp": "Optional. Wird in Studio und in Mitgliederlisten angezeigt.",
+    "email": "E-Mail-Adresse (optional)",
+    "emailHelp": "Leer lassen für einen Benutzer ohne E-Mail-Adresse.",
+    "emailInfo": "Die Adresse wird nur dann zur E-Mail-Adresse des Benutzers, wenn der Anbieter sie bestätigt hat. Sonst hat der Benutzer keine Adresse, und der Wert wird nur zur Information bei der Identität gespeichert. Benutzer ohne Adresse können keine Einladungen annehmen.",
+    "verified": "Der Anbieter hat diese Adresse bestätigt",
+    "verifiedHelp": "Nur ankreuzen, wenn der Identitätsanbieter bestätigt hat, dass die Adresse zu diesem Benutzer gehört.",
+    "created": "Benutzer hinzugefügt"
   }
 }
