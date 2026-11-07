@@ -11,7 +11,8 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
-Last full review: 2026-11-06 against master at 715da0d (TODO abatement round). Backend pin
+Last full review: 2026-11-06 against master at 4f4b762 (TODO abatement round). Before that:
+2026-11-06 against `715da0d` (TODO abatement round 2). Backend pin
 `api/BACKEND_REF`: the round-2 Axentra commit (password reset and email verification, search
 `match=prefix`, usage batch, on top of round 1's product invitations, memberships, job and search
 kinds, password policy and key states; additive `/v1` changes, see the backend's CHANGELOG). It must
@@ -77,6 +78,12 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## P3
 
+- **No views yet for the backend's round-4 additions.** Axentra's TODO abatement round 4 added
+  users without an email address and their external identities (`POST /v1/users/external`,
+  `.../identities`), the caller's inbox (`.../notify/inbox/me`), search batches, delete by kind and
+  `metadata` filters, and `GET /v1/me?tenants=memberships` (smaller responses for operators with
+  many tenants). Studio uses none of them yet: they need `api/BACKEND_REF` moved to a pushed Axentra
+  commit that contains them, so that the generated contract types include them.
 - **Dependency updates: what is held back and why** (dependency round 2026-11-05). Done in the PR
   that updates this entry: GitHub Actions v7 (replaced #18 to #21), marked 18.1.2 and Playwright
   1.64.1 without the `playwright-core` override (replaced #22), ESLint 10 (replaced #24 and #26),
