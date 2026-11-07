@@ -66,8 +66,8 @@ jobs:
         env:
           SCRIPTS: ${{ steps.script.outputs.dir }}
           GH_TOKEN: ${{ github.token }}
-          CI_OK_TIMEOUT_MINUTES: "90"
-          CI_OK_POLL_SECONDS: "60"
+          CI_OK_TIMEOUT_MINUTES: '90'
+          CI_OK_POLL_SECONDS: '60'
           # Report-only: unset. "1" makes a NOT OK verdict fail this job (a later wave, after review).
-          CI_OK_ENFORCE: ""
+          CI_OK_ENFORCE: ''
         run: python3 -I "$SCRIPTS/ci_ok.py"
