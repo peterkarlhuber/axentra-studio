@@ -92,10 +92,14 @@ export function Sidebar({
                       <item.icon className={styles.icon} aria-hidden />
                       <span className={styles.label}>{t(item.labelKey)}</span>
                       {count > 0 ? (
-                        // The link's aria-label carries the count in words.
-                        <span className={styles.badge} aria-hidden="true">
-                          {count}
-                        </span>
+                        // The link's aria-label carries the count in words. The space is a
+                        // word boundary for the visible text ("Inbox 3"); flex layout drops it.
+                        <>
+                          {' '}
+                          <span className={styles.badge} aria-hidden="true">
+                            {count}
+                          </span>
+                        </>
                       ) : null}
                       {off ? (
                         <span className={styles.off}>
