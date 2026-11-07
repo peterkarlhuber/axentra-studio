@@ -6,7 +6,7 @@ name: Nightly
 on:
   schedule:
     # Staggered across the repositories (CI-FAST cron table) so that the night runs stay under the job limit.
-    - cron: "10 2 * * *"
+    - cron: '10 2 * * *'
   workflow_dispatch:
     inputs:
       canary_fail:
