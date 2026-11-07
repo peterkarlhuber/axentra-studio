@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "comment": "Mandatory checks (S2) per CI-FAST. A PR is ok only if every listed check ran on the PR head SHA and succeeded. Changing this list needs a reason in the PR.",
+  "pull_request": {
+    "ci.yml": [
+      "Typecheck, lint, i18n, test, build",
+      "API contract matches the pinned backend",
+      "End-to-end (Playwright, real backend, multi-product)",
+      "End-to-end (Playwright, real backend, single-product)"
+    ]
+  },
+  "nightly": {
+    "nightly.yml": [
+      "report"
+    ]
+  }
+}
