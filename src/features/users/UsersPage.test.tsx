@@ -75,10 +75,13 @@ describe('UsersPage', () => {
     await screen.findByRole('link', { name: 'Ada Lovelace' });
 
     await userEv.type(screen.getByRole('searchbox', { name: 'Search users' }), 'ada');
+    // The table hides its rows while the new query is pending, which can render before the
+    // request goes out, so wait for the request itself and then for the filtered rows.
+    await waitFor(() => expect(listCalls(calls).at(-1)?.get('q')).toBe('ada'));
     await waitFor(() =>
       expect(screen.queryByRole('link', { name: 'Bob Byte' })).not.toBeInTheDocument(),
     );
-    expect(listCalls(calls).at(-1)?.get('q')).toBe('ada');
+    expect(await screen.findByRole('link', { name: 'Ada Lovelace' })).toBeInTheDocument();
 
     await userEv.clear(screen.getByRole('searchbox', { name: 'Search users' }));
     await userEv.selectOptions(screen.getByRole('combobox', { name: 'Status' }), 'disabled');
@@ -86,7 +89,7 @@ describe('UsersPage', () => {
     await waitFor(() =>
       expect(screen.queryByRole('link', { name: 'Ada Lovelace' })).not.toBeInTheDocument(),
     );
-    expect(listCalls(calls).at(-1)?.get('status')).toBe('disabled');
+    await waitFor(() => expect(listCalls(calls).at(-1)?.get('status')).toBe('disabled'));
   });
 
   it('says when no user matches the filters', async () => {
