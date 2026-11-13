@@ -20,6 +20,7 @@ import zipfile
 from pathlib import Path
 
 WINDOWS = os.name == "nt"
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # CI logs: never fail on printing
 PARENT = Path(sys.argv[2]) if len(sys.argv) > 2 else Path.home() / "Tëst Ördner l'été"
 KIT = PARENT / "AxentraStudio-QA"
 EXT = ".cmd" if WINDOWS else (".command" if sys.platform == "darwin" else ".sh")
