@@ -290,6 +290,73 @@ def stop_postgres() -> None:
     )
 
 
+class _WindowsPostgres:
+    """PostgreSQL started by pg_ctl on Windows, with the small part of the Popen interface the supervisor uses.
+
+    postgres.exe refuses to run under an account with administrator rights; pg_ctl starts it with a restricted
+    token instead, so the kit also works for testers (and CI runners) who are administrators."""
+
+    def __init__(self, pid: int) -> None:
+        import ctypes
+
+        self.pid = pid
+        self._k32 = ctypes.windll.kernel32
+        # SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION
+        self._handle = self._k32.OpenProcess(0x00100000 | 0x1000, False, pid)
+
+    def poll(self) -> int | None:
+        if not self._handle:
+            return 1
+        return None if self._k32.WaitForSingleObject(self._handle, 0) == 0x102 else 0  # WAIT_TIMEOUT: running
+
+    def wait(self, timeout: float | None = None) -> int:
+        deadline = time.monotonic() + (timeout or 0)
+        while self.poll() is None:
+            if timeout is not None and time.monotonic() > deadline:
+                raise subprocess.TimeoutExpired("postgres", timeout)
+            time.sleep(0.2)
+        return 0
+
+    def terminate(self) -> None:
+        stop_postgres()
+
+    def kill(self) -> None:
+        kill_pid(self.pid)
+
+
+def start_postgres(sup: Supervisor):
+    data = STATE / "pg"
+    if not IS_WINDOWS:
+        return sup.spawn("postgres", [pg_bin("postgres"), "-D", pg_path(data)])
+    # Output goes to files, not pipes: postgres inherits pg_ctl's handles and would keep a pipe open.
+    with open(LOGS / "pg_ctl.log", "ab") as out:
+        result = subprocess.run(
+            [
+                pg_bin("pg_ctl"),
+                "start",
+                "-D",
+                pg_path(data),
+                "-l",
+                pg_path(LOGS) + "\\postgres.log",
+                "-w",
+                "-t",
+                "60",
+            ],
+            stdout=out,
+            stderr=subprocess.STDOUT,
+            stdin=subprocess.DEVNULL,
+            creationflags=subprocess.CREATE_NO_WINDOW,
+            check=False,
+        )
+    pid_file = data / "postmaster.pid"
+    if result.returncode != 0 or not pid_file.exists():
+        raise SystemExit(f"FEHLER: Die Datenbank ist nicht gestartet (siehe {LOGS / 'postgres.log'}).")
+    proc = _WindowsPostgres(int(pid_file.read_text(encoding="ascii", errors="replace").splitlines()[0]))
+    sup.children.append(("postgres", proc))
+    sup.record()
+    return proc
+
+
 def init_postgres(ports: dict) -> str:
     """Create the cluster once; return the superuser password (kept in a 0600 file in the state folder)."""
     pw_file = STATE / "pg-superuser.txt"
@@ -465,7 +532,7 @@ def _run(args: argparse.Namespace, sup: Supervisor, ports: dict) -> int:
         (STATE / "axentra").exists() and shutil.rmtree(STATE / "axentra", ignore_errors=True)
     say("[1/4] Datenbank starten ...")
     password = init_postgres(ports)
-    pg = sup.spawn("postgres", [pg_bin("postgres"), "-D", pg_path(STATE / "pg")])
+    pg = start_postgres(sup)
     super_url = pg_url(ports, password)
     wait_for_postgres(super_url, pg)
 

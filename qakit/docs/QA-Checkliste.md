@@ -1265,7 +1265,7 @@ Screenshot-Datei: ______________________
 
 **Was sollte passieren:** „Checkout angelegt“ erscheint. Die Checkout-Seite öffnet sich NICHT – die Adresse checkout.fake.invalid führt absichtlich ins Leere (Testattrappe). Das Abonnement steht auf „Unvollständig“. Das ist alles richtig so.
 
-**Woran erkenne ich einen Fehler:** Eine echte Zahlungsseite mit Kartenfeldern erscheint. Hinweis: Nach einem Neustart des Kits kann der Checkout mit „Serverfehler“ scheitern (bekanntes Problem von Axentra). Dann „Fehlgeschlagen“ wählen und „bekannt: Checkout nach Neustart“ notieren.
+**Woran erkenne ich einen Fehler:** Eine echte Zahlungsseite mit Kartenfeldern erscheint. Ebenso ein Fehler: Der Checkout scheitert mit „Serverfehler“ (auch nach einem Neustart des Kits darf das nicht passieren).
 
 Ergebnis: ☐ Bestanden ☐ Fehlgeschlagen ☐ Nicht getestet ☐ Nicht anwendbar
 

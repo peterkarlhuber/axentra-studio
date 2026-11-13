@@ -102,11 +102,9 @@ incomplete subscriptions; queued jobs without a handler; a paused schedule; a di
 
 ## Known problems (Axentra, not the kit)
 
-- **Fake payment provider after a restart**: its checkout ids restart at `cs_fake_000001` in every
-  web process, but ids are unique in the database. After a kit restart the first checkouts in Studio
-  fail with HTTP 500 (unique violation `axentra_billing_subscriptions_provider_checkout`) until the
-  counter passes the ids already used (the seed uses 4); each failed attempt advances it and leaves an
-  `incomplete` subscription without checkout id.
+- **Fake payment provider after a restart** (fixed in axentra #80, merge `17e9bb4`): checkout ids used to
+  restart at `cs_fake_000001` in every web process, so checkouts after a kit restart failed with HTTP 500.
+  They now carry the subscription id.
 
 ## Integration matrix
 
