@@ -6,6 +6,13 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `qakit/`: a local, double-click test version of Axentra and Studio for manual QA on Windows, macOS (Apple
+  silicon) and Linux, with bundled PostgreSQL 17, hash-pinned libraries, synthetic seed data, a kit page with an
+  interactive German checklist, and smoke and browser checks (see `qakit/README.md`). Not a release; nothing is
+  published. `api/BACKEND_REF` moves to the Axentra commit with the fake billing checkout fix (OpenAPI unchanged).
+
 ### Security
 
 - The Docker image validates `AXENTRA_CSP_CONNECT_SRC` at start (MUP-ONA VB-6): only space-separated

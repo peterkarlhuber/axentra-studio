@@ -72,6 +72,12 @@ def get(path: str, data: dict | None = None) -> tuple[int, bytes]:
         return e.code, b""
 
 
+def dump_logs() -> None:
+    logs = KIT / "_kit" / "daten" / "logs"
+    for path in sorted(logs.glob("*.log")) if logs.is_dir() else []:
+        print(f"--- {path.name}\n{path.read_text(encoding='utf-8', errors='replace')[-4000:]}")
+
+
 def start(log: Path) -> subprocess.Popen:
     fh = open(log, "w", encoding="utf-8")  # noqa: SIM115
     proc = subprocess.Popen(
@@ -84,6 +90,7 @@ def start(log: Path) -> subprocess.Popen:
             return proc
         if proc.poll() is not None or "FEHLER" in text:
             print(text)
+            dump_logs()
             raise SystemExit("start failed")
         time.sleep(1)
     proc.kill()
