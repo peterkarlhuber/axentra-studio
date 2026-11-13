@@ -46,6 +46,10 @@ goto :remove
 if exist "%KIT%\daten\pg\postmaster.pid" "%KIT%\pg\bin\pg_ctl.exe" stop -D "%KIT%\daten\pg" -m fast -w >nul 2>&1
 :remove
 for %%D in ("%KIT%\env" "%KIT%\python" "%KIT%\cache" "%KIT%\daten") do if exist "%%~D" rmdir /s /q "%%~D"
+for %%D in ("%KIT%\env" "%KIT%\python" "%KIT%\cache" "%KIT%\daten") do if exist "%%~D" (
+  echo FEHLER: Der Ordner %%~D konnte nicht vollstaendig entfernt werden. Bitte "3 - Beenden" ausfuehren und erneut versuchen.
+  goto :end
+)
 echo.
 echo Entfernt. Zum Schluss den Ordner in den Papierkorb ziehen (vorher die Ordner
 echo "Sicherungen" und "QA-Ergebnisse" woanders hin kopieren, falls du sie behalten willst).

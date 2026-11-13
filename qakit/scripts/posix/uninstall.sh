@@ -30,6 +30,9 @@ elif [ -f "$KIT/daten/pg/postmaster.pid" ]; then
   "$KIT/pg/bin/pg_ctl" stop -D "$KIT/daten/pg" -m fast -w >/dev/null 2>&1 || true
 fi
 rm -rf "$KIT/env" "$KIT/python" "$KIT/cache" "$KIT/daten"
+for d in env python cache daten; do
+  [ -e "$KIT/$d" ] && fail "Der Ordner _kit/$d konnte nicht vollstaendig entfernt werden. Bitte \"3 - Beenden\" ausfuehren und erneut versuchen."
+done
 echo
 echo "Entfernt. Zum Schluss den Ordner \"$(basename "$KIT_ROOT")\" in den Papierkorb ziehen"
 echo "(vorher die Ordner \"Sicherungen\" und \"QA-Ergebnisse\" woanders hin kopieren, falls du sie behalten willst)."

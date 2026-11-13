@@ -31,7 +31,7 @@ UV_WHEELS = {
 }
 UV_PLATFORMS = {
     "windows": {"win_amd64": "windows-x64"},
-    "macos": {"macosx_11_0_arm64": "macos-arm64", "macosx_10_12_x86_64": "macos-x64"},
+    "macos": {"macosx_11_0_arm64": "macos-arm64"},
     "linux": {"manylinux_2_17_x86_64": "linux-x64"},
 }
 

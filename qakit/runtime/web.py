@@ -145,7 +145,10 @@ def build(config: Path, port: int, studio: Path, state: Path, kit: Path, results
         body = await request.body()
         if len(body) > 2_000_000:
             return JSONResponse({"error": "too large"}, status_code=413)
-        data = json.loads(body)
+        try:
+            data = json.loads(body)
+        except ValueError:
+            return JSONResponse({"error": "invalid json"}, status_code=400)
         if not isinstance(data, dict):
             return JSONResponse({"error": "invalid"}, status_code=422)
         results.mkdir(parents=True, exist_ok=True)

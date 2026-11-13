@@ -19,7 +19,6 @@ export UV_PYTHON_PREFERENCE="${UV_PYTHON_PREFERENCE:-only-managed}"
 
 case "$(uname -s)-$(uname -m)" in
   Darwin-arm64) UV="$KIT/bin/macos-arm64/uv" ;;
-  Darwin-x86_64) UV="$KIT/bin/macos-x64/uv" ;;
   Linux-x86_64) UV="$KIT/bin/linux-x64/uv" ;;
   *) UV="" ;;
 esac
@@ -63,6 +62,8 @@ ensure_terminal() {
     command -v "$term" >/dev/null 2>&1 || continue
     case "$term" in
       gnome-terminal) exec "$term" -- bash "$1" ;;
+      xfce4-terminal|mate-terminal) exec "$term" -x bash "$1" ;;
+      lxterminal) continue ;;  # takes one command string only, which breaks on the spaces in the script names
       *) exec "$term" -e bash "$1" ;;
     esac
   done
@@ -73,6 +74,9 @@ do_install() {
   echo "Axentra Studio (lokale Testversion) wird installiert."
   echo "Alles bleibt in diesem Ordner: $KIT_ROOT"
   echo
+  if [ "$(uname -s)-$(uname -m)" = "Darwin-x86_64" ]; then
+    fail "Macs mit Intel-Prozessor werden nicht unterstuetzt (einige Bibliotheken gibt es dafuer nicht mehr). Bitte einen Mac mit Apple-Chip, Windows oder Linux verwenden."
+  fi
   [ -n "$UV" ] && [ -f "$UV" ] || fail "Dieses System wird vom Testpaket nicht unterstuetzt ($(uname -s) $(uname -m))."
   if [ "$(uname -s)" = "Darwin" ]; then
     # Files unpacked from a download carry the quarantine flag; clear it for the kit's own files so that the

@@ -13,5 +13,7 @@ set "UV_CACHE_DIR=%KIT%\cache"
 set "UV_PYTHON_INSTALL_DIR=%KIT%\python"
 set "UV_NO_CONFIG=1"
 set "UV_NO_PROGRESS=1"
+rem Keep uv's Python inside the kit: no entries in the Windows registry (PEP 514).
+set "UV_PYTHON_INSTALL_REGISTRY=0"
 set "PYTHONUTF8=1"
 if not defined UV_PYTHON_PREFERENCE set "UV_PYTHON_PREFERENCE=only-managed"

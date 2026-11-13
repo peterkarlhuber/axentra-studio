@@ -39,7 +39,8 @@ SCRIPTS = {
 }
 SYSTEMS = {
     "windows": (["windows-x64"], "windows", ".cmd"),
-    "macos": (["macos-arm64", "macos-x64"], "posix", ".command"),
+    # Apple silicon only: cryptography and argon2-cffi-bindings of the lock have no Intel macOS wheels.
+    "macos": (["macos-arm64"], "posix", ".command"),
     "linux": (["linux-x64"], "posix", ".sh"),
 }
 DOCS_HTML = {

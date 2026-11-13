@@ -8,3 +8,5 @@ public/branding
 test-results
 playwright-report
 .e2e-backend
+# Generated from qakit/docs/checkliste.json by qakit/docs/tools/render_checklist.py
+qakit/docs/QA-Checkliste.md

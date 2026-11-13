@@ -19,15 +19,17 @@ Alles läuft nur bei dir. Die Testdaten sind erfunden.
 
 Lade die passende Datei für deinen Computer herunter:
 
-| Dein Computer                                              | Datei                          |
-| ---------------------------------------------------------- | ------------------------------ |
-| Windows 10 oder 11 (64 Bit)                                | `AxentraStudio-QA-windows.zip` |
-| Mac (mit Apple-Chip oder Intel-Chip, eine Datei für beide) | `AxentraStudio-QA-macos.zip`   |
-| Linux (64 Bit, x86)                                        | `AxentraStudio-QA-linux.zip`   |
+| Dein Computer                      | Datei                          |
+| ---------------------------------- | ------------------------------ |
+| Windows 10 oder 11 (64 Bit)        | `AxentraStudio-QA-windows.zip` |
+| Mac mit Apple-Chip (M1 oder neuer) | `AxentraStudio-QA-macos.zip`   |
+| Linux (64 Bit, x86)                | `AxentraStudio-QA-linux.zip`   |
 
 Entpacke die ZIP-Datei (Doppelklick, bei Windows: Rechtsklick > **Alle extrahieren**).
 Du bekommst einen Ordner `AxentraStudio-QA`. Darin liegen die Skripte und der Ordner `Dokumente` (diese Anleitung und die Checklisten). Leg ihn an einen Ort, den du wiederfindest, zum Beispiel auf den Schreibtisch.
 Wichtig: Starte nichts direkt aus der ZIP-Datei heraus. Erst entpacken.
+Macs mit Intel-Prozessor werden nicht unterstützt, weil es einige benötigte Bibliotheken dafür nicht mehr gibt. Nimm in dem Fall einen Windows- oder Linux-Computer.
+Verschiebe oder benenne den Ordner nach dem ersten Start nicht mehr um. Falls doch: **6 - Deinstallieren** am neuen Ort ausführen und neu beginnen.
 
 ## 2 Installieren
 
@@ -203,6 +205,9 @@ Prüfe deine Internetverbindung (nur beim ersten Mal nötig) und ob genug Speich
 
 **Ich komme mit einem Testbenutzer nicht rein.**
 Prüfe Adresse und Passwort auf **http://127.0.0.1:8765/qa/** (Tab **Start**). Achte auf Groß- und Kleinschreibung. Tobias Test und SSO Nutzer können sich absichtlich nicht anmelden. Nach zu vielen Fehlversuchen kommt **Zu viele Anfragen**: eine Minute warten.
+
+**Im schwarzen Fenster steht, dass der Ordnerpfad ein Sonderzeichen enthält.**
+Die Datenbank verträgt die Zeichen `$`, `` ` ``, `"`, `%` und `!` im Ordnernamen nicht. Entpacke das Testpaket in einen Ordner ohne diese Zeichen, zum Beispiel in `Downloads`.
 
 **Alles ist durcheinander.**
 **4 - Testdaten sichern** (falls du etwas behalten willst), dann **5 - Testdaten zuruecksetzen**, dann **2 - Starten**.

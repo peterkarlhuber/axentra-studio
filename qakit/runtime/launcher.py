@@ -50,7 +50,11 @@ sys.path.insert(0, str(HERE))
 
 
 def say(msg: str = "") -> None:
-    print(msg, flush=True)
+    # The terminal may already be closed (the tester closed the window); shutting down must go on regardless.
+    try:
+        print(msg, flush=True)
+    except (OSError, ValueError):
+        pass
 
 
 def pg_bin(name: str) -> Path:
@@ -118,6 +122,38 @@ def pid_alive(pid: int) -> bool:
     return True
 
 
+def pid_is_ours(pid: int) -> bool:
+    """True only for a live process whose command line points into this kit (never kill an unrelated process
+    that reused a recorded PID)."""
+    if not pid_alive(pid):
+        return False
+    try:
+        if IS_WINDOWS:
+            ps = f"(Get-CimInstance Win32_Process -Filter 'ProcessId={int(pid)}').CommandLine"
+            cmdline = subprocess.run(
+                ["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True, check=False
+            ).stdout
+        elif Path(f"/proc/{pid}/cmdline").exists():
+            cmdline = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode("utf-8", "replace")
+        else:
+            cmdline = subprocess.run(
+                ["ps", "-o", "command=", "-p", str(int(pid))], capture_output=True, text=True, check=False
+            ).stdout
+    except OSError:
+        return False
+    return str(KIT) in cmdline
+
+
+def kill_pid(pid: int) -> None:
+    try:
+        if IS_WINDOWS:
+            subprocess.run(["taskkill", "/PID", str(int(pid)), "/T", "/F"], capture_output=True, check=False)
+        else:
+            os.kill(pid, signal.SIGTERM)
+    except OSError:
+        pass
+
+
 def http_ok(url: str, timeout: float = 2.0) -> bool:
     try:
         with urllib.request.urlopen(url, timeout=timeout) as resp:
@@ -143,7 +179,9 @@ class Supervisor:
         self.smtp = None
         self.stopping = threading.Event()
         self._stopped = False
+        self._done = threading.Event()
         self._lock = threading.Lock()
+        self.ports: dict = {}
 
     def spawn(self, name: str, cmd: list[str], env: dict | None = None) -> subprocess.Popen:
         log = open(LOGS / f"{name}.log", "ab")  # noqa: SIM115 (kept open for the child's lifetime)
@@ -152,13 +190,39 @@ class Supervisor:
             kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
         proc = subprocess.Popen(cmd, env=env, **kwargs)
         self.children.append((name, proc))
+        self.record()
         return proc
+
+    def record(self, ready: bool = False) -> None:
+        """Write the run file after every spawn, so that a hard kill at any point leaves a list of what to stop."""
+        write_private(
+            RUN_FILE,
+            json.dumps(
+                {
+                    "launcher_pid": os.getpid(),
+                    "pids": [p.pid for _, p in self.children],
+                    "ports": self.ports,
+                    "ready": ready,
+                    "started": datetime.now().isoformat(timespec="seconds"),
+                }
+            ),
+        )
 
     def stop_all(self) -> None:
         with self._lock:
-            if self._stopped:
-                return
+            first = not self._stopped
             self._stopped = True
+        if not first:
+            # Another thread (Windows console close, signal) is already stopping: wait until it is done, so the
+            # interpreter does not exit while PostgreSQL is still being stopped.
+            self._done.wait(timeout=90)
+            return
+        try:
+            self._stop_all()
+        finally:
+            self._done.set()
+
+    def _stop_all(self) -> None:
         say("Axentra Studio wird beendet ...")
         for name, proc in reversed(self.children):
             if name == "postgres":
@@ -282,12 +346,11 @@ def leftover_cleanup() -> None:
     """A previous run that was killed hard can leave PostgreSQL running; stop it before starting again."""
     info = read_json(RUN_FILE)
     if info:
-        for pid in info.get("pids", []):
-            if pid_alive(pid):
-                try:
-                    os.kill(pid, signal.SIGTERM)
-                except OSError:
-                    pass
+        launcher = int(info.get("launcher_pid", 0))
+        for pid in [launcher, *info.get("pids", [])]:
+            if pid != os.getpid() and pid_is_ours(int(pid)):
+                kill_pid(int(pid))
+        time.sleep(1)
     stop_postgres()
     for path in (RUN_FILE, STOP_FILE):
         path.unlink(missing_ok=True)
@@ -295,7 +358,7 @@ def leftover_cleanup() -> None:
 
 def running_instance() -> dict | None:
     info = read_json(RUN_FILE)
-    if not info or not pid_alive(int(info.get("launcher_pid", 0))):
+    if not info or not pid_is_ours(int(info.get("launcher_pid", 0))):
         return None
     if http_ok(f"http://127.0.0.1:{info['ports']['http']}/qa/api/ping"):
         return info
@@ -336,6 +399,11 @@ def cmd_start(args: argparse.Namespace) -> int:
         if not args.no_browser:
             webbrowser.open(url)
         return 0
+    if any(ch in str(KIT) for ch in '$`"%!'):
+        # PostgreSQL's initdb and pg_ctl pass paths through a shell; these characters would break them.
+        say('FEHLER: Der Ordnerpfad des Testpakets enthaelt ein Sonderzeichen ($ ` " % !).')
+        say('Bitte das Testpaket in einen Ordner ohne diese Zeichen entpacken (z. B. in "Downloads").')
+        return 1
     private_dir(STATE)
     private_dir(LOGS)
     leftover_cleanup()
@@ -348,6 +416,7 @@ def cmd_start(args: argparse.Namespace) -> int:
             return 1
 
     sup = Supervisor()
+    sup.ports = ports
     install_stop_handlers(sup)
     try:
         return _run(args, sup, ports)
@@ -431,17 +500,7 @@ def _run(args: argparse.Namespace, sup: Supervisor, ports: dict) -> int:
     else:
         say("[4/4] Testdaten vorhanden.")
 
-    write_private(
-        RUN_FILE,
-        json.dumps(
-            {
-                "launcher_pid": os.getpid(),
-                "pids": [p.pid for _, p in sup.children],
-                "ports": ports,
-                "started": datetime.now().isoformat(timespec="seconds"),
-            }
-        ),
-    )
+    sup.record(ready=True)
     say()
     say(f"Axentra Studio laeuft: {base}/")
     say(f"Testbenutzer, E-Mails und Hinweise: {base}/qa/")
@@ -462,7 +521,7 @@ def _run(args: argparse.Namespace, sup: Supervisor, ports: dict) -> int:
 
 def cmd_stop(_args: argparse.Namespace) -> int:
     info = read_json(RUN_FILE)
-    if not info or not pid_alive(int(info.get("launcher_pid", 0))):
+    if not info or not pid_is_ours(int(info.get("launcher_pid", 0))):
         leftover_cleanup()
         say("Axentra Studio lief nicht (eventuelle Reste wurden beendet).")
         return 0
