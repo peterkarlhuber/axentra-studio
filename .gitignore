@@ -30,3 +30,7 @@ public/config.local.json
 
 # Python bytecode (e2e/fixtures is imported by the e2e worker)
 __pycache__/
+
+# QA kit build output
+qakit/build/out/
+.qakit-tools/

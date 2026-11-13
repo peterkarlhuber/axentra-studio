@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Datenbank (PostgreSQL 17)",
+    "status": "real",
+    "detail": "Läuft echt auf deinem Computer, nur für diese Testversion. Daten liegen im Ordner _kit/daten."
+  },
+  {
+    "name": "Dateispeicher",
+    "status": "real",
+    "detail": "Hochgeladene Dateien liegen echt im Ordner _kit/daten. Ein S3-Cloudspeicher ist nicht angebunden."
+  },
+  {
+    "name": "E-Mail (SMTP)",
+    "status": "simulated",
+    "detail": "Axentra verschickt echt per SMTP, aber an einen lokalen Briefkasten der Testversion. Nichts verlässt deinen Computer. Lesen im Reiter „E-Mails“. Studios eigener Bereich „Postfach“ meldet deshalb „nicht verfügbar“."
+  },
+  {
+    "name": "Zahlungen (Stripe)",
+    "status": "simulated",
+    "detail": "Testattrappe („fake“-Anbieter): Es gibt keine echte Zahlung und keine Verbindung zu Stripe. Der Checkout-Link führt ins Leere (checkout.fake.invalid)."
+  },
+  {
+    "name": "Webhooks",
+    "status": "real",
+    "detail": "Echte Zustellversuche an eine absichtlich unerreichbare lokale Adresse. Fehlgeschlagene Zustellungen sind gewollt und zeigen die Wiederholungslogik."
+  },
+  {
+    "name": "Hintergrundaufträge (Jobs, Zeitpläne)",
+    "status": "real",
+    "detail": "Ein echter Worker läuft mit. Die Beispiel-Jobtypen der Testdaten haben keinen Bearbeiter und bleiben deshalb in der Warteschlange."
+  },
+  {
+    "name": "Anmeldung über SSO (OIDC)",
+    "status": "missing",
+    "detail": "Nicht konfiguriert. Es gibt keinen lokalen Identitätsanbieter; ein SSO-Testkonto zeigt nur, wie solche Benutzer aussehen, kann sich aber nicht anmelden."
+  },
+  { "name": "Monitoring (OpenTelemetry)", "status": "missing", "detail": "Nicht konfiguriert." },
+  {
+    "name": "API-Referenz (/v1/docs)",
+    "status": "real",
+    "detail": "Funktioniert, wenn du in Studio angemeldet bist. Die Darstellung lädt Skripte aus dem Internet."
+  }
+]

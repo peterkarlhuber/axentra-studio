@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Axentra Studio – lokale Testversion</title>
+    <link rel="icon" href="/favicon-32.png" />
+    <link rel="stylesheet" href="qa.css" />
+    <script src="qa.js" defer></script>
+  </head>
+  <body>
+    <header class="top">
+      <img src="/branding/axentra-mark-128.png" alt="" width="40" height="40" />
+      <div>
+        <h1>Axentra Studio – lokale Testversion</h1>
+        <p class="muted">
+          Nur für deine persönliche QA-Abnahme. Kein Release, keine Sicherheitsfreigabe. Alle Daten
+          sind synthetisch.
+        </p>
+      </div>
+    </header>
+    <nav class="tabs" aria-label="Bereiche">
+      <a href="#start" data-tab="start">Start</a>
+      <a href="#checkliste" data-tab="checkliste">QA-Checkliste</a>
+      <a href="#mails" data-tab="mails">E-Mails</a>
+      <a href="#integrationen" data-tab="integrationen">Integrationen</a>
+      <a href="#info" data-tab="info">Version</a>
+    </nav>
+    <main>
+      <section id="tab-start" class="tab">
+        <div class="card cta">
+          <h2>Axentra Studio öffnen</h2>
+          <p>
+            Studio öffnet sich in einem neuen Tab. Melde dich mit einem der Testbenutzer unten an.
+          </p>
+          <p><a class="button" href="/" target="_blank" rel="noopener">Axentra Studio öffnen</a></p>
+        </div>
+        <div class="card">
+          <h2>Testbenutzer</h2>
+          <p class="muted">
+            Alle Konten sind erfunden und gelten nur in dieser lokalen Testversion.
+          </p>
+          <div class="table-wrap">
+            <table id="users">
+              <thead>
+                <tr>
+                  <th>E-Mail (Anmeldename)</th>
+                  <th>Passwort</th>
+                  <th>Name</th>
+                  <th>Rollen</th>
+                  <th>Gut zum Testen von</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h2>So fängst du an</h2>
+          <ol>
+            <li>Öffne Studio und melde dich als Plattform-Administrator an (erste Zeile oben).</li>
+            <li>
+              Öffne den Reiter <a href="#checkliste">QA-Checkliste</a> und arbeite die Bereiche der
+              Reihe nach ab.
+            </li>
+            <li>
+              Markiere jeden Prüfpunkt als Bestanden, Fehlgeschlagen, Nicht getestet oder Nicht
+              anwendbar. Das wird sofort gespeichert.
+            </li>
+            <li>
+              Für einen Fehler: Notiz schreiben, Screenshot machen und den Dateinamen eintragen. Die
+              Vorlage liegt im Ordner <code>Dokumente</code>.
+            </li>
+            <li>Zum Schluss: „Ergebnis herunterladen“ im Reiter QA-Checkliste.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="tab-checkliste" class="tab" hidden>
+        <div class="card">
+          <h2>QA-Checkliste</h2>
+          <p class="muted">
+            Deine Eingaben werden automatisch im Ordner <code>QA-Ergebnisse</code> des Testpakets
+            gespeichert. Zurücksetzen der Testdaten löscht sie nicht.
+          </p>
+          <p id="summary" class="summary" aria-live="polite"></p>
+          <p class="actions">
+            <button type="button" id="export-md">Ergebnis herunterladen (Text)</button>
+            <button type="button" id="export-csv">Ergebnis herunterladen (Tabelle)</button>
+            <span id="save-state" class="muted" aria-live="polite"></span>
+          </p>
+          <label class="filter"
+            >Anzeigen:
+            <select id="filter">
+              <option value="all">alle Prüfpunkte</option>
+              <option value="open">nur noch nicht bewertete</option>
+              <option value="fail">nur fehlgeschlagene</option>
+            </select>
+          </label>
+        </div>
+        <div id="checklist"></div>
+      </section>
+
+      <section id="tab-mails" class="tab" hidden>
+        <div class="card">
+          <h2>Abgefangene E-Mails</h2>
+          <p class="muted">
+            Axentra verschickt in dieser Testversion keine echten E-Mails. Alles, was Axentra senden
+            würde (Einladungen, Passwort zurücksetzen, Benachrichtigungen), landet hier.
+          </p>
+          <p><button type="button" id="reload-mails">Aktualisieren</button></p>
+          <div class="table-wrap">
+            <table id="mails">
+              <thead>
+                <tr>
+                  <th>Zeit</th>
+                  <th>An</th>
+                  <th>Betreff</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card" id="mail-view" hidden>
+          <h2 id="mail-subject"></h2>
+          <dl id="mail-headers" class="kv"></dl>
+          <pre id="mail-text"></pre>
+          <p id="mail-html-link" hidden>
+            <a target="_blank" rel="noopener">HTML-Fassung ansehen</a>
+          </p>
+        </div>
+      </section>
+
+      <section id="tab-integrationen" class="tab" hidden>
+        <div class="card">
+          <h2>Was ist echt, was ist simuliert?</h2>
+          <div class="table-wrap">
+            <table id="integrations">
+              <thead>
+                <tr>
+                  <th>Bereich</th>
+                  <th>Status</th>
+                  <th>Was das bedeutet</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h2>API-Testbereich (optional)</h2>
+          <p>
+            Die API-Referenz zeigt alle Schnittstellen von Axentra und lässt dich Aufrufe direkt
+            ausprobieren.
+          </p>
+          <p>
+            <a class="button secondary" href="/v1/docs" target="_blank" rel="noopener"
+              >API-Referenz öffnen</a
+            >
+          </p>
+          <p class="muted">
+            Für Aufrufe brauchst du einen API-Schlüssel aus Studio (Bereich „API-Schlüssel“). Die
+            Referenz lädt ihre Darstellung aus dem Internet; ohne Internet bleibt sie leer.
+          </p>
+        </div>
+      </section>
+
+      <section id="tab-info" class="tab" hidden>
+        <div class="card">
+          <h2>Version dieser Testversion</h2>
+          <dl id="build" class="kv"></dl>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
