@@ -57,8 +57,27 @@ def say(msg: str = "") -> None:
         pass
 
 
-def pg_bin(name: str) -> Path:
-    return PG_HOME / "bin" / f"{name}{EXE}"
+def pg_bin(name: str) -> str:
+    return pg_path(PG_HOME / "bin" / f"{name}{EXE}")
+
+
+def pg_path(path: Path) -> str:
+    """A path to hand to PostgreSQL. On Windows, PostgreSQL feeds its own paths into SQL during initdb and fails on
+    characters outside ASCII ("invalid byte sequence for encoding UTF8"), so the 8.3 short form is used there."""
+    if not IS_WINDOWS or str(path).isascii():
+        return str(path)
+    import ctypes
+
+    buf = ctypes.create_unicode_buffer(32768)
+    n = ctypes.windll.kernel32.GetShortPathNameW(str(path), buf, len(buf))
+    short = buf.value if 0 < n < len(buf) else ""
+    if not short or not short.isascii():
+        raise SystemExit(
+            "FEHLER: Der Ordnerpfad des Testpakets enthaelt Umlaute oder Sonderzeichen, mit denen die Datenbank\n"
+            "unter Windows nicht arbeiten kann. Bitte das Testpaket in einen Ordner ohne solche Zeichen entpacken,\n"
+            "zum Beispiel C:\\AxentraStudio-QA."
+        )
+    return short
 
 
 def free_port(preferred: int | None = None, span: int = 20) -> int:
@@ -265,7 +284,7 @@ def stop_postgres() -> None:
     if not (data / "postmaster.pid").exists():
         return
     subprocess.run(
-        [str(pg_bin("pg_ctl")), "stop", "-D", str(data), "-m", "fast", "-w", "-t", "60"],
+        [pg_bin("pg_ctl"), "stop", "-D", pg_path(data), "-m", "fast", "-w", "-t", "60"],
         capture_output=True,
         check=False,
     )
@@ -279,15 +298,16 @@ def init_postgres(ports: dict) -> str:
         return pw_file.read_text(encoding="utf-8").strip()
     password = secrets.token_urlsafe(24)
     write_private(pw_file, password + "\n")
+    data.mkdir(mode=0o700)  # initdb accepts an empty folder; it must exist for the Windows short path
     say("  Datenbank wird angelegt ...")
     res = subprocess.run(
         [
-            str(pg_bin("initdb")),
+            pg_bin("initdb"),
             "-D",
-            str(data),
+            pg_path(data),
             "-U",
             PG_SUPERUSER,
-            f"--pwfile={pw_file}",
+            f"--pwfile={pg_path(pw_file)}",
             "-A",
             "scram-sha-256",
             "-E",
@@ -445,7 +465,7 @@ def _run(args: argparse.Namespace, sup: Supervisor, ports: dict) -> int:
         (STATE / "axentra").exists() and shutil.rmtree(STATE / "axentra", ignore_errors=True)
     say("[1/4] Datenbank starten ...")
     password = init_postgres(ports)
-    pg = sup.spawn("postgres", [str(pg_bin("postgres")), "-D", str(STATE / "pg")])
+    pg = sup.spawn("postgres", [pg_bin("postgres"), "-D", pg_path(STATE / "pg")])
     super_url = pg_url(ports, password)
     wait_for_postgres(super_url, pg)
 
