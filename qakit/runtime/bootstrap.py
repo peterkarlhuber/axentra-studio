@@ -42,7 +42,7 @@ def _role_passwords(config_path: Path) -> tuple[str, str]:
 def axentra_cli(venv_python: Path, config_path: Path, *args: str, check: bool = True) -> str:
     """Run ``axentra --config <cfg> <args>`` with the venv Python; return stdout."""
     cmd = [str(venv_python), "-c", _AXENTRA, "--config", str(config_path), *args]
-    proc = subprocess.run(cmd, capture_output=True, text=True, env=_child_env())
+    proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace", env=_child_env())
     if check and proc.returncode != 0:
         raise RuntimeError(f"axentra {' '.join(args)} failed (exit {proc.returncode}):\n{proc.stderr.strip()[-2000:]}")
     return proc.stdout
@@ -111,7 +111,9 @@ def bootstrap(config_path: Path, venv_python: Path, pg_superuser_url: str) -> No
         AXQA_OWNER_PW=owner_pw,
         AXQA_APP_PW=app_pw,
     )
-    proc = subprocess.run([str(venv_python), "-c", _ROLE_SCRIPT], capture_output=True, text=True, env=env)
+    proc = subprocess.run(
+        [str(venv_python), "-c", _ROLE_SCRIPT], capture_output=True, text=True, errors="replace", env=env
+    )
     if proc.returncode != 0:
         # The superuser URL holds a password: never echo the command or environment.
         raise RuntimeError(f"creating database roles failed:\n{proc.stderr.strip()[-2000:]}")

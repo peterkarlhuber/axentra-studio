@@ -297,6 +297,7 @@ def _create_password_users(config_path: Path, venv_python: Path) -> dict[str, st
         input=json.dumps(people),
         capture_output=True,
         text=True,
+        errors="replace",
     )
     if proc.returncode != 0:
         raise RuntimeError(f"creating test accounts failed:\n{proc.stderr.strip()[-2000:]}")

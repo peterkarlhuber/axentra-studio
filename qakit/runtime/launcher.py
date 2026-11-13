@@ -110,7 +110,7 @@ def pid_alive(pid: int) -> bool:
         return False
     if IS_WINDOWS:
         out = subprocess.run(
-            ["tasklist", "/FI", f"PID eq {pid}", "/NH"], capture_output=True, text=True, check=False
+            ["tasklist", "/FI", f"PID eq {pid}", "/NH"], capture_output=True, text=True, errors="replace", check=False
         ).stdout
         return str(pid) in out
     try:
@@ -129,15 +129,22 @@ def pid_is_ours(pid: int) -> bool:
         return False
     try:
         if IS_WINDOWS:
-            ps = f"(Get-CimInstance Win32_Process -Filter 'ProcessId={int(pid)}').CommandLine"
+            ps = (
+                "[Console]::OutputEncoding = [Text.Encoding]::UTF8; "
+                f"(Get-CimInstance Win32_Process -Filter 'ProcessId={int(pid)}').CommandLine"
+            )
             cmdline = subprocess.run(
-                ["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True, check=False
-            ).stdout
+                ["powershell", "-NoProfile", "-Command", ps], capture_output=True, check=False
+            ).stdout.decode("utf-8", "replace")
         elif Path(f"/proc/{pid}/cmdline").exists():
             cmdline = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode("utf-8", "replace")
         else:
             cmdline = subprocess.run(
-                ["ps", "-o", "command=", "-p", str(int(pid))], capture_output=True, text=True, check=False
+                ["ps", "-o", "command=", "-p", str(int(pid))],
+                capture_output=True,
+                text=True,
+                errors="replace",
+                check=False,
             ).stdout
     except OSError:
         return False
@@ -289,6 +296,7 @@ def init_postgres(ports: dict) -> str:
         ],
         capture_output=True,
         text=True,
+        errors="replace",
         check=False,
     )
     (LOGS / "initdb.log").write_text(res.stdout + res.stderr, encoding="utf-8")
@@ -453,7 +461,9 @@ def _run(args: argparse.Namespace, sup: Supervisor, ports: dict) -> int:
     else:
         say("[2/4] Axentra pruefen ...")
         config = qa_config.config_path(STATE / "axentra")
-        res = subprocess.run(axentra_cmd(config, "migrate", "--check"), capture_output=True, text=True, check=False)
+        res = subprocess.run(
+            axentra_cmd(config, "migrate", "--check"), capture_output=True, text=True, errors="replace", check=False
+        )
         if res.returncode != 0:
             (LOGS / "migrate-check.log").write_text(res.stdout + res.stderr, encoding="utf-8")
             raise SystemExit(
