@@ -9,7 +9,9 @@ import { afterEach, describe, expect, it } from 'vitest';
  * MUP-ONA VB-6: docker/40-axentra-studio.sh refuses an invalid AXENTRA_CSP_CONNECT_SRC (the
  * container start fails instead of writing the value into nginx's add_header line) and sends
  * Strict-Transport-Security only when AXENTRA_TLS_TERMINATED says TLS ends in front of the
- * container. The script runs as in the image (POSIX sh), with /etc/nginx/ moved to a temp dir.
+ * container. AXENTRA_API_URL and AXENTRA_PUBLIC_API_URL must be plain http(s) URLs (assessment
+ * C-01: they go into proxy_pass, the CSP header line and config.json). The script runs as in the
+ * image (POSIX sh), with /etc/nginx/ moved to a temp dir.
  */
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const script = fs.readFileSync(path.join(root, 'docker/40-axentra-studio.sh'), 'utf8');
@@ -29,9 +31,17 @@ function run(env) {
     env: { PATH: process.env.PATH, ...env },
     encoding: 'utf8',
   });
-  const headersFile = path.join(dir, 'axentra/security-headers.conf');
-  const headers = fs.existsSync(headersFile) ? fs.readFileSync(headersFile, 'utf8') : null;
-  return { status: result.status, stderr: result.stderr, headers };
+  const read = (name) => {
+    const file = path.join(dir, 'axentra', name);
+    return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+  };
+  return {
+    status: result.status,
+    stderr: result.stderr,
+    headers: read('security-headers.conf'),
+    config: read('config.json'),
+    proxy: read('api-proxy.conf'),
+  };
 }
 
 const csp = (headers) => /Content-Security-Policy "([^"]*)"/.exec(headers)?.[1] ?? '';
@@ -78,6 +88,69 @@ describe('docker/40-axentra-studio.sh', () => {
     const { status, stderr } = run({ AXENTRA_CSP_CONNECT_SRC: value });
     expect(status).not.toBe(0);
     expect(stderr).toContain('AXENTRA_CSP_CONNECT_SRC');
+  });
+
+  // Assessment C-01
+  it.each([
+    ['https://api.example.com', 'https://api.example.com'],
+    ['https://api.example.com/v1/', 'https://api.example.com'],
+    ['http://localhost:8080', 'http://localhost:8080'],
+    ['https://example.com/axentra-api', 'https://example.com/axentra-api'],
+  ])('accepts AXENTRA_PUBLIC_API_URL=%j', (value, expected) => {
+    const { status, headers, config } = run({ AXENTRA_PUBLIC_API_URL: value });
+    expect(status).toBe(0);
+    expect(csp(headers)).toContain(`connect-src 'self' ${expected};`);
+    expect(JSON.parse(config)).toEqual({ apiBaseUrl: expected });
+  });
+
+  // Assessment C-01
+  it.each([
+    ['http://api:8080', 'http://api:8080'],
+    ['http://127.0.0.1:8080/v1', 'http://127.0.0.1:8080'],
+    ['https://api.internal/prefix/', 'https://api.internal/prefix'],
+  ])('accepts AXENTRA_API_URL=%j', (value, expected) => {
+    const { status, proxy } = run({ AXENTRA_API_URL: value });
+    expect(status).toBe(0);
+    expect(proxy).toContain(`proxy_pass ${expected};`);
+  });
+
+  // Assessment C-01: CSP directives, nginx variables and nginx directives must not get through.
+  const badUrls = [
+    'https://api.example.com;\tscript-src-elem\t*',
+    'https://api.example.com; script-src-elem *',
+    'https://api.example.com$http_x_inject',
+    'http://127.0.0.1:9; add_header X-Injected yes always',
+    'http://127.0.0.1:9;add_header X-Injected yes always',
+    'https://api.example.com\nadd_header X-Evil 1;',
+    'https://api.example.com\r',
+    'https://api.example.com\tx',
+    'https://api.example.com" always; add_header X-Evil "1',
+    "https://api.example.com'unsafe-inline'",
+    'https://api.example.com/${x}',
+    'https://api.example.com/{a}',
+    'https://api.example.com/#x',
+    'https://api.example.com/?a=b',
+    'https://api.example.com\\',
+    'https://user@api.example.com',
+    'https://*.example.com',
+    'https://api.example.com:80x',
+    'https://',
+    'ftp://api.example.com',
+    'api.example.com',
+    ' https://api.example.com',
+  ];
+  it.each(badUrls)('refuses AXENTRA_PUBLIC_API_URL=%j and stops the start', (value) => {
+    const { status, stderr, headers, config } = run({ AXENTRA_PUBLIC_API_URL: value });
+    expect(status).not.toBe(0);
+    expect(stderr).toContain('AXENTRA_PUBLIC_API_URL');
+    expect(headers).toBeNull();
+    expect(config).toBeNull();
+  });
+  it.each(badUrls)('refuses AXENTRA_API_URL=%j and stops the start', (value) => {
+    const { status, stderr, proxy } = run({ AXENTRA_API_URL: value });
+    expect(status).not.toBe(0);
+    expect(stderr).toContain('AXENTRA_API_URL');
+    expect(proxy).toBeNull();
   });
 
   // MUP-ONA T-A7-5

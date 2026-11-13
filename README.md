@@ -158,7 +158,11 @@ put the public Studio URL into the API's `security.allowed_origins` (or make it 
 server-sent events), and `AXENTRA_PUBLIC_API_URL` is added on its own (it may be `http://` for a
 local API, for example `http://localhost:8080`). `AXENTRA_CSP_CONNECT_SRC` is therefore only for
 further `https://` origins; it is written into the nginx configuration, so the start fails on any
-other value instead of producing a weaker or broken policy. Local development uses `npm run dev`,
+other value instead of producing a weaker or broken policy. `AXENTRA_API_URL` and
+`AXENTRA_PUBLIC_API_URL` end up in `proxy_pass`, the `Content-Security-Policy` line and
+`config.json`, so both must be plain `http://` or `https://` URLs (`scheme://host[:port][/path]`,
+path characters `A-Z a-z 0-9 . _ ~ / -`); whitespace, quotes, semicolons, `$`, braces, `#`, `?` or
+credentials stop the container start. Local development uses `npm run dev`,
 which does not read these variables.
 
 ## Deployment modes (single and multi product)

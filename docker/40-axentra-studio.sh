@@ -2,6 +2,8 @@
 # Generates the runtime snippets for Axentra Studio from the environment:
 #   AXENTRA_API_URL          upstream for the optional /v1 reverse proxy (e.g. http://api:8080)
 #   AXENTRA_PUBLIC_API_URL   API origin the browser calls when the API is on another origin
+#                            (both: http:// or https://, host, optional :port and /path; anything else
+#                            stops the start)
 #   AXENTRA_CSP_CONNECT_SRC  extra connect-src sources for the Content-Security-Policy: space-separated
 #                            https:// origins (https://host or https://host:port); anything else stops the start
 #   AXENTRA_TLS_TERMINATED   "true" when browsers reach Studio over HTTPS (TLS terminated in front of this
@@ -13,21 +15,33 @@ mkdir -p "$out"
 
 strip() { printf '%s' "$1" | sed -e 's#/*$##' -e 's#/v1$##'; }
 
+nl='
+'
+cr="$(printf '\r')"
+
+# Both URLs go into nginx directives (proxy_pass, the CSP add_header line) and config.json, so
+# only a plain http(s) URL is accepted: host from letters, digits, dots and hyphens, an optional
+# port and an optional path from a safe character set. Whitespace, control characters, quotes,
+# semicolons, `$` (nginx variables), braces, `#`, `?` and anything else stop the start, like
+# AXENTRA_CSP_CONNECT_SRC below.
+check_url() {
+  case "$2" in
+    "") return 0 ;;
+    *"$nl"*|*"$cr"*) ;;
+    *) printf '%s\n' "$2" | LC_ALL=C grep -Eq '^https?://[A-Za-z0-9.-]+(:[0-9]+)?(/[A-Za-z0-9._~/-]*)?$' && return 0 ;;
+  esac
+  echo "40-axentra-studio: $1 must be an http:// or https:// URL (scheme://host[:port][/path]," \
+    "path characters A-Z a-z 0-9 . _ ~ / -)" >&2
+  exit 1
+}
+
 api_url="$(strip "${AXENTRA_API_URL:-}")"
 public_api_url="$(strip "${AXENTRA_PUBLIC_API_URL:-}")"
-
-case "$public_api_url" in
-  ""|http://*|https://*) ;;
-  *) echo "40-axentra-studio: AXENTRA_PUBLIC_API_URL must start with http:// or https://" >&2; exit 1 ;;
-esac
-case "$public_api_url" in *[\"\\\ ]*) echo "40-axentra-studio: invalid AXENTRA_PUBLIC_API_URL" >&2; exit 1 ;; esac
+check_url AXENTRA_API_URL "$api_url"
+check_url AXENTRA_PUBLIC_API_URL "$public_api_url"
 
 # Reverse proxy for /v1 (same-origin deployment).
 if [ -n "$api_url" ]; then
-  case "$api_url" in
-    http://*|https://*) ;;
-    *) echo "40-axentra-studio: AXENTRA_API_URL must start with http:// or https://" >&2; exit 1 ;;
-  esac
   AXENTRA_API_URL="$api_url" envsubst '${AXENTRA_API_URL}' \
     < /etc/nginx/axentra-templates/api-proxy.conf.template > "$out/api-proxy.conf"
   echo "40-axentra-studio: proxying /v1 to $api_url"
@@ -35,7 +49,8 @@ else
   printf '# AXENTRA_API_URL is not set: no /v1 reverse proxy.\n' > "$out/api-proxy.conf"
 fi
 
-# Runtime configuration read by the Studio at startup.
+# Runtime configuration read by the Studio at startup (the value is a checked URL: no quotes or
+# backslashes that would need JSON escaping).
 printf '{"apiBaseUrl": "%s"}\n' "$public_api_url" > "$out/config.json"
 
 # Extra connect-src sources: only https origins, separated by spaces or tabs (MUP-ONA VB-6). The value
@@ -44,10 +59,8 @@ printf '{"apiBaseUrl": "%s"}\n' "$public_api_url" > "$out/config.json"
 # 'self' is always part of connect-src, and AXENTRA_PUBLIC_API_URL (http or https) is added on its own.
 extra_connect_src="$(printf '%s' "${AXENTRA_CSP_CONNECT_SRC:-}" | sed -e 's/^[[:blank:]]*//' -e 's/[[:blank:]]*$//')"
 if [ -n "$extra_connect_src" ]; then
-  nl='
-'
   case "$extra_connect_src" in
-    *"$nl"*|*"$(printf '\r')"*)
+    *"$nl"*|*"$cr"*)
       echo "40-axentra-studio: AXENTRA_CSP_CONNECT_SRC must be one line of https:// origins" >&2; exit 1 ;;
   esac
   origin='https://[A-Za-z0-9.-]+(:[0-9]+)?'
