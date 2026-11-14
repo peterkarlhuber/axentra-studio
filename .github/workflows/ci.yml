@@ -161,3 +161,26 @@ jobs:
             .e2e-backend/run/*.log
           if-no-files-found: warn
           retention-days: 14
+
+  image:
+    name: 'Container image: reproducible build, smoke test and Trivy scan'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The docker-container driver can write OCI archives with rewrite-timestamp (scripts/image-check.sh).
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - name: Build twice, compare, smoke test and scan
+        run: scripts/image-check.sh "$RUNNER_TEMP/image-check"
+      - name: Upload the build logs and the full Trivy report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: image-check
+          path: |
+            ${{ runner.temp }}/image-check/*.log
+            ${{ runner.temp }}/image-check/trivy-all.txt
+          if-no-files-found: warn
+          retention-days: 14

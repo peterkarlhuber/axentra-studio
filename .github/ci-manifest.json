@@ -6,7 +6,8 @@
       "Typecheck, lint, i18n, test, build",
       "API contract matches the pinned backend",
       "End-to-end (Playwright, real backend, multi-product)",
-      "End-to-end (Playwright, real backend, single-product)"
+      "End-to-end (Playwright, real backend, single-product)",
+      "Container image: reproducible build, smoke test and Trivy scan"
     ]
   },
   "nightly": {
