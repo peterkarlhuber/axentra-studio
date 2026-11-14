@@ -11,8 +11,9 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
-Last update: 2026-11-14 (pre-release assessment phase 3: H-C1 browser e2e, slim runtime image, I5 sign-in
-error; the independent human security review is still open: NOT COMPLETED — HUMAN REVIEW REQUIRED).
+Last update: 2026-11-14 (pre-release assessment phase 3 close-out: H-C1 browser e2e, slim runtime image, I5
+sign-in error, container image job in CI, `api/BACKEND_REF` on the final Axentra commit `3b80af1` (OpenAPI
+unchanged); the independent human security review is still open: NOT COMPLETED — HUMAN REVIEW REQUIRED).
 Last full review: 2026-11-07 against master at 6422691 (TODO abatement round 5). Before that:
 2026-11-06 against `4f4b762` (TODO abatement round 4), 2026-11-06 against `715da0d` (TODO
 abatement round 2). Backend pin

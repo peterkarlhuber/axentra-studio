@@ -8,6 +8,8 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- `api/BACKEND_REF` moves to Axentra `3b80af1` (Tabrion 0.2.1 pin, Swagger UI with Subresource Integrity); the
+  OpenAPI document is unchanged.
 - CI job `Container image: reproducible build, smoke test and Trivy scan` (`scripts/image-check.sh`): builds the
   Docker image twice with `SOURCE_DATE_EPOCH` and requires identical manifests, smoke-tests the container (uid
   101, `nginx -t`, health check, SPA fallback, security headers, refused start on invalid API/CSP values) and fails
