@@ -8,6 +8,18 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Security
 
+- Fixes from the pre-release security assessment of 2026-11-13 (findings C-01, C-04, B-01, H-C1;
+  report `axentra-sicherheitsbewertung.md`). The Docker image accepts `AXENTRA_API_URL` and
+  `AXENTRA_PUBLIC_API_URL` only as plain `http(s)://host[:port][/path]` URLs (letters, digits, `.`, `_`, `-`
+  or a bracketed IPv6 literal as host; path characters `A-Z a-z 0-9 . _ ~ / -`); any other value stops the
+  start, so CSP and nginx directives can no longer be injected through them (C-01). The production build
+  ships no source maps, and nginx answers `404` for `/assets/*.map` as a backstop (C-04). The access log
+  masks signed download tokens (`/v1/files/download/[redacted]`) when Studio proxies `/v1` (B-01).
+  `safeReturnPath` refuses whitespace, control characters and backslashes like the server's
+  `safe_return_to` (H-C1). Tests: `scripts/entrypoint-security.test.mjs`, `scripts/access-log.test.mjs`,
+  `scripts/build-config.test.mjs`, `src/lib/utils.test.ts`. Breaking only for a deployment whose API URL
+  contains other characters (for example a query string).
+
 - The Docker image validates `AXENTRA_CSP_CONNECT_SRC` at start (MUP-ONA VB-6): only space-separated
   `https://host` or `https://host:port` origins are accepted, and any other value (other schemes such as
   `http:` or `wss:`, keywords, paths, wildcards, quotes, semicolons, line breaks) stops the container start

@@ -53,9 +53,20 @@ export function currentReturnPath(): string {
   return `${pathname}${search}${hash}`;
 }
 
-/** Only allow same-app relative paths as redirect targets (no open redirects). */
+/**
+ * Only allow same-app relative paths as redirect targets (no open redirects). Like the server's
+ * `safe_return_to`, a path with a backslash, whitespace or a control character is refused: browsers
+ * drop tabs and line breaks from URLs, so `/\t/evil.example` would otherwise become `//evil.example`.
+ */
 export function safeReturnPath(value: string | null | undefined): string {
-  if (!value || !value.startsWith('/') || value.startsWith('//') || value.startsWith('/\\')) {
+  if (
+    !value ||
+    !value.startsWith('/') ||
+    value.startsWith('//') ||
+    value.includes('\\') ||
+    // eslint-disable-next-line no-control-regex
+    /[\u0000-\u0020\u007f]/.test(value)
+  ) {
     return '/';
   }
   if (value.startsWith('/login') || value.startsWith('/setup')) return '/';

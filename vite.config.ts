@@ -32,7 +32,10 @@ export default defineConfig(({ mode }) => {
     preview: { port: 4173, proxy, headers: securityHeaders },
     build: {
       target: 'es2022',
-      sourcemap: true,
+      // No source maps in the production build (assessment C-04): nginx would serve every
+      // `.map` next to its chunk. `npm run dev` has them; for a debuggable build run
+      // `npx vite build --sourcemap`.
+      sourcemap: false,
       chunkSizeWarningLimit: 900,
       // Never inline fonts as data: URLs, so the production CSP can keep `font-src 'self'`.
       assetsInlineLimit: (file) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined),
