@@ -12,7 +12,10 @@ import sys, tomllib
 project = tomllib.load(open(sys.argv[1], "rb"))["project"]
 extras = project["optional-dependencies"]
 for req in project["dependencies"] + [r for e in ("server", "oidc", "s3") for r in extras[e]]:
-    print(req)
+    # Tabrion is not on a package index: build_kit.py ships it as a wheel built from the commit that axentra's
+    # requirements/tabrion.txt pins. Its only runtime dependency (psycopg) is an axentra requirement as well.
+    if not req.replace(" ", "").startswith("tabrion"):
+        print(req)
 print("aiosmtpd")
 PY
 sed -e 's/ \\$//' -e '/--hash/d' "$AXENTRA/deploy/locks/full.txt" > "$TMP/constraints.txt"

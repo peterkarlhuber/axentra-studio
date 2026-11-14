@@ -47,6 +47,20 @@ jobs:
           ref: ${{ steps.ref.outputs.sha }}
           path: .backend
           persist-credentials: false
+      - name: Read the tabrion commit that axentra pins
+        id: tabrion
+        shell: bash
+        run: |
+          sha="$(sed -n 's|^tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@\([0-9a-f]\{40\}\)$|\1|p' .backend/requirements/tabrion.txt)"
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::axentra requirements/tabrion.txt must pin one full commit SHA"; exit 1; }
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - name: Check out peterkarlhuber/tabrion at that commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: peterkarlhuber/tabrion
+          ref: ${{ steps.tabrion.outputs.sha }}
+          path: .tabrion
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -69,7 +83,7 @@ jobs:
         shell: bash
         env:
           SYSTEM: ${{ matrix.system }}
-        run: python qakit/build/build_kit.py --axentra .backend --studio-dist dist --tools .qakit-tools "$SYSTEM"
+        run: python qakit/build/build_kit.py --axentra .backend --tabrion .tabrion --studio-dist dist --tools .qakit-tools "$SYSTEM"
       - name: Unpack below the home folder and smoke-test (managed Python download included)
         shell: bash
         env:

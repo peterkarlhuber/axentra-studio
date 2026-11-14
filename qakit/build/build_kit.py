@@ -1,11 +1,12 @@
 """Assemble the Axentra Studio QA kits: one zip per operating system.
 
 Usage:
-  python qakit/build/build_kit.py --axentra <axentra checkout> --studio-dist <dist folder> \
+  python qakit/build/build_kit.py --axentra <axentra checkout> [--tabrion <tabrion checkout>] --studio-dist <dist> \
       --tools <fetch_tools.py download folder> [--out <folder>] [windows] [macos] [linux]
 
 Inputs:
 - the axentra checkout (built into a wheel here; its commit goes into BUILD-INFO.json),
+- the tabrion checkout at the commit that axentra's requirements/tabrion.txt pins (built into a wheel too),
 - Studio's production build (`npm run build`, dist/), served same-origin by the kit's web process,
 - uv and PostgreSQL from fetch_tools.py (SHA-256 checked there),
 - qakit/runtime (launcher, web process, kit page, config, bootstrap, seed), qakit/scripts, qakit/docs,
@@ -19,6 +20,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -76,12 +78,25 @@ def git(repo: Path, *args: str) -> str:
     return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, check=True).stdout.strip()
 
 
-def build_wheel(axentra: Path, out: Path) -> Path:
-    if git(axentra, "status", "--porcelain", "--untracked-files=no"):
-        raise SystemExit(f"{axentra} has uncommitted changes; build the kit from a clean commit")
-    subprocess.run(["uv", "build", "--wheel", "--out-dir", str(out), str(axentra)], check=True)
-    (wheel,) = out.glob("axentra-*.whl")
+def build_wheel(repo: Path, name: str, out: Path) -> Path:
+    if git(repo, "status", "--porcelain", "--untracked-files=no"):
+        raise SystemExit(f"{repo} has uncommitted changes; build the kit from a clean commit")
+    subprocess.run(["uv", "build", "--wheel", "--out-dir", str(out), str(repo)], check=True)
+    (wheel,) = out.glob(f"{name}-*.whl")
     return wheel
+
+
+def tabrion_pin(axentra: Path) -> str | None:
+    """The tabrion commit that axentra pins (requirements/tabrion.txt), or None for an axentra without tabrion."""
+    pin = axentra / "requirements" / "tabrion.txt"
+    if not pin.is_file():
+        return None
+    shas = re.findall(
+        r"^tabrion @ git\+https://github\.com/peterkarlhuber/tabrion\.git@([0-9a-f]{40})$", pin.read_text(), re.M
+    )
+    if len(shas) != 1:
+        raise SystemExit(f"{pin}: expected exactly one tabrion requirement at a full commit SHA")
+    return shas[0]
 
 
 def render_docs(target: Path) -> None:
@@ -101,7 +116,7 @@ def render_docs(target: Path) -> None:
         (target / dst).write_bytes(data)
 
 
-def stage(system: str, root: Path, args: argparse.Namespace, wheel: Path, info: dict) -> None:
+def stage(system: str, root: Path, args: argparse.Namespace, wheels: list[Path], info: dict) -> None:
     platforms, flavor, ext = SYSTEMS[system]
     kit = root / "_kit"
     kit.mkdir(parents=True)
@@ -121,7 +136,8 @@ def stage(system: str, root: Path, args: argparse.Namespace, wheel: Path, info: 
         shutil.copytree(args.tools / "uv" / platform, kit / "bin" / platform)
     shutil.copytree(args.tools / "pg" / system, kit / "pg")
     (kit / "wheels").mkdir()
-    shutil.copy2(wheel, kit / "wheels" / wheel.name)
+    for wheel in wheels:
+        shutil.copy2(wheel, kit / "wheels" / wheel.name)
     shutil.copy2(QAKIT / "build" / "kit-lock.txt", kit / "runtime-lock.txt")
     shutil.copytree(
         QAKIT / "runtime",
@@ -176,6 +192,7 @@ def pack(system: str, root: Path, out: Path) -> Path:
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--axentra", required=True, type=Path)
+    p.add_argument("--tabrion", type=Path, help="tabrion checkout at the commit axentra pins (if it pins one)")
     p.add_argument("--studio-dist", required=True, type=Path)
     p.add_argument("--tools", required=True, type=Path)
     p.add_argument("--out", type=Path, default=QAKIT / "build" / "out")
@@ -183,10 +200,18 @@ def main() -> None:
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
-        wheel = build_wheel(args.axentra, Path(tmp) / "wheel")
+        wheel = build_wheel(args.axentra, "axentra", Path(tmp) / "wheel")
+        wheels = [wheel]
+        tabrion = tabrion_pin(args.axentra)
+        if tabrion:
+            if args.tabrion is None or git(args.tabrion, "rev-parse", "HEAD") != tabrion:
+                raise SystemExit(f"axentra pins tabrion {tabrion}; pass --tabrion <checkout at that commit>")
+            wheels.append(build_wheel(args.tabrion, "tabrion", Path(tmp) / "tabrion-wheel"))
         info = {
             "axentra_commit": git(args.axentra, "rev-parse", "HEAD"),
             "axentra_wheel": wheel.name,
+            "tabrion_commit": tabrion,
+            "tabrion_wheel": wheels[1].name if tabrion else None,
             "studio_commit": git(STUDIO_REPO, "rev-parse", "HEAD"),
             "studio_dirty": bool(git(STUDIO_REPO, "status", "--porcelain", "--untracked-files=no")),
             "postgresql": "17.11 (zonky embedded-postgres-binaries 17.11.0)",
@@ -196,7 +221,7 @@ def main() -> None:
         }
         for system in args.systems:
             root = Path(tmp) / system / NAME
-            stage(system, root, args, wheel, info)
+            stage(system, root, args, wheels, info)
             archive = pack(system, root, args.out)
             print(f"{archive.name}  {archive.stat().st_size // (1024 * 1024)} MiB  sha256 {sha256(archive)}")
 
