@@ -112,8 +112,34 @@ def render_docs(target: Path) -> None:
     for src, dst in DOCS_COPY.items():
         data = (docs / src).read_bytes()
         if dst.endswith(".txt"):
-            data = data.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")  # readable in Windows Notepad too
+            data = crlf(data)
         (target / dst).write_bytes(data)
+
+
+def crlf(data: bytes) -> bytes:
+    return data.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")  # readable in Windows Notepad too
+
+
+def copy_licenses(root: Path, args: argparse.Namespace) -> None:
+    """Studio's LICENSE at the top, the other bundled components' license texts in _kit/licenses. The Python
+    libraries bring their own license files into _kit/env when the kit installs them."""
+    (root / "LICENSE.txt").write_bytes(crlf((STUDIO_REPO / "LICENSE").read_bytes()))
+    target = root / "_kit" / "licenses"
+    target.mkdir()
+    sources = {"axentra-LICENSE.txt": args.axentra / "LICENSE"}
+    if args.tabrion is not None:
+        sources["tabrion-LICENSE.txt"] = args.tabrion / "LICENSE"
+    sources.update({p.name: p for p in sorted((QAKIT / "build" / "licenses").glob("*.txt"))})
+    for name, src in sources.items():
+        (target / name).write_bytes(crlf(src.read_bytes()))
+    (target / "README.txt").write_bytes(
+        crlf(
+            b"License texts of the components bundled in this kit: Axentra and Tabrion (Levuvo), PostgreSQL 17.11\n"
+            b"(PostgreSQL License, binaries from zonky embedded-postgres-binaries), uv 0.11.32 (MIT or Apache-2.0).\n"
+            b"Axentra Studio's own license is LICENSE.txt in the top folder. The Python libraries that the install\n"
+            b"step adds keep their license files in _kit/env (in each package's .dist-info folder).\n"
+        )
+    )
 
 
 def stage(system: str, root: Path, args: argparse.Namespace, wheels: list[Path], info: dict) -> None:
@@ -147,6 +173,7 @@ def stage(system: str, root: Path, args: argparse.Namespace, wheels: list[Path],
     shutil.copy2(QAKIT / "docs" / "checkliste.json", kit / "app" / "checkliste.json")
     shutil.copytree(args.studio_dist, kit / "studio-web", ignore=shutil.ignore_patterns("*.map"))
     render_docs(root / "Dokumente")
+    copy_licenses(root, args)
     (kit / "BUILD-INFO.json").write_text(json.dumps(dict(info, system=system), indent=1), encoding="utf-8")
     lines = [
         "Axentra Studio, local test version for manual QA only. Not a release; nothing is published.",
