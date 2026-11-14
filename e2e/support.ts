@@ -41,8 +41,12 @@ export const SKIP_NO_ADMIN =
  * config has no DOM types.
  */
 export async function settleAnimations(page: Page) {
+  // A function, not a string: a string needs eval, which the image's CSP (no 'unsafe-eval') refuses.
   await page.waitForFunction(
-    `document.getAnimations().every((a) => a.playState !== 'running' || a.effect?.getTiming().iterations === Infinity)`,
+    () =>
+      document
+        .getAnimations()
+        .every((a) => a.playState !== 'running' || a.effect?.getTiming().iterations === Infinity),
     undefined,
     { timeout: 5_000 },
   );

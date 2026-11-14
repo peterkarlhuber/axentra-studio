@@ -8,12 +8,25 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- The sign-in page and help explain the single sign-on error `explicit_link_required`: a platform account's
+  sign-in method must be linked by a platform administrator (Axentra owner decision I5), in all six languages.
+- README: the officially supported deployment for the first public release is the container image on Linux
+  amd64; the Windows/macOS QA kit is a test tool, not a supported deployment.
+
 - `qakit/`: a local, double-click test version of Axentra and Studio for manual QA on Windows, macOS (Apple
   silicon) and Linux, with bundled PostgreSQL 17, hash-pinned libraries, synthetic seed data, a kit page with an
   interactive German checklist, and smoke and browser checks (see `qakit/README.md`). Not a release; nothing is
   published. `api/BACKEND_REF` moves to the Axentra commit with the fake billing checkout fix (OpenAPI unchanged).
 
 ### Security
+
+- Pre-release assessment phase 3: the sign-in's return path is checked in a real browser against open
+  redirects (backslash, encoded tab/newline/CR, `//host`, `javascript:`, absolute URLs) with a real backend
+  (`e2e/return-path.spec.ts`, H-C1); with the fix reverted 7 of its cases fail. The Docker runtime moves to
+  `nginxinc/nginx-unprivileged:1.30.6-alpine-slim` (pinned by digest) plus Alpine's fixed musl and zlib: Trivy
+  OS findings go from 1 CRITICAL / 12 HIGH / 4 MEDIUM / 44 LOW to 0, the image shrinks from 100 MB to 41 MB and
+  has no curl; the build stays reproducible (`apk` runs without a log file). The e2e helper `settleAnimations`
+  passes a function instead of a string, so the specs also run under the image's CSP (no `unsafe-eval`).
 
 - Fixes from the pre-release security assessment of 2026-11-13 (findings C-01, C-04, B-01, H-C1;
   report `axentra-sicherheitsbewertung.md`). The Docker image accepts `AXENTRA_API_URL` and
