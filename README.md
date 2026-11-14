@@ -413,7 +413,7 @@ rules 8-12) to decide what it offers; the server stays authoritative.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The Axentra logo is used with permission of the same owner. The
+Proprietary: Copyright (c) 2026 Levuvo. All rights reserved. See [LICENSE](LICENSE). The Axentra logo is used with permission of the same owner. The
 official masters are in `branding-src/`; every served logo and icon is derived from them with
 `scripts/derive_branding.py` (provenance, file list and regenerate command:
 [public/branding/README.md](public/branding/README.md)).
