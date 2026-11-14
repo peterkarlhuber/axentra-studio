@@ -99,6 +99,25 @@ describe('TemplateEditorPage', () => {
     });
   });
 
+  it('does not warn about unsaved changes for an untouched template with variables', async () => {
+    const me = makeMe(['notify:manage']);
+    mockApi(me, async (request, url) => {
+      if (url.pathname === `${base}/preview`) return rendered(request);
+      if (url.pathname === `${base}/welcome`) return jsonResponse(template);
+      return undefined;
+    });
+    renderInProduct(
+      <TemplateEditorPage />,
+      me,
+      `/p/${PRODUCT}/notifications/templates/welcome`,
+      EDIT_PATH,
+    );
+    expect(await screen.findByText('Version 3')).toBeInTheDocument();
+    const leave = new Event('beforeunload', { cancelable: true });
+    window.dispatchEvent(leave);
+    expect(leave.defaultPrevented).toBe(false);
+  });
+
   it('saves a new version with If-Match and shows preview validation errors', async () => {
     const me = makeMe(['notify:manage']);
     const calls = mockApi(me, async (request, url) => {

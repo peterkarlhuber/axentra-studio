@@ -167,7 +167,7 @@
           "user": "SSO Nutzer (Test)",
           "steps": [
             "Mit sso.nutzer@example.com und dem gemeinsamen Passwort anmelden.",
-            "Als Alex Admin (Test) unter „Benutzer“ den SSO Nutzer (Test) öffnen."
+            "Als Alex Admin (Test) unter „Benutzer“ nach „SSO“ suchen und SSO Nutzer (Test) öffnen."
           ],
           "expected": "Die Anmeldung scheitert („Anmeldung fehlgeschlagen“) – das ist richtig, im Kit gibt es keinen SSO-Anbieter. In der Benutzerdetailseite steht „Kein Passwort (nur Single Sign-on)“ und unter „Single-Sign-on-Identitäten“ eine Identität.",
           "failure": "Die Anmeldung klappt, oder die Identität fehlt.",
@@ -313,7 +313,7 @@
           "title": "Mitglieder eines Mandanten",
           "user": "Alex Admin (Test)",
           "steps": ["Mandant „Muster GmbH (Test)“ öffnen, Tab „Mitglieder“."],
-          "expected": "Mitglieder mit Rolle: Maria Muster (Test) (Inhaberin), Jonas Beispiel (Test) (Admin), Lena Demo (Test) (Mitglied), Tobias Test (Test) (Betrachter), Sven Service (Test) (eigene Rolle „Support-Mitarbeiter (Test)“).",
+          "expected": "Mitglieder mit Rolle: Maria Muster (Test) (Owner), Jonas Beispiel (Test) (Admin), Lena Demo (Test) (Member), Tobias Test (Test) (Viewer), Sven Service (Test) (eigene Rolle „Support-Mitarbeiter (Test)“). Die Namen der eingebauten Rollen bleiben absichtlich englisch, ihre Beschreibung ist übersetzt.",
           "failure": "Mitglieder fehlen oder haben falsche Rollen.",
           "area": "Mandanten"
         }
@@ -517,7 +517,7 @@
             "Links „Suche“ öffnen, Mandant „Muster GmbH (Test)“ wählen.",
             "Nach „Mustermann“ suchen."
           ],
-          "expected": "Treffer der Art „kontakt“, z. B. Erika Mustermann (Test) und Max Mustermann (Test). Ein Klick öffnet das „Indizierte Dokument“.",
+          "expected": "Treffer der Art „kontakt“, z. B. Erika Mustermann (Test) und Max Mustermann (Test). Ein Klick öffnet die Details des Treffers (Überschrift ist der Titel, z. B. „Erika Mustermann (Test)“).",
           "failure": "„Keine Treffer“, Fehlermeldung oder die Seite hängt.",
           "area": "Daten"
         }
@@ -642,7 +642,7 @@
             "Links „Ereignisse“ öffnen, Tab „Ereignisprotokoll“.",
             "Ein Ereignis „kontakt.erstellt“ anklicken."
           ],
-          "expected": "5 Ereignisse: „kontakt.erstellt“ (2×), „kontakt.geaendert“, „rechnung.erstellt“, „angebot.versendet“. Die Details zeigen die Daten.",
+          "expected": "Die 5 Ereignisse der Testdaten: „kontakt.erstellt“ (2×), „kontakt.geaendert“, „rechnung.erstellt“, „angebot.versendet“. Dazu kommen Systemereignisse der Abrechnung („billing.subscription.…“) aus den Test-Abonnements. Die Details zeigen die Daten.",
           "failure": "Liste leer oder Details fehlen.",
           "area": "Ereignisse"
         },
@@ -679,7 +679,7 @@
           "steps": [
             "Endpunkt „Buchhaltungssystem (Test, nicht erreichbar)“ öffnen.",
             "„Test-Ping senden“ klicken.",
-            "Tab „Zustellungen“: eine fehlgeschlagene Zustellung öffnen und „Erneut zustellen“ klicken."
+            "Tab „Zustellungen“: eine Zustellung mit Status „Endgültig fehlgeschlagen“ öffnen und „Erneut zustellen“ klicken. (In den ersten Minuten nach dem Start werden die Zustellungen noch wiederholt; dann kurz warten und die Seite neu laden.)"
           ],
           "expected": "Test-Ping: „Test-Ping fehlgeschlagen“ mit einem verständlichen Grund (der Empfänger ist absichtlich nicht erreichbar). „Erneut zustellen“ meldet „Zustellung erneut eingereiht“ und die Zustellung scheitert danach wieder.",
           "failure": "Kein Feedback, Studio hängt, oder Fehlermeldung ohne Erklärung.",
@@ -741,7 +741,7 @@
           "title": "Abonnements und Status",
           "user": "Alex Admin (Test)",
           "steps": ["Links „Abonnements“ öffnen."],
-          "expected": "Abonnements: Muster GmbH (Test) Professional (Test) „Testphase“; Beispiel AG (Test) Starter (Test) „Aktiv“; Demo Handwerk KG (Test) Enterprise (Test) „Aktiv“; Probe & Partner (Test) Enterprise (Test) „Überfällig“; Grenzfall Datenhungrig GmbH (Test) Professional (Test) „Unvollständig“.",
+          "expected": "Abonnements: Muster GmbH (Test) professional „Testphase“; Beispiel AG (Test) starter „Aktiv“; Demo Handwerk KG (Test) enterprise „Aktiv“; Probe & Partner (Test) enterprise „Überfällig“; Grenzfall Datenhungrig GmbH (Test) professional „Unvollständig“. Die Spalte „Tarif“ zeigt den Schlüssel des Tarifs (z. B. „professional“).",
           "failure": "Abonnements fehlen oder Status falsch.",
           "area": "Abrechnung"
         },
@@ -750,10 +750,11 @@
           "title": "Zahlungsanbieter ist ein Test",
           "user": "Alex Admin (Test)",
           "steps": [
-            "In „Abonnements“ Mandant „Beispiel AG (Test)“ „Öffnen“.",
-            "Den Bereich „Zahlungsanbieter“ ansehen."
+            "„Abonnements“ öffnen.",
+            "Den Bereich „Zahlungsanbieter“ oben auf der Seite ansehen.",
+            "Bei Mandant „Beispiel AG (Test)“ „Öffnen“."
           ],
-          "expected": "Anbieter „Testattrappe (fake)“, „Echtzahlungen: Aus“. Hinweis: Studio fragt nie nach Karten- oder Bankdaten.",
+          "expected": "Oben steht der Anbieter „Testattrappe (fake)“ mit „Echtzahlungen: Aus“. Das Abonnement der Beispiel AG ist von Hand angelegt („Anbieter: Manuell“). Studio fragt nie nach Karten- oder Bankdaten.",
           "failure": "„Echtzahlungen: An“, oder Studio fragt nach Kartendaten.",
           "area": "Abrechnung"
         },
@@ -765,7 +766,7 @@
             "„Abonnements“ öffnen und die Abrechnung des Mandanten „Peter QA GmbH“ öffnen.",
             "„Tarif abonnieren“ klicken, „Starter (Test)“ wählen, „Abonnieren“."
           ],
-          "expected": "Meldung „Abonnement gestartet“. Das Abonnement zeigt „Starter (Test)“. Unter „Wirksame Leistungen“ stehen die Leistungen des Tarifs.",
+          "expected": "Meldung „Abonnement gestartet“. Das Abonnement zeigt den Tarif „starter“. Unter „Wirksame Leistungen“ stehen die Leistungen des Tarifs.",
           "failure": "Fehlermeldung oder kein Abonnement.",
           "area": "Abrechnung"
         },
@@ -809,9 +810,9 @@
           "steps": [
             "Links „Benachrichtigungen“ öffnen, Tab „Vorlagen“.",
             "Vorlage „Willkommensmail (Test)“ öffnen.",
-            "Die „Vorschau“ ansehen."
+            "In der „Vorschau“ die Sprache „de“ wählen."
           ],
-          "expected": "Vorlagen „Willkommensmail (Test)“, „Rechnung bereit (Test)“, „Wartungshinweis im Posteingang (Test)“. Die Vorschau zeigt den Betreff „Willkommen im Beispiel-CRM, Erika (Test)“ mit eingesetzten Beispielwerten.",
+          "expected": "Vorlagen „Willkommensmail (Test)“, „Rechnung bereit (Test)“, „Wartungshinweis im Posteingang (Test)“. Die Vorschau zeigt (Sprache „de“) den Betreff „Willkommen im Beispiel-CRM, Erika (Test)“ mit eingesetzten Beispielwerten. Sie beginnt immer mit Englisch („en“).",
           "failure": "Platzhalter wie {{ name }} bleiben in der Vorschau stehen, oder Vorschau fehlt.",
           "area": "Benachrichtigungen"
         },
@@ -862,10 +863,10 @@
           "user": "Alex Admin (Test)",
           "steps": [
             "Links „Audit-Protokoll“ öffnen.",
-            "Im Suchfeld „Freitext“ nach „qa-test“ suchen, „Filter anwenden“.",
+            "Im Filter „Aktion“ „access.api_key.*“ eingeben (mit Sternchen am Ende), „Filter anwenden“.",
             "Einen Eintrag öffnen."
           ],
-          "expected": "Einträge zum Anlegen, Erneuern und Widerrufen des Schlüssels „qa-test“ mit Zeitpunkt, Akteur (du) und Ergebnis. Das Geheimnis steht nirgends im Klartext.",
+          "expected": "Einträge zum Anlegen, Erneuern und Widerrufen eines API-Schlüssels (dein Schlüssel „qa-test“ aus Abschnitt G) mit Zeitpunkt, Akteur (du) und Ergebnis. Das Geheimnis steht nirgends im Klartext. Hinweis: die Freitextsuche findet Aktion, Ziel-ID und Akteur, nicht den Namen des Schlüssels.",
           "failure": "Einträge fehlen, oder ein Geheimnis ist im Audit lesbar.",
           "area": "Audit"
         }

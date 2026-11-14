@@ -50,6 +50,12 @@ record what a zip contains.
   apostrophe; install, start, sign in, stop, restart, back up, reset, uninstall.
 - `python qakit/build/e2e_kit.py http://127.0.0.1:8765`: real-browser checks of a running kit (kit page, checklist
   persistence, mails, Studio sign-in, every global and product page without 5xx, role limits, phone width, sign-out).
+- `python qakit/build/qa_checklist_auto.py http://127.0.0.1:8765 --kit <AxentraStudio-QA folder> [--sections A,B]
+[--out results.json] [--shots folder]`: the QA checklist (`docs/checkliste.json`) run automatically in Chromium
+  (Playwright), one function per case in `build/qa_auto/cases_*.py`; result per case `pass`, `fail` (German note
+  and screenshot) or `not_automated` (with the reason). Section Q stops, backs up and resets the kit with its own
+  scripts (Linux, `su qa`). Several kits on their own ports (the start picks the next free port after 8765) let
+  sections run in parallel. Some cases need fresh test data (D-02, N-04); Q-04 ends with a reset.
 - `qakit/runtime/dev_run.py`: backend lane harness (config, bootstrap, seed) against a local PostgreSQL.
 
 PostgreSQL refuses to run as root; run the kit as a normal user.

@@ -293,7 +293,7 @@ Screenshot-Datei: ______________________
 **Schritte:**
 
 1. Mit sso.nutzer@example.com und dem gemeinsamen Passwort anmelden.
-2. Als Alex Admin (Test) unter „Benutzer“ den SSO Nutzer (Test) öffnen.
+2. Als Alex Admin (Test) unter „Benutzer“ nach „SSO“ suchen und SSO Nutzer (Test) öffnen.
 
 **Was sollte passieren:** Die Anmeldung scheitert („Anmeldung fehlgeschlagen“) – das ist richtig, im Kit gibt es keinen SSO-Anbieter. In der Benutzerdetailseite steht „Kein Passwort (nur Single Sign-on)“ und unter „Single-Sign-on-Identitäten“ eine Identität.
 
@@ -527,7 +527,7 @@ Screenshot-Datei: ______________________
 
 1. Mandant „Muster GmbH (Test)“ öffnen, Tab „Mitglieder“.
 
-**Was sollte passieren:** Mitglieder mit Rolle: Maria Muster (Test) (Inhaberin), Jonas Beispiel (Test) (Admin), Lena Demo (Test) (Mitglied), Tobias Test (Test) (Betrachter), Sven Service (Test) (eigene Rolle „Support-Mitarbeiter (Test)“).
+**Was sollte passieren:** Mitglieder mit Rolle: Maria Muster (Test) (Owner), Jonas Beispiel (Test) (Admin), Lena Demo (Test) (Member), Tobias Test (Test) (Viewer), Sven Service (Test) (eigene Rolle „Support-Mitarbeiter (Test)“). Die Namen der eingebauten Rollen bleiben absichtlich englisch, ihre Beschreibung ist übersetzt.
 
 **Woran erkenne ich einen Fehler:** Mitglieder fehlen oder haben falsche Rollen.
 
@@ -863,7 +863,7 @@ Screenshot-Datei: ______________________
 1. Links „Suche“ öffnen, Mandant „Muster GmbH (Test)“ wählen.
 2. Nach „Mustermann“ suchen.
 
-**Was sollte passieren:** Treffer der Art „kontakt“, z. B. Erika Mustermann (Test) und Max Mustermann (Test). Ein Klick öffnet das „Indizierte Dokument“.
+**Was sollte passieren:** Treffer der Art „kontakt“, z. B. Erika Mustermann (Test) und Max Mustermann (Test). Ein Klick öffnet die Details des Treffers (Überschrift ist der Titel, z. B. „Erika Mustermann (Test)“).
 
 **Woran erkenne ich einen Fehler:** „Keine Treffer“, Fehlermeldung oder die Seite hängt.
 
@@ -1052,7 +1052,7 @@ Screenshot-Datei: ______________________
 1. Links „Ereignisse“ öffnen, Tab „Ereignisprotokoll“.
 2. Ein Ereignis „kontakt.erstellt“ anklicken.
 
-**Was sollte passieren:** 5 Ereignisse: „kontakt.erstellt“ (2×), „kontakt.geaendert“, „rechnung.erstellt“, „angebot.versendet“. Die Details zeigen die Daten.
+**Was sollte passieren:** Die 5 Ereignisse der Testdaten: „kontakt.erstellt“ (2×), „kontakt.geaendert“, „rechnung.erstellt“, „angebot.versendet“. Dazu kommen Systemereignisse der Abrechnung („billing.subscription.…“) aus den Test-Abonnements. Die Details zeigen die Daten.
 
 **Woran erkenne ich einen Fehler:** Liste leer oder Details fehlen.
 
@@ -1113,7 +1113,7 @@ Screenshot-Datei: ______________________
 
 1. Endpunkt „Buchhaltungssystem (Test, nicht erreichbar)“ öffnen.
 2. „Test-Ping senden“ klicken.
-3. Tab „Zustellungen“: eine fehlgeschlagene Zustellung öffnen und „Erneut zustellen“ klicken.
+3. Tab „Zustellungen“: eine Zustellung mit Status „Endgültig fehlgeschlagen“ öffnen und „Erneut zustellen“ klicken. (In den ersten Minuten nach dem Start werden die Zustellungen noch wiederholt; dann kurz warten und die Seite neu laden.)
 
 **Was sollte passieren:** Test-Ping: „Test-Ping fehlgeschlagen“ mit einem verständlichen Grund (der Empfänger ist absichtlich nicht erreichbar). „Erneut zustellen“ meldet „Zustellung erneut eingereiht“ und die Zustellung scheitert danach wieder.
 
@@ -1202,7 +1202,7 @@ Screenshot-Datei: ______________________
 
 1. Links „Abonnements“ öffnen.
 
-**Was sollte passieren:** Abonnements: Muster GmbH (Test) Professional (Test) „Testphase“; Beispiel AG (Test) Starter (Test) „Aktiv“; Demo Handwerk KG (Test) Enterprise (Test) „Aktiv“; Probe & Partner (Test) Enterprise (Test) „Überfällig“; Grenzfall Datenhungrig GmbH (Test) Professional (Test) „Unvollständig“.
+**Was sollte passieren:** Abonnements: Muster GmbH (Test) professional „Testphase“; Beispiel AG (Test) starter „Aktiv“; Demo Handwerk KG (Test) enterprise „Aktiv“; Probe & Partner (Test) enterprise „Überfällig“; Grenzfall Datenhungrig GmbH (Test) professional „Unvollständig“. Die Spalte „Tarif“ zeigt den Schlüssel des Tarifs (z. B. „professional“).
 
 **Woran erkenne ich einen Fehler:** Abonnements fehlen oder Status falsch.
 
@@ -1219,10 +1219,11 @@ Screenshot-Datei: ______________________
 
 **Schritte:**
 
-1. In „Abonnements“ Mandant „Beispiel AG (Test)“ „Öffnen“.
-2. Den Bereich „Zahlungsanbieter“ ansehen.
+1. „Abonnements“ öffnen.
+2. Den Bereich „Zahlungsanbieter“ oben auf der Seite ansehen.
+3. Bei Mandant „Beispiel AG (Test)“ „Öffnen“.
 
-**Was sollte passieren:** Anbieter „Testattrappe (fake)“, „Echtzahlungen: Aus“. Hinweis: Studio fragt nie nach Karten- oder Bankdaten.
+**Was sollte passieren:** Oben steht der Anbieter „Testattrappe (fake)“ mit „Echtzahlungen: Aus“. Das Abonnement der Beispiel AG ist von Hand angelegt („Anbieter: Manuell“). Studio fragt nie nach Karten- oder Bankdaten.
 
 **Woran erkenne ich einen Fehler:** „Echtzahlungen: An“, oder Studio fragt nach Kartendaten.
 
@@ -1242,7 +1243,7 @@ Screenshot-Datei: ______________________
 1. „Abonnements“ öffnen und die Abrechnung des Mandanten „Peter QA GmbH“ öffnen.
 2. „Tarif abonnieren“ klicken, „Starter (Test)“ wählen, „Abonnieren“.
 
-**Was sollte passieren:** Meldung „Abonnement gestartet“. Das Abonnement zeigt „Starter (Test)“. Unter „Wirksame Leistungen“ stehen die Leistungen des Tarifs.
+**Was sollte passieren:** Meldung „Abonnement gestartet“. Das Abonnement zeigt den Tarif „starter“. Unter „Wirksame Leistungen“ stehen die Leistungen des Tarifs.
 
 **Woran erkenne ich einen Fehler:** Fehlermeldung oder kein Abonnement.
 
@@ -1307,9 +1308,9 @@ Screenshot-Datei: ______________________
 
 1. Links „Benachrichtigungen“ öffnen, Tab „Vorlagen“.
 2. Vorlage „Willkommensmail (Test)“ öffnen.
-3. Die „Vorschau“ ansehen.
+3. In der „Vorschau“ die Sprache „de“ wählen.
 
-**Was sollte passieren:** Vorlagen „Willkommensmail (Test)“, „Rechnung bereit (Test)“, „Wartungshinweis im Posteingang (Test)“. Die Vorschau zeigt den Betreff „Willkommen im Beispiel-CRM, Erika (Test)“ mit eingesetzten Beispielwerten.
+**Was sollte passieren:** Vorlagen „Willkommensmail (Test)“, „Rechnung bereit (Test)“, „Wartungshinweis im Posteingang (Test)“. Die Vorschau zeigt (Sprache „de“) den Betreff „Willkommen im Beispiel-CRM, Erika (Test)“ mit eingesetzten Beispielwerten. Sie beginnt immer mit Englisch („en“).
 
 **Woran erkenne ich einen Fehler:** Platzhalter wie {{ name }} bleiben in der Vorschau stehen, oder Vorschau fehlt.
 
@@ -1391,10 +1392,10 @@ Screenshot-Datei: ______________________
 **Schritte:**
 
 1. Links „Audit-Protokoll“ öffnen.
-2. Im Suchfeld „Freitext“ nach „qa-test“ suchen, „Filter anwenden“.
+2. Im Filter „Aktion“ „access.api_key.*“ eingeben (mit Sternchen am Ende), „Filter anwenden“.
 3. Einen Eintrag öffnen.
 
-**Was sollte passieren:** Einträge zum Anlegen, Erneuern und Widerrufen des Schlüssels „qa-test“ mit Zeitpunkt, Akteur (du) und Ergebnis. Das Geheimnis steht nirgends im Klartext.
+**Was sollte passieren:** Einträge zum Anlegen, Erneuern und Widerrufen eines API-Schlüssels (dein Schlüssel „qa-test“ aus Abschnitt G) mit Zeitpunkt, Akteur (du) und Ergebnis. Das Geheimnis steht nirgends im Klartext. Hinweis: die Freitextsuche findet Aktion, Ziel-ID und Akteur, nicht den Namen des Schlüssels.
 
 **Woran erkenne ich einen Fehler:** Einträge fehlen, oder ein Geheimnis ist im Audit lesbar.
 
