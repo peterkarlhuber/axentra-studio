@@ -73,7 +73,7 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   missing. The base images are pinned by digest (`node:22.23.4-alpine`,
   `nginxinc/nginx-unprivileged:1.30.6-alpine-slim`) and Dependabot proposes updates weekly (check
   that its pull requests keep the `-alpine-slim` tag). The runtime stage runs `apk upgrade musl
-  musl-utils zlib` until an upstream digest carries those fixes (musl 1.2.6-r3, zlib 1.3.2-r1);
+musl-utils zlib` until an upstream digest carries those fixes (musl 1.2.6-r3, zlib 1.3.2-r1);
   remove it then, because it resolves against the live Alpine index and later builds may differ.
   On 2026-11-14 the image was built twice reproducibly, scanned (Trivy: 0 findings), smoke-tested
   and the smoke, return-path, a11y and permissions-policy specs ran against it locally; CI still
