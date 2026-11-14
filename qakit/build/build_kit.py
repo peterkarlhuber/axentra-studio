@@ -136,8 +136,10 @@ def copy_licenses(root: Path, args: argparse.Namespace) -> None:
         crlf(
             b"License texts of the components bundled in this kit: Axentra and Tabrion (Levuvo), PostgreSQL 17.11\n"
             b"(PostgreSQL License, binaries from zonky embedded-postgres-binaries), uv 0.11.32 (MIT or Apache-2.0).\n"
-            b"Axentra Studio's own license is LICENSE.txt in the top folder. The Python libraries that the install\n"
-            b"step adds keep their license files in _kit/env (in each package's .dist-info folder).\n"
+            b"Axentra Studio's own license is LICENSE.txt in the top folder; the open-source components of its web\n"
+            b"build are listed with their license texts in _kit/studio-web/THIRD-PARTY-NOTICES.txt. The Python\n"
+            b"libraries that the install step adds keep their license files in _kit/env (in each package's\n"
+            b".dist-info folder).\n"
         )
     )
 
