@@ -12,7 +12,8 @@ One zip per operating system: `AxentraStudio-QA-windows.zip` (Windows 10/11 x64)
 `Dokumente/` with the German guide, checklist, result sheet and bug report template.
 
 - **Install** (needs internet once): uv (bundled) downloads Python 3.13 into `_kit/python` and installs the libraries
-  of `build/kit-lock.txt` with `--require-hashes --only-binary :all:`, then the axentra wheel of the pinned commit.
+  of `build/kit-lock.txt` with `--require-hashes --only-binary :all:`, then the axentra wheel of the pinned commit and the tabrion wheel of the commit that
+  axentra's `requirements/tabrion.txt` pins (Tabrion is not on a package index).
 - **Start**: `runtime/launcher.py` runs the bundled PostgreSQL 17 (`_kit/pg`, data in `_kit/daten/pg`), on the first
   start configures Axentra (`runtime/qa_config.py`, `runtime/bootstrap.py`: owner and runtime roles, RLS checked by
   `axentra db inspect-role`), starts the web process (`runtime/web.py`), the job worker, the notification dispatcher
@@ -34,11 +35,13 @@ off, webhooks deliver to a closed local port on purpose, OIDC, S3 and OpenTeleme
 qakit/build/update_lock.sh <axentra checkout>          # only when the axentra pin or its lock changes
 npm ci && npm run build                                # Studio's dist/
 python qakit/build/fetch_tools.py <windows|macos|linux> .qakit-tools   # uv + PostgreSQL, SHA-256 pinned
-python qakit/build/build_kit.py --axentra <axentra checkout at api/BACKEND_REF> \
+python qakit/build/build_kit.py --axentra <axentra checkout at api/BACKEND_REF> --tabrion <tabrion checkout> \
   --studio-dist dist --tools .qakit-tools <system>     # needs uv and markdown; writes qakit/build/out/
 ```
 
-The axentra commit is `api/BACKEND_REF`. `BUILD-INFO.json` and `KIT-INFO.txt` (SHA-256 of every file) in `_kit/`
+The axentra commit is `api/BACKEND_REF`; pass `--tabrion <checkout>` at the commit that axentra's
+`requirements/tabrion.txt` pins. The zip carries Studio's `LICENSE` as `LICENSE.txt` and the license texts of
+axentra, tabrion, PostgreSQL and uv in `_kit/licenses/` (sources in `build/licenses/`). `BUILD-INFO.json` and `KIT-INFO.txt` (SHA-256 of every file) in `_kit/`
 record what a zip contains.
 
 ## Checks
