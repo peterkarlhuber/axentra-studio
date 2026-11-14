@@ -96,6 +96,7 @@ describe('docker/40-axentra-studio.sh', () => {
     ['https://api.example.com/v1/', 'https://api.example.com'],
     ['http://localhost:8080', 'http://localhost:8080'],
     ['https://example.com/axentra-api', 'https://example.com/axentra-api'],
+    ['http://[::1]:8080', 'http://[::1]:8080'],
   ])('accepts AXENTRA_PUBLIC_API_URL=%j', (value, expected) => {
     const { status, headers, config } = run({ AXENTRA_PUBLIC_API_URL: value });
     expect(status).toBe(0);
@@ -108,6 +109,10 @@ describe('docker/40-axentra-studio.sh', () => {
     ['http://api:8080', 'http://api:8080'],
     ['http://127.0.0.1:8080/v1', 'http://127.0.0.1:8080'],
     ['https://api.internal/prefix/', 'https://api.internal/prefix'],
+    ['http://axentra_api:8080', 'http://axentra_api:8080'],
+    ['http://[::1]:8080', 'http://[::1]:8080'],
+    ['http://[fd00::1]:8080/v1', 'http://[fd00::1]:8080'],
+    ['http://[FD00:0:0::A]', 'http://[FD00:0:0::A]'],
   ])('accepts AXENTRA_API_URL=%j', (value, expected) => {
     const { status, proxy } = run({ AXENTRA_API_URL: value });
     expect(status).toBe(0);
@@ -138,6 +143,15 @@ describe('docker/40-axentra-studio.sh', () => {
     'ftp://api.example.com',
     'api.example.com',
     ' https://api.example.com',
+    'http://[::1;add_header X 1]:8080',
+    'http://[::1]$http_x_inject',
+    'http://[::1] ;add_header X 1',
+    'http://[fe80::1%eth0]:8080',
+    'http://[::1]x',
+    'http://[]:8080',
+    'http://[::g]',
+    'http://axentra_api:8080;add_header X 1',
+    'http://axentra_api$http_x',
   ];
   it.each(badUrls)('refuses AXENTRA_PUBLIC_API_URL=%j and stops the start', (value) => {
     const { status, stderr, headers, config } = run({ AXENTRA_PUBLIC_API_URL: value });

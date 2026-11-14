@@ -20,18 +20,20 @@ nl='
 cr="$(printf '\r')"
 
 # Both URLs go into nginx directives (proxy_pass, the CSP add_header line) and config.json, so
-# only a plain http(s) URL is accepted: host from letters, digits, dots and hyphens, an optional
-# port and an optional path from a safe character set. Whitespace, control characters, quotes,
-# semicolons, `$` (nginx variables), braces, `#`, `?` and anything else stop the start, like
-# AXENTRA_CSP_CONNECT_SRC below.
+# only a plain http(s) URL is accepted: a host from letters, digits, dots, hyphens and underscores
+# (compose service names such as axentra_api) or a bracketed IPv6 literal ([::1], [fd00::1]), an
+# optional port and an optional path from a safe character set. Whitespace, control characters,
+# quotes, semicolons, `$` (nginx variables), braces, `#`, `?` and anything else stop the start,
+# like AXENTRA_CSP_CONNECT_SRC below.
 check_url() {
   case "$2" in
     "") return 0 ;;
     *"$nl"*|*"$cr"*) ;;
-    *) printf '%s\n' "$2" | LC_ALL=C grep -Eq '^https?://[A-Za-z0-9.-]+(:[0-9]+)?(/[A-Za-z0-9._~/-]*)?$' && return 0 ;;
+    *) printf '%s\n' "$2" | LC_ALL=C grep -Eq \
+      '^https?://([A-Za-z0-9._-]+|\[[0-9A-Fa-f:]+\])(:[0-9]+)?(/[A-Za-z0-9._~/-]*)?$' && return 0 ;;
   esac
-  echo "40-axentra-studio: $1 must be an http:// or https:// URL (scheme://host[:port][/path]," \
-    "path characters A-Z a-z 0-9 . _ ~ / -)" >&2
+  echo "40-axentra-studio: $1 must be an http:// or https:// URL (scheme://host[:port][/path];" \
+    "host characters A-Z a-z 0-9 . _ - or an [IPv6] literal; path characters A-Z a-z 0-9 . _ ~ / -)" >&2
   exit 1
 }
 
