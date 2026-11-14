@@ -38,6 +38,10 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
 
 ## P2
 
+- **The QA kit (`qakit/`) is not built in CI.** It was smoke-tested on Windows, macOS (Apple silicon) and Linux
+  runners from the work branch of the change that added it (temporary workflow, removed before merge); a rebuild
+  after changes to Studio, `api/BACKEND_REF` or `qakit/` is manual (`qakit/README.md`). Intel Macs are unsupported
+  (no wheels for two locked libraries); moving the unpacked folder after the first start breaks it.
 - **Role ceiling needs the role catalog.** Studio disables roles above the caller only when
   `GET .../roles` is readable (`roles:read`); otherwise the role is a free-text field and the
   server's `403` explains a refusal. The ceiling is computed from `GET /v1/me`; a role changed
