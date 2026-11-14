@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { onUnauthenticated } from '@/api/client';
 import { setCsrfToken } from '@/api/csrf';
@@ -39,18 +39,19 @@ export function RootLayout() {
     requestRouteFocus();
   }, [pathname]);
 
-  const store = useMemo<CrumbStore>(
-    () => ({
-      labels,
-      setLabel: (path, label) =>
-        setLabels((current) => {
-          if (current[path] === label) return current;
-          if (label !== undefined) return { ...current, [path]: label };
-          return Object.fromEntries(Object.entries(current).filter(([key]) => key !== path));
-        }),
-    }),
-    [labels],
+  // setLabel must keep its identity: pages pass it to an effect (useCrumbLabel), and a new function on every
+  // label change made that effect remove and re-add its label in an endless loop of updates, which kept a
+  // navigation away from a detail page from ever finishing (the address changed, the page did not).
+  const setLabel = useCallback<CrumbStore['setLabel']>(
+    (path, label) =>
+      setLabels((current) => {
+        if (current[path] === label) return current;
+        if (label !== undefined) return { ...current, [path]: label };
+        return Object.fromEntries(Object.entries(current).filter(([key]) => key !== path));
+      }),
+    [],
   );
+  const store = useMemo<CrumbStore>(() => ({ labels, setLabel }), [labels, setLabel]);
 
   return (
     <CrumbContext.Provider value={store}>

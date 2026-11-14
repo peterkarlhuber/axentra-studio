@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Braces, Database, Eye, FolderTree, Pencil, Plus, Trash2, X } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { asItems, recordsApi, recordsWriteApi, type RecordSort } from '@/api/endpoints';
@@ -58,13 +58,20 @@ export function RecordsPage() {
     enabled: canList,
   });
 
+  // Build on the latest params, not on this render's: two quick choices (collection, then tenant)
+  // would otherwise both start from the same old params, and the second would drop the first.
+  const latest = useRef(params);
+  useEffect(() => {
+    latest.current = params;
+  }, [params]);
   const update = (changes: Record<string, string>) =>
     setParams(
-      (current) => {
-        const next = new URLSearchParams(current);
+      () => {
+        const next = new URLSearchParams(latest.current);
         Object.entries(changes).forEach(([key, value]) =>
           value ? next.set(key, value) : next.delete(key),
         );
+        latest.current = next;
         return next;
       },
       { replace: true },

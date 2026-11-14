@@ -1,6 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from '@/lib/clsx';
 import { Button } from './Button';
@@ -41,6 +41,10 @@ export function Dialog({
 }: DialogProps) {
   const { t } = useTranslation();
   const [asking, setAsking] = useState(false);
+  // Many dialogs open from a URL parameter (?new=1), not from a Radix trigger. Remember what had the
+  // focus when the dialog opened, so closing it hands the focus back there (keyboard users would
+  // otherwise land on the page body).
+  const opener = useRef<HTMLElement | null>(null);
   const block = (event: Event) => {
     if (!dismissible) event.preventDefault();
   };
@@ -59,6 +63,19 @@ export function Dialog({
           className={clsx(styles.content, styles[variant], variant === 'dialog' && styles[size])}
           onPointerDownOutside={block}
           onEscapeKeyDown={block}
+          onOpenAutoFocus={() => {
+            const active = document.activeElement;
+            opener.current =
+              active instanceof HTMLElement && active !== document.body ? active : null;
+          }}
+          onCloseAutoFocus={(event) => {
+            const target = opener.current;
+            opener.current = null;
+            if (target?.isConnected && target !== document.body) {
+              event.preventDefault();
+              target.focus();
+            }
+          }}
           {...(description ? {} : { 'aria-describedby': undefined })}
         >
           <div className={styles.header}>

@@ -75,6 +75,17 @@ interface Draft {
 let rowCounter = 0;
 const nextRow = () => ++rowCounter;
 
+/** The draft as compared for unsaved changes: row ids are only React keys, new on every draftFrom call. */
+function comparable(draft: Draft): string {
+  return JSON.stringify({
+    ...draft,
+    variables: draft.variables.map((variable) => ({
+      name: variable.name,
+      sample: variable.sample,
+    })),
+  });
+}
+
 function draftFrom(template: NotifyTemplate | undefined): Draft {
   if (!template) {
     return {
@@ -198,7 +209,7 @@ function TemplateEditor({
   const { access } = useProductScope();
   const canSend = can('notify:send') || canInAnyTenant(access, 'notify:send');
   const [draft, setDraft] = useState<Draft>(() => draftFrom(template));
-  const [initialDraft] = useState(() => JSON.stringify(draftFrom(template)));
+  const [initialDraft] = useState(() => comparable(draftFrom(template)));
   const [activeLocale, setActiveLocale] = useState('en');
   const [newLocale, setNewLocale] = useState('');
   const [previewLocale, setPreviewLocale] = useState('en');
@@ -386,7 +397,7 @@ function TemplateEditor({
       ) : null}
       <div className={styles.editorGrid}>
         <UnsavedChangesGuard
-          when={JSON.stringify(draft) !== initialDraft && !save.isPending && !deleting}
+          when={comparable(draft) !== initialDraft && !save.isPending && !deleting}
         />
         <form className={layout.stack} onSubmit={submit} aria-label={t('editor.formLabel')}>
           <Card title={t('editor.general')}>

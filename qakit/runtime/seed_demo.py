@@ -485,6 +485,8 @@ def _seed_data(a: Api, base_url: str, config_path: Path, venv_python: Path) -> d
     a.post(f"{TM}/members", {"email": "tobias.test@example.com", "role": "viewer"})
     a.post(f"{TM}/members", {"email": "sven.service@example.com", "role": "support_agent"})
     a.post(f"{TP(dhw)}/members", {"email": "lena.demo@example.com", "role": "member"})
+    # The SSO-only user needs a membership to appear in the product's user list (checklist B-08).
+    a.post(f"{TP(dhw)}/members", {"email": SSO_USER["email"], "role": "viewer"})
     a.post(f"{TP(ev)}/members", {"email": "frieda.verein@example.com", "role": "tenant_owner"})
     a.post(f"{S}/tenants/{laden['id']}/members", {"email": "markus.laden@example.com", "role": "tenant_owner"})
 

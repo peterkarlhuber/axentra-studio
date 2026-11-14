@@ -20,7 +20,27 @@ function Harness() {
   );
 }
 
+function OpenerHarness() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>New tenant</button>
+      <Dialog open={open} onOpenChange={setOpen} title="Create tenant" />
+    </>
+  );
+}
+
 describe('Dialog', () => {
+  it('gives the focus back to the button that opened it (no Radix trigger)', async () => {
+    const user = userEvent.setup();
+    render(<OpenerHarness />);
+    await user.click(screen.getByRole('button', { name: 'New tenant' }));
+    await screen.findByRole('dialog', { name: 'Create tenant' });
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(screen.getByRole('button', { name: 'New tenant' })).toHaveFocus();
+  });
+
   it('closes on Escape without asking while nothing was entered', async () => {
     const user = userEvent.setup();
     render(<Harness />);

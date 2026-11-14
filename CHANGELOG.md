@@ -12,6 +12,22 @@ All notable changes to Axentra Studio are documented here. The format follows
   silicon) and Linux, with bundled PostgreSQL 17, hash-pinned libraries, synthetic seed data, a kit page with an
   interactive German checklist, and smoke and browser checks (see `qakit/README.md`). Not a release; nothing is
   published. `api/BACKEND_REF` moves to the Axentra commit with the fake billing checkout fix (OpenAPI unchanged).
+- `qakit/build/qa_checklist_auto.py` with `qakit/build/qa_auto/`: runs the 80 cases of the QA checklist
+  automatically against a running kit in a real browser (Playwright) and writes one result per case (pass, fail,
+  or not automated with the reason). The tester's own results are never touched.
+
+### Fixed
+
+- Leaving a detail page (tenant, user, job, webhook, template, product) through the sidebar or the breadcrumb
+  changed the address but kept showing the detail page until a reload. The breadcrumb label store handed out a
+  new setter on every change, so `useCrumbLabel` removed and re-added its label in an endless loop of updates
+  that starved the navigation. Test: `src/app/RootLayout.test.tsx`.
+- Closing a dialog that was opened without a Radix trigger (for example „New tenant“, which opens through
+  `?new=1`) left the keyboard focus on the page body; it now returns to the element that opened the dialog.
+- The template editor asked „Leave without saving?“ for an untouched template with variables (row ids of the
+  variable list counted as changes).
+- Records: choosing the collection and then the tenant in quick succession could drop the collection (both
+  URL updates started from the same old search parameters).
 
 ### Security
 
