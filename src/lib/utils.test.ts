@@ -25,6 +25,21 @@ describe('safeReturnPath', () => {
     expect(safeReturnPath('/login?return_to=/x')).toBe('/');
     expect(safeReturnPath(null)).toBe('/');
   });
+  // Assessment H-C1: browsers strip tabs and line breaks, so these would turn into `//evil.example`.
+  it.each([
+    '/\t/evil.example',
+    '/\n/evil.example',
+    '/\r/evil.example',
+    '/\r\n/evil.example',
+    '/ /evil.example',
+    '/\u0000/evil.example',
+    '/\u007f/evil.example',
+    '/p/1\\..\\/evil.example',
+    '/audit\t',
+  ])('refuses control characters, whitespace and backslashes: %j', (value) => {
+    expect(safeReturnPath(value)).toBe('/');
+    expect(loginPath(value)).toBe('/login');
+  });
   it('builds the login path with the return target', () => {
     expect(loginPath('/audit')).toBe('/login?return_to=%2Faudit');
     expect(loginPath('/')).toBe('/login');
