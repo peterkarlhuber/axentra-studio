@@ -124,6 +124,11 @@ docker run -p 8080:8080 -e AXENTRA_API_URL=http://axentra-api:8080 axentra-studi
 docker run -p 8080:8080 -e AXENTRA_PUBLIC_API_URL=https://api.example.com axentra-studio
 ```
 
+**Supported platform.** For the first public release, the officially supported deployment is
+this container image on Linux amd64 (x86_64) (owner decision of 2026-11-14). Other architectures
+and hosts are not tested for release. The Windows and macOS packages of the QA kit (`qakit/`) are a
+local test tool for manual QA, not a supported deployment.
+
 The image is `nginxinc/nginx-unprivileged` in its `-alpine-slim` variant (runs as uid 101, listens
 on 8080, `/healthz` for probes; no curl and no dynamic nginx modules, the healthcheck uses
 busybox `wget`). At start, `docker/40-axentra-studio.sh` writes `config.json`, the optional `/v1` proxy

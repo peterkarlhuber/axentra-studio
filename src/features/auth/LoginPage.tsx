@@ -39,6 +39,10 @@ const SSO_ERRORS = new Set([
   'email_not_verified',
   'domain_not_allowed',
   'signup_disabled',
+  // The verified email belongs to a platform user (platform_admin / platform_viewer): the server
+  // never links a new sign-in method to such an account on its own; a platform admin must link it
+  // (POST /v1/users/{user_id}/identities).
+  'explicit_link_required',
   'account_disabled',
   'rate_limited',
   // An invitation on the `GET` start (refused since security review round 4, R4-1). Studio sends

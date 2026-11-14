@@ -124,6 +124,15 @@ describe('LoginPage', () => {
     expect(screen.queryByText(/continue where you left off/i)).not.toBeInTheDocument();
   });
 
+  it('explains a single sign-on that needs an explicit identity link (I5)', async () => {
+    configureApi({ baseUrl: 'http://axentra.test', fetch: async () => unauthenticated() });
+    renderWithProviders(<LoginPage />, { route: '/login?login_error=explicit_link_required' });
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/not linked to your account yet/i);
+    expect(alert).toHaveTextContent(/ask a platform administrator to link your sign-in method/i);
+    expect(alert).not.toHaveTextContent(/explicit_link_required/);
+  });
+
   it('keeps the deep link that Axentra returns with a failed single sign-on', async () => {
     let loggedIn = false;
     configureApi({
