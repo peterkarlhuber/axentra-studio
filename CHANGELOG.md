@@ -8,6 +8,11 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Added
 
+- CI job `Container image: reproducible build, smoke test and Trivy scan` (`scripts/image-check.sh`): builds the
+  Docker image twice with `SOURCE_DATE_EPOCH` and requires identical manifests, smoke-tests the container (uid
+  101, `nginx -t`, health check, SPA fallback, security headers, refused start on invalid API/CSP values) and fails
+  on CRITICAL or HIGH Trivy findings that have a fix; the full Trivy report is uploaded as an artifact. Listed in
+  `.github/ci-manifest.json`.
 - The sign-in page and help explain the single sign-on error `explicit_link_required`: a platform account's
   sign-in method must be linked by a platform administrator (Axentra owner decision I5), in all six languages.
 - README: the officially supported deployment for the first public release is the container image on Linux
