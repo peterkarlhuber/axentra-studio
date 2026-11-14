@@ -16,7 +16,7 @@ FROM nginxinc/nginx-unprivileged:1.30.6-alpine@sha256:f5116ed4606f3eb015dd4a8e28
 
 LABEL org.opencontainers.image.title="Axentra Studio" \
       org.opencontainers.image.description="Admin UI for the Axentra SaaS backend" \
-      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.licenses="LicenseRef-Proprietary" \
       org.opencontainers.image.source="https://github.com/peterkarlhuber/axentra-studio"
 
 # AXENTRA_API_URL: optional upstream for a same-origin /v1 reverse proxy.
