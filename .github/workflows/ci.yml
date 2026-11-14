@@ -131,7 +131,11 @@ jobs:
       - name: Install axentra[server] from the pinned checkout
         run: |
           python -m pip install --upgrade pip
-          pip install "./.backend[server]"
+          # Since MIG-AXE-3 axentra requires Tabrion, which is not on a package index; requirements/tabrion.txt
+          # pins its source. Older backend commits have no such file.
+          tabrion=()
+          if [ -f .backend/requirements/tabrion.txt ]; then tabrion=(-r .backend/requirements/tabrion.txt); fi
+          pip install "${tabrion[@]}" "./.backend[server]"
           axentra --version
       - name: Backend's committed OpenAPI matches its code
         working-directory: .backend

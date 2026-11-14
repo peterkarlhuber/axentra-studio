@@ -190,7 +190,10 @@ cmd_up() {
     [[ -x "$py" ]] || python3 -m venv "$STATE/venv"
     log "installing $BACKEND[server] into $STATE/venv"
     "$py" -m pip install -q --upgrade pip
-    "$py" -m pip install -q "$BACKEND[server]"
+    # Since MIG-AXE-3 axentra requires Tabrion, which is not on a package index; requirements/tabrion.txt pins it.
+    tabrion=()
+    if [ -f "$BACKEND/requirements/tabrion.txt" ]; then tabrion=(-r "$BACKEND/requirements/tabrion.txt"); fi
+    "$py" -m pip install -q ${tabrion[@]+"${tabrion[@]}"} "$BACKEND[server]"
   else
     py="${AXENTRA_PYTHON:-python3}"
   fi
