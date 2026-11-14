@@ -11,6 +11,8 @@ remove an item only when it is done and tested, and add what you find. Prioritie
 Backend gaps (something the Axentra API does not offer) are marked **backend** and also belong in
 the backend's `docs/TODO.md`.
 
+Last update: 2026-11-14 (pre-release assessment phase 3: H-C1 browser e2e, slim runtime image, I5 sign-in
+error; the independent human security review is still open: NOT COMPLETED — HUMAN REVIEW REQUIRED).
 Last full review: 2026-11-07 against master at 6422691 (TODO abatement round 5). Before that:
 2026-11-06 against `4f4b762` (TODO abatement round 4), 2026-11-06 against `715da0d` (TODO
 abatement round 2). Backend pin
@@ -69,9 +71,13 @@ Nodestro desktop candidate, nodestro-desktop DSK-001). The P1 items are needed b
   exercised once locally without Docker (headers emulated, see the implementation report); a CI job
   that builds the image and runs the smoke and a11y specs against it (`AXENTRA_E2E_BASE_URL`) is
   missing. The base images are pinned by digest (`node:22.23.4-alpine`,
-  `nginxinc/nginx-unprivileged:1.30.6-alpine`) and Dependabot proposes updates weekly; the pinned
-  image was built and started locally in the dependency round of 2026-11-05 (`nginx -t` passes,
-  `/` serves Studio), but CI still does not build it.
+  `nginxinc/nginx-unprivileged:1.30.6-alpine-slim`) and Dependabot proposes updates weekly (check
+  that its pull requests keep the `-alpine-slim` tag). The runtime stage runs `apk upgrade musl
+musl-utils zlib` until an upstream digest carries those fixes (musl 1.2.6-r3, zlib 1.3.2-r1);
+  remove it then, because it resolves against the live Alpine index and later builds may differ.
+  On 2026-11-14 the image was built twice reproducibly, scanned (Trivy: 0 findings), smoke-tested
+  and the smoke, return-path, a11y and permissions-policy specs ran against it locally; CI still
+  does not build it.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 
