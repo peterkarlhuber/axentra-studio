@@ -12,7 +12,10 @@ COPY . .
 RUN npm run build
 
 # ---- Runtime: static files on nginx, running as an unprivileged user ----------------------
-FROM nginxinc/nginx-unprivileged:1.30.6-alpine@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03
+# The -slim variant: the same nginx build, configuration and entrypoint scripts as -alpine, without
+# the dynamic modules Studio does not load (njs, xslt, image-filter, geoip) and without curl, which
+# removes their libraries (libxslt, libexpat, brotli, libcurl, ...) and their CVEs from the image.
+FROM nginxinc/nginx-unprivileged:1.30.6-alpine-slim@sha256:5d8bb9437d74a600ec5dbf90c035451c724dc33eac8d3a71078f6f8612c345f6
 
 LABEL org.opencontainers.image.title="Axentra Studio" \
       org.opencontainers.image.description="Admin UI for the Axentra SaaS backend" \
@@ -31,7 +34,11 @@ ENV AXENTRA_API_URL="" \
     AXENTRA_TLS_TERMINATED="false"
 
 USER root
-RUN rm -f /etc/nginx/conf.d/default.conf \
+# Alpine security fixes released after the base image (musl CVE-2026-107891, zlib CVE-2026-85091).
+# Only these packages, so the rest stays as pinned; drop the line when the base digest has them.
+# --no-logfile: /var/log/apk.log would record the build's wall-clock time (not reproducible).
+RUN apk upgrade --no-cache --no-logfile musl musl-utils zlib \
+ && rm -f /etc/nginx/conf.d/default.conf \
  && mkdir -p /etc/nginx/axentra /etc/nginx/axentra-templates \
  && chown -R nginx:nginx /etc/nginx/axentra
 COPY docker/nginx.conf /etc/nginx/conf.d/axentra-studio.conf

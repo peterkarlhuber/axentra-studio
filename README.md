@@ -124,8 +124,9 @@ docker run -p 8080:8080 -e AXENTRA_API_URL=http://axentra-api:8080 axentra-studi
 docker run -p 8080:8080 -e AXENTRA_PUBLIC_API_URL=https://api.example.com axentra-studio
 ```
 
-The image is `nginxinc/nginx-unprivileged` (runs as uid 101, listens on 8080, `/healthz` for
-probes). At start, `docker/40-axentra-studio.sh` writes `config.json`, the optional `/v1` proxy
+The image is `nginxinc/nginx-unprivileged` in its `-alpine-slim` variant (runs as uid 101, listens
+on 8080, `/healthz` for probes; no curl and no dynamic nginx modules, the healthcheck uses
+busybox `wget`). At start, `docker/40-axentra-studio.sh` writes `config.json`, the optional `/v1` proxy
 (from `docker/api-proxy.conf.template` via `envsubst`) and the security headers:
 
 | Header                                            | Value                                                                                                                                                                                                                                                                   |
