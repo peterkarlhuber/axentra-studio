@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "Axentra Studio - the standalone admin UI for the Axentra backend platform.",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "engines": {
     "node": ">=22.22.0"

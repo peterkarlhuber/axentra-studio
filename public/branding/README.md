@@ -7,7 +7,7 @@
 | Masters | [`branding-src/axentra-logo-transparent.png`](../../branding-src/axentra-logo-transparent.png) and [`branding-src/axentra-logo-white.png`](../../branding-src/axentra-logo-white.png) |
 | Owner | The official Axentra logo, supplied by the brand owner (same owner as this repository) |
 | Same masters in | [`peterkarlhuber/axentra`](https://github.com/peterkarlhuber/axentra) `assets/branding/` |
-| License | MIT (see `LICENSE` in both repositories) |
+| License | Proprietary, Levuvo (see `LICENSE` in both repositories) |
 
 The masters are 2048 × 640 px, symbol left, black wordmark right; the white master is the
 transparent one flattened on white. They live outside `public/`, so they are not served. Do not
