@@ -12,10 +12,7 @@
           "id": "A-01",
           "title": "Studio startet und öffnet sich im Browser",
           "user": "keiner",
-          "steps": [
-            "Doppelklick auf „2 - Starten“.",
-            "Warten, bis sich der Browser öffnet."
-          ],
+          "steps": ["Doppelklick auf „2 - Starten“.", "Warten, bis sich der Browser öffnet."],
           "expected": "Ein schwarzes Fenster bleibt offen. Der Browser zeigt http://127.0.0.1:8765/ mit der Seite „Anmelden“.",
           "failure": "Kein Browser geht auf, auch nach mehreren Minuten nicht. Oder das schwarze Fenster zeigt einen Fehler und schließt sich.",
           "area": "Start"
@@ -105,9 +102,7 @@
           "id": "B-03",
           "title": "Deaktiviertes Konto",
           "user": "Tobias Test (Test)",
-          "steps": [
-            "Mit den Daten von Tobias Test (Test) anmelden."
-          ],
+          "steps": ["Mit den Daten von Tobias Test (Test) anmelden."],
           "expected": "Meldung „Anmeldung fehlgeschlagen“ mit „E-Mail-Adresse oder Passwort ist falsch.“ Du bleibst auf der Anmeldeseite.",
           "failure": "Tobias wird angemeldet, obwohl sein Konto deaktiviert ist.",
           "area": "Anmeldung"
@@ -188,10 +183,7 @@
           "id": "C-01",
           "title": "Benutzer suchen",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Benutzer“ öffnen.",
-            "Ins Suchfeld „Maria“ tippen."
-          ],
+          "steps": ["Links „Benutzer“ öffnen.", "Ins Suchfeld „Maria“ tippen."],
           "expected": "Die Liste zeigt nur noch Maria Muster (Test). Wenn du die Suche löschst, sind wieder alle da.",
           "failure": "Suche findet nichts oder zeigt nicht passende Einträge.",
           "area": "Benutzer"
@@ -200,9 +192,7 @@
           "id": "C-02",
           "title": "Benutzerdetails ansehen",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "In „Benutzer“ auf Lena Demo (Test) klicken."
-          ],
+          "steps": ["In „Benutzer“ auf Lena Demo (Test) klicken."],
           "expected": "Die Detailseite zeigt Profil, „Mitgliedschaften“ (Mandanten „Muster GmbH (Test)“ und „Demo Handwerk KG (Test)“ mit Rolle) und „Aktive Sitzungen“.",
           "failure": "Mitgliedschaften fehlen oder sind falsch.",
           "area": "Benutzer"
@@ -246,9 +236,7 @@
           "id": "D-01",
           "title": "Produktliste",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Produkte“ öffnen."
-          ],
+          "steps": ["Links „Produkte“ öffnen."],
           "expected": "Die Liste zeigt „Beispiel-CRM (Test)“, „Beispiel-Shop (Test)“ und „Altes Testprodukt (Test)“ mit Status „Archiviert“.",
           "failure": "Produkte fehlen oder Status stimmt nicht.",
           "area": "Produkte"
@@ -289,10 +277,7 @@
           "id": "E-01",
           "title": "Mandantenliste und Filter",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Mandanten“ öffnen.",
-            "Im Statusfilter „Gesperrt“ wählen."
-          ],
+          "steps": ["Links „Mandanten“ öffnen.", "Im Statusfilter „Gesperrt“ wählen."],
           "expected": "Ohne Filter: Muster GmbH (Test), Beispiel AG (Test), Demo Handwerk KG (Test), Musterstadt e.V. (Test), Probe & Partner (Test), Grenzfall Datenhungrig GmbH (Test). Mit Filter „Gesperrt“ nur Musterstadt e.V. (Test).",
           "failure": "Mandanten fehlen oder der Filter wirkt nicht.",
           "area": "Mandanten"
@@ -327,9 +312,7 @@
           "id": "E-04",
           "title": "Mitglieder eines Mandanten",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Mandant „Muster GmbH (Test)“ öffnen, Tab „Mitglieder“."
-          ],
+          "steps": ["Mandant „Muster GmbH (Test)“ öffnen, Tab „Mitglieder“."],
           "expected": "Mitglieder mit Rolle: Maria Muster (Test) (Owner), Jonas Beispiel (Test) (Admin), Lena Demo (Test) (Member), Tobias Test (Test) (Viewer), Sven Service (Test) (eigene Rolle „Support-Mitarbeiter (Test)“). Die Namen der eingebauten Rollen bleiben absichtlich englisch, ihre Beschreibung ist übersetzt.",
           "failure": "Mitglieder fehlen oder haben falsche Rollen.",
           "area": "Mandanten"
@@ -345,9 +328,7 @@
           "id": "F-01",
           "title": "Rollen ansehen",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Rollen“ öffnen."
-          ],
+          "steps": ["Links „Rollen“ öffnen."],
           "expected": "Unter „Eigene Rollen“ stehen „Support-Mitarbeiter (Test)“ und „Abrechnung (Test)“. Unter „Integrierte Rollen“ die eingebauten Rollen (nur lesbar).",
           "failure": "Eigene Rollen fehlen, oder integrierte Rollen lassen sich ändern.",
           "area": "Rollen"
@@ -382,10 +363,7 @@
           "id": "F-04",
           "title": "Eingeschränkter Benutzer: keine API-Schlüssel anlegen",
           "user": "Sabine Support (Test)",
-          "steps": [
-            "Als Sabine Support (Test) anmelden.",
-            "Links „API-Schlüssel“ öffnen."
-          ],
+          "steps": ["Als Sabine Support (Test) anmelden.", "Links „API-Schlüssel“ öffnen."],
           "expected": "Sabine sieht die Liste (oder einen Hinweis, dass ihr der Zugriff fehlt), aber keinen Knopf „Neuer API-Schlüssel“ und kein „Schlüssel widerrufen“.",
           "failure": "Sabine kann einen Schlüssel anlegen oder widerrufen.",
           "area": "Rollen"
@@ -394,10 +372,7 @@
           "id": "F-05",
           "title": "Eingeschränkter Benutzer: keine Mandanten anlegen",
           "user": "Sabine Support (Test)",
-          "steps": [
-            "Als Sabine Support (Test) „Mandanten“ öffnen.",
-            "Einen Mandanten öffnen."
-          ],
+          "steps": ["Als Sabine Support (Test) „Mandanten“ öffnen.", "Einen Mandanten öffnen."],
           "expected": "Kein Knopf „Neuer Mandant“. Kein „Mandant löschen“ oder „Mandant sperren“.",
           "failure": "Sabine kann Mandanten anlegen, sperren oder löschen.",
           "area": "Rollen"
@@ -406,10 +381,7 @@
           "id": "F-06",
           "title": "Mandanten-Inhaberin sieht nur ihren Mandanten",
           "user": "Karin Kunde (Test)",
-          "steps": [
-            "Als Karin Kunde (Test) anmelden.",
-            "„Mandanten“ öffnen."
-          ],
+          "steps": ["Als Karin Kunde (Test) anmelden.", "„Mandanten“ öffnen."],
           "expected": "Karin sieht nur „Beispiel AG (Test)“, nicht die anderen Mandanten.",
           "failure": "Karin sieht Muster GmbH (Test) oder andere fremde Mandanten.",
           "area": "Rollen"
@@ -450,9 +422,7 @@
           "id": "G-01",
           "title": "Schlüsselliste der Testdaten",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „API-Schlüssel“ öffnen."
-          ],
+          "steps": ["Links „API-Schlüssel“ öffnen."],
           "expected": "Schlüssel „crm-backend (Test)“ (Aktiv, mit „Zuletzt verwendet“), „import-worker Muster GmbH (Test, laeuft bald ab)“ (Mandant, läuft in wenigen Tagen ab), „reporting nur lesend (Test)“, „rotierter Schluessel (Test)“, „alter Schluessel (Test, widerrufen)“ mit Status „Widerrufen“ und „Kurzzeit-Schluessel (Test, abgelaufen)“ mit Status „Abgelaufen“.",
           "failure": "Schlüssel fehlen oder Status falsch.",
           "area": "API-Schlüssel"
@@ -494,9 +464,7 @@
           "id": "H-01",
           "title": "Datenübersicht",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Datenübersicht“ öffnen."
-          ],
+          "steps": ["Links „Datenübersicht“ öffnen."],
           "expected": "Unter „Datensatz-Sammlungen“ stehen „kontakte“, „notizen“ und „aufgaben“ mit Anzahl. Unter „Dateispeicher“ der Speicherverbrauch pro Mandant.",
           "failure": "Sammlungen fehlen oder Fehlermeldung.",
           "area": "Daten"
@@ -563,9 +531,7 @@
           "id": "I-01",
           "title": "Dateiliste und Speicherverbrauch",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Dateien“ öffnen, Mandant „Muster GmbH (Test)“ wählen."
-          ],
+          "steps": ["Links „Dateien“ öffnen, Mandant „Muster GmbH (Test)“ wählen."],
           "expected": "Dateien: angebot-2026-11.pdf, firmenlogo.png, kontakte-export.csv, protokoll-kickoff.txt. Darüber der „Speicherverbrauch“.",
           "failure": "Dateien fehlen oder Speicherverbrauch fehlt.",
           "area": "Dateien"
@@ -630,9 +596,7 @@
           "id": "J-01",
           "title": "Jobliste",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Jobs“ öffnen."
-          ],
+          "steps": ["Links „Jobs“ öffnen."],
           "expected": "Jobs wie „crm.kontakte.import“, „berichte.monatsbericht“, „daten.reindex“ mit Status „Wartend“, „crm.sync.extern“ mit „Abgebrochen“. Dazu Axentras eigene Jobs (z. B. Webhook-Zustellungen). Wichtig: Die Beispiel-Jobs bleiben „Wartend“, weil es im Kit keinen Bearbeiter für sie gibt. Das ist richtig so.",
           "failure": "Liste leer oder Fehlermeldung. (Dauerhaft „Wartend“ ist bei den Beispiel-Jobs KEIN Fehler.)",
           "area": "Jobs"
@@ -776,9 +740,7 @@
           "id": "M-01",
           "title": "Abonnements und Status",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Abonnements“ öffnen."
-          ],
+          "steps": ["Links „Abonnements“ öffnen."],
           "expected": "Abonnements: Muster GmbH (Test) professional „Testphase“; Beispiel AG (Test) starter „Aktiv“; Demo Handwerk KG (Test) enterprise „Aktiv“; Probe & Partner (Test) enterprise „Überfällig“; Grenzfall Datenhungrig GmbH (Test) professional „Unvollständig“. Die Spalte „Tarif“ zeigt den Schlüssel des Tarifs (z. B. „professional“).",
           "failure": "Abonnements fehlen oder Status falsch.",
           "area": "Abrechnung"
@@ -871,10 +833,7 @@
           "id": "N-03",
           "title": "Nachrichtenprotokoll und Postfach in Studio",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Tab „Nachrichtenprotokoll“ öffnen.",
-            "Tab „Postfach“ öffnen."
-          ],
+          "steps": ["Tab „Nachrichtenprotokoll“ öffnen.", "Tab „Postfach“ öffnen."],
           "expected": "Im Protokoll steht deine Test-Mail mit Status „Gesendet“. Der Tab „Postfach“ meldet „Kein lokales Postfach auf diesem Server“. Das ist hier richtig: Die Mails landen im Mail-Fänger des Kits (/qa/, Tab „E-Mails“).",
           "failure": "Test-Mail fehlt im Protokoll oder steht dauerhaft auf „Fehlgeschlagen“.",
           "area": "Benachrichtigungen"
@@ -1082,9 +1041,7 @@
           "id": "S-03",
           "title": "Systemzustand",
           "user": "Alex Admin (Test)",
-          "steps": [
-            "Links „Systemzustand“ öffnen."
-          ],
+          "steps": ["Links „Systemzustand“ öffnen."],
           "expected": "„Bereitschaft“ und „Erreichbarkeit“ sind grün/OK. Unter „Versionen“ stehen Server- und Studio-Version (notier sie für Fehlerberichte).",
           "failure": "Rote Prüfungen oder „Der Server meldet, dass er nicht bereit ist“.",
           "area": "Hilfe"

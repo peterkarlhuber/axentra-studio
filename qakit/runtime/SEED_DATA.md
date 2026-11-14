@@ -33,7 +33,7 @@ the email address.) The list is also written to `<kit>/_kit/daten/testbenutzer.j
 | frieda.verein@example.com   | Frieda Verein (Test)     | tenant_owner of Musterstadt e.V. (Test), which is **suspended**                                                | Logs in but sees no tenant                                                                |
 | markus.laden@example.com    | Markus Laden (Test)      | tenant_owner, Musterladen OHG (Test) in Beispiel-Shop (Test)                                                   | Product isolation                                                                         |
 | erik.ohne@example.com       | Erik Ohne-Mandant (Test) | none                                                                                                           | User without product or tenant: empty UI                                                  |
-| sso.nutzer@example.com      | SSO Nutzer (Test)        | viewer of Demo Handwerk KG (Test); external identity `qa-sso-test` only, **no password**                     | Cannot log in (no IdP in the kit); visible in the user list with its identity             |
+| sso.nutzer@example.com      | SSO Nutzer (Test)        | viewer of Demo Handwerk KG (Test); external identity `qa-sso-test` only, **no password**                       | Cannot log in (no IdP in the kit); visible in the user list with its identity             |
 
 How the accounts are created: Axentra's HTTP API has **no endpoint to create a password account**
 (only the first-run setup, OIDC logins and `POST /v1/users/external` for SSO-only users exist). The
