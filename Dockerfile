@@ -15,9 +15,9 @@ RUN npm run build
 # The -slim variant: the same nginx build, configuration and entrypoint scripts as -alpine, without
 # the dynamic modules Studio does not load (njs, xslt, image-filter, geoip) and without curl, which
 # removes their libraries (libxslt, libexpat, brotli, libcurl, ...) and their CVEs from the image.
-# From NGINX's GitHub registry: it publishes rebuilt images there first (1.30.8 on 2026-11-23, Docker Hub's
-# nginxinc/nginx-unprivileged still ends at 1.30.6). Same Dockerfiles (github.com/nginx/docker-nginx-unprivileged).
-FROM ghcr.io/nginx/nginx-unprivileged:1.30.8-alpine-slim@sha256:04c98c78c1de60ddeada00d7d2207dcd146ecd07b61b9941c9a5799cfb258d28
+# NGINX moved the image on Docker Hub from nginxinc/ to nginx/nginx-unprivileged with 1.30.6 (stable) and 1.31.7
+# (mainline); the old name gets no new releases (github.com/nginx/docker-nginx-unprivileged, README "Image Registries").
+FROM nginx/nginx-unprivileged:1.30.8-alpine-slim@sha256:04c98c78c1de60ddeada00d7d2207dcd146ecd07b61b9941c9a5799cfb258d28
 
 LABEL org.opencontainers.image.title="Axentra Studio" \
       org.opencontainers.image.description="Admin UI for the Axentra SaaS backend" \

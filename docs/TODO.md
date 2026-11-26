@@ -74,13 +74,15 @@ reproducible build, smoke test and Trivy scan` (`scripts/image-check.sh`) builds
   and fails on CRITICAL or HIGH Trivy findings that have a fix. The Playwright suite still runs
   against `vite preview`; the smoke, return-path, a11y and permissions-policy specs ran against the
   image only locally (2026-11-14, `AXENTRA_E2E_BASE_URL`). The base images are pinned by digest
-  (`node:22.23.4-alpine`, `ghcr.io/nginx/nginx-unprivileged:1.30.8-alpine-slim`) and Dependabot proposes
-  updates weekly (check that its pull requests keep the `-alpine-slim` tag). The runtime image comes
-  from NGINX's GitHub registry since 2026-11-26: Docker Hub's `nginxinc/nginx-unprivileged` still ended
-  at 1.30.6 (4 CRITICAL and 2 HIGH nginx CVEs, nightly red since 2026-11-19), ghcr had 1.30.8 with musl,
-  zlib and openssl fixed, so the `apk upgrade` step is gone and every package comes from the digest.
-  Open: zlib CVE-2026-4738 (MEDIUM, fix 1.4-r0) is in the digest; it does not fail the scan and goes
-  away with the next base image.
+  (`node:22.23.4-alpine`, `nginx/nginx-unprivileged:1.30.8-alpine-slim`) and Dependabot proposes
+  updates weekly (check that its pull requests keep the `-alpine-slim` tag). NGINX moved the image from
+  `nginxinc/nginx-unprivileged` (no releases after 1.30.6, whose nginx had 4 CRITICAL and 2 HIGH CVEs and kept the
+  nightly red from 2026-11-19) to `nginx/nginx-unprivileged`; 1.30.8 has musl, zlib and openssl fixed, so the
+  `apk upgrade` step is gone and every package comes from the digest.
+- **Open: zlib CVE-2026-4738 (MEDIUM) in the runtime image.** Trivy reports zlib 1.3.2-r1, fixed in 1.4-r0, which
+  the pinned base digest does not have yet. MEDIUM does not fail the scan. Next step: take the next
+  `nginx/nginx-unprivileged` 1.30.x digest (Dependabot) and check that `trivy-all.txt` no longer lists it; no `apk
+  upgrade` workaround, the build stays reproducible.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 
