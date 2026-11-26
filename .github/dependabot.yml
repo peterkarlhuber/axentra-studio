@@ -52,5 +52,5 @@ updates:
       - dependency-name: node
         update-types: [version-update:semver-major]
       # Stay on nginx's stable branch (even minor: 1.30, then 1.32); odd minors are mainline releases.
-      - dependency-name: nginxinc/nginx-unprivileged
+      - dependency-name: '*nginx-unprivileged'
         versions: ['1.31.x', '1.33.x']

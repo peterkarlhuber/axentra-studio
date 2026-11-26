@@ -43,6 +43,12 @@ All notable changes to Axentra Studio are documented here. The format follows
 
 ### Security
 
+- The Docker runtime moves to `ghcr.io/nginx/nginx-unprivileged:1.30.8-alpine-slim` (pinned by digest; NGINX
+  publishes its rebuilt images there before Docker Hub). nginx 1.30.6-r1 had 4 CRITICAL and 2 HIGH findings with
+  a fix (CVE-2026-113425, -121810, -123007, -123633, -118899, -123634), which kept the nightly red since 2026-11-19.
+  The base digest already has the fixed musl, zlib and openssl, so the runtime stage no longer runs `apk upgrade`.
+  Trivy: 20 findings (4 CRITICAL, 2 HIGH) to 1 MEDIUM; the build stays reproducible.
+
 - Pre-release assessment phase 3: the sign-in's return path is checked in a real browser against open
   redirects (backslash, encoded tab/newline/CR, `//host`, `javascript:`, absolute URLs) with a real backend
   (`e2e/return-path.spec.ts`, H-C1); with the fix reverted 7 of its cases fail. The Docker runtime moves to
