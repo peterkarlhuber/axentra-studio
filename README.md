@@ -132,7 +132,7 @@ local test tool for manual QA, not a supported deployment.
 `scripts/image-check.sh` (also a CI job) builds the image twice and checks that the builds are
 identical, smoke-tests the container and scans it with Trivy.
 
-The image is `nginxinc/nginx-unprivileged` in its `-alpine-slim` variant (runs as uid 101, listens
+The image is `nginx/nginx-unprivileged` in its `-alpine-slim` variant (runs as uid 101, listens
 on 8080, `/healthz` for probes; no curl and no dynamic nginx modules, the healthcheck uses
 busybox `wget`). At start, `docker/40-axentra-studio.sh` writes `config.json`, the optional `/v1` proxy
 (from `docker/api-proxy.conf.template` via `envsubst`) and the security headers:

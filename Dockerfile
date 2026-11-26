@@ -15,7 +15,9 @@ RUN npm run build
 # The -slim variant: the same nginx build, configuration and entrypoint scripts as -alpine, without
 # the dynamic modules Studio does not load (njs, xslt, image-filter, geoip) and without curl, which
 # removes their libraries (libxslt, libexpat, brotli, libcurl, ...) and their CVEs from the image.
-FROM nginxinc/nginx-unprivileged:1.30.6-alpine-slim@sha256:5d8bb9437d74a600ec5dbf90c035451c724dc33eac8d3a71078f6f8612c345f6
+# NGINX moved the image on Docker Hub from nginxinc/ to nginx/nginx-unprivileged with 1.30.6 (stable) and 1.31.7
+# (mainline); the old name gets no new releases (github.com/nginx/docker-nginx-unprivileged, README "Image Registries").
+FROM nginx/nginx-unprivileged:1.30.8-alpine-slim@sha256:04c98c78c1de60ddeada00d7d2207dcd146ecd07b61b9941c9a5799cfb258d28
 
 LABEL org.opencontainers.image.title="Axentra Studio" \
       org.opencontainers.image.description="Admin UI for the Axentra SaaS backend" \
@@ -34,11 +36,9 @@ ENV AXENTRA_API_URL="" \
     AXENTRA_TLS_TERMINATED="false"
 
 USER root
-# Alpine security fixes released after the base image (musl CVE-2026-107891, zlib CVE-2026-85091).
-# Only these packages, so the rest stays as pinned; drop the line when the base digest has them.
-# --no-logfile: /var/log/apk.log would record the build's wall-clock time (not reproducible).
-RUN apk upgrade --no-cache --no-logfile musl musl-utils zlib \
- && rm -f /etc/nginx/conf.d/default.conf \
+# The base digest carries the Alpine fixes (musl 1.2.6-r3, zlib 1.3.2-r1, openssl 3.5.9-r1), so no apk step:
+# every package comes from the pinned digest.
+RUN rm -f /etc/nginx/conf.d/default.conf \
  && mkdir -p /etc/nginx/axentra /etc/nginx/axentra-templates \
  && chown -R nginx:nginx /etc/nginx/axentra
 COPY docker/nginx.conf /etc/nginx/conf.d/axentra-studio.conf
