@@ -81,8 +81,8 @@ reproducible build, smoke test and Trivy scan` (`scripts/image-check.sh`) builds
   `apk upgrade` step is gone and every package comes from the digest.
 - **Open: zlib CVE-2026-4738 (MEDIUM) in the runtime image.** Trivy reports zlib 1.3.2-r1, fixed in 1.4-r0, which
   the pinned base digest does not have yet. MEDIUM does not fail the scan. Next step: take the next
-  `nginx/nginx-unprivileged` 1.30.x digest (Dependabot) and check that `trivy-all.txt` no longer lists it; no `apk
-  upgrade` workaround, the build stays reproducible.
+  `nginx/nginx-unprivileged` 1.30.x digest (Dependabot) and check that `trivy-all.txt` no longer lists it; no
+  `apk upgrade` workaround, the build stays reproducible.
 - **The pinned backend commit must be pushed.** `api/BACKEND_REF` is written by `npm run api:sync`
   from a local checkout too; CI cannot check out an unpushed commit and fails loudly.
 
